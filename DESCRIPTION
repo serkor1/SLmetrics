@@ -1,0 +1,22 @@
+Package: SLmetrics
+Title: Statistical Learning Evaluation Metrics with Rcpp
+Version: 0.0.1
+Authors@R: c(
+    person(
+      given   = "Serkan", 
+      family  = "Korkmaz",
+      email   = "serkor1@duck.com", 
+      role    = c("cre", "aut", "ctb", "cph"),
+      comment = c(ORCID = "0000-0002-5052-0982")
+      )
+  )
+Description: 
+  A collection of evaluation metrics for regression and classification problems written in Rcpp.
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+LinkingTo: 
+    Rcpp
+Imports: 
+    Rcpp
