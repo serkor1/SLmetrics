@@ -10,11 +10,13 @@
 coverage](https://codecov.io/gh/serkor1/MLmetrics/graph/badge.svg)](https://app.codecov.io/gh/serkor1/MLmetrics)
 <!-- badges: end -->
 
-{SLmetrics} is a collection of performance evaluation metrics for
-regression and classification models written in c++ and
-[{Rcpp}](https://github.com/RcppCore/Rcpp)
+{SLmetrics} is a collection of (lightning fast) performance evaluation
+metrics for regression and classification models written in c++ and
+[{Rcpp}](https://github.com/RcppCore/Rcpp). It’s like using a
+supercharged yardstick to measure model performance, without the risk of
+soft to super-hard deprecations.
 
-## Example: Linear Regression
+## :information_source: Basic usage
 
 ``` r
 # 0) load {SLmetrics}
@@ -28,11 +30,13 @@ model <- lm(
 
 # 2) evaluate RMSE
 rmse(
-  actual    = fitted(model),
-  predicted = predict(model) 
+  actual    = mtcars$mpg,
+  predicted = fitted(model)
 )
-#> [1] 1.385601e-14
+#> [1] 2.146905
 ```
+
+</details>
 
 ## :information_source: Installation
 

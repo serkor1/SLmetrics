@@ -10,6 +10,19 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// huberloss
+double huberloss(const NumericVector& actual, const NumericVector& predicted, const double delta);
+RcppExport SEXP _SLmetrics_huberloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP deltaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const double >::type delta(deltaSEXP);
+    rcpp_result_gen = Rcpp::wrap(huberloss(actual, predicted, delta));
+    return rcpp_result_gen;
+END_RCPP
+}
 // mae
 double mae(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted);
 RcppExport SEXP _SLmetrics_mae(SEXP actualSEXP, SEXP predictedSEXP) {
@@ -58,12 +71,27 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rsq
+double rsq(const NumericVector& actual, const NumericVector& predicted, const double k);
+RcppExport SEXP _SLmetrics_rsq(SEXP actualSEXP, SEXP predictedSEXP, SEXP kSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const double >::type k(kSEXP);
+    rcpp_result_gen = Rcpp::wrap(rsq(actual, predicted, k));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_SLmetrics_huberloss", (DL_FUNC) &_SLmetrics_huberloss, 3},
     {"_SLmetrics_mae", (DL_FUNC) &_SLmetrics_mae, 2},
     {"_SLmetrics_mse", (DL_FUNC) &_SLmetrics_mse, 2},
     {"_SLmetrics_rmse", (DL_FUNC) &_SLmetrics_rmse, 2},
     {"_SLmetrics_rmsle", (DL_FUNC) &_SLmetrics_rmsle, 2},
+    {"_SLmetrics_rsq", (DL_FUNC) &_SLmetrics_rsq, 3},
     {NULL, NULL, 0}
 };
 
