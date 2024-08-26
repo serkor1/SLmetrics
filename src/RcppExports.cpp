@@ -10,6 +10,42 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// accuracy
+double accuracy(const NumericVector& actual, const NumericVector& predicted);
+RcppExport SEXP _SLmetrics_accuracy(SEXP actualSEXP, SEXP predictedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type predicted(predictedSEXP);
+    rcpp_result_gen = Rcpp::wrap(accuracy(actual, predicted));
+    return rcpp_result_gen;
+END_RCPP
+}
+// zerooneloss
+double zerooneloss(const NumericVector& actual, const NumericVector& predicted);
+RcppExport SEXP _SLmetrics_zerooneloss(SEXP actualSEXP, SEXP predictedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type predicted(predictedSEXP);
+    rcpp_result_gen = Rcpp::wrap(zerooneloss(actual, predicted));
+    return rcpp_result_gen;
+END_RCPP
+}
+// entropy
+double entropy(const NumericVector& actual, const NumericVector& response);
+RcppExport SEXP _SLmetrics_entropy(SEXP actualSEXP, SEXP responseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type response(responseSEXP);
+    rcpp_result_gen = Rcpp::wrap(entropy(actual, response));
+    return rcpp_result_gen;
+END_RCPP
+}
 // huberloss
 double huberloss(const NumericVector& actual, const NumericVector& predicted, const double delta);
 RcppExport SEXP _SLmetrics_huberloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP deltaSEXP) {
@@ -112,6 +148,9 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_SLmetrics_accuracy", (DL_FUNC) &_SLmetrics_accuracy, 2},
+    {"_SLmetrics_zerooneloss", (DL_FUNC) &_SLmetrics_zerooneloss, 2},
+    {"_SLmetrics_entropy", (DL_FUNC) &_SLmetrics_entropy, 2},
     {"_SLmetrics_huberloss", (DL_FUNC) &_SLmetrics_huberloss, 3},
     {"_SLmetrics_mae", (DL_FUNC) &_SLmetrics_mae, 2},
     {"_SLmetrics_mse", (DL_FUNC) &_SLmetrics_mse, 2},
