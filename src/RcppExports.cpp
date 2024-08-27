@@ -84,6 +84,32 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// wmse
+double wmse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w);
+RcppExport SEXP _SLmetrics_wmse(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(wmse(actual, predicted, w));
+    return rcpp_result_gen;
+END_RCPP
+}
+// wrmse
+double wrmse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w);
+RcppExport SEXP _SLmetrics_wrmse(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(wrmse(actual, predicted, w));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_huberloss", (DL_FUNC) &_SLmetrics_huberloss, 3},
@@ -92,6 +118,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_rmse", (DL_FUNC) &_SLmetrics_rmse, 2},
     {"_SLmetrics_rmsle", (DL_FUNC) &_SLmetrics_rmsle, 2},
     {"_SLmetrics_rsq", (DL_FUNC) &_SLmetrics_rsq, 3},
+    {"_SLmetrics_wmse", (DL_FUNC) &_SLmetrics_wmse, 3},
+    {"_SLmetrics_wrmse", (DL_FUNC) &_SLmetrics_wrmse, 3},
     {NULL, NULL, 0}
 };
 

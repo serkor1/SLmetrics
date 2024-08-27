@@ -84,3 +84,33 @@ rsq <- function(actual, predicted, k = 0) {
     .Call(`_SLmetrics_rsq`, actual, predicted, k)
 }
 
+#' Weighted Mean Square Error (WMSE)
+#'
+#' Calculate the weighted MSE of two <[numeric]>-vectors
+#'
+#' @param actual A <[numeric]>-vector of length N.
+#' @param predicted A <[numeric]>-vector of length N.
+#' @param w. A <[numeric]>-vector of length N with sample weights.
+#'
+#' @returns A <[numeric]>-value of length 1.
+#'
+#' @export
+wmse <- function(actual, predicted, w) {
+    .Call(`_SLmetrics_wmse`, actual, predicted, w)
+}
+
+#' Weighted Root Mean Square Error (WRMSE)
+#'
+#' Calculate the weighted RMSE of two <[numeric]>-vectors
+#'
+#' @param actual A <[numeric]>-vector of length N.
+#' @param predicted A <[numeric]>-vector of length N.
+#' @param w. A <[numeric]>-vector of length N with sample weights.
+#'
+#' @returns A <[numeric]>-value of length 1.
+#'
+#' @export
+wrmse <- function(actual, predicted, w) {
+    .Call(`_SLmetrics_wrmse`, actual, predicted, w)
+}
+
