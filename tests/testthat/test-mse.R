@@ -10,17 +10,13 @@ testthat::test_that(
   code = {
 
     # 0) generate values
-    # from a uniform distribution
-    predicted <- runif(
-      n = 1e2,
-      min = 1,
-      max = 2
+    # from a normal distribution
+    actual <- rnorm(
+      n = 1e2
     )
 
-    actual <- runif(
-      n = 1e2,
-      min = 1,
-      max = 2
+    predicted <- actual + rnorm(
+      n = 1e2
     )
 
     # 1) calculate the
@@ -29,6 +25,43 @@ testthat::test_that(
       mse(
         predicted,
         actual
+      )
+    )
+
+    # 2) test that the value
+    # is greater than 0
+    testthat::expect_true(
+      output > 0
+    )
+
+  }
+)
+
+testthat::test_that(
+  desc = "`wmse`-function returns non-zero postive values",
+  code = {
+
+    # 0) generate values
+    # from a normal distribution
+    actual <- rnorm(
+      n = 1e2
+    )
+
+    predicted <- actual + rnorm(
+      n = 1e2
+    )
+
+    weights <- runif(
+      n = 1e2
+    )
+
+    # 1) calculate the
+    # RMSE using mse()-function
+    output <- testthat::expect_no_condition(
+      wmse(
+        predicted,
+        actual,
+        weights
       )
     )
 

@@ -1,0 +1,7 @@
+---
+output: github_document
+---
+
+# {SLmetrics} (development version)
+
+* Initial CRAN submission of {SLmetrics} :rocket:

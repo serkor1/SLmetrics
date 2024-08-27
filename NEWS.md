@@ -1,3 +1,4 @@
-# SLmetrics (development version)
 
-* Added a `NEWS.md` file to track changes to the package.
+# {SLmetrics} (development version)
+
+- Initial CRAN submission of {SLmetrics} :rocket:

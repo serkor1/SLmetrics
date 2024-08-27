@@ -11,13 +11,13 @@ testthat::test_that(
 
     # 0) generate values
     # from a uniform distribution
-    predicted <- runif(
+    actual <- runif(
       n = 1e2,
       min = 1,
       max = 2
     )
 
-    actual <- runif(
+    predicted <- actual + runif(
       n = 1e2,
       min = 1,
       max = 2

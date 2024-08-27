@@ -11,7 +11,7 @@ wrmse(actual, predicted, w)
 
 \item{predicted}{A <\link{numeric}>-vector of length N.}
 
-\item{w.}{A <\link{numeric}>-vector of length N with sample weights.}
+\item{w}{A <\link{numeric}>-vector of length N with sample weights.}
 }
 \value{
 A <\link{numeric}>-value of length 1.

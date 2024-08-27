@@ -8,7 +8,7 @@
 //'
 //' @param actual A <[numeric]>-vector of length N.
 //' @param predicted A <[numeric]>-vector of length N.
-//' @param w. A <[numeric]>-vector of length N with sample weights.
+//' @param w A <[numeric]>-vector of length N with sample weights.
 //'
 //' @returns A <[numeric]>-value of length 1.
 //'

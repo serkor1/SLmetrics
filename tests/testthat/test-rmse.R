@@ -11,11 +11,11 @@ testthat::test_that(
 
     # 0) generate values
     # from a normal distribution
-    predicted <- rnorm(
+    actual <- rnorm(
       n = 1e2
     )
 
-    actual <- rnorm(
+    predicted <- actual + rnorm(
       n = 1e2
     )
 
@@ -25,6 +25,43 @@ testthat::test_that(
       rmse(
         predicted,
         actual
+      )
+    )
+
+    # 2) test that the value
+    # is greater than 0
+    testthat::expect_true(
+      output > 0
+    )
+
+  }
+)
+
+testthat::test_that(
+  desc = "`wrmse`-function returns non-zero postive values",
+  code = {
+
+    # 0) generate values
+    # from a normal distribution
+    actual <- rnorm(
+      n = 1e2
+    )
+
+    predicted <- actual + rnorm(
+      n = 1e2
+    )
+
+    weights <- runif(
+      n = 1e2
+    )
+
+    # 1) calculate the
+    # RMSE using rmse()-function
+    output <- testthat::expect_no_condition(
+      wrmse(
+        predicted,
+        actual,
+        weights
       )
     )
 

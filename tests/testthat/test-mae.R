@@ -10,17 +10,13 @@ testthat::test_that(
   code = {
 
     # 0) generate values
-    # from a uniform distribution
-    predicted <- runif(
-      n = 1e2,
-      min = 1,
-      max = 2
+    # from a normal distribution
+    actual <- rnorm(
+      n = 1e2
     )
 
-    actual <- runif(
-      n = 1e2,
-      min = 1,
-      max = 2
+    predicted <- actual + rnorm(
+      n = 1e2
     )
 
     # 1) calculate the

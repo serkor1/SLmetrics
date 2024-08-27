@@ -12,14 +12,13 @@ testthat::test_that(
 
     # 0) generate values
     # from a normal distribution
-    actual <-  rnorm(
+    actual <- rnorm(
       n = 1e2
     )
 
     predicted <- actual + rnorm(
       n = 1e2
     )
-
 
     # 1) calculate the
     # rsq using rsq()-function
