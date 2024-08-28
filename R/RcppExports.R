@@ -4,6 +4,10 @@
 #' Accuracy
 #'
 #'
+#' @param actual placeholder
+#' @param predicted placeholder
+#'
+#'
 #' @export
 accuracy <- function(actual, predicted) {
     .Call(`_SLmetrics_accuracy`, actual, predicted)
@@ -11,6 +15,8 @@ accuracy <- function(actual, predicted) {
 
 #' Zero One Loss
 #'
+#' @param actual placeholder
+#' @param predicted placeholder
 #'
 #' @export
 zerooneloss <- function(actual, predicted) {
@@ -19,8 +25,9 @@ zerooneloss <- function(actual, predicted) {
 
 #' Binary Cross Entropy
 #'
+#' @param actual placeholder
+#' @param response placeholder
 #'
-#' @export
 entropy <- function(actual, response) {
     .Call(`_SLmetrics_entropy`, actual, response)
 }

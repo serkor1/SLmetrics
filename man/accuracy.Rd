@@ -6,6 +6,11 @@
 \usage{
 accuracy(actual, predicted)
 }
+\arguments{
+\item{actual}{placeholder}
+
+\item{predicted}{placeholder}
+}
 \description{
 Accuracy
 }

@@ -3,8 +3,9 @@ using namespace Rcpp;
 
 //' Binary Cross Entropy
 //'
+//' @param actual placeholder
+//' @param response placeholder
 //'
-//' @export
 // [[Rcpp::export]]
 double entropy(
   const NumericVector& actual,

@@ -6,6 +6,11 @@
 \usage{
 zerooneloss(actual, predicted)
 }
+\arguments{
+\item{actual}{placeholder}
+
+\item{predicted}{placeholder}
+}
 \description{
 Zero One Loss
 }

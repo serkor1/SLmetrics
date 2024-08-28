@@ -3,6 +3,8 @@ using namespace Rcpp;
 
 //' Zero One Loss
 //'
+//' @param actual placeholder
+//' @param predicted placeholder
 //'
 //' @export
 // [[Rcpp::export]]

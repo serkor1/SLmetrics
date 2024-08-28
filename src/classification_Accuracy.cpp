@@ -4,6 +4,10 @@ using namespace Rcpp;
 //' Accuracy
 //'
 //'
+//' @param actual placeholder
+//' @param predicted placeholder
+//'
+//'
 //' @export
 // [[Rcpp::export]]
 double accuracy(

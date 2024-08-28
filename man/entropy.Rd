@@ -6,6 +6,11 @@
 \usage{
 entropy(actual, response)
 }
+\arguments{
+\item{actual}{placeholder}
+
+\item{response}{placeholder}
+}
 \description{
 Binary Cross Entropy
 }
