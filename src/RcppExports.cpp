@@ -34,6 +34,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// confusion_matrix
+NumericMatrix confusion_matrix(const IntegerVector& actual, const IntegerVector& predicted);
+RcppExport SEXP _SLmetrics_confusion_matrix(SEXP actualSEXP, SEXP predictedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
+    rcpp_result_gen = Rcpp::wrap(confusion_matrix(actual, predicted));
+    return rcpp_result_gen;
+END_RCPP
+}
 // entropy
 double entropy(const NumericVector& actual, const NumericVector& response);
 RcppExport SEXP _SLmetrics_entropy(SEXP actualSEXP, SEXP responseSEXP) {
@@ -150,6 +162,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_accuracy", (DL_FUNC) &_SLmetrics_accuracy, 2},
     {"_SLmetrics_zerooneloss", (DL_FUNC) &_SLmetrics_zerooneloss, 2},
+    {"_SLmetrics_confusion_matrix", (DL_FUNC) &_SLmetrics_confusion_matrix, 2},
     {"_SLmetrics_entropy", (DL_FUNC) &_SLmetrics_entropy, 2},
     {"_SLmetrics_huberloss", (DL_FUNC) &_SLmetrics_huberloss, 3},
     {"_SLmetrics_mae", (DL_FUNC) &_SLmetrics_mae, 2},

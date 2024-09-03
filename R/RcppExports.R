@@ -23,6 +23,11 @@ zerooneloss <- function(actual, predicted) {
     .Call(`_SLmetrics_zerooneloss`, actual, predicted)
 }
 
+#' @export
+confusion_matrix <- function(actual, predicted) {
+    .Call(`_SLmetrics_confusion_matrix`, actual, predicted)
+}
+
 #' Binary Cross Entropy
 #'
 #' @param actual placeholder
