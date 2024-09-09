@@ -3,10 +3,21 @@ using namespace Rcpp;
 
 //' Accuracy
 //'
+//' Calculate the proportion of correct predictions.
 //'
-//' @param actual placeholder
-//' @param predicted placeholder
+//' @usage
+//' accuracy(
+//'   actual,
+//'   predicted
+//' )
 //'
+//' @inheritParams cmatrix
+//'
+//' @returns A <[numeric]>-vector of [length] 1
+//'
+//' @example man/examples/scr_accuracy.R
+//'
+//' @family classification
 //'
 //' @export
 // [[Rcpp::export]]

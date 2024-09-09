@@ -3,14 +3,180 @@
 
 #' Accuracy
 #'
+#' Calculate the proportion of correct predictions.
 #'
-#' @param actual placeholder
-#' @param predicted placeholder
+#' @usage
+#' accuracy(
+#'   actual,
+#'   predicted
+#' )
 #'
+#' @inheritParams cmatrix
+#'
+#' @returns A <[numeric]>-vector of [length] 1
+#'
+#' @example man/examples/scr_accuracy.R
+#'
+#' @family classification
 #'
 #' @export
 accuracy <- function(actual, predicted) {
     .Call(`_SLmetrics_accuracy`, actual, predicted)
+}
+
+#' Confusion Matrix
+#'
+#' @description
+#' Placeholder
+#'
+#' @usage
+#' cmatrix(
+#'   actual,
+#'   predicted
+#' )
+#'
+#' @param actual A <[factor]>-vector of length n, and k levels.
+#' @param predicted A <[factor]>-vector of length n.
+#'
+#' @example man/examples/scr_confusionmatrix.R
+#' @family classification
+#'
+#' @details
+#'
+#' If the function is correctly implemented the resulting
+#' confusion matrix is given as,
+#'
+#'
+#' |            | A (Predicted)        | B (Predicted)   |
+#' | ------------- |:-------------:| -----:|
+#' | A (Actual)   | Value     | Value |
+#' | B  (Actual)   |  Value    |  Value   |
+#'
+#'
+#' @returns A named k x k <[matrix]>
+#'
+#' @export
+cmatrix <- function(actual, predicted) {
+    .Call(`_SLmetrics_cmatrix`, actual, predicted)
+}
+
+#' Generalized F Score
+#'
+#' @description
+#' Calculate the F Score
+#'
+#' @usage
+#' fbeta(
+#'   actual,
+#'   predicted,
+#'   beta = 1,
+#'   aggregate = FALSE
+#' )
+#'
+#' @inheritParams cmatrix
+#' @param beta A <[numeric]> vector of length 1. 1 by default, see details.
+#' @param aggregate A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] it returns the
+#' micro average across all k-classes
+#'
+#' @details
+#' The general F-score equation is given as follows,
+#'
+#' \deqn{F_{\beta} = (1+\beta^2) \frac{precision \times recall}{\beta^2 \times precision + recall}}
+#'
+#' if \eqn{\beta = 1} then it corresponds to the traditional F1 score.
+#'
+#' @returns
+#' A named <[numeric]> vector of length k
+#'
+#' @family classification
+#'
+fbeta <- function(actual, predicted, beta = 1.0, aggregate = FALSE) {
+    .Call(`_SLmetrics_fbeta`, actual, predicted, beta, aggregate)
+}
+
+#' Precision
+#'
+#' @description
+#' Calculate the Precision
+#'
+#' @usage
+#' precision(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#'
+#' @inheritParams accuracy
+#' @param aggregate A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] it returns the
+#' micro average across all k-classes
+#'
+#'
+#' @details
+#'
+#' The precision is calculated as,
+#'
+#' \deqn{
+#'   \frac{TP}{TP + FP}
+#' }
+#'
+#' Where \eqn{TP} is the number of True Positives, and \eqn{FP} is the number
+#' of False Positives.
+#'
+#' @returns
+#' A named <[numeric]> vector of length k
+#'
+#'
+#' @family classification
+#'
+#' @export
+precision <- function(actual, predicted, aggregate = FALSE) {
+    .Call(`_SLmetrics_precision`, actual, predicted, aggregate)
+}
+
+#' Recall
+#'
+#' @description
+#' Calculate the Recall
+#'
+#' @inheritParams cmatrix
+#' @param aggregate A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] it returns the
+#' micro average across all k-classes
+#'
+#' @example man/examples/scr_recall.R
+#'
+#' @family classification
+#'
+#' @export
+recall <- function(actual, predicted, aggregate = FALSE) {
+    .Call(`_SLmetrics_recall`, actual, predicted, aggregate)
+}
+
+#' Specificity
+#'
+#' @description
+#' Calculate the specificity
+#'
+#' @usage
+#' specificity(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#'
+#' @inheritParams cmatrix
+#' @param aggregate A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] it returns the
+#' micro average across all k-classes
+#'
+#' @returns A named <[numeric]>-vector of length k.
+#'
+#' @example man/examples/scr_specificity.R
+#'
+#'
+#' @family classification
+#'
+#' @export
+specificity <- function(actual, predicted, aggregate = FALSE) {
+    .Call(`_SLmetrics_specificity`, actual, predicted, aggregate)
 }
 
 #' Zero One Loss
@@ -18,34 +184,52 @@ accuracy <- function(actual, predicted) {
 #' @param actual placeholder
 #' @param predicted placeholder
 #'
+#'
+#' @family classification
+#'
+#'
 #' @export
 zerooneloss <- function(actual, predicted) {
     .Call(`_SLmetrics_zerooneloss`, actual, predicted)
 }
 
-#' @export
-confusion_matrix <- function(actual, predicted) {
-    .Call(`_SLmetrics_confusion_matrix`, actual, predicted)
-}
-
-#' Binary Cross Entropy
-#'
-#' @param actual placeholder
-#' @param response placeholder
-#'
-entropy <- function(actual, response) {
-    .Call(`_SLmetrics_entropy`, actual, response)
-}
-
 #' Huber Loss
 #'
-#' Calculate the huber loss of two <[numeric]> vectors.
+#' @description
+#' Calculate the Huber Loss of two <[numeric]> vectors.
+#'
+#' @usage
+#' huberloss(
+#'   actual,
+#'   predicted,
+#'   delta
+#' )
 #'
 #' @param actual A <[numeric]>-vector of length N.
 #' @param predicted A <[numeric]>-vector of length N.
 #' @param delta A <[numeric]>-vector of length 1. 1 by default.
 #'
+#' @details
+#'
+#' The Huber Loss is calculated as,
+#'
+#' \deqn{
+#'  \frac{1}{2} (y_i - \hat{y}_i)^2 ~for~ |y_i - \hat{y}_i| \leq \delta
+#' }
+#'
+#' \deqn{
+#'   \delta |y_i-\hat{y}_i|-\frac{1}{2} \delta^2 ~for~ |y_i - \hat{y}_i| > \delta
+#' }
+#'
+#' for each \eqn{i},
+#'
+#'
+#' @example man/examples/scr_huberloss.R
+#'
+#'
+#' @family regression
 #' @returns A <[numeric]>-value of length 1.
+#' @export
 huberloss <- function(actual, predicted, delta = 1) {
     .Call(`_SLmetrics_huberloss`, actual, predicted, delta)
 }
@@ -58,6 +242,8 @@ huberloss <- function(actual, predicted, delta = 1) {
 #' @param predicted A <[numeric]>-vector of length N.
 #'
 #' @returns A <[numeric]>-value of length 1.
+#'
+#' @family regression
 #'
 #' @export
 mae <- function(actual, predicted) {
@@ -73,6 +259,8 @@ mae <- function(actual, predicted) {
 #'
 #' @returns A <[numeric]>-value of length 1.
 #'
+#' @family regression
+#'
 #' @export
 mse <- function(actual, predicted) {
     .Call(`_SLmetrics_mse`, actual, predicted)
@@ -86,6 +274,8 @@ mse <- function(actual, predicted) {
 #' @param predicted A <[numeric]>-vector of length N.
 #'
 #' @returns A <[numeric]>-value of length 1.
+#'
+#' @family regression
 #'
 #' @export
 rmse <- function(actual, predicted) {
@@ -101,6 +291,8 @@ rmse <- function(actual, predicted) {
 #'
 #' @returns A <[numeric]>-value of length 1.
 #'
+#' @family regression
+#'
 #' @export
 rmsle <- function(actual, predicted) {
     .Call(`_SLmetrics_rmsle`, actual, predicted)
@@ -108,12 +300,31 @@ rmsle <- function(actual, predicted) {
 
 #' R squared
 #'
+#' @description
 #' Calculate the R squared of two <[numeric]> vectors.
+#'
+#' @usage
+#' rsq(
+#'   actual,
+#'   predicted,
+#'   k = 0
+#' )
 #'
 #' @param actual A <[numeric]>-vector of length N.
 #' @param predicted A <[numeric]>-vector of length N.
 #' @param k A <[numeric]>-vector of length 1. 0 by default. If k>0
 #' the function returns the adjusted R squared.
+#'
+#'
+#' @details
+#'
+#' The \eqn{R^2} is calculated as,
+#'
+#' \deqn{
+#'   1 - \frac{SSE}{SST} \frac{n-1}{n - (k + 1)}
+#' }
+#'
+#' @family regression
 #'
 #' @returns A <[numeric]>-value of length 1.
 rsq <- function(actual, predicted, k = 0) {
@@ -130,6 +341,8 @@ rsq <- function(actual, predicted, k = 0) {
 #'
 #' @returns A <[numeric]>-value of length 1.
 #'
+#' @family regression
+#'
 #' @export
 wmse <- function(actual, predicted, w) {
     .Call(`_SLmetrics_wmse`, actual, predicted, w)
@@ -144,6 +357,8 @@ wmse <- function(actual, predicted, w) {
 #' @param w A <[numeric]>-vector of length N with sample weights.
 #'
 #' @returns A <[numeric]>-value of length 1.
+#'
+#' @family regression
 #'
 #' @export
 wrmse <- function(actual, predicted, w) {

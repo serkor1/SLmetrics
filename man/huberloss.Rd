@@ -4,7 +4,11 @@
 \alias{huberloss}
 \title{Huber Loss}
 \usage{
-huberloss(actual, predicted, delta = 1)
+huberloss(
+  actual,
+  predicted,
+  delta
+)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of length N.}
@@ -17,5 +21,51 @@ huberloss(actual, predicted, delta = 1)
 A <\link{numeric}>-value of length 1.
 }
 \description{
-Calculate the huber loss of two <\link{numeric}> vectors.
+Calculate the Huber Loss of two <\link{numeric}> vectors.
 }
+\details{
+The Huber Loss is calculated as,
+
+\deqn{
+ \frac{1}{2} (y_i - \hat{y}_i)^2 ~for~ |y_i - \hat{y}_i| \leq \delta
+}
+
+\deqn{
+  \delta |y_i-\hat{y}_i|-\frac{1}{2} \delta^2 ~for~ |y_i - \hat{y}_i| > \delta
+}
+
+for each \eqn{i},
+}
+\examples{
+# 1) assume that actual
+# and predicted are values
+# from a model
+actual <- rnorm(
+  n = 1e3,
+  mean = 10
+)
+
+predicted <- actual + rnorm(
+  n = 1e3,
+  mean = 10
+)
+
+# 2) calculate the huber loss
+# with delta 0.5
+huberloss(
+  actual = actual,
+  predicted = predicted,
+  delta = 0.5
+)
+}
+\seealso{
+Other regression: 
+\code{\link{mae}()},
+\code{\link{mse}()},
+\code{\link{rmse}()},
+\code{\link{rmsle}()},
+\code{\link{rsq}()},
+\code{\link{wmse}()},
+\code{\link{wrmse}()}
+}
+\concept{regression}

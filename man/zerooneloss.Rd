@@ -14,3 +14,13 @@ zerooneloss(actual, predicted)
 \description{
 Zero One Loss
 }
+\seealso{
+Other classification: 
+\code{\link{accuracy}()},
+\code{\link{cmatrix}()},
+\code{\link{fbeta}()},
+\code{\link{precision}()},
+\code{\link{recall}()},
+\code{\link{specificity}()}
+}
+\concept{classification}

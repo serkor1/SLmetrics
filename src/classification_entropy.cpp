@@ -6,7 +6,7 @@ using namespace Rcpp;
 //' @param actual placeholder
 //' @param response placeholder
 //'
-// [[Rcpp::export]]
+//' @family classification
 double entropy(
   const NumericVector& actual,
   const NumericVector& response) {

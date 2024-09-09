@@ -1,21 +1,25 @@
 #include <Rcpp.h>
+#include <cmath>
 
-//' Mean Square Error (MSE)
+
+//' Root Mean Square Error (RMSE)
 //'
-//' Calculate the MSE of two <[numeric]>-vectors
+//' Calculate the RMSE of two <[numeric]>-vectors
 //'
 //' @param actual A <[numeric]>-vector of length N.
 //' @param predicted A <[numeric]>-vector of length N.
 //'
 //' @returns A <[numeric]>-value of length 1.
 //'
+//' @family regression
+//'
 //' @export
 // [[Rcpp::export]]
-double mse(
+double rmse(
     const Rcpp::NumericVector& actual,
     const Rcpp::NumericVector& predicted) {
 
-  // This function calculates the MSE
+  // This function calculates the RMSE
   // between the two numeric vectors
   // NOTE: The function doesn't check
   // for equality in length before calculating
@@ -40,6 +44,7 @@ double mse(
     output += difference * difference;
   }
 
-  // 5) return the mean of the value
-  return output / n;
+  // 5) return the squared
+  // mean of the value
+  return std::sqrt(output / n);
 }

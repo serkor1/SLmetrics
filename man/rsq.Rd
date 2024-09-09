@@ -4,7 +4,11 @@
 \alias{rsq}
 \title{R squared}
 \usage{
-rsq(actual, predicted, k = 0)
+rsq(
+  actual,
+  predicted,
+  k = 0
+)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of length N.}
@@ -20,3 +24,21 @@ A <\link{numeric}>-value of length 1.
 \description{
 Calculate the R squared of two <\link{numeric}> vectors.
 }
+\details{
+The \eqn{R^2} is calculated as,
+
+\deqn{
+  1 - \frac{SSE}{SST} \frac{n-1}{n - (k + 1)}
+}
+}
+\seealso{
+Other regression: 
+\code{\link{huberloss}()},
+\code{\link{mae}()},
+\code{\link{mse}()},
+\code{\link{rmse}()},
+\code{\link{rmsle}()},
+\code{\link{wmse}()},
+\code{\link{wrmse}()}
+}
+\concept{regression}

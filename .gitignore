@@ -51,3 +51,5 @@ rsconnect/
 
 # playground
 playground/
+docs
+inst/doc

@@ -1,0 +1,28 @@
+---
+title: "{SLmetrics}: Machine learning performance evaluation on steoriods"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{{SLmetrics}: Machine learning performance evaluation on steoriods}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+# load library
+library(SLmetrics)
+```
+
+
+## Why?
+
+Depending on the application {SLmetrics} is between 5-20x faster than the other R packages that does the same thing.
+
+
+

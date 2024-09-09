@@ -1,25 +1,26 @@
 #include <Rcpp.h>
-#include <cmath>
 
-//' Root Mean Square Logarithmic Error (RMSLE)
+//' Mean Absolute Error (MAE)
 //'
-//' Calculate the RMSLE of two <[numeric]>-vectors
+//' Calculate the MAE of two <[numeric]>-vectors
 //'
 //' @param actual A <[numeric]>-vector of length N.
 //' @param predicted A <[numeric]>-vector of length N.
 //'
 //' @returns A <[numeric]>-value of length 1.
 //'
+//' @family regression
+//'
 //' @export
 // [[Rcpp::export]]
-double rmsle(
+double mae(
     const Rcpp::NumericVector& actual,
     const Rcpp::NumericVector& predicted) {
 
-  // This function calculates the RMSLE
+  // This function calculates the MAE
   // between the two numeric vectors
   // NOTE: The function doesn't check
-  // for equalit//' @exporty in length before calculating
+  // for equality in length before calculating
   // the final result.
 
   // 1) calculate the size of the vectors
@@ -37,11 +38,10 @@ double rmsle(
   // 4) loop through the values
   // in each vector
   for (std::size_t i = 0; i < n; ++i) {
-    double difference = std::log(actual_ptr[i] + 1) - std::log(predicted_ptr[i] + 1);
-    output += difference * difference;
+    double difference = std::abs(actual_ptr[i] - predicted_ptr[i]);
+    output += difference;
   }
 
-  // 5) return the squared
-  // mean of the value
-  return std::sqrt(output / n);
+  // 5) return the mean of the value
+  return output / n;
 }

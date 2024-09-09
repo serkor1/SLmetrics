@@ -1,0 +1,31 @@
+url: ~
+
+# SEO:
+home:
+  # the title of the tab:
+  title: Performance Evaluation
+
+  # description for google
+  description: >
+    {SLmetrics}: A collection of supervised learning performance evaluation
+    metrics written in C++
+
+template:
+  bootstrap: 5
+  light-switch: true
+  bslib:
+    primary: "#0054AD"
+    border-radius: 0.5rem
+    btn-border-radius: 0.25rem
+    danger: "#A6081A"
+
+reference:
+- title: Regression Metrics
+  desc: >
+    The collection of evaluation metrics for regression problems
+- contents: has_concept('regression')
+
+- title: Classification Metrics
+  desc: >
+    The collection of evaluation metrics for classification problems
+- contents: has_concept('classification')

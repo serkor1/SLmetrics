@@ -1,21 +1,23 @@
 #include <Rcpp.h>
 
-//' Mean Absolute Error (MAE)
+//' Mean Square Error (MSE)
 //'
-//' Calculate the MAE of two <[numeric]>-vectors
+//' Calculate the MSE of two <[numeric]>-vectors
 //'
 //' @param actual A <[numeric]>-vector of length N.
 //' @param predicted A <[numeric]>-vector of length N.
 //'
 //' @returns A <[numeric]>-value of length 1.
 //'
+//' @family regression
+//'
 //' @export
 // [[Rcpp::export]]
-double mae(
+double mse(
     const Rcpp::NumericVector& actual,
     const Rcpp::NumericVector& predicted) {
 
-  // This function calculates the MAE
+  // This function calculates the MSE
   // between the two numeric vectors
   // NOTE: The function doesn't check
   // for equality in length before calculating
@@ -36,8 +38,8 @@ double mae(
   // 4) loop through the values
   // in each vector
   for (std::size_t i = 0; i < n; ++i) {
-    double difference = std::abs(actual_ptr[i] - predicted_ptr[i]);
-    output += difference;
+    double difference = actual_ptr[i] - predicted_ptr[i];
+    output += difference * difference;
   }
 
   // 5) return the mean of the value

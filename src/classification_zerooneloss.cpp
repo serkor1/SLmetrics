@@ -6,6 +6,10 @@ using namespace Rcpp;
 //' @param actual placeholder
 //' @param predicted placeholder
 //'
+//'
+//' @family classification
+//'
+//'
 //' @export
 // [[Rcpp::export]]
 double zerooneloss(

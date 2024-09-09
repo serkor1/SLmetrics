@@ -17,3 +17,14 @@ A <\link{numeric}>-value of length 1.
 \description{
 Calculate the RMSLE of two <\link{numeric}>-vectors
 }
+\seealso{
+Other regression: 
+\code{\link{huberloss}()},
+\code{\link{mae}()},
+\code{\link{mse}()},
+\code{\link{rmse}()},
+\code{\link{rsq}()},
+\code{\link{wmse}()},
+\code{\link{wrmse}()}
+}
+\concept{regression}

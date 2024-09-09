@@ -19,3 +19,14 @@ A <\link{numeric}>-value of length 1.
 \description{
 Calculate the weighted RMSE of two <\link{numeric}>-vectors
 }
+\seealso{
+Other regression: 
+\code{\link{huberloss}()},
+\code{\link{mae}()},
+\code{\link{mse}()},
+\code{\link{rmse}()},
+\code{\link{rmsle}()},
+\code{\link{rsq}()},
+\code{\link{wmse}()}
+}
+\concept{regression}

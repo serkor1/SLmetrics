@@ -12,6 +12,8 @@
 //'
 //' @returns A <[numeric]>-value of length 1.
 //'
+//' @family regression
+//'
 //' @export
 // [[Rcpp::export]]
 

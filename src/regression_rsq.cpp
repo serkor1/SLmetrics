@@ -3,12 +3,31 @@ using namespace Rcpp;
 
 //' R squared
 //'
+//' @description
 //' Calculate the R squared of two <[numeric]> vectors.
+//'
+//' @usage
+//' rsq(
+//'   actual,
+//'   predicted,
+//'   k = 0
+//' )
 //'
 //' @param actual A <[numeric]>-vector of length N.
 //' @param predicted A <[numeric]>-vector of length N.
 //' @param k A <[numeric]>-vector of length 1. 0 by default. If k>0
 //' the function returns the adjusted R squared.
+//'
+//'
+//' @details
+//'
+//' The \eqn{R^2} is calculated as,
+//'
+//' \deqn{
+//'   1 - \frac{SSE}{SST} \frac{n-1}{n - (k + 1)}
+//' }
+//'
+//' @family regression
 //'
 //' @returns A <[numeric]>-value of length 1.
 // [[Rcpp::export]]
