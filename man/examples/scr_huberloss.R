@@ -18,3 +18,18 @@ huberloss(
   predicted = predicted,
   delta = 0.5
 )
+
+# 3) caclulate weighted
+# huber loss
+w <- rbeta(
+  n = 1e3,
+  shape1 = 10,
+  shape2 = 2
+)
+
+huberloss(
+  actual = actual,
+  predicted = predicted,
+  delta = 0.5,
+  w     = w
+)

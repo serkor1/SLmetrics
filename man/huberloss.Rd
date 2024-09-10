@@ -7,7 +7,8 @@
 huberloss(
   actual,
   predicted,
-  delta
+  delta = 1,
+  w     = NULL
 )
 }
 \arguments{
@@ -16,6 +17,8 @@ huberloss(
 \item{predicted}{A <\link{numeric}>-vector of length N.}
 
 \item{delta}{A <\link{numeric}>-vector of length 1. 1 by default.}
+
+\item{w}{An optional  <\link{numeric}>-vector of \link{length} n. \link{NULL} by default.}
 }
 \value{
 A <\link{numeric}>-value of length 1.
@@ -56,6 +59,21 @@ huberloss(
   actual = actual,
   predicted = predicted,
   delta = 0.5
+)
+
+# 3) caclulate weighted
+# huber loss
+w <- rbeta(
+  n = 1e3,
+  shape1 = 10,
+  shape2 = 2
+)
+
+huberloss(
+  actual = actual,
+  predicted = predicted,
+  delta = 0.5,
+  w     = w
 )
 }
 \seealso{

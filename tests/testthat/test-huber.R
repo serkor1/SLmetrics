@@ -12,16 +12,28 @@ testthat::test_that(
 
     # 0) generate values
     # from a normal distribution
+    # and weights
     actual <- rnorm(
-      n = 1e2
+      n = 1e3
     )
 
     predicted <- actual + rnorm(
-      n = 1e2
+      n = 1e3
     )
 
-    # 1) calculate the
-    # rsq using rsq()-function
+    w <- rbeta(
+      n = 1e3,
+      shape1 = 10,
+      shape2 = 2
+    )
+
+
+    # 1) calculate the metric
+    # with and without weights
+    # and assume that no errors
+    # occurs.
+
+    # 1.1) unweighted
     output <- testthat::expect_no_condition(
       huberloss(
         predicted,
@@ -30,11 +42,26 @@ testthat::test_that(
       )
     )
 
-    # 2) test that the value
-    # is greater than 0
     testthat::expect_true(
       output > 0
     )
+
+    # 1.2) weighted
+    # huber loss
+    output <- testthat::expect_no_condition(
+      huberloss(
+        predicted,
+        actual,
+        delta = 5,
+        w = w
+      )
+    )
+
+    testthat::expect_true(
+      output > 0
+    )
+
+
 
   }
 )

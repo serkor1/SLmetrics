@@ -202,12 +202,14 @@ zerooneloss <- function(actual, predicted) {
 #' huberloss(
 #'   actual,
 #'   predicted,
-#'   delta
+#'   delta = 1,
+#'   w     = NULL
 #' )
 #'
 #' @param actual A <[numeric]>-vector of length N.
 #' @param predicted A <[numeric]>-vector of length N.
 #' @param delta A <[numeric]>-vector of length 1. 1 by default.
+#' @param w An optional  <[numeric]>-vector of [length] n. [NULL] by default.
 #'
 #' @details
 #'
@@ -230,8 +232,8 @@ zerooneloss <- function(actual, predicted) {
 #' @family regression
 #' @returns A <[numeric]>-value of length 1.
 #' @export
-huberloss <- function(actual, predicted, delta = 1) {
-    .Call(`_SLmetrics_huberloss`, actual, predicted, delta)
+huberloss <- function(actual, predicted, delta = 1, w = NULL) {
+    .Call(`_SLmetrics_huberloss`, actual, predicted, delta, w)
 }
 
 #' Mean Absolute Error (MAE)

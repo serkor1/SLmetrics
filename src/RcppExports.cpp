@@ -101,15 +101,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // huberloss
-double huberloss(const NumericVector& actual, const NumericVector& predicted, const double delta);
-RcppExport SEXP _SLmetrics_huberloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP deltaSEXP) {
+double huberloss(const NumericVector& actual, const NumericVector& predicted, const double& delta, Nullable<NumericVector> w);
+RcppExport SEXP _SLmetrics_huberloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP deltaSEXP, SEXP wSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const double >::type delta(deltaSEXP);
-    rcpp_result_gen = Rcpp::wrap(huberloss(actual, predicted, delta));
+    Rcpp::traits::input_parameter< const double& >::type delta(deltaSEXP);
+    Rcpp::traits::input_parameter< Nullable<NumericVector> >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(huberloss(actual, predicted, delta, w));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -209,7 +210,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_recall", (DL_FUNC) &_SLmetrics_recall, 3},
     {"_SLmetrics_specificity", (DL_FUNC) &_SLmetrics_specificity, 3},
     {"_SLmetrics_zerooneloss", (DL_FUNC) &_SLmetrics_zerooneloss, 2},
-    {"_SLmetrics_huberloss", (DL_FUNC) &_SLmetrics_huberloss, 3},
+    {"_SLmetrics_huberloss", (DL_FUNC) &_SLmetrics_huberloss, 4},
     {"_SLmetrics_mae", (DL_FUNC) &_SLmetrics_mae, 2},
     {"_SLmetrics_mse", (DL_FUNC) &_SLmetrics_mse, 2},
     {"_SLmetrics_rmse", (DL_FUNC) &_SLmetrics_rmse, 2},
