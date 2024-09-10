@@ -38,6 +38,7 @@ Other regression:
 \code{\link{mse}()},
 \code{\link{rmse}()},
 \code{\link{rmsle}()},
+\code{\link{whuberloss}()},
 \code{\link{wmse}()},
 \code{\link{wrmse}()}
 }

@@ -24,6 +24,7 @@ Other regression:
 \code{\link{rmse}()},
 \code{\link{rmsle}()},
 \code{\link{rsq}()},
+\code{\link{whuberloss}()},
 \code{\link{wmse}()},
 \code{\link{wrmse}()}
 }

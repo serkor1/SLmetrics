@@ -1,21 +1,22 @@
 #include <Rcpp.h>
 using namespace Rcpp;
-
-//' Huber Loss
+//' Weighted Huber Loss
 //'
 //' @description
-//' Calculate the Huber Loss of two <[numeric]> vectors.
+//' Calculate the Weighted Huber Loss of two <[numeric]> vectors.
 //'
 //' @usage
-//' huberloss(
+//' whuberloss(
 //'   actual,
 //'   predicted,
-//'   delta = 1
+//'   delta = 1,
+//'   w
 //' )
 //'
 //' @param actual A <[numeric]>-vector of length N.
 //' @param predicted A <[numeric]>-vector of length N.
 //' @param delta A <[numeric]>-vector of length 1. 1 by default.
+//' @param w An optional  <[numeric]>-vector of [length] n. [NULL] by default.
 //'
 //' @details
 //'
@@ -39,11 +40,11 @@ using namespace Rcpp;
 //' @returns A <[numeric]>-value of length 1.
 //' @export
 // [[Rcpp::export]]
-double huberloss(
+double whuberloss(
     const NumericVector& actual,
     const NumericVector& predicted,
-    const double& delta = 1,
-    Nullable<NumericVector> w = R_NilValue) {
+    const NumericVector& w,
+    const double& delta = 1) {
 
   /*
    * This function returns the Huber Loss
@@ -57,23 +58,27 @@ double huberloss(
   const std::size_t n = actual.size();
 
   // Initialize the output variable
-  double output = 0.0;
+  double numerator = 0.0;
+  double denominator = 0.0;
 
   const double* actual_ptr = actual.begin();
   const double* predicted_ptr = predicted.begin();
+  const double* w_ptr = w.begin();
 
   for (std::size_t i = 0; i < n; ++i) {
+
     double diff = actual_ptr[i] - predicted_ptr[i];
     double abs_diff = std::abs(diff);
+    denominator += w_ptr[i];
 
     if (abs_diff <= delta) {
-      output += 0.5 * diff * diff;
+      numerator += 0.5 * diff * diff * w_ptr[i];
     } else {
-      output += delta * (abs_diff - 0.5 * delta);
+      numerator += delta * (abs_diff - 0.5 * delta) * w_ptr[i];
     }
+
   }
 
-  // Return the mean Huber loss
-  return output / n;
+  return numerator / denominator;
 
 }

@@ -122,3 +122,6 @@ inline Eigen::MatrixXi confmat(const Rcpp::IntegerVector& actual, const Rcpp::In
 
   return confmat;
 }
+
+
+
