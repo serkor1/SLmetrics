@@ -10,6 +10,7 @@
  *
  * R Studio crashes if the dimensions doesn't align with matrix-algebra! :-(
  */
+#include <cmath>
 
 
 inline Eigen::VectorXi TP(const Eigen::MatrixXi& matrix)
@@ -123,5 +124,35 @@ inline Eigen::MatrixXi confmat(const Rcpp::IntegerVector& actual, const Rcpp::In
   return confmat;
 }
 
+inline Eigen::MatrixXi seqmat(
+    int n,
+    double power) {
+  Eigen::MatrixXi mat(n, n);
 
+  int* mat_data = mat.data();
+
+
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j <= i; ++j) {
+      int value = std::pow(i - j, power);
+      *(mat_data + i * n + j) = value;
+      *(mat_data + j * n + i) = value;
+    }
+
+
+
+  };
+
+  if (power == 0) {
+
+    for (int i = 0; i < n; ++i) {
+
+      *(mat_data + i * n + i) = 0;
+
+    }
+
+  }
+
+  return mat;
+}
 

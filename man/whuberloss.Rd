@@ -7,8 +7,8 @@
 whuberloss(
   actual,
   predicted,
-  delta = 1,
-  w
+  w,
+  delta = 1
 )
 }
 \arguments{
@@ -69,7 +69,7 @@ w <- rbeta(
   shape2 = 2
 )
 
-huberloss(
+whuberloss(
   actual = actual,
   predicted = predicted,
   delta = 0.5,

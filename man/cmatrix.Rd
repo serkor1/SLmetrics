@@ -70,6 +70,7 @@ cmatrix(
 Other classification: 
 \code{\link{accuracy}()},
 \code{\link{fbeta}()},
+\code{\link{kappa}()},
 \code{\link{precision}()},
 \code{\link{recall}()},
 \code{\link{specificity}()},

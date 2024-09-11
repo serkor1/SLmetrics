@@ -49,7 +49,7 @@ testthat::test_that(
     # 1.2) weighted
     # huber loss
     output <- testthat::expect_no_condition(
-      huberloss(
+      whuberloss(
         predicted,
         actual,
         delta = 5,

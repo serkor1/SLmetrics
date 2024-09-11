@@ -62,6 +62,7 @@ accuracy(
 Other classification: 
 \code{\link{cmatrix}()},
 \code{\link{fbeta}()},
+\code{\link{kappa}()},
 \code{\link{precision}()},
 \code{\link{recall}()},
 \code{\link{specificity}()},

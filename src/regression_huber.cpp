@@ -42,8 +42,7 @@ using namespace Rcpp;
 double huberloss(
     const NumericVector& actual,
     const NumericVector& predicted,
-    const double& delta = 1,
-    Nullable<NumericVector> w = R_NilValue) {
+    const double& delta = 1) {
 
   /*
    * This function returns the Huber Loss

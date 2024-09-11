@@ -80,6 +80,7 @@ Other classification:
 \code{\link{accuracy}()},
 \code{\link{cmatrix}()},
 \code{\link{fbeta}()},
+\code{\link{kappa}()},
 \code{\link{precision}()},
 \code{\link{specificity}()},
 \code{\link{zerooneloss}()}

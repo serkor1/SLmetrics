@@ -38,6 +38,7 @@ if \eqn{\beta = 1} then it corresponds to the traditional F1 score.
 Other classification: 
 \code{\link{accuracy}()},
 \code{\link{cmatrix}()},
+\code{\link{kappa}()},
 \code{\link{precision}()},
 \code{\link{recall}()},
 \code{\link{specificity}()},

@@ -9,8 +9,8 @@ using namespace Rcpp;
 //' whuberloss(
 //'   actual,
 //'   predicted,
-//'   delta = 1,
-//'   w
+//'   w,
+//'   delta = 1
 //' )
 //'
 //' @param actual A <[numeric]>-vector of length N.
