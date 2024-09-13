@@ -2,9 +2,23 @@
 % Please edit documentation in R/RcppExports.R
 \name{specificity}
 \alias{specificity}
-\title{Specificity}
+\alias{tnr}
+\alias{selectivity}
+\title{Specificity (True Negative Rate)}
 \usage{
 specificity(
+  actual,
+  predicted,
+  aggregate = FALSE
+)
+
+tnr(
+  actual,
+  predicted,
+  aggregate = FALSE
+)
+
+selectivity(
   actual,
   predicted,
   aggregate = FALSE
@@ -86,8 +100,15 @@ mean(
 Other classification: 
 \code{\link{accuracy}()},
 \code{\link{cmatrix}()},
+\code{\link{dor}()},
 \code{\link{fbeta}()},
+\code{\link{fdr}()},
+\code{\link{fer}()},
+\code{\link{fpr}()},
 \code{\link{kappa}()},
+\code{\link{nlr}()},
+\code{\link{npv}()},
+\code{\link{plr}()},
 \code{\link{precision}()},
 \code{\link{recall}()},
 \code{\link{zerooneloss}()}

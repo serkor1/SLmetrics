@@ -2,26 +2,38 @@
 % Please edit documentation in R/RcppExports.R
 \name{huberloss}
 \alias{huberloss}
+\alias{whuberloss}
 \title{Huber Loss}
 \usage{
+# simple mean
 huberloss(
   actual,
   predicted,
   delta = 1
 )
+
+# weighted mean
+whuberloss(
+  actual,
+  predicted,
+  w,
+  delta = 1
+)
 }
 \arguments{
-\item{actual}{A <\link{numeric}>-vector of length N.}
+\item{actual}{A <\link{numeric}>-vector of length N. The observed (continuos) response variable.}
 
-\item{predicted}{A <\link{numeric}>-vector of length N.}
+\item{predicted}{A <\link{numeric}>-vector of length N. The estimated (continuos) response variable.}
 
-\item{delta}{A <\link{numeric}>-vector of length 1. 1 by default.}
+\item{delta}{A <\link{numeric}>-vector of length 1. 1 by default. The threshold value for switch between functions (see details).}
+
+\item{w}{A <\link{numeric}>-vector of \link{length} N. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
 }
 \value{
-A <\link{numeric}>-value of length 1.
+A <\link{numeric}>-value of \link{length} 1.
 }
 \description{
-Calculate the Huber Loss of two <\link{numeric}> vectors.
+Calculate the Huber Loss. \code{\link[=whuberloss]{whuberloss()}} calculates the arithmetic weighted average, and \code{\link[=huberloss]{huberloss()}} calculates the arithmetic average.
 }
 \details{
 The Huber Loss is calculated as,
@@ -79,9 +91,6 @@ Other regression:
 \code{\link{mse}()},
 \code{\link{rmse}()},
 \code{\link{rmsle}()},
-\code{\link{rsq}()},
-\code{\link{whuberloss}()},
-\code{\link{wmse}()},
-\code{\link{wrmse}()}
+\code{\link{rsq}()}
 }
 \concept{regression}

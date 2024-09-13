@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-//' R squared
+//' \eqn{R^2}
 //'
 //' @description
 //' Calculate the R squared of two <[numeric]> vectors.
@@ -12,12 +12,9 @@ using namespace Rcpp;
 //'   predicted,
 //'   k = 0
 //' )
-//'
-//' @param actual A <[numeric]>-vector of length N.
-//' @param predicted A <[numeric]>-vector of length N.
+//' @inherit huberloss
 //' @param k A <[numeric]>-vector of length 1. 0 by default. If k>0
 //' the function returns the adjusted R squared.
-//'
 //'
 //' @details
 //'

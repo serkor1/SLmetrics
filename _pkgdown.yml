@@ -12,6 +12,7 @@ home:
 
 template:
   bootstrap: 5
+  math-rendering: mathjax
   light-switch: true
   bslib:
     primary: "#0054AD"
@@ -20,12 +21,22 @@ template:
     danger: "#A6081A"
 
 reference:
-- title: Regression Metrics
+
+- title: Low-level supervised learning performance metrics
+  desc: |
+    The low-level functions are designed with speed and efficiency in mind and therefore have no defensive measures against user-error. If, for example, the passed
+    vectors contains missing values, your `R`-session will crash without any informative error-message.
+
+    > **Note:** All other possible error-sources like, for example, invalid divisions are handled internally by `c++` and `Rcpp`.
+
+- subtitle: Regression Metrics
   desc: >
-    The collection of evaluation metrics for regression problems
+    The collection of low-level evaluation metrics for supervised regression problems. All functions are grouped
+    together in simple and weighted means.
 - contents: has_concept('regression')
 
-- title: Classification Metrics
+- subtitle: Classification Metrics
   desc: >
-    The collection of evaluation metrics for classification problems
+    The collection of low-level evaluation metrics for supervised classification problems. All functions are grouped by
+    aliases and alternative terminology; the `recall()`- and `sensitivity()`-function calculates the same metric, for example.
 - contents: has_concept('classification')

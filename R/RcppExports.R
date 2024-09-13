@@ -60,6 +60,23 @@ cmatrix <- function(actual, predicted) {
     .Call(`_SLmetrics_cmatrix`, actual, predicted)
 }
 
+#' Diagnostic Odds Ratio (DOR)
+#' @usage
+#' # 3) `dor()`-function
+#' dor(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#'
+#' @inherit specificity
+#'
+#' @family classification
+#' @export
+dor <- function(actual, predicted, aggregate = FALSE) {
+    .Call(`_SLmetrics_dor`, actual, predicted, aggregate)
+}
+
 #' Generalized F Score
 #'
 #' @description
@@ -92,6 +109,86 @@ cmatrix <- function(actual, predicted) {
 #'
 fbeta <- function(actual, predicted, beta = 1.0, aggregate = FALSE) {
     .Call(`_SLmetrics_fbeta`, actual, predicted, beta, aggregate)
+}
+
+#' False Discovery Rate (FDR)
+#' @usage
+#' # 1) `fdr()`-function
+#' fdr(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#'
+#' @inherit specificity
+#'
+#' @details
+#'
+#' The False Discovery Rate (FDR). The metric is calculated for each class \eqn{k} as follows,
+#'
+#' \deqn{
+#'   \frac{\#FP_k}{\#TP_k+\#FP_k}
+#' }
+#'
+#' Where \eqn{\#TP_k} and \eqn{\#FP_k} is the number of true psotives and false positives, respectively, for each class \eqn{k}.
+#'
+#'
+#' @family classification
+#' @export
+fdr <- function(actual, predicted, aggregate = FALSE) {
+    .Call(`_SLmetrics_fdr`, actual, predicted, aggregate)
+}
+
+#' False Exclusion Rate (FER)
+#'
+#' Calculate the FER.
+#'
+#' @usage
+#' fer(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#'
+#' @inherit specificity
+#'
+#' @details
+#'
+#' The False Exclusion Rate is the False Omission Rate (FOR which is a reserved keyword). The metric is calculated for each class \eqn{k} as follows,
+#'
+#' \deqn{
+#'   \frac{\#FN_k}{\#FN_k+\#TN_k}
+#' }
+#'
+#' Where \eqn{\#FN_k} and \eqn{\#TN_k} is the number of false negatives and true negatives, respectively, for each class \eqn{k}.
+#'
+#' @family classification
+#' @export
+fer <- function(actual, predicted, aggregate = FALSE) {
+    .Call(`_SLmetrics_fer`, actual, predicted, aggregate)
+}
+
+#'  False Positive Rate (fpr)
+#' @usage
+#' # 3) `fpr()`-function
+#' fpr(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#'
+#' @inherit specificity
+#'
+#' @family classification
+#' @export
+fpr <- function(actual, predicted, aggregate = FALSE) {
+    .Call(`_SLmetrics_fpr`, actual, predicted, aggregate)
+}
+
+#' @rdname fpr
+#' @export
+fallout <- function(actual, predicted, aggregate = FALSE) {
+    .Call(`_SLmetrics_fallout`, actual, predicted, aggregate)
 }
 
 #' Cohens \eqn{\kappa}-statistic
@@ -154,12 +251,76 @@ kappa <- function(actual, predicted, beta = 0) {
     .Call(`_SLmetrics_kappa`, actual, predicted, beta)
 }
 
-#' Precision
+#' Positive Likelihood (LR+)
+#' @usage
+#' plr(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#'
+#' @inherit specificity
+#'
+#' @seealso
+#'
+#' The [nlr()]-function for the Negative Likehood Ratio (LR-)
+#'
+#' @family classification
+#' @export
+plr <- function(actual, predicted, aggregate = FALSE) {
+    .Call(`_SLmetrics_plr`, actual, predicted, aggregate)
+}
+
+#' Negative Likelihood Ratio (LR-)
+#'
+#'
+#' @usage
+#' nlr(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#'
+#' @inherit specificity
+#'
+#' @seealso
+#'
+#' The [plr()]-function for the Positive Likehood Ratio (LR+)
+#' @family classification
+#' @export
+nlr <- function(actual, predicted, aggregate = FALSE) {
+    .Call(`_SLmetrics_nlr`, actual, predicted, aggregate)
+}
+
+#' Negative Predictive Value (NPV)
+#'
+#' @description
+#' Calculate the sensitivity
+#'
+#' @usage
+#' npv(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#'
+#' @inheritParams recall
+#'
+#' @family classification
+#'
+#' @export
+npv <- function(actual, predicted, aggregate = FALSE) {
+    .Call(`_SLmetrics_npv`, actual, predicted, aggregate)
+}
+
+#' Precision (Positive Predictive Value)
+#'
 #'
 #' @description
 #' Calculate the Precision
 #'
 #' @usage
+#' # 1) `precision()`-function
 #' precision(
 #'   actual,
 #'   predicted,
@@ -182,6 +343,9 @@ kappa <- function(actual, predicted, beta = 0) {
 #' Where \eqn{TP} is the number of True Positives, and \eqn{FP} is the number
 #' of False Positives.
 #'
+#'
+#' @example man/examples/scr_precision.R
+#'
 #' @returns
 #' A named <[numeric]> vector of length k
 #'
@@ -193,16 +357,52 @@ precision <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_precision`, actual, predicted, aggregate)
 }
 
-#' Recall
+#' @rdname precision
+#'
+#'
+#' @usage
+#' # 2) `ppv()`-function
+#' ppv(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#'
+ppv <- function(actual, predicted, aggregate = FALSE) {
+    .Call(`_SLmetrics_ppv`, actual, predicted, aggregate)
+}
+
+#' Recall (Sensitivity)
 #'
 #' @description
-#' Calculate the Recall
+#' Calculate the sensitivity
 #'
-#' @inheritParams cmatrix
+#' @usage
+#'  # 1) `recall()`-function
+#' recall(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#' @inheritParams accuracy
 #' @param aggregate A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] it returns the
 #' micro average across all k-classes
 #'
-#' @example man/examples/scr_recall.R
+#'
+#' @details
+#'
+#' The sensitivity is calculated as,
+#'
+#' \deqn{
+#'   \frac{TP}{TP + FN}
+#' }
+#'
+#' Where \eqn{TP} is the number of True Positives, and \eqn{FP} is the number
+#' of False Positives.
+#'
+#' @returns
+#' A named <[numeric]> vector of length k
+#'
 #'
 #' @family classification
 #'
@@ -211,7 +411,20 @@ recall <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_recall`, actual, predicted, aggregate)
 }
 
-#' Specificity
+#' @rdname recall
+#' @usage
+#' # 2) `sensitivity()`-function
+#' sensitivity(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#' @export
+sensitivity <- function(actual, predicted, aggregate = FALSE) {
+    .Call(`_SLmetrics_sensitivity`, actual, predicted, aggregate)
+}
+
+#' Specificity (True Negative Rate)
 #'
 #' @description
 #' Calculate the specificity
@@ -239,6 +452,32 @@ specificity <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_specificity`, actual, predicted, aggregate)
 }
 
+#' @rdname specificity
+#'
+#' @usage
+#' tnr(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#' @export
+tnr <- function(actual, predicted, aggregate = FALSE) {
+    .Call(`_SLmetrics_tnr`, actual, predicted, aggregate)
+}
+
+#' @rdname specificity
+#'
+#' @usage
+#' selectivity(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#' @export
+selectivity <- function(actual, predicted, aggregate = FALSE) {
+    .Call(`_SLmetrics_selectivity`, actual, predicted, aggregate)
+}
+
 #' Zero One Loss
 #'
 #' @param actual placeholder
@@ -256,18 +495,20 @@ zerooneloss <- function(actual, predicted) {
 #' Huber Loss
 #'
 #' @description
-#' Calculate the Huber Loss of two <[numeric]> vectors.
+#'
+#' Calculate the Huber Loss. [whuberloss()] calculates the arithmetic weighted average, and [huberloss()] calculates the arithmetic average.
 #'
 #' @usage
+#' # simple mean
 #' huberloss(
 #'   actual,
 #'   predicted,
 #'   delta = 1
 #' )
 #'
-#' @param actual A <[numeric]>-vector of length N.
-#' @param predicted A <[numeric]>-vector of length N.
-#' @param delta A <[numeric]>-vector of length 1. 1 by default.
+#' @param actual A <[numeric]>-vector of length N. The observed (continuos) response variable.
+#' @param predicted A <[numeric]>-vector of length N. The estimated (continuos) response variable.
+#' @param delta A <[numeric]>-vector of length 1. 1 by default. The threshold value for switch between functions (see details).
 #'
 #' @details
 #'
@@ -288,20 +529,42 @@ zerooneloss <- function(actual, predicted) {
 #'
 #'
 #' @family regression
-#' @returns A <[numeric]>-value of length 1.
+#'
+#' @returns A <[numeric]>-value of [length] 1.
+#'
 #' @export
 huberloss <- function(actual, predicted, delta = 1) {
     .Call(`_SLmetrics_huberloss`, actual, predicted, delta)
 }
 
+#' @rdname huberloss
+#' @usage
+#' # weighted mean
+#' whuberloss(
+#'   actual,
+#'   predicted,
+#'   w,
+#'   delta = 1
+#' )
+#' @param w A <[numeric]>-vector of [length] N. The weight assigned to each observation in the data. See [stats::weighted.mean()] for more details.
+#' @export
+whuberloss <- function(actual, predicted, w, delta = 1) {
+    .Call(`_SLmetrics_whuberloss`, actual, predicted, w, delta)
+}
+
 #' Mean Absolute Error (MAE)
 #'
-#' Calculate the MAE of two <[numeric]>-vectors
+#' Calculate the MAE using the [mae()]-function for the (arithmetic) simple mean, or [wmae()]-function for the (arithmetic) weighted mean.
 #'
-#' @param actual A <[numeric]>-vector of length N.
-#' @param predicted A <[numeric]>-vector of length N.
+#' @usage
+#' # MAE (Simple Mean)
+#' mae(
+#'   actual,
+#'   predicted
+#' )
 #'
-#' @returns A <[numeric]>-value of length 1.
+#'
+#' @inherit huberloss
 #'
 #' @family regression
 #'
@@ -310,14 +573,32 @@ mae <- function(actual, predicted) {
     .Call(`_SLmetrics_mae`, actual, predicted)
 }
 
-#' Mean Square Error (MSE)
+#' @rdname mae
 #'
-#' Calculate the MSE of two <[numeric]>-vectors
+#' @usage
+#' # MAE (Weighted Mean)
+#' wmae(
+#'   actual,
+#'   predicted,
+#'   w
+#' )
+#' @export
+wmae <- function(actual, predicted, w) {
+    .Call(`_SLmetrics_wmae`, actual, predicted, w)
+}
+
+#' Mean Squared Error (MSE)
 #'
-#' @param actual A <[numeric]>-vector of length N.
-#' @param predicted A <[numeric]>-vector of length N.
+#' Calculate the MSE using the [mse()]-function for the (arithmetic) simple mean, or [wmse()]-function for the (arithmetic) weighted mean.
 #'
-#' @returns A <[numeric]>-value of length 1.
+#' @usage
+#' # simple mean
+#' mse(
+#'   actual,
+#'   predicted
+#' )
+#'
+#' @inherit huberloss
 #'
 #' @family regression
 #'
@@ -326,14 +607,32 @@ mse <- function(actual, predicted) {
     .Call(`_SLmetrics_mse`, actual, predicted)
 }
 
-#' Root Mean Square Error (RMSE)
+#' @rdname mse
 #'
-#' Calculate the RMSE of two <[numeric]>-vectors
+#' @usage
+#' # weighted mean
+#' wmse(
+#'   actual,
+#'   predicted,
+#'   w
+#' )
+#' @export
+wmse <- function(actual, predicted, w) {
+    .Call(`_SLmetrics_wmse`, actual, predicted, w)
+}
+
+#' Root Mean Squared Error (RMSE)
 #'
-#' @param actual A <[numeric]>-vector of length N.
-#' @param predicted A <[numeric]>-vector of length N.
+#' Calculate the RMSE using the [rmse()]-function for the (arithmetic) simple mean, or [wrmse()]-function for the (arithmetic) weighted mean.
 #'
-#' @returns A <[numeric]>-value of length 1.
+#' @usage
+#' # simple RMSE
+#' rmse(
+#'   actual,
+#'   predicted
+#' )
+#'
+#' @inherit huberloss
 #'
 #' @family regression
 #'
@@ -342,14 +641,32 @@ rmse <- function(actual, predicted) {
     .Call(`_SLmetrics_rmse`, actual, predicted)
 }
 
-#' Root Mean Square Logarithmic Error (RMSLE)
+#' @rdname rmse
 #'
-#' Calculate the RMSLE of two <[numeric]>-vectors
+#' @usage
+#' # weighted RMSE
+#' wrmse(
+#'   actual,
+#'   predicted,
+#'   w
+#' )
+#' @export
+wrmse <- function(actual, predicted, w) {
+    .Call(`_SLmetrics_wrmse`, actual, predicted, w)
+}
+
+#' Root Mean Squared Logarithmic Error (RMSLE)
 #'
-#' @param actual A <[numeric]>-vector of length N.
-#' @param predicted A <[numeric]>-vector of length N.
+#' Calculate the RMSLE using the [rmsle()]-function for the (arithmetic) simple mean, or [wrmsle()]-function for the (arithmetic) weighted mean.
 #'
-#' @returns A <[numeric]>-value of length 1.
+#' @usage
+#' # simple RMSLE
+#' rmsle(
+#'   actual,
+#'   predicted
+#' )
+#'
+#' @inherit huberloss
 #'
 #' @family regression
 #'
@@ -358,7 +675,22 @@ rmsle <- function(actual, predicted) {
     .Call(`_SLmetrics_rmsle`, actual, predicted)
 }
 
-#' R squared
+#' @rdname rmsle
+#'
+#' @usage
+#' # weighted RMSLE
+#' wrmsle(
+#'   actual,
+#'   predicted,
+#'   w
+#' )
+#'
+#' @export
+wrmsle <- function(actual, predicted, w) {
+    .Call(`_SLmetrics_wrmsle`, actual, predicted, w)
+}
+
+#' \eqn{R^2}
 #'
 #' @description
 #' Calculate the R squared of two <[numeric]> vectors.
@@ -369,12 +701,9 @@ rmsle <- function(actual, predicted) {
 #'   predicted,
 #'   k = 0
 #' )
-#'
-#' @param actual A <[numeric]>-vector of length N.
-#' @param predicted A <[numeric]>-vector of length N.
+#' @inherit huberloss
 #' @param k A <[numeric]>-vector of length 1. 0 by default. If k>0
 #' the function returns the adjusted R squared.
-#'
 #'
 #' @details
 #'
@@ -389,82 +718,5 @@ rmsle <- function(actual, predicted) {
 #' @returns A <[numeric]>-value of length 1.
 rsq <- function(actual, predicted, k = 0) {
     .Call(`_SLmetrics_rsq`, actual, predicted, k)
-}
-
-#' Weighted Huber Loss
-#'
-#' @description
-#' Calculate the Weighted Huber Loss of two <[numeric]> vectors.
-#'
-#' @usage
-#' whuberloss(
-#'   actual,
-#'   predicted,
-#'   w,
-#'   delta = 1
-#' )
-#'
-#' @param actual A <[numeric]>-vector of length N.
-#' @param predicted A <[numeric]>-vector of length N.
-#' @param delta A <[numeric]>-vector of length 1. 1 by default.
-#' @param w An optional  <[numeric]>-vector of [length] n. [NULL] by default.
-#'
-#' @details
-#'
-#' The Huber Loss is calculated as,
-#'
-#' \deqn{
-#'  \frac{1}{2} (y_i - \hat{y}_i)^2 ~for~ |y_i - \hat{y}_i| \leq \delta
-#' }
-#'
-#' \deqn{
-#'   \delta |y_i-\hat{y}_i|-\frac{1}{2} \delta^2 ~for~ |y_i - \hat{y}_i| > \delta
-#' }
-#'
-#' for each \eqn{i},
-#'
-#'
-#' @example man/examples/scr_huberloss.R
-#'
-#'
-#' @family regression
-#' @returns A <[numeric]>-value of length 1.
-#' @export
-whuberloss <- function(actual, predicted, w, delta = 1) {
-    .Call(`_SLmetrics_whuberloss`, actual, predicted, w, delta)
-}
-
-#' Weighted Mean Square Error (WMSE)
-#'
-#' Calculate the weighted MSE of two <[numeric]>-vectors
-#'
-#' @param actual A <[numeric]>-vector of length N.
-#' @param predicted A <[numeric]>-vector of length N.
-#' @param w A <[numeric]>-vector of length N with sample weights.
-#'
-#' @returns A <[numeric]>-value of length 1.
-#'
-#' @family regression
-#'
-#' @export
-wmse <- function(actual, predicted, w) {
-    .Call(`_SLmetrics_wmse`, actual, predicted, w)
-}
-
-#' Weighted Root Mean Square Error (WRMSE)
-#'
-#' Calculate the weighted RMSE of two <[numeric]>-vectors
-#'
-#' @param actual A <[numeric]>-vector of length N.
-#' @param predicted A <[numeric]>-vector of length N.
-#' @param w A <[numeric]>-vector of length N with sample weights.
-#'
-#' @returns A <[numeric]>-value of length 1.
-#'
-#' @family regression
-#'
-#' @export
-wrmse <- function(actual, predicted, w) {
-    .Call(`_SLmetrics_wrmse`, actual, predicted, w)
 }
 

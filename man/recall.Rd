@@ -2,9 +2,22 @@
 % Please edit documentation in R/RcppExports.R
 \name{recall}
 \alias{recall}
-\title{Recall}
+\alias{sensitivity}
+\title{Recall (Sensitivity)}
 \usage{
-recall(actual, predicted, aggregate = FALSE)
+# 1) `recall()`-function
+recall(
+  actual,
+  predicted,
+  aggregate = FALSE
+)
+
+# 2) `sensitivity()`-function
+sensitivity(
+  actual,
+  predicted,
+  aggregate = FALSE
+)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of length n, and k levels.}
@@ -14,73 +27,35 @@ recall(actual, predicted, aggregate = FALSE)
 \item{aggregate}{A <\link{logical}>-value of \link{length} 1. \link{FALSE} by default. If \link{TRUE} it returns the
 micro average across all k-classes}
 }
-\description{
-Calculate the Recall
+\value{
+A named <\link{numeric}> vector of length k
 }
-\examples{
-# 1) assume that actual
-# and predicted are class labels
-# from some model
-actual <- sample(
-  x = letters[1:3],
-  size = 100,
-  replace = TRUE,
-  prob = c(0.2,0.2,0.6)
-)
+\description{
+Calculate the sensitivity
+}
+\details{
+The sensitivity is calculated as,
 
-predicted <- sample(
-  x = letters[1:3],
-  size = 100,
-  replace = TRUE,
-  prob = c(0.2,0.2,0.6)
-)
+\deqn{
+  \frac{TP}{TP + FN}
+}
 
-# 1.1) convert to factor
-# variable
-actual <- factor(
-  x = actual,
-  levels = letters[1:3]
-)
-
-predicted <- factor(
-  x = predicted,
-  levels = letters[1:3]
-)
-
-
-# 2) evaluate the
-# performance of all classes
-recall(
-  actual    = actual,
-  predicted = predicted
-)
-
-# 3) evaluate the
-# overall performance
-# with micro averaging
-recall(
-  actual    = actual,
-  predicted = predicted,
-  aggregate = TRUE
-)
-
-# 4) evaluate the
-# overall performance
-# with macro averaging
-mean(
-  recall(
-    actual    = actual,
-    predicted = predicted,
-    aggregate = FALSE
-  )
-)
+Where \eqn{TP} is the number of True Positives, and \eqn{FP} is the number
+of False Positives.
 }
 \seealso{
 Other classification: 
 \code{\link{accuracy}()},
 \code{\link{cmatrix}()},
+\code{\link{dor}()},
 \code{\link{fbeta}()},
+\code{\link{fdr}()},
+\code{\link{fer}()},
+\code{\link{fpr}()},
 \code{\link{kappa}()},
+\code{\link{nlr}()},
+\code{\link{npv}()},
+\code{\link{plr}()},
 \code{\link{precision}()},
 \code{\link{specificity}()},
 \code{\link{zerooneloss}()}

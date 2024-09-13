@@ -3,16 +3,38 @@
 #include "helpers.h"
 using namespace Rcpp;
 
-//' Recall
+
+//' Recall (Sensitivity)
 //'
 //' @description
-//' Calculate the Recall
+//' Calculate the sensitivity
 //'
-//' @inheritParams cmatrix
+//' @usage
+//'  # 1) `recall()`-function
+//' recall(
+//'   actual,
+//'   predicted,
+//'   aggregate = FALSE
+//' )
+//' @inheritParams accuracy
 //' @param aggregate A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] it returns the
 //' micro average across all k-classes
 //'
-//' @example man/examples/scr_recall.R
+//'
+//' @details
+//'
+//' The sensitivity is calculated as,
+//'
+//' \deqn{
+//'   \frac{TP}{TP + FN}
+//' }
+//'
+//' Where \eqn{TP} is the number of True Positives, and \eqn{FP} is the number
+//' of False Positives.
+//'
+//' @returns
+//' A named <[numeric]> vector of length k
+//'
 //'
 //' @family classification
 //'

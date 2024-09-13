@@ -35,6 +35,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// dor
+NumericVector dor(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
+RcppExport SEXP _SLmetrics_dor(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
+    rcpp_result_gen = Rcpp::wrap(dor(actual, predicted, aggregate));
+    return rcpp_result_gen;
+END_RCPP
+}
 // fbeta
 NumericVector fbeta(const IntegerVector& actual, const IntegerVector& predicted, const double& beta, const bool& aggregate);
 RcppExport SEXP _SLmetrics_fbeta(SEXP actualSEXP, SEXP predictedSEXP, SEXP betaSEXP, SEXP aggregateSEXP) {
@@ -46,6 +59,58 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const double& >::type beta(betaSEXP);
     Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
     rcpp_result_gen = Rcpp::wrap(fbeta(actual, predicted, beta, aggregate));
+    return rcpp_result_gen;
+END_RCPP
+}
+// fdr
+NumericVector fdr(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
+RcppExport SEXP _SLmetrics_fdr(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
+    rcpp_result_gen = Rcpp::wrap(fdr(actual, predicted, aggregate));
+    return rcpp_result_gen;
+END_RCPP
+}
+// fer
+NumericVector fer(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
+RcppExport SEXP _SLmetrics_fer(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
+    rcpp_result_gen = Rcpp::wrap(fer(actual, predicted, aggregate));
+    return rcpp_result_gen;
+END_RCPP
+}
+// fpr
+NumericVector fpr(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
+RcppExport SEXP _SLmetrics_fpr(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
+    rcpp_result_gen = Rcpp::wrap(fpr(actual, predicted, aggregate));
+    return rcpp_result_gen;
+END_RCPP
+}
+// fallout
+NumericVector fallout(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
+RcppExport SEXP _SLmetrics_fallout(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
+    rcpp_result_gen = Rcpp::wrap(fallout(actual, predicted, aggregate));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -62,6 +127,45 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// plr
+NumericVector plr(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
+RcppExport SEXP _SLmetrics_plr(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
+    rcpp_result_gen = Rcpp::wrap(plr(actual, predicted, aggregate));
+    return rcpp_result_gen;
+END_RCPP
+}
+// nlr
+NumericVector nlr(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
+RcppExport SEXP _SLmetrics_nlr(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
+    rcpp_result_gen = Rcpp::wrap(nlr(actual, predicted, aggregate));
+    return rcpp_result_gen;
+END_RCPP
+}
+// npv
+NumericVector npv(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
+RcppExport SEXP _SLmetrics_npv(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
+    rcpp_result_gen = Rcpp::wrap(npv(actual, predicted, aggregate));
+    return rcpp_result_gen;
+END_RCPP
+}
 // precision
 NumericVector precision(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
 RcppExport SEXP _SLmetrics_precision(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
@@ -72,6 +176,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
     Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
     rcpp_result_gen = Rcpp::wrap(precision(actual, predicted, aggregate));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ppv
+NumericVector ppv(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
+RcppExport SEXP _SLmetrics_ppv(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
+    rcpp_result_gen = Rcpp::wrap(ppv(actual, predicted, aggregate));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -88,8 +205,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// sensitivity
+NumericVector sensitivity(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
+RcppExport SEXP _SLmetrics_sensitivity(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
+    rcpp_result_gen = Rcpp::wrap(sensitivity(actual, predicted, aggregate));
+    return rcpp_result_gen;
+END_RCPP
+}
 // specificity
-NumericVector specificity(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
+inline NumericVector specificity(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
 RcppExport SEXP _SLmetrics_specificity(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -98,6 +228,32 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
     Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
     rcpp_result_gen = Rcpp::wrap(specificity(actual, predicted, aggregate));
+    return rcpp_result_gen;
+END_RCPP
+}
+// tnr
+NumericVector tnr(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
+RcppExport SEXP _SLmetrics_tnr(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
+    rcpp_result_gen = Rcpp::wrap(tnr(actual, predicted, aggregate));
+    return rcpp_result_gen;
+END_RCPP
+}
+// selectivity
+NumericVector selectivity(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
+RcppExport SEXP _SLmetrics_selectivity(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
+    rcpp_result_gen = Rcpp::wrap(selectivity(actual, predicted, aggregate));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -126,6 +282,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// whuberloss
+double whuberloss(const NumericVector& actual, const NumericVector& predicted, const NumericVector& w, const double& delta);
+RcppExport SEXP _SLmetrics_whuberloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP deltaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const double& >::type delta(deltaSEXP);
+    rcpp_result_gen = Rcpp::wrap(whuberloss(actual, predicted, w, delta));
+    return rcpp_result_gen;
+END_RCPP
+}
 // mae
 double mae(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted);
 RcppExport SEXP _SLmetrics_mae(SEXP actualSEXP, SEXP predictedSEXP) {
@@ -138,6 +308,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// wmae
+double wmae(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w);
+RcppExport SEXP _SLmetrics_wmae(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(wmae(actual, predicted, w));
+    return rcpp_result_gen;
+END_RCPP
+}
 // mse
 double mse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted);
 RcppExport SEXP _SLmetrics_mse(SEXP actualSEXP, SEXP predictedSEXP) {
@@ -147,57 +330,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
     rcpp_result_gen = Rcpp::wrap(mse(actual, predicted));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rmse
-double rmse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted);
-RcppExport SEXP _SLmetrics_rmse(SEXP actualSEXP, SEXP predictedSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
-    rcpp_result_gen = Rcpp::wrap(rmse(actual, predicted));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rmsle
-double rmsle(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted);
-RcppExport SEXP _SLmetrics_rmsle(SEXP actualSEXP, SEXP predictedSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
-    rcpp_result_gen = Rcpp::wrap(rmsle(actual, predicted));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rsq
-double rsq(const NumericVector& actual, const NumericVector& predicted, const double k);
-RcppExport SEXP _SLmetrics_rsq(SEXP actualSEXP, SEXP predictedSEXP, SEXP kSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const double >::type k(kSEXP);
-    rcpp_result_gen = Rcpp::wrap(rsq(actual, predicted, k));
-    return rcpp_result_gen;
-END_RCPP
-}
-// whuberloss
-double whuberloss(const NumericVector& actual, const NumericVector& predicted, const NumericVector& w, const double& delta);
-RcppExport SEXP _SLmetrics_whuberloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP deltaSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type w(wSEXP);
-    Rcpp::traits::input_parameter< const double& >::type delta(deltaSEXP);
-    rcpp_result_gen = Rcpp::wrap(whuberloss(actual, predicted, w, delta));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -214,6 +346,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rmse
+double rmse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted);
+RcppExport SEXP _SLmetrics_rmse(SEXP actualSEXP, SEXP predictedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    rcpp_result_gen = Rcpp::wrap(rmse(actual, predicted));
+    return rcpp_result_gen;
+END_RCPP
+}
 // wrmse
 double wrmse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w);
 RcppExport SEXP _SLmetrics_wrmse(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
@@ -227,25 +371,77 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rmsle
+double rmsle(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted);
+RcppExport SEXP _SLmetrics_rmsle(SEXP actualSEXP, SEXP predictedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    rcpp_result_gen = Rcpp::wrap(rmsle(actual, predicted));
+    return rcpp_result_gen;
+END_RCPP
+}
+// wrmsle
+double wrmsle(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w);
+RcppExport SEXP _SLmetrics_wrmsle(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(wrmsle(actual, predicted, w));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rsq
+double rsq(const NumericVector& actual, const NumericVector& predicted, const double k);
+RcppExport SEXP _SLmetrics_rsq(SEXP actualSEXP, SEXP predictedSEXP, SEXP kSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const double >::type k(kSEXP);
+    rcpp_result_gen = Rcpp::wrap(rsq(actual, predicted, k));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_accuracy", (DL_FUNC) &_SLmetrics_accuracy, 2},
     {"_SLmetrics_cmatrix", (DL_FUNC) &_SLmetrics_cmatrix, 2},
+    {"_SLmetrics_dor", (DL_FUNC) &_SLmetrics_dor, 3},
     {"_SLmetrics_fbeta", (DL_FUNC) &_SLmetrics_fbeta, 4},
+    {"_SLmetrics_fdr", (DL_FUNC) &_SLmetrics_fdr, 3},
+    {"_SLmetrics_fer", (DL_FUNC) &_SLmetrics_fer, 3},
+    {"_SLmetrics_fpr", (DL_FUNC) &_SLmetrics_fpr, 3},
+    {"_SLmetrics_fallout", (DL_FUNC) &_SLmetrics_fallout, 3},
     {"_SLmetrics_kappa", (DL_FUNC) &_SLmetrics_kappa, 3},
+    {"_SLmetrics_plr", (DL_FUNC) &_SLmetrics_plr, 3},
+    {"_SLmetrics_nlr", (DL_FUNC) &_SLmetrics_nlr, 3},
+    {"_SLmetrics_npv", (DL_FUNC) &_SLmetrics_npv, 3},
     {"_SLmetrics_precision", (DL_FUNC) &_SLmetrics_precision, 3},
+    {"_SLmetrics_ppv", (DL_FUNC) &_SLmetrics_ppv, 3},
     {"_SLmetrics_recall", (DL_FUNC) &_SLmetrics_recall, 3},
+    {"_SLmetrics_sensitivity", (DL_FUNC) &_SLmetrics_sensitivity, 3},
     {"_SLmetrics_specificity", (DL_FUNC) &_SLmetrics_specificity, 3},
+    {"_SLmetrics_tnr", (DL_FUNC) &_SLmetrics_tnr, 3},
+    {"_SLmetrics_selectivity", (DL_FUNC) &_SLmetrics_selectivity, 3},
     {"_SLmetrics_zerooneloss", (DL_FUNC) &_SLmetrics_zerooneloss, 2},
     {"_SLmetrics_huberloss", (DL_FUNC) &_SLmetrics_huberloss, 3},
-    {"_SLmetrics_mae", (DL_FUNC) &_SLmetrics_mae, 2},
-    {"_SLmetrics_mse", (DL_FUNC) &_SLmetrics_mse, 2},
-    {"_SLmetrics_rmse", (DL_FUNC) &_SLmetrics_rmse, 2},
-    {"_SLmetrics_rmsle", (DL_FUNC) &_SLmetrics_rmsle, 2},
-    {"_SLmetrics_rsq", (DL_FUNC) &_SLmetrics_rsq, 3},
     {"_SLmetrics_whuberloss", (DL_FUNC) &_SLmetrics_whuberloss, 4},
+    {"_SLmetrics_mae", (DL_FUNC) &_SLmetrics_mae, 2},
+    {"_SLmetrics_wmae", (DL_FUNC) &_SLmetrics_wmae, 3},
+    {"_SLmetrics_mse", (DL_FUNC) &_SLmetrics_mse, 2},
     {"_SLmetrics_wmse", (DL_FUNC) &_SLmetrics_wmse, 3},
+    {"_SLmetrics_rmse", (DL_FUNC) &_SLmetrics_rmse, 2},
     {"_SLmetrics_wrmse", (DL_FUNC) &_SLmetrics_wrmse, 3},
+    {"_SLmetrics_rmsle", (DL_FUNC) &_SLmetrics_rmsle, 2},
+    {"_SLmetrics_wrmsle", (DL_FUNC) &_SLmetrics_wrmsle, 3},
+    {"_SLmetrics_rsq", (DL_FUNC) &_SLmetrics_rsq, 3},
     {NULL, NULL, 0}
 };
 

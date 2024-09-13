@@ -2,20 +2,84 @@
 % Please edit documentation in R/RcppExports.R
 \name{rmse}
 \alias{rmse}
-\title{Root Mean Square Error (RMSE)}
+\alias{wrmse}
+\title{Root Mean Squared Error (RMSE)}
 \usage{
-rmse(actual, predicted)
+# simple RMSE
+rmse(
+  actual,
+  predicted
+)
+
+# weighted RMSE
+wrmse(
+  actual,
+  predicted,
+  w
+)
 }
 \arguments{
-\item{actual}{A <\link{numeric}>-vector of length N.}
+\item{actual}{A <\link{numeric}>-vector of length N. The observed (continuos) response variable.}
 
-\item{predicted}{A <\link{numeric}>-vector of length N.}
+\item{predicted}{A <\link{numeric}>-vector of length N. The estimated (continuos) response variable.}
+
+\item{w}{A <\link{numeric}>-vector of \link{length} N. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
 }
 \value{
-A <\link{numeric}>-value of length 1.
+A <\link{numeric}>-value of \link{length} 1.
 }
 \description{
-Calculate the RMSE of two <\link{numeric}>-vectors
+Calculate the RMSE using the \code{\link[=rmse]{rmse()}}-function for the (arithmetic) simple mean, or \code{\link[=wrmse]{wrmse()}}-function for the (arithmetic) weighted mean.
+}
+\details{
+The Huber Loss is calculated as,
+
+\deqn{
+ \frac{1}{2} (y_i - \hat{y}_i)^2 ~for~ |y_i - \hat{y}_i| \leq \delta
+}
+
+\deqn{
+  \delta |y_i-\hat{y}_i|-\frac{1}{2} \delta^2 ~for~ |y_i - \hat{y}_i| > \delta
+}
+
+for each \eqn{i},
+}
+\examples{
+# 1) assume that actual
+# and predicted are values
+# from a model
+actual <- rnorm(
+  n = 1e3,
+  mean = 10
+)
+
+predicted <- actual + rnorm(
+  n = 1e3,
+  mean = 10
+)
+
+# 2) calculate the huber loss
+# with delta 0.5
+huberloss(
+  actual = actual,
+  predicted = predicted,
+  delta = 0.5
+)
+
+# 3) caclulate weighted
+# huber loss
+w <- rbeta(
+  n = 1e3,
+  shape1 = 10,
+  shape2 = 2
+)
+
+whuberloss(
+  actual = actual,
+  predicted = predicted,
+  delta = 0.5,
+  w     = w
+)
 }
 \seealso{
 Other regression: 
@@ -23,9 +87,6 @@ Other regression:
 \code{\link{mae}()},
 \code{\link{mse}()},
 \code{\link{rmsle}()},
-\code{\link{rsq}()},
-\code{\link{whuberloss}()},
-\code{\link{wmse}()},
-\code{\link{wrmse}()}
+\code{\link{rsq}()}
 }
 \concept{regression}

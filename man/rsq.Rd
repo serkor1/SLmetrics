@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{rsq}
 \alias{rsq}
-\title{R squared}
+\title{\eqn{R^2}}
 \usage{
 rsq(
   actual,
@@ -11,9 +11,9 @@ rsq(
 )
 }
 \arguments{
-\item{actual}{A <\link{numeric}>-vector of length N.}
+\item{actual}{A <\link{numeric}>-vector of length N. The observed (continuos) response variable.}
 
-\item{predicted}{A <\link{numeric}>-vector of length N.}
+\item{predicted}{A <\link{numeric}>-vector of length N. The estimated (continuos) response variable.}
 
 \item{k}{A <\link{numeric}>-vector of length 1. 0 by default. If k>0
 the function returns the adjusted R squared.}
@@ -31,15 +31,49 @@ The \eqn{R^2} is calculated as,
   1 - \frac{SSE}{SST} \frac{n-1}{n - (k + 1)}
 }
 }
+\examples{
+# 1) assume that actual
+# and predicted are values
+# from a model
+actual <- rnorm(
+  n = 1e3,
+  mean = 10
+)
+
+predicted <- actual + rnorm(
+  n = 1e3,
+  mean = 10
+)
+
+# 2) calculate the huber loss
+# with delta 0.5
+huberloss(
+  actual = actual,
+  predicted = predicted,
+  delta = 0.5
+)
+
+# 3) caclulate weighted
+# huber loss
+w <- rbeta(
+  n = 1e3,
+  shape1 = 10,
+  shape2 = 2
+)
+
+whuberloss(
+  actual = actual,
+  predicted = predicted,
+  delta = 0.5,
+  w     = w
+)
+}
 \seealso{
 Other regression: 
 \code{\link{huberloss}()},
 \code{\link{mae}()},
 \code{\link{mse}()},
 \code{\link{rmse}()},
-\code{\link{rmsle}()},
-\code{\link{whuberloss}()},
-\code{\link{wmse}()},
-\code{\link{wrmse}()}
+\code{\link{rmsle}()}
 }
 \concept{regression}

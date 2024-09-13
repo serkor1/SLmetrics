@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# {SLmetrics}: Machine learning performance evaluation on steroids
+# {SLmetrics}: Machine learning performance evaluation on steroids <img src="man/figures/logo.png" align="right" height="150" alt="" />
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/SLmetrics)](https://CRAN.R-project.org/package=SLmetrics)

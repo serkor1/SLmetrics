@@ -3,7 +3,7 @@
 #include "helpers.h"
 using namespace Rcpp;
 
-//' Specificity
+//' Specificity (True Negative Rate)
 //'
 //' @description
 //' Calculate the specificity
@@ -28,7 +28,7 @@ using namespace Rcpp;
 //'
 //' @export
 // [[Rcpp::export]]
-NumericVector specificity(
+inline NumericVector specificity(
    const IntegerVector& actual,
    const IntegerVector& predicted,
    const bool& aggregate = false) {
@@ -90,5 +90,43 @@ NumericVector specificity(
  }
 
  return output;
+
+}
+
+//' @rdname specificity
+//'
+//' @usage
+//' tnr(
+//'   actual,
+//'   predicted,
+//'   aggregate = FALSE
+//' )
+//' @export
+// [[Rcpp::export]]
+NumericVector tnr(
+      const IntegerVector& actual,
+      const IntegerVector& predicted,
+      const bool& aggregate = false) {
+
+   return specificity(actual, predicted, aggregate);
+
+}
+
+//' @rdname specificity
+//'
+//' @usage
+//' selectivity(
+//'   actual,
+//'   predicted,
+//'   aggregate = FALSE
+//' )
+//' @export
+// [[Rcpp::export]]
+NumericVector selectivity(
+     const IntegerVector& actual,
+     const IntegerVector& predicted,
+     const bool& aggregate = false) {
+
+  return specificity(actual, predicted, aggregate);
 
 }
