@@ -925,6 +925,66 @@ wmae <- function(actual, predicted, w) {
     .Call(`_SLmetrics_wmae`, actual, predicted, w)
 }
 
+#' Mean Absolute Percentage Error (MAPE)
+#'
+#' Calculate the MAPE using the [mape()]-function for the simple mean, or [wmape()]-function for the weighted mean.
+#'
+#' @usage
+#' # simple MAPE
+#' mape(
+#'   actual,
+#'   predicted
+#' )
+#'
+#' @export
+mape <- function(actual, predicted) {
+    .Call(`_SLmetrics_mape`, actual, predicted)
+}
+
+#' @rdname mape
+#'
+#' @usage
+#' # weighted MAPE
+#' wmape(
+#'   actual,
+#'   predicted,
+#'   w
+#' )
+#' @export
+wmape <- function(actual, predicted, w) {
+    .Call(`_SLmetrics_wmape`, actual, predicted, w)
+}
+
+#' Mean Percentage Error (MPE)
+#'
+#' Calculate the MPE using the [mpe()]-function for the simple mean, or [wmpe()]-function for the weighted mean.
+#'
+#' @usage
+#' # simple MPE
+#' mpe(
+#'   actual,
+#'   predicted
+#' )
+#'
+#' @export
+mpe <- function(actual, predicted) {
+    .Call(`_SLmetrics_mpe`, actual, predicted)
+}
+
+#' @rdname mpe
+#'
+#' @usage
+#' # weighted MPE
+#' wmpe(
+#'   actual,
+#'   predicted,
+#'   w
+#' )
+#' @export
+wmpe <- function(actual, predicted, w) {
+    .Call(`_SLmetrics_wmpe`, actual, predicted, w)
+}
+
 #' Mean Squared Error (MSE)
 #'
 #' Calculate the MSE using the [mse()]-function for the (arithmetic) simple mean, or [wmse()]-function for the (arithmetic) weighted mean.
@@ -1056,5 +1116,35 @@ wrmsle <- function(actual, predicted, w) {
 #' @returns A <[numeric]>-value of length 1.
 rsq <- function(actual, predicted, k = 0) {
     .Call(`_SLmetrics_rsq`, actual, predicted, k)
+}
+
+#' Symmetric Mean Absolute Percentage Error (SMAPE)
+#'
+#' Calculate the SMAPE using the [smape()]-function for the simple mean, or [wsmape()]-function for the weighted mean.
+#'
+#' @usage
+#' # simple SMAPE
+#' smape(
+#'   actual,
+#'   predicted
+#' )
+#'
+#' @export
+smape <- function(actual, predicted) {
+    .Call(`_SLmetrics_smape`, actual, predicted)
+}
+
+#' @rdname smape
+#'
+#' @usage
+#' # weighted SMAPE
+#' wsmape(
+#'   actual,
+#'   predicted,
+#'   w
+#' )
+#' @export
+wsmape <- function(actual, predicted, w) {
+    .Call(`_SLmetrics_wsmape`, actual, predicted, w)
 }
 
