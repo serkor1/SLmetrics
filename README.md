@@ -7,11 +7,12 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/SLmetrics)](https://CRAN.R-project.org/package=SLmetrics)
-[![R-CMD-check](https://github.com/serkor1/MLmetrics/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/serkor1/MLmetrics/actions/workflows/R-CMD-check.yaml)
-[![Codecov test
-coverage](https://codecov.io/gh/serkor1/MLmetrics/graph/badge.svg)](https://app.codecov.io/gh/serkor1/MLmetrics)
+[![CRAN RStudio mirror
+downloads](https://cranlogs.r-pkg.org/badges/last-month/SLmetrics?color=blue)](https://r-pkg.org/pkg/SLmetrics)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/serkor1/SLmetrics/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/serkor1/SLmetrics/actions/workflows/R-CMD-check.yaml)
+[![codecov](https://codecov.io/gh/serkor1/SLmetrics/branch/development/graph/badge.svg?token=X2osJDSRlN)](https://codecov.io/gh/serkor1/SLmetrics)
 <!-- badges: end -->
 
 {SLmetrics} is a collection of (lightning fast) performance evaluation
@@ -151,7 +152,7 @@ RMSE(
 ``` r
 ## install from github
 devtools::install_github(
-  repo = 'https://github.com/serkor1/MLmetrics',
+  repo = 'https://github.com/serkor1/SLmetrics',
   ref  = 'main'
 )
 ```
@@ -161,7 +162,7 @@ devtools::install_github(
 ``` r
 ## install from github
 devtools::install_github(
-  repo = 'https://github.com/serkor1/MLmetrics',
+  repo = 'https://github.com/serkor1/SLmetrics',
   ref  = 'development'
 )
 ```

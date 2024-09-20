@@ -20,9 +20,10 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/SLmetrics)](https://CRAN.R-project.org/package=SLmetrics)
-[![R-CMD-check](https://github.com/serkor1/MLmetrics/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/serkor1/MLmetrics/actions/workflows/R-CMD-check.yaml)
-[![Codecov test coverage](https://codecov.io/gh/serkor1/MLmetrics/graph/badge.svg)](https://app.codecov.io/gh/serkor1/MLmetrics)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/last-month/SLmetrics?color=blue)](https://r-pkg.org/pkg/SLmetrics)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/serkor1/SLmetrics/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/serkor1/SLmetrics/actions/workflows/R-CMD-check.yaml)
+[![codecov](https://codecov.io/gh/serkor1/SLmetrics/branch/development/graph/badge.svg?token=X2osJDSRlN)](https://codecov.io/gh/serkor1/SLmetrics)
 <!-- badges: end -->
 
 {SLmetrics} is a collection of (lightning fast) performance evaluation metrics for regression and classification models written in `C++` and [{Rcpp}](https://github.com/RcppCore/Rcpp); it's like using a supercharged [{yardstick}](https://github.com/tidymodels/yardstick) to measure model performance, without the risk of soft to super-hard deprecations. {SLmetrics} provides (almost) the same array of metrics as in [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) but without using [{reticulate}](https://github.com/rstudio/reticulate) and the whole compile, run and debug cycle in python.
@@ -36,9 +37,6 @@ Firstly, {SLmetrics} is *fast*. One, obviously, can't build an R-package on `C++
 Secondly, {SLmetrics} is *low level* and free of any *{pkg}verse*-regimes; this provides the freedom to develop it further as a part of your own {pkg}, or use it in any tidy, or untidy, pipeline you would want to.
 
 Thirdly, {SLmetrics} has a *larger* repertoire of supervised machine learning metrics; all of which has been battle tested with [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) against [{yardstick}](https://github.com/tidymodels/yardstick), [{mlr3measures}](https://github.com/tidymodels/yardstick) and [{MLmetrics}](https://github.com/yanyachen/MLmetrics).
-
-
-
 
 ## :information_source: Basic usage
 
@@ -130,16 +128,16 @@ RMSE(
 ```{r stable version guide, eval = FALSE, echo=TRUE}
 ## install from github
 devtools::install_github(
-  repo = 'https://github.com/serkor1/MLmetrics',
+  repo = 'https://github.com/serkor1/SLmetrics',
   ref  = 'main'
 )
 ```
 
 ### :hammer_and_wrench: Development version
-```{r development version guide, eval = FALSE,echo=TRUE}
+```{r development version guide, eval = FALSE, echo=TRUE}
 ## install from github
 devtools::install_github(
-  repo = 'https://github.com/serkor1/MLmetrics',
+  repo = 'https://github.com/serkor1/SLmetrics',
   ref  = 'development'
 )
 ```
