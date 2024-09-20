@@ -10,15 +10,18 @@ cmatrix(
 )
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of length n, and k levels.}
+\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A <\link{factor}>-vector of length n.}
+\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 }
 \value{
-A named k x k <\link{matrix}>
+A named \eqn{k} x \eqn{k} <\link{matrix}>
 }
 \description{
-Placeholder
+The \code{\link[=cmatrix]{cmatrix()}}-function uses cross-classifying factors to build
+a confusion matrix of the counts at each combination of the \link{factor} levels.
+Each row of the \link{matrix} represents the actual \link{factor} levels, while each
+column represents the predicted \link{factor} levels.
 }
 \details{
 If the function is correctly implemented the resulting
@@ -73,8 +76,11 @@ Other classification:
 \code{\link{fbeta}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
+\code{\link{fmi}()},
 \code{\link{fpr}()},
+\code{\link{jaccard}()},
 \code{\link{kappa}()},
+\code{\link{mcc}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
 \code{\link{plr}()},

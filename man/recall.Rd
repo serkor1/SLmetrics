@@ -2,6 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{recall}
 \alias{recall}
+\alias{tpr}
 \alias{sensitivity}
 \title{Recall (Sensitivity)}
 \usage{
@@ -12,6 +13,12 @@ recall(
   aggregate = FALSE
 )
 
+tpr(
+  actual,
+  predicted,
+  aggregate
+)
+
 # 2) `sensitivity()`-function
 sensitivity(
   actual,
@@ -20,28 +27,93 @@ sensitivity(
 )
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of length n, and k levels.}
+\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A <\link{factor}>-vector of length n.}
+\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{aggregate}{A <\link{logical}>-value of \link{length} 1. \link{FALSE} by default. If \link{TRUE} it returns the
-micro average across all k-classes}
+\item{aggregate}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} it returns the
+micro average across all \eqn{k} classes}
 }
 \value{
-A named <\link{numeric}> vector of length k
+If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vector of \link{length} k
+
+If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 Calculate the sensitivity
 }
 \details{
-The sensitivity is calculated as,
+The Sensitivity (SEN), also known as Recall or True Positive Rate (TPR). The metric is calculated for each class \eqn{k} as follows,
 
 \deqn{
-  \frac{TP}{TP + FN}
+  \frac{\#TP_k}{\#TP_k + \#FN_k}
 }
 
-Where \eqn{TP} is the number of True Positives, and \eqn{FP} is the number
-of False Positives.
+Where \eqn{\#TP_k} and \eqn{\#FN_k} is the number of true positives and false negatives, respectively, for each class \eqn{k}.
+
+When \code{aggregate = TRUE} the \code{micro}-average is calculated,
+
+\deqn{
+  \frac{\sum_{k=1}^k \#TP_k}{\sum_{k=1}^k \#TP_k + \sum_{k=1}^k \#FN_k}
+}
+}
+\examples{
+# 1) assume that actual
+# and predicted are class labels
+# from some model
+actual <- sample(
+  x = letters[1:3],
+  size = 100,
+  replace = TRUE,
+  prob = c(0.2,0.2,0.6)
+)
+
+predicted <- sample(
+  x = letters[1:3],
+  size = 100,
+  replace = TRUE,
+  prob = c(0.2,0.2,0.6)
+)
+
+# 1.1) convert to factor
+# variable
+actual <- factor(
+  x = actual,
+  levels = letters[1:3]
+)
+
+predicted <- factor(
+  x = predicted,
+  levels = letters[1:3]
+)
+
+
+# 2) evaluate the
+# performance of all classes
+specificity(
+  actual    = actual,
+  predicted = predicted
+)
+
+# 3) evaluate the
+# overall performance
+# with micro averaging
+specificity(
+  actual    = actual,
+  predicted = predicted,
+  aggregate = TRUE
+)
+
+# 4) evaluate the
+# overall performance
+# with macro averaging
+mean(
+  specificity(
+    actual    = actual,
+    predicted = predicted,
+    aggregate = FALSE
+  )
+)
 }
 \seealso{
 Other classification: 
@@ -51,8 +123,11 @@ Other classification:
 \code{\link{fbeta}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
+\code{\link{fmi}()},
 \code{\link{fpr}()},
+\code{\link{jaccard}()},
 \code{\link{kappa}()},
+\code{\link{mcc}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
 \code{\link{plr}()},

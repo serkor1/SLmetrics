@@ -10,7 +10,12 @@
  *
  * R Studio crashes if the dimensions doesn't align with matrix-algebra! :-(
  */
+
+#include <RcppEigen.h>
 #include <cmath>
+#define EIGEN_USE_MKL_ALL
+EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
 
 
 inline Eigen::VectorXi TP(const Eigen::MatrixXi& matrix)

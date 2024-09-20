@@ -5,9 +5,11 @@ using namespace Rcpp;
 
 //' False Exclusion Rate (FER)
 //'
-//' Calculate the FER.
+//' The [fer()]-function calculates the False Omission Rate (FOR)
+//'
 //'
 //' @usage
+//' # false omission rate
 //' fer(
 //'   actual,
 //'   predicted,
@@ -18,13 +20,19 @@ using namespace Rcpp;
 //'
 //' @details
 //'
-//' The False Exclusion Rate is the False Omission Rate (FOR which is a reserved keyword). The metric is calculated for each class \eqn{k} as follows,
+//' The False Omission Rate (FOR) is calculated for each class \eqn{k} as follows,
 //'
 //' \deqn{
-//'   \frac{\#FN_k}{\#FN_k+\#TN_k}
+//'   \frac{\#FN_k}{\#FN_k + \#TN_k}
 //' }
 //'
-//' Where \eqn{\#FN_k} and \eqn{\#TN_k} is the number of false negatives and true negatives, respectively, for each class \eqn{k}.
+//' Where \eqn{\#FN_k} and \eqn{\#TN_k} are the number of false negatives and true negatives, respectively, for each class \eqn{k}.
+//'
+//' When `aggregate = TRUE`, the `micro`-average is calculated,
+//'
+//' \deqn{
+//'   \frac{\sum_{k=1}^k \#FN_k}{\sum_{k=1}^k \#FN_k + \sum_{k=1}^k \#TN_k}
+//' }
 //'
 //' @family classification
 //' @export

@@ -4,8 +4,12 @@
 using namespace Rcpp;
 
 //' False Discovery Rate (FDR)
+//'
+//' @description
+//' Placeholder
+//'
 //' @usage
-//' # 1) `fdr()`-function
+//' # false discovery rate;
 //' fdr(
 //'   actual,
 //'   predicted,
@@ -24,6 +28,11 @@ using namespace Rcpp;
 //'
 //' Where \eqn{\#TP_k} and \eqn{\#FP_k} is the number of true psotives and false positives, respectively, for each class \eqn{k}.
 //'
+//' When `aggregate = TRUE` the `micro`-average is calculated,
+//'
+//' \deqn{
+//'  \frac{\sum_{k=1}^k \#FP_k}{\sum_{k=1}^k \#TP_k + \sum_{k=1}^k \#FP_k}
+//' }
 //'
 //' @family classification
 //' @export

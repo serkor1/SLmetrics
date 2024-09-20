@@ -16,26 +16,24 @@ using namespace Rcpp;
 //'   predicted,
 //'   aggregate = FALSE
 //' )
-//' @inheritParams accuracy
-//' @param aggregate A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] it returns the
-//' micro average across all k-classes
 //'
+//' @inherit specificity
 //'
 //' @details
 //'
-//' The sensitivity is calculated as,
+//' The Sensitivity (SEN), also known as Recall or True Positive Rate (TPR). The metric is calculated for each class \eqn{k} as follows,
 //'
 //' \deqn{
-//'   \frac{TP}{TP + FN}
+//'   \frac{\#TP_k}{\#TP_k + \#FN_k}
 //' }
 //'
-//' Where \eqn{TP} is the number of True Positives, and \eqn{FP} is the number
-//' of False Positives.
+//' Where \eqn{\#TP_k} and \eqn{\#FN_k} is the number of true positives and false negatives, respectively, for each class \eqn{k}.
 //'
-//' @returns
-//' A named <[numeric]> vector of length k
+//' When `aggregate = TRUE` the `micro`-average is calculated,
 //'
-//'
+//' \deqn{
+//'   \frac{\sum_{k=1}^k \#TP_k}{\sum_{k=1}^k \#TP_k + \sum_{k=1}^k \#FN_k}
+//' }
 //' @family classification
 //'
 //' @export
@@ -103,4 +101,25 @@ NumericVector recall(
   }
 
   return output;
+}
+
+//' @rdname recall
+//'
+//' @usage
+//' tpr(
+//'   actual,
+//'   predicted,
+//'   aggregate
+//' )
+//'
+//' @export
+// [[Rcpp::export]]
+Rcpp::NumericVector tpr(
+    const IntegerVector& actual,
+    const IntegerVector& predicted,
+    const bool& aggregate = false) {
+
+
+  return recall(actual, predicted, aggregate);
+
 }

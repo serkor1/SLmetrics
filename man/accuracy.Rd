@@ -10,15 +10,26 @@ accuracy(
 )
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of length n, and k levels.}
+\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A <\link{factor}>-vector of length n.}
+\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 }
 \value{
 A <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 Calculate the proportion of correct predictions.
+}
+\details{
+Accuracy is a global metric that measures the proportion of correct predictions (both true positives and true negatives) out of all predictions, and is calculated as follows,
+
+\deqn{
+  \frac{\#TP + \#TN}{\#TP + \#TN + \#FP + \#FN}
+}
+
+Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} represent the true positives, true negatives, false positives, and false negatives, respectively.
+
+Accuracy provides an overall performance measure of the model across all classes.
 }
 \examples{
 # 1) assume that actual
@@ -65,8 +76,11 @@ Other classification:
 \code{\link{fbeta}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
+\code{\link{fmi}()},
 \code{\link{fpr}()},
+\code{\link{jaccard}()},
 \code{\link{kappa}()},
+\code{\link{mcc}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
 \code{\link{plr}()},

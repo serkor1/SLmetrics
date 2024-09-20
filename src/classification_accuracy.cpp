@@ -11,9 +11,23 @@ using namespace Rcpp;
 //'   predicted
 //' )
 //'
-//' @inheritParams cmatrix
+//' @inherit specificity
 //'
-//' @returns A <[numeric]>-vector of [length] 1
+//' @details
+//'
+//' Accuracy is a global metric that measures the proportion of correct predictions (both true positives and true negatives) out of all predictions, and is calculated as follows,
+//'
+//' \deqn{
+//'   \frac{\#TP + \#TN}{\#TP + \#TN + \#FP + \#FN}
+//' }
+//'
+//' Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} represent the true positives, true negatives, false positives, and false negatives, respectively.
+//'
+//' Accuracy provides an overall performance measure of the model across all classes.
+//'
+//' @returns
+//'
+//' A <[numeric]>-vector of [length] 1
 //'
 //' @example man/examples/scr_accuracy.R
 //'

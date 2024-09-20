@@ -4,7 +4,7 @@
 \alias{fdr}
 \title{False Discovery Rate (FDR)}
 \usage{
-# 1) `fdr()`-function
+# false discovery rate;
 fdr(
   actual,
   predicted,
@@ -12,18 +12,20 @@ fdr(
 )
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of length n, and k levels.}
+\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A <\link{factor}>-vector of length n.}
+\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{aggregate}{A <\link{logical}>-value of \link{length} 1. \link{FALSE} by default. If \link{TRUE} it returns the
-micro average across all k-classes}
+\item{aggregate}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} it returns the
+micro average across all \eqn{k} classes}
 }
 \value{
-A named <\link{numeric}>-vector of length k.
+If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vector of \link{length} k
+
+If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-Calculate the specificity
+Placeholder
 }
 \details{
 The False Discovery Rate (FDR). The metric is calculated for each class \eqn{k} as follows,
@@ -33,6 +35,12 @@ The False Discovery Rate (FDR). The metric is calculated for each class \eqn{k} 
 }
 
 Where \eqn{\#TP_k} and \eqn{\#FP_k} is the number of true psotives and false positives, respectively, for each class \eqn{k}.
+
+When \code{aggregate = TRUE} the \code{micro}-average is calculated,
+
+\deqn{
+ \frac{\sum_{k=1}^k \#FP_k}{\sum_{k=1}^k \#TP_k + \sum_{k=1}^k \#FP_k}
+}
 }
 \examples{
 # 1) assume that actual
@@ -99,8 +107,11 @@ Other classification:
 \code{\link{dor}()},
 \code{\link{fbeta}()},
 \code{\link{fer}()},
+\code{\link{fmi}()},
 \code{\link{fpr}()},
+\code{\link{jaccard}()},
 \code{\link{kappa}()},
+\code{\link{mcc}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
 \code{\link{plr}()},

@@ -15,7 +15,23 @@ using namespace Rcpp;
 //'   aggregate = FALSE
 //' )
 //'
-//' @inheritParams recall
+//' @inherit specificity
+//'
+//' @details
+//'
+//' The Negative Predictive Value (NPV) is calculated for each class \eqn{k} as follows,
+//'
+//' \deqn{
+//'   \frac{\#TN_k}{\#TN_k + \#FN_k}
+//' }
+//'
+//' Where \eqn{\#TN_k} and \eqn{\#FN_k} are the number of true negatives and false negatives, respectively, for each class \eqn{k}.
+//'
+//' When `aggregate = TRUE`, the `micro`-average is calculated,
+//'
+//' \deqn{
+//'   \frac{\sum_{k=1}^k \#TN_k}{\sum_{k=1}^k \#TN_k + \sum_{k=1}^k \#FN_k}
+//' }
 //'
 //' @family classification
 //'

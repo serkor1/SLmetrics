@@ -4,13 +4,33 @@
 using namespace Rcpp;
 
 //' Diagnostic Odds Ratio (DOR)
+//'
+//' @description
+//' Placeholder
+//'
 //' @usage
-//' # 3) `dor()`-function
+//' # diagnostic odds ratio
 //' dor(
 //'   actual,
 //'   predicted,
 //'   aggregate = FALSE
 //' )
+//'
+//' @details
+//'
+//' The Diagnostic Odds Ratio (DOR) is calculated for each class \eqn{k} as follows,
+//'
+//' \deqn{
+//'   \frac{\text{PLR}_k}{\text{NLR}_k} = \frac{\text{Sensitivity}_k \times \text{Specificity}_k}{(1 - \text{Sensitivity}_k) \times (1 - \text{Specificity}_k)}
+//' }
+//'
+//' Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
+//'
+//' When `aggregate = TRUE`, the `micro`-average is calculated,
+//'
+//' \deqn{
+//'   \frac{\sum_{k=1}^k \text{PLR}_k}{\sum_{k=1}^k \text{NLR}_k} = \frac{\sum_{k=1}^k (\text{Sensitivity}_k \times \text{Specificity}_k)}{\sum_{k=1}^k (1 - \text{Sensitivity}_k) \times (1 - \text{Specificity}_k)}
+//' }
 //'
 //' @inherit specificity
 //'

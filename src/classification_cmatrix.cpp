@@ -6,7 +6,11 @@ using namespace Rcpp;
 //' Confusion Matrix
 //'
 //' @description
-//' Placeholder
+//'
+//' The [cmatrix()]-function uses cross-classifying factors to build
+//' a confusion matrix of the counts at each combination of the [factor] levels.
+//' Each row of the [matrix] represents the actual [factor] levels, while each
+//' column represents the predicted [factor] levels.
 //'
 //' @usage
 //' cmatrix(
@@ -14,8 +18,8 @@ using namespace Rcpp;
 //'   predicted
 //' )
 //'
-//' @param actual A <[factor]>-vector of length n, and k levels.
-//' @param predicted A <[factor]>-vector of length n.
+//' @param actual A <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
+//' @param predicted A <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
 //'
 //' @example man/examples/scr_confusionmatrix.R
 //' @family classification
@@ -25,20 +29,19 @@ using namespace Rcpp;
 //' If the function is correctly implemented the resulting
 //' confusion matrix is given as,
 //'
-//'
 //' |            | A (Predicted)        | B (Predicted)   |
 //' | ------------- |:-------------:| -----:|
 //' | A (Actual)   | Value     | Value |
 //' | B  (Actual)   |  Value    |  Value   |
 //'
 //'
-//' @returns A named k x k <[matrix]>
+//' @returns A named \eqn{k} x \eqn{k} <[matrix]>
 //'
 //' @export
 // [[Rcpp::export]]
-NumericMatrix cmatrix(
-    const IntegerVector& actual,
-    const IntegerVector& predicted) {
+Rcpp::NumericMatrix cmatrix(
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::IntegerVector& predicted) {
 
   /*
    * This function generates a confusion matrix
@@ -50,13 +53,13 @@ NumericMatrix cmatrix(
 
   // 1) get levels of the for the
   // naming of the matrix
-  const CharacterVector& levels = actual.attr("levels");
+  const Rcpp::CharacterVector& levels = actual.attr("levels");
 
-  NumericMatrix output = wrap(confmat(actual, predicted));
+  Rcpp::NumericMatrix output = Rcpp::wrap(confmat(actual, predicted));
 
   // 4) set the dimnames of
   // the confusion matrix
-  output.attr("dimnames") = List::create(levels, levels);
+  output.attr("dimnames") = Rcpp::List::create(levels, levels);
 
   return output;
 }

@@ -11,9 +11,9 @@ kappa(
 )
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of length n, and k levels.}
+\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A <\link{factor}>-vector of length n.}
+\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{beta}{A <\link{numeric}> value of \link{length} 1. 0 by default. If set to a value different from zero, the off-diagonal confusion matrix will be penalized.}
 }
@@ -63,7 +63,10 @@ Other classification:
 \code{\link{fbeta}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
+\code{\link{fmi}()},
 \code{\link{fpr}()},
+\code{\link{jaccard}()},
+\code{\link{mcc}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
 \code{\link{plr}()},

@@ -13,6 +13,22 @@ using namespace Rcpp;
 //'
 //' @inherit specificity
 //'
+//' @details
+//'
+//' The Positive Likelihood Ratio (PLR) is calculated for each class \eqn{k} as follows,
+//'
+//' \deqn{
+//'   \frac{\text{Sensitivity}_k}{1 - \text{Specificity}_k}
+//' }
+//'
+//' Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
+//'
+//' When `aggregate = TRUE`, the `micro`-average is calculated,
+//'
+//' \deqn{
+//'   \frac{\sum_{k=1}^k \text{Sensitivity}_k}{1 - \sum_{k=1}^k \text{Specificity}_k}
+//' }
+//'
 //' @seealso
 //'
 //' The [nlr()]-function for the Negative Likehood Ratio (LR-)
@@ -89,6 +105,22 @@ NumericVector plr(
 //' )
 //'
 //' @inherit specificity
+//'
+//' @details
+//'
+//' The Negative Likelihood Ratio (NLR) is calculated for each class \eqn{k} as follows,
+//'
+//' \deqn{
+//'   \frac{1 - \text{Sensitivity}_k}{\text{Specificity}_k}
+//' }
+//'
+//' Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
+//'
+//' When `aggregate = TRUE`, the `micro`-average is calculated,
+//'
+//' \deqn{
+//'   \frac{\sum_{k=1}^k (1 - \text{Sensitivity}_k)}{\sum_{k=1}^k \text{Specificity}_k}
+//' }
 //'
 //' @seealso
 //'

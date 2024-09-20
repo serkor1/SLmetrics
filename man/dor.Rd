@@ -4,7 +4,7 @@
 \alias{dor}
 \title{Diagnostic Odds Ratio (DOR)}
 \usage{
-# 3) `dor()`-function
+# diagnostic odds ratio
 dor(
   actual,
   predicted,
@@ -12,18 +12,35 @@ dor(
 )
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of length n, and k levels.}
+\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A <\link{factor}>-vector of length n.}
+\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{aggregate}{A <\link{logical}>-value of \link{length} 1. \link{FALSE} by default. If \link{TRUE} it returns the
-micro average across all k-classes}
+\item{aggregate}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} it returns the
+micro average across all \eqn{k} classes}
 }
 \value{
-A named <\link{numeric}>-vector of length k.
+If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vector of \link{length} k
+
+If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-Calculate the specificity
+Placeholder
+}
+\details{
+The Diagnostic Odds Ratio (DOR) is calculated for each class \eqn{k} as follows,
+
+\deqn{
+  \frac{\text{PLR}_k}{\text{NLR}_k} = \frac{\text{Sensitivity}_k \times \text{Specificity}_k}{(1 - \text{Sensitivity}_k) \times (1 - \text{Specificity}_k)}
+}
+
+Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
+
+When \code{aggregate = TRUE}, the \code{micro}-average is calculated,
+
+\deqn{
+  \frac{\sum_{k=1}^k \text{PLR}_k}{\sum_{k=1}^k \text{NLR}_k} = \frac{\sum_{k=1}^k (\text{Sensitivity}_k \times \text{Specificity}_k)}{\sum_{k=1}^k (1 - \text{Sensitivity}_k) \times (1 - \text{Specificity}_k)}
+}
 }
 \examples{
 # 1) assume that actual
@@ -90,8 +107,11 @@ Other classification:
 \code{\link{fbeta}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
+\code{\link{fmi}()},
 \code{\link{fpr}()},
+\code{\link{jaccard}()},
 \code{\link{kappa}()},
+\code{\link{mcc}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
 \code{\link{plr}()},

@@ -17,22 +17,23 @@ using namespace Rcpp;
 //'   aggregate = FALSE
 //' )
 //'
-//' @inheritParams accuracy
-//' @param aggregate A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] it returns the
-//' micro average across all k-classes
-//'
+//' @inherit specificity
 //'
 //' @details
 //'
-//' The precision is calculated as,
+//' The Precision (Positive Predictive Value, PPV) is calculated for each class \eqn{k} as follows,
 //'
 //' \deqn{
-//'   \frac{TP}{TP + FP}
+//'   \frac{\#TP_k}{\#TP_k + \#FP_k}
 //' }
 //'
-//' Where \eqn{TP} is the number of True Positives, and \eqn{FP} is the number
-//' of False Positives.
+//' Where \eqn{\#TP_k} and \eqn{\#FP_k} are the number of true positives and false positives, respectively, for each class \eqn{k}.
 //'
+//' When `aggregate = TRUE`, the `micro`-average is calculated,
+//'
+//' \deqn{
+//'   \frac{\sum_{k=1}^k \#TP_k}{\sum_{k=1}^k \#TP_k + \sum_{k=1}^k \#FP_k}
+//' }
 //'
 //' @example man/examples/scr_precision.R
 //'

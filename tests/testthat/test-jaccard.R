@@ -20,7 +20,7 @@ testthat::test_that(
         x = 1:3,
         size = 1e3,
         replace = TRUE,
-        prob = c(1,0,0)
+        prob = c(0,0.5,0.5)
       ),
       levels = c(1:3),
       labels = letters[1:3]
@@ -48,10 +48,10 @@ testthat::test_that(
       length(
         unique(
           lapply(
-            X =list(
-              specificity,
-              tnr,
-              selectivity
+            X = list(
+              jaccard,
+              csi,
+              tscore
             ),
             FUN = function(f) {
 
@@ -90,9 +90,9 @@ testthat::test_that(
         unique(
           lapply(
             X = list(
-              specificity,
-              tnr,
-              selectivity
+              jaccard,
+              csi,
+              tscore
             ),
             FUN = function(f) {
 
@@ -121,6 +121,13 @@ testthat::test_that(
         )
       ) == 1
     )
+
+
+
+
+
+
+
 
 
   }

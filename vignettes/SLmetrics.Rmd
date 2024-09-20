@@ -10,7 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  message = FALSE
 )
 ```
 
@@ -23,6 +24,3 @@ library(SLmetrics)
 ## Why?
 
 Depending on the application {SLmetrics} is between 5-20x faster than the other R packages that does the same thing.
-
-
-

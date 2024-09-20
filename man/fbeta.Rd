@@ -4,6 +4,7 @@
 \alias{fbeta}
 \title{Generalized F Score}
 \usage{
+# fbeta-score
 fbeta(
   actual,
   predicted,
@@ -12,9 +13,9 @@ fbeta(
 )
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of length n, and k levels.}
+\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A <\link{factor}>-vector of length n.}
+\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{beta}{A <\link{numeric}> vector of length 1. 1 by default, see details.}
 
@@ -22,17 +23,85 @@ fbeta(
 micro average across all k-classes}
 }
 \value{
-A named <\link{numeric}> vector of length k
+If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vector of \link{length} k
+
+If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 Calculate the F Score
 }
 \details{
-The general F-score equation is given as follows,
+The F-beta score is a weighted harmonic mean of precision and recall, calculated for each class \eqn{k} as follows,
 
-\deqn{F_{\beta} = (1+\beta^2) \frac{precision \times recall}{\beta^2 \times precision + recall}}
+\deqn{
+  (1 + \beta^2) \cdot \frac{\text{Precision}_k \cdot \text{Recall}_k}{(\beta^2 \cdot \text{Precision}_k) + \text{Recall}_k}
+}
 
-if \eqn{\beta = 1} then it corresponds to the traditional F1 score.
+Where precision is \eqn{\frac{\#TP_k}{\#TP_k + \#FP_k}} and recall (sensitivity) is \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}}, and \eqn{\beta} determines the weight of precision relative to recall.
+
+When \code{aggregate = TRUE}, the \code{micro}-average F-beta score is calculated,
+
+\deqn{
+  (1 + \beta^2) \cdot \frac{\sum_{k=1}^K \text{Precision}_k \cdot \sum_{k=1}^K \text{Recall}_k}{(\beta^2 \cdot \sum_{k=1}^K \text{Precision}_k) + \sum_{k=1}^K \text{Recall}_k}
+}
+}
+\examples{
+# 1) assume that actual
+# and predicted are class labels
+# from some model
+actual <- sample(
+  x = letters[1:3],
+  size = 100,
+  replace = TRUE,
+  prob = c(0.2,0.2,0.6)
+)
+
+predicted <- sample(
+  x = letters[1:3],
+  size = 100,
+  replace = TRUE,
+  prob = c(0.2,0.2,0.6)
+)
+
+# 1.1) convert to factor
+# variable
+actual <- factor(
+  x = actual,
+  levels = letters[1:3]
+)
+
+predicted <- factor(
+  x = predicted,
+  levels = letters[1:3]
+)
+
+
+# 2) evaluate the
+# performance of all classes
+specificity(
+  actual    = actual,
+  predicted = predicted
+)
+
+# 3) evaluate the
+# overall performance
+# with micro averaging
+specificity(
+  actual    = actual,
+  predicted = predicted,
+  aggregate = TRUE
+)
+
+# 4) evaluate the
+# overall performance
+# with macro averaging
+mean(
+  specificity(
+    actual    = actual,
+    predicted = predicted,
+    aggregate = FALSE
+  )
+)
 }
 \seealso{
 Other classification: 
@@ -41,8 +110,11 @@ Other classification:
 \code{\link{dor}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
+\code{\link{fmi}()},
 \code{\link{fpr}()},
+\code{\link{jaccard}()},
 \code{\link{kappa}()},
+\code{\link{mcc}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
 \code{\link{plr}()},

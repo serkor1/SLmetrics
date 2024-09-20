@@ -4,15 +4,70 @@
 \alias{zerooneloss}
 \title{Zero One Loss}
 \usage{
-zerooneloss(actual, predicted)
+zerooneloss(
+  actual,
+  predicted
+)
 }
 \arguments{
-\item{actual}{placeholder}
+\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{placeholder}
+\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+}
+\value{
+A <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-Zero One Loss
+Placeholder
+}
+\details{
+Zero-One Loss is a global metric that measures the proportion of incorrect predictions made by the model. It is calculated as follows,
+
+\deqn{
+  \frac{\#FP + \#FN}{\#TP + \#TN + \#FP + \#FN}
+}
+
+Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} represent the true positives, true negatives, false positives, and false negatives, respectively.
+
+Zero-One Loss provides an overall measure of the model's prediction errors across all classes.
+}
+\examples{
+# 1) assume that actual
+# and predicted are class labels
+# from some model
+actual <- sample(
+  x = letters[1:3],
+  size = 100,
+  replace = TRUE,
+  prob = c(0.2,0.2,0.6)
+)
+
+predicted <- sample(
+  x = letters[1:3],
+  size = 100,
+  replace = TRUE,
+  prob = c(0.2,0.2,0.6)
+)
+
+# 1.1) convert to factor
+# variable
+actual <- factor(
+  x = actual,
+  levels = letters[1:3]
+)
+
+predicted <- factor(
+  x = predicted,
+  levels = letters[1:3]
+)
+
+
+# 2) evaluate the
+# performance
+accuracy(
+  actual    = actual,
+  predicted = predicted
+)
 }
 \seealso{
 Other classification: 
@@ -22,8 +77,30 @@ Other classification:
 \code{\link{fbeta}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
+\code{\link{fmi}()},
 \code{\link{fpr}()},
+\code{\link{jaccard}()},
 \code{\link{kappa}()},
+\code{\link{mcc}()},
+\code{\link{nlr}()},
+\code{\link{npv}()},
+\code{\link{plr}()},
+\code{\link{precision}()},
+\code{\link{recall}()},
+\code{\link{specificity}()}
+
+Other classification: 
+\code{\link{accuracy}()},
+\code{\link{cmatrix}()},
+\code{\link{dor}()},
+\code{\link{fbeta}()},
+\code{\link{fdr}()},
+\code{\link{fer}()},
+\code{\link{fmi}()},
+\code{\link{fpr}()},
+\code{\link{jaccard}()},
+\code{\link{kappa}()},
+\code{\link{mcc}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
 \code{\link{plr}()},

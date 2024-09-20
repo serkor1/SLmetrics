@@ -20,12 +20,12 @@ ppv(
 )
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of length n, and k levels.}
+\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A <\link{factor}>-vector of length n.}
+\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{aggregate}{A <\link{logical}>-value of \link{length} 1. \link{FALSE} by default. If \link{TRUE} it returns the
-micro average across all k-classes}
+\item{aggregate}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} it returns the
+micro average across all \eqn{k} classes}
 }
 \value{
 A named <\link{numeric}> vector of length k
@@ -34,14 +34,19 @@ A named <\link{numeric}> vector of length k
 Calculate the Precision
 }
 \details{
-The precision is calculated as,
+The Precision (Positive Predictive Value, PPV) is calculated for each class \eqn{k} as follows,
 
 \deqn{
-  \frac{TP}{TP + FP}
+  \frac{\#TP_k}{\#TP_k + \#FP_k}
 }
 
-Where \eqn{TP} is the number of True Positives, and \eqn{FP} is the number
-of False Positives.
+Where \eqn{\#TP_k} and \eqn{\#FP_k} are the number of true positives and false positives, respectively, for each class \eqn{k}.
+
+When \code{aggregate = TRUE}, the \code{micro}-average is calculated,
+
+\deqn{
+  \frac{\sum_{k=1}^k \#TP_k}{\sum_{k=1}^k \#TP_k + \sum_{k=1}^k \#FP_k}
+}
 }
 \examples{
 # 1) assume that actual
@@ -110,8 +115,11 @@ Other classification:
 \code{\link{fbeta}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
+\code{\link{fmi}()},
 \code{\link{fpr}()},
+\code{\link{jaccard}()},
 \code{\link{kappa}()},
+\code{\link{mcc}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
 \code{\link{plr}()},
