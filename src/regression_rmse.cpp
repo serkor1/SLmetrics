@@ -1,7 +1,6 @@
 #include <Rcpp.h>
 #include <cmath>
 
-
 //' Root Mean Squared Error (RMSE)
 //'
 //' Calculate the RMSE using the [rmse()]-function for the (arithmetic) simple mean, or [wrmse()]-function for the (arithmetic) weighted mean.
@@ -16,7 +15,6 @@
 //' @inherit huberloss
 //'
 //' @family regression
-//'
 //' @export
 // [[Rcpp::export]]
 double rmse(

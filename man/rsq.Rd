@@ -11,18 +11,18 @@ rsq(
 )
 }
 \arguments{
-\item{actual}{A <\link{numeric}>-vector of length N. The observed (continuos) response variable.}
+\item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{N}. The observed (continuous) response variable.}
 
-\item{predicted}{A <\link{numeric}>-vector of length N. The estimated (continuos) response variable.}
+\item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{N}. The estimated (continuous) response variable.}
 
-\item{k}{A <\link{numeric}>-vector of length 1. 0 by default. If k>0
-the function returns the adjusted R squared.}
+\item{k}{A <\link{numeric}>-vector of \link{length} 1. 0 by default. If \eqn{k>0}
+the function returns the adjusted \eqn{R^2}.}
 }
 \value{
-A <\link{numeric}>-value of length 1.
+A <\link{numeric}>-value of \link{length} 1.
 }
 \description{
-Calculate the R squared of two <\link{numeric}> vectors.
+Calculate the \eqn{R^2} of two <\link{numeric}> vectors.
 }
 \details{
 The \eqn{R^2} is calculated as,
@@ -72,8 +72,11 @@ whuberloss(
 Other regression: 
 \code{\link{huberloss}()},
 \code{\link{mae}()},
+\code{\link{mape}()},
+\code{\link{mpe}()},
 \code{\link{mse}()},
 \code{\link{rmse}()},
-\code{\link{rmsle}()}
+\code{\link{rmsle}()},
+\code{\link{smape}()}
 }
 \concept{regression}

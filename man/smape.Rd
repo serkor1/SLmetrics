@@ -18,6 +18,88 @@ wsmape(
   w
 )
 }
+\arguments{
+\item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{N}. The observed (continuous) response variable.}
+
+\item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{N}. The estimated (continuous) response variable.}
+
+\item{w}{A <\link{numeric}>-vector of \link{length} N. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+}
+\value{
+A <\link{numeric}>-value of \link{length} 1.
+}
 \description{
 Calculate the SMAPE using the \code{\link[=smape]{smape()}}-function for the simple mean, or \code{\link[=wsmape]{wsmape()}}-function for the weighted mean.
 }
+\details{
+The Huber Loss is calculated as,
+
+\deqn{
+ \frac{1}{2} (y_i - \hat{y}_i)^2 ~for~ |y_i - \hat{y}_i| \leq \delta
+}
+
+\deqn{
+  \delta |y_i-\hat{y}_i|-\frac{1}{2} \delta^2 ~for~ |y_i - \hat{y}_i| > \delta
+}
+
+for each \eqn{i},
+}
+\examples{
+# 1) assume that actual
+# and predicted are values
+# from a model
+actual <- rnorm(
+  n = 1e3,
+  mean = 10
+)
+
+predicted <- actual + rnorm(
+  n = 1e3,
+  mean = 10
+)
+
+# 2) calculate the huber loss
+# with delta 0.5
+huberloss(
+  actual = actual,
+  predicted = predicted,
+  delta = 0.5
+)
+
+# 3) caclulate weighted
+# huber loss
+w <- rbeta(
+  n = 1e3,
+  shape1 = 10,
+  shape2 = 2
+)
+
+whuberloss(
+  actual = actual,
+  predicted = predicted,
+  delta = 0.5,
+  w     = w
+)
+}
+\seealso{
+Other regression: 
+\code{\link{huberloss}()},
+\code{\link{mae}()},
+\code{\link{mape}()},
+\code{\link{mpe}()},
+\code{\link{mse}()},
+\code{\link{rmse}()},
+\code{\link{rmsle}()},
+\code{\link{rsq}()}
+
+Other regression: 
+\code{\link{huberloss}()},
+\code{\link{mae}()},
+\code{\link{mape}()},
+\code{\link{mpe}()},
+\code{\link{mse}()},
+\code{\link{rmse}()},
+\code{\link{rmsle}()},
+\code{\link{rsq}()}
+}
+\concept{regression}

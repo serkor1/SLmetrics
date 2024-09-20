@@ -4,7 +4,7 @@ using namespace Rcpp;
 //' \eqn{R^2}
 //'
 //' @description
-//' Calculate the R squared of two <[numeric]> vectors.
+//' Calculate the \eqn{R^2} of two <[numeric]> vectors.
 //'
 //' @usage
 //' rsq(
@@ -12,9 +12,10 @@ using namespace Rcpp;
 //'   predicted,
 //'   k = 0
 //' )
+//'
 //' @inherit huberloss
-//' @param k A <[numeric]>-vector of length 1. 0 by default. If k>0
-//' the function returns the adjusted R squared.
+//' @param k A <[numeric]>-vector of [length] 1. 0 by default. If \eqn{k>0}
+//' the function returns the adjusted \eqn{R^2}.
 //'
 //' @details
 //'
@@ -26,7 +27,6 @@ using namespace Rcpp;
 //'
 //' @family regression
 //'
-//' @returns A <[numeric]>-value of length 1.
 // [[Rcpp::export]]
 double rsq(
     const NumericVector& actual,

@@ -15,7 +15,6 @@
 //' @inherit huberloss
 //'
 //' @family regression
-//'
 //' @export
 // [[Rcpp::export]]
 double rmsle(

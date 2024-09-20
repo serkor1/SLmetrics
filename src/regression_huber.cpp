@@ -15,9 +15,9 @@ using namespace Rcpp;
 //'   delta = 1
 //' )
 //'
-//' @param actual A <[numeric]>-vector of length N. The observed (continuos) response variable.
-//' @param predicted A <[numeric]>-vector of length N. The estimated (continuos) response variable.
-//' @param delta A <[numeric]>-vector of length 1. 1 by default. The threshold value for switch between functions (see details).
+//' @param actual A <[numeric]>-vector of [length] \eqn{N}. The observed (continuous) response variable.
+//' @param predicted A <[numeric]>-vector of [length] \eqn{N}. The estimated (continuous) response variable.
+//' @param delta A <[numeric]>-vector of [length] 1. 1 by default. The threshold value for switch between functions (see details).
 //'
 //' @details
 //'

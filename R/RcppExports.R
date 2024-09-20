@@ -844,9 +844,9 @@ zerooneloss <- function(actual, predicted) {
 #'   delta = 1
 #' )
 #'
-#' @param actual A <[numeric]>-vector of length N. The observed (continuos) response variable.
-#' @param predicted A <[numeric]>-vector of length N. The estimated (continuos) response variable.
-#' @param delta A <[numeric]>-vector of length 1. 1 by default. The threshold value for switch between functions (see details).
+#' @param actual A <[numeric]>-vector of [length] \eqn{N}. The observed (continuous) response variable.
+#' @param predicted A <[numeric]>-vector of [length] \eqn{N}. The estimated (continuous) response variable.
+#' @param delta A <[numeric]>-vector of [length] 1. 1 by default. The threshold value for switch between functions (see details).
 #'
 #' @details
 #'
@@ -936,6 +936,9 @@ wmae <- function(actual, predicted, w) {
 #'   predicted
 #' )
 #'
+#' @inherit huberloss
+#'
+#' @family regression
 #' @export
 mape <- function(actual, predicted) {
     .Call(`_SLmetrics_mape`, actual, predicted)
@@ -950,6 +953,7 @@ mape <- function(actual, predicted) {
 #'   predicted,
 #'   w
 #' )
+#' @family regression
 #' @export
 wmape <- function(actual, predicted, w) {
     .Call(`_SLmetrics_wmape`, actual, predicted, w)
@@ -966,6 +970,8 @@ wmape <- function(actual, predicted, w) {
 #'   predicted
 #' )
 #'
+#' @inherit huberloss
+#' @family regression
 #' @export
 mpe <- function(actual, predicted) {
     .Call(`_SLmetrics_mpe`, actual, predicted)
@@ -999,7 +1005,6 @@ wmpe <- function(actual, predicted, w) {
 #' @inherit huberloss
 #'
 #' @family regression
-#'
 #' @export
 mse <- function(actual, predicted) {
     .Call(`_SLmetrics_mse`, actual, predicted)
@@ -1033,7 +1038,6 @@ wmse <- function(actual, predicted, w) {
 #' @inherit huberloss
 #'
 #' @family regression
-#'
 #' @export
 rmse <- function(actual, predicted) {
     .Call(`_SLmetrics_rmse`, actual, predicted)
@@ -1067,7 +1071,6 @@ wrmse <- function(actual, predicted, w) {
 #' @inherit huberloss
 #'
 #' @family regression
-#'
 #' @export
 rmsle <- function(actual, predicted) {
     .Call(`_SLmetrics_rmsle`, actual, predicted)
@@ -1091,7 +1094,7 @@ wrmsle <- function(actual, predicted, w) {
 #' \eqn{R^2}
 #'
 #' @description
-#' Calculate the R squared of two <[numeric]> vectors.
+#' Calculate the \eqn{R^2} of two <[numeric]> vectors.
 #'
 #' @usage
 #' rsq(
@@ -1099,9 +1102,10 @@ wrmsle <- function(actual, predicted, w) {
 #'   predicted,
 #'   k = 0
 #' )
+#'
 #' @inherit huberloss
-#' @param k A <[numeric]>-vector of length 1. 0 by default. If k>0
-#' the function returns the adjusted R squared.
+#' @param k A <[numeric]>-vector of [length] 1. 0 by default. If \eqn{k>0}
+#' the function returns the adjusted \eqn{R^2}.
 #'
 #' @details
 #'
@@ -1113,7 +1117,6 @@ wrmsle <- function(actual, predicted, w) {
 #'
 #' @family regression
 #'
-#' @returns A <[numeric]>-value of length 1.
 rsq <- function(actual, predicted, k = 0) {
     .Call(`_SLmetrics_rsq`, actual, predicted, k)
 }
@@ -1129,6 +1132,9 @@ rsq <- function(actual, predicted, k = 0) {
 #'   predicted
 #' )
 #'
+#' @inherit huberloss
+#'
+#' @family regression
 #' @export
 smape <- function(actual, predicted) {
     .Call(`_SLmetrics_smape`, actual, predicted)
@@ -1143,6 +1149,8 @@ smape <- function(actual, predicted) {
 #'   predicted,
 #'   w
 #' )
+#'
+#' @family regression
 #' @export
 wsmape <- function(actual, predicted, w) {
     .Call(`_SLmetrics_wsmape`, actual, predicted, w)

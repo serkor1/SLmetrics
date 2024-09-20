@@ -12,6 +12,9 @@
 //'   predicted
 //' )
 //'
+//' @inherit huberloss
+//'
+//' @family regression
 //' @export
 // [[Rcpp::export]]
 double mape(
@@ -40,6 +43,7 @@ double mape(
 //'   predicted,
 //'   w
 //' )
+//' @family regression
 //' @export
 // [[Rcpp::export]]
 double wmape(
