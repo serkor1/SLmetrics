@@ -4,7 +4,8 @@
 #' Fowlkes-Mallows Index (FMI)
 #'
 #' @description
-#' Calculate the Fowlkes-Mallows Index (FMI)
+#' The [fmi()]-function computes the [Fowlkes-Mallows Index](https://en.wikipedia.org/wiki/Fowlkes%E2%80%93Mallows_index) (FMI), a measure of the similarity between two sets of clusterings, between
+#' two vectors of predicted and observed [factor()] values.
 #'
 #' @usage
 #' # fowlkes-mallows index
@@ -13,9 +14,11 @@
 #'   predicted
 #' )
 #'
+#' @example man/examples/scr_fmi.R
+#'
 #' @inherit specificity
 #'
-#' @details
+#' @section Calculation:
 #'
 #' The FMI Index is calculated for each class \eqn{k} as follows,
 #'
@@ -38,7 +41,8 @@ fmi <- function(actual, predicted) {
 
 #' Accuracy
 #'
-#' Calculate the proportion of correct predictions.
+#' The [accuracy()]-function computes the [accuracy](https://en.wikipedia.org/wiki/Precision_and_recall) between two
+#' vectors of predicted and observed [factor()] values.
 #'
 #' @usage
 #' accuracy(
@@ -48,7 +52,7 @@ fmi <- function(actual, predicted) {
 #'
 #' @inherit specificity
 #'
-#' @details
+#' @section Calculation:
 #'
 #' Accuracy is a global metric that measures the proportion of correct predictions (both true positives and true negatives) out of all predictions, and is calculated as follows,
 #'
@@ -94,18 +98,23 @@ accuracy <- function(actual, predicted) {
 #' @example man/examples/scr_confusionmatrix.R
 #' @family classification
 #'
-#' @details
+#' @inherit specificity details
 #'
-#' If the function is correctly implemented the resulting
-#' confusion matrix is given as,
+#' @section Dimensions:
 #'
-#' |            | A (Predicted)        | B (Predicted)   |
-#' | ------------- |:-------------:| -----:|
-#' | A (Actual)   | Value     | Value |
-#' | B  (Actual)   |  Value    |  Value   |
+#' There is no robust defensive measure against misspecififying
+#' the confusion matrix. If the arguments are correctly specified, the resulting
+#' confusion matrix is on the form:
+#'
+#' |            | A (Predicted) | B (Predicted) |
+#' | :----------|:-------------:| -------------:|
+#' | A (Actual) | Value         | Value         |
+#' | B (Actual) | Value         | Value         |
 #'
 #'
-#' @returns A named \eqn{k} x \eqn{k} <[matrix]>
+#' @returns
+#'
+#' A named \eqn{k} x \eqn{k} <[matrix]> of [class] <cmatrix>
 #'
 #' @export
 cmatrix <- function(actual, predicted) {
@@ -115,7 +124,9 @@ cmatrix <- function(actual, predicted) {
 #' Diagnostic Odds Ratio (DOR)
 #'
 #' @description
-#' Placeholder
+#' The [dor()]-function computes the [Diagnostic Odds Ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) (DOR), a single indicator of test performance, between
+#' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average DOR across all classes \eqn{k}.
+#' By default, it returns the class-wise DOR.
 #'
 #' @usage
 #' # diagnostic odds ratio
@@ -125,7 +136,11 @@ cmatrix <- function(actual, predicted) {
 #'   aggregate = FALSE
 #' )
 #'
-#' @details
+#' @example man/examples/scr_diagnosticodssratio.R
+#'
+#' @inherit specificity
+#'
+#' @section Calculation:
 #'
 #' The Diagnostic Odds Ratio (DOR) is calculated for each class \eqn{k} as follows,
 #'
@@ -141,7 +156,6 @@ cmatrix <- function(actual, predicted) {
 #'   \frac{\sum_{k=1}^k \text{PLR}_k}{\sum_{k=1}^k \text{NLR}_k} = \frac{\sum_{k=1}^k (\text{Sensitivity}_k \times \text{Specificity}_k)}{\sum_{k=1}^k (1 - \text{Sensitivity}_k) \times (1 - \text{Specificity}_k)}
 #' }
 #'
-#' @inherit specificity
 #'
 #' @family classification
 #' @export
@@ -149,10 +163,12 @@ dor <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_dor`, actual, predicted, aggregate)
 }
 
-#' Generalized F Score
+#' \eqn{F_{\beta}}-score
 #'
 #' @description
-#' Calculate the F Score
+#' The [fbeta()]-function computes the [F-beta score](https://en.wikipedia.org/wiki/F1_score), a weighted harmonic mean of precision and recall, between
+#' two vectors of predicted and observed [factor()] values. The parameter \eqn{\beta} determines the weight of precision and recall in the combined score. When `aggregate = TRUE`, the function returns the micro-average F-beta score across all classes \eqn{k}.
+#' By default, it returns the class-wise F-beta score.
 #'
 #' @usage
 #' # fbeta-score
@@ -163,13 +179,15 @@ dor <- function(actual, predicted, aggregate = FALSE) {
 #'   aggregate = FALSE
 #' )
 #'
+#' @example man/examples/scr_fbeta.R
+#'
 #' @inherit specificity
 #'
 #' @param beta A <[numeric]> vector of length 1. 1 by default, see details.
 #' @param aggregate A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] it returns the
 #' micro average across all k-classes
 #'
-#' @details
+#' @section Calculation:
 #'
 #'
 #' The F-beta score is a weighted harmonic mean of precision and recall, calculated for each class \eqn{k} as follows,
@@ -188,7 +206,7 @@ dor <- function(actual, predicted, aggregate = FALSE) {
 #'
 #'
 #' @family classification
-#'
+#' @export
 fbeta <- function(actual, predicted, beta = 1.0, aggregate = FALSE) {
     .Call(`_SLmetrics_fbeta`, actual, predicted, beta, aggregate)
 }
@@ -196,7 +214,11 @@ fbeta <- function(actual, predicted, beta = 1.0, aggregate = FALSE) {
 #' False Discovery Rate (FDR)
 #'
 #' @description
-#' Placeholder
+#' The [fdr()]-function computes the [False Discovery Rate](https://en.wikipedia.org/wiki/False_discovery_rate) (FDR), the proportion of false positives among the predicted positives, between
+#' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average FDR across all classes \eqn{k}.
+#' By default, it returns the class-wise FDR.
+#'
+#' @example man/examples/scr_fdr.R
 #'
 #' @usage
 #' # false discovery rate;
@@ -206,9 +228,10 @@ fbeta <- function(actual, predicted, beta = 1.0, aggregate = FALSE) {
 #'   aggregate = FALSE
 #' )
 #'
+#'
 #' @inherit specificity
 #'
-#' @details
+#' @section Calculation:
 #'
 #' The False Discovery Rate (FDR). The metric is calculated for each class \eqn{k} as follows,
 #'
@@ -232,11 +255,15 @@ fdr <- function(actual, predicted, aggregate = FALSE) {
 
 #' False Exclusion Rate (FER)
 #'
-#' The [fer()]-function calculates the False Omission Rate (FOR)
+#' @description
+#' The [fer()]-function computes the [False Omission Rate](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate) (FOR), the proportion of false negatives among the predicted negatives, between
+#' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average FOR across all classes \eqn{k}.
+#' By default, it returns the class-wise FOR.
 #'
+#' @example man/examples/scr_for.R
 #'
 #' @usage
-#' # false omission rate
+#' # false exclusion rate
 #' fer(
 #'   actual,
 #'   predicted,
@@ -245,7 +272,7 @@ fdr <- function(actual, predicted, aggregate = FALSE) {
 #'
 #' @inherit specificity
 #'
-#' @details
+#' @section Calculation:
 #'
 #' The False Omission Rate (FOR) is calculated for each class \eqn{k} as follows,
 #'
@@ -270,7 +297,9 @@ fer <- function(actual, predicted, aggregate = FALSE) {
 #' False Positive Rate (FPR)
 #'
 #' @description
-#' Calculate the False Positive Rate (FPR), also known as the fall-out rate ([fallout()]), which represents the proportion of negative instances that were incorrectly classified as positive.
+#' The [fpr()]-function computes the [False Positive Rate](https://en.wikipedia.org/wiki/False_positive_rate) (FPR), also known as the fall-out ([fallout()]), between
+#' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average FPR across all classes \eqn{k}.
+#' By default, it returns the class-wise FPR.
 #'
 #' @usage
 #' # using`fpr()`
@@ -282,8 +311,9 @@ fer <- function(actual, predicted, aggregate = FALSE) {
 #'
 #' @inherit specificity
 #'
+#' @example man/examples/scr_fpr.R
 #'
-#' @details
+#' @section Calculation:
 #'
 #' The False Positive Rate (FPR) for each class \eqn{k} is calculated as follows,
 #'
@@ -323,7 +353,9 @@ fallout <- function(actual, predicted, aggregate = FALSE) {
 #' Jaccard Index
 #'
 #' @description
-#' The Jaccard Index measures similarity between finite sample sets and is defined as the size of the intersection divided by the size of the union of the sample sets.
+#' The [jaccard()]-function computes the [Jaccard Index](https://en.wikipedia.org/wiki/Jaccard_index), also known as the Intersection over Union, between
+#' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average Jaccard Index across all classes \eqn{k}.
+#' By default, it returns the class-wise Jaccard Index.
 #'
 #' @usage
 #' # using `jaccard()`-function
@@ -335,7 +367,7 @@ fallout <- function(actual, predicted, aggregate = FALSE) {
 #'
 #' @inherit specificity
 #'
-#' @details
+#' @section Calculation:
 #'
 #' The Jaccard Index is calculated for each class \eqn{k} as follows,
 #'
@@ -388,11 +420,12 @@ tscore <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_tscore`, actual, predicted, aggregate)
 }
 
-#' Cohens \eqn{\kappa}-statistic
+#' Cohen's \eqn{\kappa}-statistic
 #'
 #' @description
-#'
-#' Cohens
+#' The [kappa()]-function computes [Cohen's \eqn{\kappa}](https://en.wikipedia.org/wiki/Cohen%27s_kappa), a statistic that measures inter-rater agreement for categorical items between
+#' two vectors of predicted and observed [factor()] values. If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of
+#' \eqn{(y_{+} - y_{i,-})^\beta}. See below for further details.
 #'
 #' @usage
 #' kappa(
@@ -401,54 +434,29 @@ tscore <- function(actual, predicted, aggregate = FALSE) {
 #'   beta = 0
 #' )
 #'
-#' @inheritParams cmatrix
+#' @example man/examples/scr_kappa.R
+#'
+#' @inherit specificity
+#'
+#' @inheritParams specificity
 #' @param beta A <[numeric]> value of [length] 1. 0 by default. If set to a value different from zero, the off-diagonal confusion matrix will be penalized.
 #'
 #'
-#' @details
-#' This function calculates the penalized kappa statistic as:
-#'
-#'   \deqn{\kappa = 1 - \frac{n_{disagree}}{n_{chance}}}
-#'
-#' where \eqn{n_{disagree}} is the weighted disagreement, and
-#' \eqn{n_{chance}} is the expected disagreement by chance. The function
-#' operates as follows:
-#'
-#' 1. **Confusion Matrix**: The confusion matrix \eqn{C} is calculated based
-#'    on the input vectors \code{actual} and \code{predicted}.
-#'
-#' 2. **Penalizing Matrix**: A penalizing matrix \eqn{P} is created using
-#'    \code{seqmat}, based on the dimensions of the confusion matrix.
-#'    The penalizing matrix assigns weights to each element based on the
-#'    absolute differences between the row and column indices, raised to the power \eqn{\beta}.
-#'    When \eqn{\beta = 0}, the matrix elements corresponding to perfect agreement
-#'    (i.e., the diagonal elements) are set to 0, while all other entries are set to 1.
-#'    For higher values of \eqn{\beta}, the penalties grow as the absolute difference between the
-#'    indices increases, giving greater penalization to more severe misclassifications.
-#'
-#' 3. **Weighted Disagreement**: The observed weighted disagreement \eqn{n_{disagree}}
-#'    is calculated as:
-#'    \deqn{n_{disagree} = \sum_{i,j} C(i,j) P(i,j)}
-#'    where \eqn{C(i,j)} is the confusion matrix entry at row \eqn{i}, column \eqn{j}, and
-#'    \eqn{P(i,j)} is the corresponding penalizing matrix entry.
-#'
-#' 4. **Expected Agreement**: The expected agreement by chance \eqn{n_{chance}} is
-#'    calculated based on the marginal row and column sums:
-#'    \deqn{n_{chance} = \sum_{i,j} \frac{R_i C_j}{N} P(i,j)}
-#'    where \eqn{R_i} is the sum of row \eqn{i} of the confusion matrix, \eqn{C_j} is the
-#'    sum of column \eqn{j}, and \eqn{N} is the total number of observations.
-#'
-#' The penalized kappa statistic then measures the agreement adjusted for chance,
-#' while penalizing different types of misclassifications depending on their severity
-#' (as controlled by \eqn{\beta}).
+#' @section Calculation
 #'
 #' @family classification
-#'
+#' @export
 kappa <- function(actual, predicted, beta = 0) {
     .Call(`_SLmetrics_kappa`, actual, predicted, beta)
 }
 
-#' Positive Likelihood (LR+)
+#' Positive Likelihood Ratio (PLR)
+#'
+#' @description
+#' The [plr()]-function computes the [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing), also known as the likelihood ratio for positive results, between
+#' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average PLR across all classes \eqn{k}.
+#' By default, it returns the class-wise PLR.
+#'
 #' @usage
 #' plr(
 #'   actual,
@@ -456,9 +464,11 @@ kappa <- function(actual, predicted, beta = 0) {
 #'   aggregate = FALSE
 #' )
 #'
+#' @example man/examples/scr_plr_nlr.R
+#'
 #' @inherit specificity
 #'
-#' @details
+#' @section Calculation:
 #'
 #' The Positive Likelihood Ratio (PLR) is calculated for each class \eqn{k} as follows,
 #'
@@ -484,8 +494,12 @@ plr <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_plr`, actual, predicted, aggregate)
 }
 
-#' Negative Likelihood Ratio (LR-)
+#' Negative Likelihood Ratio (NLR)
 #'
+#' @description
+#' The [nlr()]-function computes the [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing), also known as the likelihood ratio for negative results, between
+#' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average NLR across all classes \eqn{k}.
+#' By default, it returns the class-wise NLR.
 #'
 #' @usage
 #' nlr(
@@ -494,9 +508,11 @@ plr <- function(actual, predicted, aggregate = FALSE) {
 #'   aggregate = FALSE
 #' )
 #'
+#' @example man/examples/scr_plr_nlr.R
+#'
 #' @inherit specificity
 #'
-#' @details
+#' @section Calculation:
 #'
 #' The Negative Likelihood Ratio (NLR) is calculated for each class \eqn{k} as follows,
 #'
@@ -524,7 +540,8 @@ nlr <- function(actual, predicted, aggregate = FALSE) {
 #' Matthews Correlation Coefficient (MCC)
 #'
 #' @description
-#' Calculate the Matthews Correlation Coefficient (MCC)
+#' The [mcc()]-function computes the [Matthews Correlation Coefficient](https://en.wikipedia.org/wiki/Matthews_correlation_coefficient) (MCC), also known as the \eqn{\phi}-coefficient, between
+#' two vectors of predicted and observed [factor()] values.
 #'
 #' @usage
 #' # 1) `mcc()`-function
@@ -533,9 +550,11 @@ nlr <- function(actual, predicted, aggregate = FALSE) {
 #'   predicted
 #' )
 #'
+#' @example man/examples/scr_mcc.R
+#'
 #' @inherit precision
 #'
-#' @details
+#' @section Calculation:
 #'
 #' The MCC is calculated for each class \eqn{k} as follows,
 #'
@@ -571,7 +590,9 @@ phi <- function(actual, predicted) {
 #' Negative Predictive Value (NPV)
 #'
 #' @description
-#' Calculate the sensitivity
+#' The [npv()]-function computes the [negative predictive value](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values), also known as the True Negative Predictive Value, between
+#' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average NPV across all classes \eqn{k}.
+#' By default, it returns the class-wise NPV.
 #'
 #' @usage
 #' npv(
@@ -582,7 +603,9 @@ phi <- function(actual, predicted) {
 #'
 #' @inherit specificity
 #'
-#' @details
+#' @example man/examples/scr_npv.R
+#'
+#' @section Calculation:
 #'
 #' The Negative Predictive Value (NPV) is calculated for each class \eqn{k} as follows,
 #'
@@ -607,9 +630,10 @@ npv <- function(actual, predicted, aggregate = FALSE) {
 
 #' Precision (Positive Predictive Value)
 #'
-#'
 #' @description
-#' Calculate the Precision
+#' The [precision()]-function computes the [precision](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values), also known as the Positive Predictive Value (PPV), between
+#' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average precision across all classes \eqn{k}.
+#' By default, it returns the class-wise precision.
 #'
 #' @usage
 #' # 1) `precision()`-function
@@ -621,7 +645,7 @@ npv <- function(actual, predicted, aggregate = FALSE) {
 #'
 #' @inherit specificity
 #'
-#' @details
+#' @section Calculation:
 #'
 #' The Precision (Positive Predictive Value, PPV) is calculated for each class \eqn{k} as follows,
 #'
@@ -668,7 +692,9 @@ ppv <- function(actual, predicted, aggregate = FALSE) {
 #' Recall (Sensitivity)
 #'
 #' @description
-#' Calculate the sensitivity
+#' The [recall()]-function computes the [recall](https://en.wikipedia.org/wiki/Sensitivity_and_specificity), also known as sensitivity or the True Positive Rate (TPR), between
+#' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average recall across all classes \eqn{k}.
+#' By default, it returns the class-wise recall.
 #'
 #' @usage
 #'  # 1) `recall()`-function
@@ -680,7 +706,9 @@ ppv <- function(actual, predicted, aggregate = FALSE) {
 #'
 #' @inherit specificity
 #'
-#' @details
+#' @example man/examples/scr_recall.R
+#'
+#' @section Calculation:
 #'
 #' The Sensitivity (SEN), also known as Recall or True Positive Rate (TPR). The metric is calculated for each class \eqn{k} as follows,
 #'
@@ -729,16 +757,13 @@ sensitivity <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_sensitivity`, actual, predicted, aggregate)
 }
 
-#' @rdname specificity
-NULL
-
-#' @rdname specificity
-NULL
-
 #' Specificity (True Negative Rate)
 #'
 #' @description
-#' Calculate the specificity
+#' The  [specificity()]-function computes the [specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity), also known as the True Negative Rate (TNR) or selectivity, between
+#' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average specificity across all classes \eqn{k}.
+#' By default, it returns the class-wise specificity.
+#'
 #'
 #' @usage
 #' # using `specificity()`
@@ -755,6 +780,40 @@ NULL
 #'
 #' @details
 #'
+#' Consider a classification problem with three classes: `A`, `B`, and `C`. The actual vector of [factor()] values is defined as follows:
+#'
+#' ```{r output, echo = TRUE}
+#' ## actual
+#' factor(
+#'   x = sample(x = 1:3, size = 10, replace = TRUE),
+#'   levels = c(1, 2, 3),
+#'   labels = c("A", "B", "C")
+#' )
+#' ```
+#'
+#' Here, the values 1, 2, and 3 are mapped to `A`, `B`, and `C`, respectively. Now, suppose your model does not predict any `B`'s. The predicted vector of [factor()] values would be defined as follows:
+#'
+#' ```{r output, echo = TRUE}
+#' ## predicted
+#' factor(
+#'   x = sample(x = c(1, 3), size = 10, replace = TRUE),
+#'   levels = c(1, 2, 3),
+#'   labels = c("A", "B", "C")
+#' )
+#' ```
+#'
+#' In both cases, \eqn{k = 3}, determined indirectly by the `levels` argument.
+#'
+#' @returns
+#'
+#' If `aggregate` is [FALSE] (the default), a named <[numeric]>-vector of [length] k
+#'
+#' If `aggregate` is [TRUE], a <[numeric]>-vector of [length] 1
+#'
+#' @example man/examples/scr_specificity.R
+#'
+#'
+#' @section Calculation:
 #' The metric is calculated for each class \eqn{k} as follows,
 #'
 #' \deqn{
@@ -769,13 +828,6 @@ NULL
 #'   \frac{\sum_{k=1}^k \#TN_k}{\sum_{k=1}^k \#TN_k + \sum_{k=1}^k \#FP_k}
 #' }
 #'
-#' @returns
-#'
-#' If `aggregate` is [FALSE] (the default), a named <[numeric]>-vector of [length] k
-#'
-#' If `aggregate` is [TRUE], a <[numeric]>-vector of [length] 1
-#'
-#' @example man/examples/scr_specificity.R
 #'
 #' @family classification
 #'
@@ -784,18 +836,40 @@ specificity <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_specificity`, actual, predicted, aggregate)
 }
 
+#' @rdname specificity
+#'
+#' @usage
+#' # using `tnr()`
+#' tnr(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#'
+#' @export
 tnr <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_tnr`, actual, predicted, aggregate)
 }
 
+#' @rdname specificity
+#'
+#' @usage
+#' # using `selectivity()`
+#' selectivity(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#' @export
 selectivity <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_selectivity`, actual, predicted, aggregate)
 }
 
-#' Zero One Loss
+#' Zero-One Loss
 #'
 #' @description
-#' Placeholder
+#' The [zerooneloss()]-function computes the [Zero-One Loss](https://en.wikipedia.org/wiki/Loss_functions_for_classification), a classification loss function that calculates the proportion of misclassified instances between
+#' two vectors of predicted and observed [factor()] values.
 #'
 #' @usage
 #' zerooneloss(
@@ -804,9 +878,8 @@ selectivity <- function(actual, predicted, aggregate = FALSE) {
 #' )
 #'
 #' @inherit specificity
-#' @family classification
 #'
-#' @details
+#' @section Calculation:
 #'
 #' Zero-One Loss is a global metric that measures the proportion of incorrect predictions made by the model. It is calculated as follows,
 #'
@@ -817,17 +890,59 @@ selectivity <- function(actual, predicted, aggregate = FALSE) {
 #' Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} represent the true positives, true negatives, false positives, and false negatives, respectively.
 #'
 #' Zero-One Loss provides an overall measure of the model's prediction errors across all classes.
+#'
 #' @returns
 #'
 #' A <[numeric]>-vector of [length] 1
 #'
-#' @example man/examples/scr_accuracy.R
+#' @example man/examples/scr_zerooneloss.R
 #'
 #' @family classification
 #'
 #' @export
 zerooneloss <- function(actual, predicted) {
     .Call(`_SLmetrics_zerooneloss`, actual, predicted)
+}
+
+#' Concordance Correlation Coefficient (CCC)
+#'
+#' Calculate the CCC using the [ccc()]-function for comparing actual and predicted values.
+#'
+#' @usage
+#' # simple;
+#' ccc(
+#'   actual,
+#'   predicted,
+#'   correction = FALSE
+#' )
+#'
+#' @inherit huberloss
+#' @param correction A <[logical]> vector of [length] 1. [FALSE] by default. If [TRUE] the variance and covariance
+#' will be adjusted with \eqn{\frac{1-n}{n}}
+#'
+#' @example man/examples/scr_ccc.R
+#'
+#' @family regression
+#' @export
+ccc <- function(actual, predicted, correction = FALSE) {
+    .Call(`_SLmetrics_ccc`, actual, predicted, correction)
+}
+
+#' @rdname ccc
+#'
+#' @usage
+#' # weighted;
+#' wccc(
+#'   actual,
+#'   predicted,
+#'   w,
+#'   correction = FALSE
+#' )
+#'
+#' @family regression
+#' @export
+wccc <- function(actual, predicted, w, correction = FALSE) {
+    .Call(`_SLmetrics_wccc`, actual, predicted, w, correction)
 }
 
 #' Huber Loss
@@ -844,8 +959,8 @@ zerooneloss <- function(actual, predicted) {
 #'   delta = 1
 #' )
 #'
-#' @param actual A <[numeric]>-vector of [length] \eqn{N}. The observed (continuous) response variable.
-#' @param predicted A <[numeric]>-vector of [length] \eqn{N}. The estimated (continuous) response variable.
+#' @param actual A <[numeric]>-vector of [length] \eqn{n}. The observed (continuous) response variable.
+#' @param predicted A <[numeric]>-vector of [length] \eqn{n}. The estimated (continuous) response variable.
 #' @param delta A <[numeric]>-vector of [length] 1. 1 by default. The threshold value for switch between functions (see details).
 #'
 #' @details

@@ -8,7 +8,8 @@ using namespace Rcpp;
 //' Matthews Correlation Coefficient (MCC)
 //'
 //' @description
-//' Calculate the Matthews Correlation Coefficient (MCC)
+//' The [mcc()]-function computes the [Matthews Correlation Coefficient](https://en.wikipedia.org/wiki/Matthews_correlation_coefficient) (MCC), also known as the \eqn{\phi}-coefficient, between
+//' two vectors of predicted and observed [factor()] values.
 //'
 //' @usage
 //' # 1) `mcc()`-function
@@ -17,9 +18,11 @@ using namespace Rcpp;
 //'   predicted
 //' )
 //'
+//' @example man/examples/scr_mcc.R
+//'
 //' @inherit precision
 //'
-//' @details
+//' @section Calculation:
 //'
 //' The MCC is calculated for each class \eqn{k} as follows,
 //'

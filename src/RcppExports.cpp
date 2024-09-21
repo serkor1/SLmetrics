@@ -357,6 +357,33 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// ccc
+double ccc(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, bool correction);
+RcppExport SEXP _SLmetrics_ccc(SEXP actualSEXP, SEXP predictedSEXP, SEXP correctionSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< bool >::type correction(correctionSEXP);
+    rcpp_result_gen = Rcpp::wrap(ccc(actual, predicted, correction));
+    return rcpp_result_gen;
+END_RCPP
+}
+// wccc
+double wccc(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w, bool correction);
+RcppExport SEXP _SLmetrics_wccc(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP correctionSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< bool >::type correction(correctionSEXP);
+    rcpp_result_gen = Rcpp::wrap(wccc(actual, predicted, w, correction));
+    return rcpp_result_gen;
+END_RCPP
+}
 // huberloss
 double huberloss(const NumericVector& actual, const NumericVector& predicted, const double& delta);
 RcppExport SEXP _SLmetrics_huberloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP deltaSEXP) {
@@ -601,6 +628,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_tnr", (DL_FUNC) &_SLmetrics_tnr, 3},
     {"_SLmetrics_selectivity", (DL_FUNC) &_SLmetrics_selectivity, 3},
     {"_SLmetrics_zerooneloss", (DL_FUNC) &_SLmetrics_zerooneloss, 2},
+    {"_SLmetrics_ccc", (DL_FUNC) &_SLmetrics_ccc, 3},
+    {"_SLmetrics_wccc", (DL_FUNC) &_SLmetrics_wccc, 4},
     {"_SLmetrics_huberloss", (DL_FUNC) &_SLmetrics_huberloss, 3},
     {"_SLmetrics_whuberloss", (DL_FUNC) &_SLmetrics_whuberloss, 4},
     {"_SLmetrics_mae", (DL_FUNC) &_SLmetrics_mae, 2},

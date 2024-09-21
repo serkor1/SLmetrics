@@ -6,7 +6,9 @@ using namespace Rcpp;
 //' Diagnostic Odds Ratio (DOR)
 //'
 //' @description
-//' Placeholder
+//' The [dor()]-function computes the [Diagnostic Odds Ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) (DOR), a single indicator of test performance, between
+//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average DOR across all classes \eqn{k}.
+//' By default, it returns the class-wise DOR.
 //'
 //' @usage
 //' # diagnostic odds ratio
@@ -16,7 +18,11 @@ using namespace Rcpp;
 //'   aggregate = FALSE
 //' )
 //'
-//' @details
+//' @example man/examples/scr_diagnosticodssratio.R
+//'
+//' @inherit specificity
+//'
+//' @section Calculation:
 //'
 //' The Diagnostic Odds Ratio (DOR) is calculated for each class \eqn{k} as follows,
 //'
@@ -32,7 +38,6 @@ using namespace Rcpp;
 //'   \frac{\sum_{k=1}^k \text{PLR}_k}{\sum_{k=1}^k \text{NLR}_k} = \frac{\sum_{k=1}^k (\text{Sensitivity}_k \times \text{Specificity}_k)}{\sum_{k=1}^k (1 - \text{Sensitivity}_k) \times (1 - \text{Specificity}_k)}
 //' }
 //'
-//' @inherit specificity
 //'
 //' @family classification
 //' @export

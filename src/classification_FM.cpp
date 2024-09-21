@@ -9,7 +9,8 @@ using namespace Rcpp;
 //' Fowlkes-Mallows Index (FMI)
 //'
 //' @description
-//' Calculate the Fowlkes-Mallows Index (FMI)
+//' The [fmi()]-function computes the [Fowlkes-Mallows Index](https://en.wikipedia.org/wiki/Fowlkes%E2%80%93Mallows_index) (FMI), a measure of the similarity between two sets of clusterings, between
+//' two vectors of predicted and observed [factor()] values.
 //'
 //' @usage
 //' # fowlkes-mallows index
@@ -18,9 +19,11 @@ using namespace Rcpp;
 //'   predicted
 //' )
 //'
+//' @example man/examples/scr_fmi.R
+//'
 //' @inherit specificity
 //'
-//' @details
+//' @section Calculation:
 //'
 //' The FMI Index is calculated for each class \eqn{k} as follows,
 //'

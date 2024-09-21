@@ -24,18 +24,23 @@ using namespace Rcpp;
 //' @example man/examples/scr_confusionmatrix.R
 //' @family classification
 //'
-//' @details
+//' @inherit specificity details
 //'
-//' If the function is correctly implemented the resulting
-//' confusion matrix is given as,
+//' @section Dimensions:
 //'
-//' |            | A (Predicted)        | B (Predicted)   |
-//' | ------------- |:-------------:| -----:|
-//' | A (Actual)   | Value     | Value |
-//' | B  (Actual)   |  Value    |  Value   |
+//' There is no robust defensive measure against misspecififying
+//' the confusion matrix. If the arguments are correctly specified, the resulting
+//' confusion matrix is on the form:
+//'
+//' |            | A (Predicted) | B (Predicted) |
+//' | :----------|:-------------:| -------------:|
+//' | A (Actual) | Value         | Value         |
+//' | B (Actual) | Value         | Value         |
 //'
 //'
-//' @returns A named \eqn{k} x \eqn{k} <[matrix]>
+//' @returns
+//'
+//' A named \eqn{k} x \eqn{k} <[matrix]> of [class] <cmatrix>
 //'
 //' @export
 // [[Rcpp::export]]

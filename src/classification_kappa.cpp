@@ -2,11 +2,12 @@
 #include <RcppEigen.h>
 #include "helpers.h"
 using namespace Rcpp;
-//' Cohens \eqn{\kappa}-statistic
+//' Cohen's \eqn{\kappa}-statistic
 //'
 //' @description
-//'
-//' Cohens
+//' The [kappa()]-function computes [Cohen's \eqn{\kappa}](https://en.wikipedia.org/wiki/Cohen%27s_kappa), a statistic that measures inter-rater agreement for categorical items between
+//' two vectors of predicted and observed [factor()] values. If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of
+//' \eqn{(y_{+} - y_{i,-})^\beta}. See below for further details.
 //'
 //' @usage
 //' kappa(
@@ -15,49 +16,18 @@ using namespace Rcpp;
 //'   beta = 0
 //' )
 //'
-//' @inheritParams cmatrix
+//' @example man/examples/scr_kappa.R
+//'
+//' @inherit specificity
+//'
+//' @inheritParams specificity
 //' @param beta A <[numeric]> value of [length] 1. 0 by default. If set to a value different from zero, the off-diagonal confusion matrix will be penalized.
 //'
 //'
-//' @details
-//' This function calculates the penalized kappa statistic as:
-//'
-//'   \deqn{\kappa = 1 - \frac{n_{disagree}}{n_{chance}}}
-//'
-//' where \eqn{n_{disagree}} is the weighted disagreement, and
-//' \eqn{n_{chance}} is the expected disagreement by chance. The function
-//' operates as follows:
-//'
-//' 1. **Confusion Matrix**: The confusion matrix \eqn{C} is calculated based
-//'    on the input vectors \code{actual} and \code{predicted}.
-//'
-//' 2. **Penalizing Matrix**: A penalizing matrix \eqn{P} is created using
-//'    \code{seqmat}, based on the dimensions of the confusion matrix.
-//'    The penalizing matrix assigns weights to each element based on the
-//'    absolute differences between the row and column indices, raised to the power \eqn{\beta}.
-//'    When \eqn{\beta = 0}, the matrix elements corresponding to perfect agreement
-//'    (i.e., the diagonal elements) are set to 0, while all other entries are set to 1.
-//'    For higher values of \eqn{\beta}, the penalties grow as the absolute difference between the
-//'    indices increases, giving greater penalization to more severe misclassifications.
-//'
-//' 3. **Weighted Disagreement**: The observed weighted disagreement \eqn{n_{disagree}}
-//'    is calculated as:
-//'    \deqn{n_{disagree} = \sum_{i,j} C(i,j) P(i,j)}
-//'    where \eqn{C(i,j)} is the confusion matrix entry at row \eqn{i}, column \eqn{j}, and
-//'    \eqn{P(i,j)} is the corresponding penalizing matrix entry.
-//'
-//' 4. **Expected Agreement**: The expected agreement by chance \eqn{n_{chance}} is
-//'    calculated based on the marginal row and column sums:
-//'    \deqn{n_{chance} = \sum_{i,j} \frac{R_i C_j}{N} P(i,j)}
-//'    where \eqn{R_i} is the sum of row \eqn{i} of the confusion matrix, \eqn{C_j} is the
-//'    sum of column \eqn{j}, and \eqn{N} is the total number of observations.
-//'
-//' The penalized kappa statistic then measures the agreement adjusted for chance,
-//' while penalizing different types of misclassifications depending on their severity
-//' (as controlled by \eqn{\beta}).
+//' @section Calculation
 //'
 //' @family classification
-//'
+//' @export
 // [[Rcpp::export]]
 double kappa(
     const Rcpp::IntegerVector& actual,

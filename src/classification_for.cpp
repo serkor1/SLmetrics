@@ -5,11 +5,15 @@ using namespace Rcpp;
 
 //' False Exclusion Rate (FER)
 //'
-//' The [fer()]-function calculates the False Omission Rate (FOR)
+//' @description
+//' The [fer()]-function computes the [False Omission Rate](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate) (FOR), the proportion of false negatives among the predicted negatives, between
+//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average FOR across all classes \eqn{k}.
+//' By default, it returns the class-wise FOR.
 //'
+//' @example man/examples/scr_for.R
 //'
 //' @usage
-//' # false omission rate
+//' # false exclusion rate
 //' fer(
 //'   actual,
 //'   predicted,
@@ -18,7 +22,7 @@ using namespace Rcpp;
 //'
 //' @inherit specificity
 //'
-//' @details
+//' @section Calculation:
 //'
 //' The False Omission Rate (FOR) is calculated for each class \eqn{k} as follows,
 //'

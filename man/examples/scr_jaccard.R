@@ -1,53 +1,52 @@
-# 1) assume that actual
-# and predicted are class labels
-# from some model
-actual <- factor(
-  x = sample(
-    x = 1:3,
-    size = 10,
-    replace = TRUE,
-    prob = c(0.1,0.1,0.8)
+# 1) recode Iris
+# to binary classification
+# problem
+iris$Species <- factor(
+  x = as.numeric(
+    iris$Species == "virginica"
   ),
-  levels = c(1:4),
-  labels = letters[1:4]
+  levels = c(1,0),
+  labels = c("virginica", "others")
 )
 
-# 1.2) predicted
-# values
-predicted <- factor(
-  x = sample(
-    x = 1:4,
-    size = 10,
-    replace = TRUE,
-    prob = c(0.1,0.1,0.8,0)
-  ),
-  levels = c(1:4),
-  labels = letters[1:4]
+# 2) fit the logistic
+# regression
+model <- glm(
+  formula = Species ~ Sepal.Length + Sepal.Width,
+  data    = iris,
+  family = binomial(
+    link = "logit"
+  )
 )
 
-# 2) evaluate the
-# performance of all classes
+# 3) generate predicted
+# classes
+predicted <- as.factor(
+  ifelse(
+    predict(model, type = "response") > 0.5,
+    yes = "virginica",
+    no  = "others"
+  )
+)
+
+# 4) evaluate performance
+# 4.1) by class
 jaccard(
-  actual    = actual,
+  actual    = iris$Species,
   predicted = predicted
 )
 
-# 3) evaluate the
-# overall performance
-# with micro averaging
-jaccard(
-  actual    = actual,
-  predicted = predicted,
-  aggregate = TRUE
-)
-
-# 4) evaluate the
-# overall performance
-# with macro averaging
+# 4.2) macro-average
 mean(
   jaccard(
-    actual    = actual,
-    predicted = predicted,
-    aggregate = FALSE
+    actual    = iris$Species,
+    predicted = predicted
   )
+)
+
+# 4.3) micro-average
+jaccard(
+  actual    = iris$Species,
+  predicted = predicted,
+  aggregate = TRUE
 )

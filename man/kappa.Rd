@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{kappa}
 \alias{kappa}
-\title{Cohens \eqn{\kappa}-statistic}
+\title{Cohen's \eqn{\kappa}-statistic}
 \usage{
 kappa(
   actual,
@@ -17,43 +17,87 @@ kappa(
 
 \item{beta}{A <\link{numeric}> value of \link{length} 1. 0 by default. If set to a value different from zero, the off-diagonal confusion matrix will be penalized.}
 }
+\value{
+If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vector of \link{length} k
+
+If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
+}
 \description{
-Cohens
+The \code{\link[=kappa]{kappa()}}-function computes \href{https://en.wikipedia.org/wiki/Cohen\%27s_kappa}{Cohen's \eqn{\kappa}}, a statistic that measures inter-rater agreement for categorical items between
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values. If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of
+\eqn{(y_{+} - y_{i,-})^\beta}. See below for further details.
 }
 \details{
-This function calculates the penalized kappa statistic as:
+Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
 
-\deqn{\kappa = 1 - \frac{n_{disagree}}{n_{chance}}}
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## actual
+factor(
+  x = sample(x = 1:3, size = 10, replace = TRUE),
+  levels = c(1, 2, 3),
+  labels = c("A", "B", "C")
+)
+#>  [1] B B B B A C A B A A
+#> Levels: A B C
+}\if{html}{\out{</div>}}
 
-where \eqn{n_{disagree}} is the weighted disagreement, and
-\eqn{n_{chance}} is the expected disagreement by chance. The function
-operates as follows:
-\enumerate{
-\item \strong{Confusion Matrix}: The confusion matrix \eqn{C} is calculated based
-on the input vectors \code{actual} and \code{predicted}.
-\item \strong{Penalizing Matrix}: A penalizing matrix \eqn{P} is created using
-\code{seqmat}, based on the dimensions of the confusion matrix.
-The penalizing matrix assigns weights to each element based on the
-absolute differences between the row and column indices, raised to the power \eqn{\beta}.
-When \eqn{\beta = 0}, the matrix elements corresponding to perfect agreement
-(i.e., the diagonal elements) are set to 0, while all other entries are set to 1.
-For higher values of \eqn{\beta}, the penalties grow as the absolute difference between the
-indices increases, giving greater penalization to more severe misclassifications.
-\item \strong{Weighted Disagreement}: The observed weighted disagreement \eqn{n_{disagree}}
-is calculated as:
-\deqn{n_{disagree} = \sum_{i,j} C(i,j) P(i,j)}
-where \eqn{C(i,j)} is the confusion matrix entry at row \eqn{i}, column \eqn{j}, and
-\eqn{P(i,j)} is the corresponding penalizing matrix entry.
-\item \strong{Expected Agreement}: The expected agreement by chance \eqn{n_{chance}} is
-calculated based on the marginal row and column sums:
-\deqn{n_{chance} = \sum_{i,j} \frac{R_i C_j}{N} P(i,j)}
-where \eqn{R_i} is the sum of row \eqn{i} of the confusion matrix, \eqn{C_j} is the
-sum of column \eqn{j}, and \eqn{N} is the total number of observations.
+Here, the values 1, 2, and 3 are mapped to \code{A}, \code{B}, and \code{C}, respectively. Now, suppose your model does not predict any \code{B}'s. The predicted vector of \code{\link[=factor]{factor()}} values would be defined as follows:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## predicted
+factor(
+  x = sample(x = c(1, 3), size = 10, replace = TRUE),
+  levels = c(1, 2, 3),
+  labels = c("A", "B", "C")
+)
+#>  [1] A C C C C C C A A C
+#> Levels: A B C
+}\if{html}{\out{</div>}}
+
+In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
+}
+\section{Calculation}{
+NA
 }
 
-The penalized kappa statistic then measures the agreement adjusted for chance,
-while penalizing different types of misclassifications depending on their severity
-(as controlled by \eqn{\beta}).
+\examples{
+# 1) recode Iris
+# to binary classification
+# problem
+iris$Species <- factor(
+  x = as.numeric(
+    iris$Species == "virginica"
+  ),
+  levels = c(1,0),
+  labels = c("virginica", "others")
+)
+
+# 2) fit the logistic
+# regression
+model <- glm(
+  formula = Species ~ Sepal.Length + Sepal.Width,
+  data    = iris,
+  family = binomial(
+    link = "logit"
+  )
+)
+
+# 3) generate predicted
+# classes
+predicted <- as.factor(
+  ifelse(
+    predict(model, type = "response") > 0.5,
+    yes = "virginica",
+    no  = "others"
+  )
+)
+
+# 4) kappa statistic
+# with namespace qualified
+# call to avoid conflict
+# with base R
+SLmetrics::kappa(
+  actual    = iris$Species,
+  predicted = predicted
+)
 }
 \seealso{
 Other classification: 

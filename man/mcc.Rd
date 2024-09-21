@@ -26,72 +26,83 @@ phi(
 A named <\link{numeric}> vector of length k
 }
 \description{
-Calculate the Matthews Correlation Coefficient (MCC)
+The \code{\link[=mcc]{mcc()}}-function computes the \href{https://en.wikipedia.org/wiki/Matthews_correlation_coefficient}{Matthews Correlation Coefficient} (MCC), also known as the \eqn{\phi}-coefficient, between
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
 }
 \details{
+Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## actual
+factor(
+  x = sample(x = 1:3, size = 10, replace = TRUE),
+  levels = c(1, 2, 3),
+  labels = c("A", "B", "C")
+)
+#>  [1] B B B B A C A B A A
+#> Levels: A B C
+}\if{html}{\out{</div>}}
+
+Here, the values 1, 2, and 3 are mapped to \code{A}, \code{B}, and \code{C}, respectively. Now, suppose your model does not predict any \code{B}'s. The predicted vector of \code{\link[=factor]{factor()}} values would be defined as follows:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## predicted
+factor(
+  x = sample(x = c(1, 3), size = 10, replace = TRUE),
+  levels = c(1, 2, 3),
+  labels = c("A", "B", "C")
+)
+#>  [1] A C C C C C C A A C
+#> Levels: A B C
+}\if{html}{\out{</div>}}
+
+In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
+}
+\section{Calculation}{
+
+
 The MCC is calculated for each class \eqn{k} as follows,
 
 \deqn{
   \frac{\#TP_k \times \#TN_k - \#FP_k \times \#FN_k}{\sqrt{(\#TP_k + \#FP_k)(\#TP_k + \#FN_k)(\#TN_k + \#FP_k)(\#TN_k + \#FN_k)}}
 }
 }
+
 \examples{
-# 1) assume that actual
-# and predicted are class labels
-# from some model
-actual <- sample(
-  x = letters[1:3],
-  size = 100,
-  replace = TRUE,
-  prob = c(0.2,0.2,0.6)
+# 1) recode Iris
+# to binary classification
+# problem
+iris$Species <- factor(
+  x = as.numeric(
+    iris$Species == "virginica"
+  ),
+  levels = c(1,0),
+  labels = c("virginica", "others")
 )
 
-predicted <- sample(
-  x = letters[1:3],
-  size = 100,
-  replace = TRUE,
-  prob = c(0.2,0.2,0.6)
-)
-
-# 1.1) convert to factor
-# variable
-actual <- factor(
-  x = actual,
-  levels = letters[1:3]
-)
-
-predicted <- factor(
-  x = predicted,
-  levels = letters[1:3]
-)
-
-
-# 2) evaluate the
-# performance
-
-# 2.1) classwise performance
-# evaluation
-precision(
-  actual    = actual,
-  predicted = predicted
-)
-
-# 2.1) average performance
-# evaluation using micro-averaging
-precision(
-  actual    = actual,
-  predicted = predicted,
-  aggregate = TRUE
-)
-
-# 2.1) average performance
-# evaluation using macro-averaging
-mean(
-  precision(
-    actual    = actual,
-    predicted = predicted,
-    aggregate = FALSE
+# 2) fit the logistic
+# regression
+model <- glm(
+  formula = Species ~ Sepal.Length + Sepal.Width,
+  data    = iris,
+  family = binomial(
+    link = "logit"
   )
+)
+
+# 3) generate predicted
+# classes
+predicted <- as.factor(
+  ifelse(
+    predict(model, type = "response") > 0.5,
+    yes = "virginica",
+    no  = "others"
+  )
+)
+
+# 4) evaluate performance
+# 4.1) by class
+mcc(
+  actual    = iris$Species,
+  predicted = predicted
 )
 }
 \seealso{

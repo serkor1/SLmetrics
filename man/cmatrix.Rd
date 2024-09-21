@@ -15,7 +15,7 @@ cmatrix(
 \item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 }
 \value{
-A named \eqn{k} x \eqn{k} <\link{matrix}>
+A named \eqn{k} x \eqn{k} <\link{matrix}> of \link{class} \if{html}{\out{<cmatrix>}}
 }
 \description{
 The \code{\link[=cmatrix]{cmatrix()}}-function uses cross-classifying factors to build
@@ -24,48 +24,79 @@ Each row of the \link{matrix} represents the actual \link{factor} levels, while 
 column represents the predicted \link{factor} levels.
 }
 \details{
-If the function is correctly implemented the resulting
-confusion matrix is given as,\tabular{lcr}{
+Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## actual
+factor(
+  x = sample(x = 1:3, size = 10, replace = TRUE),
+  levels = c(1, 2, 3),
+  labels = c("A", "B", "C")
+)
+#>  [1] B B B B A C A B A A
+#> Levels: A B C
+}\if{html}{\out{</div>}}
+
+Here, the values 1, 2, and 3 are mapped to \code{A}, \code{B}, and \code{C}, respectively. Now, suppose your model does not predict any \code{B}'s. The predicted vector of \code{\link[=factor]{factor()}} values would be defined as follows:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## predicted
+factor(
+  x = sample(x = c(1, 3), size = 10, replace = TRUE),
+  levels = c(1, 2, 3),
+  labels = c("A", "B", "C")
+)
+#>  [1] A C C C C C C A A C
+#> Levels: A B C
+}\if{html}{\out{</div>}}
+
+In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
+}
+\section{Dimensions}{
+
+
+There is no robust defensive measure against misspecififying
+the confusion matrix. If the arguments are correctly specified, the resulting
+confusion matrix is on the form:\tabular{lcr}{
     \tab A (Predicted) \tab B (Predicted) \cr
    A (Actual) \tab Value \tab Value \cr
-   B  (Actual) \tab Value \tab Value \cr
+   B (Actual) \tab Value \tab Value \cr
 }
 }
+
 \examples{
-# 1) assume that actual
-# and predicted are class labels
-# from some model
-actual <- sample(
-  x = letters[1:3],
-  size = 100,
-  replace = TRUE,
-  prob = c(0.2,0.2,0.6)
+# 1) recode Iris
+# to binary classification
+# problem
+iris$Species <- factor(
+  x = as.numeric(
+    iris$Species == "virginica"
+  ),
+  levels = c(1,0),
+  labels = c("virginica", "others")
 )
 
-predicted <- sample(
-  x = letters[1:3],
-  size = 100,
-  replace = TRUE,
-  prob = c(0.2,0.2,0.6)
+# 2) fit the logistic
+# regression
+model <- glm(
+  formula = Species ~ Sepal.Length + Sepal.Width,
+  data    = iris,
+  family = binomial(
+    link = "logit"
+  )
 )
 
-# 1.1) convert to factor
-# variable
-actual <- factor(
-  x = actual,
-  levels = letters[1:3]
+# 3) generate predicted
+# classes
+predicted <- as.factor(
+  ifelse(
+    predict(model, type = "response") > 0.5,
+    yes = "virginica",
+    no  = "others"
+  )
 )
 
-predicted <- factor(
-  x = predicted,
-  levels = letters[1:3]
-)
-
-
-# 2) evaluate the
-# performance
+# 4) confusion matrix
 cmatrix(
-  actual    = actual,
+  actual    = iris$Species,
   predicted = predicted
 )
 }

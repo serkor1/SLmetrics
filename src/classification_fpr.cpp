@@ -6,7 +6,9 @@ using namespace Rcpp;
 //' False Positive Rate (FPR)
 //'
 //' @description
-//' Calculate the False Positive Rate (FPR), also known as the fall-out rate ([fallout()]), which represents the proportion of negative instances that were incorrectly classified as positive.
+//' The [fpr()]-function computes the [False Positive Rate](https://en.wikipedia.org/wiki/False_positive_rate) (FPR), also known as the fall-out ([fallout()]), between
+//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average FPR across all classes \eqn{k}.
+//' By default, it returns the class-wise FPR.
 //'
 //' @usage
 //' # using`fpr()`
@@ -18,8 +20,9 @@ using namespace Rcpp;
 //'
 //' @inherit specificity
 //'
+//' @example man/examples/scr_fpr.R
 //'
-//' @details
+//' @section Calculation:
 //'
 //' The False Positive Rate (FPR) for each class \eqn{k} is calculated as follows,
 //'

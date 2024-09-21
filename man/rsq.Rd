@@ -11,9 +11,9 @@ rsq(
 )
 }
 \arguments{
-\item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{N}. The observed (continuous) response variable.}
+\item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}
 
-\item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{N}. The estimated (continuous) response variable.}
+\item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
 \item{k}{A <\link{numeric}>-vector of \link{length} 1. 0 by default. If \eqn{k>0}
 the function returns the adjusted \eqn{R^2}.}
@@ -70,6 +70,7 @@ whuberloss(
 }
 \seealso{
 Other regression: 
+\code{\link{ccc}()},
 \code{\link{huberloss}()},
 \code{\link{mae}()},
 \code{\link{mape}()},

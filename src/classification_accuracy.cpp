@@ -3,7 +3,8 @@ using namespace Rcpp;
 
 //' Accuracy
 //'
-//' Calculate the proportion of correct predictions.
+//' The [accuracy()]-function computes the [accuracy](https://en.wikipedia.org/wiki/Precision_and_recall) between two
+//' vectors of predicted and observed [factor()] values.
 //'
 //' @usage
 //' accuracy(
@@ -13,7 +14,7 @@ using namespace Rcpp;
 //'
 //' @inherit specificity
 //'
-//' @details
+//' @section Calculation:
 //'
 //' Accuracy is a global metric that measures the proportion of correct predictions (both true positives and true negatives) out of all predictions, and is calculated as follows,
 //'

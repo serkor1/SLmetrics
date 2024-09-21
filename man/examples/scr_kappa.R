@@ -29,24 +29,11 @@ predicted <- as.factor(
   )
 )
 
-# 4) evaluate performance
-# 4.1) by class
-recall(
+# 4) kappa statistic
+# with namespace qualified
+# call to avoid conflict
+# with base R
+SLmetrics::kappa(
   actual    = iris$Species,
   predicted = predicted
-)
-
-# 4.2) macro-average
-mean(
-  recall(
-    actual    = iris$Species,
-    predicted = predicted
-  )
-)
-
-# 4.3) micro-average
-recall(
-  actual    = iris$Species,
-  predicted = predicted,
-  aggregate = TRUE
 )

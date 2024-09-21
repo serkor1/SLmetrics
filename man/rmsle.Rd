@@ -19,9 +19,9 @@ wrmsle(
 )
 }
 \arguments{
-\item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{N}. The observed (continuous) response variable.}
+\item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}
 
-\item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{N}. The estimated (continuous) response variable.}
+\item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} N. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
 }
@@ -83,6 +83,7 @@ whuberloss(
 }
 \seealso{
 Other regression: 
+\code{\link{ccc}()},
 \code{\link{huberloss}()},
 \code{\link{mae}()},
 \code{\link{mape}()},

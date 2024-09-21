@@ -6,7 +6,11 @@ using namespace Rcpp;
 //' False Discovery Rate (FDR)
 //'
 //' @description
-//' Placeholder
+//' The [fdr()]-function computes the [False Discovery Rate](https://en.wikipedia.org/wiki/False_discovery_rate) (FDR), the proportion of false positives among the predicted positives, between
+//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average FDR across all classes \eqn{k}.
+//' By default, it returns the class-wise FDR.
+//'
+//' @example man/examples/scr_fdr.R
 //'
 //' @usage
 //' # false discovery rate;
@@ -16,9 +20,10 @@ using namespace Rcpp;
 //'   aggregate = FALSE
 //' )
 //'
+//'
 //' @inherit specificity
 //'
-//' @details
+//' @section Calculation:
 //'
 //' The False Discovery Rate (FDR). The metric is calculated for each class \eqn{k} as follows,
 //'

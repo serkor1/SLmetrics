@@ -3,11 +3,12 @@
 #include "helpers.h"
 using namespace Rcpp;
 
-
 //' Recall (Sensitivity)
 //'
 //' @description
-//' Calculate the sensitivity
+//' The [recall()]-function computes the [recall](https://en.wikipedia.org/wiki/Sensitivity_and_specificity), also known as sensitivity or the True Positive Rate (TPR), between
+//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average recall across all classes \eqn{k}.
+//' By default, it returns the class-wise recall.
 //'
 //' @usage
 //'  # 1) `recall()`-function
@@ -19,7 +20,9 @@ using namespace Rcpp;
 //'
 //' @inherit specificity
 //'
-//' @details
+//' @example man/examples/scr_recall.R
+//'
+//' @section Calculation:
 //'
 //' The Sensitivity (SEN), also known as Recall or True Positive Rate (TPR). The metric is calculated for each class \eqn{k} as follows,
 //'

@@ -6,7 +6,10 @@ using namespace Rcpp;
 //' Specificity (True Negative Rate)
 //'
 //' @description
-//' Calculate the specificity
+//' The  [specificity()]-function computes the [specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity), also known as the True Negative Rate (TNR) or selectivity, between
+//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average specificity across all classes \eqn{k}.
+//' By default, it returns the class-wise specificity.
+//'
 //'
 //' @usage
 //' # using `specificity()`
@@ -23,6 +26,40 @@ using namespace Rcpp;
 //'
 //' @details
 //'
+//' Consider a classification problem with three classes: `A`, `B`, and `C`. The actual vector of [factor()] values is defined as follows:
+//'
+//' ```{r output, echo = TRUE}
+//' ## actual
+//' factor(
+//'   x = sample(x = 1:3, size = 10, replace = TRUE),
+//'   levels = c(1, 2, 3),
+//'   labels = c("A", "B", "C")
+//' )
+//' ```
+//'
+//' Here, the values 1, 2, and 3 are mapped to `A`, `B`, and `C`, respectively. Now, suppose your model does not predict any `B`'s. The predicted vector of [factor()] values would be defined as follows:
+//'
+//' ```{r output, echo = TRUE}
+//' ## predicted
+//' factor(
+//'   x = sample(x = c(1, 3), size = 10, replace = TRUE),
+//'   levels = c(1, 2, 3),
+//'   labels = c("A", "B", "C")
+//' )
+//' ```
+//'
+//' In both cases, \eqn{k = 3}, determined indirectly by the `levels` argument.
+//'
+//' @returns
+//'
+//' If `aggregate` is [FALSE] (the default), a named <[numeric]>-vector of [length] k
+//'
+//' If `aggregate` is [TRUE], a <[numeric]>-vector of [length] 1
+//'
+//' @example man/examples/scr_specificity.R
+//'
+//'
+//' @section Calculation:
 //' The metric is calculated for each class \eqn{k} as follows,
 //'
 //' \deqn{
@@ -37,13 +74,6 @@ using namespace Rcpp;
 //'   \frac{\sum_{k=1}^k \#TN_k}{\sum_{k=1}^k \#TN_k + \sum_{k=1}^k \#FP_k}
 //' }
 //'
-//' @returns
-//'
-//' If `aggregate` is [FALSE] (the default), a named <[numeric]>-vector of [length] k
-//'
-//' If `aggregate` is [TRUE], a <[numeric]>-vector of [length] 1
-//'
-//' @example man/examples/scr_specificity.R
 //'
 //' @family classification
 //'
@@ -118,42 +148,42 @@ NumericVector specificity(
 }
 
 //' @rdname specificity
-    //'
-    //' @usage
-    //' # using `tnr()`
-    //' tnr(
-    //'   actual,
-    //'   predicted,
-    //'   aggregate = FALSE
-    //' )
-    //'
-    //' @export
-    // [[Rcpp::export]]
-    NumericVector tnr(
-          const IntegerVector& actual,
-          const IntegerVector& predicted,
-          const bool& aggregate = false) {
+//'
+//' @usage
+//' # using `tnr()`
+//' tnr(
+//'   actual,
+//'   predicted,
+//'   aggregate = FALSE
+//' )
+//'
+//' @export
+// [[Rcpp::export]]
+NumericVector tnr(
+      const IntegerVector& actual,
+      const IntegerVector& predicted,
+      const bool& aggregate = false) {
 
-       return specificity(actual, predicted, aggregate);
+   return specificity(actual, predicted, aggregate);
 
-    }
+}
 
 //' @rdname specificity
-    //'
-    //' @usage
-    //' # using `selectivity()`
-    //' selectivity(
-    //'   actual,
-    //'   predicted,
-    //'   aggregate = FALSE
-    //' )
-    //' @export
-    // [[Rcpp::export]]
-    NumericVector selectivity(
-          const IntegerVector& actual,
-          const IntegerVector& predicted,
-          const bool& aggregate = false) {
+//'
+//' @usage
+//' # using `selectivity()`
+//' selectivity(
+//'   actual,
+//'   predicted,
+//'   aggregate = FALSE
+//' )
+//' @export
+// [[Rcpp::export]]
+NumericVector selectivity(
+      const IntegerVector& actual,
+      const IntegerVector& predicted,
+      const bool& aggregate = false) {
 
-       return specificity(actual, predicted, aggregate);
+   return specificity(actual, predicted, aggregate);
 
-    }
+}

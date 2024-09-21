@@ -1,10 +1,12 @@
 #include <Rcpp.h>
 #include "declarations.h"
 using namespace Rcpp;
-//' Generalized F Score
+//' \eqn{F_{\beta}}-score
 //'
 //' @description
-//' Calculate the F Score
+//' The [fbeta()]-function computes the [F-beta score](https://en.wikipedia.org/wiki/F1_score), a weighted harmonic mean of precision and recall, between
+//' two vectors of predicted and observed [factor()] values. The parameter \eqn{\beta} determines the weight of precision and recall in the combined score. When `aggregate = TRUE`, the function returns the micro-average F-beta score across all classes \eqn{k}.
+//' By default, it returns the class-wise F-beta score.
 //'
 //' @usage
 //' # fbeta-score
@@ -15,13 +17,15 @@ using namespace Rcpp;
 //'   aggregate = FALSE
 //' )
 //'
+//' @example man/examples/scr_fbeta.R
+//'
 //' @inherit specificity
 //'
 //' @param beta A <[numeric]> vector of length 1. 1 by default, see details.
 //' @param aggregate A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] it returns the
 //' micro average across all k-classes
 //'
-//' @details
+//' @section Calculation:
 //'
 //'
 //' The F-beta score is a weighted harmonic mean of precision and recall, calculated for each class \eqn{k} as follows,
@@ -40,7 +44,7 @@ using namespace Rcpp;
 //'
 //'
 //' @family classification
-//'
+//' @export
 // [[Rcpp::export]]
 NumericVector fbeta(
     const IntegerVector& actual,

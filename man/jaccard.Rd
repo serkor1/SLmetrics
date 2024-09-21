@@ -41,9 +41,40 @@ If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vect
 If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The Jaccard Index measures similarity between finite sample sets and is defined as the size of the intersection divided by the size of the union of the sample sets.
+The \code{\link[=jaccard]{jaccard()}}-function computes the \href{https://en.wikipedia.org/wiki/Jaccard_index}{Jaccard Index}, also known as the Intersection over Union, between
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values. When \code{aggregate = TRUE}, the function returns the micro-average Jaccard Index across all classes \eqn{k}.
+By default, it returns the class-wise Jaccard Index.
 }
 \details{
+Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## actual
+factor(
+  x = sample(x = 1:3, size = 10, replace = TRUE),
+  levels = c(1, 2, 3),
+  labels = c("A", "B", "C")
+)
+#>  [1] B B B B A C A B A A
+#> Levels: A B C
+}\if{html}{\out{</div>}}
+
+Here, the values 1, 2, and 3 are mapped to \code{A}, \code{B}, and \code{C}, respectively. Now, suppose your model does not predict any \code{B}'s. The predicted vector of \code{\link[=factor]{factor()}} values would be defined as follows:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## predicted
+factor(
+  x = sample(x = c(1, 3), size = 10, replace = TRUE),
+  levels = c(1, 2, 3),
+  labels = c("A", "B", "C")
+)
+#>  [1] A C C C C C C A A C
+#> Levels: A B C
+}\if{html}{\out{</div>}}
+
+In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
+}
+\section{Calculation}{
+
+
 The Jaccard Index is calculated for each class \eqn{k} as follows,
 
 \deqn{
@@ -58,59 +89,59 @@ When \code{aggregate = TRUE}, the micro-average is calculated as,
   \frac{\sum_{i = 1}^{k} TP_i}{\sum_{i = 1}^{k} TP_i + \sum_{i = 1}^{k} FP_k + \sum_{i = 1}^{k} FN_k}
 }
 }
+
 \examples{
-# 1) assume that actual
-# and predicted are class labels
-# from some model
-actual <- factor(
-  x = sample(
-    x = 1:3,
-    size = 10,
-    replace = TRUE,
-    prob = c(0.1,0.1,0.8)
+# 1) recode Iris
+# to binary classification
+# problem
+iris$Species <- factor(
+  x = as.numeric(
+    iris$Species == "virginica"
   ),
-  levels = c(1:4),
-  labels = letters[1:4]
+  levels = c(1,0),
+  labels = c("virginica", "others")
 )
 
-# 1.2) predicted
-# values
-predicted <- factor(
-  x = sample(
-    x = 1:4,
-    size = 10,
-    replace = TRUE,
-    prob = c(0.1,0.1,0.8,0)
-  ),
-  levels = c(1:4),
-  labels = letters[1:4]
+# 2) fit the logistic
+# regression
+model <- glm(
+  formula = Species ~ Sepal.Length + Sepal.Width,
+  data    = iris,
+  family = binomial(
+    link = "logit"
+  )
 )
 
-# 2) evaluate the
-# performance of all classes
+# 3) generate predicted
+# classes
+predicted <- as.factor(
+  ifelse(
+    predict(model, type = "response") > 0.5,
+    yes = "virginica",
+    no  = "others"
+  )
+)
+
+# 4) evaluate performance
+# 4.1) by class
 jaccard(
-  actual    = actual,
+  actual    = iris$Species,
   predicted = predicted
 )
 
-# 3) evaluate the
-# overall performance
-# with micro averaging
-jaccard(
-  actual    = actual,
-  predicted = predicted,
-  aggregate = TRUE
-)
-
-# 4) evaluate the
-# overall performance
-# with macro averaging
+# 4.2) macro-average
 mean(
   jaccard(
-    actual    = actual,
-    predicted = predicted,
-    aggregate = FALSE
+    actual    = iris$Species,
+    predicted = predicted
   )
+)
+
+# 4.3) micro-average
+jaccard(
+  actual    = iris$Species,
+  predicted = predicted,
+  aggregate = TRUE
 )
 }
 \seealso{

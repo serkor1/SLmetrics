@@ -5,9 +5,10 @@ using namespace Rcpp;
 
 //' Precision (Positive Predictive Value)
 //'
-//'
 //' @description
-//' Calculate the Precision
+//' The [precision()]-function computes the [precision](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values), also known as the Positive Predictive Value (PPV), between
+//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average precision across all classes \eqn{k}.
+//' By default, it returns the class-wise precision.
 //'
 //' @usage
 //' # 1) `precision()`-function
@@ -19,7 +20,7 @@ using namespace Rcpp;
 //'
 //' @inherit specificity
 //'
-//' @details
+//' @section Calculation:
 //'
 //' The Precision (Positive Predictive Value, PPV) is calculated for each class \eqn{k} as follows,
 //'

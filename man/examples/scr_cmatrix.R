@@ -1,32 +1,36 @@
-# 1) assume that actual
-# and predicted are class labels
-# from some model
-actual <- factor(
-  x = sample(
-    x = 1:4,
-    size = 1e3,
-    replace = TRUE
+# 1) recode Iris
+# to binary classification
+# problem
+iris$Species <- factor(
+  x = as.numeric(
+    iris$Species == "virginica"
   ),
-  levels = c(1:4),
-  labels = letters[1:4]
+  levels = c(1,0),
+  labels = c("virginica", "others")
 )
 
-# 1.2) predicted
-# values
-predicted <- factor(
-  x = sample(
-    x = 1:4,
-    size = 1e3,
-    replace = TRUE
-  ),
-  levels = c(1:4),
-  labels = letters[1:4]
+# 2) fit the logistic
+# regression
+model <- glm(
+  formula = Species ~ Sepal.Length + Sepal.Width,
+  data    = iris,
+  family = binomial(
+    link = "logit"
+  )
 )
 
+# 3) generate predicted
+# classes
+predicted <- as.factor(
+  ifelse(
+    predict(model, type = "response") > 0.5,
+    yes = "virginica",
+    no  = "others"
+  )
+)
 
-# 2) generate confusion
-# matrix
+# 4) confusion matrix
 cmatrix(
-  actual,
-  predicted
+  actual    = iris$Species,
+  predicted = predicted
 )

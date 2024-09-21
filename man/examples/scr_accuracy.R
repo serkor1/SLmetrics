@@ -1,36 +1,37 @@
-# 1) assume that actual
-# and predicted are class labels
-# from some model
-actual <- sample(
-  x = letters[1:3],
-  size = 100,
-  replace = TRUE,
-  prob = c(0.2,0.2,0.6)
+# 1) recode Iris
+# to binary classification
+# problem
+iris$Species <- factor(
+  x = as.numeric(
+    iris$Species == "virginica"
+  ),
+  levels = c(1,0),
+  labels = c("virginica", "others")
 )
 
-predicted <- sample(
-  x = letters[1:3],
-  size = 100,
-  replace = TRUE,
-  prob = c(0.2,0.2,0.6)
+# 2) fit the logistic
+# regression
+model <- glm(
+  formula = Species ~ Sepal.Length + Sepal.Width,
+  data    = iris,
+  family = binomial(
+    link = "logit"
+  )
 )
 
-# 1.1) convert to factor
-# variable
-actual <- factor(
-  x = actual,
-  levels = letters[1:3]
+# 3) generate predicted
+# classes
+predicted <- as.factor(
+  ifelse(
+    predict(model, type = "response") > 0.5,
+    yes = "virginica",
+    no  = "others"
+  )
 )
 
-predicted <- factor(
-  x = predicted,
-  levels = letters[1:3]
-)
-
-
-# 2) evaluate the
-# performance
+# 4) evaluate the
+# model
 accuracy(
-  actual    = actual,
+  actual    = iris$Species,
   predicted = predicted
 )

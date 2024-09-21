@@ -7,7 +7,9 @@ using namespace Rcpp;
 //' Jaccard Index
 //'
 //' @description
-//' The Jaccard Index measures similarity between finite sample sets and is defined as the size of the intersection divided by the size of the union of the sample sets.
+//' The [jaccard()]-function computes the [Jaccard Index](https://en.wikipedia.org/wiki/Jaccard_index), also known as the Intersection over Union, between
+//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average Jaccard Index across all classes \eqn{k}.
+//' By default, it returns the class-wise Jaccard Index.
 //'
 //' @usage
 //' # using `jaccard()`-function
@@ -19,7 +21,7 @@ using namespace Rcpp;
 //'
 //' @inherit specificity
 //'
-//' @details
+//' @section Calculation:
 //'
 //' The Jaccard Index is calculated for each class \eqn{k} as follows,
 //'

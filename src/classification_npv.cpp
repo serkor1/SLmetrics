@@ -6,7 +6,9 @@ using namespace Rcpp;
 //' Negative Predictive Value (NPV)
 //'
 //' @description
-//' Calculate the sensitivity
+//' The [npv()]-function computes the [negative predictive value](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values), also known as the True Negative Predictive Value, between
+//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average NPV across all classes \eqn{k}.
+//' By default, it returns the class-wise NPV.
 //'
 //' @usage
 //' npv(
@@ -17,7 +19,9 @@ using namespace Rcpp;
 //'
 //' @inherit specificity
 //'
-//' @details
+//' @example man/examples/scr_npv.R
+//'
+//' @section Calculation:
 //'
 //' The Negative Predictive Value (NPV) is calculated for each class \eqn{k} as follows,
 //'

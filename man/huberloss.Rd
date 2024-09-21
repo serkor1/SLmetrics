@@ -21,9 +21,9 @@ whuberloss(
 )
 }
 \arguments{
-\item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{N}. The observed (continuous) response variable.}
+\item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}
 
-\item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{N}. The estimated (continuous) response variable.}
+\item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
 \item{delta}{A <\link{numeric}>-vector of \link{length} 1. 1 by default. The threshold value for switch between functions (see details).}
 
@@ -87,6 +87,7 @@ whuberloss(
 }
 \seealso{
 Other regression: 
+\code{\link{ccc}()},
 \code{\link{mae}()},
 \code{\link{mape}()},
 \code{\link{mpe}()},

@@ -29,24 +29,51 @@ predicted <- as.factor(
   )
 )
 
-# 4) evaluate performance
-# 4.1) by class
-recall(
+# 4) F1-score for each
+# class
+fbeta(
   actual    = iris$Species,
   predicted = predicted
 )
 
-# 4.2) macro-average
+# 4.1) micro-averaged F1 score
+fbeta(
+  actual    = iris$Species,
+  predicted = predicted,
+  aggregate = TRUE
+)
+
+# 4.2 macro-averaged F1 score
 mean(
-  recall(
+  fbeta(
     actual    = iris$Species,
     predicted = predicted
   )
 )
 
-# 4.3) micro-average
-recall(
+# 5) F-score each class
+# with beta 2
+fbeta(
   actual    = iris$Species,
   predicted = predicted,
+  beta      = 2
+)
+
+# 4.1) micro-averaged F-score
+# with beta 2
+fbeta(
+  actual    = iris$Species,
+  predicted = predicted,
+  beta      = 2,
   aggregate = TRUE
+)
+
+# 4.2 macro-averaged F-score
+# with beta 2
+mean(
+  fbeta(
+    actual    = iris$Species,
+    predicted = predicted,
+    beta      = 2
+  )
 )

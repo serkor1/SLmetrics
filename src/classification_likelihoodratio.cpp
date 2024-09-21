@@ -3,7 +3,13 @@
 #include "helpers.h"
 using namespace Rcpp;
 
-//' Positive Likelihood (LR+)
+//' Positive Likelihood Ratio (PLR)
+//'
+//' @description
+//' The [plr()]-function computes the [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing), also known as the likelihood ratio for positive results, between
+//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average PLR across all classes \eqn{k}.
+//' By default, it returns the class-wise PLR.
+//'
 //' @usage
 //' plr(
 //'   actual,
@@ -11,9 +17,11 @@ using namespace Rcpp;
 //'   aggregate = FALSE
 //' )
 //'
+//' @example man/examples/scr_plr_nlr.R
+//'
 //' @inherit specificity
 //'
-//' @details
+//' @section Calculation:
 //'
 //' The Positive Likelihood Ratio (PLR) is calculated for each class \eqn{k} as follows,
 //'
@@ -94,8 +102,12 @@ NumericVector plr(
  return output;
 }
 
-//' Negative Likelihood Ratio (LR-)
+//' Negative Likelihood Ratio (NLR)
 //'
+//' @description
+//' The [nlr()]-function computes the [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing), also known as the likelihood ratio for negative results, between
+//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average NLR across all classes \eqn{k}.
+//' By default, it returns the class-wise NLR.
 //'
 //' @usage
 //' nlr(
@@ -104,9 +116,11 @@ NumericVector plr(
 //'   aggregate = FALSE
 //' )
 //'
+//' @example man/examples/scr_plr_nlr.R
+//'
 //' @inherit specificity
 //'
-//' @details
+//' @section Calculation:
 //'
 //' The Negative Likelihood Ratio (NLR) is calculated for each class \eqn{k} as follows,
 //'
