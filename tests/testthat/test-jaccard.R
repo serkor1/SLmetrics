@@ -6,8 +6,14 @@
 # script start;
 
 testthat::test_that(
-  desc = "Test that `jaccard()` and aliases works as intended (Has to return either a sinlge value or k values",
+  desc = "Test that `jaccard()` matches sklearn, and returns the k-classes",
   code = {
+
+    # 0) source the python
+    # program
+    reticulate::source_python(
+      "scikit-learn.py"
+    )
 
     # 1) create two vectors
     # of classes where one class
@@ -39,96 +45,76 @@ testthat::test_that(
       labels = letters[1:3]
     )
 
+    for (lgl in c(TRUE, FALSE)) {
 
-    # 2) evaluate the
-    # vectors using
-    # `jaccard()` and family
-    # without aggregation
-    testthat::expect_true(
-      length(
-        unique(
-          lapply(
-            X = list(
-              jaccard,
-              csi,
-              tscore
+      py_score <- py_jaccard(
+        actual    = actual,
+        predicted = predicted,
+        average   = if (lgl)
+          "micro"
+        else
+          NULL
+      )
+
+      sl_score <- jaccard(
+        actual    = actual,
+        predicted = predicted,
+        aggregate = lgl
+      )
+
+      # 1) expect all true
+      # for numeric and
+      # no NAs
+      testthat::expect_true(
+        all(
+          is.numeric(sl_score),
+          if (lgl)
+            !any(is.na(sl_score))
+          else
+            TRUE
+        )
+      )
+
+      testthat::expect_true(
+        all.equal(
+          target  = na.omit(sl_score),
+          current = py_score,
+          tolerance =  1e-9,
+          check.attributes = FALSE,
+          check.class = FALSE
+        )
+      )
+
+      if (!lgl) {
+
+        # If lgl = FALSE the macro average
+        # is found by mean(foo(..., aggregate = FALSE))
+
+        testthat::expect_true(
+          object = length(sl_score) == 3
+        )
+
+        testthat::expect_true(
+          all.equal(
+            target  = mean(
+              sl_score,
+              na.rm = TRUE
+              ),
+            current =  py_jaccard(
+              actual    = actual,
+              predicted = predicted,
+              average   = "macro"
             ),
-            FUN = function(f) {
+            tolerance =  1e-9,
+            check.attributes = FALSE,
+            check.class = FALSE
 
-              # 2.1) evaluate the
-              # performance
-              output <- f(actual, predicted)
-
-              # 2.2) check that the
-              # values are numeric
-              testthat::expect_true(
-                is.numeric(output)
-              )
-
-              # 2.2) check that no
-              # values are NA.
-              testthat::expect_true(
-                !any(is.na(output))
-              )
-
-              # 3) return
-              # all values
-              output
-
-            }
           )
         )
-      ) == 1
-    )
 
-    # 3) evaluate the
-    # vectors using
-    # `jaccard()` and family
-    # with aggregation
-    testthat::expect_true(
-      length(
-        unique(
-          lapply(
-            X = list(
-              jaccard,
-              csi,
-              tscore
-            ),
-            FUN = function(f) {
+      }
 
-              # 2.1) evaluate the
-              # performance
-              output <- f(actual, predicted, aggregate = TRUE)
-
-              # 2.2) check that the
-              # values are numeric
-              testthat::expect_true(
-                is.numeric(output)
-              )
-
-              # 2.2) check that no
-              # values are NA.
-              testthat::expect_true(
-                !any(is.na(output))
-              )
-
-              # 3) return
-              # all values
-              output
-
-            }
-          )
-        )
-      ) == 1
-    )
-
-
-
-
-
-
-
-
+    }
 
   }
 )
