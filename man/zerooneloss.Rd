@@ -30,7 +30,7 @@ factor(
   levels = c(1, 2, 3),
   labels = c("A", "B", "C")
 )
-#>  [1] C A C C C C C B A B
+#>  [1] B C C B B B A A A A
 #> Levels: A B C
 }\if{html}{\out{</div>}}
 
@@ -42,7 +42,7 @@ factor(
   levels = c(1, 2, 3),
   labels = c("A", "B", "C")
 )
-#>  [1] C C A C C C C C C C
+#>  [1] C C C A C C A C A C
 #> Levels: A B C
 }\if{html}{\out{</div>}}
 

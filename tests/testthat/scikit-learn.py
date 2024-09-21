@@ -65,3 +65,23 @@ def py_precision(actual, predicted, average = None):
       y_pred  = predicted,
       average = average
     )
+
+def py_accuracy(actual, predicted):
+    return metrics.accuracy_score(
+      y_true = actual,
+      y_pred = predicted
+    )
+    
+def py_cmatrix(actual, predicted):
+    return metrics.confusion_matrix(
+      y_true = actual,
+      y_pred = predicted
+    )
+    
+def py_entropy(actual, response, normalize = True):
+  return metrics.log_loss(
+      y_true    = actual,
+      y_pred    = response,
+      normalize = normalize
+  )
+  

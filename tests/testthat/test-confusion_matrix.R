@@ -1,53 +1,71 @@
-# script: test-confusion_matrix
-# author: Serkan Korkmaz
-# objective: Test that the cofidence interval
-# returns a named matrix based on number
-# of levels and names it according to the
-# labels
-# date: 2024-09-03
+# script: Test implementation confusion matrix
+# author: Serkan Korkmaz, serkor1@duck.com
+# date: 2024-09-21
+# objective: Check that the implementation
+# matches that of sklearn
+# script start;
 # start of script; ###
 
 testthat::test_that(
-  desc = "Test confusion_matrix and its returned values",
+  desc = "Test that `cmatrix()` matches that of sklearn",
   code = {
 
-    for (i in 2:10) {
+    # 0) source the python
+    # program
+    reticulate::source_python(
+      "scikit-learn.py"
+    )
 
-      # 1) generate count vector
-      # of predictions and actual
-      # values
+    # 1) create two vectors
+    # of classes where one class
+    # has not been predicted at all
 
-      # 1.1) generate labels
-      # based on letters
-      unique_labels <- letters[1:(i+1)]
+    # 1.1) actual
+    # values
+    actual <- factor(
+      x = sample(
+        x = 1:3,
+        size = 1e3,
+        replace = TRUE,
+        prob = c(0,0.5,0.5)
+      ),
+      levels = c(1:3),
+      labels = letters[1:3]
+    )
 
-      # 1.2) generate predicted and
-      # actual vectors of labels
+    # 1.2) predicted
+    # values
+    predicted <- factor(
+      x = sample(
+        1:3,
+        size = 1e3,
+        replace = TRUE,
+        prob = c(0,0.5,0.5)
+      ),
+      levels = c(1:3),
+      labels = letters[1:3]
+    )
 
-      predicted <- actual <- factor(
-        x = rbinom(
-          n = 10,
-          # size controls the
-          # number of
-          size = i,
-          prob = 0.5
-        ),
-        levels = 0:i,
-        labels = unique_labels
+
+    # 2) test that;
+    py_matrix <- py_cmatrix(
+      actual,
+      predicted
+    )
+
+    sl_matrix <- cmatrix(
+      actual,
+      predicted
+    )
+
+    testthat::expect_true(
+      all(
+        dim(sl_matrix) %in% c(3,3),
+        sapply(sl_matrix, inherits, "numeric"),
+        colnames(sl_matrix) %in% letters[1:3],
+        py_matrix %in% sl_matrix
       )
-
-
-      # 2) generate the confusion
-      # matrix and expect that it runs
-      # without errors
-      testthat::expect_no_error(
-        object = cmatrix(
-          actual,
-          predicted
-        )
-      )
-
-    }
+    )
 
   }
 )
