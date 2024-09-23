@@ -1,15 +1,21 @@
 # script: RMSE Tests
 # author: Serkan Korkmaz, serkor1@duck.com
 # date: 2024-08-24
-# objective: Test that RMSE returns a non-zero
-# positive value for all values passed into it
+# objective: Test that the implementation
+# matches that of sklearn
 # script start;
 
 testthat::test_that(
-  desc = "`rmse`-function returns non-zero postive values",
+  desc = "`rmse()`-function matches that of sklearn and returns non-zero postive values",
   code = {
 
-    # 0) generate values
+    # 0) source the python
+    # program
+    reticulate::source_python(
+      "scikit-learn.py"
+    )
+
+    # 1) generate values
     # from a normal distribution
     actual <- rnorm(
       n = 1e2
@@ -19,29 +25,50 @@ testthat::test_that(
       n = 1e2
     )
 
-    # 1) calculate the
-    # RMSE using rmse()-function
-    output <- testthat::expect_no_condition(
-      rmse(
-        predicted,
-        actual
+    # 2) generate score
+    py_score <- py_rmse(
+      actual = actual,
+      predicted = predicted
+    )
+
+    sl_score <- rmse(
+      actual = actual,
+      predicted = predicted
+    )
+
+    # 3) test that
+    testthat::expect_true(
+      all(
+        sl_score > 0,
+        length(sl_score) == 1,
+        !is.na(sl_score)
       )
     )
 
-    # 2) test that the value
-    # is greater than 0
     testthat::expect_true(
-      output > 0
+      all.equal(
+        target  = py_score,
+        current = sl_score,
+        tolerance =  1e-9,
+        check.attributes = FALSE,
+        check.class = FALSE
+      )
     )
 
   }
 )
 
 testthat::test_that(
-  desc = "`wrmse`-function returns non-zero postive values",
+  desc = "`wrmse()`-function matches that of sklearn and returns non-zero postive values",
   code = {
 
-    # 0) generate values
+    # 0) source the python
+    # program
+    reticulate::source_python(
+      "scikit-learn.py"
+    )
+
+    # 1) generate values
     # from a normal distribution
     actual <- rnorm(
       n = 1e2
@@ -51,24 +78,41 @@ testthat::test_that(
       n = 1e2
     )
 
-    weights <- runif(
+
+    w <- runif(
       n = 1e2
     )
 
-    # 1) calculate the
-    # RMSE using rmse()-function
-    output <- testthat::expect_no_condition(
-      wrmse(
-        predicted,
-        actual,
-        weights
+    # 2) generate score
+    py_score <- py_rmse(
+      actual    = actual,
+      predicted = predicted,
+      w         = w
+    )
+
+    sl_score <- wrmse(
+      actual    = actual,
+      predicted = predicted,
+      w         = w
+    )
+
+    # 3) test that
+    testthat::expect_true(
+      all(
+        sl_score > 0,
+        length(sl_score) == 1,
+        !is.na(sl_score)
       )
     )
 
-    # 2) test that the value
-    # is greater than 0
     testthat::expect_true(
-      output > 0
+      all.equal(
+        target  = py_score,
+        current = sl_score,
+        tolerance =  1e-9,
+        check.attributes = FALSE,
+        check.class = FALSE
+      )
     )
 
   }

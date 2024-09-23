@@ -36,7 +36,7 @@ Firstly, {SLmetrics} is *fast*. One, obviously, can't build an R-package on `C++
 
 Secondly, {SLmetrics} is *low level* and free of any *{pkg}verse*-regimes; this provides the freedom to develop it further as a part of your own {pkg}, or use it in any tidy, or untidy, pipeline you would want to.
 
-Thirdly, {SLmetrics} has a *larger* repertoire of supervised machine learning metrics; all of which has been battle tested with [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) against [{yardstick}](https://github.com/tidymodels/yardstick), [{mlr3measures}](https://github.com/tidymodels/yardstick) and [{MLmetrics}](https://github.com/yanyachen/MLmetrics).
+Thirdly, {SLmetrics} has a *larger* repertoire of supervised machine learning metrics; all of which has been battle tested with [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and [{pytorch}](https://github.com/pytorch/pytorch) against [{yardstick}](https://github.com/tidymodels/yardstick), [{mlr3measures}](https://github.com/mlr-org/mlr3measures) and [{MLmetrics}](https://github.com/yanyachen/MLmetrics).
 
 ## :information_source: Basic usage
 

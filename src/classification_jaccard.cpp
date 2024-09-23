@@ -83,11 +83,8 @@ Rcpp::NumericVector jaccard(
 
       for (int i = 0; i < n; ++i) {
          const double denom = tp_ptr[i] + fp_ptr[i] + fn_ptr[i];
-         output_ptr[i] = (denom == 0) ? 0.0 : (tp_ptr[i] / denom);
+         output_ptr[i] = (denom == 0) ? NA_REAL : (tp_ptr[i] / denom);
 
-         if (std::isnan(output_ptr[i])) {
-            output_ptr[i] = 0.0;
-         }
       }
 
       // Set names attribute using reference
@@ -137,10 +134,3 @@ Rcpp::NumericVector csi(
     return jaccard(actual, predicted, aggregate);
 
  }
-
-
-
-
-
-
-

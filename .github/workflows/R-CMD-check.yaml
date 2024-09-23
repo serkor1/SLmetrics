@@ -2,7 +2,7 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches: [development]
+    branches: [development, update-testenv]
   pull_request:
     branches: [development]
 
@@ -41,10 +41,41 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      - name: Install system dependencies (Ubuntu only)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-venv
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck
+          extra-packages: any::rcmdcheck reticulate
           needs: check
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Setup venv with {reticulate}
+        shell: Rscript {0}
+        run: |
+
+          path_to_python <- reticulate::virtualenv_create(
+            envname = "r-reticulate",
+            python = Sys.which("python"), # placed on PATH by the setup-python action
+            packages = c(
+              "numpy",
+              "scipy",
+              "torch",
+              "torchmetrics",
+              "scikit-learn"
+            )
+          )
+
+          writeLines(
+            sprintf("RETICULATE_PYTHON=%s", path_to_python),
+            Sys.getenv("GITHUB_ENV")
+          )
 
       - uses: r-lib/actions/check-r-package@v2
         with:

@@ -1,14 +1,14 @@
-# script: Test implementation confusion matrix
+# script: Matthews Correlation Coefficient
 # author: Serkan Korkmaz, serkor1@duck.com
 # date: 2024-09-21
 # objective: Check that the implementation
 # matches that of sklearn
 # script start;
-# start of script; ###
 
 testthat::test_that(
-  desc = "Test that `cmatrix()` matches that of sklearn",
+  desc = "Test that `mcc()` matches sklearn, and returns a single value",
   code = {
+
 
     # 0) source the python
     # program
@@ -46,28 +46,39 @@ testthat::test_that(
       labels = letters[1:3]
     )
 
-
-    # 2) test that;
-    py_matrix <- py_cmatrix(
-      actual,
-      predicted
+    # 2) test that
+    py_score <- py_mcc(
+      actual = actual,
+      predicted = predicted
     )
 
-    sl_matrix <- cmatrix(
-      actual,
-      predicted
+    sl_score <- mcc(
+      actual    = actual,
+      predicted = predicted
+    )
+
+    # expect all true
+    # for numeric and
+    # no NAs
+    testthat::expect_true(
+      all(
+        is.numeric(sl_score),
+        length(sl_score) == 1,
+        !is.na(sl_score)
+      )
     )
 
     testthat::expect_true(
-      all(
-        dim(sl_matrix) %in% c(3,3),
-        sapply(sl_matrix, inherits, "numeric"),
-        colnames(sl_matrix) %in% letters[1:3],
-        py_matrix %in% sl_matrix
+      all.equal(
+        target  = sl_score,
+        current = py_score,
+        tolerance =  1e-9,
+        check.attributes = FALSE,
+        check.class = FALSE
       )
     )
 
   }
 )
 
-# end of script; ###
+# script end;

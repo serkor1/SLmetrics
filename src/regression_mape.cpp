@@ -31,7 +31,7 @@ double mape(
    double difference = std::abs((actual_ptr[i] - predicted_ptr[i]) / actual_ptr[i]);
    output += difference;
  }
- return (output / n) * 100.0;
+ return (output / n);
 }
 
 //' @rdname mape
@@ -64,5 +64,5 @@ double wmape(
    numerator += std::abs((actual_ptr[i] - predicted_ptr[i]) / actual_ptr[i]) * w_ptr[i];
    denominator += w_ptr[i];
  }
- return (numerator / denominator) * 100.0;
+ return (numerator / denominator);
 }

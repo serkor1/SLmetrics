@@ -1,13 +1,13 @@
-# script: Test implementation confusion matrix
+# script: fowlkes mallows score
 # author: Serkan Korkmaz, serkor1@duck.com
 # date: 2024-09-21
-# objective: Check that the implementation
-# matches that of sklearn
+# objective: Test fowlkes_mallows_score
+# against sklearn
 # script start;
-# start of script; ###
+
 
 testthat::test_that(
-  desc = "Test that `cmatrix()` matches that of sklearn",
+  desc = "Test that `fmi()` matches sklearn, and returns a real value",
   code = {
 
     # 0) source the python
@@ -47,27 +47,39 @@ testthat::test_that(
     )
 
 
-    # 2) test that;
-    py_matrix <- py_cmatrix(
-      actual,
-      predicted
+    # 2) calculate the sklearn
+    # version of fmi
+    py_score <- py_fmi(
+      actual    = actual,
+      predicted = predicted
     )
 
-    sl_matrix <- cmatrix(
-      actual,
-      predicted
+    sl_score <- fmi(
+      actual    = actual,
+      predicted = predicted
     )
 
+    # 3) run tests
     testthat::expect_true(
       all(
-        dim(sl_matrix) %in% c(3,3),
-        sapply(sl_matrix, inherits, "numeric"),
-        colnames(sl_matrix) %in% letters[1:3],
-        py_matrix %in% sl_matrix
+        is.numeric(sl_score),
+        length(sl_score) == 1,
+        !is.na(sl_score)
       )
     )
 
+    testthat::expect_true(
+      all.equal(
+        target  = py_score,
+        current = sl_score,
+        tolerance =  1e-9,
+        check.attributes = FALSE,
+        check.class = FALSE
+
+      )
+    )
   }
 )
 
-# end of script; ###
+# script end;
+

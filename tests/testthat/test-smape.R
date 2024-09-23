@@ -1,19 +1,18 @@
-# script: huber Tests
+# script: smape Tests
 # author: Serkan Korkmaz, serkor1@duck.com
 # date: 2024-08-24
 # objective: Test that the implementation
-# matches that of pytorch
+# matches that of sklearn
 # script start;
 
 testthat::test_that(
-  desc = "`huber()`-function matches that of pytorch and returns non-zero postive values",
+  desc = "`smape()`-function matches that of sklearn and returns non-zero postive values",
   code = {
 
     # 0) source the python
     # program
-
     reticulate::source_python(
-      "ref-pytorch.py"
+      "scikit-learn.py"
     )
 
     # 1) generate values
@@ -27,12 +26,12 @@ testthat::test_that(
     )
 
     # 2) generate score
-    py_score <- py_huber(
+    py_score <- py_smape(
       actual = actual,
       predicted = predicted
     )
 
-    sl_score <- huberloss(
+    sl_score <- smape(
       actual = actual,
       predicted = predicted
     )
@@ -60,16 +59,13 @@ testthat::test_that(
 )
 
 testthat::test_that(
-  desc = "`whuber()`-function matches that of pytorch and returns non-zero postive values",
+  desc = "`wsmape()`-function matches that of sklearn and returns non-zero postive values",
   code = {
-
 
     # 0) source the python
     # program
-
-
     reticulate::source_python(
-      "ref-pytorch.py"
+      "scikit-learn.py"
     )
 
     # 1) generate values
@@ -88,13 +84,13 @@ testthat::test_that(
     )
 
     # 2) generate score
-    py_score <- py_huber(
+    py_score <- py_smape(
       actual    = actual,
       predicted = predicted,
       w         = w
     )
 
-    sl_score <- whuberloss(
+    sl_score <- wsmape(
       actual    = actual,
       predicted = predicted,
       w         = w
