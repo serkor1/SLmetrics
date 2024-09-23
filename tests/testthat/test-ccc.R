@@ -1,128 +1,123 @@
-# script: Test `ccc()`-function
+# script: ccc Tests
 # author: Serkan Korkmaz, serkor1@duck.com
-# date: 2024-09-20
-# objective:
+# date: 2024-08-24
+# objective: Test that the implementation
+# matches that of pytorch
 # script start;
 
 testthat::test_that(
-  desc = "`ccc()`-function returns double, without any conditions",
+  desc = "`ccc()`-function matches that of pytorch and returns non-zero postive values",
   code = {
 
-    # 1) generate actual
-    # and predicted values
-    actual <- rnorm(n = 1e6)
-    predicted <- actual + rnorm(n = 1e6)
+    # 0) source the python
+    # program
+    reticulate::source_python(
+      "ref-pytorch.py"
+    )
 
-    # 2) generate `ccc()` weighted
-    # and unweigthed with and without
-    # correction, expect the length 1
-    # and is numeric
-    for (correction in c(TRUE, FALSE)) {
+    # 1) generate values
+    # from a normal distribution
+    actual <- rnorm(
+      n = 1e2
+    )
 
-      # 2.1) unweighted
-      unweighted <- testthat::expect_no_condition(
-        object = ccc(
-          actual = actual,
-          predicted = predicted,
-          correction = correction
-        )
+    predicted <- actual + rnorm(
+      n = 1e2
+    )
+
+    # 2) generate score
+    py_score <- py_ccc(
+      actual = actual,
+      predicted = predicted
+    )
+
+    sl_score <- ccc(
+      actual = actual,
+      predicted = predicted,
+      correction = TRUE
+    )
+
+    # 3) test that
+    testthat::expect_true(
+      all(
+        sl_score > 0,
+        length(sl_score) == 1,
+        !is.na(sl_score)
       )
+    )
 
-      testthat::expect_type(
-        object = unweighted,
-        type   = "double"
+    testthat::expect_true(
+      all.equal(
+        target  = py_score,
+        current = sl_score,
+        tolerance =  1e-4,
+        check.attributes = FALSE,
+        check.class = FALSE
       )
-
-      testthat::expect_length(
-        object = unweighted,
-        n      = 1
-      )
-
-      # 2.2) weighted
-      weighted <- testthat::expect_no_condition(
-        object = ccc(
-          actual = actual,
-          predicted = predicted,
-          correction = correction
-        )
-      )
-
-      testthat::expect_type(
-        object = weighted,
-        type   = "double"
-      )
-
-      testthat::expect_length(
-        object = weighted,
-        n      = 1
-      )
-    }
+    )
 
   }
 )
 
-
 testthat::test_that(
-  desc = "`wccc()`-function returns double, without any conditions",
+  desc = "`wccc()`-function matches that of pytorch and returns non-zero postive values",
   code = {
 
-    # 1) generate actual
-    # and predicted values
-    actual <- rnorm(n = 1e6)
-    predicted <- actual + rnorm(n = 1e6)
-    w <- runif(n = 1e6)
+    # 0) source the python
+    # program
+    reticulate::source_python(
+      "ref-pytorch.py"
+    )
 
-    # 2) generate `ccc()` weighted
-    # and unweigthed with and without
-    # correction, expect the length 1
-    # and is numeric
-    for (correction in c(TRUE, FALSE)) {
+    # 1) generate values
+    # from a normal distribution
+    actual <- rnorm(
+      n = 1e2
+    )
 
-      # 2.1) unweighted
-      unweighted <- testthat::expect_no_condition(
-        object = wccc(
-          actual     = actual,
-          predicted  = predicted,
-          w          = w,
-          correction = correction
-        )
+    predicted <- actual + rnorm(
+      n = 1e2
+    )
+
+
+    w <- runif(
+      n = 1e2
+    )
+
+    # 2) generate score
+    py_score <- py_ccc(
+      actual    = actual,
+      predicted = predicted,
+      w         = w
+    )
+
+    sl_score <- wccc(
+      actual    = actual,
+      predicted = predicted,
+      w         = w,
+      correction = TRUE
+    )
+
+    # 3) test that
+    testthat::expect_true(
+      all(
+        sl_score > 0,
+        length(sl_score) == 1,
+        !is.na(sl_score)
       )
+    )
 
-      testthat::expect_type(
-        object = unweighted,
-        type   = "double"
+    testthat::expect_true(
+      all.equal(
+        target  = py_score,
+        current = sl_score,
+        tolerance =  1e-4,
+        check.attributes = FALSE,
+        check.class = FALSE
       )
-
-      testthat::expect_length(
-        object = unweighted,
-        n      = 1
-      )
-
-      # 2.2) weighted
-      weighted <- testthat::expect_no_condition(
-        object = wccc(
-          actual     = actual,
-          predicted  = predicted,
-          w          = w,
-          correction = correction
-        )
-      )
-
-      testthat::expect_type(
-        object = weighted,
-        type   = "double"
-      )
-
-      testthat::expect_length(
-        object = weighted,
-        n      = 1
-      )
-    }
+    )
 
   }
 )
 
 # script end;
-
-
-

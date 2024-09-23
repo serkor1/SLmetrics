@@ -79,9 +79,52 @@ def py_cmatrix(actual, predicted):
     )
     
 def py_entropy(actual, response, normalize = True):
-  return metrics.log_loss(
+    return metrics.log_loss(
       y_true    = actual,
       y_pred    = response,
       normalize = normalize
-  )
-  
+    )
+    
+# regression metrics
+
+def py_rmse(actual, predicted, w = None):
+    return metrics.root_mean_squared_error(
+      y_true = actual,
+      y_pred = predicted,
+      sample_weight = w
+    )
+    
+def py_rmsle(actual, predicted, w = None):
+    return metrics.root_mean_squared_log_error(
+      y_true = actual,
+      y_pred = predicted,
+      sample_weight = w
+    )
+    
+def py_mse(actual, predicted, w = None):
+    return metrics.mean_squared_error(
+      y_true = actual,
+      y_pred = predicted,
+      sample_weight = w
+    )
+    
+def py_mae(actual, predicted, w = None):
+    return metrics.mean_absolute_error(
+      y_true        = actual,
+      y_pred        = predicted,
+      sample_weight = w
+    )
+
+def py_mape(actual, predicted, w = None):
+    return metrics.mean_absolute_percentage_error(
+      y_true        = actual,
+      y_pred        = predicted,
+      sample_weight = w
+    )
+    
+def py_msle(actual, predicted, w = None):
+    return metrics.mean_squared_log_error(
+      y_true        = actual,
+      y_pred        = predicted,
+      sample_weight = w
+    )

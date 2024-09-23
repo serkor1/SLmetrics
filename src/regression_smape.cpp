@@ -34,7 +34,7 @@ double smape(
      output += difference;
    }
  }
- return (output / n ) * 100.0;
+ return (output / n );
 }
 
 //' @rdname smape
@@ -71,5 +71,5 @@ double wsmape(
      denominator += w_ptr[i];
    }
  }
- return (numerator / denominator) * 100.0;
+ return (numerator / denominator);
 }

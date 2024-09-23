@@ -64,12 +64,22 @@ jobs:
             envname = "r-reticulate",
             python = Sys.which("python"), # placed on PATH by the setup-python action
             packages = c(
+              "numpy",
+              "scipy",
+              "mkl",
+              "mkl-service",
+              "mkl_fft",
+              "mkl_random",
+              "torch",
+              "torchmetrics",
               "scikit-learn"
             )
           )
 
-          writeLines(sprintf("RETICULATE_PYTHON=%s", path_to_python),
-                     Sys.getenv("GITHUB_ENV"))
+          writeLines(
+            sprintf("RETICULATE_PYTHON=%s", path_to_python),
+            Sys.getenv("GITHUB_ENV")
+          )
 
       - uses: r-lib/actions/check-r-package@v2
         with:
