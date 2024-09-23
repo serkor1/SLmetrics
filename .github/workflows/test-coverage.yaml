@@ -25,8 +25,32 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::covr, any::xml2
+          extra-packages: any::covr, any::xml2, any::reticulate
           needs: coverage
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Setup venv with {reticulate}
+        shell: Rscript {0}
+        run: |
+          path_to_python <- reticulate::virtualenv_create(
+            envname = "r-reticulate",
+            python = Sys.which("python"),
+            packages = c(
+              "numpy",
+              "scipy",
+              "torch",
+              "torchmetrics",
+              "scikit-learn"
+            )
+          )
+
+          writeLines(
+            sprintf("RETICULATE_PYTHON=%s", path_to_python),
+            Sys.getenv("GITHUB_ENV")
+          )
 
       - name: Test coverage
         run: |
