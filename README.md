@@ -47,9 +47,10 @@ would want to.
 
 Thirdly, {SLmetrics} has a *larger* repertoire of supervised machine
 learning metrics; all of which has been battle tested with
-[{scikit-learn}](https://github.com/scikit-learn/scikit-learn) against
+[{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and
+[{pytorch}](https://github.com/pytorch/pytorch) against
 [{yardstick}](https://github.com/tidymodels/yardstick),
-[{mlr3measures}](https://github.com/tidymodels/yardstick) and
+[{mlr3measures}](https://github.com/mlr-org/mlr3measures) and
 [{MLmetrics}](https://github.com/yanyachen/MLmetrics).
 
 ## :information_source: Basic usage
