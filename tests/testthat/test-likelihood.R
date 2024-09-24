@@ -66,7 +66,6 @@ testthat::test_that(
 
     sl_dor <- sl_score[[1]]/sl_score[[2]]
 
-
     # NOTE: this test uses %in% as SLmetrics
     # returns for k-classes while sklearn a
     # total score.
@@ -89,6 +88,47 @@ testthat::test_that(
         length(sl_score[[1]]) == 3,
         length(sl_score[[2]]) == 3,
         length(sl_dor) == 3
+      )
+    )
+
+    # 2.4) finally expect that
+    # plr/nlr = dor built-in
+    testthat::expect_true(
+      all.equal(
+        target = dor(
+          actual,
+          predicted,
+          aggregate = FALSE
+        ),
+        current = sl_dor,tolerance = 1e-9,
+        check.attributes = FALSE,
+        check.class = FALSE
+      )
+    )
+
+    # 2.5) check for micro-averaged
+    # DOR
+    manual_dor <- plr(
+      actual = actual,
+      predicted = predicted,
+      aggregate = TRUE
+    ) / nlr(
+      actual = actual,
+      predicted = predicted,
+      aggregate = TRUE
+    )
+
+    testthat::expect_true(
+      all.equal(
+        target = dor(
+          actual,
+          predicted,
+          aggregate = TRUE
+        ),
+        current = manual_dor,
+        tolerance = 1e-9,
+        check.attributes = FALSE,
+        check.class = FALSE
       )
     )
 
