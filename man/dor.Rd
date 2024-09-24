@@ -2,9 +2,8 @@
 % Please edit documentation in R/RcppExports.R
 \name{dor}
 \alias{dor}
-\title{Diagnostic Odds Ratio (DOR)}
+\title{Compute the \eqn{\text{Diagnostic Odds Ratio}}}
 \usage{
-# diagnostic odds ratio
 dor(
   actual,
   predicted,
@@ -26,8 +25,9 @@ If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=dor]{dor()}}-function computes the \href{https://en.wikipedia.org/wiki/Diagnostic_odds_ratio}{Diagnostic Odds Ratio} (DOR), a single indicator of test performance, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. When \code{aggregate = TRUE}, the function returns the micro-average DOR across all classes \eqn{k}.
-By default, it returns the class-wise DOR.
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+
+When \code{aggregate = TRUE}, the function returns the micro-average DOR across all classes \eqn{k}. By default, it returns the class-wise DOR.
 }
 \details{
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
@@ -38,7 +38,7 @@ factor(
   levels = c(1, 2, 3),
   labels = c("A", "B", "C")
 )
-#>  [1] C A C B C B C B B B
+#>  [1] C A B A C C C B A B
 #> Levels: A B C
 }\if{html}{\out{</div>}}
 
@@ -50,7 +50,7 @@ factor(
   levels = c(1, 2, 3),
   labels = c("A", "B", "C")
 )
-#>  [1] A A C C C A C A A A
+#>  [1] C A A A C A C C C A
 #> Levels: A B C
 }\if{html}{\out{</div>}}
 
@@ -62,16 +62,18 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 The Diagnostic Odds Ratio (DOR) is calculated for each class \eqn{k} as follows,
 
 \deqn{
-  \frac{\text{PLR}_k}{\text{NLR}_k} = \frac{\text{Sensitivity}_k \times \text{Specificity}_k}{(1 - \text{Sensitivity}_k) \times (1 - \text{Specificity}_k)}
+  \text{DOR}_k = \frac{\text{PLR}_k}{\text{NLR}_k}
 }
 
-Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
+Where \eqn{\text{PLR}_k} and \eqn{\text{NLR}_k} is the Positive and Negative Likelihood Ratio for class \eqn{k}, respectively. See \code{\link[=plr]{plr()}} and \code{\link[=nlr]{nlr()}} for more details.
 
-When \code{aggregate = TRUE}, the \code{micro}-average is calculated,
+When \code{aggregate = TRUE}, the \code{micro}-average is calculated as,
 
 \deqn{
-  \frac{\sum_{k=1}^k \text{PLR}_k}{\sum_{k=1}^k \text{NLR}_k} = \frac{\sum_{k=1}^k (\text{Sensitivity}_k \times \text{Specificity}_k)}{\sum_{k=1}^k (1 - \text{Sensitivity}_k) \times (1 - \text{Specificity}_k)}
+  \overline{\text{DOR}} = \frac{\overline{\text{PLR}_k}}{\overline{\text{NLR}_k}}
 }
+
+Where \eqn{\overline{\text{PLR}}} and \eqn{\overline{\text{NLR}}} is the micro-averaged is the Positive and Negative Likelihood Ratio, respectively.
 }
 
 \examples{

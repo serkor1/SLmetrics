@@ -121,15 +121,15 @@ cmatrix <- function(actual, predicted) {
     .Call(`_SLmetrics_cmatrix`, actual, predicted)
 }
 
-#' Diagnostic Odds Ratio (DOR)
+#' Compute the \eqn{\text{Diagnostic Odds Ratio}}
 #'
 #' @description
 #' The [dor()]-function computes the [Diagnostic Odds Ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) (DOR), a single indicator of test performance, between
-#' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average DOR across all classes \eqn{k}.
-#' By default, it returns the class-wise DOR.
+#' two vectors of predicted and observed [factor()] values.
+#'
+#' When `aggregate = TRUE`, the function returns the micro-average DOR across all classes \eqn{k}. By default, it returns the class-wise DOR.
 #'
 #' @usage
-#' # diagnostic odds ratio
 #' dor(
 #'   actual,
 #'   predicted,
@@ -145,19 +145,21 @@ cmatrix <- function(actual, predicted) {
 #' The Diagnostic Odds Ratio (DOR) is calculated for each class \eqn{k} as follows,
 #'
 #' \deqn{
-#'   \frac{\text{PLR}_k}{\text{NLR}_k} = \frac{\text{Sensitivity}_k \times \text{Specificity}_k}{(1 - \text{Sensitivity}_k) \times (1 - \text{Specificity}_k)}
+#'   \text{DOR}_k = \frac{\text{PLR}_k}{\text{NLR}_k}
 #' }
 #'
-#' Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
+#' Where \eqn{\text{PLR}_k} and \eqn{\text{NLR}_k} is the Positive and Negative Likelihood Ratio for class \eqn{k}, respectively. See [plr()] and [nlr()] for more details.
 #'
-#' When `aggregate = TRUE`, the `micro`-average is calculated,
+#' When `aggregate = TRUE`, the `micro`-average is calculated as,
 #'
 #' \deqn{
-#'   \frac{\sum_{k=1}^k \text{PLR}_k}{\sum_{k=1}^k \text{NLR}_k} = \frac{\sum_{k=1}^k (\text{Sensitivity}_k \times \text{Specificity}_k)}{\sum_{k=1}^k (1 - \text{Sensitivity}_k) \times (1 - \text{Specificity}_k)}
+#'   \overline{\text{DOR}} = \frac{\overline{\text{PLR}_k}}{\overline{\text{NLR}_k}}
 #' }
 #'
+#' Where \eqn{\overline{\text{PLR}}} and \eqn{\overline{\text{NLR}}} is the micro-averaged is the Positive and Negative Likelihood Ratio, respectively.
 #'
 #' @family classification
+#'
 #' @export
 dor <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_dor`, actual, predicted, aggregate)
