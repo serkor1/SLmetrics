@@ -689,12 +689,13 @@ ppv <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_ppv`, actual, predicted, aggregate)
 }
 
-#' Recall (Sensitivity)
+#' Compute the \eqn{recall}, \eqn{sensitivity} or \eqn{true~positive~rate}
 #'
 #' @description
 #' The [recall()]-function computes the [recall](https://en.wikipedia.org/wiki/Sensitivity_and_specificity), also known as sensitivity or the True Positive Rate (TPR), between
-#' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average recall across all classes \eqn{k}.
-#' By default, it returns the class-wise recall.
+#' two vectors of predicted and observed [factor()] values.
+#'
+#' When `aggregate = TRUE`, the function returns the micro-averaged recall across all classes \eqn{k}. By default, it returns the class-wise recall.
 #'
 #' @usage
 #'  # 1) `recall()`-function
@@ -710,7 +711,7 @@ ppv <- function(actual, predicted, aggregate = FALSE) {
 #'
 #' @section Calculation:
 #'
-#' The Sensitivity (SEN), also known as Recall or True Positive Rate (TPR). The metric is calculated for each class \eqn{k} as follows,
+#' The metric is calculated for each class \eqn{k} as follows,
 #'
 #' \deqn{
 #'   \frac{\#TP_k}{\#TP_k + \#FN_k}
@@ -718,11 +719,12 @@ ppv <- function(actual, predicted, aggregate = FALSE) {
 #'
 #' Where \eqn{\#TP_k} and \eqn{\#FN_k} is the number of true positives and false negatives, respectively, for each class \eqn{k}.
 #'
-#' When `aggregate = TRUE` the `micro`-average is calculated,
+#' When `aggregate = TRUE` the `micro`-average is calculated as follows,
 #'
 #' \deqn{
 #'   \frac{\sum_{k=1}^k \#TP_k}{\sum_{k=1}^k \#TP_k + \sum_{k=1}^k \#FN_k}
 #' }
+#'
 #' @family classification
 #'
 #' @export
@@ -733,28 +735,31 @@ recall <- function(actual, predicted, aggregate = FALSE) {
 #' @rdname recall
 #'
 #' @usage
-#' tpr(
-#'   actual,
-#'   predicted,
-#'   aggregate
-#' )
-#'
-#' @export
-tpr <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_tpr`, actual, predicted, aggregate)
-}
-
-#' @rdname recall
-#' @usage
 #' # 2) `sensitivity()`-function
 #' sensitivity(
 #'   actual,
 #'   predicted,
 #'   aggregate = FALSE
 #' )
+#'
 #' @export
 sensitivity <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_sensitivity`, actual, predicted, aggregate)
+}
+
+#' @rdname recall
+#'
+#' @usage
+#' # 3) `tpr()`-function
+#' tpr(
+#'   actual,
+#'   predicted,
+#'   aggregate = FALSE
+#' )
+#'
+#' @export
+tpr <- function(actual, predicted, aggregate = FALSE) {
+    .Call(`_SLmetrics_tpr`, actual, predicted, aggregate)
 }
 
 #' Specificity (True Negative Rate)

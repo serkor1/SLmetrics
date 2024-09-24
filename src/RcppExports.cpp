@@ -280,6 +280,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// sensitivity
+Rcpp::NumericVector sensitivity(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
+RcppExport SEXP _SLmetrics_sensitivity(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
+    rcpp_result_gen = Rcpp::wrap(sensitivity(actual, predicted, aggregate));
+    return rcpp_result_gen;
+END_RCPP
+}
 // tpr
 Rcpp::NumericVector tpr(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
 RcppExport SEXP _SLmetrics_tpr(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
@@ -290,19 +303,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
     Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
     rcpp_result_gen = Rcpp::wrap(tpr(actual, predicted, aggregate));
-    return rcpp_result_gen;
-END_RCPP
-}
-// sensitivity
-NumericVector sensitivity(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
-RcppExport SEXP _SLmetrics_sensitivity(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
-    rcpp_result_gen = Rcpp::wrap(sensitivity(actual, predicted, aggregate));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -622,8 +622,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_precision", (DL_FUNC) &_SLmetrics_precision, 3},
     {"_SLmetrics_ppv", (DL_FUNC) &_SLmetrics_ppv, 3},
     {"_SLmetrics_recall", (DL_FUNC) &_SLmetrics_recall, 3},
-    {"_SLmetrics_tpr", (DL_FUNC) &_SLmetrics_tpr, 3},
     {"_SLmetrics_sensitivity", (DL_FUNC) &_SLmetrics_sensitivity, 3},
+    {"_SLmetrics_tpr", (DL_FUNC) &_SLmetrics_tpr, 3},
     {"_SLmetrics_specificity", (DL_FUNC) &_SLmetrics_specificity, 3},
     {"_SLmetrics_tnr", (DL_FUNC) &_SLmetrics_tnr, 3},
     {"_SLmetrics_selectivity", (DL_FUNC) &_SLmetrics_selectivity, 3},
