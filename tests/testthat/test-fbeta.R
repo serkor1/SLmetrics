@@ -51,14 +51,16 @@ testthat::test_that(
       for (beta in c(1,2,3,4,5)){
 
         # 2.1) calcuale scores
-        py_score <- py_fbeta(
-          actual    = actual,
-          predicted = predicted,
-          beta      = beta,
-          average   = if (lgl)
-            "micro"
-          else
-            NULL
+        py_score <- as.numeric(
+          py_fbeta(
+            actual    = actual,
+            predicted = predicted,
+            beta      = beta,
+            average   = if (lgl)
+              "micro"
+            else
+              NULL
+          )
         )
 
         sl_score <- fbeta(
