@@ -3,16 +3,16 @@
 \name{huberloss}
 \alias{huberloss}
 \alias{whuberloss}
-\title{Huber Loss}
+\title{Compute the \eqn{\text{huber loss}}}
 \usage{
-# simple mean
+# `huberloss()`-function
 huberloss(
   actual,
   predicted,
   delta = 1
 )
 
-# weighted mean
+# `whuberloss()`-function
 whuberloss(
   actual,
   predicted,
@@ -25,29 +25,36 @@ whuberloss(
 
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
-\item{delta}{A <\link{numeric}>-vector of \link{length} 1. 1 by default. The threshold value for switch between functions (see details).}
+\item{delta}{A <\link{numeric}>-vector of \link{length} 1. 1 by default. The threshold value for switch between functions (see calculation).}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} N. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
 }
 \value{
-A <\link{numeric}>-value of \link{length} 1.
+A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-Calculate the Huber Loss. \code{\link[=whuberloss]{whuberloss()}} calculates the arithmetic weighted average, and \code{\link[=huberloss]{huberloss()}} calculates the arithmetic average.
+The \code{\link[=huberloss]{huberloss()}}- and \code{\link[=whuberloss]{whuberloss()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Huber_loss}{huber loss} between
+the predicted and observed <\link{numeric}> vectors.
 }
-\details{
-The Huber Loss is calculated as,
+\section{Calculation}{
+
+
+The metric is calculated as follows,
 
 \deqn{
- \frac{1}{2} (y_i - \hat{y}_i)^2 ~for~ |y_i - \hat{y}_i| \leq \delta
+ \frac{1}{2} (y - \upsilon)^2 ~for~ |y - \upsilon| \leq \delta
 }
+
+and
 
 \deqn{
-  \delta |y_i-\hat{y}_i|-\frac{1}{2} \delta^2 ~for~ |y_i - \hat{y}_i| > \delta
+  \delta |y-\upsilon|-\frac{1}{2} \delta^2 ~for~ \text{otherwise}
 }
 
-for each \eqn{i},
+where \eqn{y} and \eqn{\upsilon} are the \code{actual} and \code{predicted} values respectively. If \code{w} is not \link{NULL}, then all values
+are aggregated using the weights.
 }
+
 \examples{
 # 1) assume that actual
 # and predicted are values

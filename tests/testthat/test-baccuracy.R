@@ -1,4 +1,4 @@
-# script: Test implementation precision
+# script: Test implementation bbaccuracy
 # author: Serkan Korkmaz, serkor1@duck.com
 # date: 2024-09-21
 # objective: Check that the implementation
@@ -6,7 +6,7 @@
 # script start;
 
 testthat::test_that(
-  desc = "Test that `precision()` matches that of sklearn",
+  desc = "Test that `baccuracy()` matches that of sklearn",
   code = {
 
     # 0) source the python
@@ -49,19 +49,16 @@ testthat::test_that(
 
     for (lgl in c(TRUE, FALSE)) {
 
-      py_score <- py_precision(
+      py_score <- py_baccuracy(
         actual    = actual,
         predicted = predicted,
-        average   = if (lgl)
-          "micro"
-        else
-          NULL
+        adjust    = lgl
       )
 
-      sl_score <- precision(
+      sl_score <- baccuracy(
         actual    = actual,
         predicted = predicted,
-        aggregate = lgl
+        adjust    = lgl
       )
 
       # 1) expect all true
@@ -70,10 +67,7 @@ testthat::test_that(
       testthat::expect_true(
         all(
           is.numeric(sl_score),
-          if (lgl)
-            length(sl_score) == 1
-          else
-            length(sl_score) == 3
+          length(sl_score) == 1
         )
       )
 
@@ -92,9 +86,6 @@ testthat::test_that(
         # If lgl = FALSE the macro average
         # is found by mean(foo(..., aggregate = FALSE))
 
-        testthat::expect_true(
-          object = length(sl_score) == 3
-        )
 
         testthat::expect_true(
           all.equal(
@@ -102,10 +93,9 @@ testthat::test_that(
               sl_score,
               na.rm = TRUE
             ),
-            current =  py_precision(
+            current =  py_baccuracy(
               actual    = actual,
-              predicted = predicted,
-              average   = "macro"
+              predicted = predicted
             ),
             tolerance =  1e-9,
             check.attributes = FALSE,

@@ -3,7 +3,7 @@
 \name{precision}
 \alias{precision}
 \alias{ppv}
-\title{Precision (Positive Predictive Value)}
+\title{Compute the \eqn{\text{precision}} or  \eqn{\text{positive predictive value}}}
 \usage{
 # 1) `precision()`-function
 precision(
@@ -28,11 +28,15 @@ ppv(
 micro average across all \eqn{k} classes}
 }
 \value{
-A named <\link{numeric}> vector of length k
+If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vector of \link{length} k
+
+If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=precision]{precision()}}-function computes the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{precision}, also known as the Positive Predictive Value (PPV), between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. When \code{aggregate = TRUE}, the function returns the micro-average precision across all classes \eqn{k}.
+The \code{\link[=precision]{precision()}}-function computes the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{precision}, also known as the positive predictive value (PPV), between
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+
+When \code{aggregate = TRUE}, the function returns the micro-average precision across all classes \eqn{k}.
 By default, it returns the class-wise precision.
 }
 \details{
@@ -44,7 +48,7 @@ factor(
   levels = c(1, 2, 3),
   labels = c("A", "B", "C")
 )
-#>  [1] C A B A C C C B A B
+#>  [1] C B C B B B A A B B
 #> Levels: A B C
 }\if{html}{\out{</div>}}
 
@@ -56,7 +60,7 @@ factor(
   levels = c(1, 2, 3),
   labels = c("A", "B", "C")
 )
-#>  [1] C A A A C A C C C A
+#>  [1] C A C C A A A A C C
 #> Levels: A B C
 }\if{html}{\out{</div>}}
 
@@ -65,7 +69,7 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 \section{Calculation}{
 
 
-The Precision (Positive Predictive Value, PPV) is calculated for each class \eqn{k} as follows,
+The metric is calculated for each class \eqn{k} as follows,
 
 \deqn{
   \frac{\#TP_k}{\#TP_k + \#FP_k}
@@ -137,6 +141,7 @@ precision(
 \seealso{
 Other classification: 
 \code{\link{accuracy}()},
+\code{\link{baccuracy}()},
 \code{\link{cmatrix}()},
 \code{\link{dor}()},
 \code{\link{fbeta}()},

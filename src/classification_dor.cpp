@@ -24,13 +24,13 @@ using namespace Rcpp;
 //'
 //' @section Calculation:
 //'
-//' The Diagnostic Odds Ratio (DOR) is calculated for each class \eqn{k} as follows,
+//' The metric is calculated for each class \eqn{k} as follows,
 //'
 //' \deqn{
 //'   \text{DOR}_k = \frac{\text{PLR}_k}{\text{NLR}_k}
 //' }
 //'
-//' Where \eqn{\text{PLR}_k} and \eqn{\text{NLR}_k} is the Positive and Negative Likelihood Ratio for class \eqn{k}, respectively. See [plr()] and [nlr()] for more details.
+//' Where \eqn{\text{PLR}_k} and \eqn{\text{NLR}_k} is the positive and negative likelihood ratio for class \eqn{k}, respectively. See [plr()] and [nlr()] for more details.
 //'
 //' When `aggregate = TRUE`, the `micro`-average is calculated as,
 //'
@@ -38,7 +38,7 @@ using namespace Rcpp;
 //'   \overline{\text{DOR}} = \frac{\overline{\text{PLR}_k}}{\overline{\text{NLR}_k}}
 //' }
 //'
-//' Where \eqn{\overline{\text{PLR}}} and \eqn{\overline{\text{NLR}}} is the micro-averaged is the Positive and Negative Likelihood Ratio, respectively.
+//' Where \eqn{\overline{\text{PLR}}} and \eqn{\overline{\text{NLR}}} is the micro-averaged is the positive and negative likelihood ratio, respectively.
 //'
 //' @family classification
 //'

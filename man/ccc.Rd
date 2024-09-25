@@ -3,16 +3,16 @@
 \name{ccc}
 \alias{ccc}
 \alias{wccc}
-\title{Concordance Correlation Coefficient (CCC)}
+\title{Compute the \eqn{\text{concordance correlation coefficient}}}
 \usage{
-# simple;
+# `ccc()`-function
 ccc(
   actual,
   predicted,
   correction = FALSE
 )
 
-# weighted;
+# `wccc()`-function
 wccc(
   actual,
   predicted,
@@ -28,27 +28,31 @@ wccc(
 \item{correction}{A <\link{logical}> vector of \link{length} 1. \link{FALSE} by default. If \link{TRUE} the variance and covariance
 will be adjusted with \eqn{\frac{1-n}{n}}}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} N. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
 }
 \value{
-A <\link{numeric}>-value of \link{length} 1.
+A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-Calculate the CCC using the \code{\link[=ccc]{ccc()}}-function for comparing actual and predicted values.
+The \code{\link[=ccc]{ccc()}}- and \code{\link[=wccc]{wccc()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Concordance_correlation_coefficient}{concordance correlation coefficient} between
+the two vectors of predicted and observed <\link{numeric}> values.
+
+If \code{correction} is \link{TRUE} \eqn{\sigma^2} is adjusted by \eqn{\frac{1-n}{n}} in the intermediate steps.
 }
-\details{
-The Huber Loss is calculated as,
+\section{Calculation}{
+
+
+The metric is calculated as follows,
 
 \deqn{
- \frac{1}{2} (y_i - \hat{y}_i)^2 ~for~ |y_i - \hat{y}_i| \leq \delta
+  \rho_c = \frac{2 \rho \sigma_x \sigma_y}{\sigma_x^2 + \sigma_y^2 + (\mu_x - \mu_y)^2}
 }
 
-\deqn{
-  \delta |y_i-\hat{y}_i|-\frac{1}{2} \delta^2 ~for~ |y_i - \hat{y}_i| > \delta
+Where \eqn{\rho} is the \eqn{\text{pearson correlation coefficient}}, \eqn{\sigma} is the \eqn{\text{standard deviation}} and \eqn{\mu} is the simple mean of \code{actual} and \code{predicted}.
+
+If \code{w} is not \link{NULL}, all calculations are based on the weighted measures.
 }
 
-for each \eqn{i},
-}
 \examples{
 # 1) assume that actual
 # and predicted are values
@@ -88,17 +92,6 @@ wccc(
 )
 }
 \seealso{
-Other regression: 
-\code{\link{huberloss}()},
-\code{\link{mae}()},
-\code{\link{mape}()},
-\code{\link{mpe}()},
-\code{\link{mse}()},
-\code{\link{rmse}()},
-\code{\link{rmsle}()},
-\code{\link{rsq}()},
-\code{\link{smape}()}
-
 Other regression: 
 \code{\link{huberloss}()},
 \code{\link{mae}()},

@@ -35,6 +35,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// baccuracy
+double baccuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const bool adjust);
+RcppExport SEXP _SLmetrics_baccuracy(SEXP actualSEXP, SEXP predictedSEXP, SEXP adjustSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const bool >::type adjust(adjustSEXP);
+    rcpp_result_gen = Rcpp::wrap(baccuracy(actual, predicted, adjust));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cmatrix
 Rcpp::NumericMatrix cmatrix(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
 RcppExport SEXP _SLmetrics_cmatrix(SEXP actualSEXP, SEXP predictedSEXP) {
@@ -603,6 +616,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_fmi", (DL_FUNC) &_SLmetrics_fmi, 2},
     {"_SLmetrics_accuracy", (DL_FUNC) &_SLmetrics_accuracy, 2},
+    {"_SLmetrics_baccuracy", (DL_FUNC) &_SLmetrics_baccuracy, 3},
     {"_SLmetrics_cmatrix", (DL_FUNC) &_SLmetrics_cmatrix, 2},
     {"_SLmetrics_dor", (DL_FUNC) &_SLmetrics_dor, 3},
     {"_SLmetrics_fbeta", (DL_FUNC) &_SLmetrics_fbeta, 4},

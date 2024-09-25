@@ -37,7 +37,7 @@ factor(
   levels = c(1, 2, 3),
   labels = c("A", "B", "C")
 )
-#>  [1] C A B A C C C B A B
+#>  [1] C B C B B B A A B B
 #> Levels: A B C
 }\if{html}{\out{</div>}}
 
@@ -49,7 +49,7 @@ factor(
   levels = c(1, 2, 3),
   labels = c("A", "B", "C")
 )
-#>  [1] C A A A C A C C C A
+#>  [1] C A C C A A A A C C
 #> Levels: A B C
 }\if{html}{\out{</div>}}
 
@@ -124,6 +124,7 @@ The \code{\link[=plr]{plr()}}-function for the Positive Likehood Ratio (LR+)
 
 Other classification: 
 \code{\link{accuracy}()},
+\code{\link{baccuracy}()},
 \code{\link{cmatrix}()},
 \code{\link{dor}()},
 \code{\link{fbeta}()},

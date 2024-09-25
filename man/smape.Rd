@@ -23,27 +23,33 @@ wsmape(
 
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} N. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
 }
 \value{
-A <\link{numeric}>-value of \link{length} 1.
+A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
 Calculate the SMAPE using the \code{\link[=smape]{smape()}}-function for the simple mean, or \code{\link[=wsmape]{wsmape()}}-function for the weighted mean.
 }
-\details{
-The Huber Loss is calculated as,
+\section{Calculation}{
+
+
+The metric is calculated as follows,
 
 \deqn{
- \frac{1}{2} (y_i - \hat{y}_i)^2 ~for~ |y_i - \hat{y}_i| \leq \delta
+ \frac{1}{2} (y - \upsilon)^2 ~for~ |y - \upsilon| \leq \delta
 }
+
+and
 
 \deqn{
-  \delta |y_i-\hat{y}_i|-\frac{1}{2} \delta^2 ~for~ |y_i - \hat{y}_i| > \delta
+  \delta |y-\upsilon|-\frac{1}{2} \delta^2 ~for~ \text{otherwise}
 }
 
-for each \eqn{i},
+where \eqn{y} and \eqn{\upsilon} are the \code{actual} and \code{predicted} values respectively. If \code{w} is not \link{NULL}, then all values
+are aggregated using the weights.
 }
+
 \examples{
 # 1) assume that actual
 # and predicted are values

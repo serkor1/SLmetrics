@@ -38,7 +38,7 @@ factor(
   levels = c(1, 2, 3),
   labels = c("A", "B", "C")
 )
-#>  [1] C A B A C C C B A B
+#>  [1] C B C B B B A A B B
 #> Levels: A B C
 }\if{html}{\out{</div>}}
 
@@ -50,7 +50,7 @@ factor(
   levels = c(1, 2, 3),
   labels = c("A", "B", "C")
 )
-#>  [1] C A A A C A C C C A
+#>  [1] C A C C A A A A C C
 #> Levels: A B C
 }\if{html}{\out{</div>}}
 
@@ -59,13 +59,13 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 \section{Calculation}{
 
 
-The Diagnostic Odds Ratio (DOR) is calculated for each class \eqn{k} as follows,
+The metric is calculated for each class \eqn{k} as follows,
 
 \deqn{
   \text{DOR}_k = \frac{\text{PLR}_k}{\text{NLR}_k}
 }
 
-Where \eqn{\text{PLR}_k} and \eqn{\text{NLR}_k} is the Positive and Negative Likelihood Ratio for class \eqn{k}, respectively. See \code{\link[=plr]{plr()}} and \code{\link[=nlr]{nlr()}} for more details.
+Where \eqn{\text{PLR}_k} and \eqn{\text{NLR}_k} is the positive and negative likelihood ratio for class \eqn{k}, respectively. See \code{\link[=plr]{plr()}} and \code{\link[=nlr]{nlr()}} for more details.
 
 When \code{aggregate = TRUE}, the \code{micro}-average is calculated as,
 
@@ -73,7 +73,7 @@ When \code{aggregate = TRUE}, the \code{micro}-average is calculated as,
   \overline{\text{DOR}} = \frac{\overline{\text{PLR}_k}}{\overline{\text{NLR}_k}}
 }
 
-Where \eqn{\overline{\text{PLR}}} and \eqn{\overline{\text{NLR}}} is the micro-averaged is the Positive and Negative Likelihood Ratio, respectively.
+Where \eqn{\overline{\text{PLR}}} and \eqn{\overline{\text{NLR}}} is the micro-averaged is the positive and negative likelihood ratio, respectively.
 }
 
 \examples{
@@ -118,6 +118,7 @@ dor(
 \seealso{
 Other classification: 
 \code{\link{accuracy}()},
+\code{\link{baccuracy}()},
 \code{\link{cmatrix}()},
 \code{\link{fbeta}()},
 \code{\link{fdr}()},

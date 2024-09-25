@@ -23,7 +23,6 @@ using namespace Rcpp;
 //' @param aggregate A <[logical]>-value of [length] \eqn{1}. [FALSE] by default. If [TRUE] it returns the
 //' micro average across all \eqn{k} classes
 //'
-//'
 //' @details
 //'
 //' Consider a classification problem with three classes: `A`, `B`, and `C`. The actual vector of [factor()] values is defined as follows:

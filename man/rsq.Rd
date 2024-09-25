@@ -19,7 +19,7 @@ rsq(
 the function returns the adjusted \eqn{R^2}.}
 }
 \value{
-A <\link{numeric}>-value of \link{length} 1.
+A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
 Calculate the \eqn{R^2} of two <\link{numeric}> vectors.
@@ -31,6 +31,25 @@ The \eqn{R^2} is calculated as,
   1 - \frac{SSE}{SST} \frac{n-1}{n - (k + 1)}
 }
 }
+\section{Calculation}{
+
+
+The metric is calculated as follows,
+
+\deqn{
+ \frac{1}{2} (y - \upsilon)^2 ~for~ |y - \upsilon| \leq \delta
+}
+
+and
+
+\deqn{
+  \delta |y-\upsilon|-\frac{1}{2} \delta^2 ~for~ \text{otherwise}
+}
+
+where \eqn{y} and \eqn{\upsilon} are the \code{actual} and \code{predicted} values respectively. If \code{w} is not \link{NULL}, then all values
+are aggregated using the weights.
+}
+
 \examples{
 # 1) assume that actual
 # and predicted are values

@@ -77,6 +77,44 @@ accuracy <- function(actual, predicted) {
     .Call(`_SLmetrics_accuracy`, actual, predicted)
 }
 
+#' Compute the \eqn{\text{balanced accuracy}}
+#'
+#' The [baccuracy()]-function computes the [balanced accuracy](https://neptune.ai/blog/balanced-accuracy) between two
+#' vectors of predicted and observed [factor()] values.
+#'
+#' @usage
+#' baccuracy(
+#'   actual,
+#'   predicted,
+#'   adjust = FALSE
+#' )
+#'
+#' @inherit specificity
+#' @param adjust A [logical] value. [FALSE] by default. If [TRUE] the metric is adjusted for random change \eqn{\frac{1}{k}}
+#'
+#' @section Calculation:
+#'
+#' The metric is calculated as follows,
+#'
+#' \deqn{
+#'   \frac{\text{sensitivity} + \text{specificty}}{2}
+#' }
+#'
+#' See the [sensitivity()]- and/or [specificity()]-function for more details.
+#'
+#' @returns
+#'
+#' A [numeric]-vector of [length] 1
+#'
+#' @example man/examples/scr_baccuracy.R
+#'
+#' @family classification
+#'
+#' @export
+baccuracy <- function(actual, predicted, adjust = FALSE) {
+    .Call(`_SLmetrics_baccuracy`, actual, predicted, adjust)
+}
+
 #' Confusion Matrix
 #'
 #' @description
@@ -142,13 +180,13 @@ cmatrix <- function(actual, predicted) {
 #'
 #' @section Calculation:
 #'
-#' The Diagnostic Odds Ratio (DOR) is calculated for each class \eqn{k} as follows,
+#' The metric is calculated for each class \eqn{k} as follows,
 #'
 #' \deqn{
 #'   \text{DOR}_k = \frac{\text{PLR}_k}{\text{NLR}_k}
 #' }
 #'
-#' Where \eqn{\text{PLR}_k} and \eqn{\text{NLR}_k} is the Positive and Negative Likelihood Ratio for class \eqn{k}, respectively. See [plr()] and [nlr()] for more details.
+#' Where \eqn{\text{PLR}_k} and \eqn{\text{NLR}_k} is the positive and negative likelihood ratio for class \eqn{k}, respectively. See [plr()] and [nlr()] for more details.
 #'
 #' When `aggregate = TRUE`, the `micro`-average is calculated as,
 #'
@@ -156,7 +194,7 @@ cmatrix <- function(actual, predicted) {
 #'   \overline{\text{DOR}} = \frac{\overline{\text{PLR}_k}}{\overline{\text{NLR}_k}}
 #' }
 #'
-#' Where \eqn{\overline{\text{PLR}}} and \eqn{\overline{\text{NLR}}} is the micro-averaged is the Positive and Negative Likelihood Ratio, respectively.
+#' Where \eqn{\overline{\text{PLR}}} and \eqn{\overline{\text{NLR}}} is the micro-averaged is the positive and negative likelihood ratio, respectively.
 #'
 #' @family classification
 #'
@@ -630,11 +668,13 @@ npv <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_npv`, actual, predicted, aggregate)
 }
 
-#' Precision (Positive Predictive Value)
+#' Compute the \eqn{\text{precision}} or  \eqn{\text{positive predictive value}}
 #'
 #' @description
-#' The [precision()]-function computes the [precision](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values), also known as the Positive Predictive Value (PPV), between
-#' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average precision across all classes \eqn{k}.
+#' The [precision()]-function computes the [precision](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values), also known as the positive predictive value (PPV), between
+#' two vectors of predicted and observed [factor()] values.
+#'
+#' When `aggregate = TRUE`, the function returns the micro-average precision across all classes \eqn{k}.
 #' By default, it returns the class-wise precision.
 #'
 #' @usage
@@ -649,7 +689,7 @@ npv <- function(actual, predicted, aggregate = FALSE) {
 #'
 #' @section Calculation:
 #'
-#' The Precision (Positive Predictive Value, PPV) is calculated for each class \eqn{k} as follows,
+#' The metric is calculated for each class \eqn{k} as follows,
 #'
 #' \deqn{
 #'   \frac{\#TP_k}{\#TP_k + \#FP_k}
@@ -665,10 +705,6 @@ npv <- function(actual, predicted, aggregate = FALSE) {
 #'
 #' @example man/examples/scr_precision.R
 #'
-#' @returns
-#' A named <[numeric]> vector of length k
-#'
-#'
 #' @family classification
 #'
 #' @export
@@ -678,7 +714,6 @@ precision <- function(actual, predicted, aggregate = FALSE) {
 
 #' @rdname precision
 #'
-#'
 #' @usage
 #' # 2) `ppv()`-function
 #' ppv(
@@ -686,7 +721,7 @@ precision <- function(actual, predicted, aggregate = FALSE) {
 #'   predicted,
 #'   aggregate = FALSE
 #' )
-#'
+#' @export
 ppv <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_ppv`, actual, predicted, aggregate)
 }
@@ -783,7 +818,6 @@ tpr <- function(actual, predicted, aggregate = FALSE) {
 #' @inheritParams cmatrix
 #' @param aggregate A <[logical]>-value of [length] \eqn{1}. [FALSE] by default. If [TRUE] it returns the
 #' micro average across all \eqn{k} classes
-#'
 #'
 #' @details
 #'
@@ -911,12 +945,16 @@ zerooneloss <- function(actual, predicted) {
     .Call(`_SLmetrics_zerooneloss`, actual, predicted)
 }
 
-#' Concordance Correlation Coefficient (CCC)
+#' Compute the \eqn{\text{concordance correlation coefficient}}
 #'
-#' Calculate the CCC using the [ccc()]-function for comparing actual and predicted values.
+#' @description
+#' The [ccc()]- and [wccc()]-function computes the simple and weighted [concordance correlation coefficient](https://en.wikipedia.org/wiki/Concordance_correlation_coefficient) between
+#' the two vectors of predicted and observed <[numeric]> values.
+#'
+#' If `correction` is [TRUE] \eqn{\sigma^2} is adjusted by \eqn{\frac{1-n}{n}} in the intermediate steps.
 #'
 #' @usage
-#' # simple;
+#' # `ccc()`-function
 #' ccc(
 #'   actual,
 #'   predicted,
@@ -929,6 +967,18 @@ zerooneloss <- function(actual, predicted) {
 #'
 #' @example man/examples/scr_ccc.R
 #'
+#' @section Calculation:
+#'
+#' The metric is calculated as follows,
+#'
+#' \deqn{
+#'   \rho_c = \frac{2 \rho \sigma_x \sigma_y}{\sigma_x^2 + \sigma_y^2 + (\mu_x - \mu_y)^2}
+#' }
+#'
+#' Where \eqn{\rho} is the \eqn{\text{pearson correlation coefficient}}, \eqn{\sigma} is the \eqn{\text{standard deviation}} and \eqn{\mu} is the simple mean of `actual` and `predicted`.
+#'
+#' If `w` is not [NULL], all calculations are based on the weighted measures.
+#'
 #' @family regression
 #' @export
 ccc <- function(actual, predicted, correction = FALSE) {
@@ -938,7 +988,7 @@ ccc <- function(actual, predicted, correction = FALSE) {
 #' @rdname ccc
 #'
 #' @usage
-#' # weighted;
+#' # `wccc()`-function
 #' wccc(
 #'   actual,
 #'   predicted,
@@ -946,20 +996,19 @@ ccc <- function(actual, predicted, correction = FALSE) {
 #'   correction = FALSE
 #' )
 #'
-#' @family regression
 #' @export
 wccc <- function(actual, predicted, w, correction = FALSE) {
     .Call(`_SLmetrics_wccc`, actual, predicted, w, correction)
 }
 
-#' Huber Loss
+#' Compute the \eqn{\text{huber loss}}
 #'
 #' @description
-#'
-#' Calculate the Huber Loss. [whuberloss()] calculates the arithmetic weighted average, and [huberloss()] calculates the arithmetic average.
+#' The [huberloss()]- and [whuberloss()]-function computes the simple and weighted [huber loss](https://en.wikipedia.org/wiki/Huber_loss) between
+#' the predicted and observed <[numeric]> vectors.
 #'
 #' @usage
-#' # simple mean
+#' # `huberloss()`-function
 #' huberloss(
 #'   actual,
 #'   predicted,
@@ -968,21 +1017,24 @@ wccc <- function(actual, predicted, w, correction = FALSE) {
 #'
 #' @param actual A <[numeric]>-vector of [length] \eqn{n}. The observed (continuous) response variable.
 #' @param predicted A <[numeric]>-vector of [length] \eqn{n}. The estimated (continuous) response variable.
-#' @param delta A <[numeric]>-vector of [length] 1. 1 by default. The threshold value for switch between functions (see details).
+#' @param delta A <[numeric]>-vector of [length] 1. 1 by default. The threshold value for switch between functions (see calculation).
 #'
-#' @details
+#' @section Calculation:
 #'
-#' The Huber Loss is calculated as,
-#'
-#' \deqn{
-#'  \frac{1}{2} (y_i - \hat{y}_i)^2 ~for~ |y_i - \hat{y}_i| \leq \delta
-#' }
+#' The metric is calculated as follows,
 #'
 #' \deqn{
-#'   \delta |y_i-\hat{y}_i|-\frac{1}{2} \delta^2 ~for~ |y_i - \hat{y}_i| > \delta
+#'  \frac{1}{2} (y - \upsilon)^2 ~for~ |y - \upsilon| \leq \delta
 #' }
 #'
-#' for each \eqn{i},
+#' and
+#'
+#' \deqn{
+#'   \delta |y-\upsilon|-\frac{1}{2} \delta^2 ~for~ \text{otherwise}
+#' }
+#'
+#' where \eqn{y} and \eqn{\upsilon} are the `actual` and `predicted` values respectively. If `w` is not [NULL], then all values
+#' are aggregated using the weights.
 #'
 #'
 #' @example man/examples/scr_huberloss.R
@@ -990,7 +1042,7 @@ wccc <- function(actual, predicted, w, correction = FALSE) {
 #'
 #' @family regression
 #'
-#' @returns A <[numeric]>-value of [length] 1.
+#' @returns A <[numeric]> vector of [length] 1.
 #'
 #' @export
 huberloss <- function(actual, predicted, delta = 1) {
@@ -999,14 +1051,16 @@ huberloss <- function(actual, predicted, delta = 1) {
 
 #' @rdname huberloss
 #' @usage
-#' # weighted mean
+#' # `whuberloss()`-function
 #' whuberloss(
 #'   actual,
 #'   predicted,
 #'   w,
 #'   delta = 1
 #' )
-#' @param w A <[numeric]>-vector of [length] N. The weight assigned to each observation in the data. See [stats::weighted.mean()] for more details.
+#'
+#' @param w A <[numeric]>-vector of [length] \eqn{n}. The weight assigned to each observation in the data. See [stats::weighted.mean()] for more details.
+#'
 #' @export
 whuberloss <- function(actual, predicted, w, delta = 1) {
     .Call(`_SLmetrics_whuberloss`, actual, predicted, w, delta)
