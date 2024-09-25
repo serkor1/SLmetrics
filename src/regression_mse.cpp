@@ -1,17 +1,29 @@
 #include <Rcpp.h>
 
-//' Mean Squared Error (MSE)
+//' Compute the \eqn{\text{mean squared error}}
 //'
-//' Calculate the MSE using the [mse()]-function for the (arithmetic) simple mean, or [wmse()]-function for the (arithmetic) weighted mean.
-//'
+//' The [mse()]- and [wmse()]-function computes the simple and weighted [mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error) between
+//' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted mean squared error.
 //' @usage
-//' # simple mean
+//' # `mse()`-function
 //' mse(
 //'   actual,
 //'   predicted
 //' )
 //'
 //' @inherit huberloss
+//'
+//' @example man/examples/scr_mse.R
+//'
+//' @section Calculation:
+//'
+//' The metric is calculated as,
+//'
+//' \deqn{
+//'   \frac{1}{n} \sum_i^n (y_i - \upsilon_i)^2
+//' }
+//'
+//' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
 //'
 //' @family regression
 //' @export
@@ -53,7 +65,7 @@ double mse(
 //' @rdname mse
 //'
 //' @usage
-//' # weighted mean
+//' # `wmse()`-function
 //' wmse(
 //'   actual,
 //'   predicted,

@@ -14,10 +14,9 @@ predicted <- fitted(model)
 
 # 2) calculate
 # the ccc measure
-ccc(
+mae(
   actual     = actual,
-  predicted  = predicted,
-  correction = TRUE
+  predicted  = predicted
 )
 
 # 3) calculate
@@ -29,9 +28,8 @@ w <- rbeta(
   shape2 = 2
 )
 
-wccc(
+wmae(
   actual     = actual,
   predicted  = predicted,
-  w          = w,
-  correction = TRUE
+  w          = w
 )

@@ -1,18 +1,30 @@
 #include <Rcpp.h>
 
-//' Mean Absolute Error (MAE)
+//' Compute the \eqn{\text{mean absolute error}}
 //'
-//' Calculate the MAE using the [mae()]-function for the (arithmetic) simple mean, or [wmae()]-function for the (arithmetic) weighted mean.
+//' The [mae()]- and [wmae()]-function computes the simple and weighted [mean absolute error](https://en.wikipedia.org/wiki/Mean_absolute_error) between
+//' the observed and predicted <[numeric]> vectors. If `w` is not [NULL] the function returns the weighted mean absolute error.
 //'
 //' @usage
-//' # MAE (Simple Mean)
+//' # `mae()`-function
 //' mae(
 //'   actual,
 //'   predicted
 //' )
 //'
-//'
 //' @inherit huberloss
+//'
+//' @example man/examples/scr_mae.R
+//'
+//' @section Calculation:
+//'
+//' The metric is calulated as follows,
+//'
+//' \deqn{
+//'   \frac{\sum_i^n |y_i - \upsilon_i|}{n}
+//' }
+//'
+//' If \eqn{w} is not [NULL] the function returns the weigthed version.
 //'
 //' @family regression
 //'
@@ -43,8 +55,10 @@ double mae(
   // 4) loop through the values
   // in each vector
   for (std::size_t i = 0; i < n; ++i) {
+
     double difference = std::abs(actual_ptr[i] - predicted_ptr[i]);
     output += difference;
+
   }
 
   // 5) return the mean of the value
@@ -54,7 +68,7 @@ double mae(
 //' @rdname mae
 //'
 //' @usage
-//' # MAE (Weighted Mean)
+//' # `wmae()`-function
 //' wmae(
 //'   actual,
 //'   predicted,
@@ -90,9 +104,11 @@ double wmae(
   // 4) loop through the values
   // in each vector
   for (std::size_t i = 0; i < n; ++i) {
+
     double difference = std::abs(actual_ptr[i] - predicted_ptr[i]);
     numerator   += difference * w_ptr[i];
     denominator +=  w_ptr[i];
+
   }
 
   // 5) return the mean of the value

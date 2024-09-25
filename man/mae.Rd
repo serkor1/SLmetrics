@@ -3,15 +3,15 @@
 \name{mae}
 \alias{mae}
 \alias{wmae}
-\title{Mean Absolute Error (MAE)}
+\title{Compute the \eqn{\text{mean absolute error}}}
 \usage{
-# MAE (Simple Mean)
+# `mae()`-function
 mae(
   actual,
   predicted
 )
 
-# MAE (Weighted Mean)
+# `wmae()`-function
 wmae(
   actual,
   predicted,
@@ -29,62 +29,56 @@ wmae(
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-Calculate the MAE using the \code{\link[=mae]{mae()}}-function for the (arithmetic) simple mean, or \code{\link[=wmae]{wmae()}}-function for the (arithmetic) weighted mean.
+The \code{\link[=mae]{mae()}}- and \code{\link[=wmae]{wmae()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Mean_absolute_error}{mean absolute error} between
+the observed and predicted <\link{numeric}> vectors. If \code{w} is not \link{NULL} the function returns the weighted mean absolute error.
 }
 \section{Calculation}{
 
 
-The metric is calculated as follows,
+The metric is calulated as follows,
 
 \deqn{
- \frac{1}{2} (y - \upsilon)^2 ~for~ |y - \upsilon| \leq \delta
+  \frac{\sum_i^n |y_i - \upsilon_i|}{n}
 }
 
-and
-
-\deqn{
-  \delta |y-\upsilon|-\frac{1}{2} \delta^2 ~for~ \text{otherwise}
-}
-
-where \eqn{y} and \eqn{\upsilon} are the \code{actual} and \code{predicted} values respectively. If \code{w} is not \link{NULL}, then all values
-are aggregated using the weights.
+If \eqn{w} is not \link{NULL} the function returns the weigthed version.
 }
 
 \examples{
-# 1) assume that actual
-# and predicted are values
-# from a model
-actual <- rnorm(
-  n = 1e3,
-  mean = 10
+# 1) fit a linear
+# regression
+model <- lm(
+  mpg ~ .,
+  data = mtcars
 )
 
-predicted <- actual + rnorm(
-  n = 1e3,
-  mean = 10
+# 1.1) define actual
+# and predicted values
+# to measure performance
+actual    <- mtcars$mpg
+predicted <- fitted(model)
+
+
+# 2) calculate
+# the ccc measure
+mae(
+  actual     = actual,
+  predicted  = predicted
 )
 
-# 2) calculate the huber loss
-# with delta 0.5
-huberloss(
-  actual = actual,
-  predicted = predicted,
-  delta = 0.5
-)
-
-# 3) caclulate weighted
-# huber loss
+# 3) calculate
+# the weighted ccc
+# using arbtrary weights
 w <- rbeta(
   n = 1e3,
   shape1 = 10,
   shape2 = 2
 )
 
-whuberloss(
-  actual = actual,
-  predicted = predicted,
-  delta = 0.5,
-  w     = w
+wmae(
+  actual     = actual,
+  predicted  = predicted,
+  w          = w
 )
 }
 \seealso{

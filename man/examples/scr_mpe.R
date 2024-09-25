@@ -13,15 +13,14 @@ predicted <- fitted(model)
 
 
 # 2) calculate
-# the ccc measure
-ccc(
+# the mpe measure
+mpe(
   actual     = actual,
-  predicted  = predicted,
-  correction = TRUE
+  predicted  = predicted
 )
 
 # 3) calculate
-# the weighted ccc
+# the weighted mpe
 # using arbtrary weights
 w <- rbeta(
   n = 1e3,
@@ -29,9 +28,8 @@ w <- rbeta(
   shape2 = 2
 )
 
-wccc(
+wmpe(
   actual     = actual,
   predicted  = predicted,
-  w          = w,
-  correction = TRUE
+  w          = w
 )

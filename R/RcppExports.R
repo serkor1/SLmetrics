@@ -39,7 +39,7 @@ fmi <- function(actual, predicted) {
     .Call(`_SLmetrics_fmi`, actual, predicted)
 }
 
-#' Accuracy
+#' Compute the \eqn{\text{accuracy}}
 #'
 #' The [accuracy()]-function computes the [accuracy](https://en.wikipedia.org/wiki/Precision_and_recall) between two
 #' vectors of predicted and observed [factor()] values.
@@ -1066,19 +1066,31 @@ whuberloss <- function(actual, predicted, w, delta = 1) {
     .Call(`_SLmetrics_whuberloss`, actual, predicted, w, delta)
 }
 
-#' Mean Absolute Error (MAE)
+#' Compute the \eqn{\text{mean absolute error}}
 #'
-#' Calculate the MAE using the [mae()]-function for the (arithmetic) simple mean, or [wmae()]-function for the (arithmetic) weighted mean.
+#' The [mae()]- and [wmae()]-function computes the simple and weighted [mean absolute error](https://en.wikipedia.org/wiki/Mean_absolute_error) between
+#' the observed and predicted <[numeric]> vectors. If `w` is not [NULL] the function returns the weighted mean absolute error.
 #'
 #' @usage
-#' # MAE (Simple Mean)
+#' # `mae()`-function
 #' mae(
 #'   actual,
 #'   predicted
 #' )
 #'
-#'
 #' @inherit huberloss
+#'
+#' @example man/examples/scr_mae.R
+#'
+#' @section Calculation:
+#'
+#' The metric is calulated as follows,
+#'
+#' \deqn{
+#'   \frac{\sum_i^n |y_i - \upsilon_i|}{n}
+#' }
+#'
+#' If \eqn{w} is not [NULL] the function returns the weigthed version.
 #'
 #' @family regression
 #'
@@ -1090,7 +1102,7 @@ mae <- function(actual, predicted) {
 #' @rdname mae
 #'
 #' @usage
-#' # MAE (Weighted Mean)
+#' # `wmae()`-function
 #' wmae(
 #'   actual,
 #'   predicted,
@@ -1101,18 +1113,30 @@ wmae <- function(actual, predicted, w) {
     .Call(`_SLmetrics_wmae`, actual, predicted, w)
 }
 
-#' Mean Absolute Percentage Error (MAPE)
+#' Compute the \eqn{\text{mean absolute percentage error}}
 #'
-#' Calculate the MAPE using the [mape()]-function for the simple mean, or [wmape()]-function for the weighted mean.
-#'
+#' The [mape()]- and [wmape()]-function computes the simple and weighted [mean absolute percentage error](https://en.wikipedia.org/wiki/Mean_absolute_percentage_error) between
+#' the observed and predicted <[numeric]> vectors. If `w` is not [NULL] the function returns the weighted mean absolute error.
 #' @usage
-#' # simple MAPE
+#' # `mape()`-function
 #' mape(
 #'   actual,
 #'   predicted
 #' )
 #'
 #' @inherit huberloss
+#'
+#' @example man/examples/scr_mape.R
+#'
+#' @section Calculation:
+#'
+#' The metric is calculated as,
+#'
+#' \deqn{
+#'   \frac{1}{n} \sum_i^n \frac{|y_i - \upsilon_i|}{|y_i|}
+#' }
+#'
+#' If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
 #'
 #' @family regression
 #' @export
@@ -1123,30 +1147,45 @@ mape <- function(actual, predicted) {
 #' @rdname mape
 #'
 #' @usage
-#' # weighted MAPE
+#' # `wmape()`-function
 #' wmape(
 #'   actual,
 #'   predicted,
 #'   w
 #' )
+#'
 #' @family regression
+#'
 #' @export
 wmape <- function(actual, predicted, w) {
     .Call(`_SLmetrics_wmape`, actual, predicted, w)
 }
 
-#' Mean Percentage Error (MPE)
+#' Compute the \eqn{\text{mean percentage error}}
 #'
-#' Calculate the MPE using the [mpe()]-function for the simple mean, or [wmpe()]-function for the weighted mean.
-#'
+#' The [mpe()]-function computes the [mean percentage error](https://en.wikipedia.org/wiki/Mean_percentage_error) between
+#' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted mean percentage error.
 #' @usage
-#' # simple MPE
+#' # `mpe()`-function
 #' mpe(
 #'   actual,
 #'   predicted
 #' )
 #'
 #' @inherit huberloss
+#'
+#' @example man/examples/scr_mpe.R
+#'
+#' @section Calculation:
+#'
+#' The metric is calculated as,
+#'
+#' \deqn{
+#'   \frac{1}{n} \sum_i^n \frac{y_i - \upsilon_i}{y_i}
+#' }
+#'
+#' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
+#'
 #' @family regression
 #' @export
 mpe <- function(actual, predicted) {
@@ -1156,7 +1195,7 @@ mpe <- function(actual, predicted) {
 #' @rdname mpe
 #'
 #' @usage
-#' # weighted MPE
+#' # `wmpe()`-function
 #' wmpe(
 #'   actual,
 #'   predicted,
@@ -1167,18 +1206,30 @@ wmpe <- function(actual, predicted, w) {
     .Call(`_SLmetrics_wmpe`, actual, predicted, w)
 }
 
-#' Mean Squared Error (MSE)
+#' Compute the \eqn{\text{mean squared error}}
 #'
-#' Calculate the MSE using the [mse()]-function for the (arithmetic) simple mean, or [wmse()]-function for the (arithmetic) weighted mean.
-#'
+#' The [mse()]- and [wmse()]-function computes the simple and weighted [mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error) between
+#' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted mean squared error.
 #' @usage
-#' # simple mean
+#' # `mse()`-function
 #' mse(
 #'   actual,
 #'   predicted
 #' )
 #'
 #' @inherit huberloss
+#'
+#' @example man/examples/scr_mse.R
+#'
+#' @section Calculation:
+#'
+#' The metric is calculated as,
+#'
+#' \deqn{
+#'   \frac{1}{n} \sum_i^n (y_i - \upsilon_i)^2
+#' }
+#'
+#' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
 #'
 #' @family regression
 #' @export
@@ -1189,7 +1240,7 @@ mse <- function(actual, predicted) {
 #' @rdname mse
 #'
 #' @usage
-#' # weighted mean
+#' # `wmse()`-function
 #' wmse(
 #'   actual,
 #'   predicted,
@@ -1200,18 +1251,30 @@ wmse <- function(actual, predicted, w) {
     .Call(`_SLmetrics_wmse`, actual, predicted, w)
 }
 
-#' Root Mean Squared Error (RMSE)
+#' Compute the \eqn{\text{root mean squared error}}
 #'
-#' Calculate the RMSE using the [rmse()]-function for the (arithmetic) simple mean, or [wrmse()]-function for the (arithmetic) weighted mean.
-#'
+#' The [rmse()]- and [wrmse()]-function computes the simple and weighted [root mean squared error](https://en.wikipedia.org/wiki/Root-mean-square_deviation) between
+#' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted root mean squared error.
 #' @usage
-#' # simple RMSE
+#' # `rmse()`-function
 #' rmse(
 #'   actual,
 #'   predicted
 #' )
 #'
 #' @inherit huberloss
+#'
+#' @example man/examples/scr_rmse.R
+#'
+#' @section Calculation:
+#'
+#' The metric is calculated as,
+#'
+#' \deqn{
+#'   \sqrt{\frac{1}{n} \sum_i^n (y_i - \upsilon_i)^2}
+#' }
+#'
+#' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
 #'
 #' @family regression
 #' @export
@@ -1222,7 +1285,7 @@ rmse <- function(actual, predicted) {
 #' @rdname rmse
 #'
 #' @usage
-#' # weighted RMSE
+#' # `wrmse()`-function
 #' wrmse(
 #'   actual,
 #'   predicted,
@@ -1233,18 +1296,30 @@ wrmse <- function(actual, predicted, w) {
     .Call(`_SLmetrics_wrmse`, actual, predicted, w)
 }
 
-#' Root Mean Squared Logarithmic Error (RMSLE)
+#' Compute the \eqn{\text{root mean squared logarithmic error}}
 #'
-#' Calculate the RMSLE using the [rmsle()]-function for the (arithmetic) simple mean, or [wrmsle()]-function for the (arithmetic) weighted mean.
-#'
+#' The [rmsle()]- and [wrmsle()]-function computes the simple and weighted root mean squared logarithmic error between
+#' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted root mean squared logarithmic error.
 #' @usage
-#' # simple RMSLE
+#' # `rmsle()`-function
 #' rmsle(
 #'   actual,
 #'   predicted
 #' )
 #'
 #' @inherit huberloss
+#'
+#' @example man/examples/scr_rmsle.R
+#'
+#' @section Calculation:
+#'
+#' The metric is calculated as,
+#'
+#' \deqn{
+#'   \sqrt{\frac{1}{n} \sum_i^n (\log(1 + y_i) - \log(1 + \upsilon_i))^2}
+#' }
+#'
+#' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
 #'
 #' @family regression
 #' @export
@@ -1255,7 +1330,7 @@ rmsle <- function(actual, predicted) {
 #' @rdname rmsle
 #'
 #' @usage
-#' # weighted RMSLE
+#' # `wrmsle()`-function
 #' wrmsle(
 #'   actual,
 #'   predicted,

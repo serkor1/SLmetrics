@@ -54,18 +54,18 @@ If \code{w} is not \link{NULL}, all calculations are based on the weighted measu
 }
 
 \examples{
-# 1) assume that actual
-# and predicted are values
-# from a model
-actual <- rnorm(
-  n = 1e3,
-  mean = 10
+# 1) fit a linear
+# regression
+model <- lm(
+  mpg ~ .,
+  data = mtcars
 )
 
-predicted <- actual + rnorm(
-  n = 1e3,
-  mean = 10
-)
+# 1.1) define actual
+# and predicted values
+# to measure performance
+actual    <- mtcars$mpg
+predicted <- fitted(model)
 
 
 # 2) calculate
@@ -78,6 +78,7 @@ ccc(
 
 # 3) calculate
 # the weighted ccc
+# using arbtrary weights
 w <- rbeta(
   n = 1e3,
   shape1 = 10,
