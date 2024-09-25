@@ -10,7 +10,8 @@ testthat::test_that(
   code = {
 
     # 0) source the python
-    # program
+    # progra
+    set.seed(1903)
     reticulate::source_python(
       "scikit-learn.py"
     )
