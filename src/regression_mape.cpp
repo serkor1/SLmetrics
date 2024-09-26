@@ -61,8 +61,6 @@ double mape(
 //'   w
 //' )
 //'
-//' @family regression
-//'
 //' @export
 // [[Rcpp::export]]
 double wmape(

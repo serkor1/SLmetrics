@@ -3,15 +3,15 @@
 \name{smape}
 \alias{smape}
 \alias{wsmape}
-\title{Symmetric Mean Absolute Percentage Error (SMAPE)}
+\title{Compute the \eqn{\text{symmetric mean absolute percentage error}}}
 \usage{
-# simple SMAPE
+# `smape()`-function
 smape(
   actual,
   predicted
 )
 
-# weighted SMAPE
+# `wsmape()`-function
 wsmape(
   actual,
   predicted,
@@ -29,7 +29,7 @@ wsmape(
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-Calculate the SMAPE using the \code{\link[=smape]{smape()}}-function for the simple mean, or \code{\link[=wsmape]{wsmape()}}-function for the weighted mean.
+The \code{\link[=smape]{smape()}}- and \code{\link[=wsmape]{wsmape()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error}{symmetric mean absolute percentage error}.
 }
 \section{Calculation}{
 
@@ -37,17 +37,11 @@ Calculate the SMAPE using the \code{\link[=smape]{smape()}}-function for the sim
 The metric is calculated as follows,
 
 \deqn{
- \frac{1}{2} (y - \upsilon)^2 ~for~ |y - \upsilon| \leq \delta
+  \sum_i^n \frac{1}{n} \frac{|y_i - \upsilon_i|}{\frac{|y_i|+|\upsilon_i|}{2}}
 }
 
-and
-
-\deqn{
-  \delta |y-\upsilon|-\frac{1}{2} \delta^2 ~for~ \text{otherwise}
-}
-
-where \eqn{y} and \eqn{\upsilon} are the \code{actual} and \code{predicted} values respectively. If \code{w} is not \link{NULL}, then all values
-are aggregated using the weights.
+where \eqn{y_i} and \eqn{\upsilon_i} is the \code{actual} and \code{predicted} values respectively. If \code{w} is not \link{NULL}, the metric is calculated
+using weights.
 }
 
 \examples{
@@ -64,12 +58,10 @@ predicted <- actual + rnorm(
   mean = 10
 )
 
-# 2) calculate the huber loss
-# with delta 0.5
-huberloss(
+# 2) calculate the smape
+smape(
   actual = actual,
-  predicted = predicted,
-  delta = 0.5
+  predicted = predicted
 )
 
 # 3) caclulate weighted
@@ -80,25 +72,13 @@ w <- rbeta(
   shape2 = 2
 )
 
-whuberloss(
+wsmape(
   actual = actual,
   predicted = predicted,
-  delta = 0.5,
   w     = w
 )
 }
 \seealso{
-Other regression: 
-\code{\link{ccc}()},
-\code{\link{huberloss}()},
-\code{\link{mae}()},
-\code{\link{mape}()},
-\code{\link{mpe}()},
-\code{\link{mse}()},
-\code{\link{rmse}()},
-\code{\link{rmsle}()},
-\code{\link{rsq}()}
-
 Other regression: 
 \code{\link{ccc}()},
 \code{\link{huberloss}()},

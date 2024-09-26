@@ -92,16 +92,5 @@ Other regression:
 \code{\link{rmsle}()},
 \code{\link{rsq}()},
 \code{\link{smape}()}
-
-Other regression: 
-\code{\link{ccc}()},
-\code{\link{huberloss}()},
-\code{\link{mae}()},
-\code{\link{mpe}()},
-\code{\link{mse}()},
-\code{\link{rmse}()},
-\code{\link{rmsle}()},
-\code{\link{rsq}()},
-\code{\link{smape}()}
 }
 \concept{regression}

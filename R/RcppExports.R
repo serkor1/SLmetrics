@@ -1160,8 +1160,6 @@ mape <- function(actual, predicted) {
 #'   w
 #' )
 #'
-#' @family regression
-#'
 #' @export
 wmape <- function(actual, predicted, w) {
     .Call(`_SLmetrics_wmape`, actual, predicted, w)
@@ -1382,18 +1380,31 @@ rsq <- function(actual, predicted, k = 0) {
     .Call(`_SLmetrics_rsq`, actual, predicted, k)
 }
 
-#' Symmetric Mean Absolute Percentage Error (SMAPE)
+#' Compute the \eqn{\text{symmetric mean absolute percentage error}}
 #'
-#' Calculate the SMAPE using the [smape()]-function for the simple mean, or [wsmape()]-function for the weighted mean.
+#' The [smape()]- and [wsmape()]-function computes the simple and weighted [symmetric mean absolute percentage error](https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error).
 #'
 #' @usage
-#' # simple SMAPE
+#' # `smape()`-function
 #' smape(
 #'   actual,
 #'   predicted
 #' )
 #'
 #' @inherit huberloss
+#'
+#' @example man/examples/scr_smape.R
+#'
+#' @section Calculation:
+#'
+#' The metric is calculated as follows,
+#'
+#' \deqn{
+#'   \sum_i^n \frac{1}{n} \frac{|y_i - \upsilon_i|}{\frac{|y_i|+|\upsilon_i|}{2}}
+#' }
+#'
+#' where \eqn{y_i} and \eqn{\upsilon_i} is the `actual` and `predicted` values respectively. If `w` is not [NULL], the metric is calculated
+#' using weights.
 #'
 #' @family regression
 #' @export
@@ -1404,14 +1415,13 @@ smape <- function(actual, predicted) {
 #' @rdname smape
 #'
 #' @usage
-#' # weighted SMAPE
+#' # `wsmape()`-function
 #' wsmape(
 #'   actual,
 #'   predicted,
 #'   w
 #' )
 #'
-#' @family regression
 #' @export
 wsmape <- function(actual, predicted, w) {
     .Call(`_SLmetrics_wsmape`, actual, predicted, w)
