@@ -9,30 +9,37 @@ testthat::test_that(
   desc = "`rsq`-function returns non-zero postive values",
   code = {
 
-    # 0) generate values
-    # from a normal distribution
-    actual <-  rnorm(
-      n = 1e2
+    # 0) run a regression
+    # on mtcars
+    model <-  lm(
+      formula = mpg ~ .,
+      data    = mtcars
     )
 
-    predicted <- actual + rnorm(
-      n = 1e2
+    # 1) extract rsq
+    target_rsq    <- summary(model)$r.squared
+    target_adjrsq <- summary(model)$adj.r.squared
+
+    # 2) calculate rsq
+    # manually
+    sl_rsq <- rsq(
+      actual = mtcars$mpg,
+      predicted = fitted.values(model)
     )
 
-
-    # 1) calculate the
-    # rsq using rsq()-function
-    output <- testthat::expect_no_condition(
-      rsq(
-        predicted,
-        actual
-      )
+    sl_adjrsq <- rsq(
+      actual = mtcars$mpg,
+      predicted = fitted.values(model),
+      k = ncol(model.matrix(model)) - 1
     )
 
-    # 2) test that the value
-    # is greater than 0
+    # 3) testtat they are
+    # all exactly equal
     testthat::expect_true(
-      output > 0
+      all.equal(
+        target = c(target_rsq, target_adjrsq),
+        current = c(sl_rsq, sl_adjrsq)
+      )
     )
 
   }

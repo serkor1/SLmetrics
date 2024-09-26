@@ -2,8 +2,9 @@
 % Please edit documentation in R/RcppExports.R
 \name{rsq}
 \alias{rsq}
-\title{\eqn{R^2}}
+\title{Compute the \eqn{R^2}}
 \usage{
+# `rsq()`-function
 rsq(
   actual,
   predicted,
@@ -22,14 +23,8 @@ the function returns the adjusted \eqn{R^2}.}
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-Calculate the \eqn{R^2} of two <\link{numeric}> vectors.
-}
-\details{
-The \eqn{R^2} is calculated as,
-
-\deqn{
-  1 - \frac{SSE}{SST} \frac{n-1}{n - (k + 1)}
-}
+The \code{\link[=rsq]{rsq()}}-function calculates the \eqn{R^2}, the \href{https://en.wikipedia.org/wiki/Coefficient_of_determination}{coefficient of determination}, between the ovserved
+and predicted <\link{numeric}> vectors. By default \code{\link[=rsq]{rsq()}} returns the unadjusted \eqn{R^2}. For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.
 }
 \section{Calculation}{
 
@@ -37,17 +32,10 @@ The \eqn{R^2} is calculated as,
 The metric is calculated as follows,
 
 \deqn{
- \frac{1}{2} (y - \upsilon)^2 ~for~ |y - \upsilon| \leq \delta
+  R^2 = 1 - \frac{\text{SSE}}{\text{SST}} \frac{n-1}{n - (k + 1)}
 }
 
-and
-
-\deqn{
-  \delta |y-\upsilon|-\frac{1}{2} \delta^2 ~for~ \text{otherwise}
-}
-
-where \eqn{y} and \eqn{\upsilon} are the \code{actual} and \code{predicted} values respectively. If \code{w} is not \link{NULL}, then all values
-are aggregated using the weights.
+Where \eqn{\text{SSE}} is the sum of squared errors, \eqn{\text{SST}} is total sum of squared errors, \eqn{n} is the number of observations, and \eqn{k} is the number of non-constant parameters.
 }
 
 \examples{

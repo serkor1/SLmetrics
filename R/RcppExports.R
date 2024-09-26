@@ -1348,12 +1348,14 @@ wrmsle <- function(actual, predicted, w) {
     .Call(`_SLmetrics_wrmsle`, actual, predicted, w)
 }
 
-#' \eqn{R^2}
+#' Compute the \eqn{R^2}
 #'
 #' @description
-#' Calculate the \eqn{R^2} of two <[numeric]> vectors.
+#' The [rsq()]-function calculates the \eqn{R^2}, the [coefficient of determination](https://en.wikipedia.org/wiki/Coefficient_of_determination), between the ovserved
+#' and predicted <[numeric]> vectors. By default [rsq()] returns the unadjusted \eqn{R^2}. For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.
 #'
 #' @usage
+#' # `rsq()`-function
 #' rsq(
 #'   actual,
 #'   predicted,
@@ -1364,13 +1366,15 @@ wrmsle <- function(actual, predicted, w) {
 #' @param k A <[numeric]>-vector of [length] 1. 0 by default. If \eqn{k>0}
 #' the function returns the adjusted \eqn{R^2}.
 #'
-#' @details
+#' @section Calculation:
 #'
-#' The \eqn{R^2} is calculated as,
+#' The metric is calculated as follows,
 #'
 #' \deqn{
-#'   1 - \frac{SSE}{SST} \frac{n-1}{n - (k + 1)}
+#'   R^2 = 1 - \frac{\text{SSE}}{\text{SST}} \frac{n-1}{n - (k + 1)}
 #' }
+#'
+#' Where \eqn{\text{SSE}} is the sum of squared errors, \eqn{\text{SST}} is total sum of squared errors, \eqn{n} is the number of observations, and \eqn{k} is the number of non-constant parameters.
 #'
 #' @family regression
 #'
