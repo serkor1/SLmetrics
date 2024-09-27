@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{fmi}
 \alias{fmi}
-\title{Fowlkes-Mallows Index (FMI)}
+\title{Compute the \eqn{\text{fowlkes}}-\eqn{\text{fallows}} \eqn{\text{index}}}
 \usage{
 # fowlkes-mallows index
 fmi(
@@ -58,7 +58,7 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 \section{Calculation}{
 
 
-The FMI Index is calculated for each class \eqn{k} as follows,
+The metric is calculated for each class \eqn{k} as follows,
 
 \deqn{
   \sqrt{\frac{\#TP_k}{\#TP_k + \#FP_k} \times \frac{\#TP_k}{\#TP_k + \#FN_k}}

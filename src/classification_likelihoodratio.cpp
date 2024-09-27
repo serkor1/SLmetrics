@@ -3,11 +3,13 @@
 #include "helpers.h"
 using namespace Rcpp;
 
-//' Positive Likelihood Ratio (PLR)
+//' Compute the \eqn{\text{positive}} \eqn{\text{likelihood}} \eqn{\text{ratio}}
 //'
 //' @description
 //' The [plr()]-function computes the [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing), also known as the likelihood ratio for positive results, between
-//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average PLR across all classes \eqn{k}.
+//' two vectors of predicted and observed [factor()] values.
+//'
+//' When `aggregate = TRUE`, the function returns the micro-average PLR across all classes \eqn{k}.
 //' By default, it returns the class-wise PLR.
 //'
 //' @usage
@@ -23,7 +25,7 @@ using namespace Rcpp;
 //'
 //' @section Calculation:
 //'
-//' The Positive Likelihood Ratio (PLR) is calculated for each class \eqn{k} as follows,
+//' The metric is calculated for each class \eqn{k} as follows,
 //'
 //' \deqn{
 //'   \frac{\text{Sensitivity}_k}{1 - \text{Specificity}_k}
@@ -102,11 +104,13 @@ NumericVector plr(
  return output;
 }
 
-//' Negative Likelihood Ratio (NLR)
+//' Compute the \eqn{\text{negative}} \eqn{\text{likelihood}} \eqn{\text{ratio}}
 //'
 //' @description
 //' The [nlr()]-function computes the [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing), also known as the likelihood ratio for negative results, between
-//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average NLR across all classes \eqn{k}.
+//' two vectors of predicted and observed [factor()] values.
+//'
+//' When `aggregate = TRUE`, the function returns the micro-average NLR across all classes \eqn{k}.
 //' By default, it returns the class-wise NLR.
 //'
 //' @usage
@@ -122,7 +126,7 @@ NumericVector plr(
 //'
 //' @section Calculation:
 //'
-//' The Negative Likelihood Ratio (NLR) is calculated for each class \eqn{k} as follows,
+//' The metric is calculated for each class \eqn{k} as follows,
 //'
 //' \deqn{
 //'   \frac{1 - \text{Sensitivity}_k}{\text{Specificity}_k}

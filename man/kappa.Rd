@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{kappa}
 \alias{kappa}
-\title{Cohen's \eqn{\kappa}-statistic}
+\title{Compute Cohen's \eqn{\kappa}-statistic}
 \usage{
 kappa(
   actual,
@@ -24,7 +24,9 @@ If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=kappa]{kappa()}}-function computes \href{https://en.wikipedia.org/wiki/Cohen\%27s_kappa}{Cohen's \eqn{\kappa}}, a statistic that measures inter-rater agreement for categorical items between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+
+If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of
 \eqn{(y_{+} - y_{i,-})^\beta}. See below for further details.
 }
 \details{

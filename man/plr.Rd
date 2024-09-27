@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{plr}
 \alias{plr}
-\title{Positive Likelihood Ratio (PLR)}
+\title{Compute the \eqn{\text{positive}} \eqn{\text{likelihood}} \eqn{\text{ratio}}}
 \usage{
 plr(
   actual,
@@ -25,7 +25,9 @@ If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=plr]{plr()}}-function computes the \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{positive likelihood ratio}, also known as the likelihood ratio for positive results, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. When \code{aggregate = TRUE}, the function returns the micro-average PLR across all classes \eqn{k}.
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+
+When \code{aggregate = TRUE}, the function returns the micro-average PLR across all classes \eqn{k}.
 By default, it returns the class-wise PLR.
 }
 \details{
@@ -64,7 +66,7 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 \section{Calculation}{
 
 
-The Positive Likelihood Ratio (PLR) is calculated for each class \eqn{k} as follows,
+The metric is calculated for each class \eqn{k} as follows,
 
 \deqn{
   \frac{\text{Sensitivity}_k}{1 - \text{Specificity}_k}

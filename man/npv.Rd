@@ -2,8 +2,9 @@
 % Please edit documentation in R/RcppExports.R
 \name{npv}
 \alias{npv}
-\title{Negative Predictive Value (NPV)}
+\title{Compute the \eqn{\text{negative}} \eqn{\text{predictive}} \eqn{\text{value}}}
 \usage{
+# `npv()`-function
 npv(
   actual,
   predicted,
@@ -25,8 +26,9 @@ If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=npv]{npv()}}-function computes the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{negative predictive value}, also known as the True Negative Predictive Value, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. When \code{aggregate = TRUE}, the function returns the micro-average NPV across all classes \eqn{k}.
-By default, it returns the class-wise NPV.
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+
+When \code{aggregate = TRUE}, the function returns the micro-average NPV across all classes \eqn{k}. By default, it returns the class-wise NPV.
 }
 \details{
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
@@ -64,7 +66,7 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 \section{Calculation}{
 
 
-The Negative Predictive Value (NPV) is calculated for each class \eqn{k} as follows,
+The metric is calculated for each class \eqn{k} as follows,
 
 \deqn{
   \frac{\#TN_k}{\#TN_k + \#FN_k}

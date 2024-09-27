@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{dor}
 \alias{dor}
-\title{Compute the \eqn{\text{Diagnostic Odds Ratio}}}
+\title{Compute the \eqn{\text{diagnostic}} \eqn{\text{odds}} \eqn{\text{ratio}}}
 \usage{
 dor(
   actual,

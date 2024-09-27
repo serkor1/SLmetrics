@@ -3,7 +3,7 @@
 \name{mcc}
 \alias{mcc}
 \alias{phi}
-\title{Matthews Correlation Coefficient (MCC)}
+\title{Compute the \eqn{\text{Matthews}} \eqn{\text{Correlation}} \eqn{\text{Coefficient}}}
 \usage{
 # 1) `mcc()`-function
 mcc(
@@ -65,10 +65,10 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 \section{Calculation}{
 
 
-The MCC is calculated for each class \eqn{k} as follows,
+The metric is calculated as follows,
 
 \deqn{
-  \frac{\#TP_k \times \#TN_k - \#FP_k \times \#FN_k}{\sqrt{(\#TP_k + \#FP_k)(\#TP_k + \#FN_k)(\#TN_k + \#FP_k)(\#TN_k + \#FN_k)}}
+  \frac{\#TP \times \#TN - \#FP \times \#FN}{\sqrt{(\#TP + \#FP)(\#TP + \#FN)(\#TN + \#FP)(\#TN + \#FN)}}
 }
 }
 

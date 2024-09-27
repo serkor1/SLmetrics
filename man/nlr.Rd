@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{nlr}
 \alias{nlr}
-\title{Negative Likelihood Ratio (NLR)}
+\title{Compute the \eqn{\text{negative}} \eqn{\text{likelihood}} \eqn{\text{ratio}}}
 \usage{
 nlr(
   actual,
@@ -25,7 +25,9 @@ If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=nlr]{nlr()}}-function computes the \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{negative likelihood ratio}, also known as the likelihood ratio for negative results, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. When \code{aggregate = TRUE}, the function returns the micro-average NLR across all classes \eqn{k}.
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+
+When \code{aggregate = TRUE}, the function returns the micro-average NLR across all classes \eqn{k}.
 By default, it returns the class-wise NLR.
 }
 \details{
@@ -64,7 +66,7 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 \section{Calculation}{
 
 
-The Negative Likelihood Ratio (NLR) is calculated for each class \eqn{k} as follows,
+The metric is calculated for each class \eqn{k} as follows,
 
 \deqn{
   \frac{1 - \text{Sensitivity}_k}{\text{Specificity}_k}

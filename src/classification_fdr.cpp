@@ -3,12 +3,13 @@
 #include "helpers.h"
 using namespace Rcpp;
 
-//' False Discovery Rate (FDR)
+//' Compute the \eqn{\text{false}} \eqn{\text{discovery}} \eqn{\text{rate}}
 //'
 //' @description
-//' The [fdr()]-function computes the [False Discovery Rate](https://en.wikipedia.org/wiki/False_discovery_rate) (FDR), the proportion of false positives among the predicted positives, between
-//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average FDR across all classes \eqn{k}.
-//' By default, it returns the class-wise FDR.
+//' The [fdr()]-function computes the [false discovery rate](https://en.wikipedia.org/wiki/False_discovery_rate) (FDR), the proportion of false positives among the predicted positives, between
+//' two vectors of predicted and observed [factor()] values.
+//'
+//' When `aggregate = TRUE`, the function returns the micro-average FDR across all classes \eqn{k}. By default, it returns the class-wise FDR.
 //'
 //' @example man/examples/scr_fdr.R
 //'
@@ -25,7 +26,7 @@ using namespace Rcpp;
 //'
 //' @section Calculation:
 //'
-//' The False Discovery Rate (FDR). The metric is calculated for each class \eqn{k} as follows,
+//' The metric is calculated for each class \eqn{k} as follows,
 //'
 //' \deqn{
 //'   \frac{\#FP_k}{\#TP_k+\#FP_k}

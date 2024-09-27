@@ -4,7 +4,7 @@
 \alias{jaccard}
 \alias{csi}
 \alias{tscore}
-\title{Jaccard Index}
+\title{Compute the \eqn{\text{Jaccard}} \eqn{\text{index}}}
 \usage{
 # using `jaccard()`-function
 jaccard(
@@ -42,7 +42,9 @@ If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=jaccard]{jaccard()}}-function computes the \href{https://en.wikipedia.org/wiki/Jaccard_index}{Jaccard Index}, also known as the Intersection over Union, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. When \code{aggregate = TRUE}, the function returns the micro-average Jaccard Index across all classes \eqn{k}.
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+
+When \code{aggregate = TRUE}, the function returns the micro-average Jaccard Index across all classes \eqn{k}.
 By default, it returns the class-wise Jaccard Index.
 }
 \details{
@@ -81,7 +83,7 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 \section{Calculation}{
 
 
-The Jaccard Index is calculated for each class \eqn{k} as follows,
+The metric is calcualted for each class \eqn{k} as follows,
 
 \deqn{
   \frac{\#TP_k}{\#TP_k + \#FP_k + \#FN_k}

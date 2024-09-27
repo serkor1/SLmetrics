@@ -4,11 +4,13 @@
 #include <cmath>
 using namespace Rcpp;
 
-//' Jaccard Index
+//' Compute the \eqn{\text{Jaccard}} \eqn{\text{index}}
 //'
 //' @description
 //' The [jaccard()]-function computes the [Jaccard Index](https://en.wikipedia.org/wiki/Jaccard_index), also known as the Intersection over Union, between
-//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average Jaccard Index across all classes \eqn{k}.
+//' two vectors of predicted and observed [factor()] values.
+//'
+//' When `aggregate = TRUE`, the function returns the micro-average Jaccard Index across all classes \eqn{k}.
 //' By default, it returns the class-wise Jaccard Index.
 //'
 //' @usage
@@ -23,7 +25,7 @@ using namespace Rcpp;
 //'
 //' @section Calculation:
 //'
-//' The Jaccard Index is calculated for each class \eqn{k} as follows,
+//' The metric is calcualted for each class \eqn{k} as follows,
 //'
 //' \deqn{
 //'   \frac{\#TP_k}{\#TP_k + \#FP_k + \#FN_k}

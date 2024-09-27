@@ -3,12 +3,13 @@
 #include "helpers.h"
 using namespace Rcpp;
 
-//' False Exclusion Rate (FER)
+//' Compute the  \eqn{\text{false}} \eqn{\text{exclusion}} \eqn{\text{rate}}
 //'
 //' @description
-//' The [fer()]-function computes the [False Omission Rate](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate) (FOR), the proportion of false negatives among the predicted negatives, between
-//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average FOR across all classes \eqn{k}.
-//' By default, it returns the class-wise FOR.
+//' The [fer()]-function computes the [false omission rate](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate) (FOR), the proportion of false negatives among the predicted negatives, between
+//' two vectors of predicted and observed [factor()] values.
+//'
+//' When `aggregate = TRUE`, the function returns the micro-average FOR across all classes \eqn{k}. By default, it returns the class-wise FOR.
 //'
 //' @example man/examples/scr_for.R
 //'
@@ -24,7 +25,7 @@ using namespace Rcpp;
 //'
 //' @section Calculation:
 //'
-//' The False Omission Rate (FOR) is calculated for each class \eqn{k} as follows,
+//' The metric is calculated for each class \eqn{k} as follows,
 //'
 //' \deqn{
 //'   \frac{\#FN_k}{\#FN_k + \#TN_k}

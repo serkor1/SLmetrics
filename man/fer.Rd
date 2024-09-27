@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{fer}
 \alias{fer}
-\title{False Exclusion Rate (FER)}
+\title{Compute the  \eqn{\text{false}} \eqn{\text{exclusion}} \eqn{\text{rate}}}
 \usage{
 # false exclusion rate
 fer(
@@ -25,9 +25,10 @@ If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vect
 If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=fer]{fer()}}-function computes the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate}{False Omission Rate} (FOR), the proportion of false negatives among the predicted negatives, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. When \code{aggregate = TRUE}, the function returns the micro-average FOR across all classes \eqn{k}.
-By default, it returns the class-wise FOR.
+The \code{\link[=fer]{fer()}}-function computes the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate}{false omission rate} (FOR), the proportion of false negatives among the predicted negatives, between
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+
+When \code{aggregate = TRUE}, the function returns the micro-average FOR across all classes \eqn{k}. By default, it returns the class-wise FOR.
 }
 \details{
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
@@ -65,7 +66,7 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 \section{Calculation}{
 
 
-The False Omission Rate (FOR) is calculated for each class \eqn{k} as follows,
+The metric is calculated for each class \eqn{k} as follows,
 
 \deqn{
   \frac{\#FN_k}{\#FN_k + \#TN_k}

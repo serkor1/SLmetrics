@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{fdr}
 \alias{fdr}
-\title{False Discovery Rate (FDR)}
+\title{Compute the \eqn{\text{false}} \eqn{\text{discovery}} \eqn{\text{rate}}}
 \usage{
 # false discovery rate;
 fdr(
@@ -25,9 +25,10 @@ If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vect
 If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=fdr]{fdr()}}-function computes the \href{https://en.wikipedia.org/wiki/False_discovery_rate}{False Discovery Rate} (FDR), the proportion of false positives among the predicted positives, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. When \code{aggregate = TRUE}, the function returns the micro-average FDR across all classes \eqn{k}.
-By default, it returns the class-wise FDR.
+The \code{\link[=fdr]{fdr()}}-function computes the \href{https://en.wikipedia.org/wiki/False_discovery_rate}{false discovery rate} (FDR), the proportion of false positives among the predicted positives, between
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+
+When \code{aggregate = TRUE}, the function returns the micro-average FDR across all classes \eqn{k}. By default, it returns the class-wise FDR.
 }
 \details{
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
@@ -65,7 +66,7 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 \section{Calculation}{
 
 
-The False Discovery Rate (FDR). The metric is calculated for each class \eqn{k} as follows,
+The metric is calculated for each class \eqn{k} as follows,
 
 \deqn{
   \frac{\#FP_k}{\#TP_k+\#FP_k}

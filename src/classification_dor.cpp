@@ -3,7 +3,7 @@
 #include "helpers.h"
 using namespace Rcpp;
 
-//' Compute the \eqn{\text{Diagnostic Odds Ratio}}
+//' Compute the \eqn{\text{diagnostic}} \eqn{\text{odds}} \eqn{\text{ratio}}
 //'
 //' @description
 //' The [dor()]-function computes the [Diagnostic Odds Ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) (DOR), a single indicator of test performance, between

@@ -3,7 +3,7 @@
 \name{fpr}
 \alias{fpr}
 \alias{fallout}
-\title{False Positive Rate (FPR)}
+\title{Compute the \eqn{\text{false}} \eqn{\text{positive}} \eqn{\text{rate}}}
 \usage{
 # using`fpr()`
 fpr(
@@ -34,7 +34,9 @@ If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=fpr]{fpr()}}-function computes the \href{https://en.wikipedia.org/wiki/False_positive_rate}{False Positive Rate} (FPR), also known as the fall-out (\code{\link[=fallout]{fallout()}}), between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. When \code{aggregate = TRUE}, the function returns the micro-average FPR across all classes \eqn{k}.
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+
+When \code{aggregate = TRUE}, the function returns the micro-average FPR across all classes \eqn{k}.
 By default, it returns the class-wise FPR.
 }
 \details{
@@ -73,7 +75,7 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 \section{Calculation}{
 
 
-The False Positive Rate (FPR) for each class \eqn{k} is calculated as follows,
+The metric is calculated for each class \eqn{k} as follows,
 
 \deqn{
   \frac{\#FP_k}{\#FP_k + \#TN_k}

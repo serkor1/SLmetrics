@@ -2,11 +2,13 @@
 #include <RcppEigen.h>
 #include "helpers.h"
 using namespace Rcpp;
-//' Cohen's \eqn{\kappa}-statistic
+//' Compute Cohen's \eqn{\kappa}-statistic
 //'
 //' @description
 //' The [kappa()]-function computes [Cohen's \eqn{\kappa}](https://en.wikipedia.org/wiki/Cohen%27s_kappa), a statistic that measures inter-rater agreement for categorical items between
-//' two vectors of predicted and observed [factor()] values. If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of
+//' two vectors of predicted and observed [factor()] values.
+//'
+//' If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of
 //' \eqn{(y_{+} - y_{i,-})^\beta}. See below for further details.
 //'
 //' @usage
@@ -25,6 +27,8 @@ using namespace Rcpp;
 //'
 //'
 //' @section Calculation
+//'
+//'
 //'
 //' @family classification
 //' @export
@@ -117,4 +121,5 @@ double kappa(
 
   // 6) Return penalized kappa statistic
   return 1.0 - (n_disagree / n_chance);
+
 }
