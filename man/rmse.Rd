@@ -3,15 +3,15 @@
 \name{rmse}
 \alias{rmse}
 \alias{wrmse}
-\title{Root Mean Squared Error (RMSE)}
+\title{Compute the \eqn{\text{root mean squared error}}}
 \usage{
-# simple RMSE
+# `rmse()`-function
 rmse(
   actual,
   predicted
 )
 
-# weighted RMSE
+# `wrmse()`-function
 wrmse(
   actual,
   predicted,
@@ -23,62 +23,62 @@ wrmse(
 
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} N. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
 }
 \value{
-A <\link{numeric}>-value of \link{length} 1.
+A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-Calculate the RMSE using the \code{\link[=rmse]{rmse()}}-function for the (arithmetic) simple mean, or \code{\link[=wrmse]{wrmse()}}-function for the (arithmetic) weighted mean.
+The \code{\link[=rmse]{rmse()}}- and \code{\link[=wrmse]{wrmse()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Root-mean-square_deviation}{root mean squared error} between
+the observed and predicted <\link{numeric}> vectors. If \code{w} is not \link{NULL}, the function returns the weighted root mean squared error.
 }
-\details{
-The Huber Loss is calculated as,
+\section{Calculation}{
+
+
+The metric is calculated as,
 
 \deqn{
- \frac{1}{2} (y_i - \hat{y}_i)^2 ~for~ |y_i - \hat{y}_i| \leq \delta
+  \sqrt{\frac{1}{n} \sum_i^n (y_i - \upsilon_i)^2}
 }
 
-\deqn{
-  \delta |y_i-\hat{y}_i|-\frac{1}{2} \delta^2 ~for~ |y_i - \hat{y}_i| > \delta
+Where \eqn{y_i} and \eqn{\upsilon_i} are the \code{actual} and \code{predicted} values respectively. If \eqn{\text{w}} is not \link{NULL}, the weighted version is calculated.
 }
 
-for each \eqn{i},
-}
 \examples{
-# 1) assume that actual
-# and predicted are values
-# from a model
-actual <- rnorm(
-  n = 1e3,
-  mean = 10
+# 1) fit a linear
+# regression
+model <- lm(
+  mpg ~ .,
+  data = mtcars
 )
 
-predicted <- actual + rnorm(
-  n = 1e3,
-  mean = 10
+# 1.1) define actual
+# and predicted values
+# to measure performance
+actual    <- mtcars$mpg
+predicted <- fitted(model)
+
+
+# 2) calculate
+# the rmse measure
+rmse(
+  actual     = actual,
+  predicted  = predicted
 )
 
-# 2) calculate the huber loss
-# with delta 0.5
-huberloss(
-  actual = actual,
-  predicted = predicted,
-  delta = 0.5
-)
-
-# 3) caclulate weighted
-# huber loss
+# 3) calculate
+# the weighted rmse
+# using arbtrary weights
 w <- rbeta(
   n = 1e3,
   shape1 = 10,
   shape2 = 2
 )
 
-whuberloss(
-  actual = actual,
-  predicted = predicted,
-  delta = 0.5,
-  w     = w
+wrmse(
+  actual     = actual,
+  predicted  = predicted,
+  w          = w
 )
 }
 \seealso{

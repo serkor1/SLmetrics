@@ -56,7 +56,12 @@ learning metrics; all of which has been battle tested with
 ## :information_source: Basic usage
 
 In its most basic form the functions can be used as-is without any
-pipelines, data.frames or recipes,
+pipelines, data.frames or recipes. Below are two simple usage examples.
+
+### :books: Regression
+
+Below is an example evaluating the in-sample performance of a linear
+regression on `mpg` from the `mtcars` data set,
 
 ``` r
 # 1) run regression
@@ -71,6 +76,53 @@ rmse(
   predicted = fitted(model)
 )
 #> [1] 2.146905
+```
+
+### :books: Classification
+
+Below is an example evaluating the in-sample performance of a logistic
+regression on `Species` from the `iris` data set,
+
+``` r
+# 1) recode iris
+# to binary problem
+iris$Species <- factor(
+  x = as.numeric(
+    iris$Species == "virginica"
+  ),
+  levels = c(1,0),
+  labels = c("virginica", "others")
+)
+
+# 2) fit the logistic
+# regression
+model <- glm(
+  formula = Species ~ Sepal.Length + Sepal.Width,
+  data    = iris,
+  family = binomial(
+    link = "logit"
+  )
+)
+
+# 3) generate predicted
+# classes
+predicted <- as.factor(
+  ifelse(
+    predict(model, type = "response") > 0.5,
+    yes = "virginica",
+    no  = "others"
+  )
+)
+
+# 4) generate
+# confusion matrix
+cmatrix(
+  actual    = iris$Species,
+  predicted = predicted
+)
+#>           virginica others
+#> virginica        35     15
+#> others           14     86
 ```
 
 <details>

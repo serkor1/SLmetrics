@@ -5,7 +5,7 @@
 using namespace Rcpp;
 
 
-//' Matthews Correlation Coefficient (MCC)
+//' Compute the \eqn{\text{Matthews}} \eqn{\text{Correlation}} \eqn{\text{Coefficient}}
 //'
 //' @description
 //' The [mcc()]-function computes the [Matthews Correlation Coefficient](https://en.wikipedia.org/wiki/Matthews_correlation_coefficient) (MCC), also known as the \eqn{\phi}-coefficient, between
@@ -24,10 +24,10 @@ using namespace Rcpp;
 //'
 //' @section Calculation:
 //'
-//' The MCC is calculated for each class \eqn{k} as follows,
+//' The metric is calculated as follows,
 //'
 //' \deqn{
-//'   \frac{\#TP_k \times \#TN_k - \#FP_k \times \#FN_k}{\sqrt{(\#TP_k + \#FP_k)(\#TP_k + \#FN_k)(\#TN_k + \#FP_k)(\#TN_k + \#FN_k)}}
+//'   \frac{\#TP \times \#TN - \#FP \times \#FN}{\sqrt{(\#TP + \#FP)(\#TP + \#FN)(\#TN + \#FP)(\#TN + \#FN)}}
 //' }
 //'
 //'

@@ -2,9 +2,9 @@
 % Please edit documentation in R/RcppExports.R
 \name{recall}
 \alias{recall}
-\alias{tpr}
 \alias{sensitivity}
-\title{Recall (Sensitivity)}
+\alias{tpr}
+\title{Compute the \eqn{recall}, \eqn{sensitivity} or \eqn{true~positive~rate}}
 \usage{
 # 1) `recall()`-function
 recall(
@@ -13,14 +13,15 @@ recall(
   aggregate = FALSE
 )
 
-tpr(
-  actual,
-  predicted,
-  aggregate
-)
-
 # 2) `sensitivity()`-function
 sensitivity(
+  actual,
+  predicted,
+  aggregate = FALSE
+)
+
+# 3) `tpr()`-function
+tpr(
   actual,
   predicted,
   aggregate = FALSE
@@ -41,31 +42,38 @@ If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=recall]{recall()}}-function computes the \href{https://en.wikipedia.org/wiki/Sensitivity_and_specificity}{recall}, also known as sensitivity or the True Positive Rate (TPR), between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. When \code{aggregate = TRUE}, the function returns the micro-average recall across all classes \eqn{k}.
-By default, it returns the class-wise recall.
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+
+When \code{aggregate = TRUE}, the function returns the micro-averaged recall across all classes \eqn{k}. By default, it returns the class-wise recall.
 }
 \details{
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{## actual
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
+set.seed(1903)
+
+## actual
 factor(
   x = sample(x = 1:3, size = 10, replace = TRUE),
   levels = c(1, 2, 3),
   labels = c("A", "B", "C")
 )
-#>  [1] B B C B C B B A A B
+#>  [1] B A B B A C B C C A
 #> Levels: A B C
 }\if{html}{\out{</div>}}
 
 Here, the values 1, 2, and 3 are mapped to \code{A}, \code{B}, and \code{C}, respectively. Now, suppose your model does not predict any \code{B}'s. The predicted vector of \code{\link[=factor]{factor()}} values would be defined as follows:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{## predicted
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
+set.seed(1903)
+
+## predicted
 factor(
   x = sample(x = c(1, 3), size = 10, replace = TRUE),
   levels = c(1, 2, 3),
   labels = c("A", "B", "C")
 )
-#>  [1] C A C A C C A C C C
+#>  [1] C A C C C C C C A C
 #> Levels: A B C
 }\if{html}{\out{</div>}}
 
@@ -74,7 +82,7 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 \section{Calculation}{
 
 
-The Sensitivity (SEN), also known as Recall or True Positive Rate (TPR). The metric is calculated for each class \eqn{k} as follows,
+The metric is calculated for each class \eqn{k} as follows,
 
 \deqn{
   \frac{\#TP_k}{\#TP_k + \#FN_k}
@@ -82,7 +90,7 @@ The Sensitivity (SEN), also known as Recall or True Positive Rate (TPR). The met
 
 Where \eqn{\#TP_k} and \eqn{\#FN_k} is the number of true positives and false negatives, respectively, for each class \eqn{k}.
 
-When \code{aggregate = TRUE} the \code{micro}-average is calculated,
+When \code{aggregate = TRUE} the \code{micro}-average is calculated as follows,
 
 \deqn{
   \frac{\sum_{k=1}^k \#TP_k}{\sum_{k=1}^k \#TP_k + \sum_{k=1}^k \#FN_k}
@@ -146,6 +154,7 @@ recall(
 \seealso{
 Other classification: 
 \code{\link{accuracy}()},
+\code{\link{baccuracy}()},
 \code{\link{cmatrix}()},
 \code{\link{dor}()},
 \code{\link{fbeta}()},

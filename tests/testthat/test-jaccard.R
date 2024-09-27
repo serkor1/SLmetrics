@@ -47,13 +47,15 @@ testthat::test_that(
 
     for (lgl in c(TRUE, FALSE)) {
 
-      py_score <- py_jaccard(
-        actual    = actual,
-        predicted = predicted,
-        average   = if (lgl)
-          "micro"
-        else
-          NULL
+      py_score <- as.numeric(
+        py_jaccard(
+          actual    = actual,
+          predicted = predicted,
+          average   = if (lgl)
+            "micro"
+          else
+            NULL
+        )
       )
 
       sl_score <- jaccard(

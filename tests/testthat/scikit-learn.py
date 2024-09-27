@@ -72,6 +72,13 @@ def py_accuracy(actual, predicted):
       y_pred = predicted
     )
     
+def py_baccuracy(actual, predicted, adjust = False):
+    return metrics.balanced_accuracy_score(
+      y_true   = actual,
+      y_pred   = predicted,
+      adjusted = adjust 
+    )
+    
 def py_cmatrix(actual, predicted):
     return metrics.confusion_matrix(
       y_true = actual,

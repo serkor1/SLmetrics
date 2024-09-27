@@ -23,12 +23,14 @@ using namespace Rcpp;
 //' @param aggregate A <[logical]>-value of [length] \eqn{1}. [FALSE] by default. If [TRUE] it returns the
 //' micro average across all \eqn{k} classes
 //'
-//'
 //' @details
 //'
 //' Consider a classification problem with three classes: `A`, `B`, and `C`. The actual vector of [factor()] values is defined as follows:
 //'
 //' ```{r output, echo = TRUE}
+//' ## set seed
+//' set.seed(1903)
+//'
 //' ## actual
 //' factor(
 //'   x = sample(x = 1:3, size = 10, replace = TRUE),
@@ -40,6 +42,9 @@ using namespace Rcpp;
 //' Here, the values 1, 2, and 3 are mapped to `A`, `B`, and `C`, respectively. Now, suppose your model does not predict any `B`'s. The predicted vector of [factor()] values would be defined as follows:
 //'
 //' ```{r output, echo = TRUE}
+//' ## set seed
+//' set.seed(1903)
+//'
 //' ## predicted
 //' factor(
 //'   x = sample(x = c(1, 3), size = 10, replace = TRUE),

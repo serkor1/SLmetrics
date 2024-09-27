@@ -1,4 +1,4 @@
-url: ~
+url: https://serkor1.github.io/SLmetrics/
 
 # SEO:
 home:
@@ -7,8 +7,7 @@ home:
 
   # description for google
   description: >
-    {SLmetrics}: A collection of supervised learning performance evaluation
-    metrics written in C++
+    {SLmetrics}: Performance evaluation metrics for supervised machine learning, statistical learning and artificial intelligence applications in R written in C++.
 
 template:
   bootstrap: 5

@@ -1,14 +1,14 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-//' Huber Loss
+//' Compute the \eqn{\text{huber loss}}
 //'
 //' @description
-//'
-//' Calculate the Huber Loss. [whuberloss()] calculates the arithmetic weighted average, and [huberloss()] calculates the arithmetic average.
+//' The [huberloss()]- and [whuberloss()]-function computes the simple and weighted [huber loss](https://en.wikipedia.org/wiki/Huber_loss) between
+//' the predicted and observed <[numeric]> vectors.
 //'
 //' @usage
-//' # simple mean
+//' # `huberloss()`-function
 //' huberloss(
 //'   actual,
 //'   predicted,
@@ -17,21 +17,24 @@ using namespace Rcpp;
 //'
 //' @param actual A <[numeric]>-vector of [length] \eqn{n}. The observed (continuous) response variable.
 //' @param predicted A <[numeric]>-vector of [length] \eqn{n}. The estimated (continuous) response variable.
-//' @param delta A <[numeric]>-vector of [length] 1. 1 by default. The threshold value for switch between functions (see details).
+//' @param delta A <[numeric]>-vector of [length] 1. 1 by default. The threshold value for switch between functions (see calculation).
 //'
-//' @details
+//' @section Calculation:
 //'
-//' The Huber Loss is calculated as,
-//'
-//' \deqn{
-//'  \frac{1}{2} (y_i - \hat{y}_i)^2 ~for~ |y_i - \hat{y}_i| \leq \delta
-//' }
+//' The metric is calculated as follows,
 //'
 //' \deqn{
-//'   \delta |y_i-\hat{y}_i|-\frac{1}{2} \delta^2 ~for~ |y_i - \hat{y}_i| > \delta
+//'  \frac{1}{2} (y - \upsilon)^2 ~for~ |y - \upsilon| \leq \delta
 //' }
 //'
-//' for each \eqn{i},
+//' and
+//'
+//' \deqn{
+//'   \delta |y-\upsilon|-\frac{1}{2} \delta^2 ~for~ \text{otherwise}
+//' }
+//'
+//' where \eqn{y} and \eqn{\upsilon} are the `actual` and `predicted` values respectively. If `w` is not [NULL], then all values
+//' are aggregated using the weights.
 //'
 //'
 //' @example man/examples/scr_huberloss.R
@@ -39,7 +42,7 @@ using namespace Rcpp;
 //'
 //' @family regression
 //'
-//' @returns A <[numeric]>-value of [length] 1.
+//' @returns A <[numeric]> vector of [length] 1.
 //'
 //' @export
 // [[Rcpp::export]]
@@ -66,13 +69,18 @@ double huberloss(
   const double* predicted_ptr = predicted.begin();
 
   for (std::size_t i = 0; i < n; ++i) {
+
     double diff = actual_ptr[i] - predicted_ptr[i];
     double abs_diff = std::abs(diff);
 
     if (abs_diff <= delta) {
+
       output += 0.5 * diff * diff;
+
     } else {
+
       output += delta * (abs_diff - 0.5 * delta);
+
     }
   }
 
@@ -83,14 +91,16 @@ double huberloss(
 
 //' @rdname huberloss
 //' @usage
-//' # weighted mean
+//' # `whuberloss()`-function
 //' whuberloss(
 //'   actual,
 //'   predicted,
 //'   w,
 //'   delta = 1
 //' )
-//' @param w A <[numeric]>-vector of [length] N. The weight assigned to each observation in the data. See [stats::weighted.mean()] for more details.
+//'
+//' @param w A <[numeric]>-vector of [length] \eqn{n}. The weight assigned to each observation in the data. See [stats::weighted.mean()] for more details.
+//'
 //' @export
 // [[Rcpp::export]]
 double whuberloss(
@@ -125,11 +135,14 @@ double whuberloss(
    denominator += w_ptr[i];
 
    if (abs_diff <= delta) {
-     numerator += 0.5 * diff * diff * w_ptr[i];
-   } else {
-     numerator += delta * (abs_diff - 0.5 * delta) * w_ptr[i];
-   }
 
+     numerator += 0.5 * diff * diff * w_ptr[i];
+
+   } else {
+
+     numerator += delta * (abs_diff - 0.5 * delta) * w_ptr[i];
+
+   }
  }
 
  return numerator / denominator;

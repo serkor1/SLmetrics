@@ -1,18 +1,30 @@
 #include <Rcpp.h>
 #include <cmath>
 
-//' Root Mean Squared Error (RMSE)
+//' Compute the \eqn{\text{root mean squared error}}
 //'
-//' Calculate the RMSE using the [rmse()]-function for the (arithmetic) simple mean, or [wrmse()]-function for the (arithmetic) weighted mean.
-//'
+//' The [rmse()]- and [wrmse()]-function computes the simple and weighted [root mean squared error](https://en.wikipedia.org/wiki/Root-mean-square_deviation) between
+//' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted root mean squared error.
 //' @usage
-//' # simple RMSE
+//' # `rmse()`-function
 //' rmse(
 //'   actual,
 //'   predicted
 //' )
 //'
 //' @inherit huberloss
+//'
+//' @example man/examples/scr_rmse.R
+//'
+//' @section Calculation:
+//'
+//' The metric is calculated as,
+//'
+//' \deqn{
+//'   \sqrt{\frac{1}{n} \sum_i^n (y_i - \upsilon_i)^2}
+//' }
+//'
+//' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
 //'
 //' @family regression
 //' @export
@@ -54,7 +66,7 @@ double rmse(
 //' @rdname rmse
 //'
 //' @usage
-//' # weighted RMSE
+//' # `wrmse()`-function
 //' wrmse(
 //'   actual,
 //'   predicted,

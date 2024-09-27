@@ -3,11 +3,13 @@
 #include "helpers.h"
 using namespace Rcpp;
 
-//' False Positive Rate (FPR)
+//' Compute the \eqn{\text{false}} \eqn{\text{positive}} \eqn{\text{rate}}
 //'
 //' @description
 //' The [fpr()]-function computes the [False Positive Rate](https://en.wikipedia.org/wiki/False_positive_rate) (FPR), also known as the fall-out ([fallout()]), between
-//' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average FPR across all classes \eqn{k}.
+//' two vectors of predicted and observed [factor()] values.
+//'
+//' When `aggregate = TRUE`, the function returns the micro-average FPR across all classes \eqn{k}.
 //' By default, it returns the class-wise FPR.
 //'
 //' @usage
@@ -24,7 +26,7 @@ using namespace Rcpp;
 //'
 //' @section Calculation:
 //'
-//' The False Positive Rate (FPR) for each class \eqn{k} is calculated as follows,
+//' The metric is calculated for each class \eqn{k} as follows,
 //'
 //' \deqn{
 //'   \frac{\#FP_k}{\#FP_k + \#TN_k}
@@ -41,6 +43,7 @@ using namespace Rcpp;
 //' The FPR is the complement of specificity, such that \eqn{\text{FPR} = 1 - \text{Specificity}}.
 //'
 //' @family classification
+//'
 //' @export
 // [[Rcpp::export]]
 NumericVector fpr(

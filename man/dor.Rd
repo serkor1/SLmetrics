@@ -2,9 +2,8 @@
 % Please edit documentation in R/RcppExports.R
 \name{dor}
 \alias{dor}
-\title{Diagnostic Odds Ratio (DOR)}
+\title{Compute the \eqn{\text{diagnostic}} \eqn{\text{odds}} \eqn{\text{ratio}}}
 \usage{
-# diagnostic odds ratio
 dor(
   actual,
   predicted,
@@ -26,31 +25,38 @@ If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=dor]{dor()}}-function computes the \href{https://en.wikipedia.org/wiki/Diagnostic_odds_ratio}{Diagnostic Odds Ratio} (DOR), a single indicator of test performance, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. When \code{aggregate = TRUE}, the function returns the micro-average DOR across all classes \eqn{k}.
-By default, it returns the class-wise DOR.
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+
+When \code{aggregate = TRUE}, the function returns the micro-average DOR across all classes \eqn{k}. By default, it returns the class-wise DOR.
 }
 \details{
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{## actual
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
+set.seed(1903)
+
+## actual
 factor(
   x = sample(x = 1:3, size = 10, replace = TRUE),
   levels = c(1, 2, 3),
   labels = c("A", "B", "C")
 )
-#>  [1] B B C B C B B A A B
+#>  [1] B A B B A C B C C A
 #> Levels: A B C
 }\if{html}{\out{</div>}}
 
 Here, the values 1, 2, and 3 are mapped to \code{A}, \code{B}, and \code{C}, respectively. Now, suppose your model does not predict any \code{B}'s. The predicted vector of \code{\link[=factor]{factor()}} values would be defined as follows:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{## predicted
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
+set.seed(1903)
+
+## predicted
 factor(
   x = sample(x = c(1, 3), size = 10, replace = TRUE),
   levels = c(1, 2, 3),
   labels = c("A", "B", "C")
 )
-#>  [1] C A C A C C A C C C
+#>  [1] C A C C C C C C A C
 #> Levels: A B C
 }\if{html}{\out{</div>}}
 
@@ -59,19 +65,21 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 \section{Calculation}{
 
 
-The Diagnostic Odds Ratio (DOR) is calculated for each class \eqn{k} as follows,
+The metric is calculated for each class \eqn{k} as follows,
 
 \deqn{
-  \frac{\text{PLR}_k}{\text{NLR}_k} = \frac{\text{Sensitivity}_k \times \text{Specificity}_k}{(1 - \text{Sensitivity}_k) \times (1 - \text{Specificity}_k)}
+  \text{DOR}_k = \frac{\text{PLR}_k}{\text{NLR}_k}
 }
 
-Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
+Where \eqn{\text{PLR}_k} and \eqn{\text{NLR}_k} is the positive and negative likelihood ratio for class \eqn{k}, respectively. See \code{\link[=plr]{plr()}} and \code{\link[=nlr]{nlr()}} for more details.
 
-When \code{aggregate = TRUE}, the \code{micro}-average is calculated,
+When \code{aggregate = TRUE}, the \code{micro}-average is calculated as,
 
 \deqn{
-  \frac{\sum_{k=1}^k \text{PLR}_k}{\sum_{k=1}^k \text{NLR}_k} = \frac{\sum_{k=1}^k (\text{Sensitivity}_k \times \text{Specificity}_k)}{\sum_{k=1}^k (1 - \text{Sensitivity}_k) \times (1 - \text{Specificity}_k)}
+  \overline{\text{DOR}} = \frac{\overline{\text{PLR}_k}}{\overline{\text{NLR}_k}}
 }
+
+Where \eqn{\overline{\text{PLR}}} and \eqn{\overline{\text{NLR}}} is the micro-averaged is the positive and negative likelihood ratio, respectively.
 }
 
 \examples{
@@ -116,6 +124,7 @@ dor(
 \seealso{
 Other classification: 
 \code{\link{accuracy}()},
+\code{\link{baccuracy}()},
 \code{\link{cmatrix}()},
 \code{\link{fbeta}()},
 \code{\link{fdr}()},

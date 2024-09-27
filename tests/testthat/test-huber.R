@@ -26,35 +26,42 @@ testthat::test_that(
       n = 1e2
     )
 
-    # 2) generate score
-    py_score <- py_huber(
-      actual = actual,
-      predicted = predicted
-    )
+    for (delta in c(1,2,3)) {
 
-    sl_score <- huberloss(
-      actual = actual,
-      predicted = predicted
-    )
-
-    # 3) test that
-    testthat::expect_true(
-      all(
-        sl_score > 0,
-        length(sl_score) == 1,
-        !is.na(sl_score)
+      # 2) generate score
+      py_score <- py_huber(
+        actual = actual,
+        predicted = predicted,
+        delta = delta
       )
-    )
 
-    testthat::expect_true(
-      all.equal(
-        target  = py_score,
-        current = sl_score,
-        tolerance =  1e-9,
-        check.attributes = FALSE,
-        check.class = FALSE
+      sl_score <- huberloss(
+        actual = actual,
+        predicted = predicted,
+        delta = delta
       )
-    )
+
+      # 3) test that
+      testthat::expect_true(
+        all(
+          sl_score > 0,
+          length(sl_score) == 1,
+          !is.na(sl_score)
+        )
+      )
+
+      testthat::expect_true(
+        all.equal(
+          target  = py_score,
+          current = sl_score,
+          tolerance =  1e-9,
+          check.attributes = FALSE,
+          check.class = FALSE
+        )
+      )
+
+    }
+
 
   }
 )
@@ -87,37 +94,46 @@ testthat::test_that(
       n = 1e2
     )
 
-    # 2) generate score
-    py_score <- py_huber(
-      actual    = actual,
-      predicted = predicted,
-      w         = w
-    )
+    for (delta in c(1,2,3)) {
 
-    sl_score <- whuberloss(
-      actual    = actual,
-      predicted = predicted,
-      w         = w
-    )
 
-    # 3) test that
-    testthat::expect_true(
-      all(
-        sl_score > 0,
-        length(sl_score) == 1,
-        !is.na(sl_score)
+      # 2) generate score
+      py_score <- py_huber(
+        actual    = actual,
+        predicted = predicted,
+        w         = w,
+        delta     = delta
       )
-    )
 
-    testthat::expect_true(
-      all.equal(
-        target  = py_score,
-        current = sl_score,
-        tolerance =  1e-9,
-        check.attributes = FALSE,
-        check.class = FALSE
+      sl_score <- whuberloss(
+        actual    = actual,
+        predicted = predicted,
+        w         = w,
+        delta     = delta
       )
-    )
+
+      # 3) test that
+      testthat::expect_true(
+        all(
+          sl_score > 0,
+          length(sl_score) == 1,
+          !is.na(sl_score)
+        )
+      )
+
+      testthat::expect_true(
+        all.equal(
+          target  = py_score,
+          current = sl_score,
+          tolerance =  1e-9,
+          check.attributes = FALSE,
+          check.class = FALSE
+        )
+      )
+
+
+    }
+
 
   }
 )

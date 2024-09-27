@@ -1,18 +1,31 @@
 #include <Rcpp.h>
 #include <cmath>
 
-//' Mean Percentage Error (MPE)
+//' Compute the \eqn{\text{mean percentage error}}
 //'
-//' Calculate the MPE using the [mpe()]-function for the simple mean, or [wmpe()]-function for the weighted mean.
-//'
+//' The [mpe()]-function computes the [mean percentage error](https://en.wikipedia.org/wiki/Mean_percentage_error) between
+//' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted mean percentage error.
 //' @usage
-//' # simple MPE
+//' # `mpe()`-function
 //' mpe(
 //'   actual,
 //'   predicted
 //' )
 //'
 //' @inherit huberloss
+//'
+//' @example man/examples/scr_mpe.R
+//'
+//' @section Calculation:
+//'
+//' The metric is calculated as,
+//'
+//' \deqn{
+//'   \frac{1}{n} \sum_i^n \frac{y_i - \upsilon_i}{y_i}
+//' }
+//'
+//' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
+//'
 //' @family regression
 //' @export
 // [[Rcpp::export]]
@@ -30,13 +43,13 @@ double mpe(
    double percentage_error = (actual_ptr[i] - predicted_ptr[i]) / actual_ptr[i];
    output += percentage_error;
  }
- return (output / n) * 100.0;
+ return (output / n);
 }
 
 //' @rdname mpe
 //'
 //' @usage
-//' # weighted MPE
+//' # `wmpe()`-function
 //' wmpe(
 //'   actual,
 //'   predicted,
@@ -62,5 +75,5 @@ double wmpe(
    numerator += ((actual_ptr[i] - predicted_ptr[i]) / actual_ptr[i]) * w_ptr[i];
    denominator += w_ptr[i];
  }
- return (numerator / denominator) * 100.0;
+ return (numerator / denominator);
 }

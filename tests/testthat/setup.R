@@ -1,33 +1,43 @@
 # script: Test-setup
 # author: Serkan Korkmaz, serkor1@duck.com
 # date: 2024-09-21
-# objective: General test setup (Not entirely sure how this works tbh)
+# objective:
+#
+# Setup the test-environment for
+# {scikit-learn} and {torch}
+#
 # script start;
 
 # 1) set seed for all
 # samples
 set.seed(1903)
 
-# # 2) install
-# reticulate::conda_install(
-#   envname = "base",
-#   packages = c(
-#     "numpy",
-#     "scipy",
-#     "mkl",
-#     "mkl-service",
-#     "mkl_fft",
-#     "mkl_random",
-#     "pytorch",
-#     "torchmetrics",
-#     "scikit-learn"
-#   )
-#   # python_version = "3.12.2"
-# )
-#
-# # 3) set the condaenvironment
-# # for the tests
+# 2) check if the r-reticulate
+# virtual enviroment exists. And install
+# it otherwise.
+if (!reticulate::virtualenv_exists()) {
 
+  # 2.1) install the virtual
+  # environment
+  reticulate::virtualenv_create()
+
+  # 2.2) install packages
+  # for the virtual environment
+  reticulate::py_install(
+    packages = c(
+      "numpy",
+      "scipy",
+      "mkl",
+      "mkl-service",
+      "mkl_fft",
+      "mkl_random",
+      "pytorch",
+      "torchmetrics",
+      "scikit-learn"
+    )
+  )
+
+}
 
 # 3) force reticulate to
 # use virtual environment

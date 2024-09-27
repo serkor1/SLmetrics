@@ -49,13 +49,15 @@ testthat::test_that(
 
     for (lgl in c(TRUE, FALSE)) {
 
-      py_score <- py_precision(
-        actual    = actual,
-        predicted = predicted,
-        average   = if (lgl)
-          "micro"
-        else
-          NULL
+      py_score <- as.numeric(
+        py_precision(
+          actual    = actual,
+          predicted = predicted,
+          average   = if (lgl)
+            "micro"
+          else
+            NULL
+        )
       )
 
       sl_score <- precision(
@@ -71,9 +73,9 @@ testthat::test_that(
         all(
           is.numeric(sl_score),
           if (lgl)
-            !any(is.na(sl_score))
+            length(sl_score) == 1
           else
-            TRUE
+            length(sl_score) == 3
         )
       )
 

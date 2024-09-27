@@ -10,7 +10,8 @@ testthat::test_that(
   code = {
 
     # 0) source the python
-    # program
+    # progra
+    set.seed(1903)
     reticulate::source_python(
       "scikit-learn.py"
     )
@@ -23,26 +24,24 @@ testthat::test_that(
     # values
     actual <- factor(
       x = sample(
-        x = 1:3,
+        x = 1:2,
         size = 1e3,
-        replace = TRUE,
-        prob = c(0,0.5,0.5)
+        replace = TRUE
       ),
-      levels = c(1:3),
-      labels = letters[1:3]
+      levels = c(1:2),
+      labels = letters[1:2]
     )
 
     # 1.2) predicted
     # values
     predicted <- factor(
       x = sample(
-        1:3,
+        1:2,
         size = 1e3,
-        replace = TRUE,
-        prob = c(0,0.5,0.5)
+        replace = TRUE
       ),
-      levels = c(1:3),
-      labels = letters[1:3]
+      levels = c(1:2),
+      labels = letters[1:2]
     )
 
     # 2) test that;
@@ -66,7 +65,6 @@ testthat::test_that(
 
     sl_dor <- sl_score[[1]]/sl_score[[2]]
 
-
     # NOTE: this test uses %in% as SLmetrics
     # returns for k-classes while sklearn a
     # total score.
@@ -75,10 +73,30 @@ testthat::test_that(
     # NOTE: risk of false here
     # all.equal might be better.
     testthat::expect_true(
-      any(
-        sl_score[[1]] %in% py_score[[1]],
-        sl_score[[2]] %in% py_score[[2]],
-        sl_dor %in% py_dor
+      all(
+        all.equal(
+          target  = py_score[[1]],
+          current = sl_score[[1]][1],
+          tolerance = 1e-3,
+          check.attributes = FALSE,
+          check.class = FALSE
+        ),
+        all.equal(
+          target  = py_score[[2]],
+          current = sl_score[[2]][1],
+          tolerance = 1e-3,
+          check.attributes = FALSE,
+          check.class = FALSE
+
+        ),
+        all.equal(
+          target  = py_dor,
+          current = sl_dor[1],
+          tolerance = 1e-9,
+          check.attributes = FALSE,
+          check.class = FALSE
+
+        )
       )
     )
 
@@ -86,9 +104,51 @@ testthat::test_that(
     # to the number of slasses.
     testthat::expect_true(
       all(
-        length(sl_score[[1]]) == 3,
-        length(sl_score[[2]]) == 3,
-        length(sl_dor) == 3
+        length(sl_score[[1]]) == 2,
+        length(sl_score[[2]]) == 2,
+        length(sl_dor) == 2
+      )
+    )
+
+    # 2.4) finally expect that
+    # plr/nlr = dor built-in
+    testthat::expect_true(
+      all.equal(
+        target = dor(
+          actual,
+          predicted,
+          aggregate = FALSE
+        ),
+        current = sl_dor,
+        tolerance = 1e-9,
+        check.attributes = FALSE,
+        check.class = FALSE
+      )
+    )
+
+    # 2.5) check for micro-averaged
+    # DOR
+    manual_dor <- plr(
+      actual = actual,
+      predicted = predicted,
+      aggregate = TRUE
+    ) / nlr(
+      actual = actual,
+      predicted = predicted,
+      aggregate = TRUE
+    )
+
+    testthat::expect_true(
+      all.equal(
+        target = dor(
+          actual,
+          predicted,
+          aggregate = TRUE
+        ),
+        current = manual_dor,
+        tolerance = 1e-9,
+        check.attributes = FALSE,
+        check.class = FALSE
       )
     )
 

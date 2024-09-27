@@ -6,7 +6,7 @@
 #include <cmath>
 using namespace Rcpp;
 
-//' Fowlkes-Mallows Index (FMI)
+//' Compute the \eqn{\text{fowlkes}}-\eqn{\text{fallows}} \eqn{\text{index}}
 //'
 //' @description
 //' The [fmi()]-function computes the [Fowlkes-Mallows Index](https://en.wikipedia.org/wiki/Fowlkes%E2%80%93Mallows_index) (FMI), a measure of the similarity between two sets of clusterings, between
@@ -25,7 +25,7 @@ using namespace Rcpp;
 //'
 //' @section Calculation:
 //'
-//' The FMI Index is calculated for each class \eqn{k} as follows,
+//' The metric is calculated for each class \eqn{k} as follows,
 //'
 //' \deqn{
 //'   \sqrt{\frac{\#TP_k}{\#TP_k + \#FP_k} \times \frac{\#TP_k}{\#TP_k + \#FN_k}}

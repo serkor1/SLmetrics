@@ -2,8 +2,9 @@
 % Please edit documentation in R/RcppExports.R
 \name{rsq}
 \alias{rsq}
-\title{\eqn{R^2}}
+\title{Compute the \eqn{R^2}}
 \usage{
+# `rsq()`-function
 rsq(
   actual,
   predicted,
@@ -19,18 +20,24 @@ rsq(
 the function returns the adjusted \eqn{R^2}.}
 }
 \value{
-A <\link{numeric}>-value of \link{length} 1.
+A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-Calculate the \eqn{R^2} of two <\link{numeric}> vectors.
+The \code{\link[=rsq]{rsq()}}-function calculates the \eqn{R^2}, the \href{https://en.wikipedia.org/wiki/Coefficient_of_determination}{coefficient of determination}, between the ovserved
+and predicted <\link{numeric}> vectors. By default \code{\link[=rsq]{rsq()}} returns the unadjusted \eqn{R^2}. For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.
 }
-\details{
-The \eqn{R^2} is calculated as,
+\section{Calculation}{
+
+
+The metric is calculated as follows,
 
 \deqn{
-  1 - \frac{SSE}{SST} \frac{n-1}{n - (k + 1)}
+  R^2 = 1 - \frac{\text{SSE}}{\text{SST}} \frac{n-1}{n - (k + 1)}
 }
+
+Where \eqn{\text{SSE}} is the sum of squared errors, \eqn{\text{SST}} is total sum of squared errors, \eqn{n} is the number of observations, and \eqn{k} is the number of non-constant parameters.
 }
+
 \examples{
 # 1) assume that actual
 # and predicted are values

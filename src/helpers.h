@@ -160,4 +160,3 @@ inline Eigen::MatrixXi seqmat(
 
   return mat;
 }
-

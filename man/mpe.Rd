@@ -3,15 +3,15 @@
 \name{mpe}
 \alias{mpe}
 \alias{wmpe}
-\title{Mean Percentage Error (MPE)}
+\title{Compute the \eqn{\text{mean percentage error}}}
 \usage{
-# simple MPE
+# `mpe()`-function
 mpe(
   actual,
   predicted
 )
 
-# weighted MPE
+# `wmpe()`-function
 wmpe(
   actual,
   predicted,
@@ -23,62 +23,62 @@ wmpe(
 
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} N. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
 }
 \value{
-A <\link{numeric}>-value of \link{length} 1.
+A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-Calculate the MPE using the \code{\link[=mpe]{mpe()}}-function for the simple mean, or \code{\link[=wmpe]{wmpe()}}-function for the weighted mean.
+The \code{\link[=mpe]{mpe()}}-function computes the \href{https://en.wikipedia.org/wiki/Mean_percentage_error}{mean percentage error} between
+the observed and predicted <\link{numeric}> vectors. If \code{w} is not \link{NULL}, the function returns the weighted mean percentage error.
 }
-\details{
-The Huber Loss is calculated as,
+\section{Calculation}{
+
+
+The metric is calculated as,
 
 \deqn{
- \frac{1}{2} (y_i - \hat{y}_i)^2 ~for~ |y_i - \hat{y}_i| \leq \delta
+  \frac{1}{n} \sum_i^n \frac{y_i - \upsilon_i}{y_i}
 }
 
-\deqn{
-  \delta |y_i-\hat{y}_i|-\frac{1}{2} \delta^2 ~for~ |y_i - \hat{y}_i| > \delta
+Where \eqn{y_i} and \eqn{\upsilon_i} are the \code{actual} and \code{predicted} values respectively. If \eqn{\text{w}} is not \link{NULL}, the weighted version is calculated.
 }
 
-for each \eqn{i},
-}
 \examples{
-# 1) assume that actual
-# and predicted are values
-# from a model
-actual <- rnorm(
-  n = 1e3,
-  mean = 10
+# 1) fit a linear
+# regression
+model <- lm(
+  mpg ~ .,
+  data = mtcars
 )
 
-predicted <- actual + rnorm(
-  n = 1e3,
-  mean = 10
+# 1.1) define actual
+# and predicted values
+# to measure performance
+actual    <- mtcars$mpg
+predicted <- fitted(model)
+
+
+# 2) calculate
+# the mpe measure
+mpe(
+  actual     = actual,
+  predicted  = predicted
 )
 
-# 2) calculate the huber loss
-# with delta 0.5
-huberloss(
-  actual = actual,
-  predicted = predicted,
-  delta = 0.5
-)
-
-# 3) caclulate weighted
-# huber loss
+# 3) calculate
+# the weighted mpe
+# using arbtrary weights
 w <- rbeta(
   n = 1e3,
   shape1 = 10,
   shape2 = 2
 )
 
-whuberloss(
-  actual = actual,
-  predicted = predicted,
-  delta = 0.5,
-  w     = w
+wmpe(
+  actual     = actual,
+  predicted  = predicted,
+  w          = w
 )
 }
 \seealso{
