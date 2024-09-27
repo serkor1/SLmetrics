@@ -1,6 +1,6 @@
 Package: SLmetrics
-Title: Statistical Learning Evaluation Metrics with Rcpp
-Version: 0.5-0
+Title: Machine Learning Performance Evaluation on Steroids
+Version: 0.1-0
 Authors@R: c(
     person(
       given   = "Serkan", 
@@ -10,8 +10,8 @@ Authors@R: c(
       comment = c(ORCID = "0000-0002-5052-0982")
       )
   )
-Description: 
-  A collection of evaluation metrics for regression and classification problems written in Rcpp.
+Description:
+  Performance evaluation metrics for supervised machine learning, statistical learning and artificial intelligence applications in R written in C++.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
