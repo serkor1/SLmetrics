@@ -54,15 +54,13 @@ fmi <- function(actual, predicted) {
 #'
 #' @section Calculation:
 #'
-#' Accuracy is a global metric that measures the proportion of correct predictions (both true positives and true negatives) out of all predictions, and is calculated as follows,
+#' The metric is calculated as follows,
 #'
 #' \deqn{
 #'   \frac{\#TP + \#TN}{\#TP + \#TN + \#FP + \#FN}
 #' }
 #'
-#' Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} represent the true positives, true negatives, false positives, and false negatives, respectively.
-#'
-#' Accuracy provides an overall performance measure of the model across all classes.
+#' Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} is the number of true positives, true negatives, false positives, and false negatives, respectively.
 #'
 #' @returns
 #'
@@ -203,12 +201,13 @@ dor <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_dor`, actual, predicted, aggregate)
 }
 
-#' \eqn{F_{\beta}}-score
+#' Compute the \eqn{F_{\beta}}-score
 #'
 #' @description
-#' The [fbeta()]-function computes the [F-beta score](https://en.wikipedia.org/wiki/F1_score), a weighted harmonic mean of precision and recall, between
-#' two vectors of predicted and observed [factor()] values. The parameter \eqn{\beta} determines the weight of precision and recall in the combined score. When `aggregate = TRUE`, the function returns the micro-average F-beta score across all classes \eqn{k}.
-#' By default, it returns the class-wise F-beta score.
+#' The [fbeta()]-function computes the [\eqn{F_\beta} score](https://en.wikipedia.org/wiki/F1_score), the weighted harmonic mean of [precision()] and [recall()], between
+#' two vectors of predicted and observed [factor()] values. The parameter \eqn{\beta} determines the weight of precision and recall in the combined score.
+#'
+#' When `aggregate = TRUE`, the function returns the micro-average \eqn{F_\beta} score across all classes \eqn{k}. By default, it returns the class-wise \eqn{F_\beta} score.
 #'
 #' @usage
 #' # fbeta-score
@@ -223,25 +222,25 @@ dor <- function(actual, predicted, aggregate = FALSE) {
 #'
 #' @inherit specificity
 #'
-#' @param beta A <[numeric]> vector of length 1. 1 by default, see details.
+#' @param beta A <[numeric]> vector of length 1. 1 by default, see calculations.
 #' @param aggregate A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] it returns the
 #' micro average across all k-classes
 #'
 #' @section Calculation:
 #'
+#' The metric is calculated for each class \eqn{k} as follows,
 #'
-#' The F-beta score is a weighted harmonic mean of precision and recall, calculated for each class \eqn{k} as follows,
 #'
 #' \deqn{
-#'   (1 + \beta^2) \cdot \frac{\text{Precision}_k \cdot \text{Recall}_k}{(\beta^2 \cdot \text{Precision}_k) + \text{Recall}_k}
+#'   (1 + \beta^2) \frac{\text{Precision}_k \cdot \text{Recall}_k}{(\beta^2 \cdot \text{Precision}_k) + \text{Recall}_k}
 #' }
 #'
 #' Where precision is \eqn{\frac{\#TP_k}{\#TP_k + \#FP_k}} and recall (sensitivity) is \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}}, and \eqn{\beta} determines the weight of precision relative to recall.
 #'
-#' When `aggregate = TRUE`, the `micro`-average F-beta score is calculated,
+#' When `aggregate = TRUE`, the `micro`-average \eqn{F_\beta} score is calculated,
 #'
 #' \deqn{
-#'   (1 + \beta^2) \cdot \frac{\sum_{k=1}^K \text{Precision}_k \cdot \sum_{k=1}^K \text{Recall}_k}{(\beta^2 \cdot \sum_{k=1}^K \text{Precision}_k) + \sum_{k=1}^K \text{Recall}_k}
+#'   (1 + \beta^2) \frac{\sum_{k=1}^K \text{Precision}_k \cdot \sum_{k=1}^K \text{Recall}_k}{(\beta^2 \cdot \sum_{k=1}^K \text{Precision}_k) + \sum_{k=1}^K \text{Recall}_k}
 #' }
 #'
 #'

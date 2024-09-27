@@ -57,15 +57,13 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 \section{Calculation}{
 
 
-Accuracy is a global metric that measures the proportion of correct predictions (both true positives and true negatives) out of all predictions, and is calculated as follows,
+The metric is calculated as follows,
 
 \deqn{
   \frac{\#TP + \#TN}{\#TP + \#TN + \#FP + \#FN}
 }
 
-Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} represent the true positives, true negatives, false positives, and false negatives, respectively.
-
-Accuracy provides an overall performance measure of the model across all classes.
+Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} is the number of true positives, true negatives, false positives, and false negatives, respectively.
 }
 
 \examples{

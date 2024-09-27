@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{fbeta}
 \alias{fbeta}
-\title{\eqn{F_{\beta}}-score}
+\title{Compute the \eqn{F_{\beta}}-score}
 \usage{
 # fbeta-score
 fbeta(
@@ -17,7 +17,7 @@ fbeta(
 
 \item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{beta}{A <\link{numeric}> vector of length 1. 1 by default, see details.}
+\item{beta}{A <\link{numeric}> vector of length 1. 1 by default, see calculations.}
 
 \item{aggregate}{A <\link{logical}>-value of \link{length} 1. \link{FALSE} by default. If \link{TRUE} it returns the
 micro average across all k-classes}
@@ -28,9 +28,10 @@ If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vect
 If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=fbeta]{fbeta()}}-function computes the \href{https://en.wikipedia.org/wiki/F1_score}{F-beta score}, a weighted harmonic mean of precision and recall, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The parameter \eqn{\beta} determines the weight of precision and recall in the combined score. When \code{aggregate = TRUE}, the function returns the micro-average F-beta score across all classes \eqn{k}.
-By default, it returns the class-wise F-beta score.
+The \code{\link[=fbeta]{fbeta()}}-function computes the \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_\beta} score}, the weighted harmonic mean of \code{\link[=precision]{precision()}} and \code{\link[=recall]{recall()}}, between
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The parameter \eqn{\beta} determines the weight of precision and recall in the combined score.
+
+When \code{aggregate = TRUE}, the function returns the micro-average \eqn{F_\beta} score across all classes \eqn{k}. By default, it returns the class-wise \eqn{F_\beta} score.
 }
 \details{
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
@@ -68,18 +69,18 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 \section{Calculation}{
 
 
-The F-beta score is a weighted harmonic mean of precision and recall, calculated for each class \eqn{k} as follows,
+The metric is calculated for each class \eqn{k} as follows,
 
 \deqn{
-  (1 + \beta^2) \cdot \frac{\text{Precision}_k \cdot \text{Recall}_k}{(\beta^2 \cdot \text{Precision}_k) + \text{Recall}_k}
+  (1 + \beta^2) \frac{\text{Precision}_k \cdot \text{Recall}_k}{(\beta^2 \cdot \text{Precision}_k) + \text{Recall}_k}
 }
 
 Where precision is \eqn{\frac{\#TP_k}{\#TP_k + \#FP_k}} and recall (sensitivity) is \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}}, and \eqn{\beta} determines the weight of precision relative to recall.
 
-When \code{aggregate = TRUE}, the \code{micro}-average F-beta score is calculated,
+When \code{aggregate = TRUE}, the \code{micro}-average \eqn{F_\beta} score is calculated,
 
 \deqn{
-  (1 + \beta^2) \cdot \frac{\sum_{k=1}^K \text{Precision}_k \cdot \sum_{k=1}^K \text{Recall}_k}{(\beta^2 \cdot \sum_{k=1}^K \text{Precision}_k) + \sum_{k=1}^K \text{Recall}_k}
+  (1 + \beta^2) \frac{\sum_{k=1}^K \text{Precision}_k \cdot \sum_{k=1}^K \text{Recall}_k}{(\beta^2 \cdot \sum_{k=1}^K \text{Precision}_k) + \sum_{k=1}^K \text{Recall}_k}
 }
 }
 
