@@ -65,9 +65,7 @@ Rcpp::NumericMatrix cmatrix(
   // 4) set the dimnames of
   // the confusion matrix
   output.attr("dimnames") = Rcpp::List::create(levels, levels);
+  output.attr("class")    = "cmatrix";
 
   return output;
 }
-
-
-

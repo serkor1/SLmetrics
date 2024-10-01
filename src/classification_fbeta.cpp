@@ -1,83 +1,75 @@
 #include <Rcpp.h>
-#include "declarations.h"
+#include "classification_fbeta.h"
 using namespace Rcpp;
-//' Compute the \eqn{F_{\beta}}-score
+
+//' @rdname fbeta
+//' @method fbeta factor
 //'
-//' @description
-//' The [fbeta()]-function computes the [\eqn{F_\beta} score](https://en.wikipedia.org/wiki/F1_score), the weighted harmonic mean of [precision()] and [recall()], between
-//' two vectors of predicted and observed [factor()] values. The parameter \eqn{\beta} determines the weight of precision and recall in the combined score.
-//'
-//' When `aggregate = TRUE`, the function returns the micro-average \eqn{F_\beta} score across all classes \eqn{k}. By default, it returns the class-wise \eqn{F_\beta} score.
-//'
-//' @usage
-//' # fbeta-score
-//' fbeta(
-//'   actual,
-//'   predicted,
-//'   beta = 1,
-//'   aggregate = FALSE
-//' )
-//'
-//' @example man/examples/scr_fbeta.R
-//'
-//' @inherit specificity
-//'
-//' @param beta A <[numeric]> vector of length 1. 1 by default, see calculations.
-//' @param aggregate A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] it returns the
-//' micro average across all k-classes
-//'
-//' @section Calculation:
-//'
-//' The metric is calculated for each class \eqn{k} as follows,
-//'
-//'
-//' \deqn{
-//'   (1 + \beta^2) \frac{\text{Precision}_k \cdot \text{Recall}_k}{(\beta^2 \cdot \text{Precision}_k) + \text{Recall}_k}
-//' }
-//'
-//' Where precision is \eqn{\frac{\#TP_k}{\#TP_k + \#FP_k}} and recall (sensitivity) is \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}}, and \eqn{\beta} determines the weight of precision relative to recall.
-//'
-//' When `aggregate = TRUE`, the `micro`-average \eqn{F_\beta} score is calculated,
-//'
-//' \deqn{
-//'   (1 + \beta^2) \frac{\sum_{k=1}^K \text{Precision}_k \cdot \sum_{k=1}^K \text{Recall}_k}{(\beta^2 \cdot \sum_{k=1}^K \text{Precision}_k) + \sum_{k=1}^K \text{Recall}_k}
-//' }
-//'
-//'
-//' @family classification
 //' @export
-// [[Rcpp::export]]
+// [[Rcpp::export(fbeta.factor)]]
 NumericVector fbeta(
     const IntegerVector& actual,
     const IntegerVector& predicted,
     const double& beta = 1.0,
-    const bool& aggregate = false) {
+    Nullable<bool> micro = R_NilValue) {
 
-  /*
-   * This function calculates the F1-score
-   * of the classification problem.
-   *
-   * It needs the precision and
-   * recall
-   *
-   * NOTE: This implementation is inefficient.
-   * it calculates the confusion matrix twice.
-   */
 
-  const double beta_sq = beta * beta;
-  const NumericVector recall_obj = recall(actual, predicted, aggregate);
-  const NumericVector precision_obj = precision(actual, predicted, aggregate);
+  // 1) Calculate
+  // cmatrix
+  const Eigen::MatrixXi& x = confmat(actual, predicted);
 
-  NumericVector output = (1 + beta_sq) * (recall_obj * precision_obj) / ( (beta_sq * precision_obj) + recall_obj);
+  // 1) if micro is Null
+  // the retured value are equal
+  // to the amount dimensions
+  if (micro.isNull()) {
 
-  if (aggregate) {
+    // 1.1) create the output
+    // vector
+    Rcpp::NumericVector output = _metric_(x, beta);
 
+    // 1.2) retrieve the names
+    // and assign it to the output
+    // vector and stop the function early
+    output.attr("names") = actual.attr("levels");
+
+    // 1.3) stop the function
+    // and return the output.
+    return output;
+  }
+
+  return _metric_(x, beta,  Rcpp::as<bool>(micro));
+
+}
+
+//' @rdname fbeta
+//' @method fbeta cmatrix
+//'
+//' @export
+// [[Rcpp::export(fbeta.cmatrix)]]
+NumericVector fbeta_cmatrix(const IntegerMatrix& x, const double& beta = 1.0,  Nullable<bool> micro = R_NilValue)
+{
+
+  // 1) if micro is Null
+  // the retured value are equal
+  // to the amount dimensions
+  if (micro.isNull()) {
+
+    // 1.1) create the output
+    // vector
+    Rcpp::NumericVector output = _metric_(Rcpp::as<Eigen::MatrixXi>(x), beta);
+
+    // 1.2) retrieve the dimnames
+    // and assign it to the output
+    // vector and stop the function early
+    Rcpp::List dimnames = x.attr("dimnames");
+    output.attr("names") = dimnames[1];  // Directly assign the column names
+
+    // 1.3) stop the function
+    // and return the output.
     return output;
 
   }
 
-  output.attr("names") = actual.attr("levels");
-
-  return output;
+  return _metric_(Rcpp::as<Eigen::MatrixXi>(x), beta,  Rcpp::as<bool>(micro));
 
 }

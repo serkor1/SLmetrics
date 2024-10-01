@@ -1,155 +1,330 @@
 // [[Rcpp::depends(RcppEigen)]]
 #include <RcppEigen.h>
-#include "helpers.h"
+#include "classification_recall.h"
 using namespace Rcpp;
 
-//' Compute the \eqn{recall}, \eqn{sensitivity} or \eqn{true~positive~rate}
-//'
-//' @description
-//' The [recall()]-function computes the [recall](https://en.wikipedia.org/wiki/Sensitivity_and_specificity), also known as sensitivity or the True Positive Rate (TPR), between
-//' two vectors of predicted and observed [factor()] values.
-//'
-//' When `aggregate = TRUE`, the function returns the micro-averaged recall across all classes \eqn{k}. By default, it returns the class-wise recall.
-//'
-//' @usage
-//'  # 1) `recall()`-function
-//' recall(
-//'   actual,
-//'   predicted,
-//'   aggregate = FALSE
-//' )
-//'
-//' @inherit specificity
-//'
-//' @example man/examples/scr_recall.R
-//'
-//' @section Calculation:
-//'
-//' The metric is calculated for each class \eqn{k} as follows,
-//'
-//' \deqn{
-//'   \frac{\#TP_k}{\#TP_k + \#FN_k}
-//' }
-//'
-//' Where \eqn{\#TP_k} and \eqn{\#FN_k} is the number of true positives and false negatives, respectively, for each class \eqn{k}.
-//'
-//' When `aggregate = TRUE` the `micro`-average is calculated as follows,
-//'
-//' \deqn{
-//'   \frac{\sum_{k=1}^k \#TP_k}{\sum_{k=1}^k \#TP_k + \sum_{k=1}^k \#FN_k}
-//' }
-//'
-//' @family classification
+//' @rdname recall
+//' @method recall factor
 //'
 //' @export
-// [[Rcpp::export]]
-NumericVector recall(
+//[[Rcpp::export(recall.factor)]]
+Rcpp::NumericVector recall(
     const IntegerVector& actual,
     const IntegerVector& predicted,
-    const bool& aggregate = false) {
+    Nullable<bool> micro = R_NilValue) {
 
   /*
-   * Calculate:
+   * NOTE:
    *
-   * 1) Confusion Matrix
-   * 2) True Positives
-   * 3) False Negatives
+   * There are two solutions on passing the dimnames:
    *
-   * Output is recall
+   * 1. VECTOR_ELT(x.attr("dimnames"), 1)
+   * 2. Creating a list, extracting the dimnames and assign it as dimnames[1]
    *
-   * NOTE: If aggregate is TRUE then the
-   * micro-average is returned.
+   * Both are too fast to be properly measured via
+   * benchmark. It appears that both solution are
+   * fast enough. The added overhead of this solution
+   * and not directly using NumericVectors is offset by
+   * the speed gain in cmatrix that was gained during
+   * optimization, and that Eigen is faster than Rcpp NumericVector
+   *
+   *
    */
 
-  // 0) Calculate the
-  // confusion matrix, TP and FN
-  const Eigen::MatrixXi& c_matrix = confmat(actual, predicted);
-  const Eigen::VectorXi& true_positive = TP(c_matrix);
-  const Eigen::VectorXi& false_negative = FN(c_matrix);
+  // 1) if micro is Null
+  // the retured value are equal
+  // to the amount dimensions
+  if (micro.isNull()) {
 
-  // 1) Cast the integer vectors
-  // to double Arrays
-  const Eigen::ArrayXd& tp_dbl = true_positive.cast<double>().array();
-  const Eigen::ArrayXd& fn_dbl = false_negative.cast<double>().array();
+    // 1.1) create the output
+    // vector
+    Rcpp::NumericVector output = _metric_(actual, predicted);
 
-  // 2) declare the output
-  // vector
-  Rcpp::NumericVector output;
-
-  if (aggregate) {
-
-    const double tp = tp_dbl.sum();
-    const double fn = fn_dbl.sum();
-
-    output = Rcpp::NumericVector::create(tp / (tp + fn));
-
-  } else {
-
-    // 0) calculate length
-    // of the vector to avoid
-    // dynamic allocation of vector
-    // sizes.
-    const int n = tp_dbl.size();
-    output = Rcpp::NumericVector(n);
-
-    // 1) Get raw pointers to the data for faster access
-    const double* tp_ptr = tp_dbl.data();
-    const double* fn_ptr = fn_dbl.data();
-    double* output_ptr = REAL(output);
-
-    // 2) Use a pointer-based loop to calculate recall (TPR) element-wise
-    for (int i = 0; i < n; ++i) {
-
-      output_ptr[i] = tp_ptr[i] / (tp_ptr[i] + fn_ptr[i]);
-
-    }
-
-    // Set names attribute using reference
+    // 1.2) retrieve the names
+    // and assign it to the output
+    // vector and stop the function early
     output.attr("names") = actual.attr("levels");
+
+    // 1.3) stop the function
+    // and return the output.
+    return output;
   }
 
-  return output;
+  return _metric_(actual, predicted,  Rcpp::as<bool>(micro));
+
 }
 
 //' @rdname recall
 //'
-//' @usage
-//' # 2) `sensitivity()`-function
-//' sensitivity(
-//'   actual,
-//'   predicted,
-//'   aggregate = FALSE
-//' )
+//' @method recall cmatrix
+//' @export
+// [[Rcpp::export(recall.cmatrix)]]
+Rcpp::NumericVector recall_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue)
+{
+
+  /*
+   * NOTE:
+   *
+   * There are two solutions on passing the dimnames:
+   *
+   * 1. VECTOR_ELT(x.attr("dimnames"), 1)
+   * 2. Creating a list, extracting the dimnames and assign it as dimnames[1]
+   *
+   * Both are too fast to be properly measured via
+   * benchmark. It appears that both solution are
+   * fast enough. The added overhead of this solution
+   * and not directly using NumericVectors is offset by
+   * the speed gain in cmatrix that was gained during
+   * optimization, and that Eigen is faster than Rcpp NumericVector
+   *
+   *
+   */
+
+  // 1) if micro is Null
+  // the retured value are equal
+  // to the amount dimensions
+  if (micro.isNull()) {
+
+
+    // 1.1) create the output
+    // vector
+    Rcpp::NumericVector output = _metric_(Rcpp::as<Eigen::MatrixXi>(x));
+
+    // 1.2) retrieve the dimnames
+    // and assign it to the output
+    // vector and stop the function early
+    Rcpp::List dimnames = x.attr("dimnames");
+    output.attr("names") = dimnames[1];  // Directly assign the column names
+
+    // 1.3) stop the function
+    // and return the output.
+    return output;
+
+  }
+
+  // 2) return the metric directly
+  // if the value is NULL
+  // NOTE: It might be more efficient to just
+  // pass the null value directly instead via
+  // micro
+  return _metric_(Rcpp::as<Eigen::MatrixXi>(x), Rcpp::as<bool>(micro));
+
+}
+
+//' @rdname recall
+//' @method sensitivity factor
 //'
 //' @export
-// [[Rcpp::export]]
+// [[Rcpp::export(sensitivity.factor)]]
 Rcpp::NumericVector sensitivity(
    const IntegerVector& actual,
    const IntegerVector& predicted,
-   const bool& aggregate = false) {
+   Nullable<bool> micro = R_NilValue) {
 
- return recall(actual, predicted, aggregate);
+  /*
+   * NOTE:
+   *
+   * There are two solutions on passing the dimnames:
+   *
+   * 1. VECTOR_ELT(x.attr("dimnames"), 1)
+   * 2. Creating a list, extracting the dimnames and assign it as dimnames[1]
+   *
+   * Both are too fast to be properly measured via
+   * benchmark. It appears that both solution are
+   * fast enough. The added overhead of this solution
+   * and not directly using NumericVectors is offset by
+   * the speed gain in cmatrix that was gained during
+   * optimization, and that Eigen is faster than Rcpp NumericVector
+   *
+   *
+   */
+
+  // 1) if micro is Null
+  // the retured value are equal
+  // to the amount dimensions
+  if (micro.isNull()) {
+
+    // 1.1) create the output
+    // vector
+    Rcpp::NumericVector output = _metric_(actual, predicted);
+
+    // 1.2) retrieve the names
+    // and assign it to the output
+    // vector and stop the function early
+    output.attr("names") = actual.attr("levels");
+
+    // 1.3) stop the function
+    // and return the output.
+    return output;
+  }
+
+  return _metric_(actual, predicted,  Rcpp::as<bool>(micro));
+
 
 }
 
 //' @rdname recall
 //'
-//' @usage
-//' # 3) `tpr()`-function
-//' tpr(
-//'   actual,
-//'   predicted,
-//'   aggregate = FALSE
-//' )
-//'
+//' @method sensitivity cmatrix
 //' @export
-// [[Rcpp::export]]
-Rcpp::NumericVector tpr(
-    const IntegerVector& actual,
-    const IntegerVector& predicted,
-    const bool& aggregate = false) {
+// [[Rcpp::export(sensitivity.cmatrix)]]
+Rcpp::NumericVector sensitivity_cmatrix(const IntegerMatrix& x,  Nullable<bool> micro = R_NilValue)
+{
 
-  return recall(actual, predicted, aggregate);
+  /*
+   * NOTE:
+   *
+   * There are two solutions on passing the dimnames:
+   *
+   * 1. VECTOR_ELT(x.attr("dimnames"), 1)
+   * 2. Creating a list, extracting the dimnames and assign it as dimnames[1]
+   *
+   * Both are too fast to be properly measured via
+   * benchmark. It appears that both solution are
+   * fast enough. The added overhead of this solution
+   * and not directly using NumericVectors is offset by
+   * the speed gain in cmatrix that was gained during
+   * optimization, and that Eigen is faster than Rcpp NumericVector
+   *
+   *
+   */
+
+  // 1) if micro is Null
+  // the retured value are equal
+  // to the amount dimensions
+  if (micro.isNull()) {
+
+
+    // 1.1) create the output
+    // vector
+    Rcpp::NumericVector output = _metric_(Rcpp::as<Eigen::MatrixXi>(x));
+
+    // 1.2) retrieve the dimnames
+    // and assign it to the output
+    // vector and stop the function early
+    Rcpp::List dimnames = x.attr("dimnames");
+    output.attr("names") = dimnames[1];  // Directly assign the column names
+
+    // 1.3) stop the function
+    // and return the output.
+    return output;
+
+  }
+
+  // 2) return the metric directly
+  // if the value is NULL
+  // NOTE: It might be more efficient to just
+  // pass the null value directly instead via
+  // micro
+  return _metric_(Rcpp::as<Eigen::MatrixXi>(x), Rcpp::as<bool>(micro));
 
 }
+
+
+//' @rdname recall
+//'
+//' @method tpr factor
+//' @export
+// [[Rcpp::export(tpr.factor)]]
+Rcpp::NumericVector tpr(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue) {
+
+  /*
+   * NOTE:
+   *
+   * There are two solutions on passing the dimnames:
+   *
+   * 1. VECTOR_ELT(x.attr("dimnames"), 1)
+   * 2. Creating a list, extracting the dimnames and assign it as dimnames[1]
+   *
+   * Both are too fast to be properly measured via
+   * benchmark. It appears that both solution are
+   * fast enough. The added overhead of this solution
+   * and not directly using NumericVectors is offset by
+   * the speed gain in cmatrix that was gained during
+   * optimization, and that Eigen is faster than Rcpp NumericVector
+   *
+   *
+   */
+
+  // 1) if micro is Null
+  // the retured value are equal
+  // to the amount dimensions
+  if (micro.isNull()) {
+
+    // 1.1) create the output
+    // vector
+    Rcpp::NumericVector output = _metric_(actual, predicted);
+
+    // 1.2) retrieve the names
+    // and assign it to the output
+    // vector and stop the function early
+    output.attr("names") = actual.attr("levels");
+
+    // 1.3) stop the function
+    // and return the output.
+    return output;
+  }
+
+  return _metric_(actual, predicted,  Rcpp::as<bool>(micro));
+
+
+}
+
+//' @rdname recall
+//'
+//' @method tpr cmatrix
+//' @export
+// [[Rcpp::export(tpr.cmatrix)]]
+Rcpp::NumericVector tpr_cmatrix(const IntegerMatrix& x,  Nullable<bool> micro = R_NilValue)
+{
+
+  /*
+   * NOTE:
+   *
+   * There are two solutions on passing the dimnames:
+   *
+   * 1. VECTOR_ELT(x.attr("dimnames"), 1)
+   * 2. Creating a list, extracting the dimnames and assign it as dimnames[1]
+   *
+   * Both are too fast to be properly measured via
+   * benchmark. It appears that both solution are
+   * fast enough. The added overhead of this solution
+   * and not directly using NumericVectors is offset by
+   * the speed gain in cmatrix that was gained during
+   * optimization, and that Eigen is faster than Rcpp NumericVector
+   *
+   *
+   */
+
+  // 1) if micro is Null
+  // the retured value are equal
+  // to the amount dimensions
+  if (micro.isNull()) {
+
+
+    // 1.1) create the output
+    // vector
+    Rcpp::NumericVector output = _metric_(Rcpp::as<Eigen::MatrixXi>(x));
+
+    // 1.2) retrieve the dimnames
+    // and assign it to the output
+    // vector and stop the function early
+    Rcpp::List dimnames = x.attr("dimnames");
+    output.attr("names") = dimnames[1];  // Directly assign the column names
+
+    // 1.3) stop the function
+    // and return the output.
+    return output;
+
+  }
+
+  // 2) return the metric directly
+  // if the value is NULL
+  // NOTE: It might be more efficient to just
+  // pass the null value directly instead via
+  // micro
+  return _metric_(Rcpp::as<Eigen::MatrixXi>(x), Rcpp::as<bool>(micro));
+
+}
+
 

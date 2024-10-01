@@ -116,13 +116,24 @@ predicted <- as.factor(
 
 # 4) generate
 # confusion matrix
-cmatrix(
-  actual    = iris$Species,
-  predicted = predicted
+summary(
+  cmatrix(
+    actual    = iris$Species,
+    predicted = predicted
+  )
 )
+#> Confusion Matrix (2 x 2) 
+#> ================================================================================
 #>           virginica others
 #> virginica        35     15
 #> others           14     86
+#> ================================================================================
+#> Overall Statistics (micro average)
+#>  - Accuracy:          0.81
+#>  - Balanced Accuracy: 0.78
+#>  - Sensitivity:       0.81
+#>  - Specificity:       0.81
+#>  - Precision:         0.81
 ```
 
 <details>

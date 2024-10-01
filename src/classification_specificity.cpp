@@ -152,6 +152,7 @@ NumericVector specificity(
 
 }
 
+
 //' @rdname specificity
 //'
 //' @usage

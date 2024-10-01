@@ -149,8 +149,3 @@ double baccuracy(
   return output;
 
 }
-
-
-
-
-

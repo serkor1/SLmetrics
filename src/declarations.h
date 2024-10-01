@@ -13,6 +13,6 @@
  * Thank you Stackoverflow! <3
  */
 
-Rcpp::NumericVector recall(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const bool& aggregate);
-Rcpp::NumericVector precision(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const bool& aggregate);
-Rcpp::NumericVector specificity(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const bool& aggregate);
+Rcpp::NumericVector recall_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue);
+Rcpp::NumericVector precision_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue);
+// Rcpp::NumericVector specificity(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const bool& aggregate);

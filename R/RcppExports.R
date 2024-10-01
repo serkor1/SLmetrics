@@ -201,53 +201,20 @@ dor <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_dor`, actual, predicted, aggregate)
 }
 
-#' Compute the \eqn{F_{\beta}}-score
+#' @rdname fbeta
+#' @method fbeta factor
 #'
-#' @description
-#' The [fbeta()]-function computes the [\eqn{F_\beta} score](https://en.wikipedia.org/wiki/F1_score), the weighted harmonic mean of [precision()] and [recall()], between
-#' two vectors of predicted and observed [factor()] values. The parameter \eqn{\beta} determines the weight of precision and recall in the combined score.
-#'
-#' When `aggregate = TRUE`, the function returns the micro-average \eqn{F_\beta} score across all classes \eqn{k}. By default, it returns the class-wise \eqn{F_\beta} score.
-#'
-#' @usage
-#' # fbeta-score
-#' fbeta(
-#'   actual,
-#'   predicted,
-#'   beta = 1,
-#'   aggregate = FALSE
-#' )
-#'
-#' @example man/examples/scr_fbeta.R
-#'
-#' @inherit specificity
-#'
-#' @param beta A <[numeric]> vector of length 1. 1 by default, see calculations.
-#' @param aggregate A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] it returns the
-#' micro average across all k-classes
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
-#'
-#'
-#' \deqn{
-#'   (1 + \beta^2) \frac{\text{Precision}_k \cdot \text{Recall}_k}{(\beta^2 \cdot \text{Precision}_k) + \text{Recall}_k}
-#' }
-#'
-#' Where precision is \eqn{\frac{\#TP_k}{\#TP_k + \#FP_k}} and recall (sensitivity) is \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}}, and \eqn{\beta} determines the weight of precision relative to recall.
-#'
-#' When `aggregate = TRUE`, the `micro`-average \eqn{F_\beta} score is calculated,
-#'
-#' \deqn{
-#'   (1 + \beta^2) \frac{\sum_{k=1}^K \text{Precision}_k \cdot \sum_{k=1}^K \text{Recall}_k}{(\beta^2 \cdot \sum_{k=1}^K \text{Precision}_k) + \sum_{k=1}^K \text{Recall}_k}
-#' }
-#'
-#'
-#' @family classification
 #' @export
-fbeta <- function(actual, predicted, beta = 1.0, aggregate = FALSE) {
-    .Call(`_SLmetrics_fbeta`, actual, predicted, beta, aggregate)
+fbeta.factor <- function(actual, predicted, beta = 1.0, micro = NULL) {
+    .Call(`_SLmetrics_fbeta`, actual, predicted, beta, micro)
+}
+
+#' @rdname fbeta
+#' @method fbeta cmatrix
+#'
+#' @export
+fbeta.cmatrix <- function(x, beta = 1.0, micro = NULL) {
+    .Call(`_SLmetrics_fbeta_cmatrix`, x, beta, micro)
 }
 
 #' Compute the \eqn{\text{false}} \eqn{\text{discovery}} \eqn{\text{rate}}
@@ -684,135 +651,84 @@ npv <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_npv`, actual, predicted, aggregate)
 }
 
-#' Compute the \eqn{\text{precision}} or  \eqn{\text{positive predictive value}}
-#'
-#' @description
-#' The [precision()]-function computes the [precision](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values), also known as the positive predictive value (PPV), between
-#' two vectors of predicted and observed [factor()] values.
-#'
-#' When `aggregate = TRUE`, the function returns the micro-average precision across all classes \eqn{k}.
-#' By default, it returns the class-wise precision.
-#'
-#' @usage
-#' # 1) `precision()`-function
-#' precision(
-#'   actual,
-#'   predicted,
-#'   aggregate = FALSE
-#' )
-#'
-#' @inherit specificity
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
-#'
-#' \deqn{
-#'   \frac{\#TP_k}{\#TP_k + \#FP_k}
-#' }
-#'
-#' Where \eqn{\#TP_k} and \eqn{\#FP_k} are the number of true positives and false positives, respectively, for each class \eqn{k}.
-#'
-#' When `aggregate = TRUE`, the `micro`-average is calculated,
-#'
-#' \deqn{
-#'   \frac{\sum_{k=1}^k \#TP_k}{\sum_{k=1}^k \#TP_k + \sum_{k=1}^k \#FP_k}
-#' }
-#'
-#' @example man/examples/scr_precision.R
-#'
-#' @family classification
+#' @rdname precision
+#' @method precision factor
 #'
 #' @export
-precision <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_precision`, actual, predicted, aggregate)
+precision.factor <- function(actual, predicted, micro = NULL) {
+    .Call(`_SLmetrics_precision`, actual, predicted, micro)
 }
 
 #' @rdname precision
+#' @method precision cmatrix
 #'
-#' @usage
-#' # 2) `ppv()`-function
-#' ppv(
-#'   actual,
-#'   predicted,
-#'   aggregate = FALSE
-#' )
 #' @export
-ppv <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_ppv`, actual, predicted, aggregate)
+precision.cmatrix <- function(x, micro = NULL) {
+    .Call(`_SLmetrics_precision_cmatrix`, x, micro)
 }
 
-#' Compute the \eqn{recall}, \eqn{sensitivity} or \eqn{true~positive~rate}
-#'
-#' @description
-#' The [recall()]-function computes the [recall](https://en.wikipedia.org/wiki/Sensitivity_and_specificity), also known as sensitivity or the True Positive Rate (TPR), between
-#' two vectors of predicted and observed [factor()] values.
-#'
-#' When `aggregate = TRUE`, the function returns the micro-averaged recall across all classes \eqn{k}. By default, it returns the class-wise recall.
-#'
-#' @usage
-#'  # 1) `recall()`-function
-#' recall(
-#'   actual,
-#'   predicted,
-#'   aggregate = FALSE
-#' )
-#'
-#' @inherit specificity
-#'
-#' @example man/examples/scr_recall.R
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
-#'
-#' \deqn{
-#'   \frac{\#TP_k}{\#TP_k + \#FN_k}
-#' }
-#'
-#' Where \eqn{\#TP_k} and \eqn{\#FN_k} is the number of true positives and false negatives, respectively, for each class \eqn{k}.
-#'
-#' When `aggregate = TRUE` the `micro`-average is calculated as follows,
-#'
-#' \deqn{
-#'   \frac{\sum_{k=1}^k \#TP_k}{\sum_{k=1}^k \#TP_k + \sum_{k=1}^k \#FN_k}
-#' }
-#'
-#' @family classification
+#' @rdname precision
+#' @method ppv factor
 #'
 #' @export
-recall <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_recall`, actual, predicted, aggregate)
+ppv.factor <- function(actual, predicted, micro = NULL) {
+    .Call(`_SLmetrics_ppv`, actual, predicted, micro)
+}
+
+#' @rdname precision
+#' @method ppv cmatrix
+#'
+#' @export
+ppv.cmatrix <- function(x, micro = NULL) {
+    .Call(`_SLmetrics_ppv_cmatrix`, x, micro)
+}
+
+#' @rdname recall
+#' @method recall factor
+#'
+#' @export
+recall.factor <- function(actual, predicted, micro = NULL) {
+    .Call(`_SLmetrics_recall`, actual, predicted, micro)
 }
 
 #' @rdname recall
 #'
-#' @usage
-#' # 2) `sensitivity()`-function
-#' sensitivity(
-#'   actual,
-#'   predicted,
-#'   aggregate = FALSE
-#' )
+#' @method recall cmatrix
+#' @export
+recall.cmatrix <- function(x, micro = NULL) {
+    .Call(`_SLmetrics_recall_cmatrix`, x, micro)
+}
+
+#' @rdname recall
+#' @method sensitivity factor
 #'
 #' @export
-sensitivity <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_sensitivity`, actual, predicted, aggregate)
+sensitivity.factor <- function(actual, predicted, micro = NULL) {
+    .Call(`_SLmetrics_sensitivity`, actual, predicted, micro)
 }
 
 #' @rdname recall
 #'
-#' @usage
-#' # 3) `tpr()`-function
-#' tpr(
-#'   actual,
-#'   predicted,
-#'   aggregate = FALSE
-#' )
-#'
+#' @method sensitivity cmatrix
 #' @export
-tpr <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_tpr`, actual, predicted, aggregate)
+sensitivity.cmatrix <- function(x, micro = NULL) {
+    .Call(`_SLmetrics_sensitivity_cmatrix`, x, micro)
+}
+
+#' @rdname recall
+#'
+#' @method tpr factor
+#' @export
+tpr.factor <- function(actual, predicted, micro = NULL) {
+    .Call(`_SLmetrics_tpr`, actual, predicted, micro)
+}
+
+#' @rdname recall
+#'
+#' @method tpr cmatrix
+#' @export
+tpr.cmatrix <- function(x, micro = NULL) {
+    .Call(`_SLmetrics_tpr_cmatrix`, x, micro)
 }
 
 #' Specificity (True Negative Rate)
@@ -965,6 +881,22 @@ selectivity <- function(actual, predicted, aggregate = FALSE) {
 #' @export
 zerooneloss <- function(actual, predicted) {
     .Call(`_SLmetrics_zerooneloss`, actual, predicted)
+}
+
+.accuracy <- function(x) {
+    .Call(`_SLmetrics__accuracy_`, x)
+}
+
+.baccuracy <- function(x, adjust = FALSE) {
+    .Call(`_SLmetrics__baccuracy_`, x, adjust)
+}
+
+.specificity <- function(x, micro) {
+    .Call(`_SLmetrics__specificity_`, x, micro)
+}
+
+.precision <- function(x, micro) {
+    .Call(`_SLmetrics__precision_`, x, micro)
 }
 
 #' Compute the \eqn{\text{concordance correlation coefficient}}

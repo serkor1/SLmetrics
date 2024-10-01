@@ -30,7 +30,21 @@ predicted <- as.factor(
 )
 
 # 4) confusion matrix
-cmatrix(
-  actual    = iris$Species,
-  predicted = predicted
+# and print
+print(
+  confusion_matrix <- cmatrix(
+    actual    = iris$Species,
+    predicted = predicted
+  )
 )
+
+# 5) summary of the matrix
+summary(
+  confusion_matrix
+)
+
+# 6) visualize the matrix
+plot(
+  confusion_matrix
+)
+

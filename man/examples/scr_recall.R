@@ -37,16 +37,15 @@ recall(
 )
 
 # 4.2) macro-average
-mean(
-  recall(
-    actual    = iris$Species,
-    predicted = predicted
-  )
+recall(
+  actual    = iris$Species,
+  predicted = predicted,
+  micro     = FALSE
 )
 
 # 4.3) micro-average
 recall(
   actual    = iris$Species,
   predicted = predicted,
-  aggregate = TRUE
+  micro     = TRUE
 )

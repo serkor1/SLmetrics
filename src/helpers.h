@@ -17,6 +17,33 @@
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
 
+using namespace Rcpp;
+
+/*
+ * This function locates all 0 values
+ * and returns a vector
+ */
+
+inline __attribute__((always_inline)) Eigen::VectorXi extract(const Eigen::VectorXd& x) {
+  // Count how many positive elements there are
+  Eigen::Index count = (x.array() > 0).count();
+
+  // Allocate an Eigen::VectorXi to store the indices of positive values
+  Eigen::VectorXi indices(count);
+
+  // Copy the indices of positive elements
+  Eigen::Index j = 0;
+  for (Eigen::Index i = 0; i < x.size(); ++i) {
+    if (x(i) > 0) {
+      indices(j++) = i;  // Store the index of the positive value
+    }
+  }
+
+  // Return the indices of positive values
+  return indices;
+}
+
+
 
 inline Eigen::VectorXi TP(const Eigen::MatrixXi& matrix)
 {
@@ -79,7 +106,8 @@ inline Eigen::VectorXi FN(const Eigen::MatrixXi& matrix)
   return FN;
 }
 
-inline Eigen::MatrixXi confmat(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
+
+inline __attribute__((always_inline)) Eigen::MatrixXi confmat(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
 {
   /*
    * This function generates a confusion matrix
@@ -92,10 +120,10 @@ inline Eigen::MatrixXi confmat(const Rcpp::IntegerVector& actual, const Rcpp::In
   // 1) Get the levels
   // and store
   const Rcpp::CharacterVector& levels = actual.attr("levels");
-  const int k = levels.size();
+  const int k = levels.size() + 1;
 
   // 2) Create the k x k matrix for all available factors
-  Eigen::MatrixXi confmat = Eigen::MatrixXi::Zero(k, k);
+  Eigen::MatrixXi confmat = Eigen::MatrixXi::Zero(k, k).eval();
 
   // 3) Calculate the size of the actual
   // vector. The implicit assumption
@@ -110,23 +138,62 @@ inline Eigen::MatrixXi confmat(const Rcpp::IntegerVector& actual, const Rcpp::In
   const int* predicted_ptr = predicted.begin();
   int* matrix_ptr = confmat.data();
 
-  // 5) populate the confusion
-  // matrix.
-  //
-  // NOTE: factor variables starts at 1, and
-  // C++ is 0 indexed, so we subtract 1 otherwise
-  // the matrix will be shifted +1 in each dimension
-  for (int i = 0; i < n; ++i) {
-    const int actual_value = actual_ptr[i] - 1;
-    const int predicted_value = predicted_ptr[i] - 1;
 
-    // Increment the appropriate element in the matrix
-    //
-    // NOTE: This is a rowwise operation in memory.
+  // 6) Process 4 elements at a time (batch size = 6)
+  int i = 0;
+  for (; i <= n - 6; i += 6) {
+    // Load 6 elements from actual and predicted
+    const int actual_val_1 = actual_ptr[i];
+    const int predicted_val_1 = predicted_ptr[i];
+
+    const int actual_val_2 = actual_ptr[i + 1];
+    const int predicted_val_2 = predicted_ptr[i + 1];
+
+    const int actual_val_3 = actual_ptr[i + 2];
+    const int predicted_val_3 = predicted_ptr[i + 2];
+
+    const int actual_val_4 = actual_ptr[i + 3];
+    const int predicted_val_4 = predicted_ptr[i + 3];
+
+    const int actual_val_5 = actual_ptr[i + 4];
+    const int predicted_val_5 = predicted_ptr[i + 4];
+
+    const int actual_val_6 = actual_ptr[i + 5];
+    const int predicted_val_6 = predicted_ptr[i + 5];
+
+    // Update matrix for all 4 pairs in one loop
+    ++matrix_ptr[predicted_val_1 * k + actual_val_1];
+    ++matrix_ptr[predicted_val_2 * k + actual_val_2];
+    ++matrix_ptr[predicted_val_3 * k + actual_val_3];
+    ++matrix_ptr[predicted_val_4 * k + actual_val_4];
+    ++matrix_ptr[predicted_val_5 * k + actual_val_5];
+    ++matrix_ptr[predicted_val_6 * k + actual_val_6];
+  }
+
+  // 7) Handle any leftover elements (when n is not a multiple of 4)
+  for (; i < n; ++i) {
+    const int actual_value = actual_ptr[i];
+    const int predicted_value = predicted_ptr[i];
     ++matrix_ptr[predicted_value * k + actual_value];
   }
 
-  return confmat;
+  // // 5) populate the confusion
+  // // matrix.
+  // //
+  // // NOTE: factor variables starts at 1, and
+  // // C++ is 0 indexed, so we subtract 1 otherwise
+  // // the matrix will be shifted +1 in each dimension
+  // for (int i = 0; i < n; ++i) {
+  //   const int actual_value = actual_ptr[i];
+  //   const int predicted_value = predicted_ptr[i];
+  //
+  //   // Increment the appropriate element in the matrix
+  //   //
+  //   // NOTE: This is a rowwise operation in memory.
+  //   ++matrix_ptr[predicted_value * k + actual_value];
+  // }
+
+  return confmat.block(1, 1, k - 1, k - 1);
 }
 
 inline Eigen::MatrixXi seqmat(

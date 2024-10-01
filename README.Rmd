@@ -97,9 +97,11 @@ predicted <- as.factor(
 
 # 4) generate
 # confusion matrix
-cmatrix(
-  actual    = iris$Species,
-  predicted = predicted
+summary(
+  cmatrix(
+    actual    = iris$Species,
+    predicted = predicted
+  )
 )
 ```
 

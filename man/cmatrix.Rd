@@ -101,17 +101,31 @@ predicted <- as.factor(
 )
 
 # 4) confusion matrix
-cmatrix(
-  actual    = iris$Species,
-  predicted = predicted
+# and print
+print(
+  confusion_matrix <- cmatrix(
+    actual    = iris$Species,
+    predicted = predicted
+  )
 )
+
+# 5) summary of the matrix
+summary(
+  confusion_matrix
+)
+
+# 6) visualize the matrix
+plot(
+  confusion_matrix
+)
+
 }
 \seealso{
 Other classification: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
 \code{\link{dor}()},
-\code{\link{fbeta}()},
+\code{\link{fbeta.factor}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
 \code{\link{fmi}()},
@@ -122,8 +136,8 @@ Other classification:
 \code{\link{nlr}()},
 \code{\link{npv}()},
 \code{\link{plr}()},
-\code{\link{precision}()},
-\code{\link{recall}()},
+\code{\link{precision.factor}()},
+\code{\link{recall.factor}()},
 \code{\link{specificity}()},
 \code{\link{zerooneloss}()}
 }

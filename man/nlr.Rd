@@ -135,7 +135,7 @@ Other classification:
 \code{\link{baccuracy}()},
 \code{\link{cmatrix}()},
 \code{\link{dor}()},
-\code{\link{fbeta}()},
+\code{\link{fbeta.factor}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
 \code{\link{fmi}()},
@@ -145,8 +145,8 @@ Other classification:
 \code{\link{mcc}()},
 \code{\link{npv}()},
 \code{\link{plr}()},
-\code{\link{precision}()},
-\code{\link{recall}()},
+\code{\link{precision.factor}()},
+\code{\link{recall.factor}()},
 \code{\link{specificity}()},
 \code{\link{zerooneloss}()}
 }

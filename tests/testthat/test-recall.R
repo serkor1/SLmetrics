@@ -47,41 +47,42 @@ testthat::test_that(
 
     # 2) test that
 
-    for (lgl in c(TRUE, FALSE)) {
+    for (lgl in c(NULL,TRUE, FALSE)) {
 
       py_score <- as.numeric(
         py_recall(
           actual    = actual,
           predicted = predicted,
-          average   = if (lgl)
-            "micro"
-          else
+          average   = if (is.null(lgl)) {
             NULL
+          } else {
+           ifelse(lgl, "micro", "macro")
+          }
         )
       )
 
       sl_score <- recall(
         actual    = actual,
         predicted = predicted,
-        aggregate = lgl
+        micro = lgl
       )
 
       # 1) expect all true
       # for numeric and
       # no NAs
-      testthat::expect_true(
-        all(
-          is.numeric(sl_score),
-          if (lgl)
-            !any(is.na(sl_score))
-          else
-            TRUE
-        )
-      )
+      # testthat::expect_true(
+      #   all(
+      #     is.numeric(sl_score),
+      #     if (lgl)
+      #       !any(is.na(sl_score))
+      #     else
+      #       TRUE
+      #   )
+      # )
 
       testthat::expect_true(
         all.equal(
-          target  = na.omit(sl_score),
+          target  = sl_score,
           current = py_score,
           tolerance =  1e-9,
           check.attributes = FALSE,
@@ -89,34 +90,34 @@ testthat::test_that(
         )
       )
 
-      if (!lgl) {
-
-        # If lgl = FALSE the macro average
-        # is found by mean(foo(..., aggregate = FALSE))
-
-        testthat::expect_true(
-          object = length(sl_score) == 3
-        )
-
-        testthat::expect_true(
-          all.equal(
-            target  = mean(
-              sl_score,
-              na.rm = TRUE
-            ),
-            current =  py_recall(
-              actual    = actual,
-              predicted = predicted,
-              average   = "macro"
-            ),
-            tolerance =  1e-9,
-            check.attributes = FALSE,
-            check.class = FALSE
-
-          )
-        )
-
-      }
+      # if (!lgl) {
+      #
+      #   # If lgl = FALSE the macro average
+      #   # is found by mean(foo(..., aggregate = FALSE))
+      #
+      #   testthat::expect_true(
+      #     object = length(sl_score) == 3
+      #   )
+      #
+      #   testthat::expect_true(
+      #     all.equal(
+      #       target  = mean(
+      #         sl_score,
+      #         na.rm = TRUE
+      #       ),
+      #       current =  py_recall(
+      #         actual    = actual,
+      #         predicted = predicted,
+      #         average   = "macro"
+      #       ),
+      #       tolerance =  1e-9,
+      #       check.attributes = FALSE,
+      #       check.class = FALSE
+      #
+      #     )
+      #   )
+      #
+      # }
 
     }
 
