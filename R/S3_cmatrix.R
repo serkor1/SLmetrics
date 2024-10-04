@@ -58,7 +58,7 @@ plot.cmatrix <- function(
 
 #' @export
 summary.cmatrix <- function(
-    x,
+    object,
     average = "micro",
     digits = 2,
     ...) {
@@ -69,13 +69,13 @@ summary.cmatrix <- function(
   # of the summary
   cat(
     "Confusion Matrix",
-    paste0("(", paste(dim(x),collapse = " x "), ")"),
+    paste0("(", paste(dim(object),collapse = " x "), ")"),
     "\n"
   )
 
   full_line()
 
-  print(x)
+  print(object)
 
   full_line()
 
@@ -83,11 +83,11 @@ summary.cmatrix <- function(
   #
   cat(
     paste("Overall Statistics", paste0("(", paste(average, "average"), ")")),
-    paste(" - Accuracy:         ", formatC(.accuracy(x), digits = digits,format = "f")),
-    paste(" - Balanced Accuracy:", formatC(.baccuracy(x), digits = digits,format = "f")),
-    paste(" - Sensitivity:      ", formatC(.sensitivity(x,micro = micro), digits = digits, format = "f")),
-    paste(" - Specificity:      ", formatC(.specificity(x,micro = micro), digits = digits, format = "f")),
-    paste(" - Precision:        ", formatC(.precision(x,micro = micro), digits = digits, format = "f")),
+    paste(" - Accuracy:         ", formatC(.accuracy(object), digits = digits,format = "f")),
+    paste(" - Balanced Accuracy:", formatC(.baccuracy(object), digits = digits,format = "f")),
+    paste(" - Sensitivity:      ", formatC(sensitivity(object,micro = micro), digits = digits, format = "f")),
+    paste(" - Specificity:      ", formatC(specificity(object,micro = micro), digits = digits, format = "f")),
+    paste(" - Precision:        ", formatC(precision(object,micro = micro), digits = digits, format = "f")),
     sep = "\n"
     )
 

@@ -31,9 +31,6 @@ tscore(
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
-
-\item{aggregate}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} it returns the
-micro average across all \eqn{k} classes}
 }
 \value{
 If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vector of \link{length} k
@@ -170,7 +167,7 @@ Other classification:
 \code{\link{plr}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
-\code{\link{specificity}()},
+\code{\link{specificity.factor}()},
 \code{\link{zerooneloss}()}
 }
 \concept{classification}

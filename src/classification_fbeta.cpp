@@ -11,7 +11,7 @@ NumericVector fbeta(
     const IntegerVector& actual,
     const IntegerVector& predicted,
     const double& beta = 1.0,
-    Nullable<bool> micro = R_NilValue) {
+    Nullable<bool> micro = R_NilValue,const bool& na_rm = true) {
 
 
   // 1) Calculate
@@ -37,7 +37,7 @@ NumericVector fbeta(
     return output;
   }
 
-  return _metric_(x, beta,  Rcpp::as<bool>(micro));
+  return _metric_(x, beta,  Rcpp::as<bool>(micro), na_rm);
 
 }
 
@@ -46,7 +46,7 @@ NumericVector fbeta(
 //'
 //' @export
 // [[Rcpp::export(fbeta.cmatrix)]]
-NumericVector fbeta_cmatrix(const IntegerMatrix& x, const double& beta = 1.0,  Nullable<bool> micro = R_NilValue)
+NumericVector fbeta_cmatrix(const IntegerMatrix& x, const double& beta = 1.0,  Nullable<bool> micro = R_NilValue,const bool& na_rm = true)
 {
 
   // 1) if micro is Null
@@ -70,6 +70,6 @@ NumericVector fbeta_cmatrix(const IntegerMatrix& x, const double& beta = 1.0,  N
 
   }
 
-  return _metric_(Rcpp::as<Eigen::MatrixXi>(x), beta,  Rcpp::as<bool>(micro));
+  return _metric_(Rcpp::as<Eigen::MatrixXi>(x), beta,  Rcpp::as<bool>(micro), na_rm);
 
 }

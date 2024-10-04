@@ -43,7 +43,8 @@ jobs:
               "scipy",
               "torch",
               "torchmetrics",
-              "scikit-learn"
+              "scikit-learn",
+              "imblearn"
             )
           )
 

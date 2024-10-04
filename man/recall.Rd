@@ -12,17 +12,17 @@
 \alias{tpr}
 \title{Compute the \eqn{recall}, \eqn{sensitivity} or \eqn{true~positive~rate}}
 \usage{
-\method{recall}{factor}(actual, predicted, micro = NULL)
+\method{recall}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
-\method{recall}{cmatrix}(x, micro = NULL)
+\method{recall}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
-\method{sensitivity}{factor}(actual, predicted, micro = NULL)
+\method{sensitivity}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
-\method{sensitivity}{cmatrix}(x, micro = NULL)
+\method{sensitivity}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
-\method{tpr}{factor}(actual, predicted, micro = NULL)
+\method{tpr}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
-\method{tpr}{cmatrix}(x, micro = NULL)
+\method{tpr}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 recall(...)
 
@@ -34,6 +34,13 @@ tpr(...)
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+
+\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{NULL} by default. If \link{TRUE} it returns the
+micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average. Otherwise class wise performance evaluation.}
+
+\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{TRUE} by default. If \link{FALSE} \link{NA} values will be disregarded when \code{micro = FALSE}.}
+
+\item{...}{Arguments passed into other methods.}
 
 \item{x}{confusion matrix.}
 }
@@ -139,18 +146,17 @@ recall(
 )
 
 # 4.2) macro-average
-mean(
-  recall(
-    actual    = iris$Species,
-    predicted = predicted
-  )
+recall(
+  actual    = iris$Species,
+  predicted = predicted,
+  micro     = FALSE
 )
 
 # 4.3) micro-average
 recall(
   actual    = iris$Species,
   predicted = predicted,
-  aggregate = TRUE
+  micro     = TRUE
 )
 }
 \seealso{
@@ -171,7 +177,7 @@ Other classification:
 \code{\link{npv}()},
 \code{\link{plr}()},
 \code{\link{precision.factor}()},
-\code{\link{specificity}()},
+\code{\link{specificity.factor}()},
 \code{\link{zerooneloss}()}
 }
 \concept{classification}

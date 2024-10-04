@@ -205,16 +205,16 @@ dor <- function(actual, predicted, aggregate = FALSE) {
 #' @method fbeta factor
 #'
 #' @export
-fbeta.factor <- function(actual, predicted, beta = 1.0, micro = NULL) {
-    .Call(`_SLmetrics_fbeta`, actual, predicted, beta, micro)
+fbeta.factor <- function(actual, predicted, beta = 1.0, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_fbeta`, actual, predicted, beta, micro, na_rm = na.rm)
 }
 
 #' @rdname fbeta
 #' @method fbeta cmatrix
 #'
 #' @export
-fbeta.cmatrix <- function(x, beta = 1.0, micro = NULL) {
-    .Call(`_SLmetrics_fbeta_cmatrix`, x, beta, micro)
+fbeta.cmatrix <- function(x, beta = 1.0, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_fbeta_cmatrix`, x, beta, micro, na_rm = na.rm)
 }
 
 #' Compute the \eqn{\text{false}} \eqn{\text{discovery}} \eqn{\text{rate}}
@@ -655,193 +655,128 @@ npv <- function(actual, predicted, aggregate = FALSE) {
 #' @method precision factor
 #'
 #' @export
-precision.factor <- function(actual, predicted, micro = NULL) {
-    .Call(`_SLmetrics_precision`, actual, predicted, micro)
+precision.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_precision`, actual, predicted, micro, na_rm = na.rm)
 }
 
 #' @rdname precision
 #' @method precision cmatrix
 #'
 #' @export
-precision.cmatrix <- function(x, micro = NULL) {
-    .Call(`_SLmetrics_precision_cmatrix`, x, micro)
+precision.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_precision_cmatrix`, x, micro, na_rm = na.rm)
 }
 
 #' @rdname precision
 #' @method ppv factor
 #'
 #' @export
-ppv.factor <- function(actual, predicted, micro = NULL) {
-    .Call(`_SLmetrics_ppv`, actual, predicted, micro)
+ppv.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_ppv`, actual, predicted, micro, na_rm = na.rm)
 }
 
 #' @rdname precision
 #' @method ppv cmatrix
 #'
 #' @export
-ppv.cmatrix <- function(x, micro = NULL) {
-    .Call(`_SLmetrics_ppv_cmatrix`, x, micro)
+ppv.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_ppv_cmatrix`, x, micro, na_rm = na.rm)
 }
 
 #' @rdname recall
 #' @method recall factor
 #'
 #' @export
-recall.factor <- function(actual, predicted, micro = NULL) {
-    .Call(`_SLmetrics_recall`, actual, predicted, micro)
+recall.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_recall`, actual, predicted, micro, na_rm = na.rm)
 }
 
 #' @rdname recall
 #'
 #' @method recall cmatrix
 #' @export
-recall.cmatrix <- function(x, micro = NULL) {
-    .Call(`_SLmetrics_recall_cmatrix`, x, micro)
+recall.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_recall_cmatrix`, x, micro, na_rm = na.rm)
 }
 
 #' @rdname recall
 #' @method sensitivity factor
 #'
 #' @export
-sensitivity.factor <- function(actual, predicted, micro = NULL) {
-    .Call(`_SLmetrics_sensitivity`, actual, predicted, micro)
+sensitivity.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_sensitivity`, actual, predicted, micro, na_rm = na.rm)
 }
 
 #' @rdname recall
 #'
 #' @method sensitivity cmatrix
 #' @export
-sensitivity.cmatrix <- function(x, micro = NULL) {
-    .Call(`_SLmetrics_sensitivity_cmatrix`, x, micro)
+sensitivity.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_sensitivity_cmatrix`, x, micro, na_rm = na.rm)
 }
 
 #' @rdname recall
 #'
 #' @method tpr factor
 #' @export
-tpr.factor <- function(actual, predicted, micro = NULL) {
-    .Call(`_SLmetrics_tpr`, actual, predicted, micro)
+tpr.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_tpr`, actual, predicted, micro, na_rm = na.rm)
 }
 
 #' @rdname recall
 #'
 #' @method tpr cmatrix
 #' @export
-tpr.cmatrix <- function(x, micro = NULL) {
-    .Call(`_SLmetrics_tpr_cmatrix`, x, micro)
-}
-
-#' Specificity (True Negative Rate)
-#'
-#' @description
-#' The  [specificity()]-function computes the [specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity), also known as the True Negative Rate (TNR) or selectivity, between
-#' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average specificity across all classes \eqn{k}.
-#' By default, it returns the class-wise specificity.
-#'
-#'
-#' @usage
-#' # using `specificity()`
-#' specificity(
-#'   actual,
-#'   predicted,
-#'   aggregate = FALSE
-#' )
-#'
-#' @inheritParams cmatrix
-#' @param aggregate A <[logical]>-value of [length] \eqn{1}. [FALSE] by default. If [TRUE] it returns the
-#' micro average across all \eqn{k} classes
-#'
-#' @details
-#'
-#' Consider a classification problem with three classes: `A`, `B`, and `C`. The actual vector of [factor()] values is defined as follows:
-#'
-#' ```{r output, echo = TRUE}
-#' ## set seed
-#' set.seed(1903)
-#'
-#' ## actual
-#' factor(
-#'   x = sample(x = 1:3, size = 10, replace = TRUE),
-#'   levels = c(1, 2, 3),
-#'   labels = c("A", "B", "C")
-#' )
-#' ```
-#'
-#' Here, the values 1, 2, and 3 are mapped to `A`, `B`, and `C`, respectively. Now, suppose your model does not predict any `B`'s. The predicted vector of [factor()] values would be defined as follows:
-#'
-#' ```{r output, echo = TRUE}
-#' ## set seed
-#' set.seed(1903)
-#'
-#' ## predicted
-#' factor(
-#'   x = sample(x = c(1, 3), size = 10, replace = TRUE),
-#'   levels = c(1, 2, 3),
-#'   labels = c("A", "B", "C")
-#' )
-#' ```
-#'
-#' In both cases, \eqn{k = 3}, determined indirectly by the `levels` argument.
-#'
-#' @returns
-#'
-#' If `aggregate` is [FALSE] (the default), a named <[numeric]>-vector of [length] k
-#'
-#' If `aggregate` is [TRUE], a <[numeric]>-vector of [length] 1
-#'
-#' @example man/examples/scr_specificity.R
-#'
-#'
-#' @section Calculation:
-#' The metric is calculated for each class \eqn{k} as follows,
-#'
-#' \deqn{
-#'   \frac{\#TN_k}{\#TN_k+\#FP_k}
-#' }
-#'
-#' Where \eqn{\#TN_k} and \eqn{\#FP_k} is the number of true negatives and false positives, respectively, for each class \eqn{k}.
-#'
-#' When `aggregate = TRUE` the `micro`-average is calculated,
-#'
-#' \deqn{
-#'   \frac{\sum_{k=1}^k \#TN_k}{\sum_{k=1}^k \#TN_k + \sum_{k=1}^k \#FP_k}
-#' }
-#'
-#'
-#' @family classification
-#'
-#' @export
-specificity <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_specificity`, actual, predicted, aggregate)
+tpr.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_tpr_cmatrix`, x, micro, na_rm = na.rm)
 }
 
 #' @rdname specificity
-#'
-#' @usage
-#' # using `tnr()`
-#' tnr(
-#'   actual,
-#'   predicted,
-#'   aggregate = FALSE
-#' )
+#' @method specificity factor
 #'
 #' @export
-tnr <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_tnr`, actual, predicted, aggregate)
+specificity.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_specificity`, actual, predicted, micro, na_rm = na.rm)
 }
 
 #' @rdname specificity
+#' @method specificity cmatrix
 #'
-#' @usage
-#' # using `selectivity()`
-#' selectivity(
-#'   actual,
-#'   predicted,
-#'   aggregate = FALSE
-#' )
 #' @export
-selectivity <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_selectivity`, actual, predicted, aggregate)
+specificity.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_specificity_cmatrix`, x, micro, na_rm = na.rm)
+}
+
+#' @rdname specificity
+#' @method tnr factor
+#'
+#' @export
+tnr.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_tnr`, actual, predicted, micro, na_rm = na.rm)
+}
+
+#' @rdname specificity
+#' @method tnr cmatrix
+#'
+#' @export
+tnr.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_tnr_cmatrix`, x, micro, na_rm = na.rm)
+}
+
+#' @rdname specificity
+#' @method selectivity factor
+#'
+#' @export
+selectivity.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_selectivity`, actual, predicted, micro, na_rm = na.rm)
+}
+
+#' @rdname specificity
+#' @method selectivity cmatrix
+#'
+#' @export
+selectivity.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_selectivity_cmatrix`, x, micro, na_rm = na.rm)
 }
 
 #' Zero-One Loss
@@ -889,14 +824,6 @@ zerooneloss <- function(actual, predicted) {
 
 .baccuracy <- function(x, adjust = FALSE) {
     .Call(`_SLmetrics__baccuracy_`, x, adjust)
-}
-
-.specificity <- function(x, micro) {
-    .Call(`_SLmetrics__specificity_`, x, micro)
-}
-
-.precision <- function(x, micro) {
-    .Call(`_SLmetrics__precision_`, x, micro)
 }
 
 #' Compute the \eqn{\text{concordance correlation coefficient}}

@@ -13,3 +13,5 @@
 ^cran-comments\.md$
 ^data-raw$
 ^codemeta
+^[^/]+\.R$
+Makefile

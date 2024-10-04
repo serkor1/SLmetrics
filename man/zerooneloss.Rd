@@ -125,6 +125,6 @@ Other classification:
 \code{\link{plr}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
-\code{\link{specificity}()}
+\code{\link{specificity.factor}()}
 }
 \concept{classification}

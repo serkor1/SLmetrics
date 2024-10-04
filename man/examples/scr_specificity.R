@@ -37,16 +37,15 @@ specificity(
 )
 
 # 4.2) macro-average
-mean(
-  specificity(
-    actual    = iris$Species,
-    predicted = predicted
-  )
+specificity(
+  actual    = iris$Species,
+  predicted = predicted,
+  micro     = FALSE
 )
 
 # 4.3) micro-average
 specificity(
   actual    = iris$Species,
   predicted = predicted,
-  aggregate = TRUE
+  micro     = TRUE
 )

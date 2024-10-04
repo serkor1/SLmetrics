@@ -2,6 +2,9 @@
 # sklearn and define functions
 # that corresponds to SLmetrics
 from sklearn import metrics
+from imblearn.metrics import sensitivity_score
+from imblearn.metrics import specificity_score
+import numpy as np
 
 # classification 
 # functions
@@ -9,13 +12,15 @@ def py_jaccard(actual, predicted, average = None):
     return metrics.jaccard_score(
       y_true = actual, 
       y_pred = predicted, 
-      average = average
+      average = average,
+      zero_division = np.nan
     )
 
 def py_fmi(actual, predicted):
     return metrics.fowlkes_mallows_score(
       labels_true = actual,
-      labels_pred = predicted
+      labels_pred = predicted,
+      zero_division = np.nan
     )
 
 def py_kappa(actual, predicted, penalty):
@@ -23,7 +28,8 @@ def py_kappa(actual, predicted, penalty):
       y1 = actual,
       y2 = predicted,
       weights = penalty,
-      sample_weight = None
+      sample_weight = None,
+      zero_division = np.nan
     )
 
 def py_mcc(actual, predicted):
@@ -32,25 +38,28 @@ def py_mcc(actual, predicted):
       y_pred = predicted
     )
 
-def py_fbeta(actual, predicted, beta, average = None):
+def py_fbeta(actual, predicted, beta = 1, average = None):
     return metrics.fbeta_score(
       y_true  = actual,
       y_pred  = predicted,
       beta    = beta,
-      average = average 
+      average = average,
+      zero_division = np.nan
     )
 
 def py_likelihood(actual, predicted):
     return metrics.class_likelihood_ratios(
       y_true = actual,
-      y_pred = predicted
+      y_pred = predicted,
+      zero_division = np.nan
     )
     
 def py_recall(actual, predicted, average = None):
     return metrics.recall_score(
       y_true  = actual,
       y_pred  = predicted,
-      average = average
+      average = average,
+      zero_division = np.nan
     )
     
 def py_zerooneloss(actual, predicted):
@@ -63,7 +72,8 @@ def py_precision(actual, predicted, average = None):
     return metrics.precision_score(
       y_true  = actual,
       y_pred  = predicted,
-      average = average
+      average = average,
+      zero_division = np.nan
     )
 
 def py_accuracy(actual, predicted):
@@ -90,6 +100,13 @@ def py_entropy(actual, response, normalize = True):
       y_true    = actual,
       y_pred    = response,
       normalize = normalize
+    )
+
+def py_specificity(actual, response, average = None):
+    return specificity_score(
+      y_true    = actual,
+      y_pred    = response,
+      average   = average
     )
     
 # regression metrics

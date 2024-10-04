@@ -13,7 +13,8 @@ using namespace Rcpp;
 Rcpp::NumericVector precision(
     const IntegerVector& actual,
     const IntegerVector& predicted,
-    Nullable<bool> micro = R_NilValue) {
+    Nullable<bool> micro = R_NilValue,
+    const bool& na_rm = true) {
 
   /*
    * NOTE:
@@ -52,7 +53,7 @@ Rcpp::NumericVector precision(
     return output;
   }
 
-  return _metric_(actual, predicted,  Rcpp::as<bool>(micro));
+  return _metric_(actual, predicted,  Rcpp::as<bool>(micro), na_rm);
 
 }
 
@@ -61,7 +62,7 @@ Rcpp::NumericVector precision(
 //'
 //' @export
 // [[Rcpp::export(precision.cmatrix)]]
-Rcpp::NumericVector precision_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue)
+Rcpp::NumericVector precision_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
 {
 
   /*
@@ -109,7 +110,7 @@ Rcpp::NumericVector precision_cmatrix(const IntegerMatrix& x, Nullable<bool> mic
   // NOTE: It might be more efficient to just
   // pass the null value directly instead via
   // micro
-  return _metric_(Rcpp::as<Eigen::MatrixXi>(x), Rcpp::as<bool>(micro));
+  return _metric_(Rcpp::as<Eigen::MatrixXi>(x), Rcpp::as<bool>(micro), na_rm);
 
 }
 
@@ -121,7 +122,8 @@ Rcpp::NumericVector precision_cmatrix(const IntegerMatrix& x, Nullable<bool> mic
 Rcpp::NumericVector ppv(
     const IntegerVector& actual,
     const IntegerVector& predicted,
-    Nullable<bool> micro = R_NilValue) {
+    Nullable<bool> micro = R_NilValue,
+    const bool& na_rm = true) {
 
   /*
    * NOTE:
@@ -160,7 +162,7 @@ Rcpp::NumericVector ppv(
     return output;
   }
 
-  return _metric_(actual, predicted,  Rcpp::as<bool>(micro));
+  return _metric_(actual, predicted,  Rcpp::as<bool>(micro), na_rm);
 
 }
 
@@ -171,7 +173,7 @@ Rcpp::NumericVector ppv(
 //'
 //' @export
 // [[Rcpp::export(ppv.cmatrix)]]
-   Rcpp::NumericVector ppv_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue)
+   Rcpp::NumericVector ppv_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
    {
 
      /*
@@ -219,6 +221,6 @@ Rcpp::NumericVector ppv(
      // NOTE: It might be more efficient to just
      // pass the null value directly instead via
      // micro
-     return _metric_(Rcpp::as<Eigen::MatrixXi>(x), Rcpp::as<bool>(micro));
+     return _metric_(Rcpp::as<Eigen::MatrixXi>(x), Rcpp::as<bool>(micro), na_rm);
 
    }

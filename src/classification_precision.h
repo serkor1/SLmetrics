@@ -34,19 +34,19 @@ inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::
 
   // 0) calculate TP and FP
   //
-  // was vectorXd
-  Eigen::VectorXd tp = TP(x).cast<double>().array();
-  Eigen::VectorXd fp = FP(x).cast<double>().array();
+  // was ArrayXd
+  Eigen::ArrayXd tp = TP(x).cast<double>();
+  Eigen::ArrayXd fp = FP(x).cast<double>();
 
 
   // Default behavior: element-wise recall calculation
-  Eigen::ArrayXd output = tp.array() / (tp.array() + fp.array());
+  Eigen::ArrayXd output = tp / (tp + fp);
 
   // Return the default recall output
   return Rcpp::wrap(output);
 }
 
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x, const bool& micro)
+inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x, const bool& micro, const bool& na_rm)
 {
 
   /*
@@ -59,9 +59,9 @@ inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::
 
   // 0) calculate TP and FP
   //
-  // was vectorXd
-  Eigen::VectorXd tp = TP(x).cast<double>().array();
-  Eigen::VectorXd fp = FP(x).cast<double>().array();
+  // was ArrayXd
+  Eigen::ArrayXd tp = TP(x).cast<double>().array();
+  Eigen::ArrayXd fp = FP(x).cast<double>().array();
 
   if (micro) {
 
@@ -71,8 +71,8 @@ inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::
 
   }
 
-  Eigen::VectorXd output = tp.array() / (tp.array() + fp.array());
-  return Rcpp::wrap(output.array().isNaN().select(0,output).sum() / (output.array().isNaN() == false).count());
+  Eigen::ArrayXd output = tp / (tp + fp);
+  return Rcpp::wrap(output.isNaN().select(0,output).sum() /((na_rm) ? (output.isNaN() == false).count() : output.size()));
 
 
 }
@@ -92,20 +92,20 @@ inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Integer
 
   // 0) calculate TP and FP
   //
-  // was vectorXd
-  Eigen::VectorXd tp = TP(x).cast<double>().array();
-  Eigen::VectorXd fp = FP(x).cast<double>().array();
+  // was ArrayXd
+  Eigen::ArrayXd tp = TP(x).cast<double>().array();
+  Eigen::ArrayXd fp = FP(x).cast<double>().array();
 
 
   // Default behavior: element-wise recall calculation
-  Eigen::ArrayXd output = tp.array() / (tp.array() + fp.array());
+  Eigen::ArrayXd output = tp / (tp + fp);
 
   // Return the default recall output
   return Rcpp::wrap(output);
 
 }
 
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const IntegerVector& actual, const IntegerVector& predicted, const bool& micro) {
+inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const IntegerVector& actual, const IntegerVector& predicted, const bool& micro, const bool& na_rm) {
 
   const Eigen::MatrixXi& x = confmat(actual, predicted);
 
@@ -119,9 +119,9 @@ inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Integer
 
   // 0) calculate TP and FP
   //
-  // was vectorXd
-  Eigen::VectorXd tp = TP(x).cast<double>().array();
-  Eigen::VectorXd fp = FP(x).cast<double>().array();
+  // was ArrayXd
+  Eigen::ArrayXd tp = TP(x).cast<double>().array();
+  Eigen::ArrayXd fp = FP(x).cast<double>().array();
 
   // Check if the micro argument is not null and handle accordingly
   if (micro) {
@@ -131,7 +131,7 @@ inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Integer
 
   }
 
-  Eigen::VectorXd output = tp.array() / (tp.array() + fp.array());
-  return Rcpp::wrap(output.array().isNaN().select(0,output).sum() / (output.array().isNaN() == false).count());
+  Eigen::ArrayXd output = tp / (tp + fp);
+  return Rcpp::wrap(output.isNaN().select(0,output).sum() / ((na_rm) ? (output.isNaN() == false).count() : output.size()));
 
 }

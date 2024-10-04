@@ -33,7 +33,8 @@ if (!reticulate::virtualenv_exists()) {
       "mkl_random",
       "pytorch",
       "torchmetrics",
-      "scikit-learn"
+      "scikit-learn",
+      "imblearn"
     )
   )
 
@@ -45,6 +46,59 @@ if (!reticulate::virtualenv_exists()) {
 # NOTE: Has to be set between sessions
 # otherwise it won't compile
 reticulate::use_virtualenv()
+
+
+# 4) create factors
+# for classification
+create_factor <- function(
+    k = 5,
+    balanced = TRUE) {
+
+  probs <- NULL
+
+  if (!balanced) {
+
+    probs <- rbeta(
+      n = k,
+      shape1 = 10,
+      shape2 = 2
+    )
+
+    probs[which.min(probs)] <- 0
+
+    probs <- probs / sum(probs)
+
+  }
+
+
+
+  factor(
+    x = sample(
+      1:k,
+      size = 1e2,
+      replace = TRUE,
+      prob = probs
+    ),
+    labels = letters[1:k],
+    levels = 1:k
+  )
+}
+
+
+set_equal <- function(
+    current,
+    target,
+    tolerance = 1e-9) {
+
+  all.equal(
+    target = target,
+    current = current,
+    tolerance = tolerance,
+    check.attributes = FALSE,
+    check.class = FALSE
+  )
+
+}
 
 
 # script end;

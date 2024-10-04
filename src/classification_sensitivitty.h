@@ -6,8 +6,7 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
 
 /*
- * Classwise fbeta
- * score
+ * Classwise specificity
  */
 inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x, const double& beta = 1.0)
 {
@@ -17,15 +16,15 @@ inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::
    * and recall
    */
   const double& beta_sq = beta * beta;
-  const Eigen::ArrayXd& tp = TP(x).cast<double>().array();
-  const Eigen::ArrayXd& fp = FP(x).cast<double>().array();
-  const Eigen::ArrayXd& fn = FN(x).cast<double>().array();
+  const Eigen::VectorXd& tp = TP(x).cast<double>().array();
+  const Eigen::VectorXd& fp = FP(x).cast<double>().array();
+  const Eigen::VectorXd& fn = FN(x).cast<double>().array();
 
   // 1) recall
-  const Eigen::ArrayXd& recall_obj = tp / (tp + fn);
+  const Eigen::ArrayXd& recall_obj = tp.array() / (tp.array() + fn.array());
 
   // 2) precision
-  const Eigen::ArrayXd& precision_obj = tp / (tp + fp);
+  const Eigen::ArrayXd& precision_obj = tp.array() / (tp.array() + fp.array());
 
 
   return Rcpp::wrap((1 + beta_sq) * (recall_obj*precision_obj) / (beta_sq * precision_obj + recall_obj));
@@ -34,7 +33,7 @@ inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::
 }
 
 
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x, const double& beta, const bool& micro, const bool& na_rm)
+inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x, const double& beta, const bool& micro)
 {
 
   /*
@@ -42,15 +41,15 @@ inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::
    * and recall
    */
   const double& beta_sq = beta * beta;
-  const Eigen::ArrayXd& tp = TP(x).cast<double>().array();
-  const Eigen::ArrayXd& fp = FP(x).cast<double>().array();
-  const Eigen::ArrayXd& fn = FN(x).cast<double>().array();
+  const Eigen::VectorXd& tp = TP(x).cast<double>().array();
+  const Eigen::VectorXd& fp = FP(x).cast<double>().array();
+  const Eigen::VectorXd& fn = FN(x).cast<double>().array();
 
   // 1) recall
-  const Eigen::ArrayXd& recall_obj = tp / (tp + fn);
+  const Eigen::ArrayXd& recall_obj = tp.array() / (tp.array() + fn.array());
 
   // 2) precision
-  const Eigen::ArrayXd& precision_obj = tp / (tp + fp);
+  const Eigen::ArrayXd& precision_obj = tp.array() / (tp.array() + fp.array());
 
 
   // 3) micro average
@@ -76,10 +75,10 @@ inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::
   }
 
   // 4) intermediate sum
-  Eigen::ArrayXd output =  (1 + beta_sq) * (recall_obj * precision_obj) / (beta_sq * precision_obj + recall_obj);
+  Eigen::VectorXd output =  (1 + beta_sq) * (recall_obj * precision_obj) / (beta_sq * precision_obj + recall_obj);
 
 
-  return Rcpp::wrap(output.isNaN().select(0,output).sum() / ((na_rm) ? (output.isNaN() == false).count() : output.size()));
+  return Rcpp::wrap(output.array().isNaN().select(0,output).sum() / (output.array().isNaN() == false).count());
 
 
 

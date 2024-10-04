@@ -6,17 +6,11 @@
 \alias{fbeta}
 \title{Compute the \eqn{F_{\beta}}-score}
 \usage{
-\method{fbeta}{factor}(actual, predicted, beta = 1, micro = NULL)
+\method{fbeta}{factor}(actual, predicted, beta = 1, micro = NULL, na.rm = TRUE, ...)
 
-\method{fbeta}{cmatrix}(x, beta = 1, micro = NULL)
+\method{fbeta}{cmatrix}(x, beta = 1, micro = NULL, na.rm = TRUE, ...)
 
-# fbeta-score
-fbeta(
-  actual,
-  predicted,
-  beta = 1,
-  aggregate = FALSE
-)
+fbeta(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -25,8 +19,14 @@ fbeta(
 
 \item{beta}{A <\link{numeric}> vector of length 1. 1 by default, see calculations.}
 
-\item{aggregate}{A <\link{logical}>-value of \link{length} 1. \link{FALSE} by default. If \link{TRUE} it returns the
-micro average across all k-classes}
+\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{NULL} by default. If \link{TRUE} it returns the
+micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average. Otherwise class wise performance evaluation.}
+
+\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{TRUE} by default. If \link{FALSE} \link{NA} values will be disregarded when \code{micro = FALSE}.}
+
+\item{...}{Arguments passed into other methods.}
+
+\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }
 \value{
 If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vector of \link{length} k
@@ -122,8 +122,8 @@ predicted <- as.factor(
   )
 )
 
-# 4) F1-score for each
-# class
+# 4) class-wise f1
+# score
 fbeta(
   actual    = iris$Species,
   predicted = predicted
@@ -133,42 +133,14 @@ fbeta(
 fbeta(
   actual    = iris$Species,
   predicted = predicted,
-  aggregate = TRUE
+  micro = TRUE
 )
 
 # 4.2 macro-averaged F1 score
-mean(
-  fbeta(
-    actual    = iris$Species,
-    predicted = predicted
-  )
-)
-
-# 5) F-score each class
-# with beta 2
 fbeta(
   actual    = iris$Species,
   predicted = predicted,
-  beta      = 2
-)
-
-# 4.1) micro-averaged F-score
-# with beta 2
-fbeta(
-  actual    = iris$Species,
-  predicted = predicted,
-  beta      = 2,
-  aggregate = TRUE
-)
-
-# 4.2 macro-averaged F-score
-# with beta 2
-mean(
-  fbeta(
-    actual    = iris$Species,
-    predicted = predicted,
-    beta      = 2
-  )
+  micro     = FALSE
 )
 }
 \seealso{
@@ -189,7 +161,7 @@ Other classification:
 \code{\link{plr}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
-\code{\link{specificity}()},
+\code{\link{specificity.factor}()},
 \code{\link{zerooneloss}()}
 }
 \concept{classification}

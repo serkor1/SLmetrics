@@ -8,10 +8,8 @@ using namespace Rcpp;
 //'
 //' @export
 //[[Rcpp::export(recall.factor)]]
-Rcpp::NumericVector recall(
-    const IntegerVector& actual,
-    const IntegerVector& predicted,
-    Nullable<bool> micro = R_NilValue) {
+Rcpp::NumericVector recall(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
+  {
 
   /*
    * NOTE:
@@ -50,7 +48,7 @@ Rcpp::NumericVector recall(
     return output;
   }
 
-  return _metric_(actual, predicted,  Rcpp::as<bool>(micro));
+  return _metric_(actual, predicted,  Rcpp::as<bool>(micro), na_rm);
 
 }
 
@@ -59,7 +57,7 @@ Rcpp::NumericVector recall(
 //' @method recall cmatrix
 //' @export
 // [[Rcpp::export(recall.cmatrix)]]
-Rcpp::NumericVector recall_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue)
+Rcpp::NumericVector recall_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
 {
 
   /*
@@ -107,7 +105,7 @@ Rcpp::NumericVector recall_cmatrix(const IntegerMatrix& x, Nullable<bool> micro 
   // NOTE: It might be more efficient to just
   // pass the null value directly instead via
   // micro
-  return _metric_(Rcpp::as<Eigen::MatrixXi>(x), Rcpp::as<bool>(micro));
+  return _metric_(Rcpp::as<Eigen::MatrixXi>(x), Rcpp::as<bool>(micro), na_rm);
 
 }
 
@@ -119,7 +117,8 @@ Rcpp::NumericVector recall_cmatrix(const IntegerMatrix& x, Nullable<bool> micro 
 Rcpp::NumericVector sensitivity(
    const IntegerVector& actual,
    const IntegerVector& predicted,
-   Nullable<bool> micro = R_NilValue) {
+   Nullable<bool> micro = R_NilValue,
+   const bool& na_rm = true) {
 
   /*
    * NOTE:
@@ -158,7 +157,7 @@ Rcpp::NumericVector sensitivity(
     return output;
   }
 
-  return _metric_(actual, predicted,  Rcpp::as<bool>(micro));
+  return _metric_(actual, predicted,  Rcpp::as<bool>(micro), na_rm);
 
 
 }
@@ -168,7 +167,7 @@ Rcpp::NumericVector sensitivity(
 //' @method sensitivity cmatrix
 //' @export
 // [[Rcpp::export(sensitivity.cmatrix)]]
-Rcpp::NumericVector sensitivity_cmatrix(const IntegerMatrix& x,  Nullable<bool> micro = R_NilValue)
+Rcpp::NumericVector sensitivity_cmatrix(const IntegerMatrix& x,  Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
 {
 
   /*
@@ -216,7 +215,7 @@ Rcpp::NumericVector sensitivity_cmatrix(const IntegerMatrix& x,  Nullable<bool> 
   // NOTE: It might be more efficient to just
   // pass the null value directly instead via
   // micro
-  return _metric_(Rcpp::as<Eigen::MatrixXi>(x), Rcpp::as<bool>(micro));
+  return _metric_(Rcpp::as<Eigen::MatrixXi>(x), Rcpp::as<bool>(micro), na_rm);
 
 }
 
@@ -226,7 +225,7 @@ Rcpp::NumericVector sensitivity_cmatrix(const IntegerMatrix& x,  Nullable<bool> 
 //' @method tpr factor
 //' @export
 // [[Rcpp::export(tpr.factor)]]
-Rcpp::NumericVector tpr(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue) {
+Rcpp::NumericVector tpr(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
 
   /*
    * NOTE:
@@ -265,7 +264,7 @@ Rcpp::NumericVector tpr(const IntegerVector& actual, const IntegerVector& predic
     return output;
   }
 
-  return _metric_(actual, predicted,  Rcpp::as<bool>(micro));
+  return _metric_(actual, predicted,  Rcpp::as<bool>(micro), na_rm);
 
 
 }
@@ -275,7 +274,7 @@ Rcpp::NumericVector tpr(const IntegerVector& actual, const IntegerVector& predic
 //' @method tpr cmatrix
 //' @export
 // [[Rcpp::export(tpr.cmatrix)]]
-Rcpp::NumericVector tpr_cmatrix(const IntegerMatrix& x,  Nullable<bool> micro = R_NilValue)
+Rcpp::NumericVector tpr_cmatrix(const IntegerMatrix& x,  Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
 {
 
   /*
@@ -323,7 +322,7 @@ Rcpp::NumericVector tpr_cmatrix(const IntegerMatrix& x,  Nullable<bool> micro = 
   // NOTE: It might be more efficient to just
   // pass the null value directly instead via
   // micro
-  return _metric_(Rcpp::as<Eigen::MatrixXi>(x), Rcpp::as<bool>(micro));
+  return _metric_(Rcpp::as<Eigen::MatrixXi>(x), Rcpp::as<bool>(micro), na_rm);
 
 }
 

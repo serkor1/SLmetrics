@@ -14,22 +14,11 @@
 #'
 #' When `aggregate = TRUE`, the function returns the micro-average \eqn{F_\beta} score across all classes \eqn{k}. By default, it returns the class-wise \eqn{F_\beta} score.
 #'
-#' @usage
-#' # fbeta-score
-#' fbeta(
-#'   actual,
-#'   predicted,
-#'   beta = 1,
-#'   aggregate = FALSE
-#' )
 #'
 #' @example man/examples/scr_fbeta.R
 #'
 #' @inherit specificity
-#'
 #' @param beta A <[numeric]> vector of length 1. 1 by default, see calculations.
-#' @param aggregate A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] it returns the
-#' micro average across all k-classes
 #'
 #' @section Calculation:
 #'
