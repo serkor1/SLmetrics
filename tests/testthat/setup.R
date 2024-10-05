@@ -52,7 +52,8 @@ reticulate::use_virtualenv()
 # for classification
 create_factor <- function(
     k = 5,
-    balanced = TRUE) {
+    balanced = TRUE,
+    n = 1e2) {
 
   probs <- NULL
 
@@ -75,7 +76,7 @@ create_factor <- function(
   factor(
     x = sample(
       1:k,
-      size = 1e2,
+      size = n,
       replace = TRUE,
       prob = probs
     ),

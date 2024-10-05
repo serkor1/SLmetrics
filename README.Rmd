@@ -1,5 +1,6 @@
 ---
 output: github_document
+always_allow_html: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -9,10 +10,33 @@ output: github_document
 library(SLmetrics)
 
 knitr::opts_chunk$set(
-  collapse  = TRUE,
-  comment   = "#>",
-  fig.path  = "man/figures/README-",
-  out.width = "100%"
+  collapse   = TRUE,
+  comment    = "#>",
+  fig.path   = "man/figures/README-",
+  out.width  = "100%",
+  dpi        = 640,
+  fig.height = 8
+)
+
+# 1) store data
+DT <- SLmetrics:::DT
+
+# 2) set colors of the lattice
+lattice::trellis.par.set(
+  modifyList(
+    lattice::standard.theme(), 
+    list(
+      background = list(col = "#212830"), # was  
+      panel.background = list(col = "#2b3139"), 
+      axis.text = list(col = "#848e9c"),         
+      par.xlab.text = list(col = "#848e9c"),    
+      par.ylab.text = list(col = "#848e9c"),     
+      par.main.text = list(col = "#848e9c"),
+      axis.line = list(col = "#848e9c"), 
+      superpose.line = list(col = c("#5d8ca8", "#d5695d", "#65a479")),
+      superpose.symbol = list(col = c("#5d8ca8", "#d5695d", "#65a479"), pch = 16)
+    )
+  )
 )
 ```
 
@@ -32,11 +56,82 @@ Depending on the mood and alignment of planets {SLmetrics} stands for Supervised
 
 ## :information_source: Why
 
-Firstly, {SLmetrics} is *fast*. One, obviously, can't build an R-package on `C++` and [{Rcpp}](https://github.com/RcppCore/Rcpp) without a proper pissing contest in the urinals; a detailed [blog post]() about the difference in speed has been posted on [R-bloggers](https://www.r-bloggers.com/).
+Firstly, {SLmetrics} is *fast*. One, obviously, can't build an R-package on `C++` and [{Rcpp}](https://github.com/RcppCore/Rcpp) without a proper pissing contest at the urinals; a detailed [blog post](https://www.r-bloggers.com/) about the difference in speed has been posted on [R-bloggers](https://www.r-bloggers.com/). For a quick summary see below,
 
-Secondly, {SLmetrics} is *low level* and free of any *{pkg}verse*-regimes; this provides the freedom to develop it further as a part of your own {pkg}, or use it in any tidy, or untidy, pipeline you would want to.
+<details>
+<summary> Speed comparison </summary>
 
-Thirdly, {SLmetrics} has a *larger* repertoire of supervised machine learning metrics; all of which has been battle tested with [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and [{pytorch}](https://github.com/pytorch/pytorch) against [{yardstick}](https://github.com/tidymodels/yardstick), [{mlr3measures}](https://github.com/mlr-org/mlr3measures) and [{MLmetrics}](https://github.com/yanyachen/MLmetrics).
+Please refer to the performance-file in data-raw for the details about the test. All y- and x-axis are logarithmically scaled by `log = TRUE`
+
+## Runtime: Confusion Matrix
+
+### By classes
+
+```{r classification_performance_class, echo = FALSE}
+lattice::xyplot(
+  mean ~ sample_size | factor(paste(classes, "Classes"), levels = paste(classes, "Classes"), labels = paste(classes, "Classes")),
+  data = DT[[1]],
+  groups = expr,
+  type = 'o', 
+  auto.key = list(columns = 3, col = "#848e9c"),
+  scales = list( 
+    y = list(log = TRUE),
+    x = list(log = TRUE)
+  ),
+  xlab = "Sample Size",
+  ylab = "Average Runtime",
+  layout = c(2,2)
+)
+```
+
+### By sample size
+```{r classification_performance_obs, echo = FALSE}
+lattice::xyplot(
+  mean ~ classes | factor(paste(sample_size, "Obs"), levels = paste(sample_size, "Obs"), labels = paste(sample_size, "Obs")),
+  data = DT[[1]],
+  groups = expr,
+  type = 'o', 
+  auto.key = list(columns = 3, col = "#848e9c"),
+  scales = list(
+    y = list(log = TRUE) ,
+    x = list(log = TRUE)
+    ),
+  xlab = "Sample Size",
+  ylab = "Average Runtime",
+  layout = c(2,3)
+)
+```
+
+## Runtime: RMSE
+
+```{r regression_performance_rmse, echo = FALSE}
+lattice::xyplot(
+  mean ~ sample_size,
+  data = DT[[2]],
+  groups = expr,
+  type = "o",
+  scales = list(
+    y = list(log = TRUE),
+    x = list(log = TRUE)
+    ),
+  auto.key = list(columns = 3, col = "#848e9c"),
+  xlab = "Sample Size",
+  ylab = "Average Runtime"
+)
+```
+
+> [!IMPORTANT]
+>
+> In all fairness, {yardstick} is more defensive in its implementation of some of its
+> functions. However, the difference in the average runtime can't be entirely attributed to this element.
+
+</details>
+
+Secondly, {SLmetrics} is *simple* and *flexible* to use; it is based on `S3` and provides the most essential classwise and aggregted metrics.
+
+Thirdly, {SLmetrics} is *low level* and free of any *{pkg}verse*-regimes; this provides the freedom to develop it further as a part of your own {pkg}, or use it in any tidy, or untidy, pipeline you would want to.
+
+Fourthly, {SLmetrics} has a *larger* repertoire of supervised machine learning metrics; all of which has been battle tested with [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and [{pytorch}](https://github.com/pytorch/pytorch) against [{yardstick}](https://github.com/tidymodels/yardstick), [{mlr3measures}](https://github.com/mlr-org/mlr3measures) and [{MLmetrics}](https://github.com/yanyachen/MLmetrics).
 
 ## :information_source: Basic usage
 
@@ -98,7 +193,7 @@ predicted <- as.factor(
 # 4) generate
 # confusion matrix
 summary(
-  cmatrix(
+  confusion_matrix <-  cmatrix(
     actual    = iris$Species,
     predicted = predicted
   )
@@ -106,69 +201,35 @@ summary(
 ```
 
 <details>
-<summary> For Developers </summary>
+<summary> Class-wise and aggregated metrics </summary>
 
-As {SLMetrics} assumes that the user has some degree of control over the training process of the various models and the resulting output, the functions does not validate the input.
-
-If you want to include the functions as a part of your R-package and introduce some defensive measures a possible strategy is as follows,
+__Classwise specificity__
 
 ```{r}
-## 1) create a wrapper
-## function
-RMSE <- function(
-    actual,
-    predicted,
-    w = NULL) {
-  
-  # 0) defensive measures
-  # for user
-  stopifnot(
-    length(actual) == length(predicted)
-    )
-  
-  stopifnot(
-    is.numeric(actual) & is.numeric(predicted)
-  )
-  
-  if (!is.null(w)) {
-    
-    stopifnot(
-      is.numeric(w)
-      )
-    
-    output <- wrmse(
-      actual    = actual,
-      predicted = predicted,
-      w         = w
-    )
-    
-  } else {
-    
-    output <- rmse(
-      actual    = actual,
-      predicted = predicted
-    )
-    
-  }
-  
-  return(output)
-  
-}
+sensitivity(
+  confusion_matrix,
+  micro = NULL
+)
 ```
+
+__Micro averaged specificity__
 
 ```{r}
-# 1) run regression
-model <- lm(
-  formula = mpg ~ .,
-  data    = mtcars
-)
-
-# 2) evaluate RMSE
-RMSE(
-  actual    = mtcars$mpg,
-  predicted = fitted(model)
+sensitivity(
+  confusion_matrix,
+  micro = TRUE
 )
 ```
+
+__Macro averaged specificity__
+
+```{r}
+sensitivity(
+  confusion_matrix,
+  micro = FALSE
+)
+```
+
 </details>
 
 ## :information_source: Installation
