@@ -46,7 +46,7 @@ NumericVector fbeta(
 //'
 //' @export
 // [[Rcpp::export(fbeta.cmatrix)]]
-NumericVector fbeta_cmatrix(const IntegerMatrix& x, const double& beta = 1.0,  Nullable<bool> micro = R_NilValue,const bool& na_rm = true)
+NumericVector fbeta_cmatrix(const IntegerMatrix& x, const double& beta = 1.0,  Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
 {
 
   // 1) if micro is Null

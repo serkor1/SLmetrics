@@ -1,23 +1,23 @@
 // [[Rcpp::depends(RcppEigen)]]
 #include <RcppEigen.h>
-#include "classification_dor.h"".h"
+#include "classification_nlr.h"".h"
 using namespace Rcpp;
 
-//' @rdname dor
+//' @rdname nlr
 //'
-//' @method dor factor
+//' @method nlr factor
 //' @export
-// [[Rcpp::export(dor.factor)]]
-NumericVector dor(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
+// [[Rcpp::export(nlr.factor)]]
+NumericVector nlr(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
 {
 
- // 0)
- const Eigen::MatrixXi& matrix = confmat(actual, predicted);
+  // 0)
+  const Eigen::MatrixXi& matrix = confmat(actual, predicted);
 
- // 1) if micro is Null
- // the retured value are equal
- // to the amount dimensions
- if (micro.isNull()) {
+  // 1) if micro is Null
+  // the retured value are equal
+  // to the amount dimensions
+  if (micro.isNull()) {
 
     // 1.1) create the output
     // vector
@@ -32,25 +32,26 @@ NumericVector dor(const IntegerVector& actual, const IntegerVector& predicted, N
     // and return the output.
     return output;
 
- }
+  }
 
- return _metric_(matrix,  Rcpp::as<bool>(micro), na_rm);
+  return _metric_(matrix,  Rcpp::as<bool>(micro), na_rm);
+
 
 }
 
 
-//' @rdname dor
+//' @rdname nlr
 //'
-//' @method dor cmatrix
+//' @method nlr cmatrix
 //' @export
-// [[Rcpp::export(dor.cmatrix)]]
-Rcpp::NumericVector dor_cmatrix(const Rcpp::IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
+// [[Rcpp::export(nlr.cmatrix)]]
+Rcpp::NumericVector nlr_cmatrix(const Rcpp::IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
 {
 
- // 1) if micro is Null
- // the retured value are equal
- // to the amount dimensions
- if (micro.isNull()) {
+  // 1) if micro is Null
+  // the retured value are equal
+  // to the amount dimensions
+  if (micro.isNull()) {
 
     // 1.1) create the output
     // vector
@@ -66,8 +67,8 @@ Rcpp::NumericVector dor_cmatrix(const Rcpp::IntegerMatrix& x, Nullable<bool> mic
     // and return the output.
     return output;
 
- }
+  }
 
- return _metric_(Rcpp::as<Eigen::MatrixXi>(x),  Rcpp::as<bool>(micro), na_rm);
+  return _metric_(Rcpp::as<Eigen::MatrixXi>(x),  Rcpp::as<bool>(micro), na_rm);
 
 }

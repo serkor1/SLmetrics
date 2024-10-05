@@ -10,11 +10,6 @@
 #' The [accuracy()]-function computes the [accuracy](https://en.wikipedia.org/wiki/Precision_and_recall) between two
 #' vectors of predicted and observed [factor()] values.
 #'
-#' @usage
-#' accuracy(
-#'   actual,
-#'   predicted
-#' )
 #'
 #' @inherit specificity
 #'
@@ -49,12 +44,6 @@ accuracy <- function(...) {
 #' The [baccuracy()]-function computes the [balanced accuracy](https://neptune.ai/blog/balanced-accuracy) between two
 #' vectors of predicted and observed [factor()] values.
 #'
-#' @usage
-#' baccuracy(
-#'   actual,
-#'   predicted,
-#'   adjust = FALSE
-#' )
 #'
 #' @inherit specificity
 #' @param adjust A [logical] value. [FALSE] by default. If [TRUE] the metric is adjusted for random change \eqn{\frac{1}{k}}

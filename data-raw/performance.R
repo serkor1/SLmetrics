@@ -136,7 +136,11 @@ DT <- list(
 )
 
 
-usethis::use_data(DT, internal = TRUE, overwrite = TRUE)
+usethis::use_data(
+  DT,
+  internal = TRUE,
+  overwrite = TRUE
+)
 
 # script end;
 

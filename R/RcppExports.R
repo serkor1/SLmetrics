@@ -115,48 +115,20 @@ cmatrix <- function(actual, predicted) {
     .Call(`_SLmetrics_cmatrix`, actual, predicted)
 }
 
-#' Compute the \eqn{\text{diagnostic}} \eqn{\text{odds}} \eqn{\text{ratio}}
+#' @rdname dor
 #'
-#' @description
-#' The [dor()]-function computes the [Diagnostic Odds Ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) (DOR), a single indicator of test performance, between
-#' two vectors of predicted and observed [factor()] values.
-#'
-#' When `aggregate = TRUE`, the function returns the micro-average DOR across all classes \eqn{k}. By default, it returns the class-wise DOR.
-#'
-#' @usage
-#' dor(
-#'   actual,
-#'   predicted,
-#'   aggregate = FALSE
-#' )
-#'
-#' @example man/examples/scr_diagnosticodssratio.R
-#'
-#' @inherit specificity
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
-#'
-#' \deqn{
-#'   \text{DOR}_k = \frac{\text{PLR}_k}{\text{NLR}_k}
-#' }
-#'
-#' Where \eqn{\text{PLR}_k} and \eqn{\text{NLR}_k} is the positive and negative likelihood ratio for class \eqn{k}, respectively. See [plr()] and [nlr()] for more details.
-#'
-#' When `aggregate = TRUE`, the `micro`-average is calculated as,
-#'
-#' \deqn{
-#'   \overline{\text{DOR}} = \frac{\overline{\text{PLR}_k}}{\overline{\text{NLR}_k}}
-#' }
-#'
-#' Where \eqn{\overline{\text{PLR}}} and \eqn{\overline{\text{NLR}}} is the micro-averaged is the positive and negative likelihood ratio, respectively.
-#'
-#' @family classification
-#'
+#' @method dor factor
 #' @export
-dor <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_dor`, actual, predicted, aggregate)
+dor.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_dor`, actual, predicted, micro, na_rm = na.rm)
+}
+
+#' @rdname dor
+#'
+#' @method dor cmatrix
+#' @export
+dor.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_dor_cmatrix`, x, micro, na_rm = na.rm)
 }
 
 #' @rdname fbeta
@@ -425,97 +397,6 @@ kappa <- function(actual, predicted, beta = 0) {
     .Call(`_SLmetrics_kappa`, actual, predicted, beta)
 }
 
-#' Compute the \eqn{\text{positive}} \eqn{\text{likelihood}} \eqn{\text{ratio}}
-#'
-#' @description
-#' The [plr()]-function computes the [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing), also known as the likelihood ratio for positive results, between
-#' two vectors of predicted and observed [factor()] values.
-#'
-#' When `aggregate = TRUE`, the function returns the micro-average PLR across all classes \eqn{k}.
-#' By default, it returns the class-wise PLR.
-#'
-#' @usage
-#' plr(
-#'   actual,
-#'   predicted,
-#'   aggregate = FALSE
-#' )
-#'
-#' @example man/examples/scr_plr_nlr.R
-#'
-#' @inherit specificity
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
-#'
-#' \deqn{
-#'   \frac{\text{Sensitivity}_k}{1 - \text{Specificity}_k}
-#' }
-#'
-#' Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
-#'
-#' When `aggregate = TRUE`, the `micro`-average is calculated,
-#'
-#' \deqn{
-#'   \frac{\sum_{k=1}^k \text{Sensitivity}_k}{1 - \sum_{k=1}^k \text{Specificity}_k}
-#' }
-#'
-#' @seealso
-#'
-#' The [nlr()]-function for the Negative Likehood Ratio (LR-)
-#'
-#' @family classification
-#' @export
-plr <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_plr`, actual, predicted, aggregate)
-}
-
-#' Compute the \eqn{\text{negative}} \eqn{\text{likelihood}} \eqn{\text{ratio}}
-#'
-#' @description
-#' The [nlr()]-function computes the [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing), also known as the likelihood ratio for negative results, between
-#' two vectors of predicted and observed [factor()] values.
-#'
-#' When `aggregate = TRUE`, the function returns the micro-average NLR across all classes \eqn{k}.
-#' By default, it returns the class-wise NLR.
-#'
-#' @usage
-#' nlr(
-#'   actual,
-#'   predicted,
-#'   aggregate = FALSE
-#' )
-#'
-#' @example man/examples/scr_plr_nlr.R
-#'
-#' @inherit specificity
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
-#'
-#' \deqn{
-#'   \frac{1 - \text{Sensitivity}_k}{\text{Specificity}_k}
-#' }
-#'
-#' Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
-#'
-#' When `aggregate = TRUE`, the `micro`-average is calculated,
-#'
-#' \deqn{
-#'   \frac{\sum_{k=1}^k (1 - \text{Sensitivity}_k)}{\sum_{k=1}^k \text{Specificity}_k}
-#' }
-#'
-#' @seealso
-#'
-#' The [plr()]-function for the Positive Likehood Ratio (LR+)
-#' @family classification
-#' @export
-nlr <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_nlr`, actual, predicted, aggregate)
-}
-
 #' Compute the \eqn{\text{Matthews}} \eqn{\text{Correlation}} \eqn{\text{Coefficient}}
 #'
 #' @description
@@ -566,6 +447,22 @@ phi <- function(actual, predicted) {
     .Call(`_SLmetrics_phi`, actual, predicted)
 }
 
+#' @rdname nlr
+#'
+#' @method nlr factor
+#' @export
+nlr.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_nlr`, actual, predicted, micro, na_rm = na.rm)
+}
+
+#' @rdname nlr
+#'
+#' @method nlr cmatrix
+#' @export
+nlr.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_nlr_cmatrix`, x, micro, na_rm = na.rm)
+}
+
 #' Compute the \eqn{\text{negative}} \eqn{\text{predictive}} \eqn{\text{value}}
 #'
 #' @description
@@ -607,6 +504,22 @@ phi <- function(actual, predicted) {
 #' @export
 npv <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_npv`, actual, predicted, aggregate)
+}
+
+#' @rdname plr
+#'
+#' @method plr factor
+#' @export
+plr.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_plr`, actual, predicted, micro, na_rm = na.rm)
+}
+
+#' @rdname plr
+#'
+#' @method plr cmatrix
+#' @export
+plr.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_plr_cmatrix`, x, micro, na_rm = na.rm)
 }
 
 #' @rdname precision

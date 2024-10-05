@@ -68,7 +68,13 @@ testthat::test_that(
       "precision"   = precision,
       "ppv"         = ppv,
 
-      "fbeta"       = fbeta
+      # fbeta methods
+      "fbeta"       = fbeta,
+
+      # likelihood methods
+      "dor"         = dor,
+      "plr"         = plr,
+      "nlr"         = nlr
     )
 
     for (i in seq_along(sl_function)) {

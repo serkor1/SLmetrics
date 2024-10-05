@@ -10,11 +10,7 @@
 
 \method{baccuracy}{cmatrix}(x, adjust = FALSE, ...)
 
-baccuracy(
-  actual,
-  predicted,
-  adjust = FALSE
-)
+baccuracy(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -131,7 +127,7 @@ baccuracy(
 Other classification: 
 \code{\link{accuracy.factor}()},
 \code{\link{cmatrix}()},
-\code{\link{dor}()},
+\code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
@@ -140,9 +136,9 @@ Other classification:
 \code{\link{jaccard}()},
 \code{\link{kappa}()},
 \code{\link{mcc}()},
-\code{\link{nlr}()},
+\code{\link{nlr.factor}()},
 \code{\link{npv}()},
-\code{\link{plr}()},
+\code{\link{plr.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
 \code{\link{specificity.factor}()},

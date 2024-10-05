@@ -17,7 +17,6 @@ compile:
 	Rscript modifyRcppExports.R
 
 build: compile
-	clear
 	R CMD build .
 	R CMD INSTALL $(TARBALL)
 	rm -f $(TARBALL)
