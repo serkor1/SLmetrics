@@ -145,8 +145,8 @@ fbeta(
 }
 \seealso{
 Other classification: 
-\code{\link{accuracy}()},
-\code{\link{baccuracy}()},
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
 \code{\link{cmatrix}()},
 \code{\link{dor}()},
 \code{\link{fdr}()},

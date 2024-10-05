@@ -49,6 +49,10 @@ testthat::test_that(
     # 3) test that methods
     # work and returns the same values
     sl_function <- list(
+      # accuracy
+      "accuracy"    = accuracy,
+      "baccuracy"   = baccuracy,
+
       # specificity methods
       "specificity" = specificity,
       "tnr"         = tnr,

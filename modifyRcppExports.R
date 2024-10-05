@@ -23,6 +23,26 @@ updated_content <- gsub(", na_rm = TRUE\\) \\{", ", na.rm = TRUE, ...) {", conte
 # to pass the argument
 updated_content <- gsub("na_rm)", "na_rm = na.rm)", updated_content)
 
+# 4) update eveything function wise
+foo_update <- c(
+  "accuracy",
+  "baccuracy"
+)
+
+foo_update <- as.vector(outer(foo_update, c("cmatrix", "factor"), paste, sep = "."))
+
+# 5) Modify the function signatures in RcppExports to append ', ...' to the argument list
+for (fname in foo_update) {
+  # Match the exact function definition, capture arguments, and append ', ...'
+  pattern <- paste0("\\b(", fname, " <- function\\(.*)\\)")
+  replacement <- "\\1, ...)"
+
+  # Ensure we append ', ...' to the existing arguments
+  updated_content <- gsub(pattern, replacement, updated_content, perl = TRUE)
+}
+
+
+
 # Write the updated content back to the file
 writeLines(updated_content, file_path)
 

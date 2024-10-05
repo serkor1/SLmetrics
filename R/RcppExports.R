@@ -39,78 +39,36 @@ fmi <- function(actual, predicted) {
     .Call(`_SLmetrics_fmi`, actual, predicted)
 }
 
-#' Compute the \eqn{\text{accuracy}}
-#'
-#' The [accuracy()]-function computes the [accuracy](https://en.wikipedia.org/wiki/Precision_and_recall) between two
-#' vectors of predicted and observed [factor()] values.
-#'
-#' @usage
-#' accuracy(
-#'   actual,
-#'   predicted
-#' )
-#'
-#' @inherit specificity
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated as follows,
-#'
-#' \deqn{
-#'   \frac{\#TP + \#TN}{\#TP + \#TN + \#FP + \#FN}
-#' }
-#'
-#' Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} is the number of true positives, true negatives, false positives, and false negatives, respectively.
-#'
-#' @returns
-#'
-#' A <[numeric]>-vector of [length] 1
-#'
-#' @example man/examples/scr_accuracy.R
-#'
-#' @family classification
+#' @rdname accuracy
+#' @method accuracy factor
 #'
 #' @export
-accuracy <- function(actual, predicted) {
+accuracy.factor <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_accuracy`, actual, predicted)
 }
 
-#' Compute the \eqn{\text{balanced accuracy}}
-#'
-#' The [baccuracy()]-function computes the [balanced accuracy](https://neptune.ai/blog/balanced-accuracy) between two
-#' vectors of predicted and observed [factor()] values.
-#'
-#' @usage
-#' baccuracy(
-#'   actual,
-#'   predicted,
-#'   adjust = FALSE
-#' )
-#'
-#' @inherit specificity
-#' @param adjust A [logical] value. [FALSE] by default. If [TRUE] the metric is adjusted for random change \eqn{\frac{1}{k}}
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated as follows,
-#'
-#' \deqn{
-#'   \frac{\text{sensitivity} + \text{specificty}}{2}
-#' }
-#'
-#' See the [sensitivity()]- and/or [specificity()]-function for more details.
-#'
-#' @returns
-#'
-#' A [numeric]-vector of [length] 1
-#'
-#' @example man/examples/scr_baccuracy.R
-#'
-#' @family classification
+#' @rdname accuracy
+#' @method accuracy cmatrix
 #'
 #' @export
-baccuracy <- function(actual, predicted, adjust = FALSE) {
+accuracy.cmatrix <- function(x, ...) {
+    .Call(`_SLmetrics_accuracy_cmatrix`, x)
+}
+
+#' @rdname baccuracy
+#' @method baccuracy factor
+#'
+#' @export
+baccuracy.factor <- function(actual, predicted, adjust = FALSE, ...) {
     .Call(`_SLmetrics_baccuracy`, actual, predicted, adjust)
+}
+
+#' @rdname baccuracy
+#' @method baccuracy cmatrix
+#'
+#' @export
+baccuracy.cmatrix <- function(x, adjust = FALSE, ...) {
+    .Call(`_SLmetrics_baccuracy_cmatrix`, x, adjust)
 }
 
 #' Confusion Matrix
@@ -816,14 +774,6 @@ selectivity.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
 #' @export
 zerooneloss <- function(actual, predicted) {
     .Call(`_SLmetrics_zerooneloss`, actual, predicted)
-}
-
-.accuracy <- function(x) {
-    .Call(`_SLmetrics__accuracy_`, x)
-}
-
-.baccuracy <- function(x, adjust = FALSE) {
-    .Call(`_SLmetrics__baccuracy_`, x, adjust)
 }
 
 #' Compute the \eqn{\text{concordance correlation coefficient}}

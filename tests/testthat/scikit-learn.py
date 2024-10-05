@@ -76,13 +76,13 @@ def py_precision(actual, predicted, average = None):
       zero_division = np.nan
     )
 
-def py_accuracy(actual, predicted):
+def py_accuracy(actual, predicted, average = None):
     return metrics.accuracy_score(
       y_true = actual,
       y_pred = predicted
     )
     
-def py_baccuracy(actual, predicted, adjust = False):
+def py_baccuracy(actual, predicted, adjust = False, average = None):
     return metrics.balanced_accuracy_score(
       y_true   = actual,
       y_pred   = predicted,

@@ -83,8 +83,8 @@ summary.cmatrix <- function(
   #
   cat(
     paste("Overall Statistics", paste0("(", paste(average, "average"), ")")),
-    paste(" - Accuracy:         ", formatC(.accuracy(object), digits = digits,format = "f")),
-    paste(" - Balanced Accuracy:", formatC(.baccuracy(object), digits = digits,format = "f")),
+    paste(" - Accuracy:         ", formatC(accuracy(object), digits = digits,format = "f")),
+    paste(" - Balanced Accuracy:", formatC(baccuracy(object), digits = digits,format = "f")),
     paste(" - Sensitivity:      ", formatC(sensitivity(object,micro = micro), digits = digits, format = "f")),
     paste(" - Specificity:      ", formatC(specificity(object,micro = micro), digits = digits, format = "f")),
     paste(" - Precision:        ", formatC(precision(object,micro = micro), digits = digits, format = "f")),
