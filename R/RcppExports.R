@@ -291,76 +291,46 @@ fallout <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_fallout`, actual, predicted, aggregate)
 }
 
-#' Compute the \eqn{\text{Jaccard}} \eqn{\text{index}}
-#'
-#' @description
-#' The [jaccard()]-function computes the [Jaccard Index](https://en.wikipedia.org/wiki/Jaccard_index), also known as the Intersection over Union, between
-#' two vectors of predicted and observed [factor()] values.
-#'
-#' When `aggregate = TRUE`, the function returns the micro-average Jaccard Index across all classes \eqn{k}.
-#' By default, it returns the class-wise Jaccard Index.
-#'
-#' @usage
-#' # using `jaccard()`-function
-#' jaccard(
-#'   actual,
-#'   predicted,
-#'   aggregate = FALSE
-#' )
-#'
-#' @inherit specificity
-#'
-#' @section Calculation:
-#'
-#' The metric is calcualted for each class \eqn{k} as follows,
-#'
-#' \deqn{
-#'   \frac{\#TP_k}{\#TP_k + \#FP_k + \#FN_k}
-#' }
-#'
-#' Where \eqn{\#TP_k}, \eqn{\#FP_k}, and \eqn{\#FN_k} represent the number of true positives, false positives, and false negatives for each class \eqn{k}, respectively.
-#'
-#' When `aggregate = TRUE`, the micro-average is calculated as,
-#'
-#' \deqn{
-#'   \frac{\sum_{i = 1}^{k} TP_i}{\sum_{i = 1}^{k} TP_i + \sum_{i = 1}^{k} FP_k + \sum_{i = 1}^{k} FN_k}
-#' }
-#'
-#' @example man/examples/scr_jaccard.R
-#'
-#' @family classification
-#'
+#' @rdname jaccard
+#' @method jaccard factor
 #' @export
-jaccard <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_jaccard`, actual, predicted, aggregate)
+jaccard.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_jaccard`, actual, predicted, micro, na_rm = na.rm)
 }
 
 #' @rdname jaccard
-#'
-#' @usage
-#' # using `csi()`-function
-#' csi(
-#'   actual,
-#'   predicted,
-#'   aggregate = FALSE
-#' )
+#' @method jaccard cmatrix
 #' @export
-csi <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_csi`, actual, predicted, aggregate)
+jaccard.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_jaccard_cmatrix`, x, micro, na_rm = na.rm)
 }
 
 #' @rdname jaccard
-#'
-#' @usage
-#' # using `tscore()`-function
-#' tscore(
-#'   actual,
-#'   predicted,
-#'   aggregate = FALSE
-#' )
+#' @method csi factor
 #' @export
-tscore <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_tscore`, actual, predicted, aggregate)
+csi.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_csi`, actual, predicted, micro, na_rm = na.rm)
+}
+
+#' @rdname jaccard
+#' @method csi cmatrix
+#' @export
+csi.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_csi_cmatrix`, x, micro, na_rm = na.rm)
+}
+
+#' @rdname jaccard
+#' @method tscore factor
+#' @export
+tscore.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_tscore`, actual, predicted, micro, na_rm = na.rm)
+}
+
+#' @rdname tscore
+#' @method tscore cmatrix
+#' @export
+tscore.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_tscore_cmatrix`, x, micro, na_rm = na.rm)
 }
 
 #' Compute Cohen's \eqn{\kappa}-statistic
@@ -397,54 +367,32 @@ kappa <- function(actual, predicted, beta = 0) {
     .Call(`_SLmetrics_kappa`, actual, predicted, beta)
 }
 
-#' Compute the \eqn{\text{Matthews}} \eqn{\text{Correlation}} \eqn{\text{Coefficient}}
-#'
-#' @description
-#' The [mcc()]-function computes the [Matthews Correlation Coefficient](https://en.wikipedia.org/wiki/Matthews_correlation_coefficient) (MCC), also known as the \eqn{\phi}-coefficient, between
-#' two vectors of predicted and observed [factor()] values.
-#'
-#' @usage
-#' # 1) `mcc()`-function
-#' mcc(
-#'   actual,
-#'   predicted
-#' )
-#'
-#' @example man/examples/scr_mcc.R
-#'
-#' @inherit precision
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated as follows,
-#'
-#' \deqn{
-#'   \frac{\#TP \times \#TN - \#FP \times \#FN}{\sqrt{(\#TP + \#FP)(\#TP + \#FN)(\#TN + \#FP)(\#TN + \#FN)}}
-#' }
-#'
-#'
-#' @returns
-#' A named <[numeric]> vector of length k
-#'
-#' @family classification
-#'
+#' @rdname mcc
+#' @method mcc factor
 #' @export
-mcc <- function(actual, predicted) {
+mcc.factor <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_mcc`, actual, predicted)
 }
 
 #' @rdname mcc
-#'
-#' @usage
-#' # 2) `phi()`-function
-#' phi(
-#'   actual,
-#'   predicted
-#' )
-#'
+#' @method mcc cmatrix
 #' @export
-phi <- function(actual, predicted) {
+mcc.cmatrix <- function(x, ...) {
+    .Call(`_SLmetrics_mcc_cmatrix`, x)
+}
+
+#' @rdname mcc
+#' @method phi factor
+#' @export
+phi.factor <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_phi`, actual, predicted)
+}
+
+#' @rdname mcc
+#' @method phi cmatrix
+#' @export
+phi.cmatrix <- function(x, ...) {
+    .Call(`_SLmetrics_phi_cmatrix`, x)
 }
 
 #' @rdname nlr

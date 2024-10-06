@@ -26,7 +26,10 @@ updated_content <- gsub("na_rm)", "na_rm = na.rm)", updated_content)
 # 4) update eveything function wise
 foo_update <- c(
   "accuracy",
-  "baccuracy"
+  "baccuracy",
+  "mcc",
+  "phi"
+
 )
 
 foo_update <- as.vector(outer(foo_update, c("cmatrix", "factor"), paste, sep = "."))

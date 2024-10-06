@@ -1,110 +1,52 @@
 // [[Rcpp::depends(RcppEigen)]]
 #include <RcppEigen.h>
 #include <cmath>
-#include "helpers.h"
+#include "classification_mcc.h"
 using namespace Rcpp;
 
 
-//' Compute the \eqn{\text{Matthews}} \eqn{\text{Correlation}} \eqn{\text{Coefficient}}
-//'
-//' @description
-//' The [mcc()]-function computes the [Matthews Correlation Coefficient](https://en.wikipedia.org/wiki/Matthews_correlation_coefficient) (MCC), also known as the \eqn{\phi}-coefficient, between
-//' two vectors of predicted and observed [factor()] values.
-//'
-//' @usage
-//' # 1) `mcc()`-function
-//' mcc(
-//'   actual,
-//'   predicted
-//' )
-//'
-//' @example man/examples/scr_mcc.R
-//'
-//' @inherit precision
-//'
-//' @section Calculation:
-//'
-//' The metric is calculated as follows,
-//'
-//' \deqn{
-//'   \frac{\#TP \times \#TN - \#FP \times \#FN}{\sqrt{(\#TP + \#FP)(\#TP + \#FN)(\#TN + \#FP)(\#TN + \#FN)}}
-//' }
-//'
-//'
-//' @returns
-//' A named <[numeric]> vector of length k
-//'
-//' @family classification
-//'
+//' @rdname mcc
+//' @method mcc factor
 //' @export
-// [[Rcpp::export]]
-double mcc(
-      const Rcpp::IntegerVector& actual,
-      const Rcpp::IntegerVector& predicted) {
-
-   // Compute confusion matrix
-   const Rcpp::NumericMatrix c_matrix  = wrap(confmat(actual, predicted));
-
-
-   // Compute true positives (assuming TP(c_matrix) gives a vector)
-   double n_correct = Rcpp::sum(Rcpp::diag(c_matrix));
-
-   // Get the size of the confusion matrix (N)
-   int N = c_matrix.rows();
-
-   NumericVector t_sum(N), p_sum(N);
-
-   for (int i = 0; i < N; ++i) {
-      t_sum[i] = sum(c_matrix(i, _));
-      p_sum[i] = sum(c_matrix(_, i));
-   }
-
-   double n_samples = sum(p_sum);
-
-   double cov_ytyp = n_correct * n_samples - sum(t_sum * p_sum);
-   double cov_ypyp = n_samples * n_samples - sum(p_sum * p_sum);
-   double cov_ytyt = n_samples * n_samples - sum(t_sum * t_sum);
-
-   /*
-    * Calculate the product
-    * of the covariance
-    *
-    * And check if equal to
-    * avoid errors
-    */
-
-   double product = cov_ypyp * cov_ytyt;
-
-   if (product == 0) {
-
-      return 0.0;
-
-   }
-
-   return cov_ytyp / std::sqrt(product);
+// [[Rcpp::export(mcc.factor)]]
+double mcc(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
+{
+   return _metric_(confmat(actual, predicted));
 }
 
 //' @rdname mcc
-//'
-//' @usage
-//' # 2) `phi()`-function
-//' phi(
-//'   actual,
-//'   predicted
-//' )
-//'
+//' @method mcc cmatrix
 //' @export
-// [[Rcpp::export]]
-double phi(
-      const Rcpp::IntegerVector& actual,
-      const Rcpp::IntegerVector& predicted) {
+// [[Rcpp::export(mcc.cmatrix)]]
+double mcc_cmatrix(const Rcpp::IntegerMatrix& x)
+{
 
-   /*
-    * The MCC coefficient is also known
-    * as the phi coefficient
-    */
+   return _metric_(Rcpp::as<Eigen::MatrixXi>(x));
 
-   return mcc(actual, predicted);
+}
+
+
+
+//' @rdname mcc
+//' @method phi factor
+//' @export
+// [[Rcpp::export(phi.factor)]]
+double phi(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
+{
+
+   return _metric_(confmat(actual, predicted));
+
+}
+
+
+//' @rdname mcc
+//' @method phi cmatrix
+//' @export
+// [[Rcpp::export(phi.cmatrix)]]
+double phi_cmatrix(const Rcpp::IntegerMatrix& x)
+{
+
+   return _metric_(Rcpp::as<Eigen::MatrixXi>(x));
 
 }
 

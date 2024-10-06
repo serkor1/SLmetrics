@@ -37,16 +37,15 @@ jaccard(
 )
 
 # 4.2) macro-average
-mean(
-  jaccard(
-    actual    = iris$Species,
-    predicted = predicted
-  )
+jaccard(
+  actual    = iris$Species,
+  predicted = predicted,
+  micro     = FALSE
 )
 
 # 4.3) micro-average
 jaccard(
   actual    = iris$Species,
   predicted = predicted,
-  aggregate = TRUE
+  micro     = TRUE
 )

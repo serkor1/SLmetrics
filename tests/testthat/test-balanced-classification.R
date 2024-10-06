@@ -74,7 +74,16 @@ testthat::test_that(
       # likelihood methods
       "dor"         = dor,
       "plr"         = plr,
-      "nlr"         = nlr
+      "nlr"         = nlr,
+
+      # jaccard methods
+      "jaccard"     = jaccard,
+      "tscore"      = tscore,
+      "csi"         = csi,
+
+      # mcc methods
+      "mcc"         = mcc,
+      "phi"         = phi
 
 
     )

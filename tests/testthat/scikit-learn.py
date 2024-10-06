@@ -13,7 +13,7 @@ def py_jaccard(actual, predicted, average = None):
       y_true = actual, 
       y_pred = predicted, 
       average = average,
-      zero_division = np.nan
+      zero_division = 0.0
     )
 
 def py_fmi(actual, predicted):
@@ -32,7 +32,7 @@ def py_kappa(actual, predicted, penalty):
       zero_division = np.nan
     )
 
-def py_mcc(actual, predicted):
+def py_mcc(actual, predicted, average = None):
     return metrics.matthews_corrcoef(
       y_true = actual,
       y_pred = predicted
