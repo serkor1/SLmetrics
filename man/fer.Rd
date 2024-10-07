@@ -140,7 +140,7 @@ Other classification:
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr}()},
-\code{\link{fmi}()},
+\code{\link{fmi.factor}()},
 \code{\link{fpr.factor}()},
 \code{\link{jaccard.factor}()},
 \code{\link{kappa}()},

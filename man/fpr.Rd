@@ -3,23 +3,21 @@
 \name{fpr.factor}
 \alias{fpr.factor}
 \alias{fpr.cmatrix}
+\alias{fallout.factor}
 \alias{fallout.cmatrix}
 \alias{fpr}
 \alias{fallout}
 \title{Compute the \eqn{\text{false}} \eqn{\text{positive}} \eqn{\text{rate}}}
 \usage{
-\method{fpr}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+\method{fpr}{factor}(actual, predicted, micro = NULL, na_rm = TRUE)
 
-\method{fpr}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
+\method{fpr}{cmatrix}(x, micro = NULL, na_rm = TRUE)
 
-\method{fallout}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
+\method{fallout}{factor}(actual, predicted, micro = NULL, na_rm = TRUE)
 
-# using`fpr()`
-fpr(
-  actual,
-  predicted,
-  aggregate = FALSE
-)
+\method{fallout}{cmatrix}(x, micro = NULL, na_rm = TRUE)
+
+fpr(...)
 
 fallout(...)
 }
@@ -31,11 +29,9 @@ fallout(...)
 \item{micro}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{NULL} by default. If \link{TRUE} it returns the
 micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average. Otherwise class wise performance evaluation.}
 
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{TRUE} by default. If \link{FALSE} \link{NA} values will be disregarded when \code{micro = FALSE}.}
+\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 
 \item{...}{Arguments passed into other methods.}
-
-\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }
 \value{
 If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vector of \link{length} k
@@ -142,18 +138,17 @@ fpr(
 )
 
 # 4.2) macro-average
-mean(
-  fpr(
-    actual    = iris$Species,
-    predicted = predicted
-  )
+fpr(
+  actual    = iris$Species,
+  predicted = predicted,
+  micro     = FALSE
 )
 
 # 4.3) micro-average
 fpr(
   actual    = iris$Species,
   predicted = predicted,
-  aggregate = TRUE
+  micro     = TRUE
 )
 }
 \seealso{
@@ -165,7 +160,7 @@ Other classification:
 \code{\link{fbeta.factor}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
-\code{\link{fmi}()},
+\code{\link{fmi.factor}()},
 \code{\link{jaccard.factor}()},
 \code{\link{kappa}()},
 \code{\link{mcc.factor}()},

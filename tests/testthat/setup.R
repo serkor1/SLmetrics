@@ -94,9 +94,14 @@ create_regression <- function(
   # values
   predicted <- actual + rnorm(n = n)
 
+  # 3) generate
+  # weights
+  weight <- runif(n)
+
   list(
     actual    = actual,
-    predicted = predicted
+    predicted = predicted,
+    weight    = weight
   )
 }
 

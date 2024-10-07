@@ -38,6 +38,8 @@
 #'
 #' @family classification
 #'
+#' @aliases fpr fallout
+#'
 #' @export
 fpr <- function(...) {
   UseMethod(

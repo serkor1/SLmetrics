@@ -28,6 +28,8 @@
 #'
 #' @family classification
 #'
+#' @aliases mcc phi
+#'
 #' @export
 mcc <- function(...) {
   UseMethod(

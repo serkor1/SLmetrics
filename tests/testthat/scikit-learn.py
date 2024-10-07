@@ -17,11 +17,10 @@ def py_jaccard(actual, predicted, average = None):
       zero_division = 0.0
     )
 
-def py_fmi(actual, predicted):
+def py_fmi(actual, predicted, average = None):
     return metrics.fowlkes_mallows_score(
       labels_true = actual,
-      labels_pred = predicted,
-      zero_division = np.nan
+      labels_pred = predicted
     )
 
 def py_kappa(actual, predicted, penalty):

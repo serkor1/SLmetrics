@@ -5,6 +5,8 @@ using namespace Rcpp;
 
 //' @rdname fpr
 //' @method fpr factor
+//'
+//' @export
 // [[Rcpp::export(fpr.factor)]]
 NumericVector fpr(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue,const bool& na_rm = true)
 {
@@ -38,6 +40,7 @@ NumericVector fpr(const IntegerVector& actual, const IntegerVector& predicted, N
 
 //' @rdname fpr
 //' @method fpr cmatrix
+//'
 //' @export
 // [[Rcpp::export(fpr.cmatrix)]]
 NumericVector fpr_cmatrix(const IntegerMatrix& x,  Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
@@ -68,7 +71,8 @@ NumericVector fpr_cmatrix(const IntegerMatrix& x,  Nullable<bool> micro = R_NilV
 
 }
 
-//' @rdname fp
+//' @rdname fpr
+//' @method fallout factor
 //' @export
 // [[Rcpp::export(fallout.factor)]]
 NumericVector fallout(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue,const bool& na_rm = true)

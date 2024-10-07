@@ -35,6 +35,8 @@
 #'
 #' @family classification
 #'
+#' @aliases jaccard csi tscore
+#'
 #' @export
 jaccard <- function(...) {
   UseMethod(

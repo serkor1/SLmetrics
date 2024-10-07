@@ -23,6 +23,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// fmi_cmatrix
+double fmi_cmatrix(const IntegerMatrix& x);
+RcppExport SEXP _SLmetrics_fmi_cmatrix(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(fmi_cmatrix(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // accuracy
 double accuracy(const NumericVector& actual, const NumericVector& predicted);
 RcppExport SEXP _SLmetrics_accuracy(SEXP actualSEXP, SEXP predictedSEXP) {
@@ -899,6 +910,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_fmi", (DL_FUNC) &_SLmetrics_fmi, 2},
+    {"_SLmetrics_fmi_cmatrix", (DL_FUNC) &_SLmetrics_fmi_cmatrix, 1},
     {"_SLmetrics_accuracy", (DL_FUNC) &_SLmetrics_accuracy, 2},
     {"_SLmetrics_accuracy_cmatrix", (DL_FUNC) &_SLmetrics_accuracy_cmatrix, 1},
     {"_SLmetrics_baccuracy", (DL_FUNC) &_SLmetrics_baccuracy, 3},

@@ -87,7 +87,10 @@ testthat::test_that(
 
       # fpr methods
       "fpr"         = fpr,
-      "fallout"     = fallout
+      "fallout"     = fallout,
+
+      # fmi methods
+      "fmi"         = fmi
     )
 
     for (i in seq_along(sl_function)) {

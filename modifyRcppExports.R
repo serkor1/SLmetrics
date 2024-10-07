@@ -28,7 +28,8 @@ foo_update <- c(
   "accuracy",
   "baccuracy",
   "mcc",
-  "phi"
+  "phi",
+  "fmi"
 
 )
 

@@ -6,9 +6,9 @@
 \alias{baccuracy}
 \title{Compute the \eqn{\text{balanced accuracy}}}
 \usage{
-\method{baccuracy}{factor}(actual, predicted, adjust = FALSE, ...)
+\method{baccuracy}{factor}(actual, predicted, adjust = FALSE)
 
-\method{baccuracy}{cmatrix}(x, adjust = FALSE, ...)
+\method{baccuracy}{cmatrix}(x, adjust = FALSE)
 
 baccuracy(...)
 }
@@ -19,9 +19,9 @@ baccuracy(...)
 
 \item{adjust}{A \link{logical} value. \link{FALSE} by default. If \link{TRUE} the metric is adjusted for random change \eqn{\frac{1}{k}}}
 
-\item{...}{Arguments passed into other methods.}
-
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
+
+\item{...}{Arguments passed into other methods.}
 }
 \value{
 A \link{numeric}-vector of \link{length} 1
@@ -131,7 +131,7 @@ Other classification:
 \code{\link{fbeta.factor}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
-\code{\link{fmi}()},
+\code{\link{fmi.factor}()},
 \code{\link{fpr.factor}()},
 \code{\link{jaccard.factor}()},
 \code{\link{kappa}()},

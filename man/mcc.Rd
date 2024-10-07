@@ -9,13 +9,13 @@
 \alias{phi}
 \title{Compute the \eqn{\text{Matthews}} \eqn{\text{Correlation}} \eqn{\text{Coefficient}}}
 \usage{
-\method{mcc}{factor}(actual, predicted, ...)
+\method{mcc}{factor}(actual, predicted)
 
-\method{mcc}{cmatrix}(x, ...)
+\method{mcc}{cmatrix}(x)
 
-\method{phi}{factor}(actual, predicted, ...)
+\method{phi}{factor}(actual, predicted)
 
-\method{phi}{cmatrix}(x, ...)
+\method{phi}{cmatrix}(x)
 
 mcc(...)
 
@@ -26,9 +26,9 @@ phi(...)
 
 \item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{...}{Arguments passed into other methods.}
-
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
+
+\item{...}{Arguments passed into other methods.}
 }
 \value{
 A named <\link{numeric}> vector of length k
@@ -128,7 +128,7 @@ Other classification:
 \code{\link{fbeta.factor}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
-\code{\link{fmi}()},
+\code{\link{fmi.factor}()},
 \code{\link{fpr.factor}()},
 \code{\link{jaccard.factor}()},
 \code{\link{kappa}()},
