@@ -129,7 +129,7 @@ Other classification:
 \code{\link{fdr}()},
 \code{\link{fer}()},
 \code{\link{fmi}()},
-\code{\link{fpr}()},
+\code{\link{fpr.factor}()},
 \code{\link{jaccard.factor}()},
 \code{\link{kappa}()},
 \code{\link{nlr.factor}()},

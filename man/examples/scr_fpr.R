@@ -37,16 +37,15 @@ fpr(
 )
 
 # 4.2) macro-average
-mean(
-  fpr(
-    actual    = iris$Species,
-    predicted = predicted
-  )
+fpr(
+  actual    = iris$Species,
+  predicted = predicted,
+  micro     = FALSE
 )
 
 # 4.3) micro-average
 fpr(
   actual    = iris$Species,
   predicted = predicted,
-  aggregate = TRUE
+  micro     = TRUE
 )

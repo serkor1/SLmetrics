@@ -4,6 +4,7 @@
 from sklearn import metrics
 from imblearn.metrics import sensitivity_score
 from imblearn.metrics import specificity_score
+from sklearn.metrics import confusion_matrix
 import numpy as np
 
 # classification 

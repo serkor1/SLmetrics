@@ -232,63 +232,30 @@ fer <- function(actual, predicted, aggregate = FALSE) {
     .Call(`_SLmetrics_fer`, actual, predicted, aggregate)
 }
 
-#' Compute the \eqn{\text{false}} \eqn{\text{positive}} \eqn{\text{rate}}
-#'
-#' @description
-#' The [fpr()]-function computes the [False Positive Rate](https://en.wikipedia.org/wiki/False_positive_rate) (FPR), also known as the fall-out ([fallout()]), between
-#' two vectors of predicted and observed [factor()] values.
-#'
-#' When `aggregate = TRUE`, the function returns the micro-average FPR across all classes \eqn{k}.
-#' By default, it returns the class-wise FPR.
-#'
-#' @usage
-#' # using`fpr()`
-#' fpr(
-#'   actual,
-#'   predicted,
-#'   aggregate = FALSE
-#' )
-#'
-#' @inherit specificity
-#'
-#' @example man/examples/scr_fpr.R
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
-#'
-#' \deqn{
-#'   \frac{\#FP_k}{\#FP_k + \#TN_k}
-#' }
-#'
-#' Where \eqn{\#FP_k} and \eqn{\#TN_k} represent the number of false positives and true negatives, respectively, for each class \eqn{k}.
-#'
-#' When `aggregate = TRUE`, the micro-average is calculated across all classes,
-#'
-#' \deqn{
-#'   \frac{\sum_{k=1}^k \#FP_k}{\sum_{k=1}^k \#FP_k + \sum_{k=1}^k \#TN_k}
-#' }
-#'
-#' The FPR is the complement of specificity, such that \eqn{\text{FPR} = 1 - \text{Specificity}}.
-#'
-#' @family classification
-#'
-#' @export
-fpr <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_fpr`, actual, predicted, aggregate)
+#' @rdname fpr
+#' @method fpr factor
+fpr.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_fpr`, actual, predicted, micro, na_rm = na.rm)
 }
 
 #' @rdname fpr
-#' @usage
-#' # using `fallout()`
-#' fallout(
-#'   actual,
-#'   predicted,
-#'   aggregate = FALSE
-#' )
+#' @method fpr cmatrix
 #' @export
-fallout <- function(actual, predicted, aggregate = FALSE) {
-    .Call(`_SLmetrics_fallout`, actual, predicted, aggregate)
+fpr.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_fpr_cmatrix`, x, micro, na_rm = na.rm)
+}
+
+#' @rdname fp
+#' @export
+fallout.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_fallout`, actual, predicted, micro, na_rm = na.rm)
+}
+
+#' @rdname fpr
+#' @method fallout cmatrix
+#' @export
+fallout.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_fallout_cmatrix`, x, micro, na_rm = na.rm)
 }
 
 #' @rdname jaccard

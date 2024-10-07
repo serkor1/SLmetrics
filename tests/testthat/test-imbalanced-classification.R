@@ -83,7 +83,11 @@ testthat::test_that(
 
       # mcc methods
       "mcc"         = mcc,
-      "phi"         = phi
+      "phi"         = phi,
+
+      # fpr methods
+      "fpr"         = fpr,
+      "fallout"     = fallout
     )
 
     for (i in seq_along(sl_function)) {

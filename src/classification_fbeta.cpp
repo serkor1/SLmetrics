@@ -7,11 +7,7 @@ using namespace Rcpp;
 //'
 //' @export
 // [[Rcpp::export(fbeta.factor)]]
-NumericVector fbeta(
-    const IntegerVector& actual,
-    const IntegerVector& predicted,
-    const double& beta = 1.0,
-    Nullable<bool> micro = R_NilValue,const bool& na_rm = true) {
+NumericVector fbeta(const IntegerVector& actual, const IntegerVector& predicted, const double& beta = 1.0, Nullable<bool> micro = R_NilValue,const bool& na_rm = true) {
 
 
   // 1) Calculate

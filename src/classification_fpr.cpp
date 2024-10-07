@@ -1,123 +1,134 @@
 // [[Rcpp::depends(RcppEigen)]]
 #include <RcppEigen.h>
-#include "helpers.h"
+#include "classification_fpr.h"
 using namespace Rcpp;
 
-//' Compute the \eqn{\text{false}} \eqn{\text{positive}} \eqn{\text{rate}}
-//'
-//' @description
-//' The [fpr()]-function computes the [False Positive Rate](https://en.wikipedia.org/wiki/False_positive_rate) (FPR), also known as the fall-out ([fallout()]), between
-//' two vectors of predicted and observed [factor()] values.
-//'
-//' When `aggregate = TRUE`, the function returns the micro-average FPR across all classes \eqn{k}.
-//' By default, it returns the class-wise FPR.
-//'
-//' @usage
-//' # using`fpr()`
-//' fpr(
-//'   actual,
-//'   predicted,
-//'   aggregate = FALSE
-//' )
-//'
-//' @inherit specificity
-//'
-//' @example man/examples/scr_fpr.R
-//'
-//' @section Calculation:
-//'
-//' The metric is calculated for each class \eqn{k} as follows,
-//'
-//' \deqn{
-//'   \frac{\#FP_k}{\#FP_k + \#TN_k}
-//' }
-//'
-//' Where \eqn{\#FP_k} and \eqn{\#TN_k} represent the number of false positives and true negatives, respectively, for each class \eqn{k}.
-//'
-//' When `aggregate = TRUE`, the micro-average is calculated across all classes,
-//'
-//' \deqn{
-//'   \frac{\sum_{k=1}^k \#FP_k}{\sum_{k=1}^k \#FP_k + \sum_{k=1}^k \#TN_k}
-//' }
-//'
-//' The FPR is the complement of specificity, such that \eqn{\text{FPR} = 1 - \text{Specificity}}.
-//'
-//' @family classification
-//'
-//' @export
-// [[Rcpp::export]]
-NumericVector fpr(
-      const IntegerVector& actual,
-      const IntegerVector& predicted,
-      const bool& aggregate = false) {
+//' @rdname fpr
+//' @method fpr factor
+// [[Rcpp::export(fpr.factor)]]
+NumericVector fpr(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue,const bool& na_rm = true)
+{
 
-   /*
-    * Calculate:
-    *
-    * 1) Confusion Matrix
-    * 2) False Positives
-    * 3) True Negatives
-    *
-    * Output is FPR
-    */
+   // 1) Calculate
+   // cmatrix
+   const Eigen::MatrixXi& x = confmat(actual, predicted);
 
-   const Eigen::MatrixXi& c_matrix        = confmat(actual, predicted);
-   const Eigen::VectorXi& false_positive  = FP(c_matrix);
-   const Eigen::VectorXi& true_negative   = TN(c_matrix);
+   // 1) if micro is Null
+   // the retured value are equal
+   // to the amount dimensions
+   if (micro.isNull()) {
 
-   const Eigen::ArrayXd& fp_dbl = false_positive.cast<double>().array();
-   const Eigen::ArrayXd& tn_dbl = true_negative.cast<double>().array();
+      // 1.1) create the output
+      // vector
+      Rcpp::NumericVector output = _metric_(x);
 
-   Rcpp::NumericVector output;
-
-   if (aggregate) {
-
-      const double fp = fp_dbl.sum();
-      const double tn = tn_dbl.sum();
-
-      output = Rcpp::NumericVector::create(
-         (fp + tn == 0) ? 0.0 : fp / (fp + tn)
-         );
-
-   } else {
-
-      const int n = fp_dbl.size();
-      output = Rcpp::NumericVector(n);
-
-      const double* fp_ptr = fp_dbl.data();
-      const double* tn_ptr = tn_dbl.data();
-      double* output_ptr = REAL(output);
-
-      for (int i = 0; i < n; ++i) {
-
-         const double denominator =  (fp_ptr[i] + tn_ptr[i]);
-
-         output_ptr[i] = (denominator == 0) ? 0.0 : fp_ptr[i] / denominator;
-
-      }
-
+      // 1.2) retrieve the names
+      // and assign it to the output
+      // vector and stop the function early
       output.attr("names") = actual.attr("levels");
 
+      // 1.3) stop the function
+      // and return the output.
+      return output;
    }
 
-   return output;
+   return _metric_(x,  Rcpp::as<bool>(micro), na_rm);
 
 }
 
 //' @rdname fpr
-//' @usage
-//' # using `fallout()`
-//' fallout(
-//'   actual,
-//'   predicted,
-//'   aggregate = FALSE
-//' )
+//' @method fpr cmatrix
 //' @export
-// [[Rcpp::export]]
-NumericVector fallout(
-      const IntegerVector& actual,
-      const IntegerVector& predicted,
-      const bool& aggregate = false) {
+// [[Rcpp::export(fpr.cmatrix)]]
+NumericVector fpr_cmatrix(const IntegerMatrix& x,  Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
+{
 
-   return fpr(actual, predicted, aggregate);
+ // 1) if micro is Null
+ // the retured value are equal
+ // to the amount dimensions
+ if (micro.isNull()) {
+
+    // 1.1) create the output
+    // vector
+    Rcpp::NumericVector output = _metric_(Rcpp::as<Eigen::MatrixXi>(x));
+
+    // 1.2) retrieve the dimnames
+    // and assign it to the output
+    // vector and stop the function early
+    Rcpp::List dimnames = x.attr("dimnames");
+    output.attr("names") = dimnames[1];  // Directly assign the column names
+
+    // 1.3) stop the function
+    // and return the output.
+    return output;
+
+ }
+
+ return _metric_(Rcpp::as<Eigen::MatrixXi>(x),  Rcpp::as<bool>(micro), na_rm);
+
+}
+
+//' @rdname fp
+//' @export
+// [[Rcpp::export(fallout.factor)]]
+NumericVector fallout(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue,const bool& na_rm = true)
+{
+
+   // 1) Calculate
+   // cmatrix
+   const Eigen::MatrixXi& x = confmat(actual, predicted);
+
+   // 1) if micro is Null
+   // the retured value are equal
+   // to the amount dimensions
+   if (micro.isNull()) {
+
+      // 1.1) create the output
+      // vector
+      Rcpp::NumericVector output = _metric_(x);
+
+      // 1.2) retrieve the names
+      // and assign it to the output
+      // vector and stop the function early
+      output.attr("names") = actual.attr("levels");
+
+      // 1.3) stop the function
+      // and return the output.
+      return output;
+   }
+
+   return _metric_(x,  Rcpp::as<bool>(micro), na_rm);
+}
+
+
+//' @rdname fpr
+//' @method fallout cmatrix
+//' @export
+// [[Rcpp::export(fallout.cmatrix)]]
+NumericVector fallout_cmatrix(const IntegerMatrix& x,  Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
+{
+
+ // 1) if micro is Null
+ // the retured value are equal
+ // to the amount dimensions
+ if (micro.isNull()) {
+
+    // 1.1) create the output
+    // vector
+    Rcpp::NumericVector output = _metric_(Rcpp::as<Eigen::MatrixXi>(x));
+
+    // 1.2) retrieve the dimnames
+    // and assign it to the output
+    // vector and stop the function early
+    Rcpp::List dimnames = x.attr("dimnames");
+    output.attr("names") = dimnames[1];  // Directly assign the column names
+
+    // 1.3) stop the function
+    // and return the output.
+    return output;
+
+ }
+
+ return _metric_(Rcpp::as<Eigen::MatrixXi>(x),  Rcpp::as<bool>(micro), na_rm);
+
 }

@@ -166,28 +166,56 @@ BEGIN_RCPP
 END_RCPP
 }
 // fpr
-NumericVector fpr(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
-RcppExport SEXP _SLmetrics_fpr(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
+NumericVector fpr(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro, const bool& na_rm);
+RcppExport SEXP _SLmetrics_fpr(SEXP actualSEXP, SEXP predictedSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
-    rcpp_result_gen = Rcpp::wrap(fpr(actual, predicted, aggregate));
+    Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(fpr(actual, predicted, micro, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
+// fpr_cmatrix
+NumericVector fpr_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+RcppExport SEXP _SLmetrics_fpr_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(fpr_cmatrix(x, micro, na_rm));
     return rcpp_result_gen;
 END_RCPP
 }
 // fallout
-NumericVector fallout(const IntegerVector& actual, const IntegerVector& predicted, const bool& aggregate);
-RcppExport SEXP _SLmetrics_fallout(SEXP actualSEXP, SEXP predictedSEXP, SEXP aggregateSEXP) {
+NumericVector fallout(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro, const bool& na_rm);
+RcppExport SEXP _SLmetrics_fallout(SEXP actualSEXP, SEXP predictedSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const IntegerVector& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const bool& >::type aggregate(aggregateSEXP);
-    rcpp_result_gen = Rcpp::wrap(fallout(actual, predicted, aggregate));
+    Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(fallout(actual, predicted, micro, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
+// fallout_cmatrix
+NumericVector fallout_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+RcppExport SEXP _SLmetrics_fallout_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(fallout_cmatrix(x, micro, na_rm));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -882,8 +910,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_fbeta_cmatrix", (DL_FUNC) &_SLmetrics_fbeta_cmatrix, 4},
     {"_SLmetrics_fdr", (DL_FUNC) &_SLmetrics_fdr, 3},
     {"_SLmetrics_fer", (DL_FUNC) &_SLmetrics_fer, 3},
-    {"_SLmetrics_fpr", (DL_FUNC) &_SLmetrics_fpr, 3},
-    {"_SLmetrics_fallout", (DL_FUNC) &_SLmetrics_fallout, 3},
+    {"_SLmetrics_fpr", (DL_FUNC) &_SLmetrics_fpr, 4},
+    {"_SLmetrics_fpr_cmatrix", (DL_FUNC) &_SLmetrics_fpr_cmatrix, 3},
+    {"_SLmetrics_fallout", (DL_FUNC) &_SLmetrics_fallout, 4},
+    {"_SLmetrics_fallout_cmatrix", (DL_FUNC) &_SLmetrics_fallout_cmatrix, 3},
     {"_SLmetrics_jaccard", (DL_FUNC) &_SLmetrics_jaccard, 4},
     {"_SLmetrics_jaccard_cmatrix", (DL_FUNC) &_SLmetrics_jaccard_cmatrix, 3},
     {"_SLmetrics_csi", (DL_FUNC) &_SLmetrics_csi, 4},

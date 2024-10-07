@@ -71,8 +71,6 @@ create_factor <- function(
 
   }
 
-
-
   factor(
     x = sample(
       1:k,
@@ -85,6 +83,25 @@ create_factor <- function(
   )
 }
 
+create_regression <- function(
+    n = 1e2) {
+
+  # 1) actual
+  # values
+  actual <- rnorm(n = n)
+
+  # 2) predicted
+  # values
+  predicted <- actual + rnorm(n = n)
+
+  list(
+    actual    = actual,
+    predicted = predicted
+  )
+}
+
+# 5) test-that helper
+# functions
 
 set_equal <- function(
     current,
