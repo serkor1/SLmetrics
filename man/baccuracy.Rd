@@ -6,9 +6,9 @@
 \alias{baccuracy}
 \title{Compute the \eqn{\text{balanced accuracy}}}
 \usage{
-\method{baccuracy}{factor}(actual, predicted, adjust = FALSE)
+\method{baccuracy}{factor}(actual, predicted, adjust = FALSE, ...)
 
-\method{baccuracy}{cmatrix}(x, adjust = FALSE)
+\method{baccuracy}{cmatrix}(x, adjust = FALSE, ...)
 
 baccuracy(...)
 }
@@ -19,9 +19,9 @@ baccuracy(...)
 
 \item{adjust}{A \link{logical} value. \link{FALSE} by default. If \link{TRUE} the metric is adjusted for random change \eqn{\frac{1}{k}}}
 
-\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
-
 \item{...}{Arguments passed into other methods.}
+
+\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }
 \value{
 A \link{numeric}-vector of \link{length} 1
@@ -126,22 +126,22 @@ baccuracy(
 \seealso{
 Other classification: 
 \code{\link{accuracy.factor}()},
+\code{\link{ckappa.factor}()},
 \code{\link{cmatrix}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
-\code{\link{fdr}()},
-\code{\link{fer}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
 \code{\link{fmi.factor}()},
 \code{\link{fpr.factor}()},
 \code{\link{jaccard.factor}()},
-\code{\link{kappa}()},
 \code{\link{mcc.factor}()},
 \code{\link{nlr.factor}()},
-\code{\link{npv}()},
+\code{\link{npv.factor}()},
 \code{\link{plr.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
 \code{\link{specificity.factor}()},
-\code{\link{zerooneloss}()}
+\code{\link{zerooneloss.factor}()}
 }
 \concept{classification}

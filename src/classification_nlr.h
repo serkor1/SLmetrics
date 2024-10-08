@@ -19,9 +19,8 @@ inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::
   const Eigen::ArrayXd& fn = FN(x).cast<double>().array();
   const Eigen::ArrayXd& tn = TN(x).cast<double>().array();
 
-  return Rcpp::wrap(
-    (1.0 - (tp/(tp + fn))) / (tn / (tn + fp))
-  );
+  // Calculate NLR for each class and return
+  return Rcpp::wrap((1.0 - (tp / (tp + fn))) / ((tn / (tn + fp))));
 
 }
 
@@ -47,13 +46,11 @@ inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::
     const double& tn_sum = tn.sum();
 
 
-    return Rcpp::wrap(
-      (1.0 - (tp_sum/(tp_sum + fn_sum))) / (tn_sum / (tn_sum + fp_sum))
-    );
+    return Rcpp::wrap((1.0 - (tp_sum / (tp_sum + fn_sum))) / ((tn_sum / (tn_sum + fp_sum))));
 
   }
 
-  const Eigen::ArrayXd& output = (1.0 - (tp/(tp + fn))) / (tn / (tn + fp));
+  const Eigen::ArrayXd& output = (1.0 - (tp / (tp + fn))) / ((tn / (tn + fp)));
 
   return Rcpp::wrap(output.isNaN().select(0,output).sum() / ((na_rm) ? (output.isNaN() == false).count() : output.size()));
 

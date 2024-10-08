@@ -8,7 +8,7 @@ using namespace Rcpp;
 //' @method dor factor
 //' @export
 // [[Rcpp::export(dor.factor)]]
-NumericVector dor(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
+Rcpp::NumericVector dor(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
 {
 
  // 0)

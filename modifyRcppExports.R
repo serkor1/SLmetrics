@@ -29,8 +29,9 @@ foo_update <- c(
   "baccuracy",
   "mcc",
   "phi",
-  "fmi"
-
+  "fmi",
+  "ckappa",
+  "zerooneloss"
 )
 
 foo_update <- as.vector(outer(foo_update, c("cmatrix", "factor"), paste, sep = "."))

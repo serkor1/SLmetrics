@@ -29,11 +29,11 @@ predicted <- as.factor(
   )
 )
 
-# 4) kappa statistic
+# 4) ckappa statistic
 # with namespace qualified
 # call to avoid conflict
 # with base R
-SLmetrics::kappa(
+SLmetrics::ckappa(
   actual    = iris$Species,
   predicted = predicted
 )

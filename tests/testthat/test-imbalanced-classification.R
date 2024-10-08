@@ -20,6 +20,8 @@ testthat::test_that(
       "pytorch.py"
     )
 
+    source("ref-manual.R")
+
     # 1) generate class
     # values
     actual    <- create_factor(balanced = FALSE)
@@ -53,6 +55,9 @@ testthat::test_that(
       "accuracy"    = accuracy,
       "baccuracy"   = baccuracy,
 
+      # Zero-One Loss
+      "zerooneloss" = zerooneloss,
+
       # specificity methods
       "specificity" = specificity,
       "tnr"         = tnr,
@@ -71,11 +76,6 @@ testthat::test_that(
       # fbeta methods
       "fbeta"       = fbeta,
 
-      # likelihood methods
-      "dor"         = dor,
-      "plr"         = plr,
-      "nlr"         = nlr,
-
       # jaccard methods
       "jaccard"     = jaccard,
       "tscore"      = tscore,
@@ -90,7 +90,13 @@ testthat::test_that(
       "fallout"     = fallout,
 
       # fmi methods
-      "fmi"         = fmi
+      "fmi"         = fmi,
+
+      "fdr"         = fdr,
+      "npv"         = npv,
+      "fer"         = fer,
+
+      "ckappa"      = ckappa
     )
 
     for (i in seq_along(sl_function)) {

@@ -10,13 +10,6 @@
 #' The [fmi()]-function computes the [Fowlkes-Mallows Index](https://en.wikipedia.org/wiki/Fowlkes%E2%80%93Mallows_index) (FMI), a measure of the similarity between two sets of clusterings, between
 #' two vectors of predicted and observed [factor()] values.
 #'
-#' @usage
-#' # fowlkes-mallows index
-#' fmi(
-#'   actual,
-#'   predicted
-#' )
-#'
 #' @example man/examples/scr_fmi.R
 #'
 #' @inherit specificity

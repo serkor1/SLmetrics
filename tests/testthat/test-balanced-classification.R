@@ -20,6 +20,8 @@ testthat::test_that(
       "pytorch.py"
     )
 
+    source("ref-manual.R")
+
     # 1) generate class
     # values
     actual    <- create_factor(balanced = TRUE)
@@ -52,6 +54,9 @@ testthat::test_that(
       # accuracy
       "accuracy"    = accuracy,
       "baccuracy"   = baccuracy,
+
+      # Zero-One Loss
+      "zerooneloss" = zerooneloss,
 
       # specificity methods
       "specificity" = specificity,
@@ -90,7 +95,13 @@ testthat::test_that(
       "fallout"     = fallout,
 
       # fmi methods
-      "fmi"         = fmi
+      "fmi"         = fmi,
+
+      "fdr"         = fdr,
+      "npv"         = npv,
+      "fer"         = fer,
+
+      "ckappa"      = ckappa
 
 
     )

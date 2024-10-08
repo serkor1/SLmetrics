@@ -6,24 +6,20 @@
 \alias{fmi}
 \title{Compute the \eqn{\text{fowlkes}}-\eqn{\text{fallows}} \eqn{\text{index}}}
 \usage{
-\method{fmi}{factor}(actual, predicted)
+\method{fmi}{factor}(actual, predicted, ...)
 
-\method{fmi}{cmatrix}(x)
+\method{fmi}{cmatrix}(x, ...)
 
-# fowlkes-mallows index
-fmi(
-  actual,
-  predicted
-)
+fmi(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
-
 \item{...}{Arguments passed into other methods.}
+
+\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1
@@ -119,21 +115,21 @@ fmi(
 Other classification: 
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
+\code{\link{ckappa.factor}()},
 \code{\link{cmatrix}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
-\code{\link{fdr}()},
-\code{\link{fer}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
 \code{\link{fpr.factor}()},
 \code{\link{jaccard.factor}()},
-\code{\link{kappa}()},
 \code{\link{mcc.factor}()},
 \code{\link{nlr.factor}()},
-\code{\link{npv}()},
+\code{\link{npv.factor}()},
 \code{\link{plr.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
 \code{\link{specificity.factor}()},
-\code{\link{zerooneloss}()}
+\code{\link{zerooneloss.factor}()}
 }
 \concept{classification}

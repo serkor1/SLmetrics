@@ -1,94 +1,72 @@
 // [[Rcpp::depends(RcppEigen)]]
 #include <RcppEigen.h>
-#include "helpers.h"
+#include "classification_for.h"
 using namespace Rcpp;
 
-//' Compute the  \eqn{\text{false}} \eqn{\text{exclusion}} \eqn{\text{rate}}
+//' @rdname fer
+//' @method fer factor
 //'
-//' @description
-//' The [fer()]-function computes the [false omission rate](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate) (FOR), the proportion of false negatives among the predicted negatives, between
-//' two vectors of predicted and observed [factor()] values.
-//'
-//' When `aggregate = TRUE`, the function returns the micro-average FOR across all classes \eqn{k}. By default, it returns the class-wise FOR.
-//'
-//' @example man/examples/scr_for.R
-//'
-//' @usage
-//' # false exclusion rate
-//' fer(
-//'   actual,
-//'   predicted,
-//'   aggregate = FALSE
-//' )
-//'
-//' @inherit specificity
-//'
-//' @section Calculation:
-//'
-//' The metric is calculated for each class \eqn{k} as follows,
-//'
-//' \deqn{
-//'   \frac{\#FN_k}{\#FN_k + \#TN_k}
-//' }
-//'
-//' Where \eqn{\#FN_k} and \eqn{\#TN_k} are the number of false negatives and true negatives, respectively, for each class \eqn{k}.
-//'
-//' When `aggregate = TRUE`, the `micro`-average is calculated,
-//'
-//' \deqn{
-//'   \frac{\sum_{k=1}^k \#FN_k}{\sum_{k=1}^k \#FN_k + \sum_{k=1}^k \#TN_k}
-//' }
-//'
-//' @family classification
 //' @export
-// [[Rcpp::export]]
-NumericVector fer(
-  const IntegerVector& actual,
-  const IntegerVector& predicted,
-  const bool& aggregate = false) {
+// [[Rcpp::export(fer.factor)]]
+NumericVector fer(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue,const bool& na_rm = true)
+{
 
-/*
- * Calculate:
- *
- * 1) Confusion Matrix
- * 2) False Negatives
- * 3) True Negatives
- *
- * Output is FOR
- */
+ // 1) Calculate
+ // cmatrix
+ const Eigen::MatrixXi& x = confmat(actual, predicted);
 
-const Eigen::MatrixXi& c_matrix        = confmat(actual, predicted);
-const Eigen::VectorXi& false_negative  = FN(c_matrix);
-const Eigen::VectorXi& true_negative   = TN(c_matrix);
+ // 1) if micro is Null
+ // the retured value are equal
+ // to the amount dimensions
+ if (micro.isNull()) {
 
-const Eigen::ArrayXd& fn_dbl = false_negative.cast<double>().array();
-const Eigen::ArrayXd& tn_dbl = true_negative.cast<double>().array();
+   // 1.1) create the output
+   // vector
+   Rcpp::NumericVector output = _metric_(x);
 
-Rcpp::NumericVector output;
+   // 1.2) retrieve the names
+   // and assign it to the output
+   // vector and stop the function early
+   output.attr("names") = actual.attr("levels");
 
-if (aggregate) {
+   // 1.3) stop the function
+   // and return the output.
+   return output;
+ }
 
-  const double fn = fn_dbl.sum();
-  const double tn = tn_dbl.sum();
-
-  output = Rcpp::NumericVector::create(fn / (tn + fn));
-
-} else {
-
-  const int n = fn_dbl.size();
-  output = Rcpp::NumericVector(n);
-
-  const double* fn_ptr = fn_dbl.data();
-  const double* tn_ptr = tn_dbl.data();
-  double* output_ptr = REAL(output);
-
-  for (int i = 0; i < n; ++i) {
-    output_ptr[i] = fn_ptr[i] / (tn_ptr[i] + fn_ptr[i]);
-  }
-
-  output.attr("names") = actual.attr("levels");
+ return _metric_(x,  Rcpp::as<bool>(micro), na_rm);
 
 }
 
-return output;
+//' @rdname fer
+//' @method fer cmatrix
+//'
+//' @export
+// [[Rcpp::export(fer.cmatrix)]]
+NumericVector fer_cmatrix(const IntegerMatrix& x,  Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
+{
+
+ // 1) if micro is Null
+ // the retured value are equal
+ // to the amount dimensions
+ if (micro.isNull()) {
+
+   // 1.1) create the output
+   // vector
+   Rcpp::NumericVector output = _metric_(Rcpp::as<Eigen::MatrixXi>(x));
+
+   // 1.2) retrieve the dimnames
+   // and assign it to the output
+   // vector and stop the function early
+   Rcpp::List dimnames = x.attr("dimnames");
+   output.attr("names") = dimnames[1];  // Directly assign the column names
+
+   // 1.3) stop the function
+   // and return the output.
+   return output;
+
+ }
+
+ return _metric_(Rcpp::as<Eigen::MatrixXi>(x),  Rcpp::as<bool>(micro), na_rm);
+
 }

@@ -12,6 +12,14 @@ roxygen2::roxygenize(
   roclets = c("collate", "namespace", "rd")
 )
 
+source("modifyRcppExports.R")
+
+roxygen2::roxygenize(
+  clean   = TRUE,
+  roclets = c("collate", "namespace", "rd")
+)
+
+
 # 2) r-cmd-check
 rcmdcheck::rcmdcheck(
   args = c(

@@ -124,21 +124,21 @@ plot(
 Other classification: 
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
+\code{\link{ckappa.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
-\code{\link{fdr}()},
-\code{\link{fer}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
 \code{\link{fmi.factor}()},
 \code{\link{fpr.factor}()},
 \code{\link{jaccard.factor}()},
-\code{\link{kappa}()},
 \code{\link{mcc.factor}()},
 \code{\link{nlr.factor}()},
-\code{\link{npv}()},
+\code{\link{npv.factor}()},
 \code{\link{plr.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
 \code{\link{specificity.factor}()},
-\code{\link{zerooneloss}()}
+\code{\link{zerooneloss.factor}()}
 }
 \concept{classification}

@@ -8,7 +8,7 @@ using namespace Rcpp;
 //' @method plr factor
 //' @export
 // [[Rcpp::export(plr.factor)]]
-NumericVector plr(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
+Rcpp::NumericVector plr(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
 {
 
   // 0)

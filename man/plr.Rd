@@ -6,9 +6,9 @@
 \alias{plr}
 \title{Compute the \eqn{\text{positive}} \eqn{\text{likelihood}} \eqn{\text{ratio}}}
 \usage{
-\method{plr}{factor}(actual, predicted, micro = NULL, na_rm = TRUE)
+\method{plr}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
-\method{plr}{cmatrix}(x, micro = NULL, na_rm = TRUE)
+\method{plr}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 plr(...)
 }
@@ -20,9 +20,11 @@ plr(...)
 \item{micro}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{NULL} by default. If \link{TRUE} it returns the
 micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average. Otherwise class wise performance evaluation.}
 
-\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
+\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{TRUE} by default. If \link{FALSE} \link{NA} values will be disregarded when \code{micro = FALSE}.}
 
 \item{...}{Arguments passed into other methods.}
+
+\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }
 \value{
 If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vector of \link{length} k
@@ -139,21 +141,21 @@ The \code{\link[=nlr]{nlr()}}-function for the Negative Likehood Ratio (LR-)
 Other classification: 
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
+\code{\link{ckappa.factor}()},
 \code{\link{cmatrix}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
-\code{\link{fdr}()},
-\code{\link{fer}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
 \code{\link{fmi.factor}()},
 \code{\link{fpr.factor}()},
 \code{\link{jaccard.factor}()},
-\code{\link{kappa}()},
 \code{\link{mcc.factor}()},
 \code{\link{nlr.factor}()},
-\code{\link{npv}()},
+\code{\link{npv.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
 \code{\link{specificity.factor}()},
-\code{\link{zerooneloss}()}
+\code{\link{zerooneloss.factor}()}
 }
 \concept{classification}

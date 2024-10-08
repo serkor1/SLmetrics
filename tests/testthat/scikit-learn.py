@@ -23,13 +23,12 @@ def py_fmi(actual, predicted, average = None):
       labels_pred = predicted
     )
 
-def py_kappa(actual, predicted, penalty):
+def py_ckappa(actual, predicted, penalty = "linear", average = None):
     return metrics.cohen_kappa_score(
       y1 = actual,
       y2 = predicted,
       weights = penalty,
-      sample_weight = None,
-      zero_division = np.nan
+      sample_weight = None
     )
 
 def py_mcc(actual, predicted, average = None):
@@ -50,8 +49,7 @@ def py_fbeta(actual, predicted, beta = 1, average = None):
 def py_likelihood(actual, predicted):
     return metrics.class_likelihood_ratios(
       y_true = actual,
-      y_pred = predicted,
-      zero_division = np.nan
+      y_pred = predicted
     )
     
 def py_recall(actual, predicted, average = None):
@@ -62,7 +60,7 @@ def py_recall(actual, predicted, average = None):
       zero_division = np.nan
     )
     
-def py_zerooneloss(actual, predicted):
+def py_zerooneloss(actual, predicted, average = None):
     return metrics.zero_one_loss(
       y_true  = actual,
       y_pred  = predicted
@@ -109,6 +107,8 @@ def py_specificity(actual, response, average = None):
       average   = average
     )
     
+
+
 # regression metrics
 
 def py_rmse(actual, predicted, w = None):
