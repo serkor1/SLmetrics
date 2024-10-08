@@ -53,3 +53,9 @@ rsconnect/
 playground/
 docs
 inst/doc
+
+
+# Clion Files
+src/CMakeLists.txt
+src/cmake-build-debug
+src/.idea
