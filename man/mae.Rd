@@ -84,12 +84,12 @@ wmae(
 \seealso{
 Other regression: 
 \code{\link{ccc}()},
-\code{\link{huberloss}()},
+\code{\link{huberloss.numeric}()},
 \code{\link{mape}()},
 \code{\link{mpe}()},
-\code{\link{mse}()},
-\code{\link{rmse}()},
-\code{\link{rmsle}()},
+\code{\link{mse.numeric}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
 \code{\link{rsq}()},
 \code{\link{smape}()}
 }

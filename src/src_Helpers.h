@@ -19,33 +19,8 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
 using namespace Rcpp;
 
-/*
- * This function locates all 0 values
- * and returns a vector
- */
 
-inline __attribute__((always_inline)) Eigen::VectorXi extract(const Eigen::VectorXd& x) {
-  // Count how many positive elements there are
-  Eigen::Index count = (x.array() > 0).count();
-
-  // Allocate an Eigen::VectorXi to store the indices of positive values
-  Eigen::VectorXi indices(count);
-
-  // Copy the indices of positive elements
-  Eigen::Index j = 0;
-  for (Eigen::Index i = 0; i < x.size(); ++i) {
-    if (x(i) > 0) {
-      indices(j++) = i;  // Store the index of the positive value
-    }
-  }
-
-  // Return the indices of positive values
-  return indices;
-}
-
-
-
-inline Eigen::VectorXi TP(const Eigen::MatrixXi& matrix)
+inline __attribute__((always_inline)) Eigen::VectorXi TP(const Eigen::MatrixXi& matrix)
 {
   /*
    * This function returns a vector of
@@ -58,7 +33,7 @@ inline Eigen::VectorXi TP(const Eigen::MatrixXi& matrix)
   return TP;
 }
 
-inline Eigen::VectorXi FP(const Eigen::MatrixXi& matrix)
+inline __attribute__((always_inline)) Eigen::VectorXi FP(const Eigen::MatrixXi& matrix)
 {
   /*
    * This function returns a vector of
@@ -73,7 +48,7 @@ inline Eigen::VectorXi FP(const Eigen::MatrixXi& matrix)
   return FP;
 }
 
-inline Eigen::VectorXi TN(const Eigen::MatrixXi& matrix)
+inline __attribute__((always_inline)) Eigen::VectorXi TN(const Eigen::MatrixXi& matrix)
 {
   /*
    * This function returns a vector
@@ -92,9 +67,7 @@ inline Eigen::VectorXi TN(const Eigen::MatrixXi& matrix)
   return TN;
 }
 
-
-
-inline Eigen::VectorXi FN(const Eigen::MatrixXi& matrix)
+inline __attribute__((always_inline)) Eigen::VectorXi FN(const Eigen::MatrixXi& matrix)
 {
   /*
    * This function returns a vector of
@@ -107,7 +80,7 @@ inline Eigen::VectorXi FN(const Eigen::MatrixXi& matrix)
 }
 
 
-inline __attribute__((always_inline)) Eigen::MatrixXi confmat(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
+inline __attribute__((always_inline))  Eigen::MatrixXi confmat(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
 {
   /*
    * This function generates a confusion matrix
@@ -196,7 +169,7 @@ inline __attribute__((always_inline)) Eigen::MatrixXi confmat(const Rcpp::Intege
   return confmat.block(1, 1, k - 1, k - 1);
 }
 
-inline Eigen::MatrixXi seqmat(
+inline __attribute__((always_inline)) Eigen::MatrixXi seqmat(
     int n,
     double power) {
   Eigen::MatrixXi mat(n, n);

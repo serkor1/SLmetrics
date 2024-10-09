@@ -68,7 +68,7 @@ w <- rbeta(
   shape2 = 2
 )
 
-whuberloss(
+huberloss(
   actual = actual,
   predicted = predicted,
   delta = 0.5,
@@ -78,13 +78,13 @@ whuberloss(
 \seealso{
 Other regression: 
 \code{\link{ccc}()},
-\code{\link{huberloss}()},
+\code{\link{huberloss.numeric}()},
 \code{\link{mae}()},
 \code{\link{mape}()},
 \code{\link{mpe}()},
-\code{\link{mse}()},
-\code{\link{rmse}()},
-\code{\link{rmsle}()},
+\code{\link{mse.numeric}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
 \code{\link{smape}()}
 }
 \concept{regression}

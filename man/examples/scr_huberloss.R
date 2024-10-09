@@ -27,7 +27,7 @@ w <- rbeta(
   shape2 = 2
 )
 
-whuberloss(
+huberloss(
   actual = actual,
   predicted = predicted,
   delta = 0.5,

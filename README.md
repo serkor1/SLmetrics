@@ -32,7 +32,7 @@ include unsupervised learning metrics. If not, then it will remain a
 {pkg} for Supervised Learning metrics, and a sandbox for me to develop
 my `C++` skills.
 
-## :information_source: Why
+## :information_source: Why?
 
 Firstly, {SLmetrics} is *fast*. One, obviously, can’t build an R-package
 on `C++` and [{Rcpp}](https://github.com/RcppCore/Rcpp) without a proper
@@ -46,22 +46,21 @@ summary see below,
 Speed comparison
 </summary>
 
-Please refer to the performance-file in data-raw for the details about
-the test. All y- and x-axis are logarithmically scaled by `log = TRUE`
+Below is two simple cases that any {pkg} should be able to handle
+gracefully; computing a confusion matrix and computing the root mean
+squared error. The source code of the performance test can be found
+[here](https://github.com/serkor1/SLmetrics/blob/main/data-raw/performance.R).
 
-## Runtime: Confusion Matrix
-
-### By classes
-
-<img src="man/figures/README-classification_performance_class-1.png" width="100%" />
-
-### By sample size
+## Execution time: Computing a 2 x 2 Confusion Matrix
 
 <img src="man/figures/README-classification_performance_obs-1.png" width="100%" />
 
-## Runtime: RMSE
+## Execution time: Computing the Root Mean Squared Error (RMSE)
 
 <img src="man/figures/README-regression_performance_rmse-1.png" width="100%" />
+
+In both cases the execution time is diverging in favor of {SLmetrics};
+we promised speed and efficiency - and that is what you get.
 
 > \[!IMPORTANT\]
 >
@@ -72,7 +71,7 @@ the test. All y- and x-axis are logarithmically scaled by `log = TRUE`
 </details>
 
 Secondly, {SLmetrics} is *simple* and *flexible* to use; it is based on
-`S3` and provides the most essential classwise and aggregted metrics.
+`S3` and provides the most essential class-wise and aggregated metrics.
 
 Thirdly, {SLmetrics} is *low level* and free of any
 *{pkg}verse*-regimes; this provides the freedom to develop it further as

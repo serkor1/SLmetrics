@@ -31,10 +31,14 @@ foo_update <- c(
   "phi",
   "fmi",
   "ckappa",
-  "zerooneloss"
+  "zerooneloss",
+  "rmse",
+  "mse",
+  "huberloss",
+  "rmsle"
 )
 
-foo_update <- as.vector(outer(foo_update, c("cmatrix", "factor"), paste, sep = "."))
+foo_update <- as.vector(outer(foo_update, c("cmatrix", "factor", "numeric"), paste, sep = "."))
 
 # 5) Modify the function signatures in RcppExports to append ', ...' to the argument list
 for (fname in foo_update) {

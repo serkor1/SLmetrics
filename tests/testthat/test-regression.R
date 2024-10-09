@@ -31,8 +31,91 @@ testthat::test_that(
     # lists
     sl_function <- list(
       # RMSE
-      "RMSE" = rmse
+      "rmse"  = rmse,
+      "mse"   = mse,
+      "rmsle" = rmsle,
+      "huberloss" = huberloss
     )
+
+    # 3) test that the functions
+    # returns the same values as
+    # their python equivalents
+    py_function <- Filter(
+      Negate(is.null),
+
+      setNames(
+        lapply(seq_along(sl_function), function(i) {
+          tryCatch(
+            get(paste0("py_",names(sl_function)[i])),
+            error = function(e) {
+              NULL
+            }
+          )
+
+        }),
+        paste0("py_", names(sl_function))
+      )
+    )
+
+    sl_function <- sl_function[
+      names(sl_function) %in% gsub("py_", "", names(py_function))
+    ]
+
+
+    for (i in seq_along(sl_function)) {
+
+      .f <-  sl_function[[i]]
+      .F <-  py_function[[i]]
+
+      # 1) replace missing with 0
+      # as in python
+      sl_measure <- .f(actual, predicted);
+
+      py_measure <- as.numeric(reticulate::py_suppress_warnings(.F(actual, predicted)))
+
+      testthat::expect_true(
+        object = set_equal(
+          sl_measure,
+          py_measure
+
+        ),
+        label = paste(
+          "Unweighted functions in",
+          names(sl_function)[i],
+          "not equivalent to {torch} or {scikit-learn}."
+        )
+      )
+
+    }
+
+    for (i in seq_along(sl_function)) {
+
+      .f <-  sl_function[[i]]
+      .F <-  py_function[[i]]
+
+      # 1) replace missing with 0
+      # as in python
+      sl_measure <- .f(actual, predicted, w = w);
+
+      py_measure <- as.numeric(reticulate::py_suppress_warnings(.F(actual, predicted, w = w)))
+
+      testthat::expect_true(
+        object = set_equal(
+          sl_measure,
+          py_measure
+
+        ),
+        label = paste(
+          "Weighted functions in",
+          names(sl_function)[i],
+          "not equivalent to {torch} or {scikit-learn}."
+        )
+      )
+
+    }
+
+
+
 
 
   }

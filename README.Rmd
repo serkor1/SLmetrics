@@ -14,8 +14,8 @@ knitr::opts_chunk$set(
   comment    = "#>",
   fig.path   = "man/figures/README-",
   out.width  = "100%",
-  dpi        = 640,
-  fig.height = 8
+  dpi        = 1280,
+  fig.height = 6
 )
 
 # 1) store data
@@ -27,14 +27,15 @@ lattice::trellis.par.set(
     lattice::standard.theme(), 
     list(
       background = list(col = "#212830"), # was  
-      panel.background = list(col = "#2b3139"), 
+      panel.background = list(col = "#2b3139"),
+       reference.line = list(col = "#4a5563", lty = 1), # #4a5563
       axis.text = list(col = "#848e9c"),         
       par.xlab.text = list(col = "#848e9c"),    
       par.ylab.text = list(col = "#848e9c"),     
       par.main.text = list(col = "#848e9c"),
       axis.line = list(col = "#848e9c"), 
-      superpose.line = list(col = c("#5d8ca8", "#d5695d", "#65a479")),
-      superpose.symbol = list(col = c("#5d8ca8", "#d5695d", "#65a479"), pch = 16)
+      superpose.line = list(col = c("#5d8ca8", "#d5695d", "#65a479","#d3ba68")),
+      superpose.symbol = list(col = c("#5d8ca8", "#d5695d", "#65a479","#d3ba68"), pch = 16)
     )
   )
 )
@@ -54,71 +55,62 @@ lattice::trellis.par.set(
 
 Depending on the mood and alignment of planets {SLmetrics} stands for Supervised Learning metrics, or Statistical Learning metrics. If {SLmetrics} catches on, the latter will be the core philosophy and include unsupervised learning metrics. If not, then it will remain a {pkg} for Supervised Learning metrics, and a sandbox for me to develop my `C++` skills.
 
-## :information_source: Why
+## :information_source: Why?
 
 Firstly, {SLmetrics} is *fast*. One, obviously, can't build an R-package on `C++` and [{Rcpp}](https://github.com/RcppCore/Rcpp) without a proper pissing contest at the urinals; a detailed [blog post](https://www.r-bloggers.com/) about the difference in speed has been posted on [R-bloggers](https://www.r-bloggers.com/). For a quick summary see below,
 
 <details>
 <summary> Speed comparison </summary>
 
-Please refer to the performance-file in data-raw for the details about the test. All y- and x-axis are logarithmically scaled by `log = TRUE`
+Below is two simple cases that any {pkg} should be able to handle gracefully; computing a confusion matrix and computing the root mean squared error. The source code of the performance test can be found [here](https://github.com/serkor1/SLmetrics/blob/main/data-raw/performance.R).
 
-## Runtime: Confusion Matrix
+## Execution time: Computing a 2 x 2 Confusion Matrix
 
-### By classes
-
-```{r classification_performance_class, echo = FALSE}
-lattice::xyplot(
-  mean ~ sample_size | factor(paste(classes, "Classes"), levels = paste(classes, "Classes"), labels = paste(classes, "Classes")),
-  data = DT[[1]],
-  groups = expr,
-  type = 'o', 
-  auto.key = list(columns = 3, col = "#848e9c"),
-  scales = list( 
-    y = list(log = TRUE),
-    x = list(log = TRUE)
-  ),
-  xlab = "Sample Size",
-  ylab = "Average Runtime",
-  layout = c(2,2)
-)
-```
-
-### By sample size
 ```{r classification_performance_obs, echo = FALSE}
 lattice::xyplot(
-  mean ~ classes | factor(paste(sample_size, "Obs"), levels = paste(sample_size, "Obs"), labels = paste(sample_size, "Obs")),
+  median ~ sample_size,
   data = DT[[1]],
   groups = expr,
-  type = 'o', 
-  auto.key = list(columns = 3, col = "#848e9c"),
+  type = 'l', 
+  auto.key = list(columns = 2, col = "#848e9c"),
   scales = list(
-    y = list(log = TRUE) ,
-    x = list(log = TRUE)
+    y = list(log = FALSE) ,
+    x = list(log = FALSE)
     ),
-  xlab = "Sample Size",
-  ylab = "Average Runtime",
-  layout = c(2,3)
+  xlab = "Sample Size (N)",
+  ylab = "Median Execution Time (Microseconds)",
+  panel = function(...) {
+    lattice::panel.grid(...)
+    lattice::panel.xyplot(...)
+    
+  }
 )
 ```
 
-## Runtime: RMSE
+## Execution time: Computing the Root Mean Squared Error (RMSE)
 
 ```{r regression_performance_rmse, echo = FALSE}
 lattice::xyplot(
-  mean ~ sample_size,
+  median ~ sample_size,
   data = DT[[2]],
   groups = expr,
-  type = "o",
+  type = "l",
   scales = list(
-    y = list(log = TRUE),
-    x = list(log = TRUE)
+    y = list(log = FALSE),
+    x = list(log = FALSE)
     ),
-  auto.key = list(columns = 3, col = "#848e9c"),
-  xlab = "Sample Size",
-  ylab = "Average Runtime"
+  auto.key = list(columns = 2, col = "#848e9c"),
+  xlab = "Sample Size (N)",
+  ylab = "Median Execution Time (Microseconds)",
+  panel = function(...) {
+    lattice::panel.grid(...)
+    lattice::panel.xyplot(...)
+    
+  }
 )
 ```
+
+In both cases the execution time is diverging in favor of {SLmetrics}; we promised speed and efficiency - and that is what you get.
 
 > [!IMPORTANT]
 >
@@ -127,7 +119,7 @@ lattice::xyplot(
 
 </details>
 
-Secondly, {SLmetrics} is *simple* and *flexible* to use; it is based on `S3` and provides the most essential classwise and aggregted metrics.
+Secondly, {SLmetrics} is *simple* and *flexible* to use; it is based on `S3` and provides the most essential class-wise and aggregated metrics.
 
 Thirdly, {SLmetrics} is *low level* and free of any *{pkg}verse*-regimes; this provides the freedom to develop it further as a part of your own {pkg}, or use it in any tidy, or untidy, pipeline you would want to.
 

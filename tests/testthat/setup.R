@@ -88,11 +88,11 @@ create_regression <- function(
 
   # 1) actual
   # values
-  actual <- rnorm(n = n)
+  actual <- abs(rnorm(n = n))
 
   # 2) predicted
   # values
-  predicted <- actual + rnorm(n = n)
+  predicted <- actual + abs(rnorm(n = n))
 
   # 3) generate
   # weights

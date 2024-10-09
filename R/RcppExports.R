@@ -551,69 +551,11 @@ wccc <- function(actual, predicted, w, correction = FALSE) {
     .Call(`_SLmetrics_wccc`, actual, predicted, w, correction)
 }
 
-#' Compute the \eqn{\text{huber loss}}
-#'
-#' @description
-#' The [huberloss()]- and [whuberloss()]-function computes the simple and weighted [huber loss](https://en.wikipedia.org/wiki/Huber_loss) between
-#' the predicted and observed <[numeric]> vectors.
-#'
-#' @usage
-#' # `huberloss()`-function
-#' huberloss(
-#'   actual,
-#'   predicted,
-#'   delta = 1
-#' )
-#'
-#' @param actual A <[numeric]>-vector of [length] \eqn{n}. The observed (continuous) response variable.
-#' @param predicted A <[numeric]>-vector of [length] \eqn{n}. The estimated (continuous) response variable.
-#' @param delta A <[numeric]>-vector of [length] 1. 1 by default. The threshold value for switch between functions (see calculation).
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated as follows,
-#'
-#' \deqn{
-#'  \frac{1}{2} (y - \upsilon)^2 ~for~ |y - \upsilon| \leq \delta
-#' }
-#'
-#' and
-#'
-#' \deqn{
-#'   \delta |y-\upsilon|-\frac{1}{2} \delta^2 ~for~ \text{otherwise}
-#' }
-#'
-#' where \eqn{y} and \eqn{\upsilon} are the `actual` and `predicted` values respectively. If `w` is not [NULL], then all values
-#' are aggregated using the weights.
-#'
-#'
-#' @example man/examples/scr_huberloss.R
-#'
-#'
-#' @family regression
-#'
-#' @returns A <[numeric]> vector of [length] 1.
-#'
-#' @export
-huberloss <- function(actual, predicted, delta = 1) {
-    .Call(`_SLmetrics_huberloss`, actual, predicted, delta)
-}
-
 #' @rdname huberloss
-#' @usage
-#' # `whuberloss()`-function
-#' whuberloss(
-#'   actual,
-#'   predicted,
-#'   w,
-#'   delta = 1
-#' )
-#'
-#' @param w A <[numeric]>-vector of [length] \eqn{n}. The weight assigned to each observation in the data. See [stats::weighted.mean()] for more details.
-#'
+#' @method huberloss numeric
 #' @export
-whuberloss <- function(actual, predicted, w, delta = 1) {
-    .Call(`_SLmetrics_whuberloss`, actual, predicted, w, delta)
+huberloss.numeric <- function(actual, predicted, delta = 1.0, w = NULL, ...) {
+    .Call(`_SLmetrics_huberloss`, actual, predicted, delta, w)
 }
 
 #' Compute the \eqn{\text{mean absolute error}}
@@ -754,140 +696,25 @@ wmpe <- function(actual, predicted, w) {
     .Call(`_SLmetrics_wmpe`, actual, predicted, w)
 }
 
-#' Compute the \eqn{\text{mean squared error}}
-#'
-#' The [mse()]- and [wmse()]-function computes the simple and weighted [mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error) between
-#' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted mean squared error.
-#' @usage
-#' # `mse()`-function
-#' mse(
-#'   actual,
-#'   predicted
-#' )
-#'
-#' @inherit huberloss
-#'
-#' @example man/examples/scr_mse.R
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated as,
-#'
-#' \deqn{
-#'   \frac{1}{n} \sum_i^n (y_i - \upsilon_i)^2
-#' }
-#'
-#' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
-#'
-#' @family regression
-#' @export
-mse <- function(actual, predicted) {
-    .Call(`_SLmetrics_mse`, actual, predicted)
-}
-
 #' @rdname mse
-#'
-#' @usage
-#' # `wmse()`-function
-#' wmse(
-#'   actual,
-#'   predicted,
-#'   w
-#' )
+#' @method mse numeric
 #' @export
-wmse <- function(actual, predicted, w) {
-    .Call(`_SLmetrics_wmse`, actual, predicted, w)
-}
-
-#' Compute the \eqn{\text{root mean squared error}}
-#'
-#' The [rmse()]- and [wrmse()]-function computes the simple and weighted [root mean squared error](https://en.wikipedia.org/wiki/Root-mean-square_deviation) between
-#' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted root mean squared error.
-#' @usage
-#' # `rmse()`-function
-#' rmse(
-#'   actual,
-#'   predicted
-#' )
-#'
-#' @inherit huberloss
-#'
-#' @example man/examples/scr_rmse.R
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated as,
-#'
-#' \deqn{
-#'   \sqrt{\frac{1}{n} \sum_i^n (y_i - \upsilon_i)^2}
-#' }
-#'
-#' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
-#'
-#' @family regression
-#' @export
-rmse <- function(actual, predicted) {
-    .Call(`_SLmetrics_rmse`, actual, predicted)
+mse.numeric <- function(actual, predicted, w = NULL, ...) {
+    .Call(`_SLmetrics_mse`, actual, predicted, w)
 }
 
 #' @rdname rmse
-#'
-#' @usage
-#' # `wrmse()`-function
-#' wrmse(
-#'   actual,
-#'   predicted,
-#'   w
-#' )
+#' @method rmse numeric
 #' @export
-wrmse <- function(actual, predicted, w) {
-    .Call(`_SLmetrics_wrmse`, actual, predicted, w)
-}
-
-#' Compute the \eqn{\text{root mean squared logarithmic error}}
-#'
-#' The [rmsle()]- and [wrmsle()]-function computes the simple and weighted root mean squared logarithmic error between
-#' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted root mean squared logarithmic error.
-#' @usage
-#' # `rmsle()`-function
-#' rmsle(
-#'   actual,
-#'   predicted
-#' )
-#'
-#' @inherit huberloss
-#'
-#' @example man/examples/scr_rmsle.R
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated as,
-#'
-#' \deqn{
-#'   \sqrt{\frac{1}{n} \sum_i^n (\log(1 + y_i) - \log(1 + \upsilon_i))^2}
-#' }
-#'
-#' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
-#'
-#' @family regression
-#' @export
-rmsle <- function(actual, predicted) {
-    .Call(`_SLmetrics_rmsle`, actual, predicted)
+rmse.numeric <- function(actual, predicted, w = NULL, ...) {
+    .Call(`_SLmetrics_rmse`, actual, predicted, w)
 }
 
 #' @rdname rmsle
-#'
-#' @usage
-#' # `wrmsle()`-function
-#' wrmsle(
-#'   actual,
-#'   predicted,
-#'   w
-#' )
-#'
+#' @method rmsle numeric
 #' @export
-wrmsle <- function(actual, predicted, w) {
-    .Call(`_SLmetrics_wrmsle`, actual, predicted, w)
+rmsle.numeric <- function(actual, predicted, w = NULL, ...) {
+    .Call(`_SLmetrics_rmsle`, actual, predicted, w)
 }
 
 #' Compute the \eqn{\text{symmetric mean absolute percentage error}}
