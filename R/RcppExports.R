@@ -468,60 +468,11 @@ rsq.numeric <- function(actual, predicted, k = 0, ...) {
     .Call(`_SLmetrics_rsq`, actual, predicted, k)
 }
 
-#' Compute the \eqn{\text{concordance correlation coefficient}}
-#'
-#' @description
-#' The [ccc()]- and [wccc()]-function computes the simple and weighted [concordance correlation coefficient](https://en.wikipedia.org/wiki/Concordance_correlation_coefficient) between
-#' the two vectors of predicted and observed <[numeric]> values.
-#'
-#' If `correction` is [TRUE] \eqn{\sigma^2} is adjusted by \eqn{\frac{1-n}{n}} in the intermediate steps.
-#'
-#' @usage
-#' # `ccc()`-function
-#' ccc(
-#'   actual,
-#'   predicted,
-#'   correction = FALSE
-#' )
-#'
-#' @inherit huberloss
-#' @param correction A <[logical]> vector of [length] 1. [FALSE] by default. If [TRUE] the variance and covariance
-#' will be adjusted with \eqn{\frac{1-n}{n}}
-#'
-#' @example man/examples/scr_ccc.R
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated as follows,
-#'
-#' \deqn{
-#'   \rho_c = \frac{2 \rho \sigma_x \sigma_y}{\sigma_x^2 + \sigma_y^2 + (\mu_x - \mu_y)^2}
-#' }
-#'
-#' Where \eqn{\rho} is the \eqn{\text{pearson correlation coefficient}}, \eqn{\sigma} is the \eqn{\text{standard deviation}} and \eqn{\mu} is the simple mean of `actual` and `predicted`.
-#'
-#' If `w` is not [NULL], all calculations are based on the weighted measures.
-#'
-#' @family regression
-#' @export
-ccc <- function(actual, predicted, correction = FALSE) {
-    .Call(`_SLmetrics_ccc`, actual, predicted, correction)
-}
-
 #' @rdname ccc
-#'
-#' @usage
-#' # `wccc()`-function
-#' wccc(
-#'   actual,
-#'   predicted,
-#'   w,
-#'   correction = FALSE
-#' )
-#'
+#' @method ccc numeric
 #' @export
-wccc <- function(actual, predicted, w, correction = FALSE) {
-    .Call(`_SLmetrics_wccc`, actual, predicted, w, correction)
+ccc.numeric <- function(actual, predicted, correction = FALSE, w = NULL, ...) {
+    .Call(`_SLmetrics_ccc`, actual, predicted, correction, w)
 }
 
 #' @rdname huberloss
@@ -531,51 +482,11 @@ huberloss.numeric <- function(actual, predicted, delta = 1.0, w = NULL, ...) {
     .Call(`_SLmetrics_huberloss`, actual, predicted, delta, w)
 }
 
-#' Compute the \eqn{\text{mean absolute error}}
-#'
-#' The [mae()]- and [wmae()]-function computes the simple and weighted [mean absolute error](https://en.wikipedia.org/wiki/Mean_absolute_error) between
-#' the observed and predicted <[numeric]> vectors. If `w` is not [NULL] the function returns the weighted mean absolute error.
-#'
-#' @usage
-#' # `mae()`-function
-#' mae(
-#'   actual,
-#'   predicted
-#' )
-#'
-#' @inherit huberloss
-#'
-#' @example man/examples/scr_mae.R
-#'
-#' @section Calculation:
-#'
-#' The metric is calulated as follows,
-#'
-#' \deqn{
-#'   \frac{\sum_i^n |y_i - \upsilon_i|}{n}
-#' }
-#'
-#' If \eqn{w} is not [NULL] the function returns the weigthed version.
-#'
-#' @family regression
-#'
-#' @export
-mae <- function(actual, predicted) {
-    .Call(`_SLmetrics_mae`, actual, predicted)
-}
-
 #' @rdname mae
-#'
-#' @usage
-#' # `wmae()`-function
-#' wmae(
-#'   actual,
-#'   predicted,
-#'   w
-#' )
+#' @method mae numeric
 #' @export
-wmae <- function(actual, predicted, w) {
-    .Call(`_SLmetrics_wmae`, actual, predicted, w)
+mae.numeric <- function(actual, predicted, w = NULL, ...) {
+    .Call(`_SLmetrics_mae`, actual, predicted, w)
 }
 
 #' @rdname mape

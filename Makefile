@@ -9,21 +9,22 @@ PKGNAME = SLmetrics
 VERSION = $(shell grep "^Version:" DESCRIPTION | sed "s/Version: //")
 TARBALL = $(PKGNAME)_$(VERSION).tar.gz
 
-compile:
-	clear
-	Rscript -e "Rcpp::compileAttributes()"; \
-		echo "Rcpp attributes recompiled."; \
-
-	Rscript modifyRcppExports.R
-
-build: compile
+build: document
+	@echo "Installing {$(PKGNAME)}"
 	R CMD build .
 	R CMD INSTALL $(TARBALL)
 	rm -f $(TARBALL)
 
-check: compile
-	clear
-	Rscript build.R
+check: document
+	@echo "Checking {$(PKGNAME)}"
+	R CMD build .
+	R CMD check $(TARBALL)
+	rm -f $(TARBALL)
+	rm -rf $(PKGNAME).Rcheck
 
+document:
+	clear
+	@echo "Documenting {$(PKGNAME)}"
+	@Rscript tools/document.R
 
 

@@ -74,9 +74,9 @@ smape(
 }
 \seealso{
 Other regression: 
-\code{\link{ccc}()},
+\code{\link{ccc.numeric}()},
 \code{\link{huberloss.numeric}()},
-\code{\link{mae}()},
+\code{\link{mae.numeric}()},
 \code{\link{mape.numeric}()},
 \code{\link{mpe.numeric}()},
 \code{\link{mse.numeric}()},

@@ -28,7 +28,7 @@ w <- rbeta(
   shape2 = 2
 )
 
-wmae(
+mae(
   actual     = actual,
   predicted  = predicted,
   w          = w

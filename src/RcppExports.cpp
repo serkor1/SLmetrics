@@ -744,29 +744,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // ccc
-double ccc(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, bool correction);
-RcppExport SEXP _SLmetrics_ccc(SEXP actualSEXP, SEXP predictedSEXP, SEXP correctionSEXP) {
+double ccc(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, bool correction, Rcpp::Nullable<Rcpp::NumericVector> w);
+RcppExport SEXP _SLmetrics_ccc(SEXP actualSEXP, SEXP predictedSEXP, SEXP correctionSEXP, SEXP wSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
     Rcpp::traits::input_parameter< bool >::type correction(correctionSEXP);
-    rcpp_result_gen = Rcpp::wrap(ccc(actual, predicted, correction));
-    return rcpp_result_gen;
-END_RCPP
-}
-// wccc
-double wccc(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w, bool correction);
-RcppExport SEXP _SLmetrics_wccc(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP correctionSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
-    Rcpp::traits::input_parameter< bool >::type correction(correctionSEXP);
-    rcpp_result_gen = Rcpp::wrap(wccc(actual, predicted, w, correction));
+    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(ccc(actual, predicted, correction, w));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -785,27 +772,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // mae
-double mae(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted);
-RcppExport SEXP _SLmetrics_mae(SEXP actualSEXP, SEXP predictedSEXP) {
+double mae(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, Rcpp::Nullable<Rcpp::NumericVector> w);
+RcppExport SEXP _SLmetrics_mae(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
-    rcpp_result_gen = Rcpp::wrap(mae(actual, predicted));
-    return rcpp_result_gen;
-END_RCPP
-}
-// wmae
-double wmae(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w);
-RcppExport SEXP _SLmetrics_wmae(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
-    rcpp_result_gen = Rcpp::wrap(wmae(actual, predicted, w));
+    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(mae(actual, predicted, w));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -945,11 +920,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_zerooneloss", (DL_FUNC) &_SLmetrics_zerooneloss, 2},
     {"_SLmetrics_zerooneloss_cmatrix", (DL_FUNC) &_SLmetrics_zerooneloss_cmatrix, 1},
     {"_SLmetrics_rsq", (DL_FUNC) &_SLmetrics_rsq, 3},
-    {"_SLmetrics_ccc", (DL_FUNC) &_SLmetrics_ccc, 3},
-    {"_SLmetrics_wccc", (DL_FUNC) &_SLmetrics_wccc, 4},
+    {"_SLmetrics_ccc", (DL_FUNC) &_SLmetrics_ccc, 4},
     {"_SLmetrics_huberloss", (DL_FUNC) &_SLmetrics_huberloss, 4},
-    {"_SLmetrics_mae", (DL_FUNC) &_SLmetrics_mae, 2},
-    {"_SLmetrics_wmae", (DL_FUNC) &_SLmetrics_wmae, 3},
+    {"_SLmetrics_mae", (DL_FUNC) &_SLmetrics_mae, 3},
     {"_SLmetrics_mape", (DL_FUNC) &_SLmetrics_mape, 3},
     {"_SLmetrics_mpe", (DL_FUNC) &_SLmetrics_mpe, 3},
     {"_SLmetrics_mse", (DL_FUNC) &_SLmetrics_mse, 3},
