@@ -96,12 +96,12 @@ wccc(
 Other regression: 
 \code{\link{huberloss.numeric}()},
 \code{\link{mae}()},
-\code{\link{mape}()},
-\code{\link{mpe}()},
+\code{\link{mape.numeric}()},
+\code{\link{mpe.numeric}()},
 \code{\link{mse.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
-\code{\link{rsq}()},
-\code{\link{smape}()}
+\code{\link{rsq.numeric}()},
+\code{\link{smape.numeric}()}
 }
 \concept{regression}

@@ -247,5 +247,4 @@ py_dor <- function(actual, predicted, average = NULL, na.rm = TRUE) {
   return(dor_class)
 }
 
-
 # script end;

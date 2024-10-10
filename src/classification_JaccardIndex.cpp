@@ -172,7 +172,7 @@ Rcpp::NumericVector tscore(const IntegerVector& actual, const IntegerVector& pre
 
 }
 
-//' @rdname tscore
+//' @rdname jaccard
 //' @method tscore cmatrix
 //' @export
 // [[Rcpp::export(tscore.cmatrix)]]

@@ -28,7 +28,7 @@ w <- rbeta(
   shape2 = 2
 )
 
-wmpe(
+mpe(
   actual     = actual,
   predicted  = predicted,
   w          = w

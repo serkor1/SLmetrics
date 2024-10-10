@@ -30,11 +30,13 @@ testthat::test_that(
     # 2) generate functions
     # lists
     sl_function <- list(
-      # RMSE
-      "rmse"  = rmse,
-      "mse"   = mse,
-      "rmsle" = rmsle,
-      "huberloss" = huberloss
+      "rmse"      = rmse,
+      "mse"       = mse,
+      "rmsle"     = rmsle,
+      "huberloss" = huberloss,
+      "mpe"       = mpe,
+      "mape"      = mape,
+      "smape"     = smape
     )
 
     # 3) test that the functions

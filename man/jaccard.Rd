@@ -6,6 +6,7 @@
 \alias{csi.factor}
 \alias{csi.cmatrix}
 \alias{tscore.factor}
+\alias{tscore.cmatrix}
 \alias{jaccard}
 \alias{csi}
 \alias{tscore}
@@ -20,6 +21,8 @@
 \method{csi}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 \method{tscore}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+
+\method{tscore}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 jaccard(...)
 

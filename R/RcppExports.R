@@ -236,7 +236,7 @@ tscore.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_tscore`, actual, predicted, micro, na_rm = na.rm)
 }
 
-#' @rdname tscore
+#' @rdname jaccard
 #' @method tscore cmatrix
 #' @export
 tscore.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
@@ -461,37 +461,10 @@ zerooneloss.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_zerooneloss_cmatrix`, x)
 }
 
-#' Compute the \eqn{R^2}
-#'
-#' @description
-#' The [rsq()]-function calculates the \eqn{R^2}, the [coefficient of determination](https://en.wikipedia.org/wiki/Coefficient_of_determination), between the ovserved
-#' and predicted <[numeric]> vectors. By default [rsq()] returns the unadjusted \eqn{R^2}. For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.
-#'
-#' @usage
-#' # `rsq()`-function
-#' rsq(
-#'   actual,
-#'   predicted,
-#'   k = 0
-#' )
-#'
-#' @inherit huberloss
-#' @param k A <[numeric]>-vector of [length] 1. 0 by default. If \eqn{k>0}
-#' the function returns the adjusted \eqn{R^2}.
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated as follows,
-#'
-#' \deqn{
-#'   R^2 = 1 - \frac{\text{SSE}}{\text{SST}} \frac{n-1}{n - (k + 1)}
-#' }
-#'
-#' Where \eqn{\text{SSE}} is the sum of squared errors, \eqn{\text{SST}} is total sum of squared errors, \eqn{n} is the number of observations, and \eqn{k} is the number of non-constant parameters.
-#'
-#' @family regression
-#'
-rsq <- function(actual, predicted, k = 0) {
+#' @rdname rsq
+#' @method rsq numeric
+#' @export
+rsq.numeric <- function(actual, predicted, k = 0, ...) {
     .Call(`_SLmetrics_rsq`, actual, predicted, k)
 }
 
@@ -605,95 +578,18 @@ wmae <- function(actual, predicted, w) {
     .Call(`_SLmetrics_wmae`, actual, predicted, w)
 }
 
-#' Compute the \eqn{\text{mean absolute percentage error}}
-#'
-#' The [mape()]- and [wmape()]-function computes the simple and weighted [mean absolute percentage error](https://en.wikipedia.org/wiki/Mean_absolute_percentage_error) between
-#' the observed and predicted <[numeric]> vectors. If `w` is not [NULL] the function returns the weighted mean absolute error.
-#' @usage
-#' # `mape()`-function
-#' mape(
-#'   actual,
-#'   predicted
-#' )
-#'
-#' @inherit huberloss
-#'
-#' @example man/examples/scr_mape.R
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated as,
-#'
-#' \deqn{
-#'   \frac{1}{n} \sum_i^n \frac{|y_i - \upsilon_i|}{|y_i|}
-#' }
-#'
-#' If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
-#'
-#' @family regression
-#' @export
-mape <- function(actual, predicted) {
-    .Call(`_SLmetrics_mape`, actual, predicted)
-}
-
 #' @rdname mape
-#'
-#' @usage
-#' # `wmape()`-function
-#' wmape(
-#'   actual,
-#'   predicted,
-#'   w
-#' )
-#'
+#' @method mape numeric
 #' @export
-wmape <- function(actual, predicted, w) {
-    .Call(`_SLmetrics_wmape`, actual, predicted, w)
-}
-
-#' Compute the \eqn{\text{mean percentage error}}
-#'
-#' The [mpe()]-function computes the [mean percentage error](https://en.wikipedia.org/wiki/Mean_percentage_error) between
-#' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted mean percentage error.
-#' @usage
-#' # `mpe()`-function
-#' mpe(
-#'   actual,
-#'   predicted
-#' )
-#'
-#' @inherit huberloss
-#'
-#' @example man/examples/scr_mpe.R
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated as,
-#'
-#' \deqn{
-#'   \frac{1}{n} \sum_i^n \frac{y_i - \upsilon_i}{y_i}
-#' }
-#'
-#' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
-#'
-#' @family regression
-#' @export
-mpe <- function(actual, predicted) {
-    .Call(`_SLmetrics_mpe`, actual, predicted)
+mape.numeric <- function(actual, predicted, w = NULL, ...) {
+    .Call(`_SLmetrics_mape`, actual, predicted, w)
 }
 
 #' @rdname mpe
-#'
-#' @usage
-#' # `wmpe()`-function
-#' wmpe(
-#'   actual,
-#'   predicted,
-#'   w
-#' )
+#' @method mpe numeric
 #' @export
-wmpe <- function(actual, predicted, w) {
-    .Call(`_SLmetrics_wmpe`, actual, predicted, w)
+mpe.numeric <- function(actual, predicted, w = NULL, ...) {
+    .Call(`_SLmetrics_mpe`, actual, predicted, w)
 }
 
 #' @rdname mse
@@ -717,50 +613,10 @@ rmsle.numeric <- function(actual, predicted, w = NULL, ...) {
     .Call(`_SLmetrics_rmsle`, actual, predicted, w)
 }
 
-#' Compute the \eqn{\text{symmetric mean absolute percentage error}}
-#'
-#' The [smape()]- and [wsmape()]-function computes the simple and weighted [symmetric mean absolute percentage error](https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error).
-#'
-#' @usage
-#' # `smape()`-function
-#' smape(
-#'   actual,
-#'   predicted
-#' )
-#'
-#' @inherit huberloss
-#'
-#' @example man/examples/scr_smape.R
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated as follows,
-#'
-#' \deqn{
-#'   \sum_i^n \frac{1}{n} \frac{|y_i - \upsilon_i|}{\frac{|y_i|+|\upsilon_i|}{2}}
-#' }
-#'
-#' where \eqn{y_i} and \eqn{\upsilon_i} is the `actual` and `predicted` values respectively. If `w` is not [NULL], the metric is calculated
-#' using weights.
-#'
-#' @family regression
-#' @export
-smape <- function(actual, predicted) {
-    .Call(`_SLmetrics_smape`, actual, predicted)
-}
-
 #' @rdname smape
-#'
-#' @usage
-#' # `wsmape()`-function
-#' wsmape(
-#'   actual,
-#'   predicted,
-#'   w
-#' )
-#'
+#' @method smape numeric
 #' @export
-wsmape <- function(actual, predicted, w) {
-    .Call(`_SLmetrics_wsmape`, actual, predicted, w)
+smape.numeric <- function(actual, predicted, w = NULL, ...) {
+    .Call(`_SLmetrics_smape`, actual, predicted, w)
 }
 

@@ -35,7 +35,11 @@ foo_update <- c(
   "rmse",
   "mse",
   "huberloss",
-  "rmsle"
+  "rmsle",
+  "mpe",
+  "mape",
+  "smape",
+  "rsq"
 )
 
 foo_update <- as.vector(outer(foo_update, c("cmatrix", "factor", "numeric"), paste, sep = "."))

@@ -23,8 +23,7 @@ roxygen2::roxygenize(
 # 2) r-cmd-check
 rcmdcheck::rcmdcheck(
   args = c(
-    "--as-cran",
-    "--no-tests"
+    "--as-cran"
   )
 )
 
