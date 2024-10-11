@@ -1,5 +1,6 @@
 ---
 output: github_document
+always_allow_html: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -9,10 +10,34 @@ output: github_document
 library(SLmetrics)
 
 knitr::opts_chunk$set(
-  collapse  = TRUE,
-  comment   = "#>",
-  fig.path  = "man/figures/README-",
-  out.width = "100%"
+  collapse   = TRUE,
+  comment    = "#>",
+  fig.path   = "man/figures/README-",
+  out.width  = "100%",
+  dpi        = 1280,
+  fig.height = 6
+)
+
+# 1) store data
+DT <- SLmetrics:::DT
+
+# 2) set colors of the lattice
+lattice::trellis.par.set(
+  modifyList(
+    lattice::standard.theme(), 
+    list(
+      background = list(col = "#212830"), # was  
+      panel.background = list(col = "#2b3139"),
+       reference.line = list(col = "#4a5563", lty = 1), # #4a5563
+      axis.text = list(col = "#848e9c"),         
+      par.xlab.text = list(col = "#848e9c"),    
+      par.ylab.text = list(col = "#848e9c"),     
+      par.main.text = list(col = "#848e9c"),
+      axis.line = list(col = "#848e9c"), 
+      superpose.line = list(col = c("#5d8ca8", "#d5695d", "#65a479","#d3ba68")),
+      superpose.symbol = list(col = c("#5d8ca8", "#d5695d", "#65a479","#d3ba68"), pch = 16)
+    )
+  )
 )
 ```
 
@@ -30,13 +55,75 @@ knitr::opts_chunk$set(
 
 Depending on the mood and alignment of planets {SLmetrics} stands for Supervised Learning metrics, or Statistical Learning metrics. If {SLmetrics} catches on, the latter will be the core philosophy and include unsupervised learning metrics. If not, then it will remain a {pkg} for Supervised Learning metrics, and a sandbox for me to develop my `C++` skills.
 
-## :information_source: Why
+## :information_source: Why?
 
-Firstly, {SLmetrics} is *fast*. One, obviously, can't build an R-package on `C++` and [{Rcpp}](https://github.com/RcppCore/Rcpp) without a proper pissing contest in the urinals; a detailed [blog post]() about the difference in speed has been posted on [R-bloggers](https://www.r-bloggers.com/).
+Firstly, {SLmetrics} is *fast*. One, obviously, can't build an R-package on `C++` and [{Rcpp}](https://github.com/RcppCore/Rcpp) without a proper pissing contest at the urinals; a detailed [blog post](https://www.r-bloggers.com/) about the difference in speed has been posted on [R-bloggers](https://www.r-bloggers.com/). For a quick summary see below,
 
-Secondly, {SLmetrics} is *low level* and free of any *{pkg}verse*-regimes; this provides the freedom to develop it further as a part of your own {pkg}, or use it in any tidy, or untidy, pipeline you would want to.
+<details>
+<summary> Speed comparison </summary>
 
-Thirdly, {SLmetrics} has a *larger* repertoire of supervised machine learning metrics; all of which has been battle tested with [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and [{pytorch}](https://github.com/pytorch/pytorch) against [{yardstick}](https://github.com/tidymodels/yardstick), [{mlr3measures}](https://github.com/mlr-org/mlr3measures) and [{MLmetrics}](https://github.com/yanyachen/MLmetrics).
+Below is two simple cases that any {pkg} should be able to handle gracefully; computing a confusion matrix and computing the root mean squared error. The source code of the performance test can be found [here](https://github.com/serkor1/SLmetrics/blob/main/data-raw/performance.R).
+
+## Execution time: Computing a 2 x 2 Confusion Matrix
+
+```{r classification_performance_obs, echo = FALSE}
+lattice::xyplot(
+  median ~ sample_size,
+  data = DT[[1]],
+  groups = expr,
+  type = 'l', 
+  auto.key = list(columns = 2, col = "#848e9c"),
+  scales = list(
+    y = list(log = FALSE) ,
+    x = list(log = FALSE)
+    ),
+  xlab = "Sample Size (N)",
+  ylab = "Median Execution Time (Microseconds)",
+  panel = function(...) {
+    lattice::panel.grid(...)
+    lattice::panel.xyplot(...)
+    
+  }
+)
+```
+
+## Execution time: Computing the Root Mean Squared Error (RMSE)
+
+```{r regression_performance_rmse, echo = FALSE}
+lattice::xyplot(
+  median ~ sample_size,
+  data = DT[[2]],
+  groups = expr,
+  type = "l",
+  scales = list(
+    y = list(log = FALSE),
+    x = list(log = FALSE)
+    ),
+  auto.key = list(columns = 2, col = "#848e9c"),
+  xlab = "Sample Size (N)",
+  ylab = "Median Execution Time (Microseconds)",
+  panel = function(...) {
+    lattice::panel.grid(...)
+    lattice::panel.xyplot(...)
+    
+  }
+)
+```
+
+In both cases the execution time is diverging in favor of {SLmetrics}; we promised speed and efficiency - and that is what you get.
+
+> [!IMPORTANT]
+>
+> In all fairness, {yardstick} is more defensive in its implementation of some of its
+> functions. However, the difference in the average runtime can't be entirely attributed to this element.
+
+</details>
+
+Secondly, {SLmetrics} is *simple* and *flexible* to use; it is based on `S3` and provides the most essential class-wise and aggregated metrics.
+
+Thirdly, {SLmetrics} is *low level* and free of any *{pkg}verse*-regimes; this provides the freedom to develop it further as a part of your own {pkg}, or use it in any tidy, or untidy, pipeline you would want to.
+
+Fourthly, {SLmetrics} has a *larger* repertoire of supervised machine learning metrics; all of which has been battle tested with [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and [{pytorch}](https://github.com/pytorch/pytorch) against [{yardstick}](https://github.com/tidymodels/yardstick), [{mlr3measures}](https://github.com/mlr-org/mlr3measures) and [{MLmetrics}](https://github.com/yanyachen/MLmetrics).
 
 ## :information_source: Basic usage
 
@@ -97,76 +184,44 @@ predicted <- as.factor(
 
 # 4) generate
 # confusion matrix
-cmatrix(
-  actual    = iris$Species,
-  predicted = predicted
+summary(
+  confusion_matrix <-  cmatrix(
+    actual    = iris$Species,
+    predicted = predicted
+  )
 )
 ```
 
 <details>
-<summary> For Developers </summary>
+<summary> Class-wise and aggregated metrics </summary>
 
-As {SLMetrics} assumes that the user has some degree of control over the training process of the various models and the resulting output, the functions does not validate the input.
-
-If you want to include the functions as a part of your R-package and introduce some defensive measures a possible strategy is as follows,
+__Classwise specificity__
 
 ```{r}
-## 1) create a wrapper
-## function
-RMSE <- function(
-    actual,
-    predicted,
-    w = NULL) {
-  
-  # 0) defensive measures
-  # for user
-  stopifnot(
-    length(actual) == length(predicted)
-    )
-  
-  stopifnot(
-    is.numeric(actual) & is.numeric(predicted)
-  )
-  
-  if (!is.null(w)) {
-    
-    stopifnot(
-      is.numeric(w)
-      )
-    
-    output <- wrmse(
-      actual    = actual,
-      predicted = predicted,
-      w         = w
-    )
-    
-  } else {
-    
-    output <- rmse(
-      actual    = actual,
-      predicted = predicted
-    )
-    
-  }
-  
-  return(output)
-  
-}
+sensitivity(
+  confusion_matrix,
+  micro = NULL
+)
 ```
+
+__Micro averaged specificity__
 
 ```{r}
-# 1) run regression
-model <- lm(
-  formula = mpg ~ .,
-  data    = mtcars
-)
-
-# 2) evaluate RMSE
-RMSE(
-  actual    = mtcars$mpg,
-  predicted = fitted(model)
+sensitivity(
+  confusion_matrix,
+  micro = TRUE
 )
 ```
+
+__Macro averaged specificity__
+
+```{r}
+sensitivity(
+  confusion_matrix,
+  micro = FALSE
+)
+```
+
 </details>
 
 ## :information_source: Installation

@@ -1,13 +1,14 @@
-# script: RSQ Tests
+# script: Test R Squared
+# date: 2024-10-10
 # author: Serkan Korkmaz, serkor1@duck.com
-# date: 2024-08-26
-# objective: Test that rsq returns a non-zero
-# positive value for all values passed into it
+# objective: This is tested directly
+# against LM
 # script start;
 
 testthat::test_that(
-  desc = "`rsq`-function returns non-zero postive values",
+  desc = "Test that `rsq()`-function is consistent with the `lm()`-function",
   code = {
+
 
     # 0) run a regression
     # on mtcars
@@ -36,13 +37,16 @@ testthat::test_that(
     # 3) testtat they are
     # all exactly equal
     testthat::expect_true(
-      all.equal(
-        target = c(target_rsq, target_adjrsq),
+      set_equal(
+        target  = c(target_rsq, target_adjrsq),
         current = c(sl_rsq, sl_adjrsq)
       )
     )
 
+
+
   }
 )
+
 
 # script end;

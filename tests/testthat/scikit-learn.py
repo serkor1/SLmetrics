@@ -2,6 +2,10 @@
 # sklearn and define functions
 # that corresponds to SLmetrics
 from sklearn import metrics
+from imblearn.metrics import sensitivity_score
+from imblearn.metrics import specificity_score
+from sklearn.metrics import confusion_matrix
+import numpy as np
 
 # classification 
 # functions
@@ -9,16 +13,17 @@ def py_jaccard(actual, predicted, average = None):
     return metrics.jaccard_score(
       y_true = actual, 
       y_pred = predicted, 
-      average = average
+      average = average,
+      zero_division = 0.0
     )
 
-def py_fmi(actual, predicted):
+def py_fmi(actual, predicted, average = None):
     return metrics.fowlkes_mallows_score(
       labels_true = actual,
       labels_pred = predicted
     )
 
-def py_kappa(actual, predicted, penalty):
+def py_ckappa(actual, predicted, penalty = "linear", average = None):
     return metrics.cohen_kappa_score(
       y1 = actual,
       y2 = predicted,
@@ -26,18 +31,19 @@ def py_kappa(actual, predicted, penalty):
       sample_weight = None
     )
 
-def py_mcc(actual, predicted):
+def py_mcc(actual, predicted, average = None):
     return metrics.matthews_corrcoef(
       y_true = actual,
       y_pred = predicted
     )
 
-def py_fbeta(actual, predicted, beta, average = None):
+def py_fbeta(actual, predicted, beta = 1, average = None):
     return metrics.fbeta_score(
       y_true  = actual,
       y_pred  = predicted,
       beta    = beta,
-      average = average 
+      average = average,
+      zero_division = np.nan
     )
 
 def py_likelihood(actual, predicted):
@@ -50,10 +56,11 @@ def py_recall(actual, predicted, average = None):
     return metrics.recall_score(
       y_true  = actual,
       y_pred  = predicted,
-      average = average
+      average = average,
+      zero_division = np.nan
     )
     
-def py_zerooneloss(actual, predicted):
+def py_zerooneloss(actual, predicted, average = None):
     return metrics.zero_one_loss(
       y_true  = actual,
       y_pred  = predicted
@@ -63,16 +70,17 @@ def py_precision(actual, predicted, average = None):
     return metrics.precision_score(
       y_true  = actual,
       y_pred  = predicted,
-      average = average
+      average = average,
+      zero_division = np.nan
     )
 
-def py_accuracy(actual, predicted):
+def py_accuracy(actual, predicted, average = None):
     return metrics.accuracy_score(
       y_true = actual,
       y_pred = predicted
     )
     
-def py_baccuracy(actual, predicted, adjust = False):
+def py_baccuracy(actual, predicted, adjust = False, average = None):
     return metrics.balanced_accuracy_score(
       y_true   = actual,
       y_pred   = predicted,
@@ -91,7 +99,16 @@ def py_entropy(actual, response, normalize = True):
       y_pred    = response,
       normalize = normalize
     )
+
+def py_specificity(actual, response, average = None):
+    return specificity_score(
+      y_true    = actual,
+      y_pred    = response,
+      average   = average
+    )
     
+
+
 # regression metrics
 
 def py_rmse(actual, predicted, w = None):

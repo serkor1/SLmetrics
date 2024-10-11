@@ -101,30 +101,44 @@ predicted <- as.factor(
 )
 
 # 4) confusion matrix
-cmatrix(
-  actual    = iris$Species,
-  predicted = predicted
+# and print
+print(
+  confusion_matrix <- cmatrix(
+    actual    = iris$Species,
+    predicted = predicted
+  )
 )
+
+# 5) summary of the matrix
+summary(
+  confusion_matrix
+)
+
+# 6) visualize the matrix
+plot(
+  confusion_matrix
+)
+
 }
 \seealso{
 Other classification: 
-\code{\link{accuracy}()},
-\code{\link{baccuracy}()},
-\code{\link{dor}()},
-\code{\link{fbeta}()},
-\code{\link{fdr}()},
-\code{\link{fer}()},
-\code{\link{fmi}()},
-\code{\link{fpr}()},
-\code{\link{jaccard}()},
-\code{\link{kappa}()},
-\code{\link{mcc}()},
-\code{\link{nlr}()},
-\code{\link{npv}()},
-\code{\link{plr}()},
-\code{\link{precision}()},
-\code{\link{recall}()},
-\code{\link{specificity}()},
-\code{\link{zerooneloss}()}
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
+\code{\link{ckappa.factor}()},
+\code{\link{dor.factor}()},
+\code{\link{fbeta.factor}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
+\code{\link{fmi.factor}()},
+\code{\link{fpr.factor}()},
+\code{\link{jaccard.factor}()},
+\code{\link{mcc.factor}()},
+\code{\link{nlr.factor}()},
+\code{\link{npv.factor}()},
+\code{\link{plr.factor}()},
+\code{\link{precision.factor}()},
+\code{\link{recall.factor}()},
+\code{\link{specificity.factor}()},
+\code{\link{zerooneloss.factor}()}
 }
 \concept{classification}

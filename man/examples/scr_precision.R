@@ -37,16 +37,15 @@ precision(
 )
 
 # 4.2) macro-average
-mean(
-  precision(
-    actual    = iris$Species,
-    predicted = predicted
-  )
+precision(
+  actual    = iris$Species,
+  predicted = predicted,
+  micro     = FALSE
 )
 
 # 4.3) micro-average
 precision(
   actual    = iris$Species,
   predicted = predicted,
-  aggregate = TRUE
+  micro     = TRUE
 )

@@ -1,73 +1,40 @@
-# script: Test implementation confusion matrix
+# script: Confusion Matrix
+# date: 2024-10-05
 # author: Serkan Korkmaz, serkor1@duck.com
-# date: 2024-09-21
-# objective: Check that the implementation
-# matches that of sklearn
+# objective: Test that the associated methods
+# of the cmatrix works as intended
 # script start;
-# start of script; ###
 
 testthat::test_that(
-  desc = "Test that `cmatrix()` matches that of sklearn",
+  desc = "Test that the methods associated with the `cmatrix()`-function works as intended",
   code = {
 
-    # 0) source the python
-    # program
-    reticulate::source_python(
-      "scikit-learn.py"
+    # 1) generate confusion
+    # matrix
+    confusion_matrix <- cmatrix(
+      actual    = create_factor(),
+      predicted = create_factor()
     )
 
-    # 1) create two vectors
-    # of classes where one class
-    # has not been predicted at all
+    # 2) test that summary
+    # works without any conditions
+    testthat::expect_no_condition(
+      invisible(
+        summary(confusion_matrix)
+      )
 
-    # 1.1) actual
-    # values
-    actual <- factor(
-      x = sample(
-        x = 1:3,
-        size = 1e3,
-        replace = TRUE,
-        prob = c(0,0.5,0.5)
-      ),
-      levels = c(1:3),
-      labels = letters[1:3]
     )
 
-    # 1.2) predicted
-    # values
-    predicted <- factor(
-      x = sample(
-        1:3,
-        size = 1e3,
-        replace = TRUE,
-        prob = c(0,0.5,0.5)
-      ),
-      levels = c(1:3),
-      labels = letters[1:3]
-    )
-
-
-    # 2) test that;
-    py_matrix <- py_cmatrix(
-      actual,
-      predicted
-    )
-
-    sl_matrix <- cmatrix(
-      actual,
-      predicted
-    )
-
-    testthat::expect_true(
-      all(
-        dim(sl_matrix) %in% c(3,3),
-        sapply(sl_matrix, inherits, "numeric"),
-        colnames(sl_matrix) %in% letters[1:3],
-        py_matrix %in% sl_matrix
+    # 3) test that plot
+    # works without any conditions
+    testthat::expect_no_condition(
+      invisible(
+        plot(
+          confusion_matrix
+        )
       )
     )
-
   }
 )
 
-# end of script; ###
+# script end;

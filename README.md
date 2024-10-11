@@ -32,20 +32,53 @@ include unsupervised learning metrics. If not, then it will remain a
 {pkg} for Supervised Learning metrics, and a sandbox for me to develop
 my `C++` skills.
 
-## :information_source: Why
+## :information_source: Why?
 
 Firstly, {SLmetrics} is *fast*. One, obviously, can’t build an R-package
 on `C++` and [{Rcpp}](https://github.com/RcppCore/Rcpp) without a proper
-pissing contest in the urinals; a detailed [blog post]() about the
-difference in speed has been posted on
-[R-bloggers](https://www.r-bloggers.com/).
+pissing contest at the urinals; a detailed [blog
+post](https://www.r-bloggers.com/) about the difference in speed has
+been posted on [R-bloggers](https://www.r-bloggers.com/). For a quick
+summary see below,
 
-Secondly, {SLmetrics} is *low level* and free of any
+<details>
+<summary>
+Speed comparison
+</summary>
+
+Below is two simple cases that any {pkg} should be able to handle
+gracefully; computing a confusion matrix and computing the root mean
+squared error. The source code of the performance test can be found
+[here](https://github.com/serkor1/SLmetrics/blob/main/data-raw/performance.R).
+
+## Execution time: Computing a 2 x 2 Confusion Matrix
+
+<img src="man/figures/README-classification_performance_obs-1.png" width="100%" />
+
+## Execution time: Computing the Root Mean Squared Error (RMSE)
+
+<img src="man/figures/README-regression_performance_rmse-1.png" width="100%" />
+
+In both cases the execution time is diverging in favor of {SLmetrics};
+we promised speed and efficiency - and that is what you get.
+
+> \[!IMPORTANT\]
+>
+> In all fairness, {yardstick} is more defensive in its implementation
+> of some of its functions. However, the difference in the average
+> runtime can’t be entirely attributed to this element.
+
+</details>
+
+Secondly, {SLmetrics} is *simple* and *flexible* to use; it is based on
+`S3` and provides the most essential class-wise and aggregated metrics.
+
+Thirdly, {SLmetrics} is *low level* and free of any
 *{pkg}verse*-regimes; this provides the freedom to develop it further as
 a part of your own {pkg}, or use it in any tidy, or untidy, pipeline you
 would want to.
 
-Thirdly, {SLmetrics} has a *larger* repertoire of supervised machine
+Fourthly, {SLmetrics} has a *larger* repertoire of supervised machine
 learning metrics; all of which has been battle tested with
 [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and
 [{pytorch}](https://github.com/pytorch/pytorch) against
@@ -116,84 +149,60 @@ predicted <- as.factor(
 
 # 4) generate
 # confusion matrix
-cmatrix(
-  actual    = iris$Species,
-  predicted = predicted
+summary(
+  confusion_matrix <-  cmatrix(
+    actual    = iris$Species,
+    predicted = predicted
+  )
 )
+#> Confusion Matrix (2 x 2) 
+#> ================================================================================
 #>           virginica others
 #> virginica        35     15
 #> others           14     86
+#> ================================================================================
+#> Overall Statistics (micro average)
+#>  - Accuracy:          0.81
+#>  - Balanced Accuracy: 0.78
+#>  - Sensitivity:       0.81
+#>  - Specificity:       0.81
+#>  - Precision:         0.81
 ```
 
 <details>
 <summary>
-For Developers
+Class-wise and aggregated metrics
 </summary>
 
-As {SLMetrics} assumes that the user has some degree of control over the
-training process of the various models and the resulting output, the
-functions does not validate the input.
-
-If you want to include the functions as a part of your R-package and
-introduce some defensive measures a possible strategy is as follows,
+**Classwise specificity**
 
 ``` r
-## 1) create a wrapper
-## function
-RMSE <- function(
-    actual,
-    predicted,
-    w = NULL) {
-  
-  # 0) defensive measures
-  # for user
-  stopifnot(
-    length(actual) == length(predicted)
-    )
-  
-  stopifnot(
-    is.numeric(actual) & is.numeric(predicted)
-  )
-  
-  if (!is.null(w)) {
-    
-    stopifnot(
-      is.numeric(w)
-      )
-    
-    output <- wrmse(
-      actual    = actual,
-      predicted = predicted,
-      w         = w
-    )
-    
-  } else {
-    
-    output <- rmse(
-      actual    = actual,
-      predicted = predicted
-    )
-    
-  }
-  
-  return(output)
-  
-}
+sensitivity(
+  confusion_matrix,
+  micro = NULL
+)
+#> virginica    others 
+#>      0.70      0.86
 ```
 
-``` r
-# 1) run regression
-model <- lm(
-  formula = mpg ~ .,
-  data    = mtcars
-)
+**Micro averaged specificity**
 
-# 2) evaluate RMSE
-RMSE(
-  actual    = mtcars$mpg,
-  predicted = fitted(model)
+``` r
+sensitivity(
+  confusion_matrix,
+  micro = TRUE
 )
-#> [1] 2.146905
+#> [1] 0.8066667
+```
+
+**Macro averaged specificity**
+
+``` r
+sensitivity(
+  confusion_matrix,
+  micro = FALSE
+)
+#> [1] 0.78
 ```
 
 </details>

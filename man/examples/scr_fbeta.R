@@ -29,8 +29,8 @@ predicted <- as.factor(
   )
 )
 
-# 4) F1-score for each
-# class
+# 4) class-wise f1
+# score
 fbeta(
   actual    = iris$Species,
   predicted = predicted
@@ -40,40 +40,12 @@ fbeta(
 fbeta(
   actual    = iris$Species,
   predicted = predicted,
-  aggregate = TRUE
+  micro = TRUE
 )
 
 # 4.2 macro-averaged F1 score
-mean(
-  fbeta(
-    actual    = iris$Species,
-    predicted = predicted
-  )
-)
-
-# 5) F-score each class
-# with beta 2
 fbeta(
   actual    = iris$Species,
   predicted = predicted,
-  beta      = 2
-)
-
-# 4.1) micro-averaged F-score
-# with beta 2
-fbeta(
-  actual    = iris$Species,
-  predicted = predicted,
-  beta      = 2,
-  aggregate = TRUE
-)
-
-# 4.2 macro-averaged F-score
-# with beta 2
-mean(
-  fbeta(
-    actual    = iris$Species,
-    predicted = predicted,
-    beta      = 2
-  )
+  micro     = FALSE
 )

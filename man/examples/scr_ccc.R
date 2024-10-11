@@ -29,7 +29,7 @@ w <- rbeta(
   shape2 = 2
 )
 
-wccc(
+ccc(
   actual     = actual,
   predicted  = predicted,
   w          = w,

@@ -13,3 +13,9 @@
 ^cran-comments\.md$
 ^data-raw$
 ^codemeta
+^[^/]+\.R$
+Makefile
+src/CMakeLists.txt
+src/cmake-build-debug
+src/.idea
+tools/
