@@ -7,7 +7,7 @@
 \alias{ppv.cmatrix}
 \alias{precision}
 \alias{ppv}
-\title{Compute the \eqn{\text{precision}} or  \eqn{\text{positive predictive value}}}
+\title{Compute the \eqn{\text{precision}} or \eqn{\text{positive}} \eqn{\text{predictive}} \eqn{\text{value}}}
 \usage{
 \method{precision}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 

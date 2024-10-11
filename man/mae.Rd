@@ -3,7 +3,7 @@
 \name{mae.numeric}
 \alias{mae.numeric}
 \alias{mae}
-\title{Compute the \eqn{\text{mean absolute error}}}
+\title{Compute the \eqn{\text{mean}} \eqn{\text{absolute}} \eqn{\text{error}}}
 \usage{
 \method{mae}{numeric}(actual, predicted, w = NULL, ...)
 
@@ -81,8 +81,10 @@ Other regression:
 \code{\link{mape.numeric}()},
 \code{\link{mpe.numeric}()},
 \code{\link{mse.numeric}()},
+\code{\link{rae.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{rrmse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()}
 }

@@ -10,7 +10,7 @@
 \alias{recall}
 \alias{sensitivity}
 \alias{tpr}
-\title{Compute the \eqn{recall}, \eqn{sensitivity} or \eqn{true~positive~rate}}
+\title{Compute the \eqn{recall}, \eqn{sensitivity} or \eqn{\text{true}} \eqn{\text{positive}} \eqn{\text{rate}}}
 \usage{
 \method{recall}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 

@@ -39,7 +39,7 @@ accuracy <- function(...) {
   )
 }
 
-#' Compute the \eqn{\text{balanced accuracy}}
+#' Compute the \eqn{\text{balanced}} \eqn{\text{accuracy}}
 #'
 #' The [baccuracy()]-function computes the [balanced accuracy](https://neptune.ai/blog/balanced-accuracy) between two
 #' vectors of predicted and observed [factor()] values.

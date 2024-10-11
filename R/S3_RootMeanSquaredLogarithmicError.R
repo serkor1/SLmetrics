@@ -4,7 +4,7 @@
 # objective: Generate Methods
 # script start;
 
-#' Compute the \eqn{\text{root mean squared logarithmic error}}
+#' Compute the \eqn{\text{root}} \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{logarithmic}} \eqn{\text{error}}
 #'
 #' The [rmsle()]-function computes the simple and weighted root mean squared logarithmic error between
 #' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted root mean squared logarithmic error.

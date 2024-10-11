@@ -3,7 +3,7 @@
 \name{mse.numeric}
 \alias{mse.numeric}
 \alias{mse}
-\title{Compute the \eqn{\text{mean squared error}}}
+\title{Compute the \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{error}}}
 \usage{
 \method{mse}{numeric}(actual, predicted, w = NULL, ...)
 
@@ -81,8 +81,10 @@ Other regression:
 \code{\link{mae.numeric}()},
 \code{\link{mape.numeric}()},
 \code{\link{mpe.numeric}()},
+\code{\link{rae.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{rrmse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()}
 }

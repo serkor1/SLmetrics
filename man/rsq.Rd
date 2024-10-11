@@ -84,8 +84,10 @@ Other regression:
 \code{\link{mape.numeric}()},
 \code{\link{mpe.numeric}()},
 \code{\link{mse.numeric}()},
+\code{\link{rae.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{rrmse.numeric}()},
 \code{\link{smape.numeric}()}
 }
 \concept{regression}

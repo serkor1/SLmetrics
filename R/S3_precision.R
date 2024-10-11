@@ -5,7 +5,7 @@
 # script start;
 
 
-#' Compute the \eqn{\text{precision}} or  \eqn{\text{positive predictive value}}
+#' Compute the \eqn{\text{precision}} or \eqn{\text{positive}} \eqn{\text{predictive}} \eqn{\text{value}}
 #'
 #' @description
 #' The [precision()]-function computes the [precision](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values), also known as the positive predictive value (PPV), between

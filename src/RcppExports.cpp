@@ -823,6 +823,32 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rae
+double rae(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, Rcpp::Nullable<Rcpp::NumericVector> w);
+RcppExport SEXP _SLmetrics_rae(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(rae(actual, predicted, w));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rrmse
+double rrmse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, Rcpp::Nullable<Rcpp::NumericVector> w);
+RcppExport SEXP _SLmetrics_rrmse(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(rrmse(actual, predicted, w));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rmse
 double rmse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, Rcpp::Nullable<Rcpp::NumericVector> w);
 RcppExport SEXP _SLmetrics_rmse(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
@@ -926,6 +952,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_mape", (DL_FUNC) &_SLmetrics_mape, 3},
     {"_SLmetrics_mpe", (DL_FUNC) &_SLmetrics_mpe, 3},
     {"_SLmetrics_mse", (DL_FUNC) &_SLmetrics_mse, 3},
+    {"_SLmetrics_rae", (DL_FUNC) &_SLmetrics_rae, 3},
+    {"_SLmetrics_rrmse", (DL_FUNC) &_SLmetrics_rrmse, 3},
     {"_SLmetrics_rmse", (DL_FUNC) &_SLmetrics_rmse, 3},
     {"_SLmetrics_rmsle", (DL_FUNC) &_SLmetrics_rmsle, 3},
     {"_SLmetrics_smape", (DL_FUNC) &_SLmetrics_smape, 3},

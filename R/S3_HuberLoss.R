@@ -8,7 +8,7 @@
 #'
 #' @description
 #' The [huberloss()]-function computes the simple and weighted [huber loss](https://en.wikipedia.org/wiki/Huber_loss) between
-#' the predicted and observed <[numeric]> vectors.
+#' the predicted and observed <[numeric]> vectors.If `w` is not [NULL] the function returns the weighted averages.
 #'
 #'
 #' @param actual A <[numeric]>-vector of [length] \eqn{n}. The observed (continuous) response variable.

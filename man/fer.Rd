@@ -4,7 +4,7 @@
 \alias{fer.factor}
 \alias{fer.cmatrix}
 \alias{fer}
-\title{Compute the  \eqn{\text{false}} \eqn{\text{exclusion}} \eqn{\text{rate}}}
+\title{Compute the \eqn{\text{false}} \eqn{\text{omission}} \eqn{\text{rate}}}
 \usage{
 \method{fer}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 

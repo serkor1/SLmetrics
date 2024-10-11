@@ -36,10 +36,29 @@ testthat::test_that(
       "huberloss" = huberloss,
       "mpe"       = mpe,
       "mape"      = mape,
-      "smape"     = smape
+      "smape"     = smape,
+      "rae"       = rae,
+      "rrmse"     = rrmse
     )
 
     # 3) test that the functions
+    # runs without errors
+    for (i in seq_along(sl_function)) {
+
+      .f <-  sl_function[[i]]
+
+      testthat::expect_true(
+        all(
+          is.numeric(.f(actual, predicted, w = w)),
+          is.numeric(.f(actual, predicted)),
+          length(.f(actual, predicted, w = w)) == 1,
+          length(.f(actual, predicted)) == 1
+        )
+      )
+
+    }
+
+    # 4) test that the functions
     # returns the same values as
     # their python equivalents
     py_function <- Filter(

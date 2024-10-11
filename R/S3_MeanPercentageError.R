@@ -4,7 +4,7 @@
 # objective: Generate Methods
 # script start;
 
-#' Compute the \eqn{\text{mean percentage error}} \eqn{\text{percentage}} \eqn{\text{error}}
+#' Compute the \eqn{\text{mean}} \eqn{\text{percentage}} \eqn{\text{error}}
 #'
 #' The [mpe()]-function computes the [mean percentage error](https://en.wikipedia.org/wiki/Mean_percentage_error) between
 #' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted mean percentage error.

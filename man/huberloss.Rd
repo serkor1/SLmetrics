@@ -25,7 +25,7 @@ A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
 The \code{\link[=huberloss]{huberloss()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Huber_loss}{huber loss} between
-the predicted and observed <\link{numeric}> vectors.
+the predicted and observed <\link{numeric}> vectors.If \code{w} is not \link{NULL} the function returns the weighted averages.
 }
 \section{Calculation}{
 
@@ -90,8 +90,10 @@ Other regression:
 \code{\link{mape.numeric}()},
 \code{\link{mpe.numeric}()},
 \code{\link{mse.numeric}()},
+\code{\link{rae.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{rrmse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()}
 }

@@ -4,7 +4,7 @@
 # objective: Generate Methods
 # script start;
 
-#' Compute the \eqn{\text{mean absolute error}}
+#' Compute the \eqn{\text{mean}} \eqn{\text{absolute}} \eqn{\text{error}}
 #'
 #' The [mae()]-function computes the simple and weighted [mean absolute error](https://en.wikipedia.org/wiki/Mean_absolute_error) between
 #' the observed and predicted <[numeric]> vectors. If `w` is not [NULL] the function returns the weighted mean absolute error.

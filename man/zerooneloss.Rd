@@ -4,7 +4,7 @@
 \alias{zerooneloss.factor}
 \alias{zerooneloss.cmatrix}
 \alias{zerooneloss}
-\title{Zero-One Loss}
+\title{Compute the \eqn{\text{Zero}}-\eqn{\text{One}} \eqn{\text{Loss}}}
 \usage{
 \method{zerooneloss}{factor}(actual, predicted, ...)
 

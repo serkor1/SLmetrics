@@ -10,7 +10,7 @@
 \alias{specificity}
 \alias{tnr}
 \alias{selectivity}
-\title{Specificity (True Negative Rate)}
+\title{Specificity or \eqn{\text{true}} \eqn{\text{negative}} \eqn{\text{rate}}}
 \usage{
 \method{specificity}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 

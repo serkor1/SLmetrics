@@ -4,7 +4,7 @@
 \alias{baccuracy.factor}
 \alias{baccuracy.cmatrix}
 \alias{baccuracy}
-\title{Compute the \eqn{\text{balanced accuracy}}}
+\title{Compute the \eqn{\text{balanced}} \eqn{\text{accuracy}}}
 \usage{
 \method{baccuracy}{factor}(actual, predicted, adjust = FALSE, ...)
 

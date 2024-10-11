@@ -4,7 +4,7 @@
 # objective: Generate Errors
 # script start;
 
-#' Compute the \eqn{\text{root mean squared error}}
+#' Compute the \eqn{\text{root}} \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{error}}
 #'
 #' The [rmse()]-function computes the simple and weighted [root mean squared error](https://en.wikipedia.org/wiki/Root-mean-square_deviation) between
 #' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted root mean squared error.

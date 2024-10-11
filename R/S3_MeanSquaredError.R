@@ -4,7 +4,7 @@
 # objective: Generate Errors
 # script start;
 
-#' Compute the \eqn{\text{mean squared error}}
+#' Compute the \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{error}}
 #'
 #' The [mse()]-function computes the simple and weighted [mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error) between
 #' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted mean squared error.

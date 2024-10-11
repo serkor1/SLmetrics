@@ -3,7 +3,7 @@
 \name{rmse.numeric}
 \alias{rmse.numeric}
 \alias{rmse}
-\title{Compute the \eqn{\text{root mean squared error}}}
+\title{Compute the \eqn{\text{root}} \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{error}}}
 \usage{
 \method{rmse}{numeric}(actual, predicted, w = NULL, ...)
 
@@ -82,7 +82,9 @@ Other regression:
 \code{\link{mape.numeric}()},
 \code{\link{mpe.numeric}()},
 \code{\link{mse.numeric}()},
+\code{\link{rae.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{rrmse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()}
 }

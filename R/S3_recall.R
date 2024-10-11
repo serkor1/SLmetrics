@@ -4,7 +4,7 @@
 # objective: Generate method
 # script start;
 
-#' Compute the \eqn{recall}, \eqn{sensitivity} or \eqn{true~positive~rate}
+#' Compute the \eqn{recall}, \eqn{sensitivity} or \eqn{\text{true}} \eqn{\text{positive}} \eqn{\text{rate}}
 #'
 #' @description
 #' The [recall()]-function computes the [recall](https://en.wikipedia.org/wiki/Sensitivity_and_specificity), also known as sensitivity or the True Positive Rate (TPR), between

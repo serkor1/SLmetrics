@@ -3,7 +3,7 @@
 \name{mpe.numeric}
 \alias{mpe.numeric}
 \alias{mpe}
-\title{Compute the \eqn{\text{mean percentage error}} \eqn{\text{percentage}} \eqn{\text{error}}}
+\title{Compute the \eqn{\text{mean}} \eqn{\text{percentage}} \eqn{\text{error}}}
 \usage{
 \method{mpe}{numeric}(actual, predicted, w = NULL, ...)
 
@@ -81,8 +81,10 @@ Other regression:
 \code{\link{mae.numeric}()},
 \code{\link{mape.numeric}()},
 \code{\link{mse.numeric}()},
+\code{\link{rae.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{rrmse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()}
 }

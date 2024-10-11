@@ -4,14 +4,13 @@
 # objective: Generate Methods
 # script start;
 
-#' Compute the \eqn{\text{concordance correlation coefficient}}
+#' Compute the \eqn{\text{concordance}} \eqn{\text{correlation}} \eqn{\text{coefficient}}
 #'
 #' @description
 #' The [ccc()]-function computes the simple and weighted [concordance correlation coefficient](https://en.wikipedia.org/wiki/Concordance_correlation_coefficient) between
-#' the two vectors of predicted and observed <[numeric]> values.
+#' the two vectors of predicted and observed <[numeric]> values. If `w` is not [NULL], the function returns the weighted [concordance correlation coefficient](https://en.wikipedia.org/wiki/Concordance_correlation_coefficient).
 #'
 #' If `correction` is [TRUE] \eqn{\sigma^2} is adjusted by \eqn{\frac{1-n}{n}} in the intermediate steps.
-
 #' @inherit huberloss
 #' @param correction A <[logical]> vector of [length] 1. [FALSE] by default. If [TRUE] the variance and covariance
 #' will be adjusted with \eqn{\frac{1-n}{n}}
@@ -38,5 +37,4 @@ ccc <- function(...) {
     object  = ..1
   )
 }
-
 # script end;

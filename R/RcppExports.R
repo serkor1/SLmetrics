@@ -510,6 +510,20 @@ mse.numeric <- function(actual, predicted, w = NULL, ...) {
     .Call(`_SLmetrics_mse`, actual, predicted, w)
 }
 
+#' @rdname rae
+#' @method rae numeric
+#' @export
+rae.numeric <- function(actual, predicted, w = NULL, ...) {
+    .Call(`_SLmetrics_rae`, actual, predicted, w)
+}
+
+#' @rdname rrmse
+#' @method rrmse numeric
+#' @export
+rrmse.numeric <- function(actual, predicted, w = NULL, ...) {
+    .Call(`_SLmetrics_rrmse`, actual, predicted, w)
+}
+
 #' @rdname rmse
 #' @method rmse numeric
 #' @export

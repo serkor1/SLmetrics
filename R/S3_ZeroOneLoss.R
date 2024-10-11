@@ -5,7 +5,7 @@
 # script start;
 
 
-#' Zero-One Loss
+#' Compute the \eqn{\text{Zero}}-\eqn{\text{One}} \eqn{\text{Loss}}
 #'
 #' @description
 #' The [zerooneloss()]-function computes the [Zero-One Loss](https://en.wikipedia.org/wiki/Loss_functions_for_classification), a classification loss function that calculates the proportion of misclassified instances between
@@ -40,6 +40,5 @@ zerooneloss <- function(...) {
     object  = ..1
   )
 }
-
 
 # script end;

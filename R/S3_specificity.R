@@ -4,7 +4,7 @@
 # objective: Generate method
 # script start;
 
-#' Specificity (True Negative Rate)
+#' Specificity or \eqn{\text{true}} \eqn{\text{negative}} \eqn{\text{rate}}
 #'
 #' @description
 #' The  [specificity()]-function computes the [specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity), also known as the True Negative Rate (TNR) or selectivity, between

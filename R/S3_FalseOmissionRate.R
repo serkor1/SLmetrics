@@ -4,7 +4,7 @@
 # objective: Generate Method
 # script start;
 
-#' Compute the  \eqn{\text{false}} \eqn{\text{exclusion}} \eqn{\text{rate}}
+#' Compute the \eqn{\text{false}} \eqn{\text{omission}} \eqn{\text{rate}}
 #'
 #' @description
 #' The [fer()]-function computes the [false omission rate](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate) (FOR), the proportion of false negatives among the predicted negatives, between

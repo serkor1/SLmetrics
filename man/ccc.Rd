@@ -4,7 +4,7 @@
 \name{ccc.numeric}
 \alias{ccc.numeric}
 \alias{ccc}
-\title{Compute the \eqn{\text{concordance correlation coefficient}}}
+\title{Compute the \eqn{\text{concordance}} \eqn{\text{correlation}} \eqn{\text{coefficient}}}
 \usage{
 \method{ccc}{numeric}(actual, predicted, correction = FALSE, w = NULL, ...)
 
@@ -27,7 +27,7 @@ A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
 The \code{\link[=ccc]{ccc()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Concordance_correlation_coefficient}{concordance correlation coefficient} between
-the two vectors of predicted and observed <\link{numeric}> values.
+the two vectors of predicted and observed <\link{numeric}> values. If \code{w} is not \link{NULL}, the function returns the weighted \href{https://en.wikipedia.org/wiki/Concordance_correlation_coefficient}{concordance correlation coefficient}.
 
 If \code{correction} is \link{TRUE} \eqn{\sigma^2} is adjusted by \eqn{\frac{1-n}{n}} in the intermediate steps.
 }
@@ -91,8 +91,10 @@ Other regression:
 \code{\link{mape.numeric}()},
 \code{\link{mpe.numeric}()},
 \code{\link{mse.numeric}()},
+\code{\link{rae.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{rrmse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()}
 }
