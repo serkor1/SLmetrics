@@ -152,3 +152,22 @@ def py_msle(actual, predicted, w = None):
       y_pred        = predicted,
       sample_weight = w
     )
+    
+def py_pinball(actual, predicted, w = None, alpha = 0.5):
+    return metrics.mean_pinball_loss(
+      y_true = actual,
+      y_pred = predicted,
+      sample_weight = w,
+      alpha = alpha,
+      multioutput = "raw_values"
+    )
+
+
+def py_d2pinball(actual, predicted, w = None, alpha = 0.5):
+    return metrics.d2_pinball_score(
+      y_true = actual,
+      y_pred = predicted,
+      sample_weight = w,
+      alpha = alpha,
+      multioutput = "raw_values"
+    )

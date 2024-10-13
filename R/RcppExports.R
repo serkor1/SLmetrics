@@ -510,6 +510,13 @@ mse.numeric <- function(actual, predicted, w = NULL, ...) {
     .Call(`_SLmetrics_mse`, actual, predicted, w)
 }
 
+#' @rdname pinball
+#' @method pinball numeric
+#' @export
+pinball.numeric <- function(actual, predicted, alpha = 0.5, w = NULL, ...) {
+    .Call(`_SLmetrics_pinball`, actual, predicted, alpha, w)
+}
+
 #' @rdname rae
 #' @method rae numeric
 #' @export

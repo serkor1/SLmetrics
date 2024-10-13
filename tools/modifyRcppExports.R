@@ -43,7 +43,8 @@ foo_update <- c(
   "mae",
   "ccc",
   "rae",
-  "rrmse"
+  "rrmse",
+  "pinball"
 )
 
 foo_update <- as.vector(outer(foo_update, c("cmatrix", "factor", "numeric"), paste, sep = "."))

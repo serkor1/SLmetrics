@@ -40,7 +40,8 @@ testthat::test_that(
       "rae"       = rae,
       "rrmse"     = rrmse,
       "mae"       = mae,
-      "ccc"       = ccc
+      "ccc"       = ccc,
+      "pinball"   = pinball
     )
 
     # 3) test that the functions
