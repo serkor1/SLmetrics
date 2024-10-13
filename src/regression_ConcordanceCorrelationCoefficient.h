@@ -80,7 +80,7 @@ inline __attribute__((always_inline)) double _metric_(const NumericVector& actua
   }
 
   // Calculate the Concordance Correlation Coefficient
-  return (2 * covariance) / (var_actual + var_predicted + std::pow(mean_actual - mean_predicted, 2));
+  return (2.0 * covariance) / (var_actual + var_predicted + std::pow(mean_actual - mean_predicted, 2));
 }
 
 // Weighted Concordance Correlation Coefficient Calculation
@@ -127,7 +127,7 @@ inline __attribute__((always_inline)) double _metric_(const NumericVector& actua
   }
 
   // Calculate the Weighted Concordance Correlation Coefficient
-  return (2 * weighted_covariance) /
+  return (2.0 * weighted_covariance) /
     (weighted_var_actual + weighted_var_predicted + std::pow(weighted_mean_actual - weighted_mean_predicted, 2));
 }
 

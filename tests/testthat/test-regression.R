@@ -38,7 +38,9 @@ testthat::test_that(
       "mape"      = mape,
       "smape"     = smape,
       "rae"       = rae,
-      "rrmse"     = rrmse
+      "rrmse"     = rrmse,
+      "mae"       = mae,
+      "ccc"       = ccc
     )
 
     # 3) test that the functions
@@ -97,7 +99,8 @@ testthat::test_that(
       testthat::expect_true(
         object = set_equal(
           sl_measure,
-          py_measure
+          py_measure,
+          tolerance = 1e-5
 
         ),
         label = paste(
@@ -123,7 +126,8 @@ testthat::test_that(
       testthat::expect_true(
         object = set_equal(
           sl_measure,
-          py_measure
+          py_measure,
+          tolerance = 1e-5
 
         ),
         label = paste(

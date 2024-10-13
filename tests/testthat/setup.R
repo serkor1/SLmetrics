@@ -53,7 +53,7 @@ reticulate::use_virtualenv()
 create_factor <- function(
     k = 5,
     balanced = TRUE,
-    n = 1e2) {
+    n = 1e5) {
 
   probs <- NULL
 
@@ -84,7 +84,7 @@ create_factor <- function(
 }
 
 create_regression <- function(
-    n = 1e2) {
+    n = 1e5) {
 
   # 1) actual
   # values

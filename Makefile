@@ -1,7 +1,7 @@
 # This makefile mimics
 # the functionality of devtools::check() and devtools::document()
-# but without triggering the whole
-# Rcpp::compileAttributes()
+# but without triggering the entire re-writing
+# of the package that rewrites RcppExports.R
 #
 #!/bin/sh
 # global variables

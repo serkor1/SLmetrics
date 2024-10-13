@@ -15,6 +15,6 @@ double ccc(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predict
 
   }
 
-  return _metric_(actual, predicted, correction, Rcpp::as<Rcpp::NumericVector>(w));
+  return _metric_(actual, predicted, Rcpp::as<Rcpp::NumericVector>(w), correction);
 
 }
