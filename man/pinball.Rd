@@ -5,7 +5,7 @@
 \alias{pinball}
 \title{Compute the \eqn{\text{pinball}} \eqn{\text{loss}}}
 \usage{
-\method{pinball}{numeric}(actual, predicted, alpha = 0.5, w = NULL, ...)
+\method{pinball}{numeric}(actual, predicted, alpha = 0.5, deviance = FALSE, w = NULL, ...)
 
 pinball(...)
 }
@@ -15,6 +15,8 @@ pinball(...)
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
 \item{alpha}{A <\link{numeric}>-value of \link{length} 1. The slope of the pinball loss function. \eqn{0.5} by default.}
+
+\item{deviance}{A <\link{logical}>-value of \link{length} 1. \link{FALSE} by default. If \link{TRUE} the function returns the \eqn{D^2} loss.}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
 

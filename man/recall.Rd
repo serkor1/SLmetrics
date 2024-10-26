@@ -161,6 +161,7 @@ recall(
 }
 \seealso{
 Other classification: 
+\code{\link{ROC.factor}()},
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
@@ -176,6 +177,7 @@ Other classification:
 \code{\link{nlr.factor}()},
 \code{\link{npv.factor}()},
 \code{\link{plr.factor}()},
+\code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{specificity.factor}()},
 \code{\link{zerooneloss.factor}()}

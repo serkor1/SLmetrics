@@ -12,6 +12,7 @@
 #'
 #' @inherit huberloss
 #' @param alpha A <[numeric]>-value of [length] 1. The slope of the pinball loss function. \eqn{0.5} by default.
+#' @param deviance A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] the function returns the \eqn{D^2} loss.
 #'
 #' @example man/examples/scr_pinball.R
 #' @section Calculation:

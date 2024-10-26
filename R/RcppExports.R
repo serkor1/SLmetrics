@@ -351,6 +351,13 @@ ppv.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_ppv_cmatrix`, x, micro, na_rm = na.rm)
 }
 
+#' @rdname prROC
+#' @method prROC factor
+#' @export
+prROC.factor <- function(actual, response, micro = NULL, thresholds = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_prROC`, actual, response, micro, thresholds, na_rm = na.rm)
+}
+
 #' @rdname recall
 #' @method recall factor
 #'
@@ -397,6 +404,17 @@ tpr.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
 #' @export
 tpr.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_tpr_cmatrix`, x, micro, na_rm = na.rm)
+}
+
+auc <- function(y, x, method = 0L) {
+    .Call(`_SLmetrics_auc`, y, x, method)
+}
+
+#' @rdname ROC
+#' @method ROC factor
+#' @export
+ROC.factor <- function(actual, response, micro = NULL, thresholds = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_ROC`, actual, response, micro, thresholds, na_rm = na.rm)
 }
 
 #' @rdname specificity
@@ -513,8 +531,8 @@ mse.numeric <- function(actual, predicted, w = NULL, ...) {
 #' @rdname pinball
 #' @method pinball numeric
 #' @export
-pinball.numeric <- function(actual, predicted, alpha = 0.5, w = NULL, ...) {
-    .Call(`_SLmetrics_pinball`, actual, predicted, alpha, w)
+pinball.numeric <- function(actual, predicted, alpha = 0.5, deviance = FALSE, w = NULL, ...) {
+    .Call(`_SLmetrics_pinball`, actual, predicted, alpha, deviance, w)
 }
 
 #' @rdname rae

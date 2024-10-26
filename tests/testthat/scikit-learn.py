@@ -106,7 +106,22 @@ def py_specificity(actual, response, average = None):
       y_pred    = response,
       average   = average
     )
-    
+
+def py_roc(actual, response, pos_label = 1):
+    return metrics.roc_curve(
+      actual,
+      response,
+      drop_intermediate = False,
+      pos_label = pos_label
+      
+    )
+def py_prROC(actual, response, pos_label = 1):
+  return metrics.precision_recall_curve(
+    y_true    = actual,
+    y_score   = response,
+    drop_intermediate = False,
+    pos_label = pos_label
+  )
 
 
 # regression metrics

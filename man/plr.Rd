@@ -139,6 +139,7 @@ nlr(
 The \code{\link[=nlr]{nlr()}}-function for the Negative Likehood Ratio (LR-)
 
 Other classification: 
+\code{\link{ROC.factor}()},
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
@@ -153,6 +154,7 @@ Other classification:
 \code{\link{mcc.factor}()},
 \code{\link{nlr.factor}()},
 \code{\link{npv.factor}()},
+\code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
 \code{\link{specificity.factor}()},

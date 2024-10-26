@@ -545,6 +545,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// prROC
+Rcpp::DataFrame prROC(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, Nullable<bool> micro, Rcpp::Nullable<Rcpp::NumericVector> thresholds, const bool& na_rm);
+RcppExport SEXP _SLmetrics_prROC(SEXP actualSEXP, SEXP responseSEXP, SEXP microSEXP, SEXP thresholdsSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type thresholds(thresholdsSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(prROC(actual, response, micro, thresholds, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
 // recall
 Rcpp::NumericVector recall(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_recall(SEXP actualSEXP, SEXP predictedSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
@@ -623,6 +638,34 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(tpr_cmatrix(x, micro, na_rm));
+    return rcpp_result_gen;
+END_RCPP
+}
+// auc
+double auc(const Rcpp::NumericVector y, const Rcpp::NumericVector x, const int& method);
+RcppExport SEXP _SLmetrics_auc(SEXP ySEXP, SEXP xSEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const int& >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(auc(y, x, method));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ROC
+Rcpp::DataFrame ROC(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, Nullable<bool> micro, Rcpp::Nullable<Rcpp::NumericVector> thresholds, const bool& na_rm);
+RcppExport SEXP _SLmetrics_ROC(SEXP actualSEXP, SEXP responseSEXP, SEXP microSEXP, SEXP thresholdsSEXP, SEXP na_rmSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type thresholds(thresholdsSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(ROC(actual, response, micro, thresholds, na_rm));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -824,16 +867,17 @@ BEGIN_RCPP
 END_RCPP
 }
 // pinball
-double pinball(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const double& alpha, Rcpp::Nullable<Rcpp::NumericVector> w);
-RcppExport SEXP _SLmetrics_pinball(SEXP actualSEXP, SEXP predictedSEXP, SEXP alphaSEXP, SEXP wSEXP) {
+double pinball(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const double& alpha, const bool& deviance, Rcpp::Nullable<Rcpp::NumericVector> w);
+RcppExport SEXP _SLmetrics_pinball(SEXP actualSEXP, SEXP predictedSEXP, SEXP alphaSEXP, SEXP devianceSEXP, SEXP wSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
     Rcpp::traits::input_parameter< const double& >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type deviance(devianceSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type w(wSEXP);
-    rcpp_result_gen = Rcpp::wrap(pinball(actual, predicted, alpha, w));
+    rcpp_result_gen = Rcpp::wrap(pinball(actual, predicted, alpha, deviance, w));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -945,12 +989,15 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_precision_cmatrix", (DL_FUNC) &_SLmetrics_precision_cmatrix, 3},
     {"_SLmetrics_ppv", (DL_FUNC) &_SLmetrics_ppv, 4},
     {"_SLmetrics_ppv_cmatrix", (DL_FUNC) &_SLmetrics_ppv_cmatrix, 3},
+    {"_SLmetrics_prROC", (DL_FUNC) &_SLmetrics_prROC, 5},
     {"_SLmetrics_recall", (DL_FUNC) &_SLmetrics_recall, 4},
     {"_SLmetrics_recall_cmatrix", (DL_FUNC) &_SLmetrics_recall_cmatrix, 3},
     {"_SLmetrics_sensitivity", (DL_FUNC) &_SLmetrics_sensitivity, 4},
     {"_SLmetrics_sensitivity_cmatrix", (DL_FUNC) &_SLmetrics_sensitivity_cmatrix, 3},
     {"_SLmetrics_tpr", (DL_FUNC) &_SLmetrics_tpr, 4},
     {"_SLmetrics_tpr_cmatrix", (DL_FUNC) &_SLmetrics_tpr_cmatrix, 3},
+    {"_SLmetrics_auc", (DL_FUNC) &_SLmetrics_auc, 3},
+    {"_SLmetrics_ROC", (DL_FUNC) &_SLmetrics_ROC, 5},
     {"_SLmetrics_specificity", (DL_FUNC) &_SLmetrics_specificity, 4},
     {"_SLmetrics_specificity_cmatrix", (DL_FUNC) &_SLmetrics_specificity_cmatrix, 3},
     {"_SLmetrics_tnr", (DL_FUNC) &_SLmetrics_tnr, 4},
@@ -966,7 +1013,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_mape", (DL_FUNC) &_SLmetrics_mape, 3},
     {"_SLmetrics_mpe", (DL_FUNC) &_SLmetrics_mpe, 3},
     {"_SLmetrics_mse", (DL_FUNC) &_SLmetrics_mse, 3},
-    {"_SLmetrics_pinball", (DL_FUNC) &_SLmetrics_pinball, 4},
+    {"_SLmetrics_pinball", (DL_FUNC) &_SLmetrics_pinball, 5},
     {"_SLmetrics_rae", (DL_FUNC) &_SLmetrics_rae, 3},
     {"_SLmetrics_rrmse", (DL_FUNC) &_SLmetrics_rrmse, 3},
     {"_SLmetrics_rmse", (DL_FUNC) &_SLmetrics_rmse, 3},

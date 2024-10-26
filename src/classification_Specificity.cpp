@@ -8,7 +8,7 @@ using namespace Rcpp;
 //'
 //' @export
 // [[Rcpp::export(specificity.factor)]]
-NumericVector specificity(const IntegerVector& actual, const IntegerVector& predicted,Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
+NumericVector specificity(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
 {
 
   // 1) Calculate

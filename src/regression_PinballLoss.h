@@ -1,9 +1,10 @@
-#ifndef REGRESSION_D2PINBALLLOSS_H
-#define REGRESSION_D2PINBALLLOSS_H
+#ifndef REGRESSION_PINBALLLOSS_H
+#define REGRESSION_PINBALLLOSS_H
 
 #include <Rcpp.h>
 #include <cmath>
 #include <numeric>
+#include <algorithm>
 using namespace Rcpp;
 
 // Weighted version of pinball loss
@@ -93,4 +94,58 @@ inline __attribute__((always_inline)) double _metric_(const NumericVector& actua
   return loss / n;
 }
 
-#endif // REGRESSION_D2PINBALLLOSS_H
+/*
+ * Quantile Function:
+ *
+ * This function is a faster implementation
+ * of the R quantile()-function. At the moment
+ * it is only used for the pinball loss; if there
+ * is need for it further, it should be moved to helpers
+ * or utilities
+ *
+ */
+
+inline __attribute__((always_inline)) Rcpp::NumericVector _quantile_(Rcpp::NumericVector& x, const double& alpha = 0.5) {
+  int n = x.size();
+  Rcpp::NumericVector quantiles(n);
+
+  // Calculate the quantile index position only once
+  double pos = alpha * (n - 1);
+  int pos_int = static_cast<int>(pos);
+  double frac = pos - pos_int;
+
+  // Use std::nth_element for partial sorting
+  std::nth_element(x.begin(), x.begin() + pos_int, x.end());
+  double lower = x[pos_int];
+
+  // If pos_int + 1 is within bounds, sort again to get the next element
+  double upper;
+  if (pos_int + 1 < n) {
+    std::nth_element(x.begin(), x.begin() + pos_int + 1, x.end());
+    upper = x[pos_int + 1];
+  } else {
+    upper = lower;
+  }
+
+  // Calculate the interpolated quantile
+  double quantile_value = lower + frac * (upper - lower);
+
+  // Fill the result xtor with loop unrolling
+  double* quant_ptr = quantiles.begin();
+  int i = 0;
+
+  for (; i <= n - 4; i += 4) {
+    quant_ptr[i] = quantile_value;
+    quant_ptr[i + 1] = quantile_value;
+    quant_ptr[i + 2] = quantile_value;
+    quant_ptr[i + 3] = quantile_value;
+  }
+
+  for (; i < n; ++i) {
+    quant_ptr[i] = quantile_value;
+  }
+
+  return quantiles;
+}
+
+#endif // REGRESSION_PINBALLLOSS_H
