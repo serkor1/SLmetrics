@@ -289,17 +289,9 @@ inline __attribute__((always_inline)) double calcArea(const Rcpp::NumericVector&
 inline __attribute__((always_inline)) Rcpp::List _temporary_(const Rcpp::IntegerVector &actual, const Rcpp::NumericVector &response, Rcpp::Nullable<Rcpp::NumericVector> thresholds = R_NilValue)
 {
  /*
-  * This function is a helper function using in
-  * reciever operator characteristic curves.
-  *
-  * It's basically an algorithm for converting
-  * any problem to a binary classification problem
-  * and aggregating true positives and false positves
-  * to generate for example precision recall curves.
-  *
-  * It's a solid alternative to generating matrices or
-  * looping through each set of value in all iterations.
-  *
+  * This function calculates true positives and false positives
+  * across multiple thresholds for receiver operating characteristic
+  * curve calculations.
   */
 
  size_t n = actual.size();
@@ -371,39 +363,22 @@ inline __attribute__((always_inline)) Rcpp::List _temporary_(const Rcpp::Integer
    size_t i = 0;
    size_t j = 0;
 
-   // Loop unrolling to process up to 4 elements at a time
-   for (; i + 3 < n; i += 4) {
-     // Process in chunks of 4 for better cache utilization
-     for (int k = 0; k < 4; ++k) {
-       if (sorted_actual_ptr[i + k] == current_level) {
+   // Loop through sorted responses to calculate TP and FP for each threshold
+   while (j < num_thresholds) {
+     while (i < n && sorted_response_ptr[i] >= custom_thresholds_ptr[j]) {
+       if (sorted_actual_ptr[i] == current_level) {
          cumulative_tp += 1.0;
        } else {
          cumulative_fp += 1.0;
        }
-
-       while (j < num_thresholds && sorted_response_ptr[i + k] <= custom_thresholds_ptr[j]) {
-         tp_ptr[j] = cumulative_tp;
-         fp_ptr[j] = cumulative_fp;
-         combined_threshold_ptr[j] = custom_thresholds_ptr[j];
-         j++;
-       }
-     }
-   }
-
-   // Process any remaining elements after the loop unrolling
-   for (; i < n; ++i) {
-     if (sorted_actual_ptr[i] == current_level) {
-       cumulative_tp += 1.0;
-     } else {
-       cumulative_fp += 1.0;
+       ++i;
      }
 
-     while (j < num_thresholds && sorted_response_ptr[i] <= custom_thresholds_ptr[j]) {
-       tp_ptr[j] = cumulative_tp;
-       fp_ptr[j] = cumulative_fp;
-       combined_threshold_ptr[j] = custom_thresholds_ptr[j];
-       j++;
-     }
+     // Store cumulative TP and FP at the current threshold
+     tp_ptr[j] = cumulative_tp;
+     fp_ptr[j] = cumulative_fp;
+     combined_threshold_ptr[j] = custom_thresholds_ptr[j];
+     ++j;
    }
 
    // Create a nested list for this level-label pair

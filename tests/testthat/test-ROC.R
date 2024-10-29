@@ -99,6 +99,32 @@ testthat::test_that(
     )
 
 
+    # 7) Test that custom
+    # thresholds works
+    # as expected
+    thresholds <- rbeta(
+      n = 10,
+      shape1 = 20,
+      shape2 = 2
+    )
+
+    testthat::expect_true(
+      set_equal(
+        current = ROC(
+          actual     = actual,
+          response   = response,
+          thresholds = thresholds
+        ),
+        target  = ROC_manual(
+          k          = k,
+          actual     = actual,
+          response   = response,
+          thresholds = thresholds
+        )
+      )
+    )
+
+
   }
 )
 

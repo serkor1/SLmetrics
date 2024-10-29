@@ -247,4 +247,48 @@ py_dor <- function(actual, predicted, average = NULL, na.rm = TRUE) {
   return(dor_class)
 }
 
+
+ROC_manual <- function(k, actual, response, thresholds) {
+
+  n_thresholds <- length(thresholds)
+  n_levels <- k
+  total_rows <- n_thresholds * n_levels
+
+  output <- data.frame(
+    threshold = rep(thresholds, each = n_levels),
+    level = rep(1:n_levels, times = n_thresholds),
+    label = rep(letters[1:n_levels], times = n_thresholds),
+    fpr = numeric(total_rows),
+    tpr = numeric(total_rows),
+    stringsAsFactors = FALSE
+  )
+
+  for (i in 1:n_levels) {
+
+    for (j in 1:n_thresholds) {
+      threshold_val <- thresholds[j]
+
+      predicted <- factor(
+        x = ifelse(
+          response >= threshold_val,
+          yes = i,
+          no  = 3 - i
+        ),
+        labels = letters[1:k],
+        levels = 1:k
+      )
+
+      row_index <- (j - 1) * n_levels + i
+      output$fpr[row_index] <- SLmetrics::fpr(actual = actual, predicted = predicted)[i]
+      output$tpr[row_index] <- SLmetrics::tpr(actual = actual, predicted = predicted)[i]
+    }
+  }
+
+  output <- output[order(output$level, -output$threshold),]
+  rownames(output) <- NULL
+
+  output
+}
+
+
 # script end;
