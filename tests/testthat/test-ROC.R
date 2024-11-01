@@ -16,7 +16,7 @@ testthat::test_that(
     )
 
     n <- 1e3
-    k <- 10
+    k <- 4
     # 1) generate
     # factors
     set.seed(1903)
@@ -102,10 +102,10 @@ testthat::test_that(
     # 7) Test that custom
     # thresholds works
     # as expected
-    thresholds <- rbeta(
-      n = 10,
-      shape1 = 20,
-      shape2 = 2
+    thresholds <- seq(
+      0,
+      1,
+      length.out = 10
     )
 
     testthat::expect_true(
@@ -115,8 +115,7 @@ testthat::test_that(
           response   = response,
           thresholds = thresholds
         ),
-        target  = ROC_manual(
-          k          = k,
+        target  = ref_ROC(
           actual     = actual,
           response   = response,
           thresholds = thresholds
@@ -139,7 +138,7 @@ testthat::test_that(
     )
 
     n <- 1e3
-    k <- 3
+    k <- 4
     # 1) generate
     # factors
     set.seed(1903)
@@ -232,6 +231,31 @@ testthat::test_that(
           response
         ),
         target  = py_value
+      )
+    )
+
+    
+    # 7) Test that custom
+    # thresholds works
+    # as expected
+    thresholds <- seq(
+      0,
+      1,
+      length.out = 10
+    )
+
+    testthat::expect_true(
+      set_equal(
+        current = prROC(
+          actual     = actual,
+          response   = response,
+          thresholds = thresholds
+        ),
+        target  = ref_prROC(
+          actual     = actual,
+          response   = response,
+          thresholds = thresholds
+        )
       )
     )
 
