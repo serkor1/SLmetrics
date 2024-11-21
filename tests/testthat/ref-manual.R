@@ -247,4 +247,99 @@ py_dor <- function(actual, predicted, average = NULL, na.rm = TRUE) {
   return(dor_class)
 }
 
+
+ref_ROC <- function(actual, response, thresholds) {
+
+  n_thresholds <- length(thresholds)
+  k <- n_levels <- length(levels(actual))
+  total_rows <- n_thresholds * n_levels
+
+  output <- data.frame(
+    threshold = rep(thresholds, each = n_levels),
+    level = rep(1:n_levels, times = n_thresholds),
+    label = rep(letters[1:n_levels], times = n_thresholds),
+    fpr = numeric(total_rows),
+    tpr = numeric(total_rows),
+    stringsAsFactors = FALSE
+  )
+
+  for (i in 1:n_levels) {
+
+    for (j in 1:n_thresholds) {
+      threshold_val <- thresholds[j]
+
+      predicted <- factor(
+        x = ifelse(
+          response >= threshold_val,
+          yes = i, # was i
+          no  = (k+1) - i  # was (k+1) - i
+        ),
+        labels = letters[1:k],
+        levels = 1:k
+      )
+
+
+      row_index <- (j - 1) * n_levels + i
+      output$fpr[row_index] <- SLmetrics::fpr(actual = actual, predicted = predicted)[i] # was i
+      output$tpr[row_index] <- SLmetrics::tpr(actual = actual, predicted = predicted)[i] # was i
+    }
+  }
+
+  output <- output[order(output$level, -output$threshold),]
+  rownames(output) <- NULL
+
+  output
+}
+
+ref_prROC <- function(actual, response, thresholds) {
+
+  n_thresholds <- length(thresholds)
+  k <- n_levels <- length(levels(actual))
+  total_rows <- n_thresholds * n_levels
+
+  output <- data.frame(
+    threshold = rep(thresholds, each = n_levels),
+    level = rep(1:n_levels, times = n_thresholds),
+    label = rep(letters[1:n_levels], times = n_thresholds),
+    precision = numeric(total_rows),
+    recall = numeric(total_rows),
+    stringsAsFactors = FALSE
+  )
+
+  for (i in 1:n_levels) {
+
+    for (j in 1:n_thresholds) {
+      threshold_val <- thresholds[j]
+
+      predicted <- factor(
+        x = ifelse(
+          response >= threshold_val,
+          yes = i, # was i
+          no  = (k+1) - i  # was (k+1) - i
+        ),
+        labels = letters[1:k],
+        levels = 1:k
+      )
+
+
+      row_index <- (j - 1) * n_levels + i
+      output$precision[row_index] <- SLmetrics::precision(actual = actual, predicted = predicted)[i] # was i
+      output$recall[row_index] <- SLmetrics::recall(actual = actual, predicted = predicted)[i] # was i
+    }
+  }
+
+  output <- output[order(output$level, -output$threshold),]
+  rownames(output) <- NULL
+
+  numeric_cols <- sapply(output, is.numeric)
+  output[numeric_cols] <- lapply(output[numeric_cols], function(col) {
+    col[is.nan(col)] <- 0
+    col
+  })
+
+  output
+
+}
+
+
 # script end;
