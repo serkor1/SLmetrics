@@ -24,6 +24,7 @@ if (!reticulate::virtualenv_exists()) {
   # 2.2) install packages
   # for the virtual environment
   reticulate::py_install(
+    python_version = "3.12.7",
     packages = c(
       "numpy",
       "scipy",
@@ -31,7 +32,7 @@ if (!reticulate::virtualenv_exists()) {
       "mkl-service",
       "mkl_fft",
       "mkl_random",
-      "pytorch",
+      "torch",
       "torchmetrics",
       "scikit-learn",
       "imblearn"

@@ -15,6 +15,8 @@ testthat::test_that(
       "scikit-learn.py"
     )
 
+    source("ref-manual.R")
+
     n <- 1e3
     k <- 4
     # 1) generate
@@ -137,6 +139,8 @@ testthat::test_that(
       "scikit-learn.py"
     )
 
+    source("ref-manual.R")
+
     n <- 1e3
     k <- 4
     # 1) generate
@@ -234,7 +238,7 @@ testthat::test_that(
       )
     )
 
-    
+
     # 7) Test that custom
     # thresholds works
     # as expected
