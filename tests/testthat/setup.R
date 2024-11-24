@@ -24,7 +24,7 @@ if (!reticulate::virtualenv_exists()) {
   # 2.2) install packages
   # for the virtual environment
   reticulate::py_install(
-    python_version = "3.12.7",
+    python_version = "3.10.x",
     packages = c(
       "numpy",
       "scipy",
