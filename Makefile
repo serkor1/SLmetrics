@@ -41,3 +41,10 @@ check: document
 	R CMD check $(TARBALL)
 	rm -f $(TARBALL)
 	rm -rf $(PKGNAME).Rcheck
+
+build-site:
+	@echo "Building {pkgdown}"
+	@Rscript -e "pkgdown::build_site()"
+	
+preview:
+	@xdg-open docs/index.html
