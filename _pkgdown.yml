@@ -9,6 +9,35 @@ home:
   description: >
     {SLmetrics}: Performance evaluation metrics for supervised machine learning, statistical learning and artificial intelligence applications in R written in C++.
 
+navbar:
+  inverse: true
+
+  structure:
+    left:  [introduction, regression, classification, reference, news]
+    right: [search, lightswitch, github]
+
+  components:
+    introduction:
+      icon: fa-info
+      text: Why?
+      href: articles/SLmetrics.html
+    regression:
+      icon: fa-chart-line
+      text: Regression
+      href: articles/regression_problems.html
+    classification:
+      icon: fa-diagram-project
+      text: Classification
+      href: articles/classification_problems.html
+    reference:
+      icon: fa-book-open
+      text: Reference
+      href: reference/index.html
+    news:
+      icon: fa-code
+      text: Changelog
+      href: news/index.html
+
 template:
   bootstrap: 5
   math-rendering: mathjax

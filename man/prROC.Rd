@@ -26,11 +26,11 @@ micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro a
 \value{
 A \link{data.frame} on the following form,
 
-\item{thresholds}{<\link{numeric}> Thresholds used to determine \code{\link[=tpr]{tpr()}} and \code{\link[=fpr]{fpr()}}}
+\item{thresholds}{<\link{numeric}> Thresholds used to determine \code{\link[=recall]{recall()}} and \code{\link[=precision]{precision()}}}
 \item{level}{<\link{character}> The level of the actual <\link{factor}>}
 \item{label}{<\link{character}> The levels of the actual <\link{factor}>}
-\item{fpr}{<\link{numeric}> The false positive rate}
-\item{tpr}{<\link{numeric}> The true positve rate}
+\item{recall}{<\link{numeric}> The recall}
+\item{precision}{<\link{numeric}> The precision}
 }
 \description{
 The \code{\link[=prROC]{prROC()}}-function computes the \code{\link[=precision]{precision()}} and \code{\link[=recall]{recall()}} at thresholds provided by the \eqn{response}- or \eqn{thresholds}-vector. The function
@@ -123,6 +123,8 @@ roc <- prROC(
 # 5) plot by species
 plot(roc)
 
+# 5.1) summarise
+summary(roc)
 
 # 6) provide custom
 # threholds
