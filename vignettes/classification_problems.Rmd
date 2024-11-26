@@ -26,7 +26,7 @@ In this vignette, we will demonstrate how to use [{SLmetrics}](https://github.co
 
 > **Prerequisite:** Familiarity with [{lightgbm}](https://github.com/microsoft/LightGBM)  and the general AI/ML-workflow is assumed.
 
-We will use the [Shutte](https://archive.ics.uci.edu/dataset/148/statlog+shuttle) dataset, made available via [{mlbench}](https://cran.r-project.org/web/packages/mlbench/index.html), as an example throughout this vignette.
+We will use the [Glass](https://archive.ics.uci.edu/dataset/42/glass+identification) dataset, made available via [{mlbench}](https://cran.r-project.org/web/packages/mlbench/index.html), as an example throughout this vignette.
 
 ## Setup
 
@@ -37,7 +37,7 @@ In this section we setup the essential the workflow for using [{SLmetrics}](http
 ```{r data}
 # 1) load data
 # from {mlbench}
-data("Shuttle", package = "mlbench")
+data("Glass", package = "mlbench")
 ```
 
 <details>
@@ -46,8 +46,8 @@ data("Shuttle", package = "mlbench")
 ```{r}
 # 1.1) define the features
 # and outcomes
-outcome  <- c("Class")
-features <- setdiff(x = colnames(Shuttle), y = outcome)
+outcome  <- c("Type")
+features <- setdiff(x = colnames(Glass), y = outcome)
 
 # 2) split data in training
 # and test
@@ -59,19 +59,19 @@ set.seed(1903)
 # 2.2) exttract
 # indices with a simple
 # 80/10 split
-index <- sample(1:nrow(Shuttle), size = 0.8 * nrow(Shuttle))
+index <- sample(1:nrow(Glass), size = 0.8 * nrow(Glass))
 
 # 1.1) extract training
 # data and construct
 # as lgb.Dataset
-train <- Shuttle[index,]
+train <- Glass[index,]
 dtrain <- lightgbm::lgb.Dataset(
     data  = data.matrix(train[,features]),
-    label = train$Class
+    label = train$Type
 )
 # 1.2) extract test
 # data
-test <- Shuttle[-index,]
+test <- Glass[-index,]
 
 
 # 1.2.1) extract actual
@@ -79,7 +79,7 @@ test <- Shuttle[-index,]
 # as.factor for {SLmetrics}
 # methods
 actual <- as.factor(
-    test$Class
+    test$Type
 )
 
 # 1.2.2) construct as data.matrix
@@ -208,13 +208,63 @@ response <- predict(
 
 ```
 
+The `response` can be passed into the `ROC()`-function,
+
+```{r}
+# 1) calculate the reciever
+# operator characteristics
+roc <- ROC(
+    actual   = actual,
+    response = response
+)
+
+# 2) print the roc
+# object
+print(roc)
+```
+
+The `ROC()`-function returns a `data.frame`-object, with `r nrow(roc)` rows corresponding to the `length` of `response` multiplied with number of classes in the data. The `roc`-object can be plotted as follows,
+
+```{r}
+# 1) plot roc
+# object
+plot(roc)
+```
+
+
+The `ROC()`-function accepts a custom `threshold`-argument, which can be passed as follows,
+
+```{r custom thresholds}
+# 1) create custom
+# thresholds
+thresholds <- seq(
+    from = min(roc$threshold),
+    to   = max(roc$threshold),
+    length.out = 10
+)
+
+# 2) pass the custom thresholds
+# to the ROC()-function
+roc <- ROC(
+    actual     = actual,
+    response   = response,
+    thresholds = thresholds 
+)
+
+# 3) print the roc
+# object
+print(roc)
+```
+
+The new object has `r nrow(roc)` rows. 
+
 ```{r ROC}
 # 1) viasualize
 # ROC
-plot(
-    ROC(
-    actual,
-    response = response
-)
-)
+plot(roc)
+```
+
+```{r summary of ROC}
+# 1) summarise ROC
+summary(roc)
 ```

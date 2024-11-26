@@ -107,7 +107,7 @@ print.summary.ROC <- function(
   full_line()
   cat(
     "AUC",
-    paste0(" -", names(x$auc),": " , x$auc),
+    paste0(" - ", names(x$auc),": " , round(x$auc, 3)),
     sep = "\n"
   )
 
