@@ -34,6 +34,8 @@ roc <- ROC(
 # 5) plot by species
 plot(roc)
 
+# 5.1) summarise
+summary(roc)
 
 # 6) provide custom
 # threholds

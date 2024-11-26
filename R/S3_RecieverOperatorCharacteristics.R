@@ -56,6 +56,65 @@ print.ROC <- function(x, ...) {
 
 }
 
+#' @export
+summary.ROC <- function(
+  object,
+  ...) {
+  
+  # 1) calculate area 
+  # under the curve
+
+  # 1.1) extract list
+  # of labels
+  x_list <- split(
+    x = object,
+    f = object$label
+  )
+
+  # 1.2) calculate AUC
+  # for each label
+  metric <- vapply(
+    x_list, 
+    function(x) {
+      auc(
+        y = x$tpr,
+        x = x$fpr
+      )
+    }, 
+    FUN.VALUE = numeric(1),
+    USE.NAMES = TRUE
+  )
+
+  names(metric) <- names(x_list)
+  
+  structure(
+    .Data = {
+      list(
+        auc = metric
+      )
+    },
+    class = "summary.ROC"
+  )
+
+}
+
+#' @export
+print.summary.ROC <- function(
+  x, 
+  ...) {
+
+  cat("Reciever Operator Characteristics", "\n")
+  full_line()
+  cat(
+    "AUC",
+    paste0(" -", names(x$auc),": " , x$auc),
+    sep = "\n"
+  )
+
+  invisible(x)
+
+}
+
 
 #' @export
 plot.ROC <- function(
@@ -89,34 +148,17 @@ plot.ROC <- function(
 
   }
 
-  lattice::xyplot(
-    x        = pformula,
-    data     = x,
-    groups   = groups,
-    type     = "l",
-    xlab     = xlab,
-    ylab     = ylab,
-    main     = main,
-    lwd      = 2,
-    auto.key = list(
-      space = "bottom",
-      columns = length(groups)
-    ),
-    xlim = c(0, 1),
-    ylim = c(0, 1),
-    panel = function(x, y, ...) {
 
-      lattice::panel.xyplot(x, y, ...)
-      lattice::panel.abline(
-        a = 0,
-        b = 1,
-        lty = 2
-      )
-
-    },
-    ...
-
+  roc_plot(
+    formula = pformula,
+    groups  = groups,
+    xlab    = xlab,
+    ylab    = ylab,
+    main    = main,
+    DT      = x,
+    ...  
   )
+  
 }
 
 # script end;

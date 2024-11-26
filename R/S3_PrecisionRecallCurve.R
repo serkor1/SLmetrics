@@ -17,6 +17,14 @@
 #'
 #' @family classification
 #' @family reciever operator characteristics
+#' 
+#' @returns A [data.frame] on the following form,
+#'
+#' \item{thresholds}{<[numeric]> Thresholds used to determine [recall()] and [precision()]}
+#' \item{level}{<[character]> The level of the actual <[factor]>}
+#' \item{label}{<[character]> The levels of the actual <[factor]>}
+#' \item{recall}{<[numeric]> The recall}
+#' \item{precision}{<[numeric]> The precision}
 #'
 #' @export
 prROC <- function(...) {
@@ -40,6 +48,65 @@ print.prROC <- function(x, ...) {
       )
     )
   )
+
+}
+
+#' @export
+summary.prROC <- function(
+  object,
+  ...) {
+  
+  # 1) calculate area 
+  # under the curve
+
+  # 1.1) extract list
+  # of labels
+  x_list <- split(
+    x = object,
+    f = object$label
+  )
+
+  # 1.2) calculate AUC
+  # for each label
+  metric <- vapply(
+    x_list, 
+    function(x) {
+      auc(
+        y = x$precision,
+        x = x$recall
+      )
+    }, 
+    FUN.VALUE = numeric(1),
+    USE.NAMES = TRUE
+  )
+
+  names(metric) <- names(x_list)
+  
+  structure(
+    .Data = {
+      list(
+        auc = metric
+      )
+    },
+    class = "summary.prROC"
+  )
+  
+}
+
+#' @export
+print.summary.prROC <- function(
+  x,
+  ...) {
+
+  cat("Reciever Operator Characteristics", "\n")
+  full_line()
+  cat(
+    "AUC",
+    paste0(" -",names(x$auc), ": ", x$auc),
+    sep = "\n"
+  )
+
+  invisible(x)
 
 }
 
@@ -73,34 +140,16 @@ plot.prROC <- function(
 
   }
 
-  lattice::xyplot(
-    x        = pformula,
-    data     = x,
-    groups   = groups,
-    type     = "l",
-    xlab     = xlab,
-    ylab     = ylab,
-    main     = main,
-    lwd      = 2,
-    auto.key = list(
-      space = "bottom",
-      columns = length(unique(x$label))
-    ),
-    xlim = c(0, 1),
-    ylim = c(0, 1),
-    panel = function(x, y, ...) {
-
-      lattice::panel.xyplot(x, y, ...)
-      lattice::panel.abline(
-        a = 0,
-        b = 1,
-        lty = 2
-        )
-
-    },
-    ...
-
+  roc_plot(
+    formula = pformula,
+    groups  = groups,
+    xlab    = xlab,
+    ylab    = ylab,
+    main    = main,
+    DT      = x,
+    ...  
   )
+
 }
 
 # script end;

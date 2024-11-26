@@ -29,6 +29,7 @@ Suggests:
     xgboost
 Config/testthat/edition: 3
 Imports:
+    grDevices,
     lattice,
     Rcpp
 VignetteBuilder: knitr
