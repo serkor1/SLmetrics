@@ -33,7 +33,7 @@ include unsupervised learning metrics. If not, then it will remain a
 {pkg} for Supervised Learning metrics, and a sandbox for me to develop
 my `C++` skills.
 
-## :information_source: Why?
+## :information\_source: Why?
 
 Machine Learning (ML) in itself can be a complicated task; the steps
 taken from feature engineering to the deployment of the model requires
@@ -59,9 +59,8 @@ been posted on [R-bloggers](https://www.r-bloggers.com/). For a quick
 summary see below,
 
 <details>
-<summary>
-Showcase: speed comparison
-</summary>
+
+<summary> Showcase: speed comparison </summary>
 
 Below is two simple cases that any {pkg} should be able to handle
 gracefully; computing a confusion matrix and computing the root mean
@@ -70,11 +69,11 @@ squared error. The source code of the performance test can be found
 
 ## Execution time: Computing a 2 x 2 Confusion Matrix
 
-<img src="man/figures/README-classification_performance_obs-1.png" width="100%" />
+<img src="man/figures/README-performance-classification-1.png" width="100%" />
 
 ## Execution time: Computing the Root Mean Squared Error (RMSE)
 
-<img src="man/figures/README-regression_performance_rmse-1.png" width="100%" />
+<img src="man/figures/README-performance-regression-1.png" width="100%" />
 
 In both cases the execution time is diverging in favor of {SLmetrics};
 we promised speed and efficiency - and that is what you get.
@@ -89,9 +88,8 @@ Secondly, {SLmetrics} is *simple* and *flexible* to use; it is based on
 `S3` and provides the most essential class-wise and aggregated metrics.
 
 <details>
-<summary>
-Showcase: simplicity and flexibility
-</summary>
+
+<summary> Showcase: simplicity and flexibility </summary>
 
 Consider the classification problem below,
 
@@ -118,17 +116,17 @@ follows,
 # 1) recall
 recall(actual, predicted)
 #>         a         b         c 
-#> 0.5909091 0.3157895 0.2250000
+#> 0.3333333 0.3939394 0.1162791
 
 # 2) precision
 precision(actual, predicted)
 #>         a         b         c 
-#> 0.2500000 0.4800000 0.3913043
+#> 0.1568627 0.4193548 0.2777778
 
 # 3) specificity
 specificity(actual, predicted)
 #>         a         b         c 
-#> 0.5000000 0.7903226 0.7666667
+#> 0.4342105 0.7313433 0.7719298
 ```
 
 Each function returns the class-wise metric; there is no need to specify
@@ -140,12 +138,12 @@ with a single `<[logical]>`-argument,
 # 1) micro-averaged
 # recall
 recall(actual, predicted, micro = TRUE)
-#> [1] 0.34
+#> [1] 0.26
 
 # 2) macro-averaged
 # recall
 recall(actual, predicted, micro = FALSE)
-#> [1] 0.3772329
+#> [1] 0.2811839
 ```
 
 However, it is not efficient to loop through the entire range of the
@@ -163,17 +161,17 @@ confusion_matrix <- cmatrix(
 # 1) recall
 recall(confusion_matrix)
 #>         a         b         c 
-#> 0.5909091 0.3157895 0.2250000
+#> 0.3333333 0.3939394 0.1162791
 
 # 2) precision
 precision(confusion_matrix)
 #>         a         b         c 
-#> 0.2500000 0.4800000 0.3913043
+#> 0.1568627 0.4193548 0.2777778
 
 # 3) specificity
 specificity(confusion_matrix)
 #>         a         b         c 
-#> 0.5000000 0.7903226 0.7666667
+#> 0.4342105 0.7313433 0.7719298
 ```
 
 It is the same call and metric with slightly different arguments; this
@@ -187,9 +185,8 @@ a part of your own {pkg}, or use it in any tidy, or untidy, pipeline you
 would want to.
 
 <details>
-<summary>
-Showcase: Low level and (in)dependency
-</summary>
+
+<summary> Showcase: Low level and (in)dependency </summary>
 
 Currently {SLmetrics} depends on three {pkgs};
 [{Rcpp}](https://github.com/RcppCore/Rcpp),
@@ -217,9 +214,8 @@ learning metrics; all of which has been battle tested with
 [{MLmetrics}](https://github.com/yanyachen/MLmetrics).
 
 <details>
-<summary>
-Showcase: repertoire and unit-testing
-</summary>
+
+<summary> Showcase: repertoire and unit-testing </summary>
 
 {SLmetrics} is build as the `R`-version of
 [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) but with
@@ -230,7 +226,7 @@ functions implemented in {SLmetrics} are tested using
 
 </details>
 
-## :information_source: Basic usage
+## :information\_source: Basic usage
 
 In its most basic form the functions can be used as-is without any
 pipelines, data.frames or recipes. Below are two simple examples.
@@ -290,7 +286,9 @@ predicted <- as.factor(
     no  = "others"
   )
 )
+```
 
+``` r
 # 4) generate
 # confusion matrix
 summary(
@@ -313,10 +311,31 @@ summary(
 #>  - Precision:         0.81
 ```
 
+``` r
+# 5) generate
+# roc object
+summary(
+  roc <-  ROC(
+    actual    = iris$Species,
+    response  = predict(model, type = "response")
+  )
+)
+#> Reciever Operator Characteristics 
+#> ================================================================================
+#> AUC
+#>  - others: 0.883
+#>  - virginica: 0.113
+
+# 6) plot roc
+# object
+plot(roc)
+```
+
+<img src="man/figures/README-ROC-1.png" width="100%" />
+
 <details>
-<summary>
-Class-wise and aggregated metrics
-</summary>
+
+<summary> Class-wise and aggregated metrics </summary>
 
 **Classwise specificity**
 
@@ -351,29 +370,29 @@ sensitivity(
 
 </details>
 
-## :information_source: Installation
+## :information\_source: Installation
 
 ### :shield: Stable version
 
 ``` r
-## install from github
+## install stable release
 devtools::install_github(
-  repo = 'https://github.com/serkor1/SLmetrics',
+  repo = 'https://github.com/serkor1/SLmetrics@*release',
   ref  = 'main'
 )
 ```
 
-### :hammer_and_wrench: Development version
+### :hammer\_and\_wrench: Development version
 
 ``` r
-## install from github
+## install development version
 devtools::install_github(
   repo = 'https://github.com/serkor1/SLmetrics',
   ref  = 'development'
 )
 ```
 
-## :information_source: Code of Conduct
+## :information\_source: Code of Conduct
 
 Please note that the {SLmetrics} project is released with a [Contributor
 Code of
