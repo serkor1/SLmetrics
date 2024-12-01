@@ -61,7 +61,7 @@ actual    <- mtcars$mpg
 predicted <- fitted(model)
 
 
-# 2) calculate the huber loss
+# 2) calculate the metric
 # with delta 0.5
 huberloss(
   actual = actual,
@@ -70,7 +70,7 @@ huberloss(
 )
 
 # 3) caclulate weighted
-# huber loss
+# metric using arbitrary weights
 w <- rbeta(
   n = 1e3,
   shape1 = 10,

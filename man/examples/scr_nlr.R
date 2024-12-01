@@ -33,30 +33,7 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) positive likelihood
-# ratio
-plr(
-  actual    = actual,
-  predicted = predicted
-)
-
-# 4.1) micro averaged
-# plr
-plr(
-  actual    = actual,
-  predicted = predicted,
-  micro     = TRUE 
-)
-
-# macro averaged
-# plr
-plr(
-  actual    = actual,
-  predicted = predicted,
-  micro     = FALSE 
-)
-
-# 5) negative likeliood
+# 4) negative likeliood
 # ratio
 nlr(
   actual    = actual,

@@ -116,7 +116,7 @@ actual <- factor(
 #
 # 4.1) no adjustment
 baccuracy(
-  actual    = actaul,
+  actual    = actual,
   predicted = predicted
 )
 

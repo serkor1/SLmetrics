@@ -33,18 +33,25 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) evaluate the
-# model
-#
-# 4.1) no adjustment
-baccuracy(
+# 4) positive likelihood
+# ratio
+plr(
   actual    = actual,
   predicted = predicted
 )
 
-# 4.2) with adjustment
-baccuracy(
+# 4.1) micro averaged
+# plr
+plr(
   actual    = actual,
   predicted = predicted,
-  adjust    = TRUE
+  micro     = TRUE 
+)
+
+# macro averaged
+# plr
+plr(
+  actual    = actual,
+  predicted = predicted,
+  micro     = FALSE 
 )
