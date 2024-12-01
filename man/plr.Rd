@@ -147,29 +147,6 @@ plr(
   predicted = predicted,
   micro     = FALSE 
 )
-
-# 5) negative likeliood
-# ratio
-nlr(
-  actual    = actual,
-  predicted = predicted
-)
-
-# 4.1) micro averaged
-# nlr
-nlr(
-  actual    = actual,
-  predicted = predicted,
-  micro     = TRUE 
-)
-
-# macro averaged
-# nlr
-nlr(
-  actual    = actual,
-  predicted = predicted,
-  micro     = FALSE 
-)
 }
 \seealso{
 The \code{\link[=nlr]{nlr()}}-function for the Negative Likehood Ratio (LR-)

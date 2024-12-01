@@ -121,7 +121,7 @@ plot.prROC <- function(
   # All common options for the
   # plot goes her
   pformula <- precision ~ recall
-  groups   <- unique(x$label)
+  groups   <-unique(x$label)
   xlab     <- "Recall"
   ylab     <- "Precision"
   main     <- "Precision-Recall Curve"
@@ -132,7 +132,7 @@ plot.prROC <- function(
 
     # 1.2) grouped by
     # label.
-    pformula <- precision ~ recall | label
+    pformula <- precision ~ recall | factor(label, labels = unique(label))
 
     # 1.3) disable grouping
     # if panelwise

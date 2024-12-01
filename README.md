@@ -116,17 +116,17 @@ follows,
 # 1) recall
 recall(actual, predicted)
 #>         a         b         c 
-#> 0.3333333 0.3939394 0.1162791
+#> 0.3888889 0.3777778 0.1621622
 
 # 2) precision
 precision(actual, predicted)
 #>         a         b         c 
-#> 0.1568627 0.4193548 0.2777778
+#> 0.1489362 0.5666667 0.2608696
 
 # 3) specificity
 specificity(actual, predicted)
 #>         a         b         c 
-#> 0.4342105 0.7313433 0.7719298
+#> 0.5121951 0.7636364 0.7301587
 ```
 
 Each function returns the class-wise metric; there is no need to specify
@@ -138,12 +138,12 @@ with a single `<[logical]>`-argument,
 # 1) micro-averaged
 # recall
 recall(actual, predicted, micro = TRUE)
-#> [1] 0.26
+#> [1] 0.3
 
 # 2) macro-averaged
 # recall
 recall(actual, predicted, micro = FALSE)
-#> [1] 0.2811839
+#> [1] 0.3096096
 ```
 
 However, it is not efficient to loop through the entire range of the
@@ -161,17 +161,17 @@ confusion_matrix <- cmatrix(
 # 1) recall
 recall(confusion_matrix)
 #>         a         b         c 
-#> 0.3333333 0.3939394 0.1162791
+#> 0.3888889 0.3777778 0.1621622
 
 # 2) precision
 precision(confusion_matrix)
 #>         a         b         c 
-#> 0.1568627 0.4193548 0.2777778
+#> 0.1489362 0.5666667 0.2608696
 
 # 3) specificity
 specificity(confusion_matrix)
 #>         a         b         c 
-#> 0.4342105 0.7313433 0.7719298
+#> 0.5121951 0.7636364 0.7301587
 ```
 
 It is the same call and metric with slightly different arguments; this
@@ -259,32 +259,36 @@ regression on `Species` from the `iris` data set,
 ``` r
 # 1) recode iris
 # to binary problem
-iris$Species <- factor(
-  x = as.numeric(
-    iris$Species == "virginica"
-  ),
-  levels = c(1,0),
-  labels = c("virginica", "others")
+iris$species_num <- as.numeric(
+  iris$Species == "virginica"
 )
 
 # 2) fit the logistic
 # regression
 model <- glm(
-  formula = Species ~ Sepal.Length + Sepal.Width,
+  formula = species_num ~ Sepal.Length + Sepal.Width,
   data    = iris,
-  family = binomial(
+  family  = binomial(
     link = "logit"
   )
 )
 
 # 3) generate predicted
 # classes
-predicted <- as.factor(
-  ifelse(
-    predict(model, type = "response") > 0.5,
-    yes = "virginica",
-    no  = "others"
-  )
+predicted <- factor(
+  as.numeric(
+    predict(model, type = "response") > 0.5
+  ),
+  levels = c(1,0),
+  labels = c("Virginica", "Others")
+)
+
+# 4) generate actual
+# values as factor
+actual <- factor(
+  x = iris$species_num,
+  levels = c(1,0),
+  labels = c("Virginica", "Others")
 )
 ```
 
@@ -293,15 +297,15 @@ predicted <- as.factor(
 # confusion matrix
 summary(
   confusion_matrix <-  cmatrix(
-    actual    = iris$Species,
+    actual    = actual,
     predicted = predicted
   )
 )
 #> Confusion Matrix (2 x 2) 
 #> ================================================================================
-#>           virginica others
-#> virginica        35     15
-#> others           14     86
+#>           Virginica Others
+#> Virginica        35     15
+#> Others           14     86
 #> ================================================================================
 #> Overall Statistics (micro average)
 #>  - Accuracy:          0.81
@@ -315,16 +319,16 @@ summary(
 # 5) generate
 # roc object
 summary(
-  roc <-  ROC(
-    actual    = iris$Species,
+  roc <- ROC(
+    actual    = actual,
     response  = predict(model, type = "response")
   )
 )
 #> Reciever Operator Characteristics 
 #> ================================================================================
 #> AUC
-#>  - others: 0.883
-#>  - virginica: 0.113
+#>  - Others: 0.116
+#>  - Virginica: 0.887
 
 # 6) plot roc
 # object
@@ -344,7 +348,7 @@ sensitivity(
   confusion_matrix,
   micro = NULL
 )
-#> virginica    others 
+#> Virginica    Others 
 #>      0.70      0.86
 ```
 

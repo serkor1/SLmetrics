@@ -140,7 +140,7 @@ plot.ROC <- function(
 
     # 1.2) grouped by
     # label.
-    pformula <- tpr ~ fpr | label
+    pformula <- tpr ~ fpr | factor(label, labels = unique(label))
 
     # 1.3) disable grouping
     # if panelwise
