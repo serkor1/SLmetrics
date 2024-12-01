@@ -1,6 +1,6 @@
 # 0) run a regression
 # on mtcars
-model <-  lm(
+model <- lm(
   formula = mpg ~ .,
   data    = mtcars
 )
