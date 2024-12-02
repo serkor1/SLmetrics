@@ -1,0 +1,38 @@
+Package: SLmetrics
+Title: Machine Learning Performance Evaluation on Steroids
+Version: 0.1-0
+Authors@R: c(
+    person(
+      given   = "Serkan", 
+      family  = "Korkmaz",
+      email   = "serkor1@duck.com", 
+      role    = c("cre", "aut", "cph"),
+      comment = c(ORCID = "0000-0002-5052-0982")
+      )
+  )
+Description:
+  Performance evaluation metrics for supervised machine learning, statistical learning and artificial intelligence applications in R written in C++.
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+LinkingTo: 
+    Rcpp,
+    RcppEigen
+Suggests: 
+    knitr,
+    lightgbm,
+    mlbench,
+    reticulate,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    xgboost
+Config/testthat/edition: 3
+Imports:
+    grDevices,
+    lattice,
+    Rcpp
+VignetteBuilder: knitr
+Depends: 
+    R (>= 2.10)
+URL: https://serkor1.github.io/SLmetrics/

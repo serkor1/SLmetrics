@@ -1,0 +1,186 @@
+---
+title: "{SLmetrics}: Regression"
+subtitle: "{SLmetrics} x {xgboost} in regression problems"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{{SLmetrics}: Regression}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment  = "#>",
+  message  = FALSE
+)
+```
+
+```{r setup}
+# load libraries
+library(SLmetrics)
+```
+
+
+In this vignette, we demonstrate how to use [{SLmetrics}](https://github.com/serkor1/SLmetrics) with [{xgboost}](https://github.com/dmlc/xgboost) for regression problems. 
+
+> **Prerequisite:** Familiarity with {xgboost} and the general AI/ML-workflow is assumed.
+
+We will use the [Boston Housing](https://www.archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.names) dataset, made available via [{mlbench}](https://cran.r-project.org/web/packages/mlbench/index.html), as an example throughout this vignette.
+
+## Setup
+
+In this section we setup the essential the workflow for using [{SLmetrics}](https://github.com/serkor1/SLmetrics) with [{xgboost}](https://github.com/dmlc/xgboost).
+
+### The data
+
+```{r data}
+# 1) load data
+# from {mlbench}
+data("BostonHousing", package = "mlbench")
+```
+
+<details>
+<summary> Intermediate steps </summary>
+
+```{r}
+# 1.1) define the features
+# and outcomes
+outcome  <- c("medv")
+features <- setdiff(
+    x = colnames(BostonHousing), 
+    y = outcome
+    )
+
+# 2) split data in training
+# and test
+
+# 2.1) set seed for 
+# for reproducibility
+set.seed(1903)
+
+# 2.2) exttract
+# indices with a simple
+# 90/10 split
+index <- sample(1:nrow(BostonHousing), size = 0.9 * nrow(BostonHousing))
+
+# 1.1) extract training
+# data and construct
+# as lgb.Dataset
+train <- BostonHousing[index,]
+
+# 1.1.1) convert
+# to DMatrix
+dtrain <- xgboost::xgb.DMatrix(
+    data = data.matrix(train[, features]),
+    label = data.matrix(train[, outcome])
+)
+
+
+# 1.2) extract test
+# data
+test <- BostonHousing[-index,]
+
+# 1.2.1) convert to DMatrix
+dtest <-  xgboost::xgb.DMatrix(
+    data = data.matrix(test[, features]),
+    label = data.matrix(test[, outcome])
+)
+
+# 1.2.2) extract actual
+# outcome
+actual <- test$medv
+```
+
+</details>
+
+### Set parameters
+```{r parameters}
+# 1) define parameters
+# across the vignette
+parameters <- list(
+    max_depth = 2, 
+    eta = 1
+)
+```
+
+### Evaluation function: Relative Root Mean Squared Error (RRMSE)
+
+The function is defined as,
+
+$$
+\text{RRMSE} = \sqrt{\frac{\sum_{i=1}^n (y_i - \upsilon_i)^2}{\sum_{i=1}^n (y_i - \bar{y})^2}}
+$$
+
+where $y_i$ are the actual values, $\upsilon_i$ are the predicted values and $\bar{y}$ is the mean of $y$.
+
+```{r}
+# 1) define the custom
+# evaluation metric
+evaluation_metric <- function(
+    preds, 
+    dtrain) {
+
+        # 1) extract values
+        actual    <- xgboost::getinfo(dtrain, "label")
+        predicted <- preds
+        value     <- rrmse(
+            actual    = actual,
+            predicted = predicted
+        )
+
+        # 2) construnct output
+        # list
+        list(
+            metric = "RRMSE",
+            value  = value
+        )
+    
+}
+```
+
+## Training model
+
+We train the the model using the `xgb.train()`-function,
+
+```{r}
+# 1) model training
+model <- xgboost::xgb.train(
+    params  = parameters,
+    data    = dtrain,
+    nrounds = 10L,
+    verbose = 0,
+    feval   = evaluation_metric,
+    watchlist = list(
+        train = dtrain,
+        test  = dtest
+    ),
+    maximize = FALSE
+)
+```
+
+## Performance Evaluation
+
+We extract the predicted values using the `predict()`-function,
+
+```{r}
+# 1) out of sample
+# prediction
+predicted <- predict(
+    model,
+    newdata = dtest
+)
+```
+
+We summarize the performance using the *relative root mean squared error*, *root mean squared error* and *concordance correlation coefficient*
+
+```{r}
+# 1) summarize all
+# performance measures 
+# in data.frame
+data.frame(
+    RRMSE  = rrmse(actual, predicted), 
+    RMSE   = rmse(actual, predicted),
+    CCC    = ccc(actual, predicted)
+)
+```

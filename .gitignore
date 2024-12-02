@@ -47,3 +47,21 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+.Rproj.user
+
+# playground
+playground/
+docs
+inst/doc
+
+
+# Clion Files
+src/CMakeLists.txt
+src/cmake-build-debug
+src/.idea
+
+/.quarto/
+
+# html-files
+# (from rendering markdown/quarto)
+*.html

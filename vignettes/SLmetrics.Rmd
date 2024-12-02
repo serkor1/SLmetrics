@@ -1,0 +1,101 @@
+---
+title: "{SLmetrics}: Machine learning performance evaluation on steroids"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{{SLmetrics}: Machine learning performance evaluation on steroids}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment  = "#>",
+  message  = FALSE
+)
+```
+
+```{r setup}
+# load library
+library(SLmetrics)
+```
+
+## Overview
+
+[{SLmetrics}](https://github.com/serkor1/SLmetrics) is a low-level R package for supervised AI/ML performance evaluation. It uses [{Rcpp}](https://github.com/RcppCore/Rcpp) and [{RcppEigen}](https://github.com/RcppCore/RcppEigen) as backend for memory efficient and fast execution of the various metrics. [{SLmetrics}](https://github.com/serkor1/SLmetrics) follows the syntax of base R, and uses [S3](https://deepr.gagolewski.com/chapter/220-s3.html)-classes. 
+
+## Why?
+
+There are currently a few packages that bridges the gap between R and Python in terms of AI/ML performance evaluation; [{MLmetrics}](https://github.com/yanyachen/MLmetrics), [{yardstick}](https://github.com/tidymodels/yardstick), [{mlr3measures}](https://github.com/mlr-org/mlr3measures)and [{metrica}](https://github.com/adriancorrendo/metrica/). 
+
+[{MLmetrics}](https://github.com/yanyachen/MLmetrics) can be considered *the* legacy code when it comes to performance evaluation, and it served as a backend in [{yardstick}](https://github.com/tidymodels/yardstick) up to [version 0.0.2](https://yardstick.tidymodels.org/news/index.html#yardstick-002). It is built entirely on base R, and has been stable since its inception almost 10 years ago. However, it appears that the development has reached it's peak and is currently stale - see, for example, this stale [PR](https://github.com/yanyachen/MLmetrics/pull/3) related to this [issue](https://github.com/yanyachen/MLmetrics/issues/2).
+
+Micro- and macro-averages have been implented in [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) for many years, and [{MLmetrics}](https://github.com/yanyachen/MLmetrics) simply didn't keep up with the development.
+
+[{yardstick}](https://github.com/tidymodels/yardstick), on the other hand, carried the torch forward and implemented these modern features. [{yardstick}](https://github.com/tidymodels/yardstick) closely follows the syntax, naming and functionality of [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) but is built with [{tidyverse}](https://github.com/tidyverse) tools; although the source code is nice to look at, it does introduce some serious  overhead and carries the risk of deprecations. 
+
+Furthermore, it complicates a simple application by its verbose function naming, see for example `metric()`-function for `<tbl>` and `metric_vec()`-function for `<numeric>` - the output is the same, but the call is different. [{yardstick}](https://github.com/tidymodels/yardstick) can't handle more than one positive class at a time, so the end-user is forced to run the same function more than once to get performance metrics for the adjacent classes.
+
+[{SLmetrics}](https://github.com/serkor1/SLmetrics), as the name suggests, closely resembles [{MLmetrics}](https://github.com/yanyachen/MLmetrics) in its simplicity, but this is where the similarity ends. [{SLmetrics}](https://github.com/serkor1/SLmetrics) reflects the simplicity of the application; comparing two vectors. The functionality and features closely follows that of [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and [{pytorch}](https://github.com/pytorch/pytorch) - but it has a significant edge over the two, alongside the R packages, when it comes to speed, efficiency and user-friendliness; It uses c++ as  backend, and [S3](https://deepr.gagolewski.com/chapter/220-s3.html)-classes as frontend (See [here](https://github.com/serkor1/SLmetrics/blob/development/README.md) for speed comparison)
+
+## Basic usage: classification
+
+```{r}
+# 1) recode iris
+# to binary problem
+iris$Species <- factor(
+  x = as.numeric(
+    iris$Species == "virginica"
+  ),
+  levels = c(1,0),
+  labels = c("virginica", "others")
+)
+
+# 2) fit the logistic
+# regression
+model <- glm(
+  formula = Species ~ Sepal.Length + Sepal.Width,
+  data    = iris,
+  family = binomial(
+    link = "logit"
+  )
+)
+
+# 3) generate predicted
+# classes
+predicted <- as.factor(
+  ifelse(
+    predict(model, type = "response") > 0.5,
+    yes = "virginica",
+    no  = "others"
+  )
+)
+```
+
+```{r}
+# 1) construct confusion
+# matrix
+confusion_matrix <- cmatrix(
+  actual    = iris$Species,
+  predicted = predicted
+)
+
+# 2) visualize
+# confusion matrix
+plot(
+  confusion_matrix
+)
+
+# 3) summarise 
+# confusion matrix
+summary(
+  confusion_matrix
+)
+```
+
+
+
+
+
+
+
