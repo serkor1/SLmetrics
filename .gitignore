@@ -61,3 +61,7 @@ src/cmake-build-debug
 src/.idea
 
 /.quarto/
+
+# html-files
+# (from rendering markdown/quarto)
+*.html

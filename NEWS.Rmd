@@ -2,12 +2,84 @@
 output: github_document
 ---
 
+```{r setup, echo = FALSE}
+# 1) setup common
+# values
+knitr::opts_chunk$set(
+  comment   = "#>", 
+  echo      = TRUE, 
+  fig.width = 6
+)
+
+# 2) setup seeed
+set.seed(1903) 
+```
+
 # Version 0.1-0
+
+> Version 0.1-0 is considered pre-release of {SLmetrics}. We do not
+> expect any breaking changes, unless a major bug/issue is reported and its nature
+> forces breaking changes.
 
 ## General
 
-* Initial CRAN submission of {SLmetrics} :rocket:
+* {SLmetrics} is a collection of Machine Learning performance evaluation functions for supervised learning. Visit the online documentation on [GitHub Pages](https://serkor1.github.io/SLmetrics/).
 
-## Features
+## Examples
+
+### Supervised classification metrics
+
+```{r}
+# 1) actual classes
+print(
+    actual <- factor(
+        sample(letters[1:3], size = 10, replace = TRUE)
+    )
+)
+
+# 2) predicted classes
+print(
+    predicted <- factor(
+        sample(letters[1:3], size = 10, replace = TRUE)
+    )
+)
+```
+
+```{r}
+# 1) calculate confusion
+# matrix and summarise
+# it
+summary(
+    confusion_matrix <- SLmetrics::cmatrix(
+        actual    = actual,
+        predicted = predicted
+    )
+)
+
+# 2) calculate false positive
+# rate using micro average
+SLmetrics::fpr(
+    confusion_matrix
+)
+```
 
 
+### Supervised regression metrics
+
+```{r}
+# 1) actual values
+actual <- rnorm(n = 100)
+
+# 2) predicted values
+predicted <- actual + rnorm(n = 100)
+```
+
+
+```{r}
+# 1) calculate
+# huber loss
+SLmetrics::huberloss(
+    actual    = actual,
+    predicted = predicted
+)
+```
