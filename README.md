@@ -15,23 +15,26 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![codecov](https://codecov.io/gh/serkor1/SLmetrics/branch/development/graph/badge.svg?token=X2osJDSRlN)](https://codecov.io/gh/serkor1/SLmetrics)
 <!-- badges: end -->
 
-{SLmetrics} is a collection of *lightning fast* performance evaluation
-metrics for regression and classification models written in `C++` and
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) is a collection of
+*lightning fast* performance evaluation metrics for regression and
+classification models written in `C++` and
 [{Rcpp}](https://github.com/RcppCore/Rcpp); it’s like using a
 supercharged [{yardstick}](https://github.com/tidymodels/yardstick) to
 measure model performance, without the risk of soft to super-hard
-deprecations. {SLmetrics} provides (almost) the same array of metrics as
-in [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and
+deprecations. [{SLmetrics}](https://serkor1.github.io/SLmetrics/)
+provides (almost) the same array of metrics as in
+[{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and
 [{pytorch}](https://github.com/pytorch/pytorch) but without having to
 [{reticulate}](https://github.com/rstudio/reticulate) or go through the
 whole compile, run and debug cycle in `Python`.
 
-Depending on the mood and alignment of planets {SLmetrics} stands for
+Depending on the mood and alignment of planets
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) stands for
 Supervised Learning metrics, or Statistical Learning metrics. If
-{SLmetrics} catches on, the latter will be the core philosophy and
-include unsupervised learning metrics. If not, then it will remain a
-{pkg} for Supervised Learning metrics, and a sandbox for me to develop
-my `C++` skills.
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) catches on, the
+latter will be the core philosophy and include unsupervised learning
+metrics. If not, then it will remain a {pkg} for Supervised Learning
+metrics, and a sandbox for me to develop my `C++` skills.
 
 ## :information\_source: Why?
 
@@ -48,12 +51,14 @@ There should be no need to consider *quasiquations*, *dependencies*,
 *deprecations* or variations of the same functions relative to its
 arguments; it should be plug-and-play, and “just” work out of the box.
 
-Below is four arguments of why {SLmetrics} should be considered in your
-ML pipeline,
+Below is four arguments of why
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) should be considered
+in your ML pipeline,
 
-Firstly, {SLmetrics} is *fast*. One, obviously, can’t build an
-`R`-package on `C++` and [{Rcpp}](https://github.com/RcppCore/Rcpp)
-without a proper pissing contest at the urinals; a detailed [blog
+Firstly, [{SLmetrics}](https://serkor1.github.io/SLmetrics/) is *fast*.
+One, obviously, can’t build an `R`-package on `C++` and
+[{Rcpp}](https://github.com/RcppCore/Rcpp) without a proper pissing
+contest at the urinals; a detailed [blog
 post](https://www.r-bloggers.com/) about the difference in speed has
 been posted on [R-bloggers](https://www.r-bloggers.com/). For a quick
 summary see below,
@@ -75,8 +80,9 @@ squared error. The source code of the performance test can be found
 
 <img src="man/figures/README-performance-regression-1.png" width="100%" />
 
-In both cases the execution time is diverging in favor of {SLmetrics};
-we promised speed and efficiency - and that is what you get.
+In both cases the execution time is diverging in favor of
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/); we promised speed
+and efficiency - and that is what you get.
 
 > In all fairness, {yardstick} is more defensive in its implementation
 > of some of its functions. However, the difference in the average
@@ -84,8 +90,9 @@ we promised speed and efficiency - and that is what you get.
 
 </details>
 
-Secondly, {SLmetrics} is *simple* and *flexible* to use; it is based on
-`S3` and provides the most essential class-wise and aggregated metrics.
+Secondly, [{SLmetrics}](https://serkor1.github.io/SLmetrics/) is
+*simple* and *flexible* to use; it is based on `S3` and provides the
+most essential class-wise and aggregated metrics.
 
 <details>
 
@@ -116,17 +123,17 @@ follows,
 # 1) recall
 recall(actual, predicted)
 #>         a         b         c 
-#> 0.3888889 0.3777778 0.1621622
+#> 0.5000000 0.3695652 0.1785714
 
 # 2) precision
 precision(actual, predicted)
 #>         a         b         c 
-#> 0.1489362 0.5666667 0.2608696
+#> 0.2407407 0.5312500 0.3571429
 
 # 3) specificity
 specificity(actual, predicted)
 #>         a         b         c 
-#> 0.5121951 0.7636364 0.7301587
+#> 0.4459459 0.7222222 0.8750000
 ```
 
 Each function returns the class-wise metric; there is no need to specify
@@ -138,12 +145,12 @@ with a single `<[logical]>`-argument,
 # 1) micro-averaged
 # recall
 recall(actual, predicted, micro = TRUE)
-#> [1] 0.3
+#> [1] 0.35
 
 # 2) macro-averaged
 # recall
 recall(actual, predicted, micro = FALSE)
-#> [1] 0.3096096
+#> [1] 0.3493789
 ```
 
 However, it is not efficient to loop through the entire range of the
@@ -161,17 +168,17 @@ confusion_matrix <- cmatrix(
 # 1) recall
 recall(confusion_matrix)
 #>         a         b         c 
-#> 0.3888889 0.3777778 0.1621622
+#> 0.5000000 0.3695652 0.1785714
 
 # 2) precision
 precision(confusion_matrix)
 #>         a         b         c 
-#> 0.1489362 0.5666667 0.2608696
+#> 0.2407407 0.5312500 0.3571429
 
 # 3) specificity
 specificity(confusion_matrix)
 #>         a         b         c 
-#> 0.5121951 0.7636364 0.7301587
+#> 0.4459459 0.7222222 0.8750000
 ```
 
 It is the same call and metric with slightly different arguments; this
@@ -179,34 +186,36 @@ is the power and simplicity of `S3`.
 
 </details>
 
-Thirdly, {SLmetrics} is *low level* and free of any
-*{pkg}verse*-regimes; this provides the freedom to develop it further as
-a part of your own {pkg}, or use it in any tidy, or untidy, pipeline you
-would want to.
+Thirdly, [{SLmetrics}](https://serkor1.github.io/SLmetrics/) is *low
+level* and free of any *{pkg}verse*-regimes; this provides the freedom
+to develop it further as a part of your own {pkg}, or use it in any
+tidy, or untidy, pipeline you would want to.
 
 <details>
 
 <summary> Showcase: Low level and (in)dependency </summary>
 
-Currently {SLmetrics} depends on three {pkgs};
-[{Rcpp}](https://github.com/RcppCore/Rcpp),
+Currently [{SLmetrics}](https://serkor1.github.io/SLmetrics/) depends on
+three {pkgs}; [{Rcpp}](https://github.com/RcppCore/Rcpp),
 [{RcppEigen}](https://github.com/RcppCore/RcppEigen) and
 [{lattice}](https://github.com/deepayan/lattice). Three incredibly
 stable, flexible and efficient R packages. There is basically zero risk
 of downstream breaking changes, {pkg} bloating and/or compatibility
 issues.
 
-The source code of {SLmetrics} are primarily made up of unrolled loops
-and matrix algebra using
+The source code of [{SLmetrics}](https://serkor1.github.io/SLmetrics/)
+are primarily made up of unrolled loops and matrix algebra using
 [{RcppEigen}](https://github.com/RcppCore/RcppEigen). There is, at most,
 one conversion between `R` and `C++` compatible objects without
 redundant type-checks, or various mapping functions; this makes
-{SLmetrics} lightweight and ideal for high-speed computing.
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) lightweight and
+ideal for high-speed computing.
 
 </details>
 
-Fourthly, {SLmetrics} has a *larger* repertoire of supervised machine
-learning metrics; all of which has been battle tested with
+Fourthly, [{SLmetrics}](https://serkor1.github.io/SLmetrics/) has a
+*larger* repertoire of supervised machine learning metrics; all of which
+has been battle tested with
 [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and
 [{pytorch}](https://github.com/pytorch/pytorch) against
 [{yardstick}](https://github.com/tidymodels/yardstick),
@@ -217,10 +226,12 @@ learning metrics; all of which has been battle tested with
 
 <summary> Showcase: repertoire and unit-testing </summary>
 
-{SLmetrics} is build as the `R`-version of
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) is build as the
+`R`-version of
 [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) but with
 a larger focus on versatility, speed and the simplicity of `R`. All the
-functions implemented in {SLmetrics} are tested using
+functions implemented in
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) are tested using
 [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and
 [{pytorch}](https://github.com/pytorch/pytorch) as reference values.
 
@@ -398,7 +409,7 @@ devtools::install_github(
 
 ## :information\_source: Code of Conduct
 
-Please note that the {SLmetrics} project is released with a [Contributor
-Code of
+Please note that the [{SLmetrics}](https://serkor1.github.io/SLmetrics/)
+project is released with a [Contributor Code of
 Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
