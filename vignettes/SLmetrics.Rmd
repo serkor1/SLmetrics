@@ -22,7 +22,7 @@ library(SLmetrics)
 
 ## Overview
 
-[{SLmetrics}](https://github.com/serkor1/SLmetrics) is low-level R package for supervised AI/ML performance evaluation. It uses [{Rcpp}](https://github.com/RcppCore/Rcpp) and [{RcppEigen}](https://github.com/RcppCore/RcppEigen) as backend for memory efficient and fast execution of the various metrics. [{SLmetrics}](https://github.com/serkor1/SLmetrics) follows the syntax of base R, and uses [S3](https://deepr.gagolewski.com/chapter/220-s3.html)-classes. 
+[{SLmetrics}](https://github.com/serkor1/SLmetrics) is a low-level R package for supervised AI/ML performance evaluation. It uses [{Rcpp}](https://github.com/RcppCore/Rcpp) and [{RcppEigen}](https://github.com/RcppCore/RcppEigen) as backend for memory efficient and fast execution of the various metrics. [{SLmetrics}](https://github.com/serkor1/SLmetrics) follows the syntax of base R, and uses [S3](https://deepr.gagolewski.com/chapter/220-s3.html)-classes. 
 
 ## Why?
 

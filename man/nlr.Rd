@@ -93,46 +93,59 @@ When \code{aggregate = TRUE}, the \code{micro}-average is calculated,
 # 1) recode Iris
 # to binary classification
 # problem
-iris$Species <- factor(
-  x = as.numeric(
-    iris$Species == "virginica"
-  ),
-  levels = c(1,0),
-  labels = c("virginica", "others")
+iris$species_num <- as.numeric(
+  iris$Species == "virginica"
 )
 
 # 2) fit the logistic
 # regression
 model <- glm(
-  formula = Species ~ Sepal.Length + Sepal.Width,
+  formula = species_num ~ Sepal.Length + Sepal.Width,
   data    = iris,
-  family = binomial(
+  family  = binomial(
     link = "logit"
   )
 )
 
 # 3) generate predicted
 # classes
-predicted <- as.factor(
-  ifelse(
-    predict(model, type = "response") > 0.5,
-    yes = "virginica",
-    no  = "others"
-  )
+predicted <- factor(
+  as.numeric(
+    predict(model, type = "response") > 0.5
+  ),
+  levels = c(1,0),
+  labels = c("Virginica", "Others")
 )
 
-# 4) positive likelihood
-# ratio
-plr(
-  actual    = iris$Species,
-  predicted = predicted
+# 3.1) generate actual
+# classes
+actual <- factor(
+  x = iris$species_num,
+  levels = c(1,0),
+  labels = c("Virginica", "Others")
 )
 
-# 5) negative likeliood
+# 4) negative likeliood
 # ratio
 nlr(
-  actual    = iris$Species,
+  actual    = actual,
   predicted = predicted
+)
+
+# 4.1) micro averaged
+# nlr
+nlr(
+  actual    = actual,
+  predicted = predicted,
+  micro     = TRUE 
+)
+
+# macro averaged
+# nlr
+nlr(
+  actual    = actual,
+  predicted = predicted,
+  micro     = FALSE 
 )
 }
 \seealso{

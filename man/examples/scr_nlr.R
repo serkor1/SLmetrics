@@ -33,23 +33,25 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) evaluate performance
-# 4.1) by class
-fpr(
+# 4) negative likeliood
+# ratio
+nlr(
   actual    = actual,
   predicted = predicted
 )
 
-# 4.2) macro-average
-fpr(
+# 4.1) micro averaged
+# nlr
+nlr(
   actual    = actual,
   predicted = predicted,
-  micro     = FALSE
+  micro     = TRUE 
 )
 
-# 4.3) micro-average
-fpr(
+# macro averaged
+# nlr
+nlr(
   actual    = actual,
   predicted = predicted,
-  micro     = TRUE
+  micro     = FALSE 
 )

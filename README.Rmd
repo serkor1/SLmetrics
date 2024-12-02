@@ -70,7 +70,7 @@ Below is two simple cases that any {pkg} should be able to handle gracefully; co
 
 ## Execution time: Computing a 2 x 2 Confusion Matrix
 
-```{r classification_performance_obs, echo = FALSE}
+```{r performance-classification, echo = FALSE}
 lattice::xyplot(
   median ~ sample_size,
   data = DT[[1]],
@@ -93,7 +93,7 @@ lattice::xyplot(
 
 ## Execution time: Computing the Root Mean Squared Error (RMSE)
 
-```{r regression_performance_rmse, echo = FALSE}
+```{r performance-regression, echo = FALSE}
 lattice::xyplot(
   median ~ sample_size,
   data = DT[[2]],
@@ -224,7 +224,7 @@ In its most basic form the functions can be used as-is without any pipelines, da
 
 Below is an example evaluating the in-sample performance of a linear regression on `mpg` from the `mtcars` data set, 
 
-```{r}
+```{r mtcars regression (example)}
 # 1) run regression
 model <- lm(
   formula = mpg ~ .,
@@ -242,45 +242,66 @@ rmse(
 
 Below is an example evaluating the in-sample performance of a logistic regression on `Species` from the `iris` data set, 
 
-```{r}
+```{r iris classification (example)}
 # 1) recode iris
 # to binary problem
-iris$Species <- factor(
-  x = as.numeric(
-    iris$Species == "virginica"
-  ),
-  levels = c(1,0),
-  labels = c("virginica", "others")
+iris$species_num <- as.numeric(
+  iris$Species == "virginica"
 )
 
 # 2) fit the logistic
 # regression
 model <- glm(
-  formula = Species ~ Sepal.Length + Sepal.Width,
+  formula = species_num ~ Sepal.Length + Sepal.Width,
   data    = iris,
-  family = binomial(
+  family  = binomial(
     link = "logit"
   )
 )
 
 # 3) generate predicted
 # classes
-predicted <- as.factor(
-  ifelse(
-    predict(model, type = "response") > 0.5,
-    yes = "virginica",
-    no  = "others"
-  )
+predicted <- factor(
+  as.numeric(
+    predict(model, type = "response") > 0.5
+  ),
+  levels = c(1,0),
+  labels = c("Virginica", "Others")
 )
 
+# 4) generate actual
+# values as factor
+actual <- factor(
+  x = iris$species_num,
+  levels = c(1,0),
+  labels = c("Virginica", "Others")
+)
+```
+
+```{r confusion matrix}
 # 4) generate
 # confusion matrix
 summary(
   confusion_matrix <-  cmatrix(
-    actual    = iris$Species,
+    actual    = actual,
     predicted = predicted
   )
 )
+```
+
+```{r ROC}
+# 5) generate
+# roc object
+summary(
+  roc <- ROC(
+    actual    = actual,
+    response  = predict(model, type = "response")
+  )
+)
+
+# 6) plot roc
+# object
+plot(roc)
 ```
 
 <details>
@@ -288,7 +309,7 @@ summary(
 
 __Classwise specificity__
 
-```{r}
+```{r sensitivity (class-wise)}
 sensitivity(
   confusion_matrix,
   micro = NULL
@@ -297,7 +318,7 @@ sensitivity(
 
 __Micro averaged specificity__
 
-```{r}
+```{r sensitivity (micro)}
 sensitivity(
   confusion_matrix,
   micro = TRUE
@@ -306,7 +327,7 @@ sensitivity(
 
 __Macro averaged specificity__
 
-```{r}
+```{r sensitivity (macro)}
 sensitivity(
   confusion_matrix,
   micro = FALSE
@@ -319,16 +340,16 @@ sensitivity(
 
 ### :shield: Stable version
 ```{r stable version guide, eval = FALSE, echo=TRUE}
-## install from github
+## install stable release
 devtools::install_github(
-  repo = 'https://github.com/serkor1/SLmetrics',
+  repo = 'https://github.com/serkor1/SLmetrics@*release',
   ref  = 'main'
 )
 ```
 
 ### :hammer_and_wrench: Development version
 ```{r development version guide, eval = FALSE, echo=TRUE}
-## install from github
+## install development version
 devtools::install_github(
   repo = 'https://github.com/serkor1/SLmetrics',
   ref  = 'development'

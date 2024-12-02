@@ -15,7 +15,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![codecov](https://codecov.io/gh/serkor1/SLmetrics/branch/development/graph/badge.svg?token=X2osJDSRlN)](https://codecov.io/gh/serkor1/SLmetrics)
 <!-- badges: end -->
 
-[{SLmetrics}](https://github.com/serkor1/SLmetrics) is low-level R
+[{SLmetrics}](https://github.com/serkor1/SLmetrics) is a low-level R
 package for supervised AI/ML performance evaluation. It uses
 [{Rcpp}](https://github.com/RcppCore/Rcpp) and
 [{RcppEigen}](https://github.com/RcppCore/RcppEigen) as backend for
@@ -29,9 +29,9 @@ of base R, and uses
 ### :shield: Stable version
 
 ``` r
-## install from github
+## install stable release
 devtools::install_github(
-  repo = 'https://github.com/serkor1/SLmetrics',
+  repo = 'https://github.com/serkor1/SLmetrics@*release',
   ref  = 'main'
 )
 ```
@@ -39,7 +39,7 @@ devtools::install_github(
 ### :hammer\_and\_wrench: Development version
 
 ``` r
-## install from github
+## install development version
 devtools::install_github(
   repo = 'https://github.com/serkor1/SLmetrics',
   ref  = 'development'

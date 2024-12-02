@@ -13,7 +13,7 @@ predicted <- fitted(model)
 
 
 # 2) calculate
-# the ccc measure
+# the metric
 ccc(
   actual     = actual,
   predicted  = predicted,
@@ -21,7 +21,7 @@ ccc(
 )
 
 # 3) calculate
-# the weighted ccc
+# the weighted metric
 # using arbtrary weights
 w <- rbeta(
   n = 1e3,

@@ -13,14 +13,14 @@ predicted <- fitted(model)
 
 
 # 2) calculate
-# the rmsle measure
+# the metric
 rmsle(
   actual     = actual,
   predicted  = predicted
 )
 
 # 3) calculate
-# the weighted rmsle
+# the weighted metric
 # using arbtrary weights
 w <- rbeta(
   n = 1e3,

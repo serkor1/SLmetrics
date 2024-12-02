@@ -1,24 +1,25 @@
-# 1) assume that actual
-# and predicted are values
-# from a model
-actual <- rnorm(
-  n = 1e3,
-  mean = 10
+# 1) fit a linear
+# regression
+model <- lm(
+  mpg ~ .,
+  data = mtcars
 )
 
-predicted <- actual + rnorm(
-  n = 1e3,
-  mean = 10
-)
+# 1.1) define actual
+# and predicted values
+# to measure performance
+actual    <- mtcars$mpg
+predicted <- fitted(model)
 
-# 2) calculate the smape
+
+# 2) calculate the metric
 smape(
-  actual = actual,
-  predicted = predicted
+  actual     = actual,
+  predicted  = predicted
 )
 
-# 3) caclulate weighted
-# huber loss
+# 3) calculate
+# the weighted metric
 w <- rbeta(
   n = 1e3,
   shape1 = 10,
@@ -26,7 +27,7 @@ w <- rbeta(
 )
 
 smape(
-  actual = actual,
-  predicted = predicted,
-  w     = w
+  actual     = actual,
+  predicted  = predicted,
+  w          = w
 )
