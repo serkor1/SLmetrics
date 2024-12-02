@@ -1,21 +1,21 @@
 url: https://serkor1.github.io/SLmetrics/
-
-# SEO:
 home:
-  # the title of the tab:
   title: Performance Evaluation
-
-  # description for google
-  description: >
+  description: |
     {SLmetrics}: Performance evaluation metrics for supervised machine learning, statistical learning and artificial intelligence applications in R written in C++.
-
 navbar:
-  inverse: true
-
+  inverse: yes
   structure:
-    left:  [introduction, regression, classification, reference, news]
-    right: [search, lightswitch, github]
-
+    left:
+    - introduction
+    - regression
+    - classification
+    - reference
+    - news
+    right:
+    - search
+    - lightswitch
+    - github
   components:
     introduction:
       icon: fa-info
@@ -37,34 +37,28 @@ navbar:
       icon: fa-code
       text: Changelog
       href: news/index.html
-
 template:
   bootstrap: 5
   math-rendering: mathjax
-  light-switch: true
+  light-switch: yes
   bslib:
-    primary: "#0054AD"
+    primary: '#0054AD'
     border-radius: 0.5rem
     btn-border-radius: 0.25rem
-    danger: "#A6081A"
-
+    danger: '#A6081A'
 reference:
-
 - title: Low-level supervised learning performance metrics
   desc: |
     The low-level functions are designed with speed and efficiency in mind and therefore have no defensive measures against user-error. If, for example, the passed
     vectors contains missing values, your `R`-session will crash without any informative error-message.
 
     > **Note:** All other possible error-sources like, for example, invalid divisions are handled internally by `c++` and `Rcpp`.
-
 - subtitle: Regression Metrics
-  desc: >
-    The collection of low-level evaluation metrics for supervised regression problems. All functions are grouped
-    together in simple and weighted means.
+  desc: |
+    The collection of low-level evaluation metrics for supervised regression problems. All functions are grouped together in simple and weighted means.
 - contents: has_concept('regression')
-
 - subtitle: Classification Metrics
-  desc: >
-    The collection of low-level evaluation metrics for supervised classification problems. All functions are grouped by
-    aliases and alternative terminology; the `recall()`- and `sensitivity()`-function calculates the same metric, for example.
+  desc: |
+    The collection of low-level evaluation metrics for supervised classification problems. All functions are grouped by aliases and alternative terminology; the `recall()`- and `sensitivity()`-function calculates the same metric, for example.
 - contents: has_concept('classification')
+
