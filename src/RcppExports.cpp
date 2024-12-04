@@ -803,16 +803,17 @@ BEGIN_RCPP
 END_RCPP
 }
 // huberloss
-double huberloss(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const double& delta, Rcpp::Nullable<Rcpp::NumericVector> w);
-RcppExport SEXP _SLmetrics_huberloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP deltaSEXP, SEXP wSEXP) {
+double huberloss(const std::vector<double>& actual, const std::vector<double>& predicted, const double& delta, Rcpp::Nullable<std::vector<double>> w, bool na_rm);
+RcppExport SEXP _SLmetrics_huberloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP deltaSEXP, SEXP wSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
     Rcpp::traits::input_parameter< const double& >::type delta(deltaSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type w(wSEXP);
-    rcpp_result_gen = Rcpp::wrap(huberloss(actual, predicted, delta, w));
+    Rcpp::traits::input_parameter< Rcpp::Nullable<std::vector<double>> >::type w(wSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(huberloss(actual, predicted, delta, w, na_rm));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -910,28 +911,30 @@ BEGIN_RCPP
 END_RCPP
 }
 // rmse
-double rmse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, Rcpp::Nullable<Rcpp::NumericVector> w);
-RcppExport SEXP _SLmetrics_rmse(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+double rmse(const std::vector<double>& actual, const std::vector<double>& predicted, Rcpp::Nullable<std::vector<double>> w, bool na_rm);
+RcppExport SEXP _SLmetrics_rmse(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type w(wSEXP);
-    rcpp_result_gen = Rcpp::wrap(rmse(actual, predicted, w));
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<std::vector<double>> >::type w(wSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rmse(actual, predicted, w, na_rm));
     return rcpp_result_gen;
 END_RCPP
 }
 // rmsle
-double rmsle(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, Rcpp::Nullable<Rcpp::NumericVector> w);
-RcppExport SEXP _SLmetrics_rmsle(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+double rmsle(const std::vector<double>& actual, const std::vector<double>& predicted, Rcpp::Nullable<std::vector<double>> w, bool na_rm);
+RcppExport SEXP _SLmetrics_rmsle(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type w(wSEXP);
-    rcpp_result_gen = Rcpp::wrap(rmsle(actual, predicted, w));
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<std::vector<double>> >::type w(wSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(rmsle(actual, predicted, w, na_rm));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1010,7 +1013,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_zerooneloss_cmatrix", (DL_FUNC) &_SLmetrics_zerooneloss_cmatrix, 1},
     {"_SLmetrics_rsq", (DL_FUNC) &_SLmetrics_rsq, 3},
     {"_SLmetrics_ccc", (DL_FUNC) &_SLmetrics_ccc, 4},
-    {"_SLmetrics_huberloss", (DL_FUNC) &_SLmetrics_huberloss, 4},
+    {"_SLmetrics_huberloss", (DL_FUNC) &_SLmetrics_huberloss, 5},
     {"_SLmetrics_mae", (DL_FUNC) &_SLmetrics_mae, 3},
     {"_SLmetrics_mape", (DL_FUNC) &_SLmetrics_mape, 3},
     {"_SLmetrics_mpe", (DL_FUNC) &_SLmetrics_mpe, 3},
@@ -1018,8 +1021,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_pinball", (DL_FUNC) &_SLmetrics_pinball, 5},
     {"_SLmetrics_rae", (DL_FUNC) &_SLmetrics_rae, 3},
     {"_SLmetrics_rrmse", (DL_FUNC) &_SLmetrics_rrmse, 3},
-    {"_SLmetrics_rmse", (DL_FUNC) &_SLmetrics_rmse, 3},
-    {"_SLmetrics_rmsle", (DL_FUNC) &_SLmetrics_rmsle, 3},
+    {"_SLmetrics_rmse", (DL_FUNC) &_SLmetrics_rmse, 4},
+    {"_SLmetrics_rmsle", (DL_FUNC) &_SLmetrics_rmsle, 4},
     {"_SLmetrics_smape", (DL_FUNC) &_SLmetrics_smape, 3},
     {NULL, NULL, 0}
 };

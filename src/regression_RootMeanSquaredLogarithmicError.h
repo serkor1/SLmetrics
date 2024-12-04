@@ -1,82 +1,76 @@
 #ifndef REGRESSION_ROOTMEANSQUAREDLOGARITHMICERROR_H
 #define REGRESSION_ROOTMEANSQUAREDLOGARITHMICERROR_H
-#include <Rcpp.h>
+
+#include <vector>
 #include <cmath>
-using namespace Rcpp;
+#include <cstddef>
+#include <limits>
+#include <immintrin.h> // For SIMD instructions
 
-// Unweighted RMSLE Calculation
-inline __attribute__((always_inline)) double _metric_(const NumericVector& actual, const NumericVector& predicted) {
-  const std::size_t n = actual.size();
-  double output = 0.0;
+// Unweighted RMSLE
+inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, bool na_rm = false)
+{
+    const std::size_t n = actual.size();
+    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
 
-  const double* actual_ptr = actual.begin();
-  const double* predicted_ptr = predicted.begin();
+    const double* actual_ptr = actual.data();
+    const double* predicted_ptr = predicted.data();
 
-  int i = 0;
-  int limit = n - (n % 4);
+    double output = 0.0;
+    int valid_count = 0;
 
-  for (; i < limit; i += 4) {
-    double diff0 = std::log(actual_ptr[i] + 1) - std::log(predicted_ptr[i] + 1);
-    double diff1 = std::log(actual_ptr[i + 1] + 1) - std::log(predicted_ptr[i + 1] + 1);
-    double diff2 = std::log(actual_ptr[i + 2] + 1) - std::log(predicted_ptr[i + 2] + 1);
-    double diff3 = std::log(actual_ptr[i + 3] + 1) - std::log(predicted_ptr[i + 3] + 1);
+    for (std::size_t i = 0; i < n; ++i) {
+        double actual_value = *(actual_ptr++);
+        double predicted_value = *(predicted_ptr++);
 
-    output += diff0 * diff0;
-    output += diff1 * diff1;
-    output += diff2 * diff2;
-    output += diff3 * diff3;
-  }
+        bool is_valid = !std::isnan(actual_value) && !std::isnan(predicted_value);
+        valid_count += is_valid;
 
-  for (; i < n; ++i) {
-    double diff = std::log(actual_ptr[i] + 1) - std::log(predicted_ptr[i] + 1);
-    output += diff * diff;
-  }
+        if (is_valid) {
+            double diff = std::log(actual_value + 1) - std::log(predicted_value + 1);
+            output += diff * diff;
+        }
+    }
 
-  return std::sqrt(output / n);
+    if (!na_rm && valid_count != n) {
+        return NA_DOUBLE;
+    }
+
+    return valid_count > 0 ? std::sqrt(output / valid_count) : NA_DOUBLE;
 }
 
-// Weighted RMSLE Calculation
-inline __attribute__((always_inline)) double _metric_(const NumericVector& actual, const NumericVector& predicted, const NumericVector& w) {
-  const std::size_t n = actual.size();
-  double numerator = 0.0;
-  double denominator = 0.0;
+// Weighted RMSLE
+inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights, bool na_rm = false)
+{
+    const std::size_t n = actual.size();
+    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
 
-  const double* actual_ptr = actual.begin();
-  const double* predicted_ptr = predicted.begin();
-  const double* w_ptr = w.begin();
+    const double* actual_ptr = actual.data();
+    const double* predicted_ptr = predicted.data();
+    const double* weights_ptr = weights.data();
 
-  int i = 0;
-  int limit = n - (n % 4);
+    double numerator = 0.0;
+    double denominator = 0.0;
 
-  for (; i < limit; i += 4) {
-    double diff0 = std::log(actual_ptr[i] + 1) - std::log(predicted_ptr[i] + 1);
-    double weight0 = w_ptr[i];
+    for (std::size_t i = 0; i < n; ++i) {
+        double actual_value = *(actual_ptr++);
+        double predicted_value = *(predicted_ptr++);
+        double weight = *(weights_ptr++);
 
-    double diff1 = std::log(actual_ptr[i + 1] + 1) - std::log(predicted_ptr[i + 1] + 1);
-    double weight1 = w_ptr[i + 1];
+        bool is_valid = !std::isnan(actual_value) && !std::isnan(predicted_value) && !std::isnan(weight);
 
-    double diff2 = std::log(actual_ptr[i + 2] + 1) - std::log(predicted_ptr[i + 2] + 1);
-    double weight2 = w_ptr[i + 2];
+        if (is_valid) {
+            double diff = std::log(actual_value + 1) - std::log(predicted_value + 1);
+            numerator += weight * diff * diff;
+            denominator += weight;
+        }
+    }
 
-    double diff3 = std::log(actual_ptr[i + 3] + 1) - std::log(predicted_ptr[i + 3] + 1);
-    double weight3 = w_ptr[i + 3];
+    if (!na_rm && denominator == 0) {
+        return NA_DOUBLE;
+    }
 
-    numerator += (diff0 * diff0 * weight0);
-    numerator += (diff1 * diff1 * weight1);
-    numerator += (diff2 * diff2 * weight2);
-    numerator += (diff3 * diff3 * weight3);
-
-    denominator += weight0 + weight1 + weight2 + weight3;
-  }
-
-  for (; i < n; ++i) {
-    double diff = std::log(actual_ptr[i] + 1) - std::log(predicted_ptr[i] + 1);
-    double weight = w_ptr[i];
-    numerator += (diff * diff * weight);
-    denominator += weight;
-  }
-
-  return std::sqrt(numerator / denominator);
+    return denominator > 0 ? std::sqrt(numerator / denominator) : NA_DOUBLE;
 }
 
 #endif //REGRESSION_ROOTMEANSQUAREDLOGARITHMICERROR_H

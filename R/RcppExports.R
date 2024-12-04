@@ -496,8 +496,8 @@ ccc.numeric <- function(actual, predicted, correction = FALSE, w = NULL, ...) {
 #' @rdname huberloss
 #' @method huberloss numeric
 #' @export
-huberloss.numeric <- function(actual, predicted, delta = 1.0, w = NULL, ...) {
-    .Call(`_SLmetrics_huberloss`, actual, predicted, delta, w)
+huberloss.numeric <- function(actual, predicted, delta = 1.0, w = NULL, na.rm = FALSE, ...) {
+    .Call(`_SLmetrics_huberloss`, actual, predicted, delta, w, na_rm = na.rm)
 }
 
 #' @rdname mae
@@ -552,15 +552,15 @@ rrmse.numeric <- function(actual, predicted, w = NULL, ...) {
 #' @rdname rmse
 #' @method rmse numeric
 #' @export
-rmse.numeric <- function(actual, predicted, w = NULL, ...) {
-    .Call(`_SLmetrics_rmse`, actual, predicted, w)
+rmse.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
+    .Call(`_SLmetrics_rmse`, actual, predicted, w, na_rm = na.rm)
 }
 
 #' @rdname rmsle
 #' @method rmsle numeric
 #' @export
-rmsle.numeric <- function(actual, predicted, w = NULL, ...) {
-    .Call(`_SLmetrics_rmsle`, actual, predicted, w)
+rmsle.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
+    .Call(`_SLmetrics_rmsle`, actual, predicted, w, na_rm = na.rm)
 }
 
 #' @rdname smape

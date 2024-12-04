@@ -15,6 +15,7 @@
 #' @param predicted A <[numeric]>-vector of [length] \eqn{n}. The estimated (continuous) response variable.
 #' @param w A <[numeric]>-vector of [length] \eqn{n}. The weight assigned to each observation in the data. See [stats::weighted.mean()] for more details.
 #' @param delta A <[numeric]>-vector of [length] 1. 1 by default. The threshold value for switch between functions (see calculation).
+#' @param na.rm A <[logical]>-value of [length] \eqn{1}. [FALSE] by default. If [TRUE] NA values will be removed from the computation.
 #' @param ... Arguments passed into other methods.
 #'
 #' @section Calculation:
