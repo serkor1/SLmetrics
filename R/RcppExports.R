@@ -468,8 +468,8 @@ selectivity.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
 #' @rdname zerooneloss
 #' @method zerooneloss factor
 #' @export
-zerooneloss.factor <- function(actual, predicted, ...) {
-    .Call(`_SLmetrics_zerooneloss`, actual, predicted)
+zerooneloss.factor <- function(actual, predicted, na.rm = FALSE, ...) {
+    .Call(`_SLmetrics_zerooneloss`, actual, predicted, na_rm = na.rm)
 }
 
 #' @rdname zerooneloss

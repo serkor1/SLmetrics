@@ -752,14 +752,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // zerooneloss
-double zerooneloss(const NumericVector& actual, const NumericVector& predicted);
-RcppExport SEXP _SLmetrics_zerooneloss(SEXP actualSEXP, SEXP predictedSEXP) {
+double zerooneloss(const std::vector<int>& actual, const std::vector<int>& predicted, bool na_rm);
+RcppExport SEXP _SLmetrics_zerooneloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type predicted(predictedSEXP);
-    rcpp_result_gen = Rcpp::wrap(zerooneloss(actual, predicted));
+    Rcpp::traits::input_parameter< const std::vector<int>& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const std::vector<int>& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(zerooneloss(actual, predicted, na_rm));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1005,7 +1006,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_tnr_cmatrix", (DL_FUNC) &_SLmetrics_tnr_cmatrix, 3},
     {"_SLmetrics_selectivity", (DL_FUNC) &_SLmetrics_selectivity, 4},
     {"_SLmetrics_selectivity_cmatrix", (DL_FUNC) &_SLmetrics_selectivity_cmatrix, 3},
-    {"_SLmetrics_zerooneloss", (DL_FUNC) &_SLmetrics_zerooneloss, 2},
+    {"_SLmetrics_zerooneloss", (DL_FUNC) &_SLmetrics_zerooneloss, 3},
     {"_SLmetrics_zerooneloss_cmatrix", (DL_FUNC) &_SLmetrics_zerooneloss_cmatrix, 1},
     {"_SLmetrics_rsq", (DL_FUNC) &_SLmetrics_rsq, 3},
     {"_SLmetrics_ccc", (DL_FUNC) &_SLmetrics_ccc, 4},

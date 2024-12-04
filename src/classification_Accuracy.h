@@ -13,7 +13,6 @@
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-
 /*
 Updated Accuracy:
   - The function now accounts for missing values.
@@ -186,6 +185,5 @@ inline __attribute__((always_inline)) double _metric_(const Eigen::MatrixXi& x, 
 
 
 }
-
 
 #endif
