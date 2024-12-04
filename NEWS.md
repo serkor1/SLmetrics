@@ -1,9 +1,55 @@
 
-# Version 0.1-0
+# Version 0.1-1
 
-> Version 0.1-0 is considered pre-release of {SLmetrics}. We do not
+> Version 0.1-1 is considered pre-release of {SLmetrics}. We do not
 > expect any breaking changes, unless a major bug/issue is reported and
 > its nature forces breaking changes.
+
+## General
+
+  - **Backend changes:** All pair-wise metrics arer moved from {Rcpp} to
+    C++, this have reduced execution time by half. All pair-wise metrics
+    are now faster.
+
+## Improvements
+
+  - **NA-controls:** All pair-wise metrics that doesn’t have a
+    `micro`-argument were handling missing values as according to C++
+    and {Rcpp} internals. See
+    [Issue](https://github.com/serkor1/SLmetrics/issues/8). Thank you
+    @EmilHvitfeldt for pointing this out. This has now been fixed so
+    functions uses an `na.rm`-argument to explicitly control for this.
+    See below,
+
+<!-- end list -->
+
+``` r
+# 1) define factors
+actual    <- factor(c("yes", "no"))
+predicted <- factor(c(NA, "no"))
+
+# 2) accuracy with na.rm = TRUE
+SLmetrics::accuracy(
+    actual    = actual,
+    predicted = predicted,
+    na.rm     = TRUE
+)
+```
+
+    #> [1] 1
+
+``` r
+# 2) accuracy with na.rm = FALSE
+SLmetrics::accuracy(
+    actual    = actual,
+    predicted = predicted,
+    na.rm     = FALSE
+)
+```
+
+    #> [1] NaN
+
+# Version 0.1-0
 
 ## General
 
