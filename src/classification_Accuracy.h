@@ -1,3 +1,6 @@
+#ifndef classification_Accuracy_H
+#define classification_Accuracy_H
+
 /*
  * This header file is for calculating
  * accucracy and balanced accuracy
@@ -5,30 +8,56 @@
 #include "src_Helpers.h"
 #include <RcppEigen.h>
 #include <cmath>
+#include <vector>
+#include <limits>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
 
-// Accuracy: factor
-inline __attribute__((always_inline)) double _metric_(const NumericVector& actual, const NumericVector& predicted)
+/*
+Updated Accuracy:
+  - The function now accounts for missing values.
+  - The funciton is faster than using NumericVector
+*/
+inline __attribute__((always_inline)) double _metric_(const std::vector<int>& actual, const std::vector<int>& predicted, bool na_rm) 
 {
 
+  // 1) common parameters
+  // for the calculation
   const int n = actual.size();
-
-  const double* actual_ptr = actual.begin();
-  const double* predicted_ptr = predicted.begin();
-
+  const int NA_INTEGER = std::numeric_limits<int>::min();
   int correct_count = 0;
+  int valid_count = 0;
 
+  // 2) loop through the values
+  // using pointers
   for (int i = 0; i < n; ++i) {
+      const int actual_value = actual[i];
+      const int predicted_value = predicted[i];
 
-    correct_count += (*(actual_ptr++) == *(predicted_ptr++));
+      // 2.1) check for non-NA values
+      const bool is_valid = actual_value != NA_INTEGER && predicted_value != NA_INTEGER;
+      valid_count += is_valid;
 
+      // 2.2) increment correct count if valid and equal
+      correct_count += is_valid && (actual_value == predicted_value);
   }
 
-  return static_cast<double> (correct_count) / n;
+  // 3) if there is missing values
+  // return NAN
+  // NOTE: Maybe this more efficient to have inside
+  // the loop and stop it early
+  if (!na_rm && valid_count != n) {
+      return NAN;
+  }
+
+  // 4) return values
+  // if valid_count is above
+  // 0.
+  return valid_count > 0 ? static_cast<double>(correct_count) / valid_count : NAN;
 
 }
+
 
 // Accuracy: cmatrix
 inline __attribute__((always_inline)) double _metric_(const Eigen::MatrixXi& x)
@@ -157,3 +186,6 @@ inline __attribute__((always_inline)) double _metric_(const Eigen::MatrixXi& x, 
 
 
 }
+
+
+#endif

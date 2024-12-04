@@ -5,8 +5,8 @@
 #' @method accuracy factor
 #'
 #' @export
-accuracy.factor <- function(actual, predicted, ...) {
-    .Call(`_SLmetrics_accuracy`, actual, predicted)
+accuracy.factor <- function(actual, predicted, na.rm = FALSE, ...) {
+    .Call(`_SLmetrics_accuracy`, actual, predicted, na_rm = na.rm)
 }
 
 #' @rdname accuracy

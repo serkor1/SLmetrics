@@ -12,14 +12,15 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // accuracy
-double accuracy(const NumericVector& actual, const NumericVector& predicted);
-RcppExport SEXP _SLmetrics_accuracy(SEXP actualSEXP, SEXP predictedSEXP) {
+double accuracy(const std::vector<int>& actual, const std::vector<int>& predicted, bool na_rm);
+RcppExport SEXP _SLmetrics_accuracy(SEXP actualSEXP, SEXP predictedSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type predicted(predictedSEXP);
-    rcpp_result_gen = Rcpp::wrap(accuracy(actual, predicted));
+    Rcpp::traits::input_parameter< const std::vector<int>& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const std::vector<int>& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
+    rcpp_result_gen = Rcpp::wrap(accuracy(actual, predicted, na_rm));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -948,7 +949,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_SLmetrics_accuracy", (DL_FUNC) &_SLmetrics_accuracy, 2},
+    {"_SLmetrics_accuracy", (DL_FUNC) &_SLmetrics_accuracy, 3},
     {"_SLmetrics_accuracy_cmatrix", (DL_FUNC) &_SLmetrics_accuracy_cmatrix, 1},
     {"_SLmetrics_baccuracy", (DL_FUNC) &_SLmetrics_baccuracy, 3},
     {"_SLmetrics_baccuracy_cmatrix", (DL_FUNC) &_SLmetrics_baccuracy_cmatrix, 2},
