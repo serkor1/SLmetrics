@@ -482,15 +482,15 @@ zerooneloss.cmatrix <- function(x, ...) {
 #' @rdname rsq
 #' @method rsq numeric
 #' @export
-rsq.numeric <- function(actual, predicted, k = 0, ...) {
-    .Call(`_SLmetrics_rsq`, actual, predicted, k)
+rsq.numeric <- function(actual, predicted, k = 0, na.rm = FALSE, ...) {
+    .Call(`_SLmetrics_rsq`, actual, predicted, k, na_rm = na.rm)
 }
 
 #' @rdname ccc
 #' @method ccc numeric
 #' @export
-ccc.numeric <- function(actual, predicted, correction = FALSE, w = NULL, ...) {
-    .Call(`_SLmetrics_ccc`, actual, predicted, correction, w)
+ccc.numeric <- function(actual, predicted, correction = FALSE, w = NULL, na.rm = FALSE, ...) {
+    .Call(`_SLmetrics_ccc`, actual, predicted, correction, w, na_rm = na.rm)
 }
 
 #' @rdname huberloss
@@ -503,50 +503,50 @@ huberloss.numeric <- function(actual, predicted, delta = 1.0, w = NULL, na.rm = 
 #' @rdname mae
 #' @method mae numeric
 #' @export
-mae.numeric <- function(actual, predicted, w = NULL, ...) {
-    .Call(`_SLmetrics_mae`, actual, predicted, w)
+mae.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
+    .Call(`_SLmetrics_mae`, actual, predicted, w, na_rm = na.rm)
 }
 
 #' @rdname mape
 #' @method mape numeric
 #' @export
-mape.numeric <- function(actual, predicted, w = NULL, ...) {
-    .Call(`_SLmetrics_mape`, actual, predicted, w)
+mape.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
+    .Call(`_SLmetrics_mape`, actual, predicted, w, na_rm = na.rm)
 }
 
 #' @rdname mpe
 #' @method mpe numeric
 #' @export
-mpe.numeric <- function(actual, predicted, w = NULL, ...) {
-    .Call(`_SLmetrics_mpe`, actual, predicted, w)
+mpe.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
+    .Call(`_SLmetrics_mpe`, actual, predicted, w, na_rm = na.rm)
 }
 
 #' @rdname mse
 #' @method mse numeric
 #' @export
-mse.numeric <- function(actual, predicted, w = NULL, ...) {
-    .Call(`_SLmetrics_mse`, actual, predicted, w)
+mse.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
+    .Call(`_SLmetrics_mse`, actual, predicted, w, na_rm = na.rm)
 }
 
 #' @rdname pinball
 #' @method pinball numeric
 #' @export
-pinball.numeric <- function(actual, predicted, alpha = 0.5, deviance = FALSE, w = NULL, ...) {
-    .Call(`_SLmetrics_pinball`, actual, predicted, alpha, deviance, w)
+pinball.numeric <- function(actual, predicted, alpha = 0.5, deviance = FALSE, w = NULL, na.rm = FALSE, ...) {
+    .Call(`_SLmetrics_pinball`, actual, predicted, alpha, deviance, w, na_rm = na.rm)
 }
 
 #' @rdname rae
 #' @method rae numeric
 #' @export
-rae.numeric <- function(actual, predicted, w = NULL, ...) {
-    .Call(`_SLmetrics_rae`, actual, predicted, w)
+rae.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
+    .Call(`_SLmetrics_rae`, actual, predicted, w, na_rm = na.rm)
 }
 
 #' @rdname rrmse
 #' @method rrmse numeric
 #' @export
-rrmse.numeric <- function(actual, predicted, w = NULL, ...) {
-    .Call(`_SLmetrics_rrmse`, actual, predicted, w)
+rrmse.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
+    .Call(`_SLmetrics_rrmse`, actual, predicted, w, na_rm = na.rm)
 }
 
 #' @rdname rmse
@@ -566,7 +566,7 @@ rmsle.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
 #' @rdname smape
 #' @method smape numeric
 #' @export
-smape.numeric <- function(actual, predicted, w = NULL, ...) {
-    .Call(`_SLmetrics_smape`, actual, predicted, w)
+smape.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
+    .Call(`_SLmetrics_smape`, actual, predicted, w, na_rm = na.rm)
 }
 

@@ -1,98 +1,128 @@
-#ifndef REGRESSION_RelativeAbsoluteError_H
-#define REGRESSION_RelativeAbsoluteError_H
-#include <Rcpp.h>
+#ifndef REGRESSION_RELATIVEABSOLUTEERROR_H
+#define REGRESSION_RELATIVEABSOLUTEERROR_H
+
+#include <vector>
 #include <cmath>
-#include <numeric>
-using namespace Rcpp;
+#include <cstddef>
+#include <limits>
 
+// Unweighted Relative Absolute Error
+inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, bool na_rm = false) {
+    const std::size_t n = actual.size();
+    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
 
-inline __attribute__((always_inline)) double _metric_(const NumericVector& actual, const NumericVector& predicted)
-{
-  const std::size_t n = actual.size();
-  const double mean_actual = std::accumulate(actual.begin(), actual.end(), 0.0) / n;
+    if (n == 0) {
+        return NA_DOUBLE;
+    }
 
-  const double* actual_ptr = actual.begin();
-  const double* predicted_ptr = predicted.begin();
+    const double* actual_ptr = actual.data();
 
-  double numerator = 0.0;
-  double denominator = 0.0;
-  int i = 0;
-  int limit = n - (n % 4);
+    double mean_actual = 0.0;
+    std::size_t valid_count_mean = 0;
 
-  for (; i < limit; i += 4) {
-    double diff0 = std::abs(*(actual_ptr++) - *(predicted_ptr++));
-    double diff1 = std::abs(*(actual_ptr++) - *(predicted_ptr++));
-    double diff2 = std::abs(*(actual_ptr++) - *(predicted_ptr++));
-    double diff3 = std::abs(*(actual_ptr++) - *(predicted_ptr++));
+    for (std::size_t i = 0; i < n; ++i) {
+        double actual_value = *(actual_ptr++);
+        if (!std::isnan(actual_value)) {
+            mean_actual += actual_value;
+            ++valid_count_mean;
+        }
+    }
 
-    numerator += diff0 + diff1 + diff2 + diff3;
+    if (valid_count_mean == 0) {
+        return NA_DOUBLE;
+    }
 
-    double diff_mean0 = std::abs(*(actual_ptr - 4) - mean_actual);
-    double diff_mean1 = std::abs(*(actual_ptr - 3) - mean_actual);
-    double diff_mean2 = std::abs(*(actual_ptr - 2) - mean_actual);
-    double diff_mean3 = std::abs(*(actual_ptr - 1) - mean_actual);
+    mean_actual /= static_cast<double>(valid_count_mean);
 
-    denominator += diff_mean0 + diff_mean1 + diff_mean2 + diff_mean3;
-  }
+    actual_ptr = actual.data(); // Reset pointer
+    const double* predicted_ptr = predicted.data();
 
-  for (; i < n; ++i) {
-    double diff = std::abs(*(actual_ptr++) - *(predicted_ptr++));
-    numerator += diff;
+    double numerator = 0.0;
+    double denominator = 0.0;
+    std::size_t valid_count = 0;
 
-    double diff_mean = std::abs(*(actual_ptr - 1) - mean_actual);
-    denominator += diff_mean;
-  }
+    for (std::size_t i = 0; i < n; ++i) {
+        double actual_value = *(actual_ptr++);
+        double predicted_value = *(predicted_ptr++);
 
-  return numerator / denominator;
+        bool is_valid = !std::isnan(actual_value) && !std::isnan(predicted_value);
+        valid_count += is_valid;
+
+        if (is_valid) {
+            double diff = std::abs(actual_value - predicted_value);
+            numerator += diff;
+
+            double diff_mean = std::abs(actual_value - mean_actual);
+            denominator += diff_mean;
+        }
+    }
+
+    if (!na_rm && valid_count != n) {
+        return NA_DOUBLE;
+    }
+
+    return denominator > 0 ? numerator / denominator : NA_DOUBLE;
 }
 
+// Weighted Relative Absolute Error
+inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights, bool na_rm = false) {
+    const std::size_t n = actual.size();
+    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
 
-inline __attribute__((always_inline)) double _metric_(const NumericVector& actual, const NumericVector& predicted, const NumericVector& w)
-{
-  const std::size_t n = actual.size();
-  const double weighted_sum = std::accumulate(w.begin(), w.end(), 0.0);
-  const double mean_actual = std::inner_product(actual.begin(), actual.end(), w.begin(), 0.0) / weighted_sum;
+    if (n == 0) {
+        return NA_DOUBLE;
+    }
 
-  const double* actual_ptr = actual.begin();
-  const double* predicted_ptr = predicted.begin();
-  const double* w_ptr = w.begin();
+    const double* actual_ptr = actual.data();
+    const double* weights_ptr = weights.data();
 
-  double numerator = 0.0;
-  double denominator = 0.0;
-  int i = 0;
-  int limit = n - (n % 4);
+    double weight_sum = 0.0;
+    double mean_actual = 0.0;
 
-  for (; i < limit; i += 4) {
-    double w0 = *(w_ptr++);
-    double w1 = *(w_ptr++);
-    double w2 = *(w_ptr++);
-    double w3 = *(w_ptr++);
+    for (std::size_t i = 0; i < n; ++i) {
+        double actual_value = *(actual_ptr++);
+        double weight = *(weights_ptr++);
 
-    double diff0 = std::abs(*(actual_ptr++) - *(predicted_ptr++));
-    double diff1 = std::abs(*(actual_ptr++) - *(predicted_ptr++));
-    double diff2 = std::abs(*(actual_ptr++) - *(predicted_ptr++));
-    double diff3 = std::abs(*(actual_ptr++) - *(predicted_ptr++));
+        if (!std::isnan(actual_value) && !std::isnan(weight)) {
+            weight_sum += weight;
+            mean_actual += weight * actual_value;
+        }
+    }
 
-    numerator += w0 * diff0 + w1 * diff1 + w2 * diff2 + w3 * diff3;
+    if (weight_sum == 0.0) {
+        return NA_DOUBLE;
+    }
 
-    double diff_mean0 = std::abs(*(actual_ptr - 4) - mean_actual);
-    double diff_mean1 = std::abs(*(actual_ptr - 3) - mean_actual);
-    double diff_mean2 = std::abs(*(actual_ptr - 2) - mean_actual);
-    double diff_mean3 = std::abs(*(actual_ptr - 1) - mean_actual);
+    mean_actual /= weight_sum;
 
-    denominator += w0 * diff_mean0 + w1 * diff_mean1 + w2 * diff_mean2 + w3 * diff_mean3;
-  }
+    actual_ptr = actual.data(); // Reset pointer
+    weights_ptr = weights.data();
+    const double* predicted_ptr = predicted.data();
 
-  for (; i < n; ++i) {
-    double w = *(w_ptr++);
-    double diff = std::abs(*(actual_ptr++) - *(predicted_ptr++));
-    numerator += w * diff;
+    double numerator = 0.0;
+    double denominator = 0.0;
 
-    double diff_mean = std::abs(*(actual_ptr - 1) - mean_actual);
-    denominator += w * diff_mean;
-  }
+    for (std::size_t i = 0; i < n; ++i) {
+        double actual_value = *(actual_ptr++);
+        double predicted_value = *(predicted_ptr++);
+        double weight = *(weights_ptr++);
 
-  return numerator / denominator;
+        bool is_valid = !std::isnan(actual_value) && !std::isnan(predicted_value) && !std::isnan(weight);
+
+        if (is_valid) {
+            double diff = std::abs(actual_value - predicted_value);
+            numerator += weight * diff;
+
+            double diff_mean = std::abs(actual_value - mean_actual);
+            denominator += weight * diff_mean;
+        }
+    }
+
+    if (!na_rm && denominator == 0) {
+        return NA_DOUBLE;
+    }
+
+    return denominator > 0 ? numerator / denominator : NA_DOUBLE;
 }
 
-#endif //REGRESSION_RelativeAbsoluteError_H
+#endif //REGRESSION_RELATIVEABSOLUTEERROR_H

@@ -1,97 +1,85 @@
 #ifndef REGRESSION_PINBALLLOSS_H
 #define REGRESSION_PINBALLLOSS_H
 
-#include <Rcpp.h>
+#include <vector>
 #include <cmath>
-#include <numeric>
-#include <algorithm>
-using namespace Rcpp;
+#include <cstddef>
+#include <limits>
 
 // Weighted version of pinball loss
-inline __attribute__((always_inline)) double _metric_(const NumericVector& actual, const NumericVector& predicted, const NumericVector& w, const double& alpha = 0.5) {
-  const std::size_t n = actual.size();
+inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights, double alpha = 0.5, bool na_rm = false) {
+    const std::size_t n = actual.size();
+    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
 
-  const double* actual_ptr = actual.begin();
-  const double* predicted_ptr = predicted.begin();
-  const double* weight_ptr = w.begin();
+    if (n == 0) {
+        return NA_DOUBLE;
+    }
 
-  double loss = 0.0;
-  double weight_sum = 0.0;
-  int i = 0;
-  int limit = n - (n % 4);
+    const double* actual_ptr = actual.data();
+    const double* predicted_ptr = predicted.data();
+    const double* weight_ptr = weights.data();
 
-  for (; i < limit; i += 4) {
-    double diff0 = *(actual_ptr++) - *(predicted_ptr++);
-    double diff1 = *(actual_ptr++) - *(predicted_ptr++);
-    double diff2 = *(actual_ptr++) - *(predicted_ptr++);
-    double diff3 = *(actual_ptr++) - *(predicted_ptr++);
+    double loss = 0.0;
+    double weight_sum = 0.0;
 
-    double sign0 = (diff0 >= 0) ? 1.0 : 0.0;
-    double sign1 = (diff1 >= 0) ? 1.0 : 0.0;
-    double sign2 = (diff2 >= 0) ? 1.0 : 0.0;
-    double sign3 = (diff3 >= 0) ? 1.0 : 0.0;
+    for (std::size_t i = 0; i < n; ++i) {
+        double actual_value = *(actual_ptr++);
+        double predicted_value = *(predicted_ptr++);
+        double weight = *(weight_ptr++);
 
-    double weight0 = *(weight_ptr++);
-    double weight1 = *(weight_ptr++);
-    double weight2 = *(weight_ptr++);
-    double weight3 = *(weight_ptr++);
+        bool is_valid = !std::isnan(actual_value) && !std::isnan(predicted_value) && !std::isnan(weight);
 
-    loss += weight0 * (alpha * sign0 * diff0 - (1 - alpha) * (1 - sign0) * diff0);
-    loss += weight1 * (alpha * sign1 * diff1 - (1 - alpha) * (1 - sign1) * diff1);
-    loss += weight2 * (alpha * sign2 * diff2 - (1 - alpha) * (1 - sign2) * diff2);
-    loss += weight3 * (alpha * sign3 * diff3 - (1 - alpha) * (1 - sign3) * diff3);
+        if (is_valid) {
+            double diff = actual_value - predicted_value;
+            double sign = (diff >= 0) ? 1.0 : 0.0;
 
-    weight_sum += weight0 + weight1 + weight2 + weight3;
-  }
+            loss += weight * (alpha * sign * diff - (1 - alpha) * (1 - sign) * diff);
+            weight_sum += weight;
+        }
+    }
 
-  for (; i < n; ++i) {
-    double diff = *(actual_ptr++) - *(predicted_ptr++);
-    double sign = (diff >= 0) ? 1.0 : 0.0;
-    double weight = *(weight_ptr++);
+    if (!na_rm && weight_sum == 0) {
+        return NA_DOUBLE;
+    }
 
-    loss += weight * (alpha * sign * diff - (1 - alpha) * (1 - sign) * diff);
-    weight_sum += weight;
-  }
-
-  return weight_sum > 0 ? (loss / weight_sum) : 0.0;
+    return weight_sum > 0 ? (loss / weight_sum) : NA_DOUBLE;
 }
 
 // Unweighted version of pinball loss
-inline __attribute__((always_inline)) double _metric_(const NumericVector& actual, const NumericVector& predicted, const double& alpha = 0.5) {
-  const std::size_t n = actual.size();
+inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, double alpha = 0.5, bool na_rm = false) {
+    const std::size_t n = actual.size();
+    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
 
-  const double* actual_ptr = actual.begin();
-  const double* predicted_ptr = predicted.begin();
+    if (n == 0) {
+        return NA_DOUBLE;
+    }
 
-  double loss = 0.0;
-  int i = 0;
-  int limit = n - (n % 4);
+    const double* actual_ptr = actual.data();
+    const double* predicted_ptr = predicted.data();
 
-  for (; i < limit; i += 4) {
-    double diff0 = *(actual_ptr++) - *(predicted_ptr++);
-    double diff1 = *(actual_ptr++) - *(predicted_ptr++);
-    double diff2 = *(actual_ptr++) - *(predicted_ptr++);
-    double diff3 = *(actual_ptr++) - *(predicted_ptr++);
+    double loss = 0.0;
+    std::size_t valid_count = 0;
 
-    double sign0 = (diff0 >= 0) ? 1.0 : 0.0;
-    double sign1 = (diff1 >= 0) ? 1.0 : 0.0;
-    double sign2 = (diff2 >= 0) ? 1.0 : 0.0;
-    double sign3 = (diff3 >= 0) ? 1.0 : 0.0;
+    for (std::size_t i = 0; i < n; ++i) {
+        double actual_value = *(actual_ptr++);
+        double predicted_value = *(predicted_ptr++);
 
-    loss += alpha * sign0 * diff0 - (1 - alpha) * (1 - sign0) * diff0;
-    loss += alpha * sign1 * diff1 - (1 - alpha) * (1 - sign1) * diff1;
-    loss += alpha * sign2 * diff2 - (1 - alpha) * (1 - sign2) * diff2;
-    loss += alpha * sign3 * diff3 - (1 - alpha) * (1 - sign3) * diff3;
-  }
+        bool is_valid = !std::isnan(actual_value) && !std::isnan(predicted_value);
+        valid_count += is_valid;
 
-  for (; i < n; ++i) {
-    double diff = *(actual_ptr++) - *(predicted_ptr++);
-    double sign = (diff >= 0) ? 1.0 : 0.0;
+        if (is_valid) {
+            double diff = actual_value - predicted_value;
+            double sign = (diff >= 0) ? 1.0 : 0.0;
 
-    loss += alpha * sign * diff - (1 - alpha) * (1 - sign) * diff;
-  }
+            loss += alpha * sign * diff - (1 - alpha) * (1 - sign) * diff;
+        }
+    }
 
-  return loss / n;
+    if (!na_rm && valid_count != n) {
+        return NA_DOUBLE;
+    }
+
+    return valid_count > 0 ? (loss / valid_count) : NA_DOUBLE;
 }
 
 /*
@@ -105,47 +93,54 @@ inline __attribute__((always_inline)) double _metric_(const NumericVector& actua
  *
  */
 
-inline __attribute__((always_inline)) Rcpp::NumericVector _quantile_(Rcpp::NumericVector& x, const double& alpha = 0.5) {
-  int n = x.size();
-  Rcpp::NumericVector quantiles(n);
+inline __attribute__((always_inline)) std::vector<double> _quantile_(std::vector<double>& x, const double alpha = 0.5, bool na_rm = false) {
+    const std::size_t n = x.size();
+    std::vector<double> quantiles(n);
+    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
 
-  // Calculate the quantile index position only once
-  double pos = alpha * (n - 1);
-  int pos_int = static_cast<int>(pos);
-  double frac = pos - pos_int;
+    if (n == 0) {
+        return quantiles;
+    }
 
-  // Use std::nth_element for partial sorting
-  std::nth_element(x.begin(), x.begin() + pos_int, x.end());
-  double lower = x[pos_int];
+    // Remove NA values if na_rm is true
+    if (na_rm) {
+        double* data_ptr = x.data();
+        double* end_ptr = data_ptr + n;
+        auto valid_end = std::remove_if(data_ptr, end_ptr, [](double val) { return std::isnan(val); });
+        x.resize(std::distance(data_ptr, valid_end));
+    }
 
-  // If pos_int + 1 is within bounds, sort again to get the next element
-  double upper;
-  if (pos_int + 1 < n) {
-    std::nth_element(x.begin(), x.begin() + pos_int + 1, x.end());
-    upper = x[pos_int + 1];
-  } else {
-    upper = lower;
-  }
+    if (x.empty()) {
+        std::fill(quantiles.begin(), quantiles.end(), NA_DOUBLE);
+        return quantiles;
+    }
 
-  // Calculate the interpolated quantile
-  double quantile_value = lower + frac * (upper - lower);
+    // Calculate the quantile index position
+    double pos = alpha * (x.size() - 1);
+    std::size_t pos_int = static_cast<std::size_t>(pos);
+    double frac = pos - pos_int;
 
-  // Fill the result xtor with loop unrolling
-  double* quant_ptr = quantiles.begin();
-  int i = 0;
+    // Use nth_element for partial sorting
+    double* data_ptr = x.data();
+    std::nth_element(data_ptr, data_ptr + pos_int, data_ptr + x.size());
+    double lower = data_ptr[pos_int];
 
-  for (; i <= n - 4; i += 4) {
-    quant_ptr[i] = quantile_value;
-    quant_ptr[i + 1] = quantile_value;
-    quant_ptr[i + 2] = quantile_value;
-    quant_ptr[i + 3] = quantile_value;
-  }
+    double upper;
+    if (pos_int + 1 < x.size()) {
+        std::nth_element(data_ptr, data_ptr + pos_int + 1, data_ptr + x.size());
+        upper = data_ptr[pos_int + 1];
+    } else {
+        upper = lower;
+    }
 
-  for (; i < n; ++i) {
-    quant_ptr[i] = quantile_value;
-  }
+    double quantile_value = lower + frac * (upper - lower);
 
-  return quantiles;
+    double* quant_ptr = quantiles.data();
+    for (std::size_t i = 0; i < n; ++i) {
+        *(quant_ptr++) = quantile_value;
+    }
+
+    return quantiles;
 }
 
 #endif // REGRESSION_PINBALLLOSS_H

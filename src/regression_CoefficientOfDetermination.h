@@ -1,56 +1,66 @@
 #ifndef REGRESSION_COEFFICIENTOFDETERMINATION_H
 #define REGRESSION_COEFFICIENTOFDETERMINATION_H
 
-#include <Rcpp.h>
+#include <vector>
 #include <cmath>
-#include <numeric>
-using namespace Rcpp;
+#include <cstddef>
+#include <limits>
 
 // R-squared Calculation
-inline __attribute__((always_inline)) double _metric_(const NumericVector& actual, const NumericVector& predicted, const double k) {
+inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, const double k, bool na_rm = false) {
     const std::size_t n = actual.size();
+    if (n == 0) {
+        return std::numeric_limits<double>::quiet_NaN();
+    }
+
+    const double* actual_ptr = actual.data();
+    const double* predicted_ptr = predicted.data();
 
     // Calculate the mean of actual values
-    double mean_actual = std::accumulate(actual.begin(), actual.end(), 0.0) / n;
+    double mean_actual = 0.0;
+    std::size_t valid_count = 0;
+
+    for (std::size_t i = 0; i < n; ++i) {
+        double actual_value = *(actual_ptr++);
+        if (!std::isnan(actual_value)) {
+            mean_actual += actual_value;
+            ++valid_count;
+        }
+    }
+
+    if (valid_count == 0) {
+        return std::numeric_limits<double>::quiet_NaN();
+    }
+
+    mean_actual /= valid_count;
+
+    // Reset pointers
+    actual_ptr = actual.data();
+    predicted_ptr = predicted.data();
 
     // Initialize SSE and SST
     double SSE = 0.0;
     double SST = 0.0;
 
-    int i = 0;
-    int limit = n - (n % 4);
+    for (std::size_t i = 0; i < n; ++i) {
+        double actual_value = *(actual_ptr++);
+        double predicted_value = *(predicted_ptr++);
 
-    for (; i < limit; i += 4) {
-        const double actual_val0 = actual[i];
-        const double predicted_val0 = predicted[i];
-        SSE += (actual_val0 - predicted_val0) * (actual_val0 - predicted_val0);
-        SST += (actual_val0 - mean_actual) * (actual_val0 - mean_actual);
+        if (!std::isnan(actual_value) && !std::isnan(predicted_value)) {
+            double diff_actual_mean = actual_value - mean_actual;
+            double diff_actual_predicted = actual_value - predicted_value;
 
-        const double actual_val1 = actual[i + 1];
-        const double predicted_val1 = predicted[i + 1];
-        SSE += (actual_val1 - predicted_val1) * (actual_val1 - predicted_val1);
-        SST += (actual_val1 - mean_actual) * (actual_val1 - mean_actual);
-
-        const double actual_val2 = actual[i + 2];
-        const double predicted_val2 = predicted[i + 2];
-        SSE += (actual_val2 - predicted_val2) * (actual_val2 - predicted_val2);
-        SST += (actual_val2 - mean_actual) * (actual_val2 - mean_actual);
-
-        const double actual_val3 = actual[i + 3];
-        const double predicted_val3 = predicted[i + 3];
-        SSE += (actual_val3 - predicted_val3) * (actual_val3 - predicted_val3);
-        SST += (actual_val3 - mean_actual) * (actual_val3 - mean_actual);
+            SST += diff_actual_mean * diff_actual_mean;
+            SSE += diff_actual_predicted * diff_actual_predicted;
+        }
     }
 
-    for (; i < n; ++i) {
-        const double actual_val = actual[i];
-        const double predicted_val = predicted[i];
-        SSE += (actual_val - predicted_val) * (actual_val - predicted_val);
-        SST += (actual_val - mean_actual) * (actual_val - mean_actual);
+    if (SST == 0) {
+        return std::numeric_limits<double>::quiet_NaN();
     }
 
     // Calculate R-squared
-    return 1.0 - (SSE / SST) * ((n - 1) / (n - (k + 1)));
+    return 1.0 - (SSE / SST) * ((valid_count - 1) / (valid_count - (k + 1)));
 }
 
 #endif //REGRESSION_COEFFICIENTOFDETERMINATION_H

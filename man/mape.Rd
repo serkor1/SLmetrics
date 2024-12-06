@@ -6,7 +6,7 @@
 \alias{mape}
 \title{Compute the \eqn{\text{mean}} \eqn{\text{absolute}} \eqn{\text{percentage}} \eqn{\text{error}}}
 \usage{
-\method{mape}{numeric}(actual, predicted, w = NULL, ...)
+\method{mape}{numeric}(actual, predicted, w = NULL, na.rm = FALSE, ...)
 
 mape(...)
 }
@@ -16,6 +16,8 @@ mape(...)
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+
+\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
 }
