@@ -17,7 +17,7 @@ content <- readLines(file_path)
 # 2) start by modifying
 # the na_rm = TRUE to na.rm = TRUE, ...
 # Replace all occurrences of ') {' with ', ...) {'
-updated_content <- gsub(", na_rm = TRUE\\) \\{", ", na.rm = TRUE, ...) {", content)
+updated_content <- gsub(", na_rm = (TRUE|FALSE)\\) \\{", ", na.rm = \\1) {", content)
 
 # 3) now replace na_rm with na_rm = na.rm
 # to pass the argument
@@ -50,7 +50,7 @@ foo_update <- c(
   # "prROC"
 )
 
-foo_update <- as.vector(outer(foo_update, c("cmatrix", "factor", "numeric", "default"), paste, sep = "."))
+foo_update <- as.vector(outer("[a-z]*", c("cmatrix", "factor", "numeric", "default"), paste, sep = "."))
 
 # 5) Modify the function signatures in RcppExports to append ', ...' to the argument list
 for (fname in foo_update) {

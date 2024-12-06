@@ -49,8 +49,8 @@ po/*~
 rsconnect/
 .Rproj.user
 
-# playground
-playground/
+# sandbox
+sandbox/
 docs
 inst/doc
 

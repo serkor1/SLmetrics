@@ -6,18 +6,15 @@ using namespace Rcpp;
 //' @method rae numeric
 //' @export
 // [[Rcpp::export(rae.numeric)]]
-double rae(
-   const Rcpp::NumericVector& actual,
-   const Rcpp::NumericVector& predicted,
-   Rcpp::Nullable<Rcpp::NumericVector> w = R_NilValue
-) {
+double rae(const std::vector<double>& actual, const std::vector<double>& predicted,  Rcpp::Nullable<std::vector<double>> w = R_NilValue, bool na_rm = false)
+{
 
  if (w.isNull()) {
 
-   return _metric_(actual, predicted);
+   return _metric_(actual, predicted, na_rm);
 
  }
 
- return _metric_(actual, predicted, Rcpp::as<Rcpp::NumericVector>(w));
+ return _metric_(actual, predicted, Rcpp::as<std::vector<double>>(w), na_rm);
 
 }

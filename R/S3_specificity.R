@@ -16,8 +16,7 @@
 #' @param x A confusion matrix created by [table()] or [cmatrix()]
 #' @param micro A <[logical]>-value of [length] \eqn{1}. [NULL] by default. If [TRUE] it returns the
 #' micro average across all \eqn{k} classes, if [FALSE] it returns the macro average. Otherwise class wise performance evaluation.
-#' @param na.rm A <[logical]>-value of [length] \eqn{1}. [TRUE] by default. If [FALSE] [NA] values will be disregarded when `micro = FALSE`.
-#'
+#' @param na.rm A <[logical]>-value of [length] \eqn{1}. [FALSE] by default. If [TRUE] NA values will be removed from the computation.
 #' @details
 #'
 #' Consider a classification problem with three classes: `A`, `B`, and `C`. The actual vector of [factor()] values is defined as follows:

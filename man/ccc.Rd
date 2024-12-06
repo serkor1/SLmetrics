@@ -6,7 +6,7 @@
 \alias{ccc}
 \title{Compute the \eqn{\text{concordance}} \eqn{\text{correlation}} \eqn{\text{coefficient}}}
 \usage{
-\method{ccc}{numeric}(actual, predicted, correction = FALSE, w = NULL, ...)
+\method{ccc}{numeric}(actual, predicted, correction = FALSE, w = NULL, na.rm = FALSE, ...)
 
 ccc(...)
 }
@@ -19,6 +19,8 @@ ccc(...)
 will be adjusted with \eqn{\frac{1-n}{n}}}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+
+\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
 }

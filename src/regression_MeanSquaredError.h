@@ -1,89 +1,81 @@
-//
-// Created by serko on 09/10/2024.
-//
-
 #ifndef REGRESSION_MEANSQUAREDERROR_H
 #define REGRESSION_MEANSQUAREDERROR_H
-#include <Rcpp.h>
+
+#include <vector>
 #include <cmath>
-using namespace Rcpp;
+#include <cstddef>
+#include <limits>
 
 // Unweighted MSE
-inline __attribute__((always_inline)) double _metric_(const NumericVector& actual, const NumericVector& predicted)
-{
+inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, bool na_rm = false) {
     const std::size_t n = actual.size();
+    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
 
-    const double* actual_ptr = actual.begin();
-    const double* predicted_ptr = predicted.begin();
+    if (n == 0) {
+        return NA_DOUBLE;
+    }
+
+    const double* actual_ptr = actual.data();
+    const double* predicted_ptr = predicted.data();
 
     double output = 0.0;
-    int i = 0;
-    int limit = n - (n % 4);
+    std::size_t valid_count = 0;
 
-    for (; i < limit; i += 4) {
-        double diff0 = *(actual_ptr++) - *(predicted_ptr++);
-        double diff1 = *(actual_ptr++) - *(predicted_ptr++);
-        double diff2 = *(actual_ptr++) - *(predicted_ptr++);
-        double diff3 = *(actual_ptr++) - *(predicted_ptr++);
+    for (std::size_t i = 0; i < n; ++i) {
+        double actual_value = *(actual_ptr++);
+        double predicted_value = *(predicted_ptr++);
 
-        output += diff0 * diff0;
-        output += diff1 * diff1;
-        output += diff2 * diff2;
-        output += diff3 * diff3;
+        bool is_valid = !std::isnan(actual_value) && !std::isnan(predicted_value);
+        valid_count += is_valid;
+
+        if (is_valid) {
+            double diff = actual_value - predicted_value;
+            output += diff * diff;
+        }
     }
 
-    for (; i < n; ++i) {
-        double diff = *(actual_ptr++) - *(predicted_ptr++);
-        output += diff * diff;
+    if (!na_rm && valid_count != n) {
+        return NA_DOUBLE;
     }
 
-    return output / n;
+    return valid_count > 0 ? output / valid_count : NA_DOUBLE;
 }
 
 // Weighted MSE
-inline __attribute__((always_inline)) double _metric_(const NumericVector& actual, const NumericVector& predicted, const NumericVector& w)
-{
+inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights, bool na_rm = false) {
     const std::size_t n = actual.size();
+    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
 
-    const double* actual_ptr = actual.begin();
-    const double* predicted_ptr = predicted.begin();
-    const double* w_ptr = w.begin();
+    if (n == 0) {
+        return NA_DOUBLE;
+    }
+
+    const double* actual_ptr = actual.data();
+    const double* predicted_ptr = predicted.data();
+    const double* weights_ptr = weights.data();
 
     double output = 0.0;
     double weight_sum = 0.0;
-    int i = 0;
-    int limit = n - (n % 4);
 
-    for (; i < limit; i += 4) {
-        double weight0 = *(w_ptr++);
-        double weight1 = *(w_ptr++);
-        double weight2 = *(w_ptr++);
-        double weight3 = *(w_ptr++);
+    for (std::size_t i = 0; i < n; ++i) {
+        double actual_value = *(actual_ptr++);
+        double predicted_value = *(predicted_ptr++);
+        double weight = *(weights_ptr++);
 
-        double diff0 = *(actual_ptr++) - *(predicted_ptr++);
-        double diff1 = *(actual_ptr++) - *(predicted_ptr++);
-        double diff2 = *(actual_ptr++) - *(predicted_ptr++);
-        double diff3 = *(actual_ptr++) - *(predicted_ptr++);
+        bool is_valid = !std::isnan(actual_value) && !std::isnan(predicted_value) && !std::isnan(weight);
 
-        output += weight0 * diff0 * diff0;
-        output += weight1 * diff1 * diff1;
-        output += weight2 * diff2 * diff2;
-        output += weight3 * diff3 * diff3;
-
-        weight_sum += weight0 + weight1 + weight2 + weight3;
+        if (is_valid) {
+            double diff = actual_value - predicted_value;
+            output += weight * diff * diff;
+            weight_sum += weight;
+        }
     }
 
-    for (; i < n; ++i) {
-        double weight = *(w_ptr++);
-        double diff = *(actual_ptr++) - *(predicted_ptr++);
-
-        output += weight * diff * diff;
-        weight_sum += weight;
+    if (!na_rm && weight_sum == 0) {
+        return NA_DOUBLE;
     }
 
-    return output / weight_sum;
+    return weight_sum > 0 ? output / weight_sum : NA_DOUBLE;
 }
-
-
 
 #endif //REGRESSION_MEANSQUAREDERROR_H

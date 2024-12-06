@@ -29,7 +29,7 @@ ppv(...)
 \item{micro}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{NULL} by default. If \link{TRUE} it returns the
 micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average. Otherwise class wise performance evaluation.}
 
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{TRUE} by default. If \link{FALSE} \link{NA} values will be disregarded when \code{micro = FALSE}.}
+\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
 

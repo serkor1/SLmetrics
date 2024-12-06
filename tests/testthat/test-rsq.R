@@ -9,7 +9,6 @@ testthat::test_that(
   desc = "Test that `rsq()`-function is consistent with the `lm()`-function",
   code = {
 
-
     # 0) run a regression
     # on mtcars
     model <-  lm(
@@ -43,10 +42,22 @@ testthat::test_that(
       )
     )
 
+    # 4) testthat missing
+    # values are handled correctly
 
+    # 4.1) create actual and predicted
+    # with large noise
+    actual    <- rnorm(n = 100)
+    predicted <- actual + rnorm(n = 100, 10, 10)
 
+    # 4.2) test that they are equal
+    testthat::expect_true(
+      set_equal(
+        target  = rsq(actual, predicted), 
+        current = rsq(c(actual, NA), c(predicted, NA),na.rm = TRUE)
+      )
+    )
   }
 )
-
 
 # script end;

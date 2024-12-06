@@ -7,9 +7,9 @@ using namespace Rcpp;
 //' @method zerooneloss factor
 //' @export
 // [[Rcpp::export(zerooneloss.factor)]]
-double zerooneloss(const NumericVector& actual, const NumericVector& predicted) {
+double zerooneloss(const std::vector<int>& actual, const std::vector<int>& predicted, bool na_rm = false) {
 
-  return _metric_(actual, predicted);
+  return _metric_(actual, predicted, na_rm);
 
 }
 
