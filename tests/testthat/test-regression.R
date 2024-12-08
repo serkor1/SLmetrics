@@ -55,7 +55,22 @@ testthat::test_that(
           is.numeric(.f(actual, predicted, w = w)),
           is.numeric(.f(actual, predicted)),
           length(.f(actual, predicted, w = w)) == 1,
-          length(.f(actual, predicted)) == 1
+          length(.f(actual, predicted)) == 1,
+          set_equal(
+            .f(c(actual,NA), c(predicted, NA), w = c(w, NA), na.rm = TRUE),
+            .f(actual, predicted, w = w)
+          ),
+          set_equal(
+            .f(c(actual, NA), c(predicted, NA), na.rm = TRUE),
+            .f(actual, predicted)
+          ),
+          is.na(
+            .f(c(actual, NA), c(predicted, NA), na.rm = FALSE)
+          )
+        ),
+        label = paste(
+          names(sl_function)[i],
+          "Not all true"
         )
       )
 

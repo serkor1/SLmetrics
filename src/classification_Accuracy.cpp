@@ -8,10 +8,10 @@ using namespace Rcpp;
 //'
 //' @export
 // [[Rcpp::export(accuracy.factor)]]
-double accuracy(const NumericVector& actual, const NumericVector& predicted)
+double accuracy(const std::vector<int>& actual, const std::vector<int>& predicted, bool na_rm = false)
 {
 
-  return _metric_(actual, predicted);
+  return _metric_(actual, predicted, na_rm);
 
 }
 

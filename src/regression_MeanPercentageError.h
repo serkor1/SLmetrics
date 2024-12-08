@@ -1,83 +1,81 @@
 #ifndef REGRESSION_MEANPERCENTAGEERROR_H
 #define REGRESSION_MEANPERCENTAGEERROR_H
 
-
-#include <Rcpp.h>
+#include <vector>
 #include <cmath>
-using namespace Rcpp;
+#include <cstddef>
+#include <limits>
 
 // Unweighted MPE Calculation
-inline __attribute__((always_inline)) double _metric_(const NumericVector& actual, const NumericVector& predicted)
-{
-  const std::size_t n = actual.size();
-  double output = 0.0;
+inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, bool na_rm = false) {
+    const std::size_t n = actual.size();
+    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
 
-  const double* actual_ptr = actual.begin();
-  const double* predicted_ptr = predicted.begin();
+    if (n == 0) {
+        return NA_DOUBLE;
+    }
 
-  int i = 0;
-  int limit = n - (n % 4);
+    const double* actual_ptr = actual.data();
+    const double* predicted_ptr = predicted.data();
 
-  for (; i < limit; i += 4) {
-    double percentage_error0 = (actual_ptr[i] - predicted_ptr[i]) / actual_ptr[i];
-    double percentage_error1 = (actual_ptr[i + 1] - predicted_ptr[i + 1]) / actual_ptr[i + 1];
-    double percentage_error2 = (actual_ptr[i + 2] - predicted_ptr[i + 2]) / actual_ptr[i + 2];
-    double percentage_error3 = (actual_ptr[i + 3] - predicted_ptr[i + 3]) / actual_ptr[i + 3];
+    double output = 0.0;
+    std::size_t valid_count = 0;
 
-    output += percentage_error0 + percentage_error1 + percentage_error2 + percentage_error3;
-  }
+    for (std::size_t i = 0; i < n; ++i) {
+        double actual_value = *(actual_ptr++);
+        double predicted_value = *(predicted_ptr++);
 
-  for (; i < n; ++i) {
-    double percentage_error = (actual_ptr[i] - predicted_ptr[i]) / actual_ptr[i];
-    output += percentage_error;
-  }
+        bool is_valid = !std::isnan(actual_value) && actual_value != 0.0 && !std::isnan(predicted_value);
+        valid_count += is_valid;
 
-  return output / n;
+        if (is_valid) {
+            double percentage_error = (actual_value - predicted_value) / actual_value;
+            output += percentage_error;
+        }
+    }
+
+    if (!na_rm && valid_count != n) {
+        return NA_DOUBLE;
+    }
+
+    return valid_count > 0 ? output / valid_count : NA_DOUBLE;
 }
 
 // Weighted MPE Calculation
-inline __attribute__((always_inline)) double _metric_(const NumericVector& actual, const NumericVector& predicted, const NumericVector& w)
-{
-  const std::size_t n = actual.size();
-  double numerator = 0.0;
-  double denominator = 0.0;
+inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights, bool na_rm = false) {
+    const std::size_t n = actual.size();
+    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
 
-  const double* actual_ptr = actual.begin();
-  const double* predicted_ptr = predicted.begin();
-  const double* w_ptr = w.begin();
+    if (n == 0) {
+        return NA_DOUBLE;
+    }
 
-  int i = 0;
-  int limit = n - (n % 4);
+    const double* actual_ptr = actual.data();
+    const double* predicted_ptr = predicted.data();
+    const double* weights_ptr = weights.data();
 
-  for (; i < limit; i += 4) {
-    double percentage_error0 = (actual_ptr[i] - predicted_ptr[i]) / actual_ptr[i];
-    double weight0 = w_ptr[i];
+    double numerator = 0.0;
+    double denominator = 0.0;
 
-    double percentage_error1 = (actual_ptr[i + 1] - predicted_ptr[i + 1]) / actual_ptr[i + 1];
-    double weight1 = w_ptr[i + 1];
+    for (std::size_t i = 0; i < n; ++i) {
+        double actual_value = *(actual_ptr++);
+        double predicted_value = *(predicted_ptr++);
+        double weight = *(weights_ptr++);
 
-    double percentage_error2 = (actual_ptr[i + 2] - predicted_ptr[i + 2]) / actual_ptr[i + 2];
-    double weight2 = w_ptr[i + 2];
+        bool is_valid = !std::isnan(actual_value) && actual_value != 0.0 && !std::isnan(predicted_value) && !std::isnan(weight);
 
-    double percentage_error3 = (actual_ptr[i + 3] - predicted_ptr[i + 3]) / actual_ptr[i + 3];
-    double weight3 = w_ptr[i + 3];
+        if (is_valid) {
+            double percentage_error = (actual_value - predicted_value) / actual_value;
+            numerator += percentage_error * weight;
+            denominator += weight;
+        }
+    }
 
-    numerator += (percentage_error0 * weight0);
-    numerator += (percentage_error1 * weight1);
-    numerator += (percentage_error2 * weight2);
-    numerator += (percentage_error3 * weight3);
+    if (!na_rm && denominator == 0) {
+        return NA_DOUBLE;
+    }
 
-    denominator += weight0 + weight1 + weight2 + weight3;
-  }
-
-  for (; i < n; ++i) {
-    double percentage_error = (actual_ptr[i] - predicted_ptr[i]) / actual_ptr[i];
-    double weight = w_ptr[i];
-    numerator += (percentage_error * weight);
-    denominator += weight;
-  }
-
-  return numerator / denominator;
+    return denominator > 0 ? numerator / denominator : NA_DOUBLE;
 }
 
 #endif //REGRESSION_MEANPERCENTAGEERROR_H

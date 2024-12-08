@@ -6,9 +6,9 @@ using namespace Rcpp;
 //' @method rsq numeric
 //' @export
 // [[Rcpp::export(rsq.numeric)]]
-double rsq(const NumericVector& actual, const NumericVector& predicted, const double k = 0)
+double rsq(const std::vector<double>& actual, const std::vector<double>& predicted, const double k = 0, bool na_rm = false)
 {
 
-  return _metric_(actual, predicted, k);
+  return _metric_(actual, predicted, k, na_rm);
 
 }

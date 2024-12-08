@@ -1,85 +1,81 @@
-//
-// Created by serko on 10/10/2024.
-//
-
 #ifndef MEANABSOLUTEPERCENTAGEERROR_H
 #define MEANABSOLUTEPERCENTAGEERROR_H
 
-
-#include <Rcpp.h>
+#include <vector>
 #include <cmath>
-using namespace Rcpp;
+#include <cstddef>
+#include <limits>
 
 // Unweighted MAPE Calculation
-inline __attribute__((always_inline)) double _metric_(const NumericVector& actual, const NumericVector& predicted) {
-  const std::size_t n = actual.size();
-  double output = 0.0;
+inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, bool na_rm = false) {
+    const std::size_t n = actual.size();
+    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
 
-  const double* actual_ptr = actual.begin();
-  const double* predicted_ptr = predicted.begin();
+    if (n == 0) {
+        return NA_DOUBLE;
+    }
 
-  int i = 0;
-  int limit = n - (n % 4);
+    const double* actual_ptr = actual.data();
+    const double* predicted_ptr = predicted.data();
 
-  for (; i < limit; i += 4) {
-    double difference0 = std::abs((actual_ptr[i] - predicted_ptr[i]) / actual_ptr[i]);
-    double difference1 = std::abs((actual_ptr[i + 1] - predicted_ptr[i + 1]) / actual_ptr[i + 1]);
-    double difference2 = std::abs((actual_ptr[i + 2] - predicted_ptr[i + 2]) / actual_ptr[i + 2]);
-    double difference3 = std::abs((actual_ptr[i + 3] - predicted_ptr[i + 3]) / actual_ptr[i + 3]);
+    double output = 0.0;
+    std::size_t valid_count = 0;
 
-    output += difference0 + difference1 + difference2 + difference3;
-  }
+    for (std::size_t i = 0; i < n; ++i) {
+        double actual_value = *(actual_ptr++);
+        double predicted_value = *(predicted_ptr++);
 
-  for (; i < n; ++i) {
-    double difference = std::abs((actual_ptr[i] - predicted_ptr[i]) / actual_ptr[i]);
-    output += difference;
-  }
+        bool is_valid = !std::isnan(actual_value) && actual_value != 0.0 && !std::isnan(predicted_value);
+        valid_count += is_valid;
 
-  return output / n;
+        if (is_valid) {
+            double difference = std::abs((actual_value - predicted_value) / actual_value);
+            output += difference;
+        }
+    }
+
+    if (!na_rm && valid_count != n) {
+        return NA_DOUBLE;
+    }
+
+    return valid_count > 0 ? output / valid_count : NA_DOUBLE;
 }
 
 // Weighted MAPE Calculation
-inline __attribute__((always_inline)) double _metric_(const NumericVector& actual, const NumericVector& predicted, const NumericVector& w) {
-  const std::size_t n = actual.size();
-  double numerator = 0.0;
-  double denominator = 0.0;
+inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights, bool na_rm = false) {
+    const std::size_t n = actual.size();
+    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
 
-  const double* actual_ptr = actual.begin();
-  const double* predicted_ptr = predicted.begin();
-  const double* w_ptr = w.begin();
+    if (n == 0) {
+        return NA_DOUBLE;
+    }
 
-  int i = 0;
-  int limit = n - (n % 4);
+    const double* actual_ptr = actual.data();
+    const double* predicted_ptr = predicted.data();
+    const double* weights_ptr = weights.data();
 
-  for (; i < limit; i += 4) {
-    double difference0 = std::abs((actual_ptr[i] - predicted_ptr[i]) / actual_ptr[i]);
-    double weight0 = w_ptr[i];
+    double numerator = 0.0;
+    double denominator = 0.0;
 
-    double difference1 = std::abs((actual_ptr[i + 1] - predicted_ptr[i + 1]) / actual_ptr[i + 1]);
-    double weight1 = w_ptr[i + 1];
+    for (std::size_t i = 0; i < n; ++i) {
+        double actual_value = *(actual_ptr++);
+        double predicted_value = *(predicted_ptr++);
+        double weight = *(weights_ptr++);
 
-    double difference2 = std::abs((actual_ptr[i + 2] - predicted_ptr[i + 2]) / actual_ptr[i + 2]);
-    double weight2 = w_ptr[i + 2];
+        bool is_valid = !std::isnan(actual_value) && actual_value != 0.0 && !std::isnan(predicted_value) && !std::isnan(weight);
 
-    double difference3 = std::abs((actual_ptr[i + 3] - predicted_ptr[i + 3]) / actual_ptr[i + 3]);
-    double weight3 = w_ptr[i + 3];
+        if (is_valid) {
+            double difference = std::abs((actual_value - predicted_value) / actual_value);
+            numerator += difference * weight;
+            denominator += weight;
+        }
+    }
 
-    numerator += (difference0 * weight0);
-    numerator += (difference1 * weight1);
-    numerator += (difference2 * weight2);
-    numerator += (difference3 * weight3);
+    if (!na_rm && denominator == 0) {
+        return NA_DOUBLE;
+    }
 
-    denominator += weight0 + weight1 + weight2 + weight3;
-  }
-
-  for (; i < n; ++i) {
-    double difference = std::abs((actual_ptr[i] - predicted_ptr[i]) / actual_ptr[i]);
-    double weight = w_ptr[i];
-    numerator += (difference * weight);
-    denominator += weight;
-  }
-
-  return numerator / denominator;
+    return denominator > 0 ? numerator / denominator : NA_DOUBLE;
 }
 
 #endif //MEANABSOLUTEPERCENTAGEERROR_H

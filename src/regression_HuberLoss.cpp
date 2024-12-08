@@ -7,15 +7,15 @@ using namespace Rcpp;
 //' @method huberloss numeric
 //' @export
 // [[Rcpp::export(huberloss.numeric)]]
-double huberloss(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const double& delta = 1.0, Rcpp::Nullable<Rcpp::NumericVector> w = R_NilValue)
+double huberloss(const std::vector<double>& actual, const std::vector<double>& predicted, const double& delta = 1.0, Rcpp::Nullable<std::vector<double>> w = R_NilValue, bool na_rm = false)
 {
 
   if (w.isNull()) {
 
-    return _metric_(actual, predicted, delta);
+    return _metric_(actual, predicted, delta, na_rm);
 
   }
 
-  return _metric_(actual, predicted, delta, Rcpp::as<Rcpp::NumericVector>(w));
+  return _metric_(actual, predicted, Rcpp::as<std::vector<double>>(w), delta, na_rm);
 
 }
