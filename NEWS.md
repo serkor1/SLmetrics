@@ -25,7 +25,7 @@
 
 ``` r
 # 1) define factors
-actual    <- factor(c("yes", "no"))
+actual    <- factor(c("no", "yes"))
 predicted <- factor(c(NA, "no"))
 
 # 2) accuracy with na.rm = TRUE
@@ -36,7 +36,7 @@ SLmetrics::accuracy(
 )
 ```
 
-    #> [1] 1
+    #> [1] 0
 
 ``` r
 # 2) accuracy with na.rm = FALSE
@@ -48,6 +48,60 @@ SLmetrics::accuracy(
 ```
 
     #> [1] NaN
+
+## Bug-fixes
+
+  - The `plot.prROC()`- and `plot.ROC()`-functions now adds a line to
+    the plot when `panels = FALSE`. See Issue
+    <https://github.com/serkor1/SLmetrics/issues/9>.
+
+<!-- end list -->
+
+``` r
+# 1) define actual
+# classes
+actual <- factor(
+  sample(letters[1:2], size = 100, replace = TRUE)
+)
+
+# 2) define response
+# probabilities
+response <- runif(100)
+
+# 3) calculate
+# ROC and prROC
+
+# 3.1) ROC
+roc <- SLmetrics::ROC(
+    actual,
+    response
+)
+
+# 3.2) prROC
+prroc <- SLmetrics::prROC(
+    actual,
+    response
+)
+
+# 4) plot with panels
+# FALSE
+par(mfrow = c(1,2))
+plot(
+  roc,
+  panels = FALSE
+)
+```
+
+![](NEWS_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
+``` r
+plot(
+    prroc,
+    panels = FALSE
+)
+```
+
+![](NEWS_files/figure-gfm/unnamed-chunk-2-2.png)<!-- -->
 
 # Version 0.1-0
 
@@ -71,7 +125,7 @@ print(
 )
 ```
 
-    #>  [1] b a b b a c b c c a
+    #>  [1] a a a b c a b c c a
     #> Levels: a b c
 
 ``` r
@@ -83,7 +137,7 @@ print(
 )
 ```
 
-    #>  [1] c c a b a b c c a c
+    #>  [1] c c b b a a b b c b
     #> Levels: a b c
 
 ``` r
@@ -101,16 +155,16 @@ summary(
     #> Confusion Matrix (3 x 3) 
     #> ================================================================================
     #>   a b c
-    #> a 1 0 2
-    #> b 1 1 2
+    #> a 1 2 2
+    #> b 0 2 0
     #> c 1 1 1
     #> ================================================================================
     #> Overall Statistics (micro average)
-    #>  - Accuracy:          0.30
-    #>  - Balanced Accuracy: 0.31
-    #>  - Sensitivity:       0.30
-    #>  - Specificity:       0.65
-    #>  - Precision:         0.30
+    #>  - Accuracy:          0.40
+    #>  - Balanced Accuracy: 0.51
+    #>  - Sensitivity:       0.40
+    #>  - Specificity:       0.70
+    #>  - Precision:         0.40
 
 ``` r
 # 2) calculate false positive
@@ -121,7 +175,7 @@ SLmetrics::fpr(
 ```
 
     #>         a         b         c 
-    #> 0.2857143 0.1666667 0.5714286
+    #> 0.2000000 0.3750000 0.2857143
 
 ### Supervised regression metrics
 
@@ -142,4 +196,4 @@ SLmetrics::huberloss(
 )
 ```
 
-    #> [1] 0.394088
+    #> [1] 0.4757045

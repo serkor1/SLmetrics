@@ -121,7 +121,7 @@ plot.prROC <- function(
   # All common options for the
   # plot goes her
   pformula <- precision ~ recall
-  groups   <-unique(x$label)
+  groups   <- x$label
   xlab     <- "Recall"
   ylab     <- "Precision"
   main     <- "Precision-Recall Curve"
@@ -141,12 +141,13 @@ plot.prROC <- function(
   }
 
   roc_plot(
-    formula = pformula,
-    groups  = groups,
-    xlab    = xlab,
-    ylab    = ylab,
-    main    = main,
-    DT      = x,
+    formula  = pformula,
+    groups   = groups,
+    xlab     = xlab,
+    ylab     = ylab,
+    main     = main,
+    DT       = x,
+    add_poly = panels,
     ...  
   )
 
