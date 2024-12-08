@@ -28,6 +28,7 @@ roc_plot <- function(
   xlab = NULL,
   ylab = NULL,
   main = NULL,
+  add_poly = FALSE,
   ...) {
 
 
@@ -42,25 +43,30 @@ roc_plot <- function(
     lwd      = 2,
     auto.key = list(
       space = "bottom",
-      columns = length(unique(DT$label))
+      columns = length(unique(DT$label)),
+      between.columns = 1
     ),
     xlim = c(0, 1),
     ylim = c(0, 1),
     panel = function(x, y, ...) {
 
-      # 1) vertices for the polygon
-      poly_x <- c(0, x, 1)
-      poly_y <- c(0, y, 0)
+      if (add_poly) {
+      
+        # 1) vertices for the polygon
+        poly_x <- c(0, x, 1)
+        poly_y <- c(0, y, 0)
 
-      # 1.1) plot the polygon
-      lattice::panel.polygon(
-        poly_x,
-        poly_y,
-        col = grDevices::adjustcolor(
-        col = "lightblue",
-        alpha.f = 0.4),
-        border = NA
-      )
+        # 1.1) plot the polygon
+        lattice::panel.polygon(
+          poly_x,
+          poly_y,
+          col = grDevices::adjustcolor(
+          col = "lightblue",
+          alpha.f = 0.4),
+          border = NA
+        )
+        
+      }
 
       # 2) xyplot
       lattice::panel.xyplot(
