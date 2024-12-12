@@ -87,10 +87,11 @@ def py_baccuracy(actual, predicted, adjust = False, average = None):
       adjusted = adjust 
     )
     
-def py_cmatrix(actual, predicted):
+def py_cmatrix(actual, predicted, w = None):
     return metrics.confusion_matrix(
       y_true = actual,
-      y_pred = predicted
+      y_pred = predicted,
+      sample_weight = w
     )
     
 def py_entropy(actual, response, normalize = True):

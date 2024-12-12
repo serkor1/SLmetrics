@@ -86,14 +86,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // cmatrix
-Rcpp::NumericMatrix cmatrix(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
-RcppExport SEXP _SLmetrics_cmatrix(SEXP actualSEXP, SEXP predictedSEXP) {
+Rcpp::NumericMatrix cmatrix(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::Nullable<Rcpp::NumericVector>& w);
+RcppExport SEXP _SLmetrics_cmatrix(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type predicted(predictedSEXP);
-    rcpp_result_gen = Rcpp::wrap(cmatrix(actual, predicted));
+    Rcpp::traits::input_parameter< const Rcpp::Nullable<Rcpp::NumericVector>& >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(cmatrix(actual, predicted, w));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -969,7 +970,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_baccuracy_cmatrix", (DL_FUNC) &_SLmetrics_baccuracy_cmatrix, 2},
     {"_SLmetrics_ckappa", (DL_FUNC) &_SLmetrics_ckappa, 3},
     {"_SLmetrics_ckappa_cmatrix", (DL_FUNC) &_SLmetrics_ckappa_cmatrix, 2},
-    {"_SLmetrics_cmatrix", (DL_FUNC) &_SLmetrics_cmatrix, 2},
+    {"_SLmetrics_cmatrix", (DL_FUNC) &_SLmetrics_cmatrix, 3},
     {"_SLmetrics_dor", (DL_FUNC) &_SLmetrics_dor, 4},
     {"_SLmetrics_dor_cmatrix", (DL_FUNC) &_SLmetrics_dor_cmatrix, 3},
     {"_SLmetrics_fbeta", (DL_FUNC) &_SLmetrics_fbeta, 5},

@@ -15,6 +15,38 @@ knitr::opts_chunk$set(
 set.seed(1903) 
 ```
 
+# Version 0.2-0
+
+> Version 0.2-0 is considered pre-release of {SLmetrics}. We do not
+> expect any breaking changes, unless a major bug/issue is reported and its nature
+> forces breaking changes.
+
+## Improvements
+
+* **weighted classification metrics:** All classification metrics now accepts the argument `w` which is the sample weights. If passed the respective function will return the weighted metric. Below is an example using sample weights for the confusion matrix,
+
+```{r}
+# 1) define factors
+actual    <- factor(sample(letters[1:3], 100, replace = TRUE))
+predicted <- factor(sample(letters[1:3], 100, replace = TRUE))
+weights   <- runif(length(actual))
+
+# 2) without weights
+SLmetrics::cmatrix(
+    actual    = actual,
+    predicted = predicted
+)
+
+# 2) with weights
+SLmetrics::cmatrix(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+```
+
+
+
 # Version 0.1-1
 
 > Version 0.1-1 is considered pre-release of {SLmetrics}. We do not

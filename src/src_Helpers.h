@@ -82,6 +82,94 @@ inline __attribute__((always_inline)) Eigen::VectorXi FN(const Eigen::MatrixXi& 
   return FN;
 }
 
+/*
+Confusion Matrix:
+
+    ***ARGS***
+    `actual`: IntegerVector 
+    `predicted`: IntegerVector
+    `k`: int (NOTE: has to be passed as k + 1)
+    `weights`: Nullable NumericVector
+
+    1. This template returns a Eigen::MatrixX<T> in weighted or unweighted form
+    depending on the argument `weight`
+
+    The tests shows that for 1e7 observations it is still faster than the original implementation
+    up to v0.1-1; it runs 5.77 ms on average, while the original are 5.89 ms on average. This might be a chance
+    finding, but it seems they are equivalent in terms of speed, efficiency and memory handling.
+
+    For lower values this function is not faster. In fact its 8 times slower than the original implementation
+    this is due to the overhead cost of the if-statements in relation to weighted
+    and unweighted version.
+
+    It does not handle missing values, and will not handle missing values as this is inefficient. More on this
+    will come later.
+
+*/
+template <typename MatrixType>
+inline __attribute__((always_inline)) MatrixType confusionMatrix(
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::IntegerVector& predicted,
+    const int& k, 
+    const Rcpp::Nullable<Rcpp::NumericVector>& weights = R_NilValue) {
+
+        // 1) general setup of the function
+        // 1.1) initialize a k x k placeholder matrix
+        MatrixType placeholder = MatrixType::Zero(k, k).eval();
+
+        // 1.2) determine the size of
+        // the actual vector - used for the loop
+        const int n = actual.size();
+
+        // 1.3) initialize the pointers
+        // for efficient loops
+        const int* actual_ptr = actual.begin();
+        const int* predicted_ptr = predicted.begin();
+        const double* weights_ptr = weights.isNotNull() ? Rcpp::NumericVector(weights).begin() : nullptr;
+        auto matrix_ptr = placeholder.data();
+        
+        // 2) populate the matrix
+        // according to location conditional
+        // on wether weights are passed
+        int i = 0;
+        if (weights_ptr) {
+
+            for (; i <= n - 6; i += 6) {
+                matrix_ptr[predicted_ptr[i] * k + actual_ptr[i]] += weights_ptr[i];
+                matrix_ptr[predicted_ptr[i + 1] * k + actual_ptr[i + 1]] += weights_ptr[i + 1];
+                matrix_ptr[predicted_ptr[i + 2] * k + actual_ptr[i + 2]] += weights_ptr[i + 2];
+                matrix_ptr[predicted_ptr[i + 3] * k + actual_ptr[i + 3]] += weights_ptr[i + 3];
+                matrix_ptr[predicted_ptr[i + 4] * k + actual_ptr[i + 4]] += weights_ptr[i + 4];
+                matrix_ptr[predicted_ptr[i + 5] * k + actual_ptr[i + 5]] += weights_ptr[i + 5];
+            }
+
+            for (; i < n; ++i) {
+                matrix_ptr[predicted_ptr[i] * k + actual_ptr[i]] += weights_ptr[i];
+            }
+
+        } else {
+
+            for (; i <= n - 6; i += 6) {
+                ++matrix_ptr[predicted_ptr[i] * k + actual_ptr[i]];
+                ++matrix_ptr[predicted_ptr[i + 1] * k + actual_ptr[i + 1]];
+                ++matrix_ptr[predicted_ptr[i + 2] * k + actual_ptr[i + 2]];
+                ++matrix_ptr[predicted_ptr[i + 3] * k + actual_ptr[i + 3]];
+                ++matrix_ptr[predicted_ptr[i + 4] * k + actual_ptr[i + 4]];
+                ++matrix_ptr[predicted_ptr[i + 5] * k + actual_ptr[i + 5]];
+            }
+
+            for (; i < n; ++i) {
+                ++matrix_ptr[predicted_ptr[i] * k + actual_ptr[i]];
+            }
+        }
+        
+
+        // 3) return the matrix
+        // but leave index 
+        // (NOTE: Cpp is 0-indexed, and <factor> can't include zero)
+        return placeholder.block(1, 1, k - 1, k - 1);
+}
+
 
 inline __attribute__((always_inline))  Eigen::MatrixXi confmat(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
 {

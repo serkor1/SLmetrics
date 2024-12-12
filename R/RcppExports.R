@@ -61,13 +61,16 @@ ckappa.cmatrix <- function(x, beta = 1.0, ...) {
 #' @usage
 #' cmatrix(
 #'   actual,
-#'   predicted
+#'   predicted,
+#'   w
 #' )
 #'
 #' @param actual A <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
 #' @param predicted A <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
+#' @param w A <[numeric]>--vector of [length] \eqn{n}. [NULL] by default. If passed it will return a weighted confusion matrix.
 #'
 #' @example man/examples/scr_confusionmatrix.R
+#' @example man/examples/scr_wconfusionmatrix.R
 #' @family classification
 #'
 #' @inherit specificity details
@@ -89,8 +92,8 @@ ckappa.cmatrix <- function(x, beta = 1.0, ...) {
 #' A named \eqn{k} x \eqn{k} <[matrix]> of [class] <cmatrix>
 #'
 #' @export
-cmatrix <- function(actual, predicted) {
-    .Call(`_SLmetrics_cmatrix`, actual, predicted)
+cmatrix <- function(actual, predicted, w = NULL) {
+    .Call(`_SLmetrics_cmatrix`, actual, predicted, w)
 }
 
 #' @rdname dor

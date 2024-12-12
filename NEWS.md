@@ -1,4 +1,51 @@
 
+# Version 0.2-0
+
+> Version 0.2-0 is considered pre-release of {SLmetrics}. We do not
+> expect any breaking changes, unless a major bug/issue is reported and
+> its nature forces breaking changes.
+
+## Improvements
+
+  - **weighted classification metrics:** All classification metrics now
+    accepts the argument `w` which is the sample weights. If passed the
+    respective function will return the weighted metric. Below is an
+    example using sample weights for the confusion matrix,
+
+<!-- end list -->
+
+``` r
+# 1) define factors
+actual    <- factor(sample(letters[1:3], 100, replace = TRUE))
+predicted <- factor(sample(letters[1:3], 100, replace = TRUE))
+weights   <- runif(length(actual))
+
+# 2) without weights
+SLmetrics::cmatrix(
+    actual    = actual,
+    predicted = predicted
+)
+```
+
+    #>    a  b  c
+    #> a 16  6  8
+    #> b 14 10 11
+    #> c  5 15 15
+
+``` r
+# 2) with weights
+SLmetrics::cmatrix(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+```
+
+    #>          a        b        c
+    #> a 8.796270 3.581817 3.422532
+    #> b 6.471277 4.873632 5.732148
+    #> c 0.908202 8.319738 8.484611
+
 # Version 0.1-1
 
 > Version 0.1-1 is considered pre-release of {SLmetrics}. We do not
@@ -92,7 +139,7 @@ plot(
 )
 ```
 
-![](NEWS_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](NEWS_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 ``` r
 plot(
@@ -101,7 +148,7 @@ plot(
 )
 ```
 
-![](NEWS_files/figure-gfm/unnamed-chunk-2-2.png)<!-- -->
+![](NEWS_files/figure-gfm/unnamed-chunk-3-2.png)<!-- -->
 
 # Version 0.1-0
 
@@ -125,7 +172,7 @@ print(
 )
 ```
 
-    #>  [1] a a a b c a b c c a
+    #>  [1] a b b a c b b a b c
     #> Levels: a b c
 
 ``` r
@@ -137,7 +184,7 @@ print(
 )
 ```
 
-    #>  [1] c c b b a a b b c b
+    #>  [1] a b b a a c a b b c
     #> Levels: a b c
 
 ``` r
@@ -155,16 +202,16 @@ summary(
     #> Confusion Matrix (3 x 3) 
     #> ================================================================================
     #>   a b c
-    #> a 1 2 2
-    #> b 0 2 0
-    #> c 1 1 1
+    #> a 2 1 0
+    #> b 1 3 1
+    #> c 1 0 1
     #> ================================================================================
     #> Overall Statistics (micro average)
-    #>  - Accuracy:          0.40
-    #>  - Balanced Accuracy: 0.51
-    #>  - Sensitivity:       0.40
-    #>  - Specificity:       0.70
-    #>  - Precision:         0.40
+    #>  - Accuracy:          0.60
+    #>  - Balanced Accuracy: 0.59
+    #>  - Sensitivity:       0.60
+    #>  - Specificity:       0.80
+    #>  - Precision:         0.60
 
 ``` r
 # 2) calculate false positive
@@ -175,7 +222,7 @@ SLmetrics::fpr(
 ```
 
     #>         a         b         c 
-    #> 0.2000000 0.3750000 0.2857143
+    #> 0.2857143 0.2000000 0.1250000
 
 ### Supervised regression metrics
 
@@ -196,4 +243,4 @@ SLmetrics::huberloss(
 )
 ```
 
-    #> [1] 0.4757045
+    #> [1] 0.5281794
