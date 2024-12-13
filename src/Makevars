@@ -1,0 +1,6 @@
+PKG_CXXFLAGS = -O3 -ffast-math
+ifdef __aarch64__
+PKG_CXXFLAGS += -march=armv8-a
+else
+PKG_CXXFLAGS += -march=native
+endif
