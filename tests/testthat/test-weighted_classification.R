@@ -50,6 +50,121 @@ testthat::test_that(
       )
     )
 
+    # 3) test that all metrics
+    # that supports weighted classifications
+    # are equal to target metrics
+    sl_function <- list(
+      # accuracy
+      "accuracy"    = accuracy,
+      "baccuracy"   = baccuracy,
+
+      # Zero-One Loss
+      "zerooneloss" = zerooneloss,
+
+      # specificity methods
+      "specificity" = specificity,
+      "tnr"         = tnr,
+      "selectivity" = selectivity,
+
+
+      # recall methods;
+      "recall"      = recall,
+      "sensitivity" = sensitivity,
+      "tpr"         = tpr,
+
+      # precision methods
+      "precision"   = precision,
+      "ppv"         = ppv,
+
+      # fbeta methods
+      "fbeta"       = fbeta,
+
+      # likelihood methods
+      "dor"         = dor,
+      "plr"         = plr,
+      "nlr"         = nlr,
+
+      # jaccard methods
+      "jaccard"     = jaccard,
+      "tscore"      = tscore,
+      "csi"         = csi,
+
+      # mcc methods
+      "mcc"         = mcc,
+      "phi"         = phi,
+
+      # fpr methods
+      "fpr"         = fpr,
+      "fallout"     = fallout,
+
+      "fdr"         = fdr,
+      "npv"         = npv,
+      "fer"         = fer,
+
+      "ckappa"      = ckappa
+
+    )
+
+    # 4) test that the functions
+    # returns the same values as
+    # their python equivalents
+    py_function <- Filter(
+      Negate(is.null),
+
+      setNames(
+        lapply(seq_along(sl_function), function(i) {
+          tryCatch(
+            get(paste0("py_",names(sl_function)[i])),
+            error = function(e) {
+              NULL
+            }
+          )
+
+        }),
+        paste0("py_", names(sl_function))
+      )
+    )
+
+    sl_function <- sl_function[
+      names(sl_function) %in% gsub("py_", "", names(py_function))
+    ]
+
+    for (i in seq_along(sl_function)) {
+
+      .f <-  sl_function[[i]]
+      .F <-  py_function[[i]]
+
+      testthat::expect_true(
+        object = set_equal(
+          .f(actual, predicted),
+          as.numeric(.F(actual, predicted))
+        ),
+        label = paste(
+          "Class-wise functions in",
+          names(sl_function)[i],
+          "not equivalent to {torch} or {scikit-learn}."
+        )
+      )
+
+      for (lgl in c(TRUE, FALSE)) {
+
+        testthat::expect_true(
+          object = set_equal(
+            .f(actual, predicted, micro = lgl),
+            as.numeric(.F(actual, predicted, average = ifelse(lgl, "micro", "macro")))
+          ),
+          label = paste(
+            "Aggregated functions in",
+            names(sl_function)[i],
+            "not equivalent to {torch} or {scikit-learn}."
+          )
+        )
+
+      }
+
+
+    }
+
 
 
 

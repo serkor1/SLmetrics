@@ -31,13 +31,13 @@ document:
 
 build: document
 	@echo "Installing {$(PKGNAME)}"
-	R CMD build . --clean
-	R CMD INSTALL --clean $(TARBALL)
+	R CMD build .
+	R CMD INSTALL $(TARBALL)
 	rm -f $(TARBALL)
 
 check: document
 	@echo "Checking {$(PKGNAME)}"
-	R CMD build . --clean
+	R CMD build .
 	R CMD check $(TARBALL)
 	rm -f $(TARBALL)
 	rm -rf $(PKGNAME).Rcheck
