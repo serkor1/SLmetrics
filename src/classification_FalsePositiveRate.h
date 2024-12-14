@@ -1,57 +1,51 @@
+#ifndef CLASSIFICATION_FPR_H
+#define CLASSIFICATION_FPR_H
+
 #include "src_Helpers.h"
+#include "classification_Utils.h"
+#include "classification_Helpers.h"
 #include <RcppEigen.h>
 #include <cmath>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
+class FPRMetric : public classification {
+public:
 
-/*
- * Classwise fpr
- */
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x)
-{
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm, bool micro) const override {
+        Eigen::ArrayXd output(1);
+        Eigen::ArrayXd fp(matrix.rows()), tn(matrix.rows());
 
-  // 1) calcuculate
-  // relevent metrics
-  const Eigen::ArrayXd& fp = FP(x).cast<double>().array();
-  const Eigen::ArrayXd& tn = TN(x).cast<double>().array();
+        FP(matrix, fp);
+        TN(matrix, tn);
 
-  // 2) return value
-  // by class
-  return Rcpp::wrap(
-    fp / (fp + tn)
-  );
+        if (micro) {
+            double fp_sum = fp.sum(), tn_sum = tn.sum();
+            output = Eigen::ArrayXd::Constant(1, (fp_sum + tn_sum == 0)
+                ? R_NaReal
+                : fp_sum / (fp_sum + tn_sum));
+        } else {
+            output = fp / (fp + tn);
+            if (na_rm) {
+                double valid_sum = (output.isFinite().select(output, 0.0)).sum();
+                double valid_count = output.isFinite().count();
+                output = Eigen::ArrayXd::Constant(1, valid_count > 0 ? valid_sum / valid_count : R_NaReal);
+            }
+        }
 
+        return Rcpp::wrap(output);
+    }
 
-}
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
+        Eigen::ArrayXd output(matrix.rows());
+        Eigen::ArrayXd fp(matrix.rows()), tn(matrix.rows());
 
+        FP(matrix, fp);
+        TN(matrix, tn);
 
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x, const bool& micro, const bool& na_rm)
-{
+        output = fp / (fp + tn);
+        return Rcpp::wrap(output);
+    }
+};
 
-  // 1) calcuculate
-  // relevent metrics
-  const Eigen::ArrayXd& fp = FP(x).cast<double>().array();
-  const Eigen::ArrayXd& tn = TN(x).cast<double>().array();
-
-  // 2) return
-  // micro average
-  // and end function
-  if (micro) {
-
-    const double& fp_sum = fp.sum();
-    const double& tn_sum = tn.sum();
-
-    return Rcpp::wrap(
-      (fp_sum + tn_sum == 0) ? NA_REAL : fp_sum / (fp_sum + tn_sum)
-    );
-
-  }
-
-  Eigen::ArrayXd output =  fp / (fp + tn);
-
-  return Rcpp::wrap(
-    output.isNaN().select(0,output).sum() / ((na_rm) ? (output.isNaN() == false).count() : output.size())
-    );
-
-}
+#endif // CLASSIFICATION_FPR_H
