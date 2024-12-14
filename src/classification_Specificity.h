@@ -1,67 +1,73 @@
+#ifndef CLASSIFICATION_SPECIFICITY_H
+#define CLASSIFICATION_SPECIFICITY_H
+
 #include "src_Helpers.h"
+#include "classification_Utils.h"
+#include "classification_Helpers.h"
 #include <RcppEigen.h>
 #include <cmath>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-
 /*
- * Class-wise specificity
- */
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x)
-{
+    NOTE:
+        To increase maintainability, all functions are passed through
+        the confusion matrix. So there is no need to add an overloaded function
+        for the weighted metrics.
+*/
+class SpecificityMetric : public classification {
+public:
 
-  /*
-   * Calculate the metric based on
-   * the confusion matrix.
-   *
-   * NOTE: The function is very fragile in how
-   * you define the vectors.
-   */
+    // Compute specificity with micro or macro aggregation
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm, bool micro) const override {
 
-  // 0) calculate TP and FN
-  //
-  // was vectorXd
-  Eigen::ArrayXd fp = FP(x).cast<double>().array();
-  Eigen::ArrayXd tn = TN(x).cast<double>().array();
+        // 0) Declare output value and TN/FP arrays
+        Eigen::ArrayXd output(1);
+        Eigen::ArrayXd tn(matrix.rows()), fp(matrix.rows());
 
+        // 1) Create TN and FP arrays
+        TN(matrix, tn);
+        FP(matrix, fp);
 
-  // Default behavior: element-wise recall calculation
-  Eigen::ArrayXd output = tn / (fp + tn);
+        // 2) Conditional computation of metric
+        if (micro) {
 
-  // Return the default recall output
-  return Rcpp::wrap(output);
-}
+            double tn_sum = tn.sum(), fp_sum = fp.sum();
+            output = Eigen::ArrayXd::Constant(1, (tn_sum + fp_sum == 0) ? R_NaReal : tn_sum / (tn_sum + fp_sum));
 
-/*
- * Aggregated specificity
- */
+        } else {
 
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x, const bool& micro, const bool& na_rm) {
+            output = tn / (tn + fp);
 
-  /*
-   * Calculate the metric based on
-   * the confusion matrix.
-   *
-   * NOTE: The function is very fragile in how
-   * you define the vectors.
-   */
+            if (na_rm) {
+                double valid_sum = (output.isFinite().select(output, 0.0)).sum();
+                double valid_count = output.isFinite().count();
+                output = Eigen::ArrayXd::Constant(1, valid_count > 0 ? valid_sum / valid_count : R_NaReal);
+            }
 
-  // 0) calculate TP and FP
-  //
-  // was vectorXd
-  Eigen::ArrayXd fp = FP(x).cast<double>().array();
-  Eigen::ArrayXd tn = TN(x).cast<double>().array();
+        }
 
-  // Check if the micro argument is not null and handle accordingly
-  if (micro) {
+        // 3) Return wrapped (R-compatible classes)
+        return Rcpp::wrap(output);
+    }
 
-    return Rcpp::wrap((fp.sum() + tn.sum() == 0) ? R_NaReal : tn.sum() / (fp.sum() + tn.sum()));
+    // Compute specificity without micro aggregation
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
 
+        // 0) Declare output value and TN/FP arrays
+        Eigen::ArrayXd output(matrix.rows());
+        Eigen::ArrayXd tn(matrix.rows()), fp(matrix.rows());
 
-  }
+        // 1) Create TN and FP arrays
+        TN(matrix, tn);
+        FP(matrix, fp);
 
-  Eigen::ArrayXd output = tn / (fp + tn);
-  return Rcpp::wrap(output.isNaN().select(0,output).sum() / ((na_rm) ? (output.isNaN() == false).count() : output.size()));
+        // 2) Calculate metric
+        output = tn / (tn + fp);
 
-}
+        // 3) Return wrapped (R-compatible classes)
+        return Rcpp::wrap(output);
+    }
+};
+
+#endif // CLASSIFICATION_SPECIFICITY_H
