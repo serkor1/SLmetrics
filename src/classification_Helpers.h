@@ -1,6 +1,62 @@
 #include <Rcpp.h>
 #include <Eigen/Dense>
-#include "classification_Utils.h" 
+#include "classification_Utils.h"
+#include "src_Helpers.h"
+
+Rcpp::NumericVector classification_base(
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::IntegerVector& predicted,
+    const classification& foo,
+    const bool& na_rm = true)
+{
+    // 0) Extract the number of classes
+    Rcpp::CharacterVector levels = actual.attr("levels");
+    int k = levels.length();
+
+    // 1) Construct the confusion matrix
+    Eigen::MatrixXd matrix = confusionMatrix<Eigen::MatrixXd>(actual, predicted, k + 1); 
+
+
+    Rcpp::NumericVector output(1);
+    output = foo.compute(matrix, na_rm);
+    return output;
+}
+
+Rcpp::NumericVector classification_base(
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::IntegerVector& predicted,
+    const Rcpp::NumericVector& w,
+    const classification& foo,
+    const bool& na_rm = true)
+{
+    // 0) Extract the number of classes
+    Rcpp::CharacterVector levels = actual.attr("levels");
+    int k = levels.length();
+
+    // 1) Construct the confusion matrix
+    Eigen::MatrixXd matrix = confusionMatrix<Eigen::MatrixXd>(actual, predicted, k + 1, w); 
+
+    Rcpp::NumericVector output(1);
+    output = foo.compute(matrix, na_rm);
+    return output;
+}
+
+Rcpp::NumericVector classification_base(
+    const Rcpp::IntegerMatrix& matrix,
+    const classification& foo,
+    const bool& na_rm = true)
+{
+
+    // 1) Convert matrix to Eigen format
+    const Eigen::MatrixXd eigen_matrix = Rcpp::as<Eigen::MatrixXd>(matrix);
+
+
+    Rcpp::NumericVector output(1);
+    output = foo.compute(eigen_matrix, na_rm);
+    return output;
+}
+
+
 
 Rcpp::NumericVector classification_base(
     const Rcpp::IntegerVector& actual,
