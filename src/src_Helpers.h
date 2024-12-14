@@ -19,67 +19,42 @@
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-
 using namespace Rcpp;
 
 
-inline __attribute__((always_inline)) Eigen::VectorXi TP(const Eigen::MatrixXi& matrix)
+template <typename MatrixType>
+inline __attribute__((always_inline)) void TP(const MatrixType& matrix, Eigen::Array<typename MatrixType::Scalar, Eigen::Dynamic, 1>& tp)
 {
-  /*
-   * This function returns a vector of
-   * True Positives, which corresponds to the
-   * diagonal matrix.
-   */
-
-  Eigen::VectorXi TP = matrix.diagonal();
-
-  return TP;
+    tp = matrix.diagonal().array();
 }
 
-inline __attribute__((always_inline)) Eigen::VectorXi FP(const Eigen::MatrixXi& matrix)
+// Generic template function to compute False Positives (FP)
+template <typename MatrixType>
+inline __attribute__((always_inline)) void FP(const MatrixType& matrix, Eigen::Array<typename MatrixType::Scalar, Eigen::Dynamic, 1>& fp)
 {
-  /*
-   * This function returns a vector of
-   * False Positives (FP) for each class,
-   * which corresponds to the column-wise sum
-   * of the confusion matrix minus the diagonal elements (True Positives).
-   */
 
-  Eigen::VectorXi TP = matrix.diagonal();
-  Eigen::VectorXi FP = matrix.colwise().sum() - TP.transpose();
-
-  return FP;
+    fp = matrix.colwise().sum().array() - matrix.diagonal().array().transpose();
 }
 
-inline __attribute__((always_inline)) Eigen::VectorXi TN(const Eigen::MatrixXi& matrix)
+template <typename MatrixType>
+inline __attribute__((always_inline)) void TN(const MatrixType& matrix, Eigen::Array<typename MatrixType::Scalar, Eigen::Dynamic, 1>& tn)
 {
-  /*
-   * This function returns a vector
-   * of True Negatives (TN)
-   */
 
-  const int N = matrix.sum();
-  Eigen::VectorXi TP = matrix.diagonal();
-  Eigen::VectorXi row_sums = matrix.rowwise().sum();
-  Eigen::VectorXi col_sums = matrix.colwise().sum();
+    using Scalar = typename MatrixType::Scalar;
+    const Scalar total_sum = matrix.sum();
+    auto tp = matrix.diagonal().array();
+    auto row_sums = matrix.rowwise().sum().array();
+    auto col_sums = matrix.colwise().sum().array();
 
-  // Compute True Negatives (TN) using in-place calculations to minimize temporary objects
-  Eigen::VectorXi TN = Eigen::VectorXi::Constant(matrix.rows(), N);
-  TN -= row_sums + col_sums - TP;
-
-  return TN;
+    tn = Eigen::Array<Scalar, Eigen::Dynamic, 1>::Constant(matrix.rows(), total_sum) - (row_sums + col_sums - tp);
 }
 
-inline __attribute__((always_inline)) Eigen::VectorXi FN(const Eigen::MatrixXi& matrix)
+// Generic template function to compute False Negatives (FN)
+template <typename MatrixType>
+inline __attribute__((always_inline)) void FN(const MatrixType& matrix, Eigen::Array<typename MatrixType::Scalar, Eigen::Dynamic, 1>& fn)
 {
-  /*
-   * This function returns a vector of
-   * False Negatives
-   */
-  Eigen::VectorXi TP = matrix.diagonal();
-  Eigen::VectorXi FN = matrix.rowwise().sum() - TP;
 
-  return FN;
+    fn = matrix.rowwise().sum().array() - matrix.diagonal().array();
 }
 
 /*
