@@ -1,79 +1,42 @@
-#ifndef classification_ZeroOneLoss_H
-#define classification_ZeroOneLoss_H
+#ifndef CLASSIFICATION_ZEROONELOSS_H
+#define CLASSIFICATION_ZEROONELOSS_H
 
-/*
- * This header file is for calculating
- * accucracy and balanced accuracy
- */
-#include "src_Helpers.h"
+#include "classification_Helpers.h"
 #include <RcppEigen.h>
-#include <cmath>
-#include <vector>
-#include <limits>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-
-
 /*
- * Zero One Loss; factors
- */
-inline __attribute__((always_inline)) double _metric_(const std::vector<int>& actual, const std::vector<int>& predicted, bool na_rm)
-{
+    Simplified ZeroOneLoss class:
+    Calculates ZeroOneLoss as (tp + tn) / N.
+*/
+class ZeroOneLossMetric : public classification {
+public:
+    // Compute overall accuracy
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
 
-  // 1) common parameters
-  // for the calculation
-  const int n = actual.size();
-  const int NA_INTEGER = std::numeric_limits<int>::min();
-  int incorrect_count = 0;
-  int valid_count = 0;
+        // 0) set sizes
+        // of arrays
+        Eigen::ArrayXd output(1);
+        Eigen::ArrayXd tp(matrix.rows());
 
-  
-  // 2) loop through the values
-  // using pointers
-  for (int i = 0; i < n; ++i) {
-      const int actual_value = actual[i];
-      const int predicted_value = predicted[i];
+        // 1) extract values
+        TP(matrix, tp);
+        double N = matrix.sum();
 
-      // 2.1) check for non-NA values
-      const bool is_valid = actual_value != NA_INTEGER && predicted_value != NA_INTEGER;
-      valid_count += is_valid;
+        // 1) calculate 
+        // Calculate total instances (N), TP, and TN
+        // double total = matrix.sum(); // Total entries in the confusion matrix
+        // double tp = matrix.diagonal().sum(); // Sum of the diagonal (True Positives)
+        output = Eigen::ArrayXd::Constant(1, (N == 0) ? R_NaReal : (N - tp.sum()) / N);
 
-      // 2.2) increment correct count if valid and equal
-      incorrect_count += is_valid && (actual_value != predicted_value);
-  }
+        return Rcpp::wrap(output); // Wrap into NumericVector
+    }
 
-  // 3) if there is missing values
-  // return NAN
-  // NOTE: Maybe this more efficient to have inside
-  // the loop and stop it early
-  if (!na_rm && valid_count != n) {
-      return NAN;
-  }
-
-  // 4) return values
-  // if valid_count is above
-  // 0.
-  return valid_count > 0 ? static_cast<double>(incorrect_count) / valid_count : NAN;
-
-
-}
-
-
-/*
- * Zero One Loss; cmatrix
- */
-inline __attribute__((always_inline)) double _metric_(const Eigen::MatrixXi& x)
-{
-
-  // 1) extract total
-  // N and True Positives Sum
-  int N = x.sum();
-  int TP = x.diagonal().sum();
-
-  // 2) return value
-  return static_cast<double>(N - TP) / N;
-
-}
+    // Dummy micro aggregation to adhere to base class
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm, bool micro) const override {
+        return compute(matrix, na_rm); // Reuse the same function
+    }
+};
 
 #endif
