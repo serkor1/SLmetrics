@@ -14,7 +14,7 @@ NumericVector accuracy(const IntegerVector& actual, const IntegerVector& predict
 }
 
 //' @rdname accuracy
-//' @method weighted.accuracy.factor
+//' @method weighted.accuracy factor
 //' @export
 // [[Rcpp::export(weighted.accuracy.factor)]]
 NumericVector weighted_accuracy(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, const bool& na_rm = true) {

@@ -1,15 +1,13 @@
 #ifndef CLASSIFICATION_FPR_H
 #define CLASSIFICATION_FPR_H
 
-#include "src_Helpers.h"
-#include "classification_Utils.h"
 #include "classification_Helpers.h"
 #include <RcppEigen.h>
 #include <cmath>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-class FPRMetric : public classification {
+class FalsePositiveRateMetric : public classification {
 public:
 
     Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm, bool micro) const override {

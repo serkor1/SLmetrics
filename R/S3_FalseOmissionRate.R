@@ -42,4 +42,13 @@ fer <- function(...) {
   )
 }
 
+#' @rdname fer
+#' @export
+weighted.fer <- function(...) {
+  UseMethod(
+    generic = "weighted.fer",
+    object  = ..1
+  )
+}
+
 # script end;

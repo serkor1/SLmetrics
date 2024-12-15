@@ -32,11 +32,6 @@ public:
 
         return Rcpp::wrap(output); // Wrap into NumericVector
     }
-
-    // Dummy micro aggregation to adhere to base class
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm, bool micro) const override {
-        return compute(matrix, na_rm); // Reuse the same function
-    }
 };
 
 #endif // CLASSIFICATION_ACCURACY_H

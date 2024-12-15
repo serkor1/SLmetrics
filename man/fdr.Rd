@@ -2,15 +2,21 @@
 % Please edit documentation in R/RcppExports.R, R/S3_FalseDiscoveryRate.R
 \name{fdr.factor}
 \alias{fdr.factor}
+\alias{weighted.fdr.factor}
 \alias{fdr.cmatrix}
 \alias{fdr}
+\alias{weighted.fdr}
 \title{Compute the \eqn{\text{false}} \eqn{\text{discovery}} \eqn{\text{rate}}}
 \usage{
 \method{fdr}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
+\method{weighted.fdr}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+
 \method{fdr}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 fdr(...)
+
+weighted.fdr(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -23,6 +29,8 @@ micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro a
 \item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
 
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }

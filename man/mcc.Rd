@@ -3,24 +3,36 @@
 %   R/S3_MatthewsCorrelationCoefficient.R
 \name{mcc.factor}
 \alias{mcc.factor}
+\alias{weighted.mcc.factor}
 \alias{mcc.cmatrix}
 \alias{phi.factor}
+\alias{weighted.phi.factor}
 \alias{phi.cmatrix}
 \alias{mcc}
 \alias{phi}
+\alias{weighted.mcc}
+\alias{weighted.phi}
 \title{Compute the \eqn{\text{Matthews}} \eqn{\text{Correlation}} \eqn{\text{Coefficient}}}
 \usage{
 \method{mcc}{factor}(actual, predicted, ...)
+
+\method{weighted.mcc}{factor}(actual, predicted, w, ...)
 
 \method{mcc}{cmatrix}(x, ...)
 
 \method{phi}{factor}(actual, predicted, ...)
 
+\method{weighted.phi}{factor}(actual, predicted, w, ...)
+
 \method{phi}{cmatrix}(x, ...)
 
 mcc(...)
 
+weighted.mcc(...)
+
 phi(...)
+
+weighted.phi(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -28,6 +40,8 @@ phi(...)
 \item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
 
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }

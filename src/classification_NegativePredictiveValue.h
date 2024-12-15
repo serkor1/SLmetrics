@@ -1,8 +1,6 @@
 #ifndef CLASSIFICATION_NEGATIVE_PREDICTIVE_VALUE_H
 #define CLASSIFICATION_NEGATIVE_PREDICTIVE_VALUE_H
 
-#include "src_Helpers.h"
-#include "classification_Utils.h"
 #include "classification_Helpers.h"
 #include <RcppEigen.h>
 #include <cmath>

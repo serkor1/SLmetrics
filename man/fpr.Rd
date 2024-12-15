@@ -2,24 +2,27 @@
 % Please edit documentation in R/RcppExports.R, R/S3_FalsePositiveRate.R
 \name{fpr.factor}
 \alias{fpr.factor}
+\alias{weighted.fpr.factor}
 \alias{fpr.cmatrix}
-\alias{fallout.factor}
-\alias{fallout.cmatrix}
 \alias{fpr}
 \alias{fallout}
+\alias{weighted.fpr}
+\alias{weighted.fallout}
 \title{Compute the \eqn{\text{false}} \eqn{\text{positive}} \eqn{\text{rate}}}
 \usage{
 \method{fpr}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
+\method{weighted.fpr}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+
 \method{fpr}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
-
-\method{fallout}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
-
-\method{fallout}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 fpr(...)
 
 fallout(...)
+
+weighted.fpr(...)
+
+weighted.fallout(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -32,6 +35,8 @@ micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro a
 \item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
 
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }

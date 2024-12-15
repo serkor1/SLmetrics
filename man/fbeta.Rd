@@ -2,15 +2,21 @@
 % Please edit documentation in R/RcppExports.R, R/S3_FBetaScore.R
 \name{fbeta.factor}
 \alias{fbeta.factor}
+\alias{weighted.fbeta.factor}
 \alias{fbeta.cmatrix}
 \alias{fbeta}
+\alias{weighted.fbeta}
 \title{Compute the \eqn{F_{\beta}}-score}
 \usage{
-\method{fbeta}{factor}(actual, predicted, beta = 1, micro = NULL, na.rm = TRUE, ...)
+\method{fbeta}{factor}(actual, predicted, beta = 1, micro = NULL, ...)
 
-\method{fbeta}{cmatrix}(x, beta = 1, micro = NULL, na.rm = TRUE, ...)
+\method{weighted.fbeta}{factor}(actual, predicted, w, beta = 1, micro = NULL, ...)
+
+\method{fbeta}{cmatrix}(x, beta = 1, micro = NULL, ...)
 
 fbeta(...)
+
+weighted.fbeta(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -22,9 +28,9 @@ fbeta(...)
 \item{micro}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{NULL} by default. If \link{TRUE} it returns the
 micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average. Otherwise class wise performance evaluation.}
 
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
-
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
 
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }

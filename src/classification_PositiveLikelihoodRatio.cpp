@@ -14,7 +14,7 @@ NumericVector plr(const IntegerVector& actual, const IntegerVector& predicted, N
 }
 
 //' @rdname plr
-//' @method plr factor
+//' @method weighted.plr factor
 //' @export
 // [[Rcpp::export(weighted.plr.factor)]]
 NumericVector weighted_plr(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {

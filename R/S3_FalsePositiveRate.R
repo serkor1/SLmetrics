@@ -56,4 +56,22 @@ fallout <- function(...) {
     object  = ..1
   )
 }
+
+#' @rdname fpr
+#' @export
+weighted.fpr <- function(...) {
+  UseMethod(
+    generic = "weighted.fpr",
+    object  = ..1
+  )
+}
+
+#' @rdname fpr
+#' @export
+weighted.fallout <- function(...) {
+  UseMethod(
+    generic = "weighted.fallout",
+    object  = ..1
+  )
+}
 # script end;

@@ -14,7 +14,7 @@ NumericVector dor(const IntegerVector& actual, const IntegerVector& predicted, N
 }
 
 //' @rdname dor
-//' @method dor factor
+//' @method weighted.dor factor
 //' @export
 // [[Rcpp::export(weighted.dor.factor)]]
 NumericVector weighted_dor(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {

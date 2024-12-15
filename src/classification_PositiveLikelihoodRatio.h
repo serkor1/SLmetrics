@@ -1,8 +1,6 @@
 #ifndef CLASSIFICATION_PLR_H
 #define CLASSIFICATION_PLR_H
 
-#include "src_Helpers.h"
-#include "classification_Utils.h"
 #include "classification_Helpers.h"
 #include <RcppEigen.h>
 #include <cmath>

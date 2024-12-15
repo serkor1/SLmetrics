@@ -2,7 +2,6 @@
 #define CLASSIFICATION_BALANCED_ACCURACY_H
 
 #include "classification_Helpers.h"
-#include "classification_Utils.h"
 #include <RcppEigen.h>
 #include <cmath>
 #define EIGEN_USE_MKL_ALL
@@ -13,11 +12,11 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     Calculates the average recall across classes,
     with an optional adjustment for chance agreement.
 */
+
 class BalancedAccuracyMetric : public classification {
 public:
-    // Compute balanced accuracy with optional adjustment
+
     Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm, bool adjust) const override {
-        
         // 0) define values
         Eigen::ArrayXd output(1);                       
         Eigen::ArrayXd tp(matrix.rows()); 
@@ -46,12 +45,13 @@ public:
         // 5) return
         // with wrap
         return Rcpp::wrap(output);
-    }
+
+    };
 
     // Compute balanced accuracy without adjustment
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
-        return compute(matrix, na_rm, false); // Default to no adjustment
-    }
+    // Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
+    //    return compute(matrix, na_rm, false); // Default to no adjustment
+    // }
 };
 
 #endif // CLASSIFICATION_BALANCED_ACCURACY_H

@@ -1,33 +1,32 @@
 // [[Rcpp::depends(RcppEigen)]]
 #include <RcppEigen.h>
 #include "classification_CohensKappa.h"
+
 using namespace Rcpp;
 
 //' @rdname ckappa
 //' @method ckappa factor
-//'
 //' @export
 // [[Rcpp::export(ckappa.factor)]]
-double ckappa(const IntegerVector& actual, const IntegerVector& predicted, const double& beta = 1.0)
-{
+NumericVector ckappa(const IntegerVector& actual, const IntegerVector& predicted, const double& beta = 1.0) {
+    CohensKappaMetric foo; // Instantiate CohensKappaMetric
+    return classification_base(actual, predicted, foo, beta);
+}
 
- // 1) Calculate
- // cmatrix
- const Eigen::MatrixXi& x = confmat(actual, predicted);
-
-
- return _metric_(x, beta);
-
+//' @rdname ckappa
+//' @method weighted.ckappa factor
+//' @export
+// [[Rcpp::export(weighted.ckappa.factor)]]
+NumericVector weighted_ckappa(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, const double& beta = 1.0) {
+    CohensKappaMetric foo; // Instantiate CohensKappaMetric
+    return classification_base(actual, predicted, w, foo, beta);
 }
 
 //' @rdname ckappa
 //' @method ckappa cmatrix
-//'
 //' @export
 // [[Rcpp::export(ckappa.cmatrix)]]
-double ckappa_cmatrix(const IntegerMatrix& x, const double& beta = 1.0)
-{
-
- return _metric_(Rcpp::as<Eigen::MatrixXi>(x), beta);
-
+NumericVector ckappa_cmatrix(const IntegerMatrix& x, const double& beta = 1.0) {
+    CohensKappaMetric foo; // Instantiate CohensKappaMetric
+    return classification_base(x, foo, beta);
 }

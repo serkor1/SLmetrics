@@ -55,53 +55,53 @@ testthat::test_that(
     # are equal to target metrics
     sl_function <- list(
       # accuracy
-      "accuracy"    = accuracy,
-      "baccuracy"   = baccuracy,
+      "accuracy"    = weighted.accuracy,
+      "baccuracy"   = weighted.baccuracy,
 
       # Zero-One Loss
-      "zerooneloss" = zerooneloss,
+      "zerooneloss" = weighted.zerooneloss,
 
       # specificity methods
-      "specificity" = specificity,
-      "tnr"         = tnr,
-      "selectivity" = selectivity,
+      "specificity" = weighted.specificity,
+      "tnr"         = weighted.tnr,
+      "selectivity" = weighted.selectivity,
 
 
       # recall methods;
-      "recall"      = recall,
-      "sensitivity" = sensitivity,
-      "tpr"         = tpr,
+      "recall"      = weighted.recall,
+      "sensitivity" = weighted.sensitivity,
+      "tpr"         = weighted.tpr,
 
       # precision methods
-      "precision"   = precision,
-      "ppv"         = ppv,
+      "precision"   = weighted.precision,
+      "ppv"         = weighted.ppv,
 
       # fbeta methods
-      "fbeta"       = fbeta,
+      "fbeta"       = weighted.fbeta,
 
       # likelihood methods
-      "dor"         = dor,
-      "plr"         = plr,
-      "nlr"         = nlr,
+      "dor"         = weighted.dor,
+      "plr"         = weighted.plr,
+      "nlr"         = weighted.nlr,
 
       # jaccard methods
-      "jaccard"     = jaccard,
-      "tscore"      = tscore,
-      "csi"         = csi,
+      "jaccard"     = weighted.jaccard,
+      "tscore"      = weighted.tscore,
+      "csi"         = weighted.csi,
 
       # mcc methods
-      "mcc"         = mcc,
-      "phi"         = phi,
+      "mcc"         = weighted.mcc,
+      "phi"         = weighted.phi,
 
       # fpr methods
-      "fpr"         = fpr,
-      "fallout"     = fallout,
+      "fpr"         = weighted.fpr,
+      "fallout"     = weighted.fallout,
 
-      "fdr"         = fdr,
-      "npv"         = npv,
-      "fer"         = fer,
+      "fdr"         = weighted.fdr,
+      "npv"         = weighted.npv,
+      "fer"         = weighted.fer,
 
-      "ckappa"      = ckappa
+      "ckappa"      = weighted.ckappa
 
     )
 
@@ -136,8 +136,8 @@ testthat::test_that(
 
       testthat::expect_true(
         object = set_equal(
-          .f(actual, predicted),
-          as.numeric(.F(actual, predicted))
+          .f(actual, predicted, w = weights),
+          as.numeric(.F(actual, predicted, w = weights))
         ),
         label = paste(
           "Class-wise functions in",
@@ -150,8 +150,8 @@ testthat::test_that(
 
         testthat::expect_true(
           object = set_equal(
-            .f(actual, predicted, micro = lgl),
-            as.numeric(.F(actual, predicted, average = ifelse(lgl, "micro", "macro")))
+            .f(actual, predicted, micro = lgl, w =  weights),
+            as.numeric(.F(actual, predicted, average = ifelse(lgl, "micro", "macro"),w = weights))
           ),
           label = paste(
             "Aggregated functions in",

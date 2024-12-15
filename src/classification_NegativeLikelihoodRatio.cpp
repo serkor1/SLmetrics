@@ -14,7 +14,7 @@ NumericVector nlr(const IntegerVector& actual, const IntegerVector& predicted, N
 }
 
 //' @rdname nlr
-//' @method nlr factor
+//' @method weighted.nlr factor
 //' @export
 // [[Rcpp::export(weighted.nlr.factor)]]
 NumericVector weighted_nlr(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {

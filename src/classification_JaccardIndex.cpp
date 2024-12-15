@@ -14,7 +14,7 @@ NumericVector jaccard(const IntegerVector& actual, const IntegerVector& predicte
 }
 
 //' @rdname jaccard
-//' @method weighted.jaccard.factor
+//' @method weighted.jaccard factor
 //' @export
 // [[Rcpp::export(weighted.jaccard.factor)]]
 NumericVector weighted_jaccard(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {

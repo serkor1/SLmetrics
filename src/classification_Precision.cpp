@@ -15,7 +15,7 @@ Rcpp::NumericVector precision(const Rcpp::IntegerVector& actual, const Rcpp::Int
 }
 
 //' @rdname precision
-//' @method precision factor
+//' @method weighted.precision factor
 //' @export
 // [[Rcpp::export(weighted.precision.factor)]]
 Rcpp::NumericVector weighted_precision(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, bool na_rm = true) {
@@ -42,7 +42,7 @@ Rcpp::NumericVector ppv(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVe
 }
 
 //' @rdname precision
-//' @method ppv factor
+//' @method weighted.ppv factor
 //' @export
 // [[Rcpp::export(weighted.ppv.factor)]]
 Rcpp::NumericVector weighted_ppv(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, bool na_rm = true) {

@@ -2,15 +2,21 @@
 % Please edit documentation in R/RcppExports.R, R/S3_LikelihoodRatios.R
 \name{dor.factor}
 \alias{dor.factor}
+\alias{weighted.dor.factor}
 \alias{dor.cmatrix}
 \alias{dor}
+\alias{weighted.dor}
 \title{Compute the \eqn{\text{diagnostic}} \eqn{\text{odds}} \eqn{\text{ratio}}}
 \usage{
 \method{dor}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
+\method{weighted.dor}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+
 \method{dor}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 dor(...)
+
+weighted.dor(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -23,6 +29,8 @@ micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro a
 \item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
 
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }

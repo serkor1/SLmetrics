@@ -2,24 +2,36 @@
 % Please edit documentation in R/RcppExports.R, R/S3_precision.R
 \name{precision.factor}
 \alias{precision.factor}
+\alias{weighted.precision.factor}
 \alias{precision.cmatrix}
 \alias{ppv.factor}
+\alias{weighted.ppv.factor}
 \alias{ppv.cmatrix}
 \alias{precision}
 \alias{ppv}
+\alias{weighted.precision}
+\alias{weighted.ppv}
 \title{Compute the \eqn{\text{precision}} or \eqn{\text{positive}} \eqn{\text{predictive}} \eqn{\text{value}}}
 \usage{
 \method{precision}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+
+\method{weighted.precision}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
 
 \method{precision}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 \method{ppv}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
+\method{weighted.ppv}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+
 \method{ppv}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 precision(...)
 
+weighted.precision(...)
+
 ppv(...)
+
+weighted.ppv(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -32,6 +44,8 @@ micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro a
 \item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
 
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }

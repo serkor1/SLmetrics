@@ -41,4 +41,13 @@ fdr <- function(...) {
   )
 }
 
+#' @rdname fdr
+#' @export
+weighted.fdr <- function(...) {
+  UseMethod(
+    generic = "weighted.fdr",
+    object   = ..1
+  )
+}
+
 # script end;

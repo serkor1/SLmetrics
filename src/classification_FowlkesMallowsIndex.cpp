@@ -8,23 +8,20 @@ using namespace Rcpp;
 //' @method fmi factor
 //' @export
 // [[Rcpp::export(fmi.factor)]]
-double fmi(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
+Rcpp::NumericVector fmi(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
 {
-
-  return _metric_(confmat(actual, predicted));
-
-
+  FMIMetric foo; // Instantiate AccuracyMetric
+  return classification_base(actual, predicted, foo);
 }
 
 //' @rdname fmi
 //' @method fmi cmatrix
 //' @export
 // [[Rcpp::export(fmi.cmatrix)]]
-double fmi_cmatrix(const IntegerMatrix& x)
+Rcpp::NumericVector fmi_cmatrix(const IntegerMatrix& x)
 {
-
-  return _metric_(Rcpp::as<Eigen::MatrixXi>(x));
-
+  FMIMetric foo; // Instantiate AccuracyMetric
+  return classification_base(x, foo);
 }
 
 

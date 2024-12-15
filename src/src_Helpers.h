@@ -1,3 +1,5 @@
+#ifndef OVERALL_HELPERS_H
+#define OVERALL_HELPERS_H
 /*
  * A bunch of helpers for calculating
  * various metrics, and simplifying
@@ -458,3 +460,5 @@ inline __attribute__((always_inline)) Rcpp::List _temporary_(const Rcpp::Integer
 
  return result;
 }
+
+#endif

@@ -48,6 +48,15 @@ nlr <- function(...) {
   )
 }
 
+#' @rdname nlr
+#' @export
+weighted.nlr <- function(...) {
+  UseMethod(
+    generic = "weighted.nlr",
+    object  = ..1
+  )
+}
+
 #' Compute the \eqn{\text{positive}} \eqn{\text{likelihood}} \eqn{\text{ratio}}
 #'
 #' @description
@@ -86,6 +95,15 @@ nlr <- function(...) {
 plr <- function(...) {
   UseMethod(
     generic = "plr",
+    object  = ..1
+  )
+}
+
+#' @rdname plr
+#' @export
+weighted.plr <- function(...) {
+  UseMethod(
+    generic = "weighted.plr",
     object  = ..1
   )
 }
@@ -129,5 +147,15 @@ dor <- function(...) {
     object  = ..1
   )
 }
+
+#' @rdname dor
+#' @export
+weighted.dor <- function(...) {
+  UseMethod(
+    generic = "weighted.dor",
+    object  = ..1
+  )
+}
+
 
 # script end;

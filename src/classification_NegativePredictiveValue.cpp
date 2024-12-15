@@ -14,7 +14,7 @@ NumericVector npv(const IntegerVector& actual, const IntegerVector& predicted, N
 }
 
 //' @rdname npv
-//' @method weighted.npv.factor
+//' @method weighted.npv factor
 //' @export
 // [[Rcpp::export(weighted.npv.factor)]]
 NumericVector weighted_npv(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {

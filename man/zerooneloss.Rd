@@ -2,15 +2,21 @@
 % Please edit documentation in R/RcppExports.R, R/S3_ZeroOneLoss.R
 \name{zerooneloss.factor}
 \alias{zerooneloss.factor}
+\alias{weighted.zerooneloss.factor}
 \alias{zerooneloss.cmatrix}
 \alias{zerooneloss}
+\alias{weighted.zerooneloss}
 \title{Compute the \eqn{\text{Zero}}-\eqn{\text{One}} \eqn{\text{Loss}}}
 \usage{
 \method{zerooneloss}{factor}(actual, predicted, na.rm = FALSE, ...)
 
-\method{zerooneloss}{cmatrix}(x, ...)
+\method{weighted.zerooneloss}{factor}(actual, predicted, w, na.rm = TRUE, ...)
+
+\method{zerooneloss}{cmatrix}(x, na.rm = TRUE, ...)
 
 zerooneloss(...)
+
+weighted.zerooneloss(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -20,6 +26,8 @@ zerooneloss(...)
 \item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
 
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }

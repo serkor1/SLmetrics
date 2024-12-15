@@ -15,7 +15,7 @@ Rcpp::NumericVector recall(const Rcpp::IntegerVector& actual, const Rcpp::Intege
 }
 
 //' @rdname recall
-//' @method recall factor
+//' @method weighted.recall factor
 //' @export
 // [[Rcpp::export(weighted.recall.factor)]]
 Rcpp::NumericVector weighted_recall(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, bool na_rm = true) {
@@ -49,7 +49,7 @@ Rcpp::NumericVector sensitivity(const IntegerVector& actual, const IntegerVector
 }
 
 //' @rdname recall
-//' @method sensitivity factor
+//' @method weighted.sensitivity factor
 //' @export
 // [[Rcpp::export(weighted.sensitivity.factor)]]
 Rcpp::NumericVector weighted_sensitivity(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, bool na_rm = true) {
@@ -81,7 +81,7 @@ Rcpp::NumericVector tpr(const IntegerVector& actual, const IntegerVector& predic
 }
 
 //' @rdname recall
-//' @method tpr factor
+//' @method weighted.tpr factor
 //' @export
 // [[Rcpp::export(weighted.tpr.factor)]]
 Rcpp::NumericVector weighted_tpr(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, bool na_rm = true) {

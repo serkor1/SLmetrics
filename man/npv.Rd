@@ -2,15 +2,21 @@
 % Please edit documentation in R/RcppExports.R, R/S3_NegativePredictiveValue.R
 \name{npv.factor}
 \alias{npv.factor}
+\alias{weighted.npv.factor}
 \alias{npv.cmatrix}
 \alias{npv}
+\alias{weighted.npv}
 \title{Compute the \eqn{\text{negative}} \eqn{\text{predictive}} \eqn{\text{value}}}
 \usage{
 \method{npv}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
+\method{weighted.npv}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+
 \method{npv}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 npv(...)
+
+weighted.npv(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -23,6 +29,8 @@ micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro a
 \item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
 
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }

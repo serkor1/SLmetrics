@@ -63,4 +63,32 @@ tpr <- function(...) {
   )
 }
 
+
+#' @rdname recall
+#' @export
+weighted.recall <- function(...) {
+  UseMethod(
+    generic = "weighted.recall",
+    object  = ..1
+  )
+}
+
+#' @rdname recall
+#' @export
+weighted.sensitivity <- function(...) {
+  UseMethod(
+    generic = "weighted.sensitivity",
+    object  = ..1
+  )
+}
+
+#' @rdname recall
+#' @export
+weighted.tpr <- function(...) {
+  UseMethod(
+    generic = "weighted.tpr",
+    object  = ..1
+  )
+}
+
 # script end;

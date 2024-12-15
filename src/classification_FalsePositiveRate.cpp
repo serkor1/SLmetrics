@@ -14,7 +14,7 @@ NumericVector fpr(const IntegerVector& actual, const IntegerVector& predicted, N
 }
 
 //' @rdname fpr
-//' @method weighted.fpr.factor
+//' @method weighted.fpr factor
 //' @export
 // [[Rcpp::export(weighted.fpr.factor)]]
 NumericVector weighted_fpr(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {

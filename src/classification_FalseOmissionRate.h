@@ -1,8 +1,6 @@
 #ifndef CLASSIFICATION_FALSE_OMISSION_RATE_H
 #define CLASSIFICATION_FALSE_OMISSION_RATE_H
 
-#include "src_Helpers.h"
-#include "classification_Utils.h"
 #include "classification_Helpers.h"
 #include <RcppEigen.h>
 #include <cmath>
@@ -15,7 +13,7 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
         the confusion matrix. So there is no need to add an overloaded function
         for the weighted metrics.
 */
-class FORMetric : public classification {
+class FalseOmissionRateMetric : public classification {
 public:
 
     // Compute FOR with micro or macro aggregation

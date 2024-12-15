@@ -2,25 +2,37 @@
 % Please edit documentation in R/RcppExports.R, R/S3_recall.R
 \name{recall.factor}
 \alias{recall.factor}
+\alias{weighted.recall.factor}
 \alias{recall.cmatrix}
 \alias{sensitivity.factor}
+\alias{weighted.sensitivity.factor}
 \alias{sensitivity.cmatrix}
 \alias{tpr.factor}
+\alias{weighted.tpr.factor}
 \alias{tpr.cmatrix}
 \alias{recall}
 \alias{sensitivity}
 \alias{tpr}
+\alias{weighted.recall}
+\alias{weighted.sensitivity}
+\alias{weighted.tpr}
 \title{Compute the \eqn{recall}, \eqn{sensitivity} or \eqn{\text{true}} \eqn{\text{positive}} \eqn{\text{rate}}}
 \usage{
 \method{recall}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+
+\method{weighted.recall}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
 
 \method{recall}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 \method{sensitivity}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
+\method{weighted.sensitivity}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+
 \method{sensitivity}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 \method{tpr}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+
+\method{weighted.tpr}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
 
 \method{tpr}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
@@ -29,6 +41,12 @@ recall(...)
 sensitivity(...)
 
 tpr(...)
+
+weighted.recall(...)
+
+weighted.sensitivity(...)
+
+weighted.tpr(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -41,6 +59,8 @@ micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro a
 \item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
 
 \item{x}{confusion matrix.}
 }

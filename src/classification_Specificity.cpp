@@ -15,7 +15,7 @@ NumericVector specificity(const IntegerVector& actual, const IntegerVector& pred
 }
 
 //' @rdname specificity
-//' @method specificity factor
+//' @method weighted.specificity factor
 //' @export
 // [[Rcpp::export(weighted.specificity.factor)]]
 NumericVector weighted_specificity(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
@@ -42,6 +42,15 @@ NumericVector tnr(const IntegerVector& actual, const IntegerVector& predicted, N
 }
 
 //' @rdname specificity
+//' @method weighted.tnr factor
+//' @export
+// [[Rcpp::export(weighted.tnr.factor)]]
+NumericVector weighted_tnr(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+    SpecificityMetric foo; // Instantiate SpecificityMetric
+    return classification_base(actual, predicted, w, foo, micro, na_rm);
+}
+
+//' @rdname specificity
 //' @method tnr cmatrix
 //' @export
 // [[Rcpp::export(tnr.cmatrix)]]
@@ -57,6 +66,15 @@ NumericVector tnr_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilVa
 NumericVector selectivity(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
     SpecificityMetric foo; // Instantiate SpecificityMetric
     return classification_base(actual, predicted, foo, micro, na_rm);
+}
+
+//' @rdname specificity
+//' @method weighted.selectivity factor
+//' @export
+// [[Rcpp::export(weighted.selectivity.factor)]]
+NumericVector weighted_selectivity(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+    SpecificityMetric foo; // Instantiate SpecificityMetric
+    return classification_base(actual, predicted, w, foo, micro, na_rm);
 }
 
 //' @rdname specificity

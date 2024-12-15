@@ -2,33 +2,33 @@
 % Please edit documentation in R/RcppExports.R, R/S3_JaccardIndex.R
 \name{jaccard.factor}
 \alias{jaccard.factor}
+\alias{weighted.jaccard.factor}
 \alias{jaccard.cmatrix}
-\alias{csi.factor}
-\alias{csi.cmatrix}
-\alias{tscore.factor}
-\alias{tscore.cmatrix}
 \alias{jaccard}
 \alias{csi}
 \alias{tscore}
+\alias{weighted.jaccard}
+\alias{weighted.csi}
+\alias{weighted.tscore}
 \title{Compute the \eqn{\text{Jaccard}} \eqn{\text{index}}}
 \usage{
 \method{jaccard}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
+\method{weighted.jaccard}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+
 \method{jaccard}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
-
-\method{csi}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
-
-\method{csi}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
-
-\method{tscore}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
-
-\method{tscore}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 jaccard(...)
 
 csi(...)
 
 tscore(...)
+
+weighted.jaccard(...)
+
+weighted.csi(...)
+
+weighted.tscore(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -41,6 +41,8 @@ micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro a
 \item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
 
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }

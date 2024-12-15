@@ -14,7 +14,7 @@ NumericVector fer(const IntegerVector& actual, const IntegerVector& predicted, N
 }
 
 //' @rdname fer
-//' @method weighted.fer.factor
+//' @method weighted.fer factor
 //' @export
 // [[Rcpp::export(weighted.fer.factor)]]
 NumericVector weighted_fer(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {

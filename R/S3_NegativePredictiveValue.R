@@ -42,4 +42,13 @@ npv <- function(...) {
   )
 }
 
+#' @rdname npv
+#' @export
+weighted.npv <- function(...) {
+  UseMethod(
+    generic = "weighted.npv",
+    object  = ..1
+  )
+}
+
 # script end;

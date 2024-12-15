@@ -9,32 +9,52 @@ using namespace Rcpp;
 //' @method mcc factor
 //' @export
 // [[Rcpp::export(mcc.factor)]]
-double mcc(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
+Rcpp::NumericVector mcc(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
 {
-   return _metric_(confmat(actual, predicted));
+   MCCMetric foo; // Instantiate MCCMetric
+   return classification_base(actual, predicted, foo);
+}
+
+//' @rdname mcc
+//' @method weighted.mcc factor
+//' @export
+// [[Rcpp::export(weighted.mcc.factor)]]
+Rcpp::NumericVector weigthed_mcc(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector w)
+{
+   MCCMetric foo; // Instantiate MCCMetric
+   return classification_base(actual, predicted, foo);
 }
 
 //' @rdname mcc
 //' @method mcc cmatrix
 //' @export
 // [[Rcpp::export(mcc.cmatrix)]]
-double mcc_cmatrix(const Rcpp::IntegerMatrix& x)
+Rcpp::NumericVector mcc_cmatrix(const Rcpp::IntegerMatrix& x)
 {
-
-   return _metric_(Rcpp::as<Eigen::MatrixXi>(x));
+   MCCMetric foo; // Instantiate MCCMetric
+   return classification_base(x, foo);
 
 }
-
-
 
 //' @rdname mcc
 //' @method phi factor
 //' @export
 // [[Rcpp::export(phi.factor)]]
-double phi(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
+Rcpp::NumericVector phi(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
 {
+   MCCMetric foo; // Instantiate MCCMetric
+   return classification_base(actual, predicted, foo);
 
-   return _metric_(confmat(actual, predicted));
+}
+
+//' @rdname mcc
+//' @method weighted.phi factor
+//' @export
+// [[Rcpp::export(weighted.phi.factor)]]
+Rcpp::NumericVector weighted_phi(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector w)
+{
+   MCCMetric foo; // Instantiate MCCMetric
+   return classification_base(actual, predicted, foo);
 
 }
 
@@ -43,10 +63,10 @@ double phi(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predict
 //' @method phi cmatrix
 //' @export
 // [[Rcpp::export(phi.cmatrix)]]
-double phi_cmatrix(const Rcpp::IntegerMatrix& x)
+Rcpp::NumericVector phi_cmatrix(const Rcpp::IntegerMatrix& x)
 {
-
-   return _metric_(Rcpp::as<Eigen::MatrixXi>(x));
+   MCCMetric foo; // Instantiate MCCMetric
+   return classification_base(x, foo);
 
 }
 
