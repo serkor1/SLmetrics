@@ -23,7 +23,7 @@ set.seed(1903)
 
 ## Improvements
 
-* **weighted classification metrics:** All classification metrics now accepts the argument `w` which is the sample weights. If passed the respective function will return the weighted metric. Below is an example using sample weights for the confusion matrix,
+* **weighted classification metrics:** The `cmatrix()`-function now accepts the argument `w` which is the sample weights; if passed the respective method will return the weighted metric. Below is an example using sample weights for the confusion matrix,
 
 ```{r}
 # 1) define factors
@@ -45,13 +45,45 @@ SLmetrics::cmatrix(
 )
 ```
 
+Calculating weighted metrics manually or by using `foo.cmatrix()`-method,
+
+```{r}
+# 1) weigthed confusion matrix
+# and weighted accuray
+confusion_matrix <- SLmetrics::cmatrix(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+
+# 2) pass into accuracy
+# function
+SLmetrics::accuracy(
+    confusion_matrix
+)
+
+# 3) calculate the weighted
+# accuracy manually
+SLmetrics::weighted.accuracy(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+```
+
+Please note, however, that it is not possible to pass `cmatix()`-into `weighted.accurracy()`,
+
+```{r}
+try(
+    SLmetrics::weighted.accurracy(
+        confusion_matrix
+    )
+)
+```
+
 
 
 # Version 0.1-1
-
-> Version 0.1-1 is considered pre-release of {SLmetrics}. We do not
-> expect any breaking changes, unless a major bug/issue is reported and its nature
-> forces breaking changes.
 
 ## General
 
@@ -124,7 +156,6 @@ plot(
     panels = FALSE
 )
 ```
-
 
 
 # Version 0.1-0
