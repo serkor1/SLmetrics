@@ -26,7 +26,7 @@ NumericVector weighted_fdr(const IntegerVector& actual, const IntegerVector& pre
 //' @method fdr cmatrix
 //' @export
 // [[Rcpp::export(fdr.cmatrix)]]
-NumericVector fdr_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+NumericVector fdr_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
     FalseDiscoveryRateMetric foo; // Instantiate FDR metric
     return classification_base(x, foo, micro, na_rm);
 }

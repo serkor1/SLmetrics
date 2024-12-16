@@ -29,7 +29,7 @@ Rcpp::NumericVector weigthed_mcc(const Rcpp::IntegerVector& actual, const Rcpp::
 //' @method mcc cmatrix
 //' @export
 // [[Rcpp::export(mcc.cmatrix)]]
-Rcpp::NumericVector mcc_cmatrix(const Rcpp::IntegerMatrix& x)
+Rcpp::NumericVector mcc_cmatrix(const Rcpp::NumericMatrix& x)
 {
    MCCMetric foo; // Instantiate MCCMetric
    return classification_base(x, foo);
@@ -63,7 +63,7 @@ Rcpp::NumericVector weighted_phi(const Rcpp::IntegerVector& actual, const Rcpp::
 //' @method phi cmatrix
 //' @export
 // [[Rcpp::export(phi.cmatrix)]]
-Rcpp::NumericVector phi_cmatrix(const Rcpp::IntegerMatrix& x)
+Rcpp::NumericVector phi_cmatrix(const Rcpp::NumericMatrix& x)
 {
    MCCMetric foo; // Instantiate MCCMetric
    return classification_base(x, foo);

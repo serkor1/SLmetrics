@@ -26,7 +26,7 @@ NumericVector weighted_jaccard(const IntegerVector& actual, const IntegerVector&
 //' @method jaccard cmatrix
 //' @export
 // [[Rcpp::export(jaccard.cmatrix)]]
-NumericVector jaccard_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+NumericVector jaccard_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
     JaccardIndexMetric foo; // Instantiate Jaccard Index metric
     return classification_base(x, foo, micro, na_rm);
 }
@@ -54,7 +54,7 @@ NumericVector weighted_csi(const IntegerVector& actual, const IntegerVector& pre
 //' @method csi cmatrix
 //' @export
 // [[Rcpp::export(csi.cmatrix)]]
-NumericVector csi_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+NumericVector csi_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
     JaccardIndexMetric foo; // Instantiate Jaccard Index metric
     return classification_base(x, foo, micro, na_rm);
 }
@@ -82,7 +82,7 @@ NumericVector weighted_tscore(const IntegerVector& actual, const IntegerVector& 
 //' @method tscore cmatrix
 //' @export
 // [[Rcpp::export(tscore.cmatrix)]]
-NumericVector tscore_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+NumericVector tscore_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
     JaccardIndexMetric foo; // Instantiate Jaccard Index metric
     return classification_base(x, foo, micro, na_rm);
 }

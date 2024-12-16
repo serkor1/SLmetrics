@@ -26,7 +26,7 @@ NumericVector weighted_nlr(const IntegerVector& actual, const IntegerVector& pre
 //' @method nlr cmatrix
 //' @export
 // [[Rcpp::export(nlr.cmatrix)]]
-NumericVector nlr_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+NumericVector nlr_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
     NLRMetric foo; // Instantiate NLRMetric
     return classification_base(x, foo, micro, na_rm);
 }

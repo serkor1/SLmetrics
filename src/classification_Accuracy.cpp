@@ -26,7 +26,7 @@ NumericVector weighted_accuracy(const IntegerVector& actual, const IntegerVector
 //' @method accuracy cmatrix
 //' @export
 // [[Rcpp::export(accuracy.cmatrix)]]
-NumericVector accuracy_cmatrix(const IntegerMatrix& x, const bool& na_rm = true) {
+NumericVector accuracy_cmatrix(const NumericMatrix& x, const bool& na_rm = true) {
     AccuracyMetric foo; // Instantiate AccuracyMetric
     return classification_base(x, foo, na_rm);
 }

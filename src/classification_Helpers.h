@@ -29,7 +29,7 @@
 // without micro-agument
 template <typename... Args>
 Rcpp::NumericVector classification_base(
-    const Rcpp::IntegerMatrix& matrix,
+    const Rcpp::NumericMatrix& matrix,
     const classification& foo,
     Args&&... args)
 {
@@ -44,7 +44,7 @@ Rcpp::NumericVector classification_base(
 // with micro argument
 template <typename... Args>
 Rcpp::NumericVector classification_base(
-    const Rcpp::IntegerMatrix& matrix,
+    const Rcpp::NumericMatrix& matrix,
     const classification& foo,
     Rcpp::Nullable<bool> micro,
     Args&&... args)

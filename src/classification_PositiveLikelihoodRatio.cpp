@@ -26,7 +26,7 @@ NumericVector weighted_plr(const IntegerVector& actual, const IntegerVector& pre
 //' @method plr cmatrix
 //' @export
 // [[Rcpp::export(plr.cmatrix)]]
-NumericVector plr_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+NumericVector plr_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
     PLRMetric foo; // Instantiate PLRMetric
     return classification_base(x, foo, micro, na_rm);
 }

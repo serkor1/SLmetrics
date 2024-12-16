@@ -26,7 +26,7 @@ NumericVector weighted_dor(const IntegerVector& actual, const IntegerVector& pre
 //' @method dor cmatrix
 //' @export
 // [[Rcpp::export(dor.cmatrix)]]
-NumericVector dor_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+NumericVector dor_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
     DORMetric foo; // Instantiate DORMetric
     return classification_base(x, foo, micro, na_rm);
 }

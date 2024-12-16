@@ -61,9 +61,11 @@ private:
 
             double* upper_elem = mat_data + i * n + j;
             double* lower_elem = mat_data + j * n + i;
+            double* diag_elem  = mat_data + i * n + i;
 
             *upper_elem = value;
             *lower_elem = value;
+            *diag_elem  = 0.0;
         }
     }
 

@@ -112,7 +112,7 @@ create_regression <- function(
 set_equal <- function(
     current,
     target,
-    tolerance = 1e-2) {
+    tolerance = 4e-4) {
 
   all.equal(
     target = target,

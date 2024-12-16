@@ -26,7 +26,7 @@ NumericVector weighted_fbeta(const IntegerVector& actual, const IntegerVector& p
 //' @method fbeta cmatrix
 //' @export
 // [[Rcpp::export(fbeta.cmatrix)]]
-NumericVector fbeta_cmatrix(const IntegerMatrix& x, const double& beta = 1.0, Nullable<bool> micro = R_NilValue) {
+NumericVector fbeta_cmatrix(const NumericMatrix& x, const double& beta = 1.0, Nullable<bool> micro = R_NilValue) {
     FBetaMetric foo; // Instantiate F-Beta metric with the provided beta value
     return classification_base(x, foo, micro, beta);
 }

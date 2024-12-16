@@ -18,7 +18,7 @@ Rcpp::NumericVector fmi(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVe
 //' @method fmi cmatrix
 //' @export
 // [[Rcpp::export(fmi.cmatrix)]]
-Rcpp::NumericVector fmi_cmatrix(const IntegerMatrix& x)
+Rcpp::NumericVector fmi_cmatrix(const NumericMatrix& x)
 {
   FMIMetric foo; // Instantiate AccuracyMetric
   return classification_base(x, foo);

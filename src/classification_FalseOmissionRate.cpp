@@ -26,7 +26,7 @@ NumericVector weighted_fer(const IntegerVector& actual, const IntegerVector& pre
 //' @method fer cmatrix
 //' @export
 // [[Rcpp::export(fer.cmatrix)]]
-NumericVector fer_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+NumericVector fer_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
     FalseOmissionRateMetric foo; // Instantiate FOR metric
     return classification_base(x, foo, micro, na_rm);
 }

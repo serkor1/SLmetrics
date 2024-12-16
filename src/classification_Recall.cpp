@@ -28,7 +28,7 @@ Rcpp::NumericVector weighted_recall(const Rcpp::IntegerVector& actual, const Rcp
 //' @method recall cmatrix
 //' @export
 // [[Rcpp::export(recall.cmatrix)]]
-Rcpp::NumericVector recall_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
+Rcpp::NumericVector recall_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
 {
 
   RecallMetric foo; // Instantiate RecallMetric
@@ -62,7 +62,7 @@ Rcpp::NumericVector weighted_sensitivity(const Rcpp::IntegerVector& actual, cons
 //' @method sensitivity cmatrix
 //' @export
 // [[Rcpp::export(sensitivity.cmatrix)]]
-Rcpp::NumericVector sensitivity_cmatrix(const IntegerMatrix& x,  Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
+Rcpp::NumericVector sensitivity_cmatrix(const NumericMatrix& x,  Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
 {
     RecallMetric foo; // Instantiate RecallMetric
     return classification_base(x, foo, micro, na_rm);
@@ -94,7 +94,7 @@ Rcpp::NumericVector weighted_tpr(const Rcpp::IntegerVector& actual, const Rcpp::
 //' @method tpr cmatrix
 //' @export
 // [[Rcpp::export(tpr.cmatrix)]]
-Rcpp::NumericVector tpr_cmatrix(const IntegerMatrix& x,  Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
+Rcpp::NumericVector tpr_cmatrix(const NumericMatrix& x,  Nullable<bool> micro = R_NilValue, const bool& na_rm = true)
 {
     RecallMetric foo; // Instantiate RecallMetric
     return classification_base(x, foo, micro, na_rm);

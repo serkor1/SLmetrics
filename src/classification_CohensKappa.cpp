@@ -26,7 +26,7 @@ NumericVector weighted_ckappa(const IntegerVector& actual, const IntegerVector& 
 //' @method ckappa cmatrix
 //' @export
 // [[Rcpp::export(ckappa.cmatrix)]]
-NumericVector ckappa_cmatrix(const IntegerMatrix& x, const double& beta = 0.0) {
+NumericVector ckappa_cmatrix(const NumericMatrix& x, const double& beta = 0.0) {
     CohensKappaMetric foo; // Instantiate CohensKappaMetric
     return classification_base(x, foo, beta);
 }

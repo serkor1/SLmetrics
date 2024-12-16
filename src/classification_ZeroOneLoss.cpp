@@ -25,7 +25,7 @@ Rcpp::NumericVector weighted_zerooneloss(const Rcpp::IntegerVector& actual, cons
 //' @method zerooneloss cmatrix
 //' @export
 // [[Rcpp::export(zerooneloss.cmatrix)]]
-Rcpp::NumericVector zerooneloss_cmatrix(const Rcpp::IntegerMatrix& x, const bool& na_rm = true) {
+Rcpp::NumericVector zerooneloss_cmatrix(const Rcpp::NumericMatrix& x, const bool& na_rm = true) {
   ZeroOneLossMetric foo; // Instantiate ZeroOneLossMetric
   return classification_base(x, foo, na_rm);
 }

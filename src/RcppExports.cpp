@@ -39,12 +39,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // accuracy_cmatrix
-NumericVector accuracy_cmatrix(const IntegerMatrix& x, const bool& na_rm);
+NumericVector accuracy_cmatrix(const NumericMatrix& x, const bool& na_rm);
 RcppExport SEXP _SLmetrics_accuracy_cmatrix(SEXP xSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(accuracy_cmatrix(x, na_rm));
     return rcpp_result_gen;
@@ -80,12 +80,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // baccuracy_cmatrix
-NumericVector baccuracy_cmatrix(const IntegerMatrix& x, const bool& adjust, const bool& na_rm);
+NumericVector baccuracy_cmatrix(const NumericMatrix& x, const bool& adjust, const bool& na_rm);
 RcppExport SEXP _SLmetrics_baccuracy_cmatrix(SEXP xSEXP, SEXP adjustSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const bool& >::type adjust(adjustSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(baccuracy_cmatrix(x, adjust, na_rm));
@@ -120,12 +120,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // ckappa_cmatrix
-NumericVector ckappa_cmatrix(const IntegerMatrix& x, const double& beta);
+NumericVector ckappa_cmatrix(const NumericMatrix& x, const double& beta);
 RcppExport SEXP _SLmetrics_ckappa_cmatrix(SEXP xSEXP, SEXP betaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const double& >::type beta(betaSEXP);
     rcpp_result_gen = Rcpp::wrap(ckappa_cmatrix(x, beta));
     return rcpp_result_gen;
@@ -174,12 +174,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // dor_cmatrix
-NumericVector dor_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+NumericVector dor_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_dor_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(dor_cmatrix(x, micro, na_rm));
@@ -216,12 +216,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // fbeta_cmatrix
-NumericVector fbeta_cmatrix(const IntegerMatrix& x, const double& beta, Nullable<bool> micro);
+NumericVector fbeta_cmatrix(const NumericMatrix& x, const double& beta, Nullable<bool> micro);
 RcppExport SEXP _SLmetrics_fbeta_cmatrix(SEXP xSEXP, SEXP betaSEXP, SEXP microSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const double& >::type beta(betaSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     rcpp_result_gen = Rcpp::wrap(fbeta_cmatrix(x, beta, micro));
@@ -258,12 +258,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // fdr_cmatrix
-NumericVector fdr_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+NumericVector fdr_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_fdr_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(fdr_cmatrix(x, micro, na_rm));
@@ -300,12 +300,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // fer_cmatrix
-NumericVector fer_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+NumericVector fer_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_fer_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(fer_cmatrix(x, micro, na_rm));
@@ -342,12 +342,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // fpr_cmatrix
-NumericVector fpr_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+NumericVector fpr_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_fpr_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(fpr_cmatrix(x, micro, na_rm));
@@ -384,12 +384,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // fallout_cmatrix
-NumericVector fallout_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+NumericVector fallout_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_fallout_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(fallout_cmatrix(x, micro, na_rm));
@@ -409,12 +409,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // fmi_cmatrix
-Rcpp::NumericVector fmi_cmatrix(const IntegerMatrix& x);
+Rcpp::NumericVector fmi_cmatrix(const NumericMatrix& x);
 RcppExport SEXP _SLmetrics_fmi_cmatrix(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     rcpp_result_gen = Rcpp::wrap(fmi_cmatrix(x));
     return rcpp_result_gen;
 END_RCPP
@@ -449,12 +449,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // jaccard_cmatrix
-NumericVector jaccard_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+NumericVector jaccard_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_jaccard_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(jaccard_cmatrix(x, micro, na_rm));
@@ -491,12 +491,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // csi_cmatrix
-NumericVector csi_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+NumericVector csi_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_csi_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(csi_cmatrix(x, micro, na_rm));
@@ -533,12 +533,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // tscore_cmatrix
-NumericVector tscore_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+NumericVector tscore_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_tscore_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(tscore_cmatrix(x, micro, na_rm));
@@ -571,12 +571,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // mcc_cmatrix
-Rcpp::NumericVector mcc_cmatrix(const Rcpp::IntegerMatrix& x);
+Rcpp::NumericVector mcc_cmatrix(const Rcpp::NumericMatrix& x);
 RcppExport SEXP _SLmetrics_mcc_cmatrix(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type x(xSEXP);
     rcpp_result_gen = Rcpp::wrap(mcc_cmatrix(x));
     return rcpp_result_gen;
 END_RCPP
@@ -607,12 +607,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // phi_cmatrix
-Rcpp::NumericVector phi_cmatrix(const Rcpp::IntegerMatrix& x);
+Rcpp::NumericVector phi_cmatrix(const Rcpp::NumericMatrix& x);
 RcppExport SEXP _SLmetrics_phi_cmatrix(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type x(xSEXP);
     rcpp_result_gen = Rcpp::wrap(phi_cmatrix(x));
     return rcpp_result_gen;
 END_RCPP
@@ -647,12 +647,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // nlr_cmatrix
-NumericVector nlr_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+NumericVector nlr_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_nlr_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(nlr_cmatrix(x, micro, na_rm));
@@ -689,12 +689,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // npv_cmatrix
-NumericVector npv_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+NumericVector npv_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_npv_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(npv_cmatrix(x, micro, na_rm));
@@ -731,12 +731,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // plr_cmatrix
-NumericVector plr_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+NumericVector plr_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_plr_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(plr_cmatrix(x, micro, na_rm));
@@ -773,12 +773,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // precision_cmatrix
-Rcpp::NumericVector precision_cmatrix(const IntegerMatrix& x, Rcpp::Nullable<bool> micro, const bool& na_rm);
+Rcpp::NumericVector precision_cmatrix(const NumericMatrix& x, Rcpp::Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_precision_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(precision_cmatrix(x, micro, na_rm));
@@ -815,12 +815,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // ppv_cmatrix
-Rcpp::NumericVector ppv_cmatrix(const IntegerMatrix& x, Rcpp::Nullable<bool> micro, const bool& na_rm);
+Rcpp::NumericVector ppv_cmatrix(const NumericMatrix& x, Rcpp::Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_ppv_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(ppv_cmatrix(x, micro, na_rm));
@@ -872,12 +872,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // recall_cmatrix
-Rcpp::NumericVector recall_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+Rcpp::NumericVector recall_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_recall_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(recall_cmatrix(x, micro, na_rm));
@@ -914,12 +914,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // sensitivity_cmatrix
-Rcpp::NumericVector sensitivity_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+Rcpp::NumericVector sensitivity_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_sensitivity_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(sensitivity_cmatrix(x, micro, na_rm));
@@ -956,12 +956,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // tpr_cmatrix
-Rcpp::NumericVector tpr_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+Rcpp::NumericVector tpr_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_tpr_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(tpr_cmatrix(x, micro, na_rm));
@@ -1026,12 +1026,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // specificity_cmatrix
-NumericVector specificity_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+NumericVector specificity_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_specificity_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(specificity_cmatrix(x, micro, na_rm));
@@ -1068,12 +1068,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // tnr_cmatrix
-NumericVector tnr_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+NumericVector tnr_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_tnr_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(tnr_cmatrix(x, micro, na_rm));
@@ -1110,12 +1110,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // selectivity_cmatrix
-NumericVector selectivity_cmatrix(const IntegerMatrix& x, Nullable<bool> micro, const bool& na_rm);
+NumericVector selectivity_cmatrix(const NumericMatrix& x, Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_selectivity_cmatrix(SEXP xSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(selectivity_cmatrix(x, micro, na_rm));
@@ -1150,12 +1150,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // zerooneloss_cmatrix
-Rcpp::NumericVector zerooneloss_cmatrix(const Rcpp::IntegerMatrix& x, const bool& na_rm);
+Rcpp::NumericVector zerooneloss_cmatrix(const Rcpp::NumericMatrix& x, const bool& na_rm);
 RcppExport SEXP _SLmetrics_zerooneloss_cmatrix(SEXP xSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::IntegerMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(zerooneloss_cmatrix(x, na_rm));
     return rcpp_result_gen;

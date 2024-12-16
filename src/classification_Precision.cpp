@@ -27,7 +27,7 @@ Rcpp::NumericVector weighted_precision(const Rcpp::IntegerVector& actual, const 
 //' @method precision cmatrix
 //' @export
 // [[Rcpp::export(precision.cmatrix)]]
-Rcpp::NumericVector precision_cmatrix(const IntegerMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+Rcpp::NumericVector precision_cmatrix(const NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
     PrecisionMetric foo; // Instantiate PrecisionMetric
     return classification_base(x, foo, micro, na_rm);
 }
@@ -54,7 +54,7 @@ Rcpp::NumericVector weighted_ppv(const Rcpp::IntegerVector& actual, const Rcpp::
 //' @method ppv cmatrix
 //' @export
 // [[Rcpp::export(ppv.cmatrix)]]
-Rcpp::NumericVector ppv_cmatrix(const IntegerMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+Rcpp::NumericVector ppv_cmatrix(const NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
     PrecisionMetric foo; // Instantiate PrecisionMetric
     return classification_base(x, foo, micro, na_rm);
 }

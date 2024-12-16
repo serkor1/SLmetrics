@@ -26,7 +26,7 @@ NumericVector weighted_baccuracy(const IntegerVector& actual, const IntegerVecto
 //' @method baccuracy cmatrix
 //' @export
 // [[Rcpp::export(baccuracy.cmatrix)]]
-NumericVector baccuracy_cmatrix(const IntegerMatrix& x, const bool& adjust = false, const bool& na_rm = true) {
+NumericVector baccuracy_cmatrix(const NumericMatrix& x, const bool& adjust = false, const bool& na_rm = true) {
     BalancedAccuracyMetric foo; // Instantiate BalancedAccuracyMetric
     return classification_base(x, foo, na_rm, adjust);
 }

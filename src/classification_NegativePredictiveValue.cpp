@@ -26,7 +26,7 @@ NumericVector weighted_npv(const IntegerVector& actual, const IntegerVector& pre
 //' @method npv cmatrix
 //' @export
 // [[Rcpp::export(npv.cmatrix)]]
-NumericVector npv_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+NumericVector npv_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
     NegativePredictiveValueMetric foo; // Instantiate NPV metric
     return classification_base(x, foo, micro, na_rm);
 }

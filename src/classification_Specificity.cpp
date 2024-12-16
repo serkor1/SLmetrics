@@ -27,7 +27,7 @@ NumericVector weighted_specificity(const IntegerVector& actual, const IntegerVec
 //' @method specificity cmatrix
 //' @export
 // [[Rcpp::export(specificity.cmatrix)]]
-NumericVector specificity_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+NumericVector specificity_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
     SpecificityMetric foo; // Instantiate SpecificityMetric
     return classification_base(x, foo, micro, na_rm);
 }
@@ -54,7 +54,7 @@ NumericVector weighted_tnr(const IntegerVector& actual, const IntegerVector& pre
 //' @method tnr cmatrix
 //' @export
 // [[Rcpp::export(tnr.cmatrix)]]
-NumericVector tnr_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+NumericVector tnr_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
     SpecificityMetric foo; // Instantiate SpecificityMetric
     return classification_base(x, foo, micro, na_rm);
 }
@@ -81,7 +81,7 @@ NumericVector weighted_selectivity(const IntegerVector& actual, const IntegerVec
 //' @method selectivity cmatrix
 //' @export
 // [[Rcpp::export(selectivity.cmatrix)]]
-NumericVector selectivity_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+NumericVector selectivity_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
     SpecificityMetric foo; // Instantiate SpecificityMetric
     return classification_base(x, foo, micro, na_rm);
 }
