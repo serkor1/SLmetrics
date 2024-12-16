@@ -46,21 +46,21 @@ baccuracy.cmatrix <- function(x, adjust = FALSE, na.rm = TRUE, ...) {
 #' @rdname ckappa
 #' @method ckappa factor
 #' @export
-ckappa.factor <- function(actual, predicted, beta = 1.0, ...) {
+ckappa.factor <- function(actual, predicted, beta = 0.0, ...) {
     .Call(`_SLmetrics_ckappa`, actual, predicted, beta)
 }
 
 #' @rdname ckappa
 #' @method weighted.ckappa factor
 #' @export
-weighted.ckappa.factor <- function(actual, predicted, w, beta = 1.0, ...) {
+weighted.ckappa.factor <- function(actual, predicted, w, beta = 0.0, ...) {
     .Call(`_SLmetrics_weighted_ckappa`, actual, predicted, w, beta)
 }
 
 #' @rdname ckappa
 #' @method ckappa cmatrix
 #' @export
-ckappa.cmatrix <- function(x, beta = 1.0, ...) {
+ckappa.cmatrix <- function(x, beta = 0.0, ...) {
     .Call(`_SLmetrics_ckappa_cmatrix`, x, beta)
 }
 
@@ -216,6 +216,27 @@ fpr.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_fpr_cmatrix`, x, micro, na_rm = na.rm)
 }
 
+#' @rdname fpr
+#' @method fallout factor
+#' @export
+fallout.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_fallout`, actual, predicted, micro, na_rm = na.rm)
+}
+
+#' @rdname fpr
+#' @method weighted.fallout factor
+#' @export
+weighted.fallout.factor <- function(actual, predicted, w, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_fallout`, actual, predicted, w, micro, na_rm = na.rm)
+}
+
+#' @rdname fpr
+#' @method fallout cmatrix
+#' @export
+fallout.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_fallout_cmatrix`, x, micro, na_rm = na.rm)
+}
+
 #' @rdname fmi
 #' @method fmi factor
 #' @export
@@ -249,6 +270,48 @@ weighted.jaccard.factor <- function(actual, predicted, w, micro = NULL, na.rm = 
 #' @export
 jaccard.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_jaccard_cmatrix`, x, micro, na_rm = na.rm)
+}
+
+#' @rdname jaccard
+#' @method csi factor
+#' @export
+csi.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_csi`, actual, predicted, micro, na_rm = na.rm)
+}
+
+#' @rdname jaccard
+#' @method weighted.csi factor
+#' @export
+weighted.csi.factor <- function(actual, predicted, w, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_csi`, actual, predicted, w, micro, na_rm = na.rm)
+}
+
+#' @rdname jaccard
+#' @method csi cmatrix
+#' @export
+csi.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_csi_cmatrix`, x, micro, na_rm = na.rm)
+}
+
+#' @rdname jaccard
+#' @method tscore factor
+#' @export
+tscore.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_tscore`, actual, predicted, micro, na_rm = na.rm)
+}
+
+#' @rdname jaccard
+#' @method weighted.tscore factor
+#' @export
+weighted.tscore.factor <- function(actual, predicted, w, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_tscore`, actual, predicted, w, micro, na_rm = na.rm)
+}
+
+#' @rdname jaccard
+#' @method tscore cmatrix
+#' @export
+tscore.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_tscore_cmatrix`, x, micro, na_rm = na.rm)
 }
 
 #' @rdname mcc

@@ -4,6 +4,9 @@
 \alias{fpr.factor}
 \alias{weighted.fpr.factor}
 \alias{fpr.cmatrix}
+\alias{fallout.factor}
+\alias{weighted.fallout.factor}
+\alias{fallout.cmatrix}
 \alias{fpr}
 \alias{fallout}
 \alias{weighted.fpr}
@@ -15,6 +18,12 @@
 \method{weighted.fpr}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
 
 \method{fpr}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
+
+\method{fallout}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+
+\method{weighted.fallout}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+
+\method{fallout}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 fpr(...)
 

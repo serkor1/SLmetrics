@@ -17,11 +17,11 @@ class SpecificityMetric : public classification {
 public:
 
     // Compute specificity with micro or macro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm, bool micro) const override {
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool micro, bool na_rm) const override {
 
         // 0) Declare output value and TN/FP arrays
-        Eigen::ArrayXd output(1);
-        Eigen::ArrayXd tn(matrix.rows()), fp(matrix.rows());
+        Eigen::ArrayXd output(1), tn_sum(1), fp_sum(1);
+        Eigen::ArrayXd tn(matrix.rows()), fp(matrix.rows()), auxillary(matrix.rows());
 
         // 1) Create TN and FP arrays
         TN(matrix, tn);
@@ -30,18 +30,20 @@ public:
         // 2) Conditional computation of metric
         if (micro) {
 
-            double tn_sum = tn.sum(), fp_sum = fp.sum();
-            output = Eigen::ArrayXd::Constant(1, (tn_sum + fp_sum == 0) ? R_NaReal : tn_sum / (tn_sum + fp_sum));
+            // 2.1) calculate sums
+            tn_sum = Eigen::ArrayXd::Constant(1, tn.sum()); fp_sum = Eigen::ArrayXd::Constant(1, fp.sum());
+
+            // 2.2) calculate output
+            output = tn_sum / (tn_sum + fp_sum);
 
         } else {
 
-            output = tn / (tn + fp);
+            // 2.1) calculate intermediate
+            // value
+            auxillary = tn / (tn + fp);
 
-            if (na_rm) {
-                double valid_sum = (output.isFinite().select(output, 0.0)).sum();
-                double valid_count = output.isFinite().count();
-                output = Eigen::ArrayXd::Constant(1, valid_count > 0 ? valid_sum / valid_count : R_NaReal);
-            }
+            // 2.2) calculate output
+            output = auxillary.sum() / auxillary.size();
 
         }
 

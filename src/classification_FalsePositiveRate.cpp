@@ -30,3 +30,30 @@ NumericVector fpr_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilVa
     FalsePositiveRateMetric foo; // Instantiate FPR metric
     return classification_base(x, foo, micro, na_rm);
 }
+
+//' @rdname fpr
+//' @method fallout factor
+//' @export
+// [[Rcpp::export(fallout.factor)]]
+NumericVector fallout(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+    FalsePositiveRateMetric foo; // Instantiate FPR metric
+    return classification_base(actual, predicted, foo, micro, na_rm);
+}
+
+//' @rdname fpr
+//' @method weighted.fallout factor
+//' @export
+// [[Rcpp::export(weighted.fallout.factor)]]
+NumericVector weighted_fallout(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+    FalsePositiveRateMetric foo; // Instantiate FPR metric
+    return classification_base(actual, predicted, w, foo, micro, na_rm);
+}
+
+//' @rdname fpr
+//' @method fallout cmatrix
+//' @export
+// [[Rcpp::export(fallout.cmatrix)]]
+NumericVector fallout_cmatrix(const IntegerMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
+    FalsePositiveRateMetric foo; // Instantiate FPR metric
+    return classification_base(x, foo, micro, na_rm);
+}

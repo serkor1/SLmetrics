@@ -10,30 +10,26 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 class FalsePositiveRateMetric : public classification {
 public:
 
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm, bool micro) const override {
+    // Compute FPR with micro or macro aggregation
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool micro, bool na_rm) const override {
         Eigen::ArrayXd output(1);
-        Eigen::ArrayXd fp(matrix.rows()), tn(matrix.rows());
+        Eigen::ArrayXd fp(matrix.rows()), tn(matrix.rows()), auxillary(matrix.rows());
 
         FP(matrix, fp);
         TN(matrix, tn);
 
         if (micro) {
             double fp_sum = fp.sum(), tn_sum = tn.sum();
-            output = Eigen::ArrayXd::Constant(1, (fp_sum + tn_sum == 0)
-                ? R_NaReal
-                : fp_sum / (fp_sum + tn_sum));
+            output = Eigen::ArrayXd::Constant(1, fp_sum / (fp_sum + tn_sum));
         } else {
-            output = fp / (fp + tn);
-            if (na_rm) {
-                double valid_sum = (output.isFinite().select(output, 0.0)).sum();
-                double valid_count = output.isFinite().count();
-                output = Eigen::ArrayXd::Constant(1, valid_count > 0 ? valid_sum / valid_count : R_NaReal);
-            }
+            auxillary = fp / (fp + tn);
+            output = Eigen::ArrayXd::Constant(1, auxillary.sum() / auxillary.size());
         }
 
         return Rcpp::wrap(output);
     }
 
+    // Compute FPR without micro aggregation
     Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
         Eigen::ArrayXd output(matrix.rows());
         Eigen::ArrayXd fp(matrix.rows()), tn(matrix.rows());

@@ -20,6 +20,7 @@ public:
         FN(matrix, fn);
 
         if (micro) {
+
             double tp_sum = tp.sum(), fp_sum = fp.sum(), fn_sum = fn.sum();
             double precision = tp_sum / (tp_sum + fp_sum);
             double recall = tp_sum / (tp_sum + fn_sum);
@@ -27,19 +28,19 @@ public:
             output = Eigen::ArrayXd::Constant(1, (precision + recall == 0)
                 ? R_NaReal
                 : (1 + beta_sq) * precision * recall / (beta_sq * precision + recall));
+            
+            return Rcpp::wrap(output);
+
         } else {
             Eigen::ArrayXd precision = tp / (tp + fp);
             Eigen::ArrayXd recall = tp / (tp + fn);
+
             output = (1 + beta_sq) * (precision * recall) / (beta_sq * precision + recall);
 
-            // if (na_rm) {
-            //    double valid_sum = (output.isFinite().select(output, 0.0)).sum();
-            //    double valid_count = output.isFinite().count();
-            //    output = Eigen::ArrayXd::Constant(1, valid_count > 0 ? valid_sum / valid_count : R_NaReal);
-            // }
+            return Rcpp::wrap(Eigen::ArrayXd::Constant(1, output.sum() / output.size()));
         }
 
-        return Rcpp::wrap(output);
+        
     }
 
     Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, double beta) const override {

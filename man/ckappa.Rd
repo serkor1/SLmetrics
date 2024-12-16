@@ -8,11 +8,11 @@
 \alias{weighted.ckappa}
 \title{Compute Cohen's \eqn{\kappa}-statistic}
 \usage{
-\method{ckappa}{factor}(actual, predicted, beta = 1, ...)
+\method{ckappa}{factor}(actual, predicted, beta = 0, ...)
 
-\method{weighted.ckappa}{factor}(actual, predicted, w, beta = 1, ...)
+\method{weighted.ckappa}{factor}(actual, predicted, w, beta = 0, ...)
 
-\method{ckappa}{cmatrix}(x, beta = 1, ...)
+\method{ckappa}{cmatrix}(x, beta = 0, ...)
 
 ckappa(...)
 

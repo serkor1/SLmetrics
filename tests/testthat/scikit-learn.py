@@ -24,7 +24,7 @@ def py_fmi(actual, predicted, average = None):
       labels_pred = predicted
     )
 
-def py_ckappa(actual, predicted, penalty = "linear", average = None, w = None):
+def py_ckappa(actual, predicted, penalty = None, average = None, w = None):
     return metrics.cohen_kappa_score(
       y1 = actual,
       y2 = predicted,

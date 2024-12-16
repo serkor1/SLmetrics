@@ -4,6 +4,12 @@
 \alias{jaccard.factor}
 \alias{weighted.jaccard.factor}
 \alias{jaccard.cmatrix}
+\alias{csi.factor}
+\alias{weighted.csi.factor}
+\alias{csi.cmatrix}
+\alias{tscore.factor}
+\alias{weighted.tscore.factor}
+\alias{tscore.cmatrix}
 \alias{jaccard}
 \alias{csi}
 \alias{tscore}
@@ -17,6 +23,18 @@
 \method{weighted.jaccard}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
 
 \method{jaccard}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
+
+\method{csi}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+
+\method{weighted.csi}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+
+\method{csi}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
+
+\method{tscore}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+
+\method{weighted.tscore}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+
+\method{tscore}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 jaccard(...)
 
