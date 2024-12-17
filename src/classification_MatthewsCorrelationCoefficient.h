@@ -26,7 +26,7 @@ public:
       tp_sum  = matrix.diagonal().sum();
       row_sum = matrix.rowwise().sum();
       col_sum = matrix.colwise().sum();
-      N       = col_sum.sum();
+      N       = matrix.sum();
 
       // 2) calculate covariances
       cov_ytyp = tp_sum * N - row_sum.matrix().dot(col_sum.matrix());

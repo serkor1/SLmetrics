@@ -22,7 +22,7 @@ Rcpp::NumericVector mcc(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVe
 Rcpp::NumericVector weigthed_mcc(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector w)
 {
    MCCMetric foo; // Instantiate MCCMetric
-   return classification_base(actual, predicted, foo);
+   return classification_base(actual, predicted, w, foo);
 }
 
 //' @rdname mcc
@@ -54,7 +54,7 @@ Rcpp::NumericVector phi(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVe
 Rcpp::NumericVector weighted_phi(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector w)
 {
    MCCMetric foo; // Instantiate MCCMetric
-   return classification_base(actual, predicted, foo);
+   return classification_base(actual, predicted, w, foo);
 
 }
 
