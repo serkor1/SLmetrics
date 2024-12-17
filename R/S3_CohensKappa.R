@@ -36,7 +36,7 @@ ckappa <- function(...) {
 #' @export
 weighted.ckappa <- function(...) {
   UseMethod(
-    generic = "ckappa",
+    generic = "weighted.ckappa",
     object  = ..1
   )
 }
