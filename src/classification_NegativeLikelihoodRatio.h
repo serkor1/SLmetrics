@@ -1,57 +1,35 @@
-#include "src_Helpers.h"
+#ifndef CLASSIFICATION_NLR_H
+#define CLASSIFICATION_NLR_H
+
+#include "classification_Helpers.h"
 #include <RcppEigen.h>
 #include <cmath>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-
-/*
- * Classwise nlr
- */
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x)
-{
-
-  /*
-   * Extract
-   */
-  const Eigen::ArrayXd& tp = TP(x).cast<double>().array();
-  const Eigen::ArrayXd& fp = FP(x).cast<double>().array();
-  const Eigen::ArrayXd& fn = FN(x).cast<double>().array();
-  const Eigen::ArrayXd& tn = TN(x).cast<double>().array();
-
-  // Calculate NLR for each class and return
-  return Rcpp::wrap((1.0 - (tp / (tp + fn))) / ((tn / (tn + fp))));
-
-}
+class NLRMetric : public classification {
+public:
 
 
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x, const bool& micro, const bool& na_rm)
-{
+    // Compute NLR without micro aggregation
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
+        Eigen::ArrayXd output(matrix.rows());
+        Eigen::ArrayXd tp(matrix.rows()), fn(matrix.rows()), tn(matrix.rows()), fp(matrix.rows());
+        Eigen::ArrayXd fnr(matrix.rows()), tnr(matrix.rows());
 
-  /*
-   * Extract
-   */
-  const Eigen::ArrayXd& tp = TP(x).cast<double>().array();
-  const Eigen::ArrayXd& fp = FP(x).cast<double>().array();
-  const Eigen::ArrayXd& fn = FN(x).cast<double>().array();
-  const Eigen::ArrayXd& tn = TN(x).cast<double>().array();
+        TP(matrix, tp);
+        FN(matrix, fn);
+        TN(matrix, tn);
+        FP(matrix, fp);
 
+        fnr = fn / (tp + fn);
+        tnr = tn / (fp + tn);
 
-  if (micro) {
+        output = fnr / tnr;
 
+        return Rcpp::wrap(output);
+    }
 
-    const double& tp_sum = tp.sum();
-    const double& fp_sum = fp.sum();
-    const double& fn_sum = fn.sum();
-    const double& tn_sum = tn.sum();
+};
 
-
-    return Rcpp::wrap((1.0 - (tp_sum / (tp_sum + fn_sum))) / ((tn_sum / (tn_sum + fp_sum))));
-
-  }
-
-  const Eigen::ArrayXd& output = (1.0 - (tp / (tp + fn))) / ((tn / (tn + fp)));
-
-  return Rcpp::wrap(output.isNaN().select(0,output).sum() / ((na_rm) ? (output.isNaN() == false).count() : output.size()));
-
-}
+#endif // CLASSIFICATION_NLR_H

@@ -1,35 +1,78 @@
-#include "src_Helpers.h"
+#ifndef CLASSIFICATION_COHENS_KAPPA_H
+#define CLASSIFICATION_COHENS_KAPPA_H
+
+#include "classification_Helpers.h"
 #include <RcppEigen.h>
-#include <cmath>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-inline __attribute__((always_inline)) double _metric_(const Eigen::MatrixXi& x, const double& beta)
-{
+/*
+ * Calculation of Cohen's Kappa statistic
+ * This class provides methods to compute the Cohen's Kappa with penalization.
+ */
+class CohensKappaMetric : public classification {
+public:
+  Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, double beta) const override {
 
-  // Step 0: Calculate confusion matrix and penalizing matrix
-  const Eigen::MatrixXi& penalizing_matrix = seqmat(x.cols(), beta);
+    // 0) initialize containers
+    Eigen::MatrixXd penalizing_matrix(matrix.cols(), matrix.cols());
+    Eigen::VectorXd row_sum(matrix.cols()), col_sum(matrix.cols());
 
-  // Step 1: Extract dimensions of the confusion matrix
-  std::size_t nrow = x.rows();
-  std::size_t ncol = x.cols();
+    // 1) populate the 
+    // matrix
+    penalizing_matrix = penalizingMatrix(matrix.cols(), beta);
 
-  // Step 2: Total number of observations (full sum)
-  double N = x.sum();
-  double N_inv = 1.0 / N;
+    // 2) 
+    double N = matrix.sum();
+    double N_inv = 1.0 / N;
 
-  // Step 3: Calculate row and column sums
-  Eigen::VectorXd row_sum = x.rowwise().sum().cast<double>();
-  Eigen::VectorXd col_sum = x.colwise().sum().cast<double>();
+    // 3)
+    row_sum = matrix.rowwise().sum();
+    col_sum = matrix.colwise().sum();
 
-  // Step 4: Calculate weighted disagreement (observed agreement with penalizing matrix)
-  double n_disagree = (x.cast<double>().cwiseProduct(penalizing_matrix.cast<double>())).sum();
+    // 4) Calculate weighted disagreement (observed agreement with penalizing matrix)
+    double n_disagree = (matrix.cwiseProduct(penalizing_matrix)).sum();
 
-  // Step 5: Calculate expected agreement by chance (weighted)
-  double n_chance = (row_sum * col_sum.transpose() * N_inv).cwiseProduct(penalizing_matrix.cast<double>()).sum();
+    // 5) Calculate expected agreement by chance (weighted)
+    double n_chance = (row_sum * col_sum.transpose() * N_inv).cwiseProduct(penalizing_matrix).sum();
 
-  // Step 6: Return penalized kappa statistic
-  return 1.0 - (n_disagree / n_chance);
+    // Step 5: Return penalized kappa statistic
+    double kappa = 1.0 - (n_disagree / n_chance);
 
+    return Rcpp::wrap(kappa);
 
-}
+  }
+
+private:
+
+  inline __attribute__((always_inline)) Eigen::MatrixXd penalizingMatrix(const int& n, const double& power) const {
+    
+    /*
+    Returns a diagonal matrix, with diag(0)      
+    */
+    
+    Eigen::MatrixXd matrix(n, n);
+    
+    double* mat_data = matrix.data();
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = i; j < n; ++j) { 
+            double value = std::pow(std::abs(j - i), power);
+
+            double* upper_elem = mat_data + i * n + j;
+            double* lower_elem = mat_data + j * n + i;
+            double* diag_elem  = mat_data + i * n + i;
+
+            *upper_elem = value;
+            *lower_elem = value;
+            *diag_elem  = 0.0;
+        }
+    }
+
+    return matrix;
+
+  }
+
+};
+
+#endif

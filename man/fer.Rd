@@ -2,15 +2,21 @@
 % Please edit documentation in R/RcppExports.R, R/S3_FalseOmissionRate.R
 \name{fer.factor}
 \alias{fer.factor}
+\alias{weighted.fer.factor}
 \alias{fer.cmatrix}
 \alias{fer}
+\alias{weighted.fer}
 \title{Compute the \eqn{\text{false}} \eqn{\text{omission}} \eqn{\text{rate}}}
 \usage{
 \method{fer}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
+\method{weighted.fer}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+
 \method{fer}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 fer(...)
+
+weighted.fer(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -23,6 +29,8 @@ micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro a
 \item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
 
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }

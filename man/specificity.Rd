@@ -2,25 +2,37 @@
 % Please edit documentation in R/RcppExports.R, R/S3_specificity.R
 \name{specificity.factor}
 \alias{specificity.factor}
+\alias{weighted.specificity.factor}
 \alias{specificity.cmatrix}
 \alias{tnr.factor}
+\alias{weighted.tnr.factor}
 \alias{tnr.cmatrix}
 \alias{selectivity.factor}
+\alias{weighted.selectivity.factor}
 \alias{selectivity.cmatrix}
 \alias{specificity}
 \alias{tnr}
 \alias{selectivity}
+\alias{weighted.specificity}
+\alias{weighted.tnr}
+\alias{weighted.selectivity}
 \title{Specificity or \eqn{\text{true}} \eqn{\text{negative}} \eqn{\text{rate}}}
 \usage{
 \method{specificity}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+
+\method{weighted.specificity}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
 
 \method{specificity}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 \method{tnr}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
+\method{weighted.tnr}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+
 \method{tnr}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 \method{selectivity}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+
+\method{weighted.selectivity}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
 
 \method{selectivity}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
@@ -29,6 +41,12 @@ specificity(...)
 tnr(...)
 
 selectivity(...)
+
+weighted.specificity(...)
+
+weighted.tnr(...)
+
+weighted.selectivity(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -41,6 +59,8 @@ micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro a
 \item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
 
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }

@@ -48,9 +48,27 @@ precision <- function(...) {
 
 #' @rdname precision
 #' @export
+weighted.precision <- function(...) {
+  UseMethod(
+    generic = "weighted.precision",
+    object  = ..1
+  )
+}
+
+#' @rdname precision
+#' @export
 ppv <- function(...) {
   UseMethod(
     generic = "ppv",
+    object  = ..1
+  )
+}
+
+#' @rdname precision
+#' @export
+weighted.ppv <- function(...) {
+  UseMethod(
+    generic = "weighted.ppv",
     object  = ..1
   )
 }

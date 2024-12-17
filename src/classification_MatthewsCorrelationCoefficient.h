@@ -1,41 +1,47 @@
-#include "src_Helpers.h"
+#ifndef CLASSIFICATION_MCC_H
+#define CLASSIFICATION_MCC_H
+
+#include "classification_Helpers.h"
 #include <RcppEigen.h>
-#include <cmath>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-
 /*
- * Classwise metric
- */
-inline __attribute__((always_inline)) double _metric_(const Eigen::MatrixXi& x)
-{
-  // Cast the diagonal matrix to double before summing
-  double n_correct = x.diagonal().cast<double>().sum();
+    MCCMetric class:
+    Calculates the Matthews Correlation Coefficient (MCC) using the provided
+    confusion matrix or actual/predicted labels.
+*/
+class MCCMetric : public classification {
+public:
+    // Compute MCC or Phi Coefficient
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
 
-  // Cast the rowwise and colwise sums before assigning them to double vectors
-  Eigen::VectorXd t_sum = x.rowwise().sum().cast<double>();
-  Eigen::VectorXd p_sum = x.colwise().sum().cast<double>();
+      // 0) set sizes
+      // of arrays
+      Eigen::ArrayXd output(1), N(1), row_sum(matrix.rows()), col_sum(matrix.cols()), tp_sum(1), cov_ytyp(1), cov_ypyp(1), cov_ytyt(1), product(1);
 
-  // Sum the p_sum vector to get the total number of samples
-  double n_samples = p_sum.sum(); // No need to cast since p_sum is already double
+      
+      // 1) calculate values
+      // accordingly
+      tp_sum  = matrix.diagonal().sum();
+      row_sum = matrix.rowwise().sum();
+      col_sum = matrix.colwise().sum();
+      N       = matrix.sum();
 
-  // Compute covariance terms
-  double cov_ytyp = n_correct * n_samples - t_sum.dot(p_sum);
-  double cov_ypyp = n_samples * n_samples - p_sum.squaredNorm();
-  double cov_ytyt = n_samples * n_samples - t_sum.squaredNorm();
+      // 2) calculate covariances
+      cov_ytyp = tp_sum * N - row_sum.matrix().dot(col_sum.matrix());
+      cov_ypyp = N * N - col_sum.matrix().squaredNorm();
+      cov_ytyt = N * N - row_sum.matrix().squaredNorm();
 
-  // Compute the product of covariances
-  double product = cov_ypyp * cov_ytyt;
+      // 3) calcualte the product
+      product = cov_ypyp * cov_ytyt;
 
-  // Handle the case where the product is zero
-  if (product == 0) {
-    return 0.0;
-  }
+      // 4) calculate output
+      // value
+      output  = cov_ytyp / product.array().sqrt();
 
-  // Return the final metric value
-  return cov_ytyp / std::sqrt(product);
-}
+      return Rcpp::wrap(output);
+    }
+};
 
-
-
+#endif // CLASSIFICATION_MCC_H

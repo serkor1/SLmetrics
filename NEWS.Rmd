@@ -15,11 +15,81 @@ knitr::opts_chunk$set(
 set.seed(1903) 
 ```
 
-# Version 0.1-1
+# Version 0.2-0
 
-> Version 0.1-1 is considered pre-release of {SLmetrics}. We do not
+> Version 0.2-0 is considered pre-release of {SLmetrics}. We do not
 > expect any breaking changes, unless a major bug/issue is reported and its nature
 > forces breaking changes.
+
+## Improvements
+
+* **weighted classification metrics:** The `cmatrix()`-function now accepts the argument `w` which is the sample weights; if passed the respective method will return the weighted metric. Below is an example using sample weights for the confusion matrix,
+
+```{r}
+# 1) define factors
+actual    <- factor(sample(letters[1:3], 100, replace = TRUE))
+predicted <- factor(sample(letters[1:3], 100, replace = TRUE))
+weights   <- runif(length(actual))
+
+# 2) without weights
+SLmetrics::cmatrix(
+    actual    = actual,
+    predicted = predicted
+)
+
+# 2) with weights
+SLmetrics::cmatrix(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+```
+
+Calculating weighted metrics manually or by using `foo.cmatrix()`-method,
+
+```{r}
+# 1) weigthed confusion matrix
+# and weighted accuray
+confusion_matrix <- SLmetrics::cmatrix(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+
+# 2) pass into accuracy
+# function
+SLmetrics::accuracy(
+    confusion_matrix
+)
+
+# 3) calculate the weighted
+# accuracy manually
+SLmetrics::weighted.accuracy(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+```
+
+Please note, however, that it is not possible to pass `cmatix()`-into `weighted.accurracy()`,
+
+```{r}
+try(
+    SLmetrics::weighted.accuracy(
+        confusion_matrix
+    )
+)
+```
+
+## Bug-fixes
+
+* **Floating precision:** Metrics would give different results based on the method used. This means that `foo.cmatrix()` and `foo.factor()` would produce different results (See Issue https://github.com/serkor1/SLmetrics/issues/16). This has been fixed by using higher precision `Rcpp::NumericMatrix` instead of `Rcpp::IntegerMatrix`.
+
+* **Miscalculation of Confusion Matrix elements:** An error in how `FN`, `TN`, `FP` and `TP` were calculated have been fixed. No issue has been raised for this bug. This was not something that was caught by the unit-tests, as the total samples were too high to spot this error. It has, however, been fixed now. This means that all metrics that uses these explicitly are now stable, and produces the desired output.
+
+* **Calculation Error in Fowlks Mallows Index:** A bug in the calculation of the `fmi()`-function has been fixed. The `fmi()`-function now correctly calculates the measure.
+
+# Version 0.1-1
 
 ## General
 
@@ -29,7 +99,7 @@ set.seed(1903)
 
 * **NA-controls:** All pair-wise metrics that doesn't have a `micro`-argument were handling missing values as according to C++ and {Rcpp} internals. See [Issue](https://github.com/serkor1/SLmetrics/issues/8). Thank you @EmilHvitfeldt for pointing this out. This has now been fixed so functions uses an `na.rm`-argument to explicitly control for this. See below,
 
-```{r}
+```{r, eval = FALSE}
 # 1) define factors
 actual    <- factor(c("no", "yes"))
 predicted <- factor(c(NA, "no"))
@@ -92,7 +162,6 @@ plot(
     panels = FALSE
 )
 ```
-
 
 
 # Version 0.1-0

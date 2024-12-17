@@ -2,15 +2,21 @@
 % Please edit documentation in R/RcppExports.R, R/S3_accuracy.R
 \name{accuracy.factor}
 \alias{accuracy.factor}
+\alias{weighted.accuracy.factor}
 \alias{accuracy.cmatrix}
 \alias{accuracy}
+\alias{weighted.accuracy}
 \title{Compute the \eqn{\text{accuracy}}}
 \usage{
-\method{accuracy}{factor}(actual, predicted, na.rm = FALSE, ...)
+\method{accuracy}{factor}(actual, predicted, na.rm = TRUE, ...)
 
-\method{accuracy}{cmatrix}(x, ...)
+\method{weighted.accuracy}{factor}(actual, predicted, w, na.rm = TRUE, ...)
+
+\method{accuracy}{cmatrix}(x, na.rm = TRUE, ...)
 
 accuracy(...)
+
+weighted.accuracy(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -20,6 +26,8 @@ accuracy(...)
 \item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
 
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }

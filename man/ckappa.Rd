@@ -2,15 +2,21 @@
 % Please edit documentation in R/RcppExports.R, R/S3_CohensKappa.R
 \name{ckappa.factor}
 \alias{ckappa.factor}
+\alias{weighted.ckappa.factor}
 \alias{ckappa.cmatrix}
 \alias{ckappa}
+\alias{weighted.ckappa}
 \title{Compute Cohen's \eqn{\kappa}-statistic}
 \usage{
-\method{ckappa}{factor}(actual, predicted, beta = 1, ...)
+\method{ckappa}{factor}(actual, predicted, beta = 0, ...)
 
-\method{ckappa}{cmatrix}(x, beta = 1, ...)
+\method{weighted.ckappa}{factor}(actual, predicted, w, beta = 0, ...)
+
+\method{ckappa}{cmatrix}(x, beta = 0, ...)
 
 ckappa(...)
+
+weighted.ckappa(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -20,6 +26,8 @@ ckappa(...)
 \item{beta}{A <\link{numeric}> value of \link{length} 1. 0 by default. If set to a value different from zero, the off-diagonal confusion matrix will be penalized.}
 
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
 
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }

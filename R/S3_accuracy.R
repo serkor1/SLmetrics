@@ -39,6 +39,15 @@ accuracy <- function(...) {
   )
 }
 
+#' @rdname accuracy
+#' @export
+weighted.accuracy <- function(...) {
+  UseMethod(
+    generic = "weighted.accuracy",
+    object  = ..1
+  )
+}
+
 #' Compute the \eqn{\text{balanced}} \eqn{\text{accuracy}}
 #'
 #' The [baccuracy()]-function computes the [balanced accuracy](https://neptune.ai/blog/balanced-accuracy) between two
@@ -70,6 +79,15 @@ accuracy <- function(...) {
 baccuracy <- function(...) {
   UseMethod(
     generic = "baccuracy",
+    object  = ..1
+  )
+}
+
+#' @rdname baccuracy
+#' @export
+weighted.baccuracy <- function(...) {
+  UseMethod(
+    generic = "weighted.baccuracy",
     object  = ..1
   )
 }

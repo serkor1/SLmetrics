@@ -2,15 +2,21 @@
 % Please edit documentation in R/RcppExports.R, R/S3_accuracy.R
 \name{baccuracy.factor}
 \alias{baccuracy.factor}
+\alias{weighted.baccuracy.factor}
 \alias{baccuracy.cmatrix}
 \alias{baccuracy}
+\alias{weighted.baccuracy}
 \title{Compute the \eqn{\text{balanced}} \eqn{\text{accuracy}}}
 \usage{
-\method{baccuracy}{factor}(actual, predicted, adjust = FALSE, ...)
+\method{baccuracy}{factor}(actual, predicted, adjust = FALSE, na.rm = TRUE, ...)
 
-\method{baccuracy}{cmatrix}(x, adjust = FALSE, ...)
+\method{weighted.baccuracy}{factor}(actual, predicted, w, adjust = FALSE, na.rm = TRUE, ...)
+
+\method{baccuracy}{cmatrix}(x, adjust = FALSE, na.rm = TRUE, ...)
 
 baccuracy(...)
+
+weighted.baccuracy(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -19,7 +25,11 @@ baccuracy(...)
 
 \item{adjust}{A \link{logical} value. \link{FALSE} by default. If \link{TRUE} the metric is adjusted for random change \eqn{\frac{1}{k}}}
 
+\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
+
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
 
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }

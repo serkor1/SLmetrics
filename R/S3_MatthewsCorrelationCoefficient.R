@@ -40,9 +40,27 @@ mcc <- function(...) {
 
 #' @rdname mcc
 #' @export
+weighted.mcc <- function(...) {
+  UseMethod(
+    generic = "weighted.mcc",
+    object  = ..1
+  )
+}
+
+#' @rdname mcc
+#' @export
 phi <- function(...) {
   UseMethod(
     generic = "phi",
+    object  = ..1
+  )
+}
+
+#' @rdname mcc
+#' @export
+weighted.phi <- function(...) {
+  UseMethod(
+    generic = "weighted.phi",
     object  = ..1
   )
 }

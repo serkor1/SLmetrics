@@ -47,6 +47,14 @@ fbeta <- function(...) {
   )
 }
 
+#' @rdname fbeta
+#' @export
+weighted.fbeta <- function(...) {
+  UseMethod(
+    generic = "weighted.fbeta",
+    object  = ..1
+  )
+}
 
 
 # script end;

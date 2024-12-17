@@ -41,4 +41,13 @@ zerooneloss <- function(...) {
   )
 }
 
+#' @rdname zerooneloss
+#' @export
+weighted.zerooneloss <- function(...) {
+  UseMethod(
+    generic = "weighted.zerooneloss",
+    object  = ..1
+  )
+}
+
 # script end;

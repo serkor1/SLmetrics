@@ -104,4 +104,31 @@ selectivity <- function(...) {
   )
 }
 
+#' @rdname specificity
+#' @export
+weighted.specificity <- function(...) {
+  UseMethod(
+    generic = "weighted.specificity",
+    object  = ..1
+  )
+}
+
+#' @rdname specificity
+#' @export
+weighted.tnr <- function(...) {
+  UseMethod(
+    generic = "weighted.tnr",
+    object  = ..1
+  )
+}
+
+#' @rdname specificity
+#' @export
+weighted.selectivity <- function(...) {
+  UseMethod(
+    generic = "weighted.selectivity",
+    object  = ..1
+  )
+}
+
 # script end;

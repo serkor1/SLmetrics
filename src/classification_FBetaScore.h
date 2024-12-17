@@ -1,86 +1,63 @@
-#include "src_Helpers.h"
+#ifndef CLASSIFICATION_FBETASCORE_H
+#define CLASSIFICATION_FBETASCORE_H
+
+#include "classification_Helpers.h"
 #include <RcppEigen.h>
 #include <cmath>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
+class FBetaMetric : public classification {
+public:
 
-/*
- * Classwise fbeta
- * score
- */
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x, const double& beta = 1.0)
-{
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool micro, double beta) const override {
+        Eigen::ArrayXd output(1);
+        Eigen::ArrayXd tp(matrix.rows()), fp(matrix.rows()), fn(matrix.rows());
+        double beta_sq = beta * beta;
 
-  /*
-   * Calculate precision
-   * and recall
-   */
-  const double& beta_sq = beta * beta;
-  const Eigen::ArrayXd& tp = TP(x).cast<double>().array();
-  const Eigen::ArrayXd& fp = FP(x).cast<double>().array();
-  const Eigen::ArrayXd& fn = FN(x).cast<double>().array();
+        TP(matrix, tp);
+        FP(matrix, fp);
+        FN(matrix, fn);
 
-  // 1) recall
-  const Eigen::ArrayXd& recall_obj = tp / (tp + fn);
+        if (micro) {
 
-  // 2) precision
-  const Eigen::ArrayXd& precision_obj = tp / (tp + fp);
+            double tp_sum = tp.sum(), fp_sum = fp.sum(), fn_sum = fn.sum();
+            double precision = tp_sum / (tp_sum + fp_sum);
+            double recall = tp_sum / (tp_sum + fn_sum);
 
+            output = Eigen::ArrayXd::Constant(1, (precision + recall == 0)
+                ? R_NaReal
+                : (1 + beta_sq) * precision * recall / (beta_sq * precision + recall));
+            
+            return Rcpp::wrap(output);
 
-  return Rcpp::wrap((1 + beta_sq) * (recall_obj*precision_obj) / (beta_sq * precision_obj + recall_obj));
+        } else {
+            Eigen::ArrayXd precision = tp / (tp + fp);
+            Eigen::ArrayXd recall = tp / (tp + fn);
 
+            output = (1 + beta_sq) * (precision * recall) / (beta_sq * precision + recall);
 
-}
+            return Rcpp::wrap(Eigen::ArrayXd::Constant(1, output.sum() / output.size()));
+        }
 
+        
+    }
 
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x, const double& beta, const bool& micro, const bool& na_rm)
-{
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, double beta) const override {
+        Eigen::ArrayXd output(matrix.rows());
+        Eigen::ArrayXd tp(matrix.rows()), fp(matrix.rows()), fn(matrix.rows());
+        double beta_sq = beta * beta;
 
-  /*
-   * Calculate precision
-   * and recall
-   */
-  const double& beta_sq = beta * beta;
-  const Eigen::ArrayXd& tp = TP(x).cast<double>().array();
-  const Eigen::ArrayXd& fp = FP(x).cast<double>().array();
-  const Eigen::ArrayXd& fn = FN(x).cast<double>().array();
+        TP(matrix, tp);
+        FP(matrix, fp);
+        FN(matrix, fn);
 
-  // 1) recall
-  const Eigen::ArrayXd& recall_obj = tp / (tp + fn);
+        Eigen::ArrayXd precision = tp / (tp + fp);
+        Eigen::ArrayXd recall = tp / (tp + fn);
 
-  // 2) precision
-  const Eigen::ArrayXd& precision_obj = tp / (tp + fp);
+        output = (1 + beta_sq) * (precision * recall) / (beta_sq * precision + recall);
+        return Rcpp::wrap(output);
+    }
+};
 
-
-  // 3) micro average
-  // calculation
-  if (micro) {
-
-    // 3.1) calculate the sum
-    // of tp, fp and fn for micro
-    // precision and micro recall
-    const double& tp_sum = tp.sum();
-    const double& fp_sum = fp.sum();
-    const double& fn_sum = fn.sum();
-
-    // 3.2) caclculate
-    // precision and recall
-    const double& precision_sum = tp_sum / (tp_sum + fp_sum);
-    const double& recall_sum = tp_sum / (tp_sum + fn_sum);
-
-
-    // 3.3) return
-    // the micro fbeta
-    return Rcpp::wrap((recall_sum + precision_sum == 0) ? R_NaReal: (1 + beta_sq) * (recall_sum * precision_sum) / (beta_sq * precision_sum + recall_sum));
-  }
-
-  // 4) intermediate sum
-  Eigen::ArrayXd output =  (1 + beta_sq) * (recall_obj * precision_obj) / (beta_sq * precision_obj + recall_obj);
-
-
-  return Rcpp::wrap(output.isNaN().select(0,output).sum() / ((na_rm) ? (output.isNaN() == false).count() : output.size()));
-
-
-
-}
+#endif // CLASSIFICATION_FBETASCORE_H

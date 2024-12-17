@@ -1,13 +1,12 @@
-# script: Classification Tests
+# script: weighted classification metrics
+# date: 2024-12-12
 # author: Serkan Korkmaz, serkor1@duck.com
-# date: 2024-10-02
-# objective: Test all classification
-# metrics against their torch/scikit-learn
-# counter part
+# objective: Test that the weighted metrics
+# corresponds to target values
 # script start;
 
 testthat::test_that(
-  desc = "Test that all classification metrics are correctly implemented",
+  desc = "Test that the weighted classification metrics equals {scikit-learn}-equivalents",
   code = {
 
     # 0) load functions from
@@ -20,23 +19,26 @@ testthat::test_that(
       "pytorch.py"
     )
 
-    source("ref-manual.R")
+    # source("ref-manual.R")
 
     # 1) generate class
     # values
     actual    <- create_factor(balanced = TRUE)
     predicted <- create_factor(balanced = TRUE)
+    weights   <- runif(n = length(actual))
 
     # 2) generate confusion matrix
     # from {SLmetrics} and {Python}
     sl_matrix <- cmatrix(
       actual    = actual,
-      predicted = predicted
+      predicted = predicted,
+      w         = weights
     )
 
     py_matrix <- py_cmatrix(
       actual    = actual,
-      predicted = predicted
+      predicted = predicted,
+      w         = weights
     )
 
     # 2.1) test for equality
@@ -48,9 +50,71 @@ testthat::test_that(
       )
     )
 
-    # 3) test that methods
-    # work and returns the same values
+    # 3) test that all metrics
+    # that supports weighted classifications
+    # are equal to target metrics and methods
     sl_function <- list(
+      # accuracy
+      "accuracy"    = weighted.accuracy,
+      "baccuracy"   = weighted.baccuracy,
+
+      # Zero-One Loss
+      "zerooneloss" = weighted.zerooneloss,
+
+      # specificity methods
+      # Bug in python application. This is incorrect
+      # make PR
+      # "specificity" = weighted.specificity,
+      # "tnr"         = weighted.tnr,
+      # "selectivity" = weighted.selectivity,
+
+
+      # recall methods;
+      "recall"      = weighted.recall,
+      "sensitivity" = weighted.sensitivity,
+      "tpr"         = weighted.tpr,
+
+      # precision methods
+      "precision"   = weighted.precision,
+      "ppv"         = weighted.ppv,
+
+      # fbeta methods
+      "fbeta"       = weighted.fbeta,
+
+      # likelihood methods
+      "dor"         = weighted.dor,
+      "plr"         = weighted.plr, 
+      "nlr"         = weighted.nlr,
+
+      # jaccard methods
+      "jaccard"     = weighted.jaccard,
+      "tscore"      = weighted.tscore,
+      "csi"         = weighted.csi,
+
+      # mcc methods: 
+      "mcc"         = weighted.mcc,
+      "phi"         = weighted.phi,
+
+      # fpr methods
+      "fpr"         = weighted.fpr, 
+      "fallout"     = weighted.fallout,
+
+      "fdr"         = weighted.fdr,
+      "npv"         = weighted.npv,
+      "fer"         = weighted.fer,
+
+      # Cohens Kappa:
+      "ckappa"      = weighted.ckappa
+
+    )
+
+    # 3.1) check if the foo.cmatrix
+    # gives the same result
+    #
+    # NOTE: This has to be produced differently
+    # to avoid mismatches!
+
+    cmatrix_method <- list(
       # accuracy
       "accuracy"    = accuracy,
       "baccuracy"   = baccuracy,
@@ -59,9 +123,9 @@ testthat::test_that(
       "zerooneloss" = zerooneloss,
 
       # specificity methods
-      "specificity" = specificity,
-      "tnr"         = tnr,
-      "selectivity" = selectivity,
+      # "specificity" = specificity,
+      # "tnr"         = tnr,
+      # "selectivity" = selectivity,
 
 
       # recall methods;
@@ -94,9 +158,6 @@ testthat::test_that(
       "fpr"         = fpr,
       "fallout"     = fallout,
 
-      # fmi methods
-      "fmi"         = fmi,
-
       "fdr"         = fdr,
       "npv"         = npv,
       "fer"         = fer,
@@ -109,14 +170,15 @@ testthat::test_that(
     for (i in seq_along(sl_function)) {
 
       .f <-  sl_function[[i]]
+      .F <-  cmatrix_method[[i]]
 
       testthat::expect_true(
         object = set_equal(
-          .f(actual, predicted),
-          .f(sl_matrix)
+          .f(actual, predicted, w = weights),
+          .F(sl_matrix)
         ),
         label = paste(
-          "Class-wise metods in", names(sl_function)[i], "not equivalent."
+          "foo.cmatrix", names(sl_function)[i], "is not equivalent to weighted.foo!"
         )
       )
 
@@ -154,8 +216,8 @@ testthat::test_that(
 
       testthat::expect_true(
         object = set_equal(
-          .f(actual, predicted),
-          as.numeric(.F(actual, predicted))
+          .f(actual, predicted, w = weights),
+          as.numeric(.F(actual, predicted, w = weights))
         ),
         label = paste(
           "Class-wise functions in",
@@ -164,7 +226,11 @@ testthat::test_that(
         )
       )
 
+
     }
+
+
+
 
   }
 )

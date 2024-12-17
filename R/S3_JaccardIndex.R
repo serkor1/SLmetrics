@@ -63,4 +63,32 @@ tscore <- function(...) {
   )
 }
 
+#' @rdname jaccard
+#' @export
+weighted.jaccard <- function(...) {
+  UseMethod(
+    generic = "weighted.jaccard",
+    object  = ..1
+  )
+}
+
+#' @rdname jaccard
+#' @export
+weighted.csi <- function(...) {
+  UseMethod(
+    generic = "weighted.csi",
+    object  = ..1
+  )
+}
+
+#' @rdname jaccard
+#' @export
+weighted.tscore <- function(...) {
+  UseMethod(
+    generic = "weighted.tscore",
+    object  = ..1
+  )
+}
+
+
 # script end;
