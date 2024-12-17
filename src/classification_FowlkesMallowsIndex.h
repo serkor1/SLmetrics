@@ -23,20 +23,21 @@ public:
 
     // 0) set sizes
     // of arrays
-    Eigen::ArrayXd output(1), N(1), row_sum(matrix.rows()), col_sum(matrix.cols()), pk(1), qk(1), tk(1);
+    Eigen::ArrayXd output(1), N(1), pk(1), qk(1), tk(1);
+    Eigen::VectorXd col_sum(matrix.rows()), row_sum(matrix.rows());
 
     // 1) calculate values
     // accordingly
     N       = matrix.sum();
     row_sum = matrix.rowwise().sum();
     col_sum = matrix.colwise().sum();
-    tk      = matrix.cwiseProduct(matrix).sum();
-    pk      = row_sum.matrix().squaredNorm() - N;
-    qk      = row_sum.matrix().squaredNorm() - N;
+    tk      = matrix.cwiseProduct(matrix).sum() - N;
+    pk      = col_sum.squaredNorm() - N;
+    qk      = row_sum.squaredNorm() - N;
 
     // 2) calculate output
     // value
-    output  = (tk.square()) / (pk.square());
+    output  = (tk / pk) * (tk / qk);
 
     return Rcpp::wrap(output.array().sqrt());
 

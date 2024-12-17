@@ -87,6 +87,8 @@ try(
 
 * **Miscalculation of Confusion Matrix elements:** An error in how `FN`, `TN`, `FP` and `TP` were calculated have been fixed. No issue has been raised for this bug. This was not something that was caught by the unit-tests, as the total samples were too high to spot this error. It has, however, been fixed now. This means that all metrics that uses these explicitly are now stable, and produces the desired output.
 
+* **Calculation Error in Fowlks Mallows Index:** A bug in the calculation of the `fmi()`-function has been fixed. The `fmi()`-function now correctly calculates the measure.
+
 # Version 0.1-1
 
 ## General
@@ -97,7 +99,7 @@ try(
 
 * **NA-controls:** All pair-wise metrics that doesn't have a `micro`-argument were handling missing values as according to C++ and {Rcpp} internals. See [Issue](https://github.com/serkor1/SLmetrics/issues/8). Thank you @EmilHvitfeldt for pointing this out. This has now been fixed so functions uses an `na.rm`-argument to explicitly control for this. See below,
 
-```{r}
+```{r, eval = FALSE}
 # 1) define factors
 actual    <- factor(c("no", "yes"))
 predicted <- factor(c(NA, "no"))

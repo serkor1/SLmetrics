@@ -52,7 +52,7 @@ testthat::test_that(
 
     # 3) test that all metrics
     # that supports weighted classifications
-    # are equal to target metrics
+    # are equal to target metrics and methods
     sl_function <- list(
       # accuracy
       "accuracy"    = weighted.accuracy,
@@ -107,6 +107,83 @@ testthat::test_that(
       "ckappa"      = weighted.ckappa
 
     )
+
+    # 3.1) check if the foo.cmatrix
+    # gives the same result
+    #
+    # NOTE: This has to be produced differently
+    # to avoid mismatches!
+
+    cmatrix_method <- list(
+      # accuracy
+      "accuracy"    = accuracy,
+      "baccuracy"   = baccuracy,
+
+      # Zero-One Loss
+      "zerooneloss" = zerooneloss,
+
+      # specificity methods
+      # "specificity" = specificity,
+      # "tnr"         = tnr,
+      # "selectivity" = selectivity,
+
+
+      # recall methods;
+      "recall"      = recall,
+      "sensitivity" = sensitivity,
+      "tpr"         = tpr,
+
+      # precision methods
+      "precision"   = precision,
+      "ppv"         = ppv,
+
+      # fbeta methods
+      "fbeta"       = fbeta,
+
+      # likelihood methods
+      "dor"         = dor,
+      "plr"         = plr,
+      "nlr"         = nlr,
+
+      # jaccard methods
+      "jaccard"     = jaccard,
+      "tscore"      = tscore,
+      "csi"         = csi,
+
+      # mcc methods
+      "mcc"         = mcc,
+      "phi"         = phi,
+
+      # fpr methods. Differs by 0.001 against scikit 
+      "fpr"         = fpr,
+      "fallout"     = fallout,
+
+      "fdr"         = fdr,
+      "npv"         = npv,
+      "fer"         = fer,
+
+      "ckappa"      = ckappa
+
+
+    )
+
+    for (i in seq_along(sl_function)) {
+
+      .f <-  sl_function[[i]]
+      .F <-  cmatrix_method[[i]]
+
+      testthat::expect_true(
+        object = set_equal(
+          .f(actual, predicted, w = weights),
+          .F(sl_matrix)
+        ),
+        label = paste(
+          "foo.cmatrix", names(sl_function)[i], "is not equivalent to weighted.foo!"
+        )
+      )
+
+
+    }
 
     # 4) test that the functions
     # returns the same values as
