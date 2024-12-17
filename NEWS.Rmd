@@ -75,13 +75,17 @@ Please note, however, that it is not possible to pass `cmatix()`-into `weighted.
 
 ```{r}
 try(
-    SLmetrics::weighted.accurracy(
+    SLmetrics::weighted.accuracy(
         confusion_matrix
     )
 )
 ```
 
+## Bug-fixes
 
+* **Floating precision:** Metrics would give different results based on the method used. This means that `foo.cmatrix()` and `foo.factor()` would produce different results (See Issue https://github.com/serkor1/SLmetrics/issues/16). This has been fixed by using higher precision `Rcpp::NumericMatrix` instead of `Rcpp::IntegerMatrix`.
+
+* **Miscalculation of Confusion Matrix elements:** An error in how `FN`, `TN`, `FP` and `TP` were calculated have been fixed. No issue has been raised for this bug. This was not something that was caught by the unit-tests, as the total samples were too high to spot this error. It has, however, been fixed now. This means that all metrics that uses these explicitly are now stable, and produces the desired output.
 
 # Version 0.1-1
 

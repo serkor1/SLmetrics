@@ -49,11 +49,12 @@ def py_fbeta(actual, predicted, beta = 1, average = None, w = None):
       sample_weight = w
     )
 
-def py_likelihood(actual, predicted, w = None):
+def py_likelihood(actual, predicted, w = None, labels = None):
     return metrics.class_likelihood_ratios(
       y_true = actual,
       y_pred = predicted,
-      sample_weight = w
+      sample_weight = w,
+      labels = labels
     )
     
 def py_recall(actual, predicted, average = None, w = None):

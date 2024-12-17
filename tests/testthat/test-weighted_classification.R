@@ -82,8 +82,8 @@ testthat::test_that(
       "fbeta"       = weighted.fbeta,
 
       # likelihood methods
-      # "dor"         = weighted.dor, Differs by 0.00327 against Scikit
-      # "plr"         = weighted.plr, Differs by 0.002096 against Scikit
+      "dor"         = weighted.dor,
+      "plr"         = weighted.plr, 
       "nlr"         = weighted.nlr,
 
       # jaccard methods
@@ -91,21 +91,20 @@ testthat::test_that(
       "tscore"      = weighted.tscore,
       "csi"         = weighted.csi,
 
-      # mcc methods: Currently differs 0.1476 from Scikit
-      # "mcc"         = weighted.mcc,
-      # "phi"         = weighted.phi,
+      # mcc methods: 
+      "mcc"         = weighted.mcc,
+      "phi"         = weighted.phi,
 
       # fpr methods
-      # "fpr"         = weighted.fpr, Differs by 0.0026
-      # "fallout"     = weighted.fallout,
+      "fpr"         = weighted.fpr, 
+      "fallout"     = weighted.fallout,
 
       "fdr"         = weighted.fdr,
-      "npv"         = weighted.npv
-      # "fer"         = weighted.fer Differrs by 0.002621
-      #,
+      "npv"         = weighted.npv,
+      "fer"         = weighted.fer,
 
-      # Cohens Kappa: Differs 0.XXX from Scikit
-      # "ckappa"      = weighted.ckappa
+      # Cohens Kappa:
+      "ckappa"      = weighted.ckappa
 
     )
 
@@ -141,8 +140,7 @@ testthat::test_that(
       testthat::expect_true(
         object = set_equal(
           .f(actual, predicted, w = weights),
-          as.numeric(.F(actual, predicted, w = weights)),
-          tolerance = 1e-3
+          as.numeric(.F(actual, predicted, w = weights))
         ),
         label = paste(
           "Class-wise functions in",

@@ -23,41 +23,40 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
 using namespace Rcpp;
 
+/*
+  Calculating TP, FP, TN and FN from matrices.
+
+  NOTE: The template is redundant, and will be removed at a later point.
+*/
 
 template <typename MatrixType>
-inline __attribute__((always_inline)) void TP(const MatrixType& matrix, Eigen::Array<typename MatrixType::Scalar, Eigen::Dynamic, 1>& tp)
-{
+inline __attribute__((always_inline)) void TP(const MatrixType& matrix, Eigen::Array<typename MatrixType::Scalar, Eigen::Dynamic, 1>& tp) {
     tp = matrix.diagonal().array();
 }
 
-// Generic template function to compute False Positives (FP)
 template <typename MatrixType>
-inline __attribute__((always_inline)) void FP(const MatrixType& matrix, Eigen::Array<typename MatrixType::Scalar, Eigen::Dynamic, 1>& fp)
-{
-
+inline __attribute__((always_inline)) void FP(const MatrixType& matrix, Eigen::Array<typename MatrixType::Scalar, Eigen::Dynamic, 1>& fp) {
     fp = matrix.colwise().sum().array() - matrix.diagonal().array().transpose();
 }
 
 template <typename MatrixType>
-inline __attribute__((always_inline)) void TN(const MatrixType& matrix, Eigen::Array<typename MatrixType::Scalar, Eigen::Dynamic, 1>& tn)
-{
-
+inline __attribute__((always_inline)) void TN(const MatrixType& matrix, Eigen::Array<typename MatrixType::Scalar, Eigen::Dynamic, 1>& tn) {
     using Scalar = typename MatrixType::Scalar;
-    const Scalar total_sum = matrix.sum();
-    auto tp = matrix.diagonal().array();
-    auto row_sums = matrix.rowwise().sum().array();
-    auto col_sums = matrix.colwise().sum().array();
 
-    tn = Eigen::Array<Scalar, Eigen::Dynamic, 1>::Constant(matrix.rows(), total_sum) - (row_sums + col_sums - tp);
+    const Scalar total_sum = matrix.sum();
+    Eigen::Array<Scalar, Eigen::Dynamic, 1> tp = matrix.diagonal().array();
+    Eigen::Array<Scalar, Eigen::Dynamic, 1> row_sums = matrix.rowwise().sum().array();
+    Eigen::Array<Scalar, Eigen::Dynamic, 1> col_sums = matrix.colwise().sum().array();
+
+    tn = Eigen::Array<Scalar, Eigen::Dynamic, 1>::Constant(matrix.rows(), total_sum) - row_sums - col_sums + tp;
 }
 
 // Generic template function to compute False Negatives (FN)
 template <typename MatrixType>
-inline __attribute__((always_inline)) void FN(const MatrixType& matrix, Eigen::Array<typename MatrixType::Scalar, Eigen::Dynamic, 1>& fn)
-{
-
+inline __attribute__((always_inline)) void FN(const MatrixType& matrix, Eigen::Array<typename MatrixType::Scalar, Eigen::Dynamic, 1>& fn) {
     fn = matrix.rowwise().sum().array() - matrix.diagonal().array();
 }
+
 
 /*
 Confusion Matrix:

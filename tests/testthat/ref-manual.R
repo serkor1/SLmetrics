@@ -175,22 +175,6 @@ py_plr <- function(actual, predicted, average = NULL, na.rm = TRUE, w = NULL) {
   # Calculate Positive Likelihood Ratio per class
   plr_class <- TPR / FPR
 
-  # If averaging is requested
-  if (!is.null(average)) {
-    if (average == "micro") {
-      # Micro-average
-      overall_tpr <- sum(TP, na.rm = TRUE) / (sum(TP, na.rm = TRUE) + sum(FN, na.rm = TRUE))
-      overall_fpr <- sum(FP, na.rm = TRUE) / (sum(FP, na.rm = TRUE) + sum(TN, na.rm = TRUE))
-      return(overall_tpr / overall_fpr)
-    } else {
-      # Handle non-finite values in macro-average case
-      if (!na.rm) {
-        plr_class[!is.finite(plr_class)] <- 0
-      }
-      return(mean(plr_class, na.rm = na.rm))
-    }
-  }
-
   return(plr_class)
 }
 

@@ -77,8 +77,8 @@ testthat::test_that(
       "fbeta"       = fbeta,
 
       # likelihood methods
-      # "dor"         = dor, # Differs by 0.0012 against scikit
-      # "plr"         = plr, # Differs by 0.00107
+      "dor"         = dor,
+      "plr"         = plr,
       "nlr"         = nlr,
 
       # jaccard methods
@@ -91,15 +91,15 @@ testthat::test_that(
       "phi"         = phi,
 
       # fpr methods. Differs by 0.001 against scikit 
-      # "fpr"         = fpr,
-      # "fallout"     = fallout,
+      "fpr"         = fpr,
+      "fallout"     = fallout,
 
       # fmi methods
       "fmi"         = fmi,
 
       "fdr"         = fdr,
       "npv"         = npv,
-      # "fer"         = fer, Differs by 0.001349
+      "fer"         = fer,
 
       "ckappa"      = ckappa
 
