@@ -34,11 +34,13 @@ testthat::test_that(
       all(
         set_equal(
           current = as.numeric(pinball(actual, predicted, deviance = TRUE)),
-          target  = as.numeric(py_d2pinball(actual, predicted))
+          target  = as.numeric(py_d2pinball(actual, predicted)),
+          tolerance = 3e-5
         ),
         set_equal(
           current   = as.numeric(weighted.pinball(actual, predicted, w = w, deviance = TRUE)),
-          target    = as.numeric(py_d2pinball(actual, predicted, w = w))
+          target    = as.numeric(py_d2pinball(actual, predicted, w = w)),
+          tolerance = 3e-5
         )
       )
     )

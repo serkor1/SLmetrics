@@ -100,10 +100,10 @@ predicted <- actual + rnorm(n = 1e3)
 w         <- runif(n = 1e3)
 
 # 2) unweighted metrics
-rmse(actual, predicted)
+SLmetrics::rmse(actual, predicted)
 
 # 3) weighted metrics
-weighted.rmse(actual, predicted)
+SLmetrics::weighted.rmse(actual, predicted, w = w)
 ```
 
 
