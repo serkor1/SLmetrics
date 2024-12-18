@@ -22,34 +22,6 @@ def py_huber(actual, predicted, delta=1.0, w=None):
     else:
         return loss.mean().item()
 
-def py_ccc(actual, predicted, w=None):
-
-    actual = torch.tensor(actual, dtype=torch.float64)
-    predicted = torch.tensor(predicted, dtype=torch.float64)
-
-    ccc_metric = ConcordanceCorrCoef()
-
-    if w is None:
-        result = ccc_metric(predicted, actual)
-        return result.item()
-
-    else:
-        w = torch.tensor(w, dtype=torch.float64)
-
-        mean_actual = (actual * w).sum() / w.sum()
-        mean_predicted = (predicted * w).sum() / w.sum()
-
-        centered_actual = actual - mean_actual
-        centered_predicted = predicted - mean_predicted
-
-        var_actual = ((centered_actual)**2 * w).sum() / w.sum()
-        var_predicted = ((centered_predicted)**2 * w).sum() / w.sum()
-
-        covariance = (centered_actual * centered_predicted * w).sum() / w.sum()
-
-        ccc = (2 * covariance) / (var_actual + var_predicted + (mean_actual - mean_predicted)**2)
-        return ccc.item()
-
 def py_smape(actual, predicted, w=None):
     actual = torch.tensor(actual, dtype=torch.float64)
     predicted = torch.tensor(predicted, dtype=torch.float64)

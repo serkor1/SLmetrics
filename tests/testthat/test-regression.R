@@ -101,8 +101,7 @@ testthat::test_that(
       testthat::expect_true(
         object = set_equal(
           sl_measure,
-          py_measure,
-          tolerance = 5e-6
+          py_measure
 
         ),
         label = paste(
