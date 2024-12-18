@@ -3,12 +3,18 @@
 %   R/S3_ConcordanceCorrelationCoefficient.R
 \name{ccc.numeric}
 \alias{ccc.numeric}
+\alias{weighted.ccc.numeric}
 \alias{ccc}
+\alias{weighted.ccc}
 \title{Compute the \eqn{\text{concordance}} \eqn{\text{correlation}} \eqn{\text{coefficient}}}
 \usage{
-\method{ccc}{numeric}(actual, predicted, correction = FALSE, w = NULL, na.rm = FALSE, ...)
+\method{ccc}{numeric}(actual, predicted, correction = FALSE, ...)
+
+\method{weighted.ccc}{numeric}(actual, predicted, w, correction = FALSE, ...)
 
 ccc(...)
+
+weighted.ccc(...)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}
@@ -18,11 +24,9 @@ ccc(...)
 \item{correction}{A <\link{logical}> vector of \link{length} 1. \link{FALSE} by default. If \link{TRUE} the variance and covariance
 will be adjusted with \eqn{\frac{1-n}{n}}}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
-
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
-
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.

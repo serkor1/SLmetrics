@@ -1176,46 +1176,81 @@ BEGIN_RCPP
 END_RCPP
 }
 // ccc
-double ccc(const std::vector<double>& actual, const std::vector<double>& predicted, bool correction, Rcpp::Nullable<std::vector<double>> w, bool na_rm);
-RcppExport SEXP _SLmetrics_ccc(SEXP actualSEXP, SEXP predictedSEXP, SEXP correctionSEXP, SEXP wSEXP, SEXP na_rmSEXP) {
+double ccc(const std::vector<double>& actual, const std::vector<double>& predicted, bool correction);
+RcppExport SEXP _SLmetrics_ccc(SEXP actualSEXP, SEXP predictedSEXP, SEXP correctionSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
     Rcpp::traits::input_parameter< bool >::type correction(correctionSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<std::vector<double>> >::type w(wSEXP);
-    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(ccc(actual, predicted, correction, w, na_rm));
+    rcpp_result_gen = Rcpp::wrap(ccc(actual, predicted, correction));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_ccc
+double weighted_ccc(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w, bool correction);
+RcppExport SEXP _SLmetrics_weighted_ccc(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP correctionSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< bool >::type correction(correctionSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_ccc(actual, predicted, w, correction));
     return rcpp_result_gen;
 END_RCPP
 }
 // huberloss
-double huberloss(const std::vector<double>& actual, const std::vector<double>& predicted, const double& delta, Rcpp::Nullable<std::vector<double>> w, bool na_rm);
-RcppExport SEXP _SLmetrics_huberloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP deltaSEXP, SEXP wSEXP, SEXP na_rmSEXP) {
+double huberloss(const std::vector<double>& actual, const std::vector<double>& predicted, const double& delta);
+RcppExport SEXP _SLmetrics_huberloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP deltaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
     Rcpp::traits::input_parameter< const double& >::type delta(deltaSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<std::vector<double>> >::type w(wSEXP);
-    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(huberloss(actual, predicted, delta, w, na_rm));
+    rcpp_result_gen = Rcpp::wrap(huberloss(actual, predicted, delta));
     return rcpp_result_gen;
 END_RCPP
 }
-// mae
-double mae(const std::vector<double>& actual, const std::vector<double>& predicted, Rcpp::Nullable<std::vector<double>> w, bool na_rm);
-RcppExport SEXP _SLmetrics_mae(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP na_rmSEXP) {
+// weighted_huberloss
+double weighted_huberloss(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w, const double& delta);
+RcppExport SEXP _SLmetrics_weighted_huberloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP deltaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<std::vector<double>> >::type w(wSEXP);
-    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(mae(actual, predicted, w, na_rm));
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const double& >::type delta(deltaSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_huberloss(actual, predicted, w, delta));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mae
+double mae(const std::vector<double>& actual, const std::vector<double>& predicted);
+RcppExport SEXP _SLmetrics_mae(SEXP actualSEXP, SEXP predictedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
+    rcpp_result_gen = Rcpp::wrap(mae(actual, predicted));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_mae
+double weighted_mae(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w);
+RcppExport SEXP _SLmetrics_weighted_mae(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_mae(actual, predicted, w));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1522,9 +1557,12 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_weighted_zerooneloss", (DL_FUNC) &_SLmetrics_weighted_zerooneloss, 4},
     {"_SLmetrics_zerooneloss_cmatrix", (DL_FUNC) &_SLmetrics_zerooneloss_cmatrix, 2},
     {"_SLmetrics_rsq", (DL_FUNC) &_SLmetrics_rsq, 4},
-    {"_SLmetrics_ccc", (DL_FUNC) &_SLmetrics_ccc, 5},
-    {"_SLmetrics_huberloss", (DL_FUNC) &_SLmetrics_huberloss, 5},
-    {"_SLmetrics_mae", (DL_FUNC) &_SLmetrics_mae, 4},
+    {"_SLmetrics_ccc", (DL_FUNC) &_SLmetrics_ccc, 3},
+    {"_SLmetrics_weighted_ccc", (DL_FUNC) &_SLmetrics_weighted_ccc, 4},
+    {"_SLmetrics_huberloss", (DL_FUNC) &_SLmetrics_huberloss, 3},
+    {"_SLmetrics_weighted_huberloss", (DL_FUNC) &_SLmetrics_weighted_huberloss, 4},
+    {"_SLmetrics_mae", (DL_FUNC) &_SLmetrics_mae, 2},
+    {"_SLmetrics_weighted_mae", (DL_FUNC) &_SLmetrics_weighted_mae, 3},
     {"_SLmetrics_mape", (DL_FUNC) &_SLmetrics_mape, 2},
     {"_SLmetrics_weighted_mape", (DL_FUNC) &_SLmetrics_weighted_mape, 3},
     {"_SLmetrics_mpe", (DL_FUNC) &_SLmetrics_mpe, 2},

@@ -37,7 +37,10 @@ testthat::test_that(
       "mape"      = weighted.mape,
       "smape"     = weighted.smape,
       "mpe"       = weighted.mpe,
-      "mse"       = weighted.mse
+      "mse"       = weighted.mse,
+      "ccc"       = weighted.ccc,
+      "huberloss" = weighted.huberloss,
+      "mae"       = weighted.mae
     )
 
     # 3) test that the functions

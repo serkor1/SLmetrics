@@ -1,78 +1,39 @@
 #ifndef REGRESSION_HUBERLOSS_H
 #define REGRESSION_HUBERLOSS_H
 
-#include <vector>
+#include "regression_Utils.h"
 #include <cmath>
-#include <cstddef>
-#include <limits>
+#include <vector>
 
-// Unweighted Huber Loss
-inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, const double& delta, bool na_rm = false)
-{
-    const std::size_t n = actual.size();
-    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
+/**
+ * Huber Loss implementation using RegressionBase.
+ */
+class HuberLoss : public RegressionBase {
+public:
+    explicit HuberLoss(double delta) : delta_(delta) {}
 
-    const double* actual_ptr = actual.data();
-    const double* predicted_ptr = predicted.data();
-
-    double output = 0.0;
-    int valid_count = 0;
-
-    for (std::size_t i = 0; i < n; ++i) {
-        double actual_value = *(actual_ptr++);
-        double predicted_value = *(predicted_ptr++);
-
-        bool is_valid = !std::isnan(actual_value) && !std::isnan(predicted_value);
-        valid_count += is_valid;
-
-        if (is_valid) {
-            double diff = actual_value - predicted_value;
+    // Unweighted Huber Loss
+    double compute(const std::vector<double>& actual, const std::vector<double>& predicted) const override {
+        auto errorFunc = [this](const double& a, const double& p) {
+            double diff = a - p;
             double abs_diff = std::abs(diff);
-            output += (abs_diff <= delta) ? 0.5 * diff * diff : delta * (abs_diff - 0.5 * delta);
-        }
+            return (abs_diff <= delta_) ? 0.5 * diff * diff : delta_ * (abs_diff - 0.5 * delta_);
+        };
+        return calculate(actual, predicted, errorFunc);
     }
 
-    if (!na_rm && valid_count != n) {
-        return NA_DOUBLE;
-    }
-
-    return valid_count > 0 ? output / valid_count : NA_DOUBLE;
-}
-
-// Weighted Huber Loss
-inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights, const double& delta, bool na_rm = false)
-{
-    const std::size_t n = actual.size();
-    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
-
-    const double* actual_ptr = actual.data();
-    const double* predicted_ptr = predicted.data();
-    const double* weights_ptr = weights.data();
-
-    double numerator = 0.0;
-    double denominator = 0.0;
-
-    for (std::size_t i = 0; i < n; ++i) {
-        double actual_value = *(actual_ptr++);
-        double predicted_value = *(predicted_ptr++);
-        double weight = *(weights_ptr++);
-
-        bool is_valid = !std::isnan(actual_value) && !std::isnan(predicted_value) && !std::isnan(weight);
-
-        if (is_valid) {
-            double diff = actual_value - predicted_value;
+    // Weighted Huber Loss
+    double compute(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights) const override {
+        auto errorFunc = [this](const double& a, const double& p) {
+            double diff = a - p;
             double abs_diff = std::abs(diff);
-
-            numerator += (abs_diff <= delta) ? 0.5 * diff * diff * weight : delta * (abs_diff - 0.5 * delta) * weight;
-            denominator += weight;
-        }
+            return (abs_diff <= delta_) ? 0.5 * diff * diff : delta_ * (abs_diff - 0.5 * delta_);
+        };
+        return calculate(actual, predicted, weights, errorFunc);
     }
 
-    if (!na_rm && denominator == 0) {
-        return NA_DOUBLE;
-    }
+private:
+    double delta_;
+};
 
-    return denominator > 0 ? numerator / denominator : NA_DOUBLE;
-}
-
-#endif //REGRESSION_HUBERLOSS_H
+#endif // REGRESSION_HUBERLOSS_H

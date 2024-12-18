@@ -32,4 +32,14 @@ mae <- function(...) {
     object  = ..1
   )
 }
+
+#' @rdname mae
+#' @export
+weighted.mae <- function(...) {
+  UseMethod(
+    generic = "weighted.mae",
+    object  = ..1
+  )
+}
+
 # script end;

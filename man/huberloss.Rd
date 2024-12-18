@@ -2,10 +2,13 @@
 % Please edit documentation in R/RcppExports.R, R/S3_HuberLoss.R
 \name{huberloss.numeric}
 \alias{huberloss.numeric}
+\alias{weighted.huberloss.numeric}
 \alias{huberloss}
 \title{Compute the \eqn{\text{huber}} \eqn{\text{loss}}}
 \usage{
-\method{huberloss}{numeric}(actual, predicted, delta = 1, w = NULL, na.rm = FALSE, ...)
+\method{huberloss}{numeric}(actual, predicted, delta = 1, ...)
+
+\method{weighted.huberloss}{numeric}(actual, predicted, w, delta = 1, ...)
 
 huberloss(...)
 }
@@ -16,11 +19,11 @@ huberloss(...)
 
 \item{delta}{A <\link{numeric}>-vector of \link{length} 1. 1 by default. The threshold value for switch between functions (see calculation).}
 
+\item{...}{Arguments passed into other methods.}
+
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
 
 \item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
-
-\item{...}{Arguments passed into other methods.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.

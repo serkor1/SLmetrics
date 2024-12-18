@@ -4,6 +4,7 @@
 \alias{mse.numeric}
 \alias{weighted.mse.numeric}
 \alias{mse}
+\alias{weighted.mse}
 \title{Compute the \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{error}}}
 \usage{
 \method{mse}{numeric}(actual, predicted, ...)
@@ -11,6 +12,8 @@
 \method{weighted.mse}{numeric}(actual, predicted, w, ...)
 
 mse(...)
+
+weighted.mse(...)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}
