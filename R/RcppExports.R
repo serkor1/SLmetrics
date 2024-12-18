@@ -690,29 +690,57 @@ pinball.numeric <- function(actual, predicted, alpha = 0.5, deviance = FALSE, w 
 #' @rdname rae
 #' @method rae numeric
 #' @export
-rae.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
-    .Call(`_SLmetrics_rae`, actual, predicted, w, na_rm = na.rm)
+rae.numeric <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_rae`, actual, predicted)
+}
+
+#' @rdname rae
+#' @method weighted.rae numeric
+#' @export
+weighted.rae.numeric <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_rae`, actual, predicted, w)
 }
 
 #' @rdname rrmse
 #' @method rrmse numeric
 #' @export
-rrmse.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
-    .Call(`_SLmetrics_rrmse`, actual, predicted, w, na_rm = na.rm)
+rrmse.numeric <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_rrmse`, actual, predicted)
+}
+
+#' @rdname rrmse
+#' @method weighted.rrmse numeric
+#' @export
+weighted.rrmse.numeric <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_rrmse`, actual, predicted, w)
 }
 
 #' @rdname rmse
 #' @method rmse numeric
 #' @export
-rmse.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
-    .Call(`_SLmetrics_rmse`, actual, predicted, w, na_rm = na.rm)
+rmse.numeric <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_rmse`, actual, predicted)
+}
+
+#' @rdname rmse
+#' @method weighted.rmse numeric
+#' @export
+weighted.rmse.numeric <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_rmse`, actual, predicted, w)
 }
 
 #' @rdname rmsle
 #' @method rmsle numeric
 #' @export
-rmsle.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
-    .Call(`_SLmetrics_rmsle`, actual, predicted, w, na_rm = na.rm)
+rmsle.numeric <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_rmsle`, actual, predicted)
+}
+
+#' @rdname rmsle
+#' @method weighted.rmsle numeric
+#' @export
+weighted.rmsle.numeric <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_rmsle`, actual, predicted, w)
 }
 
 #' @rdname smape

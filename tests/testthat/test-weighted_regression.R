@@ -1,13 +1,13 @@
 # script: Regression Tests
-# date: 2024-10-07
+# date: 2024-12-18
 # author: Serkan Korkmaz, serkor1@duck.com
-# objective: Test that regression methods
+# objective: Test that weighted regression methods
 # are consistent with equivalent python methods
 # and retrurns sensible values
 # script start;
 
 testthat::test_that(
-  desc = "Test that all regression metrics are correctly implemented",
+  desc = "Test that all weighted regression metrics are correctly implemented",
   code = {
 
     # 0) load functions from
@@ -25,44 +25,18 @@ testthat::test_that(
     values <- create_regression()
     actual <- values$actual
     predicted <- values$predicted
+    w <- values$weight
 
     # 2) generate functions
     # lists
     sl_function <- list(
-      "rmse"      = rmse,
-      "mse"       = mse,
-      "rmsle"     = rmsle,
-      "huberloss" = huberloss,
-      "mpe"       = mpe,
-      "mape"      = mape,
-      "smape"     = smape,
-      "rae"       = rae,
-      "rrmse"     = rrmse,
-      "mae"       = mae,
-      "ccc"       = ccc,
-      "pinball"   = pinball
+      "rmse"      = weighted.rmse,
+      "rmsle"     = weighted.rmsle,
+      "rrmse"     = weighted.rrmse,
+      "rae"       = weighted.rae
     )
 
     # 3) test that the functions
-    # runs without errors
-    for (i in seq_along(sl_function)) {
-
-      .f <-  sl_function[[i]]
-
-      testthat::expect_true(
-        all(
-          is.numeric(.f(actual, predicted)),
-          length(.f(actual, predicted)) == 1
-        ),
-        label = paste(
-          names(sl_function)[i],
-          "Not all true"
-        )
-      )
-
-    }
-
-    # 4) test that the functions
     # returns the same values as
     # their python equivalents
     py_function <- Filter(
@@ -94,19 +68,18 @@ testthat::test_that(
 
       # 1) replace missing with 0
       # as in python
-      sl_measure <- .f(actual, predicted);
+      sl_measure <- .f(actual, predicted, w = w);
 
-      py_measure <- as.numeric(reticulate::py_suppress_warnings(.F(actual, predicted)))
+      py_measure <- as.numeric(reticulate::py_suppress_warnings(.F(actual, predicted, w = w)))
 
       testthat::expect_true(
         object = set_equal(
           sl_measure,
-          py_measure,
-          tolerance = 1e-5
+          py_measure
 
         ),
         label = paste(
-          "Unweighted functions in",
+          "Weighted functions in",
           names(sl_function)[i],
           "not equivalent to {torch} or {scikit-learn}."
         )

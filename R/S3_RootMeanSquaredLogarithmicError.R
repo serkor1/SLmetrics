@@ -32,4 +32,13 @@ rmsle <- function(...) {
   )
 }
 
+#' @rdname rmsle
+#' @export
+weighted.rmsle <- function(...) {
+  UseMethod(
+    generic = "weighted.rmsle",
+    object  = ..1
+  )
+}
+
 # script end;

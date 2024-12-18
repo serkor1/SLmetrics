@@ -47,4 +47,13 @@ rae <- function(...) {
   )
 }
 
+#' @rdname rae
+#' @export
+weighted.rae <- function(...) {
+  UseMethod(
+    generic = "weighted.rae",
+    object  = ..1
+  )
+}
+
 # script end;

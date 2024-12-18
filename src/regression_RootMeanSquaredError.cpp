@@ -6,15 +6,21 @@ using namespace Rcpp;
 //' @method rmse numeric
 //' @export
 // [[Rcpp::export(rmse.numeric)]]
-double rmse(const std::vector<double>& actual, const std::vector<double>& predicted,  Rcpp::Nullable<std::vector<double>> w = R_NilValue, bool na_rm = false) 
+double rmse(const std::vector<double>& actual, const std::vector<double>& predicted) 
 {
-    if (w.isNull()) {
-
-    return _metric_(actual, predicted, na_rm);
+    RMSE rmseMetric;; // Instantiate RMSE class
+    return rmseMetric.compute(actual, predicted);
     
-    }
-    
-    return _metric_(actual, predicted, Rcpp::as<std::vector<double>>(w), na_rm);
 
 }
 
+//' @rdname rmse
+//' @method weighted.rmse numeric
+//' @export
+// [[Rcpp::export(weighted.rmse.numeric)]]
+double weighted_rmse(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double> w) {
+
+    RMSE rmseMetric;; // Instantiate RMSE class
+    return rmseMetric.compute(actual, predicted, w);
+   
+}

@@ -6,15 +6,18 @@ using namespace Rcpp;
 //' @method rae numeric
 //' @export
 // [[Rcpp::export(rae.numeric)]]
-double rae(const std::vector<double>& actual, const std::vector<double>& predicted,  Rcpp::Nullable<std::vector<double>> w = R_NilValue, bool na_rm = false)
+double rae(const std::vector<double>& actual, const std::vector<double>& predicted) 
 {
+    RelativeAbsoluteError raeMetric; // Instantiate RelativeAbsoluteError class
+    return raeMetric.compute(actual, predicted);
+}
 
- if (w.isNull()) {
-
-   return _metric_(actual, predicted, na_rm);
-
- }
-
- return _metric_(actual, predicted, Rcpp::as<std::vector<double>>(w), na_rm);
-
+//' @rdname rae
+//' @method weighted.rae numeric
+//' @export
+// [[Rcpp::export(weighted.rae.numeric)]]
+double weighted_rae(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w) 
+{
+    RelativeAbsoluteError raeMetric; // Instantiate RelativeAbsoluteError class
+    return raeMetric.compute(actual, predicted, w);
 }
