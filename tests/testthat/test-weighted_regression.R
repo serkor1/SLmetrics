@@ -40,7 +40,8 @@ testthat::test_that(
       "mse"       = weighted.mse,
       "ccc"       = weighted.ccc,
       "huberloss" = weighted.huberloss,
-      "mae"       = weighted.mae
+      "mae"       = weighted.mae,
+      "pinball"   = weighted.pinball
     )
 
     # 3) test that the functions

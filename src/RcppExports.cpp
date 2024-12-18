@@ -1330,18 +1330,31 @@ BEGIN_RCPP
 END_RCPP
 }
 // pinball
-double pinball(const std::vector<double>& actual, const std::vector<double>& predicted, double alpha, const bool& deviance, Rcpp::Nullable<std::vector<double>> w, bool na_rm);
-RcppExport SEXP _SLmetrics_pinball(SEXP actualSEXP, SEXP predictedSEXP, SEXP alphaSEXP, SEXP devianceSEXP, SEXP wSEXP, SEXP na_rmSEXP) {
+double pinball(const std::vector<double>& actual, const std::vector<double>& predicted, double alpha, bool deviance);
+RcppExport SEXP _SLmetrics_pinball(SEXP actualSEXP, SEXP predictedSEXP, SEXP alphaSEXP, SEXP devianceSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
     Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
-    Rcpp::traits::input_parameter< const bool& >::type deviance(devianceSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<std::vector<double>> >::type w(wSEXP);
-    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(pinball(actual, predicted, alpha, deviance, w, na_rm));
+    Rcpp::traits::input_parameter< bool >::type deviance(devianceSEXP);
+    rcpp_result_gen = Rcpp::wrap(pinball(actual, predicted, alpha, deviance));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_pinball
+double weighted_pinball(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w, double alpha, bool deviance);
+RcppExport SEXP _SLmetrics_weighted_pinball(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP alphaSEXP, SEXP devianceSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< bool >::type deviance(devianceSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_pinball(actual, predicted, w, alpha, deviance));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1569,7 +1582,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_weighted_mpe", (DL_FUNC) &_SLmetrics_weighted_mpe, 3},
     {"_SLmetrics_mse", (DL_FUNC) &_SLmetrics_mse, 2},
     {"_SLmetrics_weighted_mse", (DL_FUNC) &_SLmetrics_weighted_mse, 3},
-    {"_SLmetrics_pinball", (DL_FUNC) &_SLmetrics_pinball, 6},
+    {"_SLmetrics_pinball", (DL_FUNC) &_SLmetrics_pinball, 4},
+    {"_SLmetrics_weighted_pinball", (DL_FUNC) &_SLmetrics_weighted_pinball, 5},
     {"_SLmetrics_rae", (DL_FUNC) &_SLmetrics_rae, 2},
     {"_SLmetrics_weighted_rae", (DL_FUNC) &_SLmetrics_weighted_rae, 3},
     {"_SLmetrics_rrmse", (DL_FUNC) &_SLmetrics_rrmse, 2},

@@ -725,8 +725,15 @@ weighted.mse.numeric <- function(actual, predicted, w, ...) {
 #' @rdname pinball
 #' @method pinball numeric
 #' @export
-pinball.numeric <- function(actual, predicted, alpha = 0.5, deviance = FALSE, w = NULL, na.rm = FALSE, ...) {
-    .Call(`_SLmetrics_pinball`, actual, predicted, alpha, deviance, w, na_rm = na.rm)
+pinball.numeric <- function(actual, predicted, alpha = 0.5, deviance = FALSE, ...) {
+    .Call(`_SLmetrics_pinball`, actual, predicted, alpha, deviance)
+}
+
+#' @rdname pinball
+#' @method weighted.pinball numeric
+#' @export
+weighted.pinball.numeric <- function(actual, predicted, w, alpha = 0.5, deviance = FALSE, ...) {
+    .Call(`_SLmetrics_weighted_pinball`, actual, predicted, w, alpha, deviance)
 }
 
 #' @rdname rae

@@ -18,8 +18,6 @@ rsq(...)
 \item{k}{A <\link{numeric}>-vector of \link{length} 1. 0 by default. If \eqn{k>0}
 the function returns the adjusted \eqn{R^2}.}
 
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
-
 \item{...}{Arguments passed into other methods.}
 }
 \value{
