@@ -1,6 +1,6 @@
 // [[Rcpp::depends(RcppEigen)]]
 #include <RcppEigen.h>
-#include "src_Helpers.h"
+#include "classification_Helpers.h"
 #include <Rcpp.h>
 using namespace Rcpp;
 //' Confusion Matrix
