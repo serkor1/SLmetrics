@@ -1162,16 +1162,29 @@ BEGIN_RCPP
 END_RCPP
 }
 // rsq
-double rsq(const std::vector<double>& actual, const std::vector<double>& predicted, const double k, bool na_rm);
-RcppExport SEXP _SLmetrics_rsq(SEXP actualSEXP, SEXP predictedSEXP, SEXP kSEXP, SEXP na_rmSEXP) {
+double rsq(const std::vector<double>& actual, const std::vector<double>& predicted, const double k);
+RcppExport SEXP _SLmetrics_rsq(SEXP actualSEXP, SEXP predictedSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
     Rcpp::traits::input_parameter< const double >::type k(kSEXP);
-    Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(rsq(actual, predicted, k, na_rm));
+    rcpp_result_gen = Rcpp::wrap(rsq(actual, predicted, k));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_rsq
+double weighted_rsq(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w, const double k);
+RcppExport SEXP _SLmetrics_weighted_rsq(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP kSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const double >::type k(kSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_rsq(actual, predicted, w, k));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1569,7 +1582,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_zerooneloss", (DL_FUNC) &_SLmetrics_zerooneloss, 3},
     {"_SLmetrics_weighted_zerooneloss", (DL_FUNC) &_SLmetrics_weighted_zerooneloss, 4},
     {"_SLmetrics_zerooneloss_cmatrix", (DL_FUNC) &_SLmetrics_zerooneloss_cmatrix, 2},
-    {"_SLmetrics_rsq", (DL_FUNC) &_SLmetrics_rsq, 4},
+    {"_SLmetrics_rsq", (DL_FUNC) &_SLmetrics_rsq, 3},
+    {"_SLmetrics_weighted_rsq", (DL_FUNC) &_SLmetrics_weighted_rsq, 4},
     {"_SLmetrics_ccc", (DL_FUNC) &_SLmetrics_ccc, 3},
     {"_SLmetrics_weighted_ccc", (DL_FUNC) &_SLmetrics_weighted_ccc, 4},
     {"_SLmetrics_huberloss", (DL_FUNC) &_SLmetrics_huberloss, 3},

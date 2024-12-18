@@ -4,11 +4,14 @@
 \name{rsq.numeric}
 \alias{rsq.numeric}
 \alias{rsq}
+\alias{weighted.rsq}
 \title{Compute the \eqn{R^2}}
 \usage{
-\method{rsq}{numeric}(actual, predicted, k = 0, na.rm = FALSE, ...)
+\method{rsq}{numeric}(actual, predicted, k = 0, ...)
 
 rsq(...)
+
+weighted.rsq(...)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}

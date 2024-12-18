@@ -634,8 +634,15 @@ zerooneloss.cmatrix <- function(x, na.rm = TRUE, ...) {
 #' @rdname rsq
 #' @method rsq numeric
 #' @export
-rsq.numeric <- function(actual, predicted, k = 0, na.rm = FALSE, ...) {
-    .Call(`_SLmetrics_rsq`, actual, predicted, k, na_rm = na.rm)
+rsq.numeric <- function(actual, predicted, k = 0.0, ...) {
+    .Call(`_SLmetrics_rsq`, actual, predicted, k)
+}
+
+#' @rdname weighted.rsq
+#' @method weighted.rsq numeric
+#' @export
+weighted.rsq.numeric <- function(actual, predicted, w, k = 0.0, ...) {
+    .Call(`_SLmetrics_weighted_rsq`, actual, predicted, w, k)
 }
 
 #' @rdname ccc

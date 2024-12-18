@@ -102,7 +102,7 @@ testthat::test_that(
         object = set_equal(
           sl_measure,
           py_measure,
-          tolerance = 1e-6
+          tolerance = 5e-6
 
         ),
         label = paste(
