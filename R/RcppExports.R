@@ -662,22 +662,43 @@ mae.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
 #' @rdname mape
 #' @method mape numeric
 #' @export
-mape.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
-    .Call(`_SLmetrics_mape`, actual, predicted, w, na_rm = na.rm)
+mape.numeric <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_mape`, actual, predicted)
+}
+
+#' @rdname mape
+#' @method weighted.mape numeric
+#' @export
+weighted.mape.numeric <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_mape`, actual, predicted, w)
 }
 
 #' @rdname mpe
 #' @method mpe numeric
 #' @export
-mpe.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
-    .Call(`_SLmetrics_mpe`, actual, predicted, w, na_rm = na.rm)
+mpe.numeric <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_mpe`, actual, predicted)
+}
+
+#' @rdname mpe
+#' @method weighted.mpe numeric
+#' @export
+weighted.mpe.numeric <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_mpe`, actual, predicted, w)
 }
 
 #' @rdname mse
 #' @method mse numeric
 #' @export
-mse.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
-    .Call(`_SLmetrics_mse`, actual, predicted, w, na_rm = na.rm)
+mse.numeric <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_mse`, actual, predicted)
+}
+
+#' @rdname mse
+#' @method weighted.mse numeric
+#' @export
+weighted.mse.numeric <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_mse`, actual, predicted, w)
 }
 
 #' @rdname pinball
@@ -746,7 +767,14 @@ weighted.rmsle.numeric <- function(actual, predicted, w, ...) {
 #' @rdname smape
 #' @method smape numeric
 #' @export
-smape.numeric <- function(actual, predicted, w = NULL, na.rm = FALSE, ...) {
-    .Call(`_SLmetrics_smape`, actual, predicted, w, na_rm = na.rm)
+smape.numeric <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_smape`, actual, predicted)
+}
+
+#' @rdname smape
+#' @method weighted.smape numeric
+#' @export
+weighted.smape.numeric <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_smape`, actual, predicted, w)
 }
 

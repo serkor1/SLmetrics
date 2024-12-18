@@ -31,3 +31,14 @@ mse <- function(...) {
     object  = ..1
   )
 }
+
+#' @rdname mse
+#' @export
+weighted.mse <- function(...) {
+  UseMethod(
+    generic = "weighted.mse",
+    object  = ..1
+  )
+}
+
+# script end;

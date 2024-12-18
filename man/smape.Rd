@@ -3,10 +3,13 @@
 %   R/S3_SymmetricMeanAbsolutePercentageError.R
 \name{smape.numeric}
 \alias{smape.numeric}
+\alias{weighted.smape.numeric}
 \alias{smape}
 \title{Compute the \eqn{\text{symmetric}} \eqn{\text{mean}} \eqn{\text{absolute}} \eqn{\text{percentage}} \eqn{\text{error}}}
 \usage{
-\method{smape}{numeric}(actual, predicted, w = NULL, na.rm = FALSE, ...)
+\method{smape}{numeric}(actual, predicted, ...)
+
+\method{weighted.smape}{numeric}(actual, predicted, w, ...)
 
 smape(...)
 }
@@ -15,11 +18,9 @@ smape(...)
 
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
-
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
-
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.

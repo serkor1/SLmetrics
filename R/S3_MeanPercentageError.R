@@ -32,4 +32,13 @@ mpe <- function(...) {
   )
 }
 
+#' @rdname mpe
+#' @export
+weighted.mpe <- function(...) {
+  UseMethod(
+    generic = "weighted.mpe",
+    object  = ..1
+  )
+}
+
 # script end;

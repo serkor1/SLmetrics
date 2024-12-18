@@ -33,7 +33,11 @@ testthat::test_that(
       "rmse"      = weighted.rmse,
       "rmsle"     = weighted.rmsle,
       "rrmse"     = weighted.rrmse,
-      "rae"       = weighted.rae
+      "rae"       = weighted.rae,
+      "mape"      = weighted.mape,
+      "smape"     = weighted.smape,
+      "mpe"       = weighted.mpe,
+      "mse"       = weighted.mse
     )
 
     # 3) test that the functions
