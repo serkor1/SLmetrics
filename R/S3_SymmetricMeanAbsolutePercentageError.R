@@ -32,5 +32,14 @@ smape <- function(...) {
   )
 }
 
+#' @rdname mape
+#' @export
+weighted.smape <- function(...) {
+  UseMethod(
+    generic = "weighted.smape",
+    object  = ..1
+  )
+}
+
 
 # script end;

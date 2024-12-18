@@ -47,4 +47,13 @@ pinball <- function(...) {
   )
 }
 
+#' @rdname pinball
+#' @export
+weighted.pinball <- function(...) {
+  UseMethod(
+    generic = "weighted.pinball",
+    object  = ..1
+  )
+}
+
 # script end;

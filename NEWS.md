@@ -111,6 +111,32 @@ try(
   calculation of the `fmi()`-function has been fixed. The
   `fmi()`-function now correctly calculates the measure.
 
+## Breaking changes
+
+- All regression metrics have had `na.rm`- and `w`-arguments removed.
+  All weighted regression metrics have a seperate function on the
+  `weighted.foo()` to increase consistency across all metrics. See
+  example below,
+
+``` r
+# 1) define regression problem
+actual    <- rnorm(n = 1e3)
+predicted <- actual + rnorm(n = 1e3)
+w         <- runif(n = 1e3)
+
+# 2) unweighted metrics
+SLmetrics::rmse(actual, predicted)
+```
+
+    #> [1] 0.9613081
+
+``` r
+# 3) weighted metrics
+SLmetrics::weighted.rmse(actual, predicted, w = w)
+```
+
+    #> [1] 0.957806
+
 # Version 0.1-1
 
 ## General
@@ -190,7 +216,7 @@ plot(
 )
 ```
 
-![](NEWS_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](NEWS_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ``` r
 plot(
@@ -199,7 +225,7 @@ plot(
 )
 ```
 
-![](NEWS_files/figure-gfm/unnamed-chunk-5-2.png)<!-- -->
+![](NEWS_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->
 
 # Version 0.1-0
 
@@ -222,7 +248,7 @@ print(
 )
 ```
 
-    #>  [1] a b b a c b b a b c
+    #>  [1] b b a c a a c b a b
     #> Levels: a b c
 
 ``` r
@@ -234,7 +260,7 @@ print(
 )
 ```
 
-    #>  [1] a b b a a c a b b c
+    #>  [1] a b b c c a a a c a
     #> Levels: a b c
 
 ``` r
@@ -252,16 +278,16 @@ summary(
     #> Confusion Matrix (3 x 3) 
     #> ================================================================================
     #>   a b c
-    #> a 2 1 0
-    #> b 1 3 1
+    #> a 1 1 2
+    #> b 3 1 0
     #> c 1 0 1
     #> ================================================================================
     #> Overall Statistics (micro average)
-    #>  - Accuracy:          0.60
-    #>  - Balanced Accuracy: 0.59
-    #>  - Sensitivity:       0.60
-    #>  - Specificity:       0.80
-    #>  - Precision:         0.60
+    #>  - Accuracy:          0.30
+    #>  - Balanced Accuracy: 0.33
+    #>  - Sensitivity:       0.30
+    #>  - Specificity:       0.65
+    #>  - Precision:         0.30
 
 ``` r
 # 2) calculate false positive
@@ -272,7 +298,7 @@ SLmetrics::fpr(
 ```
 
     #>         a         b         c 
-    #> 0.2857143 0.2000000 0.1250000
+    #> 0.6666667 0.1666667 0.2500000
 
 ### Supervised regression metrics
 
@@ -293,4 +319,4 @@ SLmetrics::huberloss(
 )
 ```
 
-    #> [1] 0.5281794
+    #> [1] 0.5326572

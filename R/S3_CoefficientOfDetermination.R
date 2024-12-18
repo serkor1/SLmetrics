@@ -33,4 +33,13 @@ rsq <- function(...) {
   )
 }
 
+#' @rdname rsq
+#' @export
+weighted.rsq <- function(...) {
+  UseMethod(
+    generic = "weighted.rsq",
+    object  = ..1
+  )
+}
+
 # script end;

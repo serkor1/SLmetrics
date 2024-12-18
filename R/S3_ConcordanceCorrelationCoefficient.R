@@ -37,4 +37,13 @@ ccc <- function(...) {
     object  = ..1
   )
 }
+
+#' @rdname ccc
+#' @export
+weighted.ccc <- function(...) {
+  UseMethod(
+    generic = "weighted.ccc",
+    object  = ..1
+  )
+}
 # script end;

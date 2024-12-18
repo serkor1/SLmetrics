@@ -89,6 +89,24 @@ try(
 
 * **Calculation Error in Fowlks Mallows Index:** A bug in the calculation of the `fmi()`-function has been fixed. The `fmi()`-function now correctly calculates the measure.
 
+## Breaking changes
+
+* All regression metrics have had `na.rm`- and `w`-arguments removed. All  weighted regression metrics have a seperate function on the `weighted.foo()` to increase consistency across all metrics. See example below,
+
+```{r}
+# 1) define regression problem
+actual    <- rnorm(n = 1e3)
+predicted <- actual + rnorm(n = 1e3)
+w         <- runif(n = 1e3)
+
+# 2) unweighted metrics
+SLmetrics::rmse(actual, predicted)
+
+# 3) weighted metrics
+SLmetrics::weighted.rmse(actual, predicted, w = w)
+```
+
+
 # Version 0.1-1
 
 ## General

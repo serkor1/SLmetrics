@@ -1,19 +1,23 @@
 #include <Rcpp.h>
-#include <cmath>
 #include "regression_RootMeanSquaredLogarithmicError.h"
+using namespace Rcpp;
 
 //' @rdname rmsle
 //' @method rmsle numeric
 //' @export
 // [[Rcpp::export(rmsle.numeric)]]
-double rmsle(const std::vector<double>& actual, const std::vector<double>& predicted,  Rcpp::Nullable<std::vector<double>> w = R_NilValue, bool na_rm = false)
+double rmsle(const std::vector<double>& actual, const std::vector<double>& predicted) 
 {
-  if (w.isNull()) {
+    RootMeanSquaredLogarithmicError rmsleMetric; // Instantiate RootMeanSquaredLogarithmicError class
+    return rmsleMetric.compute(actual, predicted);
+}
 
-      return _metric_(actual, predicted, na_rm);
-
-  }
-
-  return _metric_(actual, predicted, Rcpp::as<std::vector<double>>(w), na_rm);
-  
+//' @rdname rmsle
+//' @method weighted.rmsle numeric
+//' @export
+// [[Rcpp::export(weighted.rmsle.numeric)]]
+double weighted_rmsle(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w) 
+{
+    RootMeanSquaredLogarithmicError rmsleMetric; // Instantiate RootMeanSquaredLogarithmicError class
+    return rmsleMetric.compute(actual, predicted, w);
 }
