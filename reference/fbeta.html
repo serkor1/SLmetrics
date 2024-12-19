@@ -53,13 +53,13 @@ two vectors of predicted and observed <code><a href="https://rdrr.io/r/base/fact
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'factor'</span></span>
-<span><span class="fu">fbeta</span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span>, beta <span class="op">=</span> <span class="fl">1</span>, micro <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">fbeta</span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span>, beta <span class="op">=</span> <span class="fl">1</span>, micro <span class="op">=</span> <span class="cn">NULL</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'factor'</span></span>
-<span><span class="fu">weighted.fbeta</span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span>, <span class="va">w</span>, beta <span class="op">=</span> <span class="fl">1</span>, micro <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">weighted.fbeta</span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span>, <span class="va">w</span>, beta <span class="op">=</span> <span class="fl">1</span>, micro <span class="op">=</span> <span class="cn">NULL</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'cmatrix'</span></span>
-<span><span class="fu">fbeta</span><span class="op">(</span><span class="va">x</span>, beta <span class="op">=</span> <span class="fl">1</span>, micro <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">fbeta</span><span class="op">(</span><span class="va">x</span>, beta <span class="op">=</span> <span class="fl">1</span>, micro <span class="op">=</span> <span class="cn">NULL</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">fbeta</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -85,6 +85,10 @@ two vectors of predicted and observed <code><a href="https://rdrr.io/r/base/fact
 <dt id="arg-micro">micro<a class="anchor" aria-label="anchor" href="#arg-micro"></a></dt>
 <dd><p>A &lt;<a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>&gt;-value of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(1\). <a href="https://rdrr.io/r/base/NULL.html" class="external-link">NULL</a> by default. If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a> it returns the
 micro average across all \(k\) classes, if <a href="https://rdrr.io/r/base/logical.html" class="external-link">FALSE</a> it returns the macro average. Otherwise class wise performance evaluation.</p></dd>
+
+
+<dt id="arg-na-rm">na.rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
+<dd><p>A &lt;<a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>&gt;-value of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(1\). <a href="https://rdrr.io/r/base/logical.html" class="external-link">FALSE</a> by default. If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a> NA values will be removed from the computation.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -225,7 +229,7 @@ $$</p>
 <span class="r-in"><span>  predicted <span class="op">=</span> <span class="va">predicted</span>,</span></span>
 <span class="r-in"><span>  micro <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.8066667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7884629</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># 4.2 macro-averaged F1 score</span></span></span>
 <span class="r-in"><span><span class="fu">fbeta</span><span class="op">(</span></span></span>
@@ -233,7 +237,7 @@ $$</p>
 <span class="r-in"><span>  predicted <span class="op">=</span> <span class="va">predicted</span>,</span></span>
 <span class="r-in"><span>  micro     <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7813961</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7899213</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

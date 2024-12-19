@@ -50,13 +50,13 @@ vectors of predicted and observed <code><a href="https://rdrr.io/r/base/factor.h
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'factor'</span></span>
-<span><span class="fu">accuracy</span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">accuracy</span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'factor'</span></span>
-<span><span class="fu">weighted.accuracy</span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span>, <span class="va">w</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">weighted.accuracy</span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span>, <span class="va">w</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'cmatrix'</span></span>
-<span><span class="fu">accuracy</span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">accuracy</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">accuracy</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -73,10 +73,6 @@ vectors of predicted and observed <code><a href="https://rdrr.io/r/base/factor.h
 
 <dt id="arg-predicted">predicted<a class="anchor" aria-label="anchor" href="#arg-predicted"></a></dt>
 <dd><p>A &lt;<a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a>&gt;-vector of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(n\), and \(k\) levels.</p></dd>
-
-
-<dt id="arg-na-rm">na.rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
-<dd><p>A &lt;<a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>&gt;-value of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(1\). <a href="https://rdrr.io/r/base/logical.html" class="external-link">FALSE</a> by default. If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a> NA values will be removed from the computation.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
