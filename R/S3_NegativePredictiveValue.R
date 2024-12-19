@@ -32,7 +32,8 @@
 #'   \frac{\sum_{k=1}^k \#TN_k}{\sum_{k=1}^k \#TN_k + \sum_{k=1}^k \#FN_k}
 #' }
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @export
 npv <- function(...) {

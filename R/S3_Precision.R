@@ -34,7 +34,8 @@
 #'
 #' @example man/examples/scr_Precision.R
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @aliases precision ppv
 #'

@@ -28,8 +28,8 @@
 #' \item{fpr}{<[numeric]> The false positive rate}
 #' \item{tpr}{<[numeric]> The true positve rate}
 #'
-#' @family classification
-#' @family reciever operator characteristics
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @export
 ROC <- function(...) {

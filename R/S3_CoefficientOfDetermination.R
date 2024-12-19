@@ -26,7 +26,8 @@
 #'
 #' @example man/examples/scr_CoefficientOfDetermination.R
 #' 
-#' @family regression
+#' @family Regression
+#' @family Supervised Learning
 #' @export
 rsq <- function(...) {
   UseMethod(

@@ -28,7 +28,8 @@
 #'
 #' @example man/examples/scr_Accuracy.R
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @export
 accuracy <- function(...) {

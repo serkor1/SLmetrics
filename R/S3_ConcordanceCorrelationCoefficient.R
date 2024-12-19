@@ -29,7 +29,8 @@
 #'
 #' If `w` is not [NULL], all calculations are based on the weighted measures.
 #'
-#' @family regression
+#' @family Regression
+#' @family Supervised Learning
 #' @export
 ccc <- function(...) {
   UseMethod(

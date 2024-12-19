@@ -33,7 +33,8 @@
 #'
 #' @example man/examples/scr_JaccardIndex.R
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @aliases jaccard csi tscore
 #'

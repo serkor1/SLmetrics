@@ -23,7 +23,8 @@
 #' where \eqn{y_i} and \eqn{\upsilon_i} is the `actual` and `predicted` values respectively. If `w` is not [NULL], the metric is calculated
 #' using weights.
 #'
-#' @family regression
+#' @family Regression
+#' @family Supervised Learning
 #' @export
 smape <- function(...) {
   UseMethod(

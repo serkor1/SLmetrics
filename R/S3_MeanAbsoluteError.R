@@ -23,8 +23,8 @@
 #'
 #' If \eqn{w} is not [NULL] the function returns the weigthed version.
 #'
-#' @family regression
-#'
+#' @family Regression
+#' @family Supervised Learning
 #' @export
 mae <- function(...) {
   UseMethod(

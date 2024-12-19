@@ -38,7 +38,9 @@
 #' }
 #'
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
+#' 
 #' @export
 fbeta <- function(...) {
   UseMethod(

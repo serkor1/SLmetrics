@@ -38,7 +38,8 @@
 #'   \item \eqn{\alpha} is the quantile level.
 #' }
 #'
-#' @family regression
+#' @family Regression
+#' @family Supervised Learning
 #' @export
 pinball <- function(...) {
   UseMethod(

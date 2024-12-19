@@ -24,7 +24,8 @@
 #'
 #' If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
 #'
-#' @family regression
+#' @family Regression
+#' @family Supervised Learning
 #' @export
 mape <- function(...) {
   UseMethod(

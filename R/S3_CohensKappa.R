@@ -21,7 +21,10 @@
 #' @example man/examples/scr_CohensKappa.R
 #' 
 #' @section Calculation
-#' @family classification
+#' 
+#' @family Classification
+#' @family Supervised Learning
+#' 
 #' @export
 ckappa <- function(...) {
   UseMethod(

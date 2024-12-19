@@ -21,7 +21,8 @@
 #'
 #' @example man/examples/scr_ConfusionMatrix.R
 #' 
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @inherit specificity details
 #'

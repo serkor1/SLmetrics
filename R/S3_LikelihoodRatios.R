@@ -38,7 +38,8 @@
 #'
 #' The [plr()]-function for the Positive Likehood Ratio (LR+)
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @export
 nlr <- function(...) {
@@ -90,7 +91,8 @@ weighted.nlr <- function(...) {
 #'
 #' The [nlr()]-function for the Negative Likehood Ratio (LR-)
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #' @export
 plr <- function(...) {
   UseMethod(
@@ -138,7 +140,8 @@ weighted.plr <- function(...) {
 #'
 #' Where \eqn{\overline{\text{PLR}}} and \eqn{\overline{\text{NLR}}} is the micro-averaged is the positive and negative likelihood ratio, respectively.
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @export
 dor <- function(...) {

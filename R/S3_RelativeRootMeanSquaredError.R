@@ -36,7 +36,8 @@
 #'
 #'
 #' @example man/examples/scr_RelativeRootMeanSquaredError.R
-#' @family regression
+#' @family Regression
+#' @family Supervised Learning
 #' @export
 rrmse <- function(...) {
   UseMethod(

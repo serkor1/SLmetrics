@@ -28,8 +28,8 @@
 #' @returns
 #' A <[numeric]> vector of [length] 1
 #'
-#' @family classification
-#'
+#' @family Classification
+#' @family Unsupervised Learning
 #' @export
 fmi <- function(...) {
   UseMethod(

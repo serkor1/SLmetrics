@@ -31,7 +31,8 @@
 #'
 #' @example man/examples/scr_ZeroOneLoss.R
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @export
 zerooneloss <- function(...) {

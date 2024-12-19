@@ -28,7 +28,8 @@
 #' @returns
 #' A named <[numeric]> vector of length k
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @aliases mcc phi
 #'

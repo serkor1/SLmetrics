@@ -32,7 +32,9 @@
 #'  \frac{\sum_{k=1}^k \#FP_k}{\sum_{k=1}^k \#TP_k + \sum_{k=1}^k \#FP_k}
 #' }
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
+#' 
 #' @export
 fdr <- function(...) {
   UseMethod(

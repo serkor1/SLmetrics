@@ -29,7 +29,8 @@
 #'
 #' @example man/examples/scr_BalancedAccuracy.R
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @export
 baccuracy <- function(...) {

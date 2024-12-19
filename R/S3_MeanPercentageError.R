@@ -23,7 +23,8 @@
 #'
 #' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
 #'
-#' @family regression
+#' @family Regression
+#' @family Supervised Learning
 #' @export
 mpe <- function(...) {
   UseMethod(

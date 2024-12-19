@@ -74,7 +74,8 @@
 #' }
 #'
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @aliases specificity tnr selectivity
 #'

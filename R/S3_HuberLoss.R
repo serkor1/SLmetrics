@@ -38,8 +38,8 @@
 #' @example man/examples/scr_HuberLoss.R
 #'
 #'
-#' @family regression
-#'
+#' @family Regression
+#' @family Supervised Learning
 #' @returns A <[numeric]> vector of [length] 1.
 #'
 #' @export

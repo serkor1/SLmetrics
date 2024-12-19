@@ -36,7 +36,8 @@
 #'
 #' The FPR is the complement of specificity, such that \eqn{\text{FPR} = 1 - \text{Specificity}}.
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @aliases fpr fallout
 #'

@@ -120,7 +120,7 @@ cat(
 )
 }
 \seealso{
-Other classification: 
+Other Classification: 
 \code{\link{ROC.factor}()},
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
@@ -142,4 +142,5 @@ Other classification:
 \code{\link{specificity.factor}()},
 \code{\link{zerooneloss.factor}()}
 }
-\concept{classification}
+\concept{Classification}
+\concept{Unsupervised Learning}
