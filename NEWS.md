@@ -111,6 +111,12 @@ try(
   calculation of the `fmi()`-function has been fixed. The
   `fmi()`-function now correctly calculates the measure.
 
+- **Calculation Error in Pinball Deviance and Concordance Correlation
+  Coefficient:** See issue
+  <https://github.com/serkor1/SLmetrics/issues/19>. Switched to unbiased
+  variance calculation in `ccc()`-function. The `pinball()`-function
+  were missing a weighted quantile function. The issue is now fixed.
+
 ## Breaking changes
 
 - All regression metrics have had `na.rm`- and `w`-arguments removed.
