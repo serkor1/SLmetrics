@@ -33,9 +33,9 @@ micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro a
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }
 \value{
-If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vector of \link{length} k
+If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
 
-If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
+If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=plr]{plr()}}-function computes the \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{positive likelihood ratio}, also known as the likelihood ratio for positive results, between

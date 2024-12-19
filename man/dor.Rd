@@ -33,9 +33,9 @@ micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro a
 \item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
 }
 \value{
-If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vector of \link{length} k
+If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
 
-If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
+If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=dor]{dor()}}-function computes the \href{https://en.wikipedia.org/wiki/Diagnostic_odds_ratio}{Diagnostic Odds Ratio} (DOR), a single indicator of test performance, between

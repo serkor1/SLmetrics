@@ -16,7 +16,10 @@
 #' @param x A confusion matrix created by [table()] or [cmatrix()]
 #' @param micro A <[logical]>-value of [length] \eqn{1}. [NULL] by default. If [TRUE] it returns the
 #' micro average across all \eqn{k} classes, if [FALSE] it returns the macro average. Otherwise class wise performance evaluation.
-#' @param na.rm A <[logical]>-value of [length] \eqn{1}. [FALSE] by default. If [TRUE] NA values will be removed from the computation.
+#' @param na.rm A <[logical]< value (default: [TRUE]). If [TRUE], [NA] values are removed from the computation. 
+#' This argument is only relevant when `micro != NULL`. 
+#' When `na.rm = TRUE`, the computation corresponds to `sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))`.
+#' When `na.rm = FALSE`, the computation corresponds to `sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))`.
 #' @details
 #'
 #' Consider a classification problem with three classes: `A`, `B`, and `C`. The actual vector of [factor()] values is defined as follows:
@@ -51,9 +54,9 @@
 #'
 #' @returns
 #'
-#' If `aggregate` is [FALSE] (the default), a named <[numeric]>-vector of [length] k
+#' If `micro` is [NULL] (the default), a named <[numeric]>-vector of [length] k
 #'
-#' If `aggregate` is [TRUE], a <[numeric]>-vector of [length] 1
+#' If `micro` is [TRUE] or [FALSE], a <[numeric]>-vector of [length] 1
 #'
 #' @example man/examples/scr_Specificity.R
 #'
