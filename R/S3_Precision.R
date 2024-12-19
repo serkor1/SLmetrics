@@ -32,7 +32,7 @@
 #'   \frac{\sum_{k=1}^k \#TP_k}{\sum_{k=1}^k \#TP_k + \sum_{k=1}^k \#FP_k}
 #' }
 #'
-#' @example man/examples/scr_precision.R
+#' @example man/examples/scr_Precision.R
 #'
 #' @family classification
 #'

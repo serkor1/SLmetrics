@@ -35,7 +35,7 @@
 #' }
 #'
 #'
-#' @example man/examples/scr_rrmse.R
+#' @example man/examples/scr_RelativeRootMeanSquaredError.R
 #' @family regression
 #' @export
 rrmse <- function(...) {

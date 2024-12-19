@@ -119,10 +119,19 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) Zero-One Loss
-zerooneloss(
-  actual    = actual,
-  predicted = predicted
+# 4) evaluate model
+# performance using Zero-One Loss
+cat(
+  "Zero-One Loss", zerooneloss(
+    actual    = actual,
+    predicted = predicted
+  ),
+  "Zero-One Loss (weigthed)", weighted.zerooneloss(
+    actual    = actual,
+    predicted = predicted,
+    w         = iris$Petal.Length/mean(iris$Petal.Length)
+  ),
+  sep = "\n"
 )
 }
 \seealso{
@@ -131,7 +140,7 @@ Other classification:
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},

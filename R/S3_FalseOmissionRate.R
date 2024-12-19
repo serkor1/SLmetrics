@@ -12,7 +12,7 @@
 #'
 #' When `aggregate = TRUE`, the function returns the micro-average FOR across all classes \eqn{k}. By default, it returns the class-wise FOR.
 #'
-#' @example man/examples/scr_for.R
+#' @example man/examples/scr_FalseOmissionRate.R
 #'
 #'
 #' @inherit specificity

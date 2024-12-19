@@ -131,27 +131,19 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) negative likeliood
-# ratio
+# 4) evaluate model performance
+# with class-wise negative likelihood ratios
+cat("Negative Likelihood Ratio", sep = "\n")
 nlr(
-  actual    = actual,
+  actual    = actual, 
   predicted = predicted
 )
 
-# 4.1) micro averaged
-# nlr
-nlr(
+cat("Negative Likelihood Ratio (weighted)", sep = "\n")
+weighted.nlr(
   actual    = actual,
   predicted = predicted,
-  micro     = TRUE 
-)
-
-# macro averaged
-# nlr
-nlr(
-  actual    = actual,
-  predicted = predicted,
-  micro     = FALSE 
+  w         = iris$Petal.Length/mean(iris$Petal.Length)
 )
 }
 \seealso{
@@ -162,7 +154,7 @@ Other classification:
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},

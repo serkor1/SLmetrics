@@ -13,15 +13,13 @@
 #' If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of
 #' \eqn{(y_{+} - y_{i,-})^\beta}. See below for further details.
 #'
-#'
-#' @example man/examples/scr_kappa.R
-#'
 #' @inherit specificity
 #'
 #' @inheritParams specificity
 #' @param beta A <[numeric]> value of [length] 1. 0 by default. If set to a value different from zero, the off-diagonal confusion matrix will be penalized.
 #'
-#'
+#' @example man/examples/scr_CohensKappa.R
+#' 
 #' @section Calculation
 #' @family classification
 #' @export

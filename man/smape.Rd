@@ -55,25 +55,19 @@ model <- lm(
 actual    <- mtcars$mpg
 predicted <- fitted(model)
 
-
-# 2) calculate the metric
-smape(
-  actual     = actual,
-  predicted  = predicted
-)
-
-# 3) calculate
-# the weighted metric
-w <- rbeta(
-  n = 1e3,
-  shape1 = 10,
-  shape2 = 2
-)
-
-smape(
-  actual     = actual,
-  predicted  = predicted,
-  w          = w
+# 2) evaluate in-sample model
+# performance using Symmetric Mean Absolute Percentage Error (MAPE)
+cat(
+  "Symmetric Mean Absolute Percentage Error", mape(
+    actual    = actual,
+    predicted = predicted,
+  ),
+  "Symmetric Mean Absolute Percentage Error (weighted)", weighted.mape(
+    actual    = actual,
+    predicted = predicted,
+    w         = mtcars$mpg/mean(mtcars$mpg)
+  ),
+  sep = "\n"
 )
 }
 \seealso{

@@ -35,7 +35,7 @@
 #' are aggregated using the weights.
 #'
 #'
-#' @example man/examples/scr_huberloss.R
+#' @example man/examples/scr_HuberLoss.R
 #'
 #'
 #' @family regression

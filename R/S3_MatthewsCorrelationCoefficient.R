@@ -10,7 +10,6 @@
 #' The [mcc()]-function computes the [Matthews Correlation Coefficient](https://en.wikipedia.org/wiki/Matthews_correlation_coefficient) (MCC), also known as the \eqn{\phi}-coefficient, between
 #' two vectors of predicted and observed [factor()] values.
 #'
-#' @example man/examples/scr_mcc.R
 #'
 #' @inherit precision
 #'
@@ -21,6 +20,9 @@
 #' \deqn{
 #'   \frac{\#TP \times \#TN - \#FP \times \#FN}{\sqrt{(\#TP + \#FP)(\#TP + \#FN)(\#TN + \#FP)(\#TN + \#FN)}}
 #' }
+#' 
+#' 
+#' @example man/examples/scr_MatthewsCorrelationCoefficient.R
 #'
 #'
 #' @returns

@@ -132,25 +132,37 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) evaluate performance
-# 4.1) by class
+# 4) evaluate class-wise performance
+# using False Omission Rate
+
+# 4.1) unweighted False Omission Rate
 fer(
   actual    = actual,
   predicted = predicted
 )
 
-# 4.2) macro-average
-fer(
+# 4.2) weighted False Omission Rate
+weighted.fer(
   actual    = actual,
   predicted = predicted,
-  micro     = FALSE
+  w         = iris$Petal.Length/mean(iris$Petal.Length)
 )
 
-# 4.3) micro-average
-fer(
-  actual    = actual,
-  predicted = predicted,
-  micro     = TRUE
+# 5) evaluate overall performance
+# using micro-averaged False Omission Rate
+cat(
+  "Micro-averaged False Omission Rate", fer(
+    actual    = actual,
+    predicted = predicted,
+    micro     = TRUE
+  ),
+  "Micro-averaged False Omission Rate (weighted)", weighted.fer(
+    actual    = actual,
+    predicted = predicted,
+    w         = iris$Petal.Length/mean(iris$Petal.Length),
+    micro     = TRUE
+  ),
+  sep = "\n"
 )
 }
 \seealso{
@@ -159,7 +171,7 @@ Other classification:
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},

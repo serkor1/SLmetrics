@@ -116,13 +116,24 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) ckappa statistic
-# with namespace qualified
-# call to avoid conflict
-# with base R
-SLmetrics::ckappa(
-  actual    = iris$Species,
-  predicted = predicted
+# 4) evaluate model performance with
+# Cohens Kappa statistic
+cat(
+  "Kappa", ckappa(
+    actual    = actual,
+    predicted = predicted
+  ),
+  "Kappa (penalized)", ckappa(
+    actual    = actual,
+    predicted = predicted,
+    beta      = 2
+  ),
+  "Kappa (weigthed)", weighted.ckappa(
+    actual    = actual,
+    predicted = predicted,
+    w         = iris$Petal.Length/mean(iris$Petal.Length)
+  ),
+  sep = "\n"
 )
 }
 \seealso{
@@ -130,7 +141,7 @@ Other classification:
 \code{\link{ROC.factor}()},
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},

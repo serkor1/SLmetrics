@@ -11,7 +11,7 @@
 #'
 #' @inherit huberloss
 #'
-#' @example man/examples/scr_mse.R
+#' @example man/examples/scr_MeanSquaredError.R
 #'
 #' @section Calculation:
 #'

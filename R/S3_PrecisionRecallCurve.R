@@ -13,7 +13,7 @@
 #'
 #' @inherit ROC
 #'
-#' @example man/examples/scr_prROC.R
+#' @example man/examples/scr_PrecisionRecallCurve.R
 #'
 #' @family classification
 #' @family reciever operator characteristics

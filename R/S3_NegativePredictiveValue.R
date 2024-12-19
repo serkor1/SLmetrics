@@ -14,7 +14,7 @@
 #'
 #' @inherit specificity
 #'
-#' @example man/examples/scr_npv.R
+#' @example man/examples/scr_NegativePredictiveValue.R
 #'
 #' @section Calculation:
 #'

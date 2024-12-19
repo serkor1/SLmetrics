@@ -132,27 +132,39 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
+# 4) evaluate class-wise performance
+# using False Discovery Rate
 
-# 4) evaluate performance
-# 4.1) by class
+# 4.1) unweighted False Discovery Rate
 fdr(
   actual    = actual,
   predicted = predicted
 )
 
-# 4.2) macro-average
-fdr(
+# 4.2) weighted False Discovery Rate
+weighted.fdr(
   actual    = actual,
   predicted = predicted,
-  micro     = FALSE
+  w         = iris$Petal.Length/mean(iris$Petal.Length)
 )
 
-# 4.3) micro-average
-fdr(
-  actual    = actual,
-  predicted = predicted,
-  micro     = TRUE
+# 5) evaluate overall performance
+# using micro-averaged False Discovery Rate
+cat(
+  "Micro-averaged False Discovery Rate", fdr(
+    actual    = actual,
+    predicted = predicted,
+    micro     = TRUE
+  ),
+  "Micro-averaged False Discovery Rate (weighted)", weighted.fdr(
+    actual    = actual,
+    predicted = predicted,
+    w         = iris$Petal.Length/mean(iris$Petal.Length),
+    micro     = TRUE
+  ),
+  sep = "\n"
 )
+
 }
 \seealso{
 Other classification: 
@@ -160,7 +172,7 @@ Other classification:
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fer.factor}()},

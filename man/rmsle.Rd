@@ -59,26 +59,19 @@ actual    <- mtcars$mpg
 predicted <- fitted(model)
 
 
-# 2) calculate
-# the metric
-rmsle(
-  actual     = actual,
-  predicted  = predicted
-)
-
-# 3) calculate
-# the weighted metric
-# using arbtrary weights
-w <- rbeta(
-  n = 1e3,
-  shape1 = 10,
-  shape2 = 2
-)
-
-rmsle(
-  actual     = actual,
-  predicted  = predicted,
-  w          = w
+# 2) evaluate in-sample model
+# performance using Root Mean Squared Logarithmic Error (RMSLE)
+cat(
+  "Root Mean Squared Logarithmic Error", rmsle(
+    actual    = actual,
+    predicted = predicted,
+  ),
+  "Root Mean Squared Logarithmic Error (weighted)", weighted.rmsle(
+    actual    = actual,
+    predicted = predicted,
+    w         = mtcars$mpg/mean(mtcars$mpg)
+  ),
+  sep = "\n"
 )
 }
 \seealso{

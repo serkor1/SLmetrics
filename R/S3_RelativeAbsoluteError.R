@@ -37,7 +37,7 @@
 #'
 #' This metric provides a relative measure by comparing the total absolute prediction error to the total absolute deviation from the mean of the actual values.
 #'
-#' @example man/examples/scr_rae.R
+#' @example man/examples/scr_RelativeAbsoluteError.R
 #' @family regression
 #' @export
 rae <- function(...) {

@@ -31,7 +31,7 @@
 #'   \frac{\sum_{i = 1}^{k} TP_i}{\sum_{i = 1}^{k} TP_i + \sum_{i = 1}^{k} FP_k + \sum_{i = 1}^{k} FN_k}
 #' }
 #'
-#' @example man/examples/scr_jaccard.R
+#' @example man/examples/scr_JaccardIndex.R
 #'
 #' @family classification
 #'

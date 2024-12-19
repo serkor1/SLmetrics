@@ -12,7 +12,7 @@ double rsq(const std::vector<double>& actual, const std::vector<double>& predict
     return rsqMetric.compute(actual, predicted);
 }
 
-//' @rdname weighted.rsq
+//' @rdname rsq
 //' @method weighted.rsq numeric
 //' @export
 // [[Rcpp::export(weighted.rsq.numeric)]]

@@ -162,25 +162,37 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) evaluate performance
-# 4.1) by class
+# 4) evaluate class-wise performance
+# using Recall
+
+# 4.1) unweighted Recall
 recall(
   actual    = actual,
   predicted = predicted
 )
 
-# 4.2) macro-average
-recall(
+# 4.2) weighted Recall
+weighted.recall(
   actual    = actual,
   predicted = predicted,
-  micro     = FALSE
+  w         = iris$Petal.Length/mean(iris$Petal.Length)
 )
 
-# 4.3) micro-average
-recall(
-  actual    = actual,
-  predicted = predicted,
-  micro     = TRUE
+# 5) evaluate overall performance
+# using micro-averaged Recall
+cat(
+  "Micro-averaged Recall", recall(
+    actual    = actual,
+    predicted = predicted,
+    micro     = TRUE
+  ),
+  "Micro-averaged Recall (weighted)", weighted.recall(
+    actual    = actual,
+    predicted = predicted,
+    w         = iris$Petal.Length/mean(iris$Petal.Length),
+    micro     = TRUE
+  ),
+  sep = "\n"
 )
 }
 \seealso{
@@ -189,7 +201,7 @@ Other classification:
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},

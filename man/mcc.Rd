@@ -132,11 +132,20 @@ actual <- factor(
 )
 
 # 4) evaluate performance
-# 4.1) by class
-mcc(
-  actual    = actual,
-  predicted = predicted
+# using Matthews Correlation Coefficient
+cat(
+  "Matthews Correlation Coefficient", mcc(
+    actual    = actual,
+    predicted = predicted
+  ),
+  "Matthews Correlation Coefficient (weighted)", weighted.mcc(
+    actual    = actual,
+    predicted = predicted,
+    w         = iris$Petal.Length/mean(iris$Petal.Length)
+  ),
+  sep = "\n"
 )
+
 }
 \seealso{
 Other classification: 
@@ -144,7 +153,7 @@ Other classification:
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},

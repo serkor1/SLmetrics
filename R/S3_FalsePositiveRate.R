@@ -16,7 +16,7 @@
 #'
 #' @inherit specificity
 #'
-#' @example man/examples/scr_fpr.R
+#' @example man/examples/scr_FalsePositiveRate.R
 #'
 #' @section Calculation:
 #'

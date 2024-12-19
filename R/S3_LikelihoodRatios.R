@@ -14,7 +14,7 @@
 #' When `aggregate = TRUE`, the function returns the micro-average NLR across all classes \eqn{k}.
 #' By default, it returns the class-wise NLR.
 #'
-#' @example man/examples/scr_nlr.R
+#' @example man/examples/scr_NegativeLikelihoodRatio.R
 #'
 #' @inherit specificity
 #'
@@ -66,7 +66,7 @@ weighted.nlr <- function(...) {
 #' When `aggregate = TRUE`, the function returns the micro-average PLR across all classes \eqn{k}.
 #' By default, it returns the class-wise PLR.
 #'
-#' @example man/examples/scr_plr.R
+#' @example man/examples/scr_PositiveLikelihoodRatio.R
 #'
 #' @inherit specificity
 #'
@@ -116,7 +116,7 @@ weighted.plr <- function(...) {
 #'
 #' When `aggregate = TRUE`, the function returns the micro-average DOR across all classes \eqn{k}. By default, it returns the class-wise DOR.
 #'
-#' @example man/examples/scr_diagnosticodssratio.R
+#' @example man/examples/scr_DiagnosticOddsRatio.R
 #'
 #' @inherit specificity
 #'

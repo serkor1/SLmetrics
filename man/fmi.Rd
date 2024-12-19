@@ -109,10 +109,14 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) evaluate performance
-fmi(
+# 4) evaluate model performance
+# using Fowlkes Mallows Index
+cat(
+  "Fowlkes Mallows Index", fmi(
   actual    = actual,
   predicted = predicted
+  ),
+  sep = "\n"
 )
 }
 \seealso{
@@ -121,7 +125,7 @@ Other classification:
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},

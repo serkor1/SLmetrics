@@ -14,7 +14,7 @@
 #' @param alpha A <[numeric]>-value of [length] 1. The slope of the pinball loss function. \eqn{0.5} by default.
 #' @param deviance A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] the function returns the \eqn{D^2} loss.
 #'
-#' @example man/examples/scr_pinball.R
+#' @example man/examples/scr_PinballLoss.R
 #' @section Calculation:
 #' 
 #' The pinball loss measures the accuracy of quantile predictions by penalizing overestimates and underestimates asymmetrically based on the specified quantile (\code{alpha}).

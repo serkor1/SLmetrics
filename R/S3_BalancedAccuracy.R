@@ -27,7 +27,7 @@
 #'
 #' A [numeric]-vector of [length] 1
 #'
-#' @example man/examples/scr_baccuracy.R
+#' @example man/examples/scr_BalancedAccuracy.R
 #'
 #' @family classification
 #'

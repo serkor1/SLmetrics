@@ -29,7 +29,7 @@
 #'
 #' A <[numeric]>-vector of [length] 1
 #'
-#' @example man/examples/scr_zerooneloss.R
+#' @example man/examples/scr_ZeroOneLoss.R
 #'
 #' @family classification
 #'

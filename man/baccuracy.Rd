@@ -121,18 +121,18 @@ actual <- factor(
 
 # 4) evaluate the
 # model
-#
-# 4.1) no adjustment
-baccuracy(
-  actual    = actual,
-  predicted = predicted
-)
-
-# 4.2) with adjustment
-baccuracy(
-  actual    = actual,
-  predicted = predicted,
-  adjust    = TRUE
+cat(
+  "Balanced accuracy", baccuracy(
+    actual    = actual,
+    predicted = predicted
+  ),
+  
+  "Balanced accuracy (weigthed)", weighted.baccuracy(
+    actual    = actual,
+    predicted = predicted,
+    w         = iris$Petal.Length/mean(iris$Petal.Length)
+  ),
+  sep = "\n"
 )
 }
 \seealso{
@@ -140,7 +140,7 @@ Other classification:
 \code{\link{ROC.factor}()},
 \code{\link{accuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},

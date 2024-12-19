@@ -12,7 +12,7 @@
 #'
 #' When `aggregate = TRUE`, the function returns the micro-average FDR across all classes \eqn{k}. By default, it returns the class-wise FDR.
 #'
-#' @example man/examples/scr_fdr.R
+#' @example man/examples/scr_FalseDiscoveryRate.R
 #'
 #' @inherit specificity
 #'

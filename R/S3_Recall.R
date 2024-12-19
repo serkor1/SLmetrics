@@ -15,7 +15,7 @@
 #' @inherit specificity
 #' @param x confusion matrix.
 #'
-#' @example man/examples/scr_recall.R
+#' @example man/examples/scr_Recall.R
 #'
 #' @section Calculation:
 #'

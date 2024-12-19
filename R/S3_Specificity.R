@@ -55,7 +55,7 @@
 #'
 #' If `aggregate` is [TRUE], a <[numeric]>-vector of [length] 1
 #'
-#' @example man/examples/scr_specificity.R
+#' @example man/examples/scr_Specificity.R
 #'
 #'
 #' @section Calculation:

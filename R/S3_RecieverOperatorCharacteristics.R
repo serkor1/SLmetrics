@@ -18,7 +18,7 @@
 #' @param ... Arguments passed into other methods.
 #'
 #'
-#' @example man/examples/scr_ROC.R
+#' @example man/examples/scr_RecieverOperatorCurve.R
 #'
 #' @returns A [data.frame] on the following form,
 #'

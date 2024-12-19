@@ -132,11 +132,20 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) diagnostic odds
-# ratio
+
+# 4) evaluate model performance
+# with Diagnostic Odds Ratio
+cat("Diagnostic Odds Ratio", sep = "\n")
 dor(
-  actual    = actual,
+  actual    = actual, 
   predicted = predicted
+)
+
+cat("Diagnostic Odds Ratio (weighted)", sep = "\n")
+weighted.dor(
+  actual    = actual,
+  predicted = predicted,
+  w         = iris$Petal.Length/mean(iris$Petal.Length)
 )
 }
 \seealso{
@@ -145,7 +154,7 @@ Other classification:
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},
 \code{\link{fer.factor}()},

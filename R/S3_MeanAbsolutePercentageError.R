@@ -12,7 +12,7 @@
 #'
 #' @inherit huberloss
 #'
-#' @example man/examples/scr_mape.R
+#' @example man/examples/scr_MeanAbsolutePercentageError.R
 #'
 #' @section Calculation:
 #'

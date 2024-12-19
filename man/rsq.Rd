@@ -3,11 +3,14 @@
 %   R/S3_CoefficientOfDetermination.R
 \name{rsq.numeric}
 \alias{rsq.numeric}
+\alias{weighted.rsq.numeric}
 \alias{rsq}
 \alias{weighted.rsq}
 \title{Compute the \eqn{R^2}}
 \usage{
 \method{rsq}{numeric}(actual, predicted, k = 0, ...)
+
+\method{weighted.rsq}{numeric}(actual, predicted, w, k = 0, ...)
 
 rsq(...)
 
@@ -22,6 +25,8 @@ weighted.rsq(...)
 the function returns the adjusted \eqn{R^2}.}
 
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
@@ -52,32 +57,24 @@ model <- lm(
 
 # 1.1) define actual
 # and predicted values
-# to measure performance
+# to measure in-sample performance
 actual    <- mtcars$mpg
 predicted <- fitted(model)
 
-
-# 2) calculate the metric
-# with delta 0.5
-huberloss(
-  actual = actual,
-  predicted = predicted,
-  delta = 0.5
-)
-
-# 3) caclulate weighted
-# metric using arbitrary weights
-w <- rbeta(
-  n = 1e3,
-  shape1 = 10,
-  shape2 = 2
-)
-
-huberloss(
-  actual = actual,
-  predicted = predicted,
-  delta = 0.5,
-  w     = w
+# 2) calculate performance
+# using R squared adjusted and
+# unadjused for features
+cat(
+  "Rsq", rsq(
+    actual    = actual,
+    predicted = fitted(model)
+  ),
+  "Rsq (Adjusted)", rsq(
+    actual    = actual,
+    predicted = fitted(model),
+    k = ncol(model.matrix(model)) - 1
+  ),
+  sep = "\n"
 )
 }
 \seealso{

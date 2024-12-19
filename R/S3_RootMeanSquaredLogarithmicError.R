@@ -11,7 +11,7 @@
 #'
 #' @inherit huberloss
 #'
-#' @example man/examples/scr_rmsle.R
+#' @example man/examples/scr_RootMeanSquaredLogarithmicError.R
 #'
 #' @section Calculation:
 #'

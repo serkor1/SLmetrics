@@ -70,25 +70,19 @@ model <- lm(
 actual    <- mtcars$mpg
 predicted <- fitted(model)
 
-
-# 2) calculate the metric
-rrmse(
-  actual     = actual,
-  predicted  = predicted
-)
-
-# 3) calculate
-# the weighted metric
-w <- rbeta(
-  n = 1e3,
-  shape1 = 10,
-  shape2 = 2
-)
-
-rrmse(
-  actual     = actual,
-  predicted  = predicted,
-  w          = w
+# 2) evaluate in-sample model
+# performance using Relative Root Mean Squared Error (RRMSE)
+cat(
+  "Relative Root Mean Squared Error", rrmse(
+    actual    = actual,
+    predicted = predicted,
+  ),
+  "Relative Root Mean Squared Error (weighted)", weighted.rrmse(
+    actual    = actual,
+    predicted = predicted,
+    w         = mtcars$mpg/mean(mtcars$mpg)
+  ),
+  sep = "\n"
 )
 }
 \seealso{

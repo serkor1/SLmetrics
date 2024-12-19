@@ -24,6 +24,8 @@
 #'
 #' Where \eqn{\text{SSE}} is the sum of squared errors, \eqn{\text{SST}} is total sum of squared errors, \eqn{n} is the number of observations, and \eqn{k} is the number of non-constant parameters.
 #'
+#' @example man/examples/scr_CoefficientOfDetermination.R
+#' 
 #' @family regression
 #' @export
 rsq <- function(...) {

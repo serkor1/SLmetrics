@@ -134,26 +134,41 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
+# 4) evaluate class-wise performance
+# using F1-score
 
-# 4) class-wise f1
-# score
-fbeta(
-  actual    = actual,
-  predicted = predicted
-)
-
-# 4.1) micro-averaged F1 score
+# 4.1) unweighted F1-score
 fbeta(
   actual    = actual,
   predicted = predicted,
-  micro = TRUE
+  beta      = 1
 )
 
-# 4.2 macro-averaged F1 score
-fbeta(
+# 4.2) weighted F1-score
+weighted.fbeta(
   actual    = actual,
   predicted = predicted,
-  micro     = FALSE
+  w         = iris$Petal.Length/mean(iris$Petal.Length),
+  beta      = 1
+)
+
+# 5) evaluate overall performance
+# using micro-averaged F1-score
+cat(
+  "Micro-averaged F1-score", fbeta(
+    actual    = actual,
+    predicted = predicted,
+    beta      = 1,
+    micro     = TRUE
+  ),
+  "Micro-averaged F1-score (weighted)", weighted.fbeta(
+    actual    = actual,
+    predicted = predicted,
+    w         = iris$Petal.Length/mean(iris$Petal.Length),
+    beta      = 1,
+    micro     = TRUE
+  ),
+  sep = "\n"
 )
 }
 \seealso{
@@ -162,7 +177,7 @@ Other classification:
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fdr.factor}()},
 \code{\link{fer.factor}()},

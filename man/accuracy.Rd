@@ -117,19 +117,29 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) evaluate the
-# model
-accuracy(
-  actual    = actual,
-  predicted = predicted
+# 4) evaluate model
+# performance
+cat(
+  "Accuracy", accuracy(
+    actual    = actual,
+    predicted = predicted
+  ),
+
+  "Accuracy (weigthed)", weighted.accuracy(
+    actual    = actual,
+    predicted = predicted,
+    w         = iris$Petal.Length/mean(iris$Petal.Length)
+  ),
+  sep = "\n"
 )
+
 }
 \seealso{
 Other classification: 
 \code{\link{ROC.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},

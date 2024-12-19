@@ -15,7 +15,7 @@
 #' @param correction A <[logical]> vector of [length] 1. [FALSE] by default. If [TRUE] the variance and covariance
 #' will be adjusted with \eqn{\frac{1-n}{n}}
 #'
-#' @example man/examples/scr_ccc.R
+#' @example man/examples/scr_ConcordanceCorrelationCoefficient.R
 #'
 #' @section Calculation:
 #'
