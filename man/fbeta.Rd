@@ -8,11 +8,11 @@
 \alias{weighted.fbeta}
 \title{Compute the \eqn{F_{\beta}}-score}
 \usage{
-\method{fbeta}{factor}(actual, predicted, beta = 1, micro = NULL, ...)
+\method{fbeta}{factor}(actual, predicted, beta = 1, micro = NULL, na.rm = TRUE, ...)
 
-\method{weighted.fbeta}{factor}(actual, predicted, w, beta = 1, micro = NULL, ...)
+\method{weighted.fbeta}{factor}(actual, predicted, w, beta = 1, micro = NULL, na.rm = TRUE, ...)
 
-\method{fbeta}{cmatrix}(x, beta = 1, micro = NULL, ...)
+\method{fbeta}{cmatrix}(x, beta = 1, micro = NULL, na.rm = TRUE, ...)
 
 fbeta(...)
 
@@ -27,6 +27,8 @@ weighted.fbeta(...)
 
 \item{micro}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{NULL} by default. If \link{TRUE} it returns the
 micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average. Otherwise class wise performance evaluation.}
+
+\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
 

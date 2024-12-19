@@ -17,12 +17,12 @@ class PrecisionMetric : public classification {
 public:
 
     // Compute precision with micro or macro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm, bool micro) const override {
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm) const override {
         
-        // 0) declare the
-        // output value and 
-        // TP/FP
-        Eigen::ArrayXd output(1);
+        // 0) Declare variables and size
+        // for efficiency.
+        // NOTE: Micro and macro already wraps and exports as Rcpp
+        Rcpp::NumericVector output(1);
         Eigen::ArrayXd tp(matrix.rows()), fp(matrix.rows());
 
         // 1) create TP and FP arrays
@@ -30,28 +30,10 @@ public:
         TP(matrix, tp);
         FP(matrix, fp);
 
-        // 2) conditional
-        // computing of metric
-        if (micro) {
+        return do_micro
+            ? micro(tp, tp + fp, na_rm)
+            : macro(tp, tp + fp, na_rm);
 
-            double tp_sum = tp.sum(), fp_sum = fp.sum();
-            output = Eigen::ArrayXd::Constant(1, (tp_sum + fp_sum == 0) ? R_NaReal : tp_sum / (tp_sum + fp_sum));
-
-        } else {
-
-            output = tp / (tp + fp);
-
-            if (na_rm) {
-                double valid_sum = (output.isFinite().select(output, 0.0)).sum();
-                double valid_count = output.isFinite().count();
-                output = Eigen::ArrayXd::Constant(1, valid_count > 0 ? valid_sum / valid_count : R_NaReal);
-            }
-
-        }
-
-        // 3) return with 
-        // wrap (R compatible classes)        
-        return Rcpp::wrap(output);
     }
 
     // Compute precision without micro aggregation

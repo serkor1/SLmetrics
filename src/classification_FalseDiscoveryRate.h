@@ -10,28 +10,21 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 class FalseDiscoveryRateMetric : public classification {
 public:
 
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm, bool micro) const override {
-        Eigen::ArrayXd output(1);
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm) const override {
+
+        // 0) Declare variables and size
+        // for efficiency.
+        // NOTE: Micro and macro already wraps and exports as Rcpp
+        Rcpp::NumericVector output(1);
         Eigen::ArrayXd fp(matrix.rows()), tp(matrix.rows());
 
         FP(matrix, fp);
         TP(matrix, tp);
 
-        if (micro) {
-            double fp_sum = fp.sum(), tp_sum = tp.sum();
-            output = Eigen::ArrayXd::Constant(1, (fp_sum + tp_sum == 0)
-                ? R_NaReal
-                : fp_sum / (fp_sum + tp_sum));
-        } else {
-            output = fp / (fp + tp);
-            if (na_rm) {
-                double valid_sum = (output.isFinite().select(output, 0.0)).sum();
-                double valid_count = output.isFinite().count();
-                output = Eigen::ArrayXd::Constant(1, valid_count > 0 ? valid_sum / valid_count : R_NaReal);
-            }
-        }
+        return do_micro
+            ? micro(fp, fp + tp, na_rm)
+            : macro(fp, fp + tp, na_rm);
 
-        return Rcpp::wrap(output);
     }
 
     Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {

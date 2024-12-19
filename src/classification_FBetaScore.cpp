@@ -8,25 +8,25 @@ using namespace Rcpp;
 //' @method fbeta factor
 //' @export
 // [[Rcpp::export(fbeta.factor)]]
-NumericVector fbeta(const IntegerVector& actual, const IntegerVector& predicted, const double& beta = 1.0, Nullable<bool> micro = R_NilValue) {
+NumericVector fbeta(const IntegerVector& actual, const IntegerVector& predicted, const double& beta = 1.0, Nullable<bool> micro = R_NilValue, bool na_rm = true) {
     FBetaMetric foo; // Instantiate F-Beta metric with the provided beta value
-    return classification_base(actual, predicted, foo, micro, beta);
+    return classification_base(actual, predicted, foo, micro, beta, na_rm);
 }
 
 //' @rdname fbeta
 //' @method weighted.fbeta factor
 //' @export
 // [[Rcpp::export(weighted.fbeta.factor)]]
-NumericVector weighted_fbeta(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, const double& beta = 1.0, Nullable<bool> micro = R_NilValue) {
+NumericVector weighted_fbeta(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, const double& beta = 1.0, Nullable<bool> micro = R_NilValue, bool na_rm = true) {
     FBetaMetric foo; // Instantiate F-Beta metric with the provided beta value
-    return classification_base(actual, predicted, w, foo, micro, beta);
+    return classification_base(actual, predicted, w, foo, micro, beta, na_rm);
 }
 
 //' @rdname fbeta
 //' @method fbeta cmatrix
 //' @export
 // [[Rcpp::export(fbeta.cmatrix)]]
-NumericVector fbeta_cmatrix(const NumericMatrix& x, const double& beta = 1.0, Nullable<bool> micro = R_NilValue) {
+NumericVector fbeta_cmatrix(const NumericMatrix& x, const double& beta = 1.0, Nullable<bool> micro = R_NilValue, bool na_rm = true) {
     FBetaMetric foo; // Instantiate F-Beta metric with the provided beta value
-    return classification_base(x, foo, micro, beta);
+    return classification_base(x, foo, micro, beta, na_rm);
 }

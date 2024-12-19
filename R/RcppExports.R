@@ -135,22 +135,22 @@ dor.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
 #' @rdname fbeta
 #' @method fbeta factor
 #' @export
-fbeta.factor <- function(actual, predicted, beta = 1.0, micro = NULL, ...) {
-    .Call(`_SLmetrics_fbeta`, actual, predicted, beta, micro)
+fbeta.factor <- function(actual, predicted, beta = 1.0, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_fbeta`, actual, predicted, beta, micro, na_rm = na.rm)
 }
 
 #' @rdname fbeta
 #' @method weighted.fbeta factor
 #' @export
-weighted.fbeta.factor <- function(actual, predicted, w, beta = 1.0, micro = NULL, ...) {
-    .Call(`_SLmetrics_weighted_fbeta`, actual, predicted, w, beta, micro)
+weighted.fbeta.factor <- function(actual, predicted, w, beta = 1.0, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_fbeta`, actual, predicted, w, beta, micro, na_rm = na.rm)
 }
 
 #' @rdname fbeta
 #' @method fbeta cmatrix
 #' @export
-fbeta.cmatrix <- function(x, beta = 1.0, micro = NULL, ...) {
-    .Call(`_SLmetrics_fbeta_cmatrix`, x, beta, micro)
+fbeta.cmatrix <- function(x, beta = 1.0, micro = NULL, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_fbeta_cmatrix`, x, beta, micro, na_rm = na.rm)
 }
 
 #' @rdname fdr

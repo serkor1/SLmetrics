@@ -17,31 +17,21 @@ class FalseOmissionRateMetric : public classification {
 public:
 
     // Compute FOR with micro or macro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm, bool micro) const override {
-        // Declare the output value and FN/TN arrays
-        Eigen::ArrayXd output(1);
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm) const override {
+        // 0) Declare variables and size
+        // for efficiency.
+        // NOTE: Micro and macro already wraps and exports as Rcpp
+        Rcpp::NumericVector output(1);
         Eigen::ArrayXd fn(matrix.rows()), tn(matrix.rows());
 
         // Create FN and TN arrays for calculations
         FN(matrix, fn);
         TN(matrix, tn);
 
-        // Conditional computation of metric
-        if (micro) {
-            double fn_sum = fn.sum(), tn_sum = tn.sum();
-            output = Eigen::ArrayXd::Constant(1, (fn_sum + tn_sum == 0) ? R_NaReal : fn_sum / (fn_sum + tn_sum));
-        } else {
-            output = fn / (fn + tn);
-
-            if (na_rm) {
-                double valid_sum = (output.isFinite().select(output, 0.0)).sum();
-                double valid_count = output.isFinite().count();
-                output = Eigen::ArrayXd::Constant(1, valid_count > 0 ? valid_sum / valid_count : R_NaReal);
-            }
-        }
-
-        // Return with R-compatible class
-        return Rcpp::wrap(output);
+        return do_micro
+            ? micro(fn, fn + tn, na_rm)
+            : macro(fn, fn + tn, na_rm);
+        
     }
 
     // Compute FOR without micro aggregation

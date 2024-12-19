@@ -10,8 +10,12 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 class FBetaMetric : public classification {
 public:
 
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool micro, double beta) const override {
-        Eigen::ArrayXd output(1);
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, double beta, bool do_micro, bool na_rm) const override {
+        
+        // 0) Declare variables and size
+        // for efficiency.
+        // NOTE: Micro and macro already wraps and exports as Rcpp
+        Rcpp::NumericVector output(1);
         Eigen::ArrayXd tp(matrix.rows()), fp(matrix.rows()), fn(matrix.rows());
         double beta_sq = beta * beta;
 
@@ -19,31 +23,20 @@ public:
         FP(matrix, fp);
         FN(matrix, fn);
 
-        if (micro) {
+        // 1) define recall 
+        // and recall
+        const Eigen::ArrayXd& precision = tp / (tp + fp);
+        const Eigen::ArrayXd& recall    = tp / (tp + fn);
 
-            double tp_sum = tp.sum(), fp_sum = fp.sum(), fn_sum = fn.sum();
-            double precision = tp_sum / (tp_sum + fp_sum);
-            double recall = tp_sum / (tp_sum + fn_sum);
+        // 2) retun with 
+        // ternary expression
+        return do_micro
+            ? micro((1 + beta_sq) * (precision * recall), (beta_sq * precision + recall), na_rm)
+            : macro((1 + beta_sq) * (precision * recall), (beta_sq * precision + recall), na_rm);
 
-            output = Eigen::ArrayXd::Constant(1, (precision + recall == 0)
-                ? R_NaReal
-                : (1 + beta_sq) * precision * recall / (beta_sq * precision + recall));
-            
-            return Rcpp::wrap(output);
-
-        } else {
-            Eigen::ArrayXd precision = tp / (tp + fp);
-            Eigen::ArrayXd recall = tp / (tp + fn);
-
-            output = (1 + beta_sq) * (precision * recall) / (beta_sq * precision + recall);
-
-            return Rcpp::wrap(Eigen::ArrayXd::Constant(1, output.sum() / output.size()));
-        }
-
-        
     }
 
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, double beta) const override {
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, double beta, bool na_rm) const override {
         Eigen::ArrayXd output(matrix.rows());
         Eigen::ArrayXd tp(matrix.rows()), fp(matrix.rows()), fn(matrix.rows());
         double beta_sq = beta * beta;

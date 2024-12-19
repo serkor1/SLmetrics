@@ -12,6 +12,50 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 using namespace Rcpp;
 
 /*
+    Micro and Macro averages with missing value handling.
+    If na_rm is TRUE it divides with the available number
+    of classes.
+
+    Otherwise it divides by the original number of classes. 
+    This is consistent with {Scikit}-learn.
+
+    NOTE: This should warn or give a message when there is missing values
+
+*/
+
+inline __attribute__((always_inline)) Rcpp::NumericVector micro(const Eigen::ArrayXd& numerator, const Eigen::ArrayXd& denominator, bool na_rm) {
+
+    if (na_rm)
+
+    {
+        return Rcpp::wrap(numerator.sum() / denominator.sum());
+    }
+
+    return Rcpp::wrap(numerator.sum() / denominator.sum());
+
+}
+
+
+inline __attribute__((always_inline)) Rcpp::NumericVector macro(const Eigen::ArrayXd& numerator, const Eigen::ArrayXd& denominator, bool na_rm) {
+
+    /*
+        NOTE: If you test this function by itself, isFinite() works. But when compiling only is.NaN works.
+        The reason behind this is currently unkown. However, isNaN() produces the same result as {scikit-learn}.
+
+        If .isFinite() is used, it will not do respect it. And return NA even if na_rm is set to true.
+     */
+
+    Eigen::ArrayXd z(numerator.size());
+    z = numerator / denominator;
+
+    return na_rm
+            ? Rcpp::wrap(z.isNaN().select(0, z).sum() / (z.isNaN() == false).count())
+            : Rcpp::wrap(z.isNaN().select(0, z).sum() / z.size());
+
+}
+
+
+/*
   Calculating TP, FP, TN and FN from matrices.
 
   NOTE: The template is redundant, and will be removed at a later point.

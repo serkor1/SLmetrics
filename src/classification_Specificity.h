@@ -17,38 +17,21 @@ class SpecificityMetric : public classification {
 public:
 
     // Compute specificity with micro or macro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool micro, bool na_rm) const override {
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm) const override {
 
-        // 0) Declare output value and TN/FP arrays
-        Eigen::ArrayXd output(1), tn_sum(1), fp_sum(1);
-        Eigen::ArrayXd tn(matrix.rows()), fp(matrix.rows()), auxillary(matrix.rows());
+        // 0) Declare variables and size
+        // for efficiency.
+        // NOTE: Micro and macro already wraps and exports as Rcpp
+        Rcpp::NumericVector output(1);
+        Eigen::ArrayXd tn(matrix.rows()), fp(matrix.rows());
 
-        // 1) Create TN and FP arrays
         TN(matrix, tn);
         FP(matrix, fp);
 
-        // 2) Conditional computation of metric
-        if (micro) {
+        return do_micro
+            ?  micro(tn, tn + fp, na_rm)
+            :  macro(tn, tn + fp, na_rm);
 
-            // 2.1) calculate sums
-            tn_sum = Eigen::ArrayXd::Constant(1, tn.sum()); fp_sum = Eigen::ArrayXd::Constant(1, fp.sum());
-
-            // 2.2) calculate output
-            output = tn_sum / (tn_sum + fp_sum);
-
-        } else {
-
-            // 2.1) calculate intermediate
-            // value
-            auxillary = tn / (tn + fp);
-
-            // 2.2) calculate output
-            output = auxillary.sum() / auxillary.size();
-
-        }
-
-        // 3) Return wrapped (R-compatible classes)
-        return Rcpp::wrap(output);
     }
 
     // Compute specificity without micro aggregation
