@@ -13,7 +13,7 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 class AccuracyMetric : public classification {
 public:
     // Compute overall accuracy
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
 
         // 0) set sizes
         // of arrays

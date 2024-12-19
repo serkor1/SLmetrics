@@ -16,7 +16,7 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 class BalancedAccuracyMetric : public classification {
 public:
 
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm, bool adjust) const override {
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool adjust) const override {
         // 0) define values
         Eigen::ArrayXd output(1);                       
         Eigen::ArrayXd tp(matrix.rows()); 
@@ -48,10 +48,6 @@ public:
 
     };
 
-    // Compute balanced accuracy without adjustment
-    // Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
-    //    return compute(matrix, na_rm, false); // Default to no adjustment
-    // }
 };
 
 #endif // CLASSIFICATION_BALANCED_ACCURACY_H

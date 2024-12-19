@@ -10,9 +10,8 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 class NLRMetric : public classification {
 public:
 
-
     // Compute NLR without micro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
         Eigen::ArrayXd output(matrix.rows());
         Eigen::ArrayXd tp(matrix.rows()), fn(matrix.rows()), tn(matrix.rows()), fp(matrix.rows());
         Eigen::ArrayXd fnr(matrix.rows()), tnr(matrix.rows());

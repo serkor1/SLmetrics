@@ -49,6 +49,34 @@ testthat::test_that(
       threshold = response
     )
 
+    # 3.2) check if summaries
+    # and print methods responds
+    # correctly
+
+    # 3.2.1) print method
+    testthat::expect_no_error(
+      print.ROC(
+        target
+      )
+    )
+   
+
+    # 3.2.2) summary
+    # method
+    testthat::expect_no_error(
+      summary.ROC(
+        target
+      )
+    )
+    
+
+    # 3.2.3) plot method
+    testthat::expect_no_error(
+      plot.ROC(
+        target
+      )
+    )
+
     # 4) test if its
     # equal
     testthat::expect_true(
@@ -174,6 +202,35 @@ testthat::test_that(
       response   = response,
       threshold = response
     )
+
+    # 3.2) check if summaries
+    # and print methods responds
+    # correctly
+
+    # 3.2.1) print method
+    testthat::expect_no_error(
+      print.prROC(
+        target
+      )
+    )
+   
+
+    # 3.2.2) summary
+    # method
+    testthat::expect_no_error(
+      summary.prROC(
+        target
+      )
+    )
+    
+
+    # 3.2.3) plot method
+    testthat::expect_no_error(
+      plot.prROC(
+        target
+      )
+    )
+    
 
     # 4) test if its
     # equal
