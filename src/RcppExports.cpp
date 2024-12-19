@@ -1343,12 +1343,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // pinball
-double pinball(const std::vector<double>& actual, const std::vector<double>& predicted, double alpha, bool deviance);
+double pinball(std::vector<double>& actual, const std::vector<double>& predicted, double alpha, bool deviance);
 RcppExport SEXP _SLmetrics_pinball(SEXP actualSEXP, SEXP predictedSEXP, SEXP alphaSEXP, SEXP devianceSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< std::vector<double>& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
     Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< bool >::type deviance(devianceSEXP);

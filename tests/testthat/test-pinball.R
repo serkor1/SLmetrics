@@ -30,19 +30,24 @@ testthat::test_that(
     predicted <- values$predicted
     w <- values$weight
 
+    # 2) test for unweighted deviance
+    # equality
     testthat::expect_true(
-      all(
-        set_equal(
-          current = as.numeric(pinball(actual, predicted, deviance = TRUE)),
-          target  = as.numeric(py_d2pinball(actual, predicted)),
-          tolerance = 3e-5
-        ),
-        set_equal(
-          current   = as.numeric(weighted.pinball(actual, predicted, w = w, deviance = TRUE)),
-          target    = as.numeric(py_d2pinball(actual, predicted, w = w)),
-          tolerance = 3e-5
-        )
-      )
+      object = set_equal(
+        current = as.numeric(pinball(actual, predicted, deviance = TRUE)),
+        target  = as.numeric(py_d2pinball(actual, predicted))
+      ),
+      label = "(unweighted) Pinball deviance is not equal to {scikit-learn} implementation"
+    )
+
+    # 3) test for weighted deviance
+    # equality
+    testthat::expect_true(
+      object = set_equal(
+        current = as.numeric(weighted.pinball(actual, predicted, w = w, deviance = TRUE)),
+        target  = as.numeric(py_d2pinball(actual, predicted, w = w))
+      ),
+      label = "(weightted) Pinball deviance is not equal to {scikit-learn} implementation"
     )
 
   }
