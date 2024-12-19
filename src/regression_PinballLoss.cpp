@@ -11,9 +11,9 @@ double pinball(const std::vector<double>& actual, const std::vector<double>& pre
     PinballLoss pinballMetric(alpha); // Instantiate Pinball Loss class
 
     if (deviance) {
-        // Copy the actual vector and compute quantiles
-        std::vector<double> actualCopy = actual;
-        std::vector<double> quantiles = pinballMetric.quantile(actualCopy);
+
+        double quantile_value = pinballMetric.quantile(actual.begin(), actual.end());
+        std::vector<double> quantiles(actual.size(), quantile_value);
 
         double quantile_loss = pinballMetric.compute(actual, quantiles);
         double pinball_loss = pinballMetric.compute(actual, predicted);
@@ -25,6 +25,7 @@ double pinball(const std::vector<double>& actual, const std::vector<double>& pre
     return pinballMetric.compute(actual, predicted);
 }
 
+
 //' @rdname pinball
 //' @method weighted.pinball numeric
 //' @export
@@ -34,9 +35,8 @@ double weighted_pinball(const std::vector<double>& actual, const std::vector<dou
     PinballLoss pinballMetric(alpha); // Instantiate Pinball Loss class
 
     if (deviance) {
-        // Copy the actual vector and compute quantiles
-        std::vector<double> actualCopy = actual;
-        std::vector<double> quantiles = pinballMetric.quantile(actualCopy);
+        // Compute quantiles directly using the input vectors
+        std::vector<double> quantiles = pinballMetric.quantile(actual, w);
 
         double quantile_loss = pinballMetric.compute(actual, quantiles, w);
         double pinball_loss = pinballMetric.compute(actual, predicted, w);

@@ -11,7 +11,7 @@ class PLRMetric : public classification {
 public:
 
     // Compute PLR without micro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
         Eigen::ArrayXd output(matrix.rows());
         Eigen::ArrayXd tp(matrix.rows()), fn(matrix.rows()), tn(matrix.rows()), fp(matrix.rows());
         Eigen::ArrayXd tpr(matrix.rows()), fpr(matrix.rows());

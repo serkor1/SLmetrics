@@ -8,11 +8,11 @@
 \alias{weighted.plr}
 \title{Compute the \eqn{\text{positive}} \eqn{\text{likelihood}} \eqn{\text{ratio}}}
 \usage{
-\method{plr}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+\method{plr}{factor}(actual, predicted, micro = NULL, ...)
 
-\method{weighted.plr}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+\method{weighted.plr}{factor}(actual, predicted, w, micro = NULL, ...)
 
-\method{plr}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
+\method{plr}{cmatrix}(x, micro = NULL, ...)
 
 plr(...)
 
@@ -25,8 +25,6 @@ weighted.plr(...)
 
 \item{micro}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{NULL} by default. If \link{TRUE} it returns the
 micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average. Otherwise class wise performance evaluation.}
-
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
 

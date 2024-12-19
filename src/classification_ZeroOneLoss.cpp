@@ -7,25 +7,25 @@ using namespace Rcpp;
 //' @method zerooneloss factor
 //' @export
 // [[Rcpp::export(zerooneloss.factor)]]
-Rcpp::NumericVector zerooneloss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, bool na_rm = false) {
+Rcpp::NumericVector zerooneloss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) {
     ZeroOneLossMetric foo; // Instantiate ZeroOneLossMetric
-    return classification_base(actual, predicted, foo, na_rm);
+    return classification_base(actual, predicted, foo);
 }
 
 //' @rdname zerooneloss
 //' @method weighted.zerooneloss factor
 //' @export
 // [[Rcpp::export(weighted.zerooneloss.factor)]]
-Rcpp::NumericVector weighted_zerooneloss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const NumericVector& w, const bool& na_rm = true) {
+Rcpp::NumericVector weighted_zerooneloss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const NumericVector& w) {
     ZeroOneLossMetric foo; // Instantiate ZeroOneLossMetric
-    return classification_base(actual, predicted, w, foo, na_rm);
+    return classification_base(actual, predicted, w, foo);
 }
 
 //' @rdname zerooneloss
 //' @method zerooneloss cmatrix
 //' @export
 // [[Rcpp::export(zerooneloss.cmatrix)]]
-Rcpp::NumericVector zerooneloss_cmatrix(const Rcpp::NumericMatrix& x, const bool& na_rm = true) {
+Rcpp::NumericVector zerooneloss_cmatrix(const Rcpp::NumericMatrix& x) {
   ZeroOneLossMetric foo; // Instantiate ZeroOneLossMetric
-  return classification_base(x, foo, na_rm);
+  return classification_base(x, foo);
 }

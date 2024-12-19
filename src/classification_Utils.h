@@ -27,7 +27,16 @@ public:
 
             Warning: ALL signatures has to be used (I think)
     */
+
     virtual Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const {
+        return Rcpp::NumericVector();
+    };
+    
+    virtual Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const {
+        return Rcpp::NumericVector();
+    };
+
+    virtual Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm) const {
         return Rcpp::NumericVector();
     };
 
@@ -35,17 +44,21 @@ public:
         return Rcpp::NumericVector();
     };
 
-    virtual Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const {
+    virtual Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, double beta, bool na_rm) const {
         return Rcpp::NumericVector();
     };
 
-    virtual Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm, double beta) const {
+    virtual Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, double beta, bool micro, bool na_rm) const {
         return Rcpp::NumericVector();
     };
 
-    virtual Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm, bool micro) const {
-        return Rcpp::NumericVector();
-    };
+   
+    
+
+    
+
+    
+
 
     virtual ~classification() = default;
 };

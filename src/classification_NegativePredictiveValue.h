@@ -17,7 +17,7 @@ class NegativePredictiveValueMetric : public classification {
 public:
 
     // Compute NPV with micro or macro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm, bool micro) const override {
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm) const override {
         // Declare the output value and TN/FN arrays
         Eigen::ArrayXd output(1);
         Eigen::ArrayXd tn(matrix.rows()), fn(matrix.rows());
@@ -26,22 +26,13 @@ public:
         TN(matrix, tn);
         FN(matrix, fn);
 
-        // Conditional computation of metric
-        if (micro) {
-            double tn_sum = tn.sum(), fn_sum = fn.sum();
-            output = Eigen::ArrayXd::Constant(1, (tn_sum + fn_sum == 0) ? R_NaReal : tn_sum / (tn_sum + fn_sum));
-        } else {
-            output = tn / (tn + fn);
 
-            if (na_rm) {
-                double valid_sum = (output.isFinite().select(output, 0.0)).sum();
-                double valid_count = output.isFinite().count();
-                output = Eigen::ArrayXd::Constant(1, valid_count > 0 ? valid_sum / valid_count : R_NaReal);
-            }
-        }
+        // 2) retun with 
+        // ternary expression
+        return do_micro
+            ? micro(tn, (tn + fn), na_rm)
+            : macro(tn, (tn + fn), na_rm);
 
-        // Return with R-compatible class
-        return Rcpp::wrap(output);
     }
 
     // Compute NPV without micro aggregation

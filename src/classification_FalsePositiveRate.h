@@ -11,22 +11,21 @@ class FalsePositiveRateMetric : public classification {
 public:
 
     // Compute FPR with micro or macro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool micro, bool na_rm) const override {
-        Eigen::ArrayXd output(1);
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm) const override {
+        
+        // 0) Declare variables and size
+        // for efficiency.
+        // NOTE: Micro and macro already wraps and exports as Rcpp
+        Rcpp::NumericVector output(1);
         Eigen::ArrayXd fp(matrix.rows()), tn(matrix.rows()), auxillary(matrix.rows());
 
         FP(matrix, fp);
         TN(matrix, tn);
 
-        if (micro) {
-            double fp_sum = fp.sum(), tn_sum = tn.sum();
-            output = Eigen::ArrayXd::Constant(1, fp_sum / (fp_sum + tn_sum));
-        } else {
-            auxillary = fp / (fp + tn);
-            output = Eigen::ArrayXd::Constant(1, auxillary.sum() / auxillary.size());
-        }
+        return do_micro
+            ? micro(fp, fp + tn, na_rm)
+            : macro(fp, fp + tn, na_rm);
 
-        return Rcpp::wrap(output);
     }
 
     // Compute FPR without micro aggregation

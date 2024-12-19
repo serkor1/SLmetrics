@@ -10,6 +10,51 @@
 # was convienient.
 # script start;
 
+# Concordance Correlation Coefficient
+# The values have been verified with yardstick and 
+# epiR
+py_ccc <- function(actual, predicted, w = NULL, bias = FALSE) {
+
+  actual <- as.numeric(actual)
+  predicted <- as.numeric(predicted)
+  
+  if (is.null(w)) {
+    w <- rep(1, length(actual))
+  } else {
+    w <- as.numeric(w)
+  }
+  
+  data <- cbind(actual = actual, predicted = predicted)
+  cov_matrix <- stats::cov.wt(
+    x = data,
+    wt = w,
+    cor = FALSE,
+    center = TRUE,
+    method = "unbiased"
+  )
+  
+  actual_mean <- weighted.mean(actual, w = w)
+  predicted_mean <- weighted.mean(predicted, w = w)
+  actual_variance <- cov_matrix$cov[1, 1]
+  predicted_variance <- cov_matrix$cov[2, 2]
+  covariance <- cov_matrix$cov[1, 2]
+  
+  if (bias) {
+    n <- sum(w) 
+    actual_variance <- actual_variance * (n - 1) / n
+    predicted_variance <- predicted_variance * (n - 1) / n
+    covariance <- covariance * (n - 1) / n
+  }
+  
+  numerator <- 2 * covariance
+  denominator <- actual_variance + predicted_variance + (actual_mean - predicted_mean)^2
+  ccc_value <- numerator / denominator
+  
+  return(ccc_value)
+}
+
+
+
 # False Discovery Rate
 py_fdr <- function(
     actual,

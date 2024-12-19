@@ -8,11 +8,11 @@
 \alias{weighted.baccuracy}
 \title{Compute the \eqn{\text{balanced}} \eqn{\text{accuracy}}}
 \usage{
-\method{baccuracy}{factor}(actual, predicted, adjust = FALSE, na.rm = TRUE, ...)
+\method{baccuracy}{factor}(actual, predicted, adjust = FALSE, ...)
 
-\method{weighted.baccuracy}{factor}(actual, predicted, w, adjust = FALSE, na.rm = TRUE, ...)
+\method{weighted.baccuracy}{factor}(actual, predicted, w, adjust = FALSE, ...)
 
-\method{baccuracy}{cmatrix}(x, adjust = FALSE, na.rm = TRUE, ...)
+\method{baccuracy}{cmatrix}(x, adjust = FALSE, ...)
 
 baccuracy(...)
 
@@ -24,8 +24,6 @@ weighted.baccuracy(...)
 \item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{adjust}{A \link{logical} value. \link{FALSE} by default. If \link{TRUE} the metric is adjusted for random change \eqn{\frac{1}{k}}}
-
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
 
 \item{...}{Arguments passed into other methods.}
 
