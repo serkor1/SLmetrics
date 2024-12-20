@@ -6,8 +6,8 @@
 
 #' Compute the \eqn{\text{root}} \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{error}}
 #'
-#' The [rmse()]-function computes the simple and weighted [root mean squared error](https://en.wikipedia.org/wiki/Root-mean-square_deviation) between
-#' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted root mean squared error.
+#' The [rmse()]-function computes the [root mean squared error](https://en.wikipedia.org/wiki/Root-mean-square_deviation) between
+#' the observed and predicted <[numeric]> vectors. The [weighted.rmse()] function computes the weighted root mean squared error.
 #'
 #' @inherit huberloss
 #'
@@ -21,7 +21,7 @@
 #'   \sqrt{\frac{1}{n} \sum_i^n (y_i - \upsilon_i)^2}
 #' }
 #'
-#' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
+#' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively.
 #'
 #' @family Regression
 #' @family Supervised Learning

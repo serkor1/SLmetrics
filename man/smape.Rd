@@ -5,6 +5,7 @@
 \alias{smape.numeric}
 \alias{weighted.smape.numeric}
 \alias{smape}
+\alias{weighted.smape}
 \title{Compute the \eqn{\text{symmetric}} \eqn{\text{mean}} \eqn{\text{absolute}} \eqn{\text{percentage}} \eqn{\text{error}}}
 \usage{
 \method{smape}{numeric}(actual, predicted, ...)
@@ -12,6 +13,8 @@
 \method{weighted.smape}{numeric}(actual, predicted, w, ...)
 
 smape(...)
+
+weighted.smape(...)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}
@@ -20,13 +23,14 @@ smape(...)
 
 \item{...}{Arguments passed into other methods.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-The \code{\link[=smape]{smape()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error}{symmetric mean absolute percentage error}.
+The \code{\link[=smape]{smape()}}-function computes the  \href{https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error}{symmetric mean absolute percentage error} between
+the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.smape]{weighted.smape()}} function computes the weighted symmetric mean absolute percentage error.
 }
 \section{Calculation}{
 
@@ -37,8 +41,7 @@ The metric is calculated as follows,
   \sum_i^n \frac{1}{n} \frac{|y_i - \upsilon_i|}{\frac{|y_i|+|\upsilon_i|}{2}}
 }
 
-where \eqn{y_i} and \eqn{\upsilon_i} is the \code{actual} and \code{predicted} values respectively. If \code{w} is not \link{NULL}, the metric is calculated
-using weights.
+where \eqn{y_i} and \eqn{\upsilon_i} is the \code{actual} and \code{predicted} values respectively.
 }
 
 \examples{

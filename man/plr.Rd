@@ -19,18 +19,18 @@ plr(...)
 weighted.plr(...)
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{NULL} by default. If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average. Otherwise class wise performance evaluation.}
+\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
+micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
 
-\item{...}{Arguments passed into other methods.}
+\item{...}{Arguments passed into other methods}
 
-\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 
-\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
+\item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 }
 \value{
 If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
@@ -39,12 +39,29 @@ If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \li
 }
 \description{
 The \code{\link[=plr]{plr()}}-function computes the \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{positive likelihood ratio}, also known as the likelihood ratio for positive results, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
-
-When \code{aggregate = TRUE}, the function returns the micro-average PLR across all classes \eqn{k}.
-By default, it returns the class-wise PLR.
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values.  The \code{\link[=weighted.plr]{weighted.plr()}} function computes the weighted positive likelihood ratio.
 }
-\details{
+\section{Calculation}{
+
+
+The metric is calculated for each class \eqn{k} as follows,
+
+\deqn{
+  \frac{\text{Sensitivity}_k}{1 - \text{Specificity}_k}
+}
+
+Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
+
+When \code{aggregate = TRUE}, the \code{micro}-average is calculated,
+
+\deqn{
+  \frac{\sum_{k=1}^k \text{Sensitivity}_k}{1 - \sum_{k=1}^k \text{Specificity}_k}
+}
+}
+
+\section{Creating <\link{factor}>}{
+
+
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
@@ -76,23 +93,6 @@ factor(
 }\if{html}{\out{</div>}}
 
 In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
-}
-\section{Calculation}{
-
-
-The metric is calculated for each class \eqn{k} as follows,
-
-\deqn{
-  \frac{\text{Sensitivity}_k}{1 - \text{Specificity}_k}
-}
-
-Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
-
-When \code{aggregate = TRUE}, the \code{micro}-average is calculated,
-
-\deqn{
-  \frac{\sum_{k=1}^k \text{Sensitivity}_k}{1 - \sum_{k=1}^k \text{Specificity}_k}
-}
 }
 
 \examples{

@@ -19,24 +19,38 @@ zerooneloss(...)
 weighted.zerooneloss(...)
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{...}{Arguments passed into other methods.}
+\item{...}{Arguments passed into other methods}
 
-\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default}
 
-\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
+\item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}}
 }
 \value{
 A <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=zerooneloss]{zerooneloss()}}-function computes the \href{https://en.wikipedia.org/wiki/Loss_functions_for_classification}{Zero-One Loss}, a classification loss function that calculates the proportion of misclassified instances between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+The \code{\link[=zerooneloss]{zerooneloss()}}-function computes the \href{https://en.wikipedia.org/wiki/Loss_functions_for_classification}{zero-one Loss}, a classification loss function that calculates the proportion of misclassified instances between
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.zerooneloss]{weighted.zerooneloss()}} function computes the weighted zero-one loss.
 }
-\details{
+\section{Calculation}{
+
+
+The metric is calculated as follows,
+
+\deqn{
+  \frac{\#FP + \#FN}{\#TP + \#TN + \#FP + \#FN}
+}
+
+Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} represent the true positives, true negatives, false positives, and false negatives, respectively.
+}
+
+\section{Creating <\link{factor}>}{
+
+
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
@@ -68,19 +82,6 @@ factor(
 }\if{html}{\out{</div>}}
 
 In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
-}
-\section{Calculation}{
-
-
-Zero-One Loss is a global metric that measures the proportion of incorrect predictions made by the model. It is calculated as follows,
-
-\deqn{
-  \frac{\#FP + \#FN}{\#TP + \#TN + \#FP + \#FN}
-}
-
-Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} represent the true positives, true negatives, false positives, and false negatives, respectively.
-
-Zero-One Loss provides an overall measure of the model's prediction errors across all classes.
 }
 
 \examples{

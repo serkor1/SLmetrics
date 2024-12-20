@@ -22,14 +22,14 @@ weighted.rmse(...)
 
 \item{...}{Arguments passed into other methods.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-The \code{\link[=rmse]{rmse()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Root-mean-square_deviation}{root mean squared error} between
-the observed and predicted <\link{numeric}> vectors. If \code{w} is not \link{NULL}, the function returns the weighted root mean squared error.
+The \code{\link[=rmse]{rmse()}}-function computes the \href{https://en.wikipedia.org/wiki/Root-mean-square_deviation}{root mean squared error} between
+the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.rmse]{weighted.rmse()}} function computes the weighted root mean squared error.
 }
 \section{Calculation}{
 
@@ -40,7 +40,7 @@ The metric is calculated as,
   \sqrt{\frac{1}{n} \sum_i^n (y_i - \upsilon_i)^2}
 }
 
-Where \eqn{y_i} and \eqn{\upsilon_i} are the \code{actual} and \code{predicted} values respectively. If \eqn{\text{w}} is not \link{NULL}, the weighted version is calculated.
+Where \eqn{y_i} and \eqn{\upsilon_i} are the \code{actual} and \code{predicted} values respectively.
 }
 
 \examples{

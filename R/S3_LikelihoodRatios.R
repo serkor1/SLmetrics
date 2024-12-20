@@ -9,10 +9,7 @@
 #'
 #' @description
 #' The [nlr()]-function computes the [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing), also known as the likelihood ratio for negative results, between
-#' two vectors of predicted and observed [factor()] values.
-#'
-#' When `aggregate = TRUE`, the function returns the micro-average NLR across all classes \eqn{k}.
-#' By default, it returns the class-wise NLR.
+#' two vectors of predicted and observed [factor()] values. The [weighted.nlr()] function computes the weighted negative likelihood ratio.
 #'
 #' @example man/examples/scr_NegativeLikelihoodRatio.R
 #'
@@ -27,13 +24,7 @@
 #' }
 #'
 #' Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
-#'
-#' When `aggregate = TRUE`, the `micro`-average is calculated,
-#'
-#' \deqn{
-#'   \frac{\sum_{k=1}^k (1 - \text{Sensitivity}_k)}{\sum_{k=1}^k \text{Specificity}_k}
-#' }
-#'
+#' 
 #' @seealso
 #'
 #' The [plr()]-function for the Positive Likehood Ratio (LR+)
@@ -62,10 +53,8 @@ weighted.nlr <- function(...) {
 #'
 #' @description
 #' The [plr()]-function computes the [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing), also known as the likelihood ratio for positive results, between
-#' two vectors of predicted and observed [factor()] values.
-#'
-#' When `aggregate = TRUE`, the function returns the micro-average PLR across all classes \eqn{k}.
-#' By default, it returns the class-wise PLR.
+#' two vectors of predicted and observed [factor()] values.  The [weighted.plr()] function computes the weighted positive likelihood ratio.
+#
 #'
 #' @example man/examples/scr_PositiveLikelihoodRatio.R
 #'
@@ -114,7 +103,7 @@ weighted.plr <- function(...) {
 #'
 #' @description
 #' The [dor()]-function computes the [Diagnostic Odds Ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) (DOR), a single indicator of test performance, between
-#' two vectors of predicted and observed [factor()] values.
+#' two vectors of predicted and observed [factor()] values. The [weighted.dor()] function computes the weighted diagnostic odds ratio.
 #'
 #' When `aggregate = TRUE`, the function returns the micro-average DOR across all classes \eqn{k}. By default, it returns the class-wise DOR.
 #'

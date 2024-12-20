@@ -19,17 +19,17 @@ ckappa(...)
 weighted.ckappa(...)
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{beta}{A <\link{numeric}> value of \link{length} 1. 0 by default. If set to a value different from zero, the off-diagonal confusion matrix will be penalized.}
+\item{beta}{A <\link{numeric}> value of \link{length} 1 (default: 0). If set to a value different from zero, the off-diagonal confusion matrix will be penalized.}
 
-\item{...}{Arguments passed into other methods.}
+\item{...}{Arguments passed into other methods}
 
-\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 
-\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
+\item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 }
 \value{
 If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
@@ -38,12 +38,24 @@ If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \li
 }
 \description{
 The \code{\link[=kappa]{kappa()}}-function computes \href{https://en.wikipedia.org/wiki/Cohen\%27s_kappa}{Cohen's \eqn{\kappa}}, a statistic that measures inter-rater agreement for categorical items between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.ckappa]{weighted.ckappa()}} function computes the weighted \eqn{\kappa}-statistic.
 
 If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of
 \eqn{(y_{+} - y_{i,-})^\beta}. See below for further details.
 }
-\details{
+\section{Calculation}{
+
+
+\deqn{
+  \frac{\rho_p - \rho_e}{1-\rho_e}
+}
+
+where \eqn{\rho_p} is the empirical probability of agreement between predicted and actual values, and \eqn{\rho_e} is the expected probability of agreement under random chance.
+}
+
+\section{Creating <\link{factor}>}{
+
+
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
@@ -75,9 +87,6 @@ factor(
 }\if{html}{\out{</div>}}
 
 In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
-}
-\section{Calculation}{
-NA
 }
 
 \examples{

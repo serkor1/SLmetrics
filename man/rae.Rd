@@ -22,14 +22,14 @@ weighted.rae(...)
 
 \item{...}{Arguments passed into other methods.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
 The \code{\link[=rae]{rae()}}-function calculates the normalized \href{https://www.statisticshowto.com/relative-absolute-error/}{relative absolute error} between
-the predicted and observed <\link{numeric}> vectors. If \code{w} is not \link{NULL} the function returns the weighted averages.
+the predicted and observed <\link{numeric}> vectors. The \code{\link[=weighted.rae]{weighted.rae()}} function computes the weigthed relative absolute error.
 }
 \section{Calculation}{
 
@@ -42,19 +42,6 @@ The Relative Absolute Error (RAE) is calculated as:
 
 Where \eqn{y_i} are the \code{actual} values, \eqn{\upsilon_i} are the \code{predicted} values,
 and \eqn{\bar{y}} is the mean of the \code{actual} values.
-
-If weights \eqn{w_i} are provided, the Weighted RAE is calculated as:
-
-\deqn{
-  \text{Weighted RAE} = \frac{\sum_{i=1}^n w_i |y_i - \upsilon_i|}{\sum_{i=1}^n w_i |y_i - \bar{y}_w|}
-}
-
-Where \eqn{\bar{y}_w} is the weighted mean of the \code{actual} values, calculated as:
-\deqn{
-  \bar{y}_w = \frac{\sum_{i=1}^n w_i y_i}{\sum_{i=1}^n w_i}
-}
-
-This metric provides a relative measure by comparing the total absolute prediction error to the total absolute deviation from the mean of the actual values.
 }
 
 \examples{

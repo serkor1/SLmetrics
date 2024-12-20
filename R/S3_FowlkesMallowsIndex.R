@@ -12,7 +12,7 @@
 #'
 #' @example man/examples/scr_FowlkesMallowsIndex.R
 #'
-#' @inherit specificity
+#' @inherit accuracy
 #'
 #' @section Calculation:
 #'
@@ -23,10 +23,7 @@
 #' }
 #'
 #' Where \eqn{\#TP_k}, \eqn{\#FP_k}, and \eqn{\#FN_k} represent the number of true positives, false positives, and false negatives for each class \eqn{k}, respectively.
-#'
-#'
-#' @returns
-#' A <[numeric]> vector of [length] 1
+#' 
 #'
 #' @family Classification
 #' @family Unsupervised Learning

@@ -35,24 +35,36 @@ phi(...)
 weighted.phi(...)
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{...}{Arguments passed into other methods.}
+\item{...}{Arguments passed into other methods}
 
-\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default}
 
-\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
+\item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}}
 }
 \value{
-A named <\link{numeric}> vector of length k
+A <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=mcc]{mcc()}}-function computes the \href{https://en.wikipedia.org/wiki/Matthews_correlation_coefficient}{Matthews Correlation Coefficient} (MCC), also known as the \eqn{\phi}-coefficient, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.mcc]{weighted.mcc()}} function computes the weighted Matthews Correlation Coefficient.
 }
-\details{
+\section{Calculation}{
+
+
+The metric is calculated as follows,
+
+\deqn{
+  \frac{\#TP \times \#TN - \#FP \times \#FN}{\sqrt{(\#TP + \#FP)(\#TP + \#FN)(\#TN + \#FP)(\#TN + \#FN)}}
+}
+}
+
+\section{Creating <\link{factor}>}{
+
+
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
@@ -84,15 +96,6 @@ factor(
 }\if{html}{\out{</div>}}
 
 In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
-}
-\section{Calculation}{
-
-
-The metric is calculated as follows,
-
-\deqn{
-  \frac{\#TP \times \#TN - \#FP \times \#FN}{\sqrt{(\#TP + \#FP)(\#TP + \#FN)(\#TN + \#FP)(\#TN + \#FN)}}
-}
 }
 
 \examples{

@@ -8,19 +8,26 @@
 #'
 #' @description
 #' The [kappa()]-function computes [Cohen's \eqn{\kappa}](https://en.wikipedia.org/wiki/Cohen%27s_kappa), a statistic that measures inter-rater agreement for categorical items between
-#' two vectors of predicted and observed [factor()] values.
+#' two vectors of predicted and observed [factor()] values. The [weighted.ckappa()] function computes the weighted \eqn{\kappa}-statistic.
 #'
 #' If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of
 #' \eqn{(y_{+} - y_{i,-})^\beta}. See below for further details.
 #'
 #' @inherit specificity
 #'
-#' @inheritParams specificity
-#' @param beta A <[numeric]> value of [length] 1. 0 by default. If set to a value different from zero, the off-diagonal confusion matrix will be penalized.
+#' @inheritParams accurracy
+#' @param beta A <[numeric]> value of [length] 1 (default: 0). If set to a value different from zero, the off-diagonal confusion matrix will be penalized.
 #'
 #' @example man/examples/scr_CohensKappa.R
 #' 
-#' @section Calculation
+#' @section Calculation:
+#' 
+#' \deqn{
+#'   \frac{\rho_p - \rho_e}{1-\rho_e}
+#' }
+#' 
+#' where \eqn{\rho_p} is the empirical probability of agreement between predicted and actual values, and \eqn{\rho_e} is the expected probability of agreement under random chance.
+#' 
 #' 
 #' @family Classification
 #' @family Supervised Learning

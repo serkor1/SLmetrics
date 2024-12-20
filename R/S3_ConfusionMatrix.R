@@ -16,7 +16,7 @@
 #'
 #' @param actual A <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
 #' @param predicted A <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
-#' @param w A <[numeric]>--vector of [length] \eqn{n}. [NULL] by default. If passed it will return a weighted confusion matrix.
+#' @param w A <[numeric]>-vector of [length] \eqn{n} (default: [NULL]) If passed it will return a weighted confusion matrix.
 #' @param ... Arguments passed into other methods.
 #'
 #' @example man/examples/scr_ConfusionMatrix.R

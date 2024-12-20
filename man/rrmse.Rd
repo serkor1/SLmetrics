@@ -23,14 +23,14 @@ weighted.rrmse(...)
 
 \item{...}{Arguments passed into other methods.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
 The \code{\link[=rrmse]{rrmse()}}-function calculates the normalized \href{https://en.wikipedia.org/wiki/Root_mean_square_deviation}{root mean squared error} between
-the predicted and observed <\link{numeric}> vectors. If \code{w} is not \link{NULL} the function returns the weighted averages.
+the predicted and observed <\link{numeric}> vectors. The \code{\link[=weighted.rrmse]{weighted.rrmse()}} function computes the weighed relative root mean squared error.
 }
 \section{Calculation}{
 
@@ -43,17 +43,6 @@ The Relative Root Mean Squared Error (RRMSE) is calculated as:
 
 Where \eqn{y_i} are the \code{actual} values, \eqn{\upsilon_i} are the \code{predicted} values,
 and \eqn{\bar{y}} is the mean of the \code{actual} values.
-
-If weights \eqn{w_i} are provided, the Weighted RRSE is calculated as:
-
-\deqn{
-  \text{Weighted RRSE} = \sqrt{\frac{\sum_{i=1}^n w_i (y_i - \upsilon_i)^2}{\sum_{i=1}^n w_i (y_i - \bar{y}_w)^2}}
-}
-
-Where \eqn{\bar{y}_w} is the weighted mean of the \code{actual} values, calculated as:
-\deqn{
-  \bar{y}_w = \frac{\sum_{i=1}^n w_i y_i}{\sum_{i=1}^n w_i}
-}
 }
 
 \examples{

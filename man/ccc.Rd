@@ -21,20 +21,19 @@ weighted.ccc(...)
 
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
-\item{correction}{A <\link{logical}> vector of \link{length} 1. \link{FALSE} by default. If \link{TRUE} the variance and covariance
+\item{correction}{A <\link{logical}> vector of \link{length} \eqn{1} (default: \link{FALSE}). If \link{TRUE} the variance and covariance
 will be adjusted with \eqn{\frac{1-n}{n}}}
 
 \item{...}{Arguments passed into other methods.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
 The \code{\link[=ccc]{ccc()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Concordance_correlation_coefficient}{concordance correlation coefficient} between
-the two vectors of predicted and observed <\link{numeric}> values. If \code{w} is not \link{NULL}, the function returns the weighted \href{https://en.wikipedia.org/wiki/Concordance_correlation_coefficient}{concordance correlation coefficient}.
-
+the two vectors of predicted and observed <\link{numeric}> values.  The \code{\link[=weighted.ccc]{weighted.ccc()}} function computes the weighted Concordance Correlation Coefficient.
 If \code{correction} is \link{TRUE} \eqn{\sigma^2} is adjusted by \eqn{\frac{1-n}{n}} in the intermediate steps.
 }
 \section{Calculation}{
@@ -47,8 +46,6 @@ The metric is calculated as follows,
 }
 
 Where \eqn{\rho} is the \eqn{\text{pearson correlation coefficient}}, \eqn{\sigma} is the \eqn{\text{standard deviation}} and \eqn{\mu} is the simple mean of \code{actual} and \code{predicted}.
-
-If \code{w} is not \link{NULL}, all calculations are based on the weighted measures.
 }
 
 \examples{

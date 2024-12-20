@@ -22,14 +22,14 @@ weighted.mae(...)
 
 \item{...}{Arguments passed into other methods.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-The \code{\link[=mae]{mae()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Mean_absolute_error}{mean absolute error} between
-the observed and predicted <\link{numeric}> vectors. If \code{w} is not \link{NULL} the function returns the weighted mean absolute error.
+The \code{\link[=mae]{mae()}}-function computes the \href{https://en.wikipedia.org/wiki/Mean_absolute_error}{mean absolute error} between
+the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.mae]{weighted.mae()}} function computes the weighted mean absolute error.
 }
 \section{Calculation}{
 
@@ -39,8 +39,6 @@ The metric is calulated as follows,
 \deqn{
   \frac{\sum_i^n |y_i - \upsilon_i|}{n}
 }
-
-If \eqn{w} is not \link{NULL} the function returns the weigthed version.
 }
 
 \examples{

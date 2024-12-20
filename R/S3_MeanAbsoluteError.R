@@ -6,8 +6,8 @@
 
 #' Compute the \eqn{\text{mean}} \eqn{\text{absolute}} \eqn{\text{error}}
 #'
-#' The [mae()]-function computes the simple and weighted [mean absolute error](https://en.wikipedia.org/wiki/Mean_absolute_error) between
-#' the observed and predicted <[numeric]> vectors. If `w` is not [NULL] the function returns the weighted mean absolute error.
+#' The [mae()]-function computes the [mean absolute error](https://en.wikipedia.org/wiki/Mean_absolute_error) between
+#' the observed and predicted <[numeric]> vectors. The [weighted.mae()] function computes the weighted mean absolute error.
 #'
 #' @inherit huberloss
 #'
@@ -20,8 +20,7 @@
 #' \deqn{
 #'   \frac{\sum_i^n |y_i - \upsilon_i|}{n}
 #' }
-#'
-#' If \eqn{w} is not [NULL] the function returns the weigthed version.
+#' 
 #'
 #' @family Regression
 #' @family Supervised Learning

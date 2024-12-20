@@ -8,13 +8,12 @@
 #'
 #' @description
 #' The [huberloss()]-function computes the simple and weighted [huber loss](https://en.wikipedia.org/wiki/Huber_loss) between
-#' the predicted and observed <[numeric]> vectors.If `w` is not [NULL] the function returns the weighted averages.
-#'
+#' the predicted and observed <[numeric]> vectors. The [weighted.huberloss()] function computes the weighted Huber Loss.
 #'
 #' @param actual A <[numeric]>-vector of [length] \eqn{n}. The observed (continuous) response variable.
 #' @param predicted A <[numeric]>-vector of [length] \eqn{n}. The estimated (continuous) response variable.
-#' @param w A <[numeric]>-vector of [length] \eqn{n}. The weight assigned to each observation in the data. See [stats::weighted.mean()] for more details.
-#' @param delta A <[numeric]>-vector of [length] 1. 1 by default. The threshold value for switch between functions (see calculation).
+#' @param w A <[numeric]>-vector of [length] \eqn{n}. The weight assigned to each observation in the data.
+#' @param delta A <[numeric]>-vector of [length] \eqn{1} (default: \eqn{1}). The threshold value for switch between functions (see calculation).
 #' @param ... Arguments passed into other methods.
 #'
 #' @section Calculation:

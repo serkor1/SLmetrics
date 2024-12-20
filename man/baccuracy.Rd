@@ -19,26 +19,40 @@ baccuracy(...)
 weighted.baccuracy(...)
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{adjust}{A \link{logical} value. \link{FALSE} by default. If \link{TRUE} the metric is adjusted for random change \eqn{\frac{1}{k}}}
+\item{adjust}{A \link{logical} value (default: \link{FALSE}). If \link{TRUE} the metric is adjusted for random chance \eqn{\frac{1}{k}}}
 
-\item{...}{Arguments passed into other methods.}
+\item{...}{Arguments passed into other methods}
 
-\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default}
 
-\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
+\item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}}
 }
 \value{
 A \link{numeric}-vector of \link{length} 1
 }
 \description{
 The \code{\link[=baccuracy]{baccuracy()}}-function computes the \href{https://neptune.ai/blog/balanced-accuracy}{balanced accuracy} between two
-vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.baccuracy]{weighted.baccuracy()}} function computes the weighted balanced accuracy.
 }
-\details{
+\section{Calculation}{
+
+
+The metric is calculated as follows,
+
+\deqn{
+  \frac{\text{sensitivity} + \text{specificty}}{2}
+}
+
+See the \code{\link[=sensitivity]{sensitivity()}}- and/or \code{\link[=specificity]{specificity()}}-function for more details.
+}
+
+\section{Creating <\link{factor}>}{
+
+
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
@@ -70,17 +84,6 @@ factor(
 }\if{html}{\out{</div>}}
 
 In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
-}
-\section{Calculation}{
-
-
-The metric is calculated as follows,
-
-\deqn{
-  \frac{\text{sensitivity} + \text{specificty}}{2}
-}
-
-See the \code{\link[=sensitivity]{sensitivity()}}- and/or \code{\link[=specificity]{specificity()}}-function for more details.
 }
 
 \examples{

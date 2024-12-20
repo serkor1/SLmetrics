@@ -20,44 +20,29 @@ weighted.pinball(...)
 
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
-\item{alpha}{A <\link{numeric}>-value of \link{length} 1. The slope of the pinball loss function. \eqn{0.5} by default.}
+\item{alpha}{A <\link{numeric}>-value of \link{length} \eqn{1} (default: \eqn{0.5}). The slope of the pinball loss function.}
 
-\item{deviance}{A <\link{logical}>-value of \link{length} 1. \link{FALSE} by default. If \link{TRUE} the function returns the \eqn{D^2} loss.}
+\item{deviance}{A <\link{logical}>-value of \link{length} 1 (default: \link{FALSE}). If \link{TRUE} the function returns the \eqn{D^2} loss.}
 
 \item{...}{Arguments passed into other methods.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
 The \code{\link[=pinball]{pinball()}}-function computes the \href{https://en.wikipedia.org/wiki/Quantile_regression}{pinball loss} between
-the observed and predicted <\link{numeric}> vectors. If If \code{w} is not \link{NULL}, the function returns the weighted pinball loss.
+the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.pinball]{weighted.pinball()}} function computes the weighted Pinball Loss.
 }
 \section{Calculation}{
 
 
-The pinball loss measures the accuracy of quantile predictions by penalizing overestimates and underestimates asymmetrically based on the specified quantile (\code{alpha}).
+The metric is calculated as,
 
-\strong{Weighted Pinball Loss}:
-\deqn{\text{PinballLoss}_{\text{weighted}} = \frac{\sum_{i=1}^{n} w_i \cdot \left[ \alpha \cdot \max(0, y_i - \hat{y}_i) - (1 - \alpha) \cdot \max(0, \hat{y}_i - y_i) \right]}{\sum_{i=1}^{n} w_i}}
-where:
-\itemize{
-\item \eqn{y_i} is the actual value,
-\item \eqn{\hat{y}_i} is the predicted value,
-\item \eqn{w_i} is the weight for observation \eqn{i},
-\item \eqn{\alpha} is the quantile level.
-}
-
-\strong{Unweighted Pinball Loss}:
 \deqn{\text{PinballLoss}_{\text{unweighted}} = \frac{1}{n} \sum_{i=1}^{n} \left[ \alpha \cdot \max(0, y_i - \hat{y}_i) - (1 - \alpha) \cdot \max(0, \hat{y}_i - y_i) \right]}
-where:
-\itemize{
-\item \eqn{y_i} is the actual value,
-\item \eqn{\hat{y}_i} is the predicted value,
-\item \eqn{\alpha} is the quantile level.
-}
+
+where \eqn{y_i} is the actual value, \eqn{\hat{y}_i} is the predicted value and \eqn{\alpha} is the quantile level.
 }
 
 \examples{

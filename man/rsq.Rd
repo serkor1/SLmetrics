@@ -21,12 +21,12 @@ weighted.rsq(...)
 
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
-\item{k}{A <\link{numeric}>-vector of \link{length} 1. 0 by default. If \eqn{k>0}
+\item{k}{A <\link{numeric}>-vector of \link{length} 1 (default: 0). If \eqn{k>0}
 the function returns the adjusted \eqn{R^2}.}
 
 \item{...}{Arguments passed into other methods.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.

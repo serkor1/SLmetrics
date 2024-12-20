@@ -14,7 +14,7 @@
 #'
 #' @inherit specificity
 #' @param response A <[numeric]>-vector of [length] \eqn{n}. The estimated response probabilities.
-#' @param thresholds An optional <[numeric]>-vector of non-zero [length]. [NULL] by default.
+#' @param thresholds An optional <[numeric]>-vector of non-zero [length] (default: [NULL]).
 #' @param ... Arguments passed into other methods.
 #'
 #'

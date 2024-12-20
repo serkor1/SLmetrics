@@ -8,35 +8,20 @@
 #'
 #' @description
 #' The [pinball()]-function computes the [pinball loss](https://en.wikipedia.org/wiki/Quantile_regression) between
-#' the observed and predicted <[numeric]> vectors. If If `w` is not [NULL], the function returns the weighted pinball loss.
+#' the observed and predicted <[numeric]> vectors. The [weighted.pinball()] function computes the weighted Pinball Loss.
 #'
 #' @inherit huberloss
-#' @param alpha A <[numeric]>-value of [length] 1. The slope of the pinball loss function. \eqn{0.5} by default.
-#' @param deviance A <[logical]>-value of [length] 1. [FALSE] by default. If [TRUE] the function returns the \eqn{D^2} loss.
+#' @param alpha A <[numeric]>-value of [length] \eqn{1} (default: \eqn{0.5}). The slope of the pinball loss function.
+#' @param deviance A <[logical]>-value of [length] 1 (default: [FALSE]). If [TRUE] the function returns the \eqn{D^2} loss.
 #'
 #' @example man/examples/scr_PinballLoss.R
 #' @section Calculation:
 #' 
-#' The pinball loss measures the accuracy of quantile predictions by penalizing overestimates and underestimates asymmetrically based on the specified quantile (\code{alpha}).
+#' The metric is calculated as,
 #' 
-#' **Weighted Pinball Loss**:
-#' \deqn{\text{PinballLoss}_{\text{weighted}} = \frac{\sum_{i=1}^{n} w_i \cdot \left[ \alpha \cdot \max(0, y_i - \hat{y}_i) - (1 - \alpha) \cdot \max(0, \hat{y}_i - y_i) \right]}{\sum_{i=1}^{n} w_i}}
-#' where:
-#' \itemize{
-#'   \item \eqn{y_i} is the actual value,
-#'   \item \eqn{\hat{y}_i} is the predicted value,
-#'   \item \eqn{w_i} is the weight for observation \eqn{i},
-#'   \item \eqn{\alpha} is the quantile level.
-#' }
-#' 
-#' **Unweighted Pinball Loss**:
 #' \deqn{\text{PinballLoss}_{\text{unweighted}} = \frac{1}{n} \sum_{i=1}^{n} \left[ \alpha \cdot \max(0, y_i - \hat{y}_i) - (1 - \alpha) \cdot \max(0, \hat{y}_i - y_i) \right]}
-#' where:
-#' \itemize{
-#'   \item \eqn{y_i} is the actual value,
-#'   \item \eqn{\hat{y}_i} is the predicted value,
-#'   \item \eqn{\alpha} is the quantile level.
-#' }
+#' 
+#' where \eqn{y_i} is the actual value, \eqn{\hat{y}_i} is the predicted value and \eqn{\alpha} is the quantile level.
 #'
 #' @family Regression
 #' @family Supervised Learning

@@ -6,8 +6,8 @@
 
 #' Compute the \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{error}}
 #'
-#' The [mse()]-function computes the simple and weighted [mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error) between
-#' the observed and predicted <[numeric]> vectors. If `w` is not [NULL], the function returns the weighted mean squared error.
+#' The [mse()]-function computes the [mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error) between
+#' the observed and predicted <[numeric]> vectors. The [weighted.mse()] function computes the weighted mean squared error.
 #'
 #' @inherit huberloss
 #'
@@ -21,8 +21,8 @@
 #'   \frac{1}{n} \sum_i^n (y_i - \upsilon_i)^2
 #' }
 #'
-#' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. If \eqn{\text{w}} is not [NULL], the weighted version is calculated.
-#'
+#' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. 
+#' 
 #' @family Regression
 #' @family Supervised Learning
 #' @export

@@ -20,18 +20,18 @@ weighted.huberloss(...)
 
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
-\item{delta}{A <\link{numeric}>-vector of \link{length} 1. 1 by default. The threshold value for switch between functions (see calculation).}
+\item{delta}{A <\link{numeric}>-vector of \link{length} \eqn{1} (default: \eqn{1}). The threshold value for switch between functions (see calculation).}
 
 \item{...}{Arguments passed into other methods.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
 The \code{\link[=huberloss]{huberloss()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Huber_loss}{huber loss} between
-the predicted and observed <\link{numeric}> vectors.If \code{w} is not \link{NULL} the function returns the weighted averages.
+the predicted and observed <\link{numeric}> vectors. The \code{\link[=weighted.huberloss]{weighted.huberloss()}} function computes the weighted Huber Loss.
 }
 \section{Calculation}{
 

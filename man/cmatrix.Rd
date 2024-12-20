@@ -14,7 +14,7 @@ cmatrix(...)
 
 \item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{w}{A <\link{numeric}>--vector of \link{length} \eqn{n}. \link{NULL} by default. If passed it will return a weighted confusion matrix.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n} (default: \link{NULL}) If passed it will return a weighted confusion matrix.}
 
 \item{...}{Arguments passed into other methods.}
 }
@@ -26,39 +26,6 @@ The \code{\link[=cmatrix]{cmatrix()}}-function uses cross-classifying factors to
 a confusion matrix of the counts at each combination of the \link{factor} levels.
 Each row of the \link{matrix} represents the actual \link{factor} levels, while each
 column represents the predicted \link{factor} levels.
-}
-\details{
-Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
-set.seed(1903)
-
-## actual
-factor(
-  x = sample(x = 1:3, size = 10, replace = TRUE),
-  levels = c(1, 2, 3),
-  labels = c("A", "B", "C")
-)
-#>  [1] B A B B A C B C C A
-#> Levels: A B C
-}\if{html}{\out{</div>}}
-
-Here, the values 1, 2, and 3 are mapped to \code{A}, \code{B}, and \code{C}, respectively. Now, suppose your model does not predict any \code{B}'s. The predicted vector of \code{\link[=factor]{factor()}} values would be defined as follows:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
-set.seed(1903)
-
-## predicted
-factor(
-  x = sample(x = c(1, 3), size = 10, replace = TRUE),
-  levels = c(1, 2, 3),
-  labels = c("A", "B", "C")
-)
-#>  [1] C A C C C C C C A C
-#> Levels: A B C
-}\if{html}{\out{</div>}}
-
-In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 }
 \section{Dimensions}{
 

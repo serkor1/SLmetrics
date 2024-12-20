@@ -7,11 +7,11 @@
 #' Compute the \eqn{\text{balanced}} \eqn{\text{accuracy}}
 #'
 #' The [baccuracy()]-function computes the [balanced accuracy](https://neptune.ai/blog/balanced-accuracy) between two
-#' vectors of predicted and observed [factor()] values.
+#' vectors of predicted and observed [factor()] values. The [weighted.baccuracy()] function computes the weighted balanced accuracy.
 #'
 #'
-#' @inherit specificity
-#' @param adjust A [logical] value. [FALSE] by default. If [TRUE] the metric is adjusted for random change \eqn{\frac{1}{k}}
+#' @inherit accuracy
+#' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}
 #'
 #' @section Calculation:
 #'

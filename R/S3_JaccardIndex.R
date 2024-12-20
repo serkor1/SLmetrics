@@ -8,10 +8,7 @@
 #'
 #' @description
 #' The [jaccard()]-function computes the [Jaccard Index](https://en.wikipedia.org/wiki/Jaccard_index), also known as the Intersection over Union, between
-#' two vectors of predicted and observed [factor()] values.
-#'
-#' When `aggregate = TRUE`, the function returns the micro-average Jaccard Index across all classes \eqn{k}.
-#' By default, it returns the class-wise Jaccard Index.
+#' two vectors of predicted and observed [factor()] values. The [weighted.jaccard()] function computes the weighted Jaccard Index.
 #'
 #' @inherit specificity
 #'
@@ -24,13 +21,7 @@
 #' }
 #'
 #' Where \eqn{\#TP_k}, \eqn{\#FP_k}, and \eqn{\#FN_k} represent the number of true positives, false positives, and false negatives for each class \eqn{k}, respectively.
-#'
-#' When `aggregate = TRUE`, the micro-average is calculated as,
-#'
-#' \deqn{
-#'   \frac{\sum_{i = 1}^{k} TP_i}{\sum_{i = 1}^{k} TP_i + \sum_{i = 1}^{k} FP_k + \sum_{i = 1}^{k} FN_k}
-#' }
-#'
+#' 
 #' @example man/examples/scr_JaccardIndex.R
 #'
 #' @family Classification
