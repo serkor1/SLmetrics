@@ -10,16 +10,6 @@ testthat::test_that(
   desc = "Test that all regression metrics are correctly implemented",
   code = {
 
-    # 0) load functions from
-    # {scikit-learn} and {pytorch}
-    reticulate::source_python(
-      "scikit-learn.py"
-    )
-
-    reticulate::source_python(
-      "pytorch.py"
-    )
-
     # 1) generate actual
     # and predicted values
     values <- create_regression()

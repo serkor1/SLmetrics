@@ -9,15 +9,6 @@ testthat::test_that(
   desc = "Test that `ROC()`-function works as expected",
   code = {
 
-    # testthat::skip("Skippin ROC()-tests - currently unstable")
-    # 0) load functions from
-    # {scikit-learn} and {pytorch}
-    reticulate::source_python(
-      "scikit-learn.py"
-    )
-
-    source("ref-manual.R")
-
     n <- 1e3
     k <- 4
     # 1) generate
@@ -161,16 +152,6 @@ testthat::test_that(
 testthat::test_that(
   desc = "Test that `prROC()`-function works as expected",
   code = {
-
-    # testthat::skip("Skippin pROC()-tests - currently unstable")
-
-    # 0) load functions from
-    # {scikit-learn} and {pytorch}
-    reticulate::source_python(
-      "scikit-learn.py"
-    )
-
-    source("ref-manual.R")
 
     n <- 1e3
     k <- 4

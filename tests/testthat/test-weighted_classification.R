@@ -9,18 +9,6 @@ testthat::test_that(
   desc = "Test that the weighted classification metrics equals {scikit-learn}-equivalents",
   code = {
 
-    # 0) load functions from
-    # {scikit-learn} and {pytorch}
-    reticulate::source_python(
-      "scikit-learn.py"
-    )
-
-    reticulate::source_python(
-      "pytorch.py"
-    )
-
-    # source("ref-manual.R")
-
     # 1) generate class
     # values
     actual    <- create_factor(balanced = TRUE)

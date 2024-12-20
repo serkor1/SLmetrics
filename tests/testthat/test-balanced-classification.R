@@ -10,18 +10,6 @@ testthat::test_that(
   desc = "Test that all classification metrics are correctly implemented",
   code = {
 
-    # 0) load functions from
-    # {scikit-learn} and {pytorch}
-    reticulate::source_python(
-      "scikit-learn.py"
-    )
-
-    reticulate::source_python(
-      "pytorch.py"
-    )
-
-    source("ref-manual.R")
-
     # 1) generate class
     # values
     actual    <- create_factor(balanced = TRUE)
@@ -90,7 +78,7 @@ testthat::test_that(
       "mcc"         = mcc,
       "phi"         = phi,
 
-      # fpr methods. Differs by 0.001 against scikit 
+      # false positive
       "fpr"         = fpr,
       "fallout"     = fallout,
 

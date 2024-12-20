@@ -124,5 +124,71 @@ set_equal <- function(
 
 }
 
+# 6) load scripts
+# globally
+reticulate::source_python(
+  "scikit-learn.py"
+)
+reticulate::source_python(
+  "pytorch.py"
+)
+source("ref-manual.R")
+
+# 7) define all classification
+# functions in {SLmetrics}
+sl_classification <- list(
+  # accuracy
+  "accuracy"    = accuracy,
+  "baccuracy"   = baccuracy,
+
+  # Zero-One Loss
+  "zerooneloss" = zerooneloss,
+
+  # specificity methods
+  "specificity" = specificity,
+  "tnr"         = tnr,
+  "selectivity" = selectivity,
+
+
+  # recall methods;
+  "recall"      = recall,
+  "sensitivity" = sensitivity,
+  "tpr"         = tpr,
+
+  # precision methods
+  "precision"   = precision,
+  "ppv"         = ppv,
+
+  # fbeta methods
+  "fbeta"       = fbeta,
+
+  # likelihood methods
+  "dor"         = dor,
+  "plr"         = plr,
+  "nlr"         = nlr,
+
+  # jaccard methods
+  "jaccard"     = jaccard,
+  "tscore"      = tscore,
+  "csi"         = csi,
+
+  # mcc methods
+  "mcc"         = mcc,
+  "phi"         = phi,
+
+  # false positive
+  "fpr"         = fpr,
+  "fallout"     = fallout,
+
+  # fmi methods
+  "fmi"         = fmi,
+
+  "fdr"         = fdr,
+  "npv"         = npv,
+  "fer"         = fer,
+
+  "ckappa"      = ckappa
+
+)
 
 # script end;
