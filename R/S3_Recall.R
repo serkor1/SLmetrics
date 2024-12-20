@@ -8,14 +8,11 @@
 #'
 #' @description
 #' The [recall()]-function computes the [recall](https://en.wikipedia.org/wiki/Sensitivity_and_specificity), also known as sensitivity or the True Positive Rate (TPR), between
-#' two vectors of predicted and observed [factor()] values.
-#'
-#' When `aggregate = TRUE`, the function returns the micro-averaged recall across all classes \eqn{k}. By default, it returns the class-wise recall.
-#'
+#' two vectors of predicted and observed [factor()] values. The [weighted.recall()] function computes the weighted recall.
+#' 
 #' @inherit specificity
-#' @param x confusion matrix.
 #'
-#' @example man/examples/scr_recall.R
+#' @example man/examples/scr_Recall.R
 #'
 #' @section Calculation:
 #'
@@ -26,14 +23,9 @@
 #' }
 #'
 #' Where \eqn{\#TP_k} and \eqn{\#FN_k} is the number of true positives and false negatives, respectively, for each class \eqn{k}.
-#'
-#' When `aggregate = TRUE` the `micro`-average is calculated as follows,
-#'
-#' \deqn{
-#'   \frac{\sum_{k=1}^k \#TP_k}{\sum_{k=1}^k \#TP_k + \sum_{k=1}^k \#FN_k}
-#' }
-#'
-#' @family classification
+#' 
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @aliases sensitivity tpr recall
 #'

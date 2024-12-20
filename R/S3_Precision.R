@@ -9,10 +9,7 @@
 #'
 #' @description
 #' The [precision()]-function computes the [precision](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values), also known as the positive predictive value (PPV), between
-#' two vectors of predicted and observed [factor()] values.
-#'
-#' When `aggregate = TRUE`, the function returns the micro-average precision across all classes \eqn{k}.
-#' By default, it returns the class-wise precision.
+#' two vectors of predicted and observed [factor()] values. The [weighted.precision()] function computes the weighted precision.
 #'
 #' @inherit specificity
 #'
@@ -25,16 +22,11 @@
 #' }
 #'
 #' Where \eqn{\#TP_k} and \eqn{\#FP_k} are the number of true positives and false positives, respectively, for each class \eqn{k}.
+#' 
+#' @example man/examples/scr_Precision.R
 #'
-#' When `aggregate = TRUE`, the `micro`-average is calculated,
-#'
-#' \deqn{
-#'   \frac{\sum_{k=1}^k \#TP_k}{\sum_{k=1}^k \#TP_k + \sum_{k=1}^k \#FP_k}
-#' }
-#'
-#' @example man/examples/scr_precision.R
-#'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @aliases precision ppv
 #'

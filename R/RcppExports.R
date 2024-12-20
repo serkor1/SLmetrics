@@ -64,50 +64,10 @@ ckappa.cmatrix <- function(x, beta = 0.0, ...) {
     .Call(`_SLmetrics_ckappa_cmatrix`, x, beta)
 }
 
-#' Confusion Matrix
-#'
-#' @description
-#'
-#' The [cmatrix()]-function uses cross-classifying factors to build
-#' a confusion matrix of the counts at each combination of the [factor] levels.
-#' Each row of the [matrix] represents the actual [factor] levels, while each
-#' column represents the predicted [factor] levels.
-#'
-#' @usage
-#' cmatrix(
-#'   actual,
-#'   predicted,
-#'   w
-#' )
-#'
-#' @param actual A <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
-#' @param predicted A <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
-#' @param w A <[numeric]>--vector of [length] \eqn{n}. [NULL] by default. If passed it will return a weighted confusion matrix.
-#'
-#' @example man/examples/scr_confusionmatrix.R
-#' @example man/examples/scr_wconfusionmatrix.R
-#' @family classification
-#'
-#' @inherit specificity details
-#'
-#' @section Dimensions:
-#'
-#' There is no robust defensive measure against misspecififying
-#' the confusion matrix. If the arguments are correctly specified, the resulting
-#' confusion matrix is on the form:
-#'
-#' |            | A (Predicted) | B (Predicted) |
-#' | :----------|:-------------:| -------------:|
-#' | A (Actual) | Value         | Value         |
-#' | B (Actual) | Value         | Value         |
-#'
-#'
-#' @returns
-#'
-#' A named \eqn{k} x \eqn{k} <[matrix]> of [class] <cmatrix>
-#'
+#' @rdname cmatrix
+#' @method cmatrix factor
 #' @export
-cmatrix <- function(actual, predicted, w = NULL) {
+cmatrix.factor <- function(actual, predicted, w = NULL, ...) {
     .Call(`_SLmetrics_cmatrix`, actual, predicted, w)
 }
 
@@ -638,7 +598,7 @@ rsq.numeric <- function(actual, predicted, k = 0.0, ...) {
     .Call(`_SLmetrics_rsq`, actual, predicted, k)
 }
 
-#' @rdname weighted.rsq
+#' @rdname rsq
 #' @method weighted.rsq numeric
 #' @export
 weighted.rsq.numeric <- function(actual, predicted, w, k = 0.0, ...) {

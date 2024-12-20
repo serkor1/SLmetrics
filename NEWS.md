@@ -7,6 +7,12 @@
 
 ## Improvements
 
+- **documentation:** The documentation has gotten some extra love, and
+  now all functions have their formulas embedded, the details section
+  have been freed from a general description of \[factor\] creation.
+  This will make room for future expansions on the various functions
+  where more details are required.
+
 - **weighted classification metrics:** The `cmatrix()`-function now
   accepts the argument `w` which is the sample weights; if passed the
   respective method will return the weighted metric. Below is an example

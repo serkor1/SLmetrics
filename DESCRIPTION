@@ -34,5 +34,5 @@ Imports:
     Rcpp
 VignetteBuilder: knitr
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5)
 URL: https://serkor1.github.io/SLmetrics/

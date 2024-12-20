@@ -5,11 +5,18 @@
 # script start;
 
 #' Compute the \eqn{\text{accuracy}}
+#' 
+#' @description
 #'
-#' The [accuracy()]-function computes the [accuracy](https://en.wikipedia.org/wiki/Precision_and_recall) between two
-#' vectors of predicted and observed [factor()] values.
+#' The [accuracy()] function computes the [accuracy](https://en.wikipedia.org/wiki/Precision_and_recall) between two
+#' vectors of predicted and observed [factor()] values. The [weighted.accuracy()] function computes the weighted accuracy.
 #'
-#'
+#' @param actual A vector of <[factor]>- of [length] \eqn{n}, and \eqn{k} levels
+#' @param predicted A vector of <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels
+#' @param w A <[numeric]>-vector of [length] \eqn{n}. [NULL] by default
+#' @param x A confusion matrix created [cmatrix()]
+#' @param ... Arguments passed into other methods
+#' 
 #' @inherit specificity
 #'
 #' @section Calculation:
@@ -26,10 +33,10 @@
 #'
 #' A <[numeric]>-vector of [length] 1
 #'
-#' @example man/examples/scr_accuracy.R
+#' @example man/examples/scr_Accuracy.R
 #'
-#' @family classification
-#'
+#' @family Classification
+#' @family Supervised Learning
 #' @export
 accuracy <- function(...) {
   UseMethod(

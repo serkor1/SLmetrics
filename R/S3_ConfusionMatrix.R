@@ -5,6 +5,52 @@
 # objective:
 # script start;
 
+#' Confusion Matrix
+#'
+#' @description
+#'
+#' The [cmatrix()]-function uses cross-classifying factors to build
+#' a confusion matrix of the counts at each combination of the [factor] levels.
+#' Each row of the [matrix] represents the actual [factor] levels, while each
+#' column represents the predicted [factor] levels.
+#'
+#' @param actual A <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
+#' @param predicted A <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
+#' @param w A <[numeric]>-vector of [length] \eqn{n} (default: [NULL]) If passed it will return a weighted confusion matrix.
+#' @param ... Arguments passed into other methods.
+#'
+#' @example man/examples/scr_ConfusionMatrix.R
+#' 
+#' @family Classification
+#' @family Supervised Learning
+#'
+#' @inherit specificity details
+#'
+#' @section Dimensions:
+#'
+#' There is no robust defensive measure against misspecififying
+#' the confusion matrix. If the arguments are correctly specified, the resulting
+#' confusion matrix is on the form:
+#'
+#' |            | A (Predicted) | B (Predicted) |
+#' | :----------|:-------------:| -------------:|
+#' | A (Actual) | Value         | Value         |
+#' | B (Actual) | Value         | Value         |
+#'
+#'
+#' @returns
+#'
+#' A named \eqn{k} x \eqn{k} <[matrix]> of [class] <cmatrix>
+#'
+#' @export
+cmatrix <- function(...) {
+  UseMethod(
+    generic = "cmatrix",
+    object  = ..1 
+  )
+}
+
+
 #' @export
 print.cmatrix <- function(
     x,

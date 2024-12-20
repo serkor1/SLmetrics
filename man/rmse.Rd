@@ -22,14 +22,14 @@ weighted.rmse(...)
 
 \item{...}{Arguments passed into other methods.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-The \code{\link[=rmse]{rmse()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Root-mean-square_deviation}{root mean squared error} between
-the observed and predicted <\link{numeric}> vectors. If \code{w} is not \link{NULL}, the function returns the weighted root mean squared error.
+The \code{\link[=rmse]{rmse()}}-function computes the \href{https://en.wikipedia.org/wiki/Root-mean-square_deviation}{root mean squared error} between
+the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.rmse]{weighted.rmse()}} function computes the weighted root mean squared error.
 }
 \section{Calculation}{
 
@@ -40,7 +40,7 @@ The metric is calculated as,
   \sqrt{\frac{1}{n} \sum_i^n (y_i - \upsilon_i)^2}
 }
 
-Where \eqn{y_i} and \eqn{\upsilon_i} are the \code{actual} and \code{predicted} values respectively. If \eqn{\text{w}} is not \link{NULL}, the weighted version is calculated.
+Where \eqn{y_i} and \eqn{\upsilon_i} are the \code{actual} and \code{predicted} values respectively.
 }
 
 \examples{
@@ -57,31 +57,24 @@ model <- lm(
 actual    <- mtcars$mpg
 predicted <- fitted(model)
 
-
-# 2) calculate
-# the metric
-rmse(
-  actual     = actual,
-  predicted  = predicted
+# 2) evaluate in-sample model
+# performance using Root Mean Squared Error (RMSE)
+cat(
+  "Root Mean Squared Error", rmse(
+    actual    = actual,
+    predicted = predicted,
+  ),
+  "Root Mean Squared Error (weighted)", weighted.rmse(
+    actual    = actual,
+    predicted = predicted,
+    w         = mtcars$mpg/mean(mtcars$mpg)
+  ),
+  sep = "\n"
 )
 
-# 3) calculate
-# the weighted metric
-# using arbtrary weights
-w <- rbeta(
-  n = 1e3,
-  shape1 = 10,
-  shape2 = 2
-)
-
-rmse(
-  actual     = actual,
-  predicted  = predicted,
-  w          = w
-)
 }
 \seealso{
-Other regression: 
+Other Regression: 
 \code{\link{ccc.numeric}()},
 \code{\link{huberloss.numeric}()},
 \code{\link{mae.numeric}()},
@@ -94,5 +87,40 @@ Other regression:
 \code{\link{rrmse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()}
+
+Other Supervised Learning: 
+\code{\link{ROC.factor}()},
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
+\code{\link{ccc.numeric}()},
+\code{\link{ckappa.factor}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{dor.factor}()},
+\code{\link{fbeta.factor}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
+\code{\link{fpr.factor}()},
+\code{\link{huberloss.numeric}()},
+\code{\link{jaccard.factor}()},
+\code{\link{mae.numeric}()},
+\code{\link{mape.numeric}()},
+\code{\link{mcc.factor}()},
+\code{\link{mpe.numeric}()},
+\code{\link{mse.numeric}()},
+\code{\link{nlr.factor}()},
+\code{\link{npv.factor}()},
+\code{\link{pinball.numeric}()},
+\code{\link{plr.factor}()},
+\code{\link{prROC.factor}()},
+\code{\link{precision.factor}()},
+\code{\link{rae.numeric}()},
+\code{\link{recall.factor}()},
+\code{\link{rmsle.numeric}()},
+\code{\link{rrmse.numeric}()},
+\code{\link{rsq.numeric}()},
+\code{\link{smape.numeric}()},
+\code{\link{specificity.factor}()},
+\code{\link{zerooneloss.factor}()}
 }
-\concept{regression}
+\concept{Regression}
+\concept{Supervised Learning}

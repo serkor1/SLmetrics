@@ -11,7 +11,7 @@
 #' and predicted <[numeric]> vectors. By default [rsq()] returns the unadjusted \eqn{R^2}. For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.
 #'
 #' @inherit huberloss
-#' @param k A <[numeric]>-vector of [length] 1. 0 by default. If \eqn{k>0}
+#' @param k A <[numeric]>-vector of [length] 1 (default: 0). If \eqn{k>0}
 #' the function returns the adjusted \eqn{R^2}.
 #'
 #' @section Calculation:
@@ -24,7 +24,10 @@
 #'
 #' Where \eqn{\text{SSE}} is the sum of squared errors, \eqn{\text{SST}} is total sum of squared errors, \eqn{n} is the number of observations, and \eqn{k} is the number of non-constant parameters.
 #'
-#' @family regression
+#' @example man/examples/scr_CoefficientOfDetermination.R
+#' 
+#' @family Regression
+#' @family Supervised Learning
 #' @export
 rsq <- function(...) {
   UseMethod(

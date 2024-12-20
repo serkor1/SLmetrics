@@ -8,16 +8,21 @@
 #'
 #' @description
 #' The  [specificity()]-function computes the [specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity), also known as the True Negative Rate (TNR) or selectivity, between
-#' two vectors of predicted and observed [factor()] values. When `aggregate = TRUE`, the function returns the micro-average specificity across all classes \eqn{k}.
-#' By default, it returns the class-wise specificity.
+#' two vectors of predicted and observed [factor()] values. The [weighted.specificity()] function computes the weighted specificity.
 #'
-#' @inheritParams cmatrix
-#' @param ... Arguments passed into other methods.
-#' @param x A confusion matrix created by [table()] or [cmatrix()]
-#' @param micro A <[logical]>-value of [length] \eqn{1}. [NULL] by default. If [TRUE] it returns the
-#' micro average across all \eqn{k} classes, if [FALSE] it returns the macro average. Otherwise class wise performance evaluation.
-#' @param na.rm A <[logical]>-value of [length] \eqn{1}. [FALSE] by default. If [TRUE] NA values will be removed from the computation.
-#' @details
+#' @param actual A vector of <[factor]>- of [length] \eqn{n}, and \eqn{k} levels.
+#' @param predicted A vector of <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
+#' @param w A <[numeric]>-vector of [length] \eqn{n}. [NULL] by default. 
+#' @param x A confusion matrix created [cmatrix()].
+#' @param micro A <[logical]>-value of [length] \eqn{1} (default: [NULL]). If [TRUE] it returns the
+#' micro average across all \eqn{k} classes, if [FALSE] it returns the macro average.
+#' @param na.rm A <[logical]> value of [length] \eqn{1} (default: [TRUE]). If [TRUE], [NA] values are removed from the computation. 
+#' This argument is only relevant when `micro != NULL`. 
+#' When `na.rm = TRUE`, the computation corresponds to `sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))`.
+#' When `na.rm = FALSE`, the computation corresponds to `sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))`.
+#' @param ... Arguments passed into other methods
+#' 
+#' @section Creating <[factor]>:
 #'
 #' Consider a classification problem with three classes: `A`, `B`, and `C`. The actual vector of [factor()] values is defined as follows:
 #'
@@ -51,14 +56,15 @@
 #'
 #' @returns
 #'
-#' If `aggregate` is [FALSE] (the default), a named <[numeric]>-vector of [length] k
+#' If `micro` is [NULL] (the default), a named <[numeric]>-vector of [length] k
 #'
-#' If `aggregate` is [TRUE], a <[numeric]>-vector of [length] 1
+#' If `micro` is [TRUE] or [FALSE], a <[numeric]>-vector of [length] 1
 #'
-#' @example man/examples/scr_specificity.R
+#' @example man/examples/scr_Specificity.R
 #'
 #'
 #' @section Calculation:
+#' 
 #' The metric is calculated for each class \eqn{k} as follows,
 #'
 #' \deqn{
@@ -66,15 +72,9 @@
 #' }
 #'
 #' Where \eqn{\#TN_k} and \eqn{\#FP_k} is the number of true negatives and false positives, respectively, for each class \eqn{k}.
-#'
-#' When `aggregate = TRUE` the `micro`-average is calculated,
-#'
-#' \deqn{
-#'   \frac{\sum_{k=1}^k \#TN_k}{\sum_{k=1}^k \#TN_k + \sum_{k=1}^k \#FP_k}
-#' }
-#'
-#'
-#' @family classification
+#' 
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @aliases specificity tnr selectivity
 #'

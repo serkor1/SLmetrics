@@ -23,14 +23,14 @@ weighted.rrmse(...)
 
 \item{...}{Arguments passed into other methods.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
 The \code{\link[=rrmse]{rrmse()}}-function calculates the normalized \href{https://en.wikipedia.org/wiki/Root_mean_square_deviation}{root mean squared error} between
-the predicted and observed <\link{numeric}> vectors. If \code{w} is not \link{NULL} the function returns the weighted averages.
+the predicted and observed <\link{numeric}> vectors. The \code{\link[=weighted.rrmse]{weighted.rrmse()}} function computes the weighed relative root mean squared error.
 }
 \section{Calculation}{
 
@@ -43,17 +43,6 @@ The Relative Root Mean Squared Error (RRMSE) is calculated as:
 
 Where \eqn{y_i} are the \code{actual} values, \eqn{\upsilon_i} are the \code{predicted} values,
 and \eqn{\bar{y}} is the mean of the \code{actual} values.
-
-If weights \eqn{w_i} are provided, the Weighted RRSE is calculated as:
-
-\deqn{
-  \text{Weighted RRSE} = \sqrt{\frac{\sum_{i=1}^n w_i (y_i - \upsilon_i)^2}{\sum_{i=1}^n w_i (y_i - \bar{y}_w)^2}}
-}
-
-Where \eqn{\bar{y}_w} is the weighted mean of the \code{actual} values, calculated as:
-\deqn{
-  \bar{y}_w = \frac{\sum_{i=1}^n w_i y_i}{\sum_{i=1}^n w_i}
-}
 }
 
 \examples{
@@ -70,29 +59,23 @@ model <- lm(
 actual    <- mtcars$mpg
 predicted <- fitted(model)
 
-
-# 2) calculate the metric
-rrmse(
-  actual     = actual,
-  predicted  = predicted
-)
-
-# 3) calculate
-# the weighted metric
-w <- rbeta(
-  n = 1e3,
-  shape1 = 10,
-  shape2 = 2
-)
-
-rrmse(
-  actual     = actual,
-  predicted  = predicted,
-  w          = w
+# 2) evaluate in-sample model
+# performance using Relative Root Mean Squared Error (RRMSE)
+cat(
+  "Relative Root Mean Squared Error", rrmse(
+    actual    = actual,
+    predicted = predicted,
+  ),
+  "Relative Root Mean Squared Error (weighted)", weighted.rrmse(
+    actual    = actual,
+    predicted = predicted,
+    w         = mtcars$mpg/mean(mtcars$mpg)
+  ),
+  sep = "\n"
 )
 }
 \seealso{
-Other regression: 
+Other Regression: 
 \code{\link{ccc.numeric}()},
 \code{\link{huberloss.numeric}()},
 \code{\link{mae.numeric}()},
@@ -105,5 +88,40 @@ Other regression:
 \code{\link{rmsle.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()}
+
+Other Supervised Learning: 
+\code{\link{ROC.factor}()},
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
+\code{\link{ccc.numeric}()},
+\code{\link{ckappa.factor}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{dor.factor}()},
+\code{\link{fbeta.factor}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
+\code{\link{fpr.factor}()},
+\code{\link{huberloss.numeric}()},
+\code{\link{jaccard.factor}()},
+\code{\link{mae.numeric}()},
+\code{\link{mape.numeric}()},
+\code{\link{mcc.factor}()},
+\code{\link{mpe.numeric}()},
+\code{\link{mse.numeric}()},
+\code{\link{nlr.factor}()},
+\code{\link{npv.factor}()},
+\code{\link{pinball.numeric}()},
+\code{\link{plr.factor}()},
+\code{\link{prROC.factor}()},
+\code{\link{precision.factor}()},
+\code{\link{rae.numeric}()},
+\code{\link{recall.factor}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
+\code{\link{rsq.numeric}()},
+\code{\link{smape.numeric}()},
+\code{\link{specificity.factor}()},
+\code{\link{zerooneloss.factor}()}
 }
-\concept{regression}
+\concept{Regression}
+\concept{Supervised Learning}
