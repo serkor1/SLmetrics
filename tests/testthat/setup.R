@@ -113,7 +113,7 @@ set_equal <- function(
     current,
     target,
     tolerance = 1e-9) {
-
+  
   all.equal(
     target = target,
     current = current,
@@ -188,6 +188,60 @@ sl_classification <- list(
   "fer"         = fer,
 
   "ckappa"      = ckappa
+
+)
+
+# 7) define all weighted classification
+# functions in {SLmetrics}
+sl_wclassification <- list(
+  # accuracy
+  "accuracy"    = weighted.accuracy,
+  "baccuracy"   = weighted.baccuracy,
+
+  # Zero-One Loss
+  "zerooneloss" = weighted.zerooneloss,
+
+  # specificity methods
+  "specificity" = weighted.specificity,
+  "tnr"         = weighted.tnr,
+  "selectivity" = weighted.selectivity,
+
+
+  # recall methods;
+  "recall"      = weighted.recall,
+  "sensitivity" = weighted.sensitivity,
+  "tpr"         = weighted.tpr,
+
+  # precision methods
+  "precision"   = weighted.precision,
+  "ppv"         = weighted.ppv,
+
+  # fbeta methods
+  "fbeta"       = weighted.fbeta,
+
+  # likelihood methods
+  "dor"         = weighted.dor,
+  "plr"         = weighted.plr,
+  "nlr"         = weighted.nlr,
+
+  # jaccard methods
+  "jaccard"     = weighted.jaccard,
+  "tscore"      = weighted.tscore,
+  "csi"         = weighted.csi,
+
+  # mcc methods
+  "mcc"         = weighted.mcc,
+  "phi"         = weighted.phi,
+
+  # false positive
+  "fpr"         = weighted.fpr,
+  "fallout"     = weighted.fallout,
+
+  "fdr"         = weighted.fdr,
+  "npv"         = weighted.npv,
+  "fer"         = weighted.fer,
+
+  "ckappa"      = weighted.ckappa
 
 )
 
