@@ -12,55 +12,53 @@ rm(list = ls()); gc(); source("tests/testthat/setup.R")
 # grounds
 
 # 1.1) classes available
-classes <- c(2)
+k <- c(2)
 
 # 1.2) sample size
-N       <- seq(from = 100, by = 100, length.out = 200)
+N <- seq(from = 2e3, by = 2e3, length.out = 50)
 
 # 2) conduct test
 # on confusion matrix
 confusion_matrix_performance <- list()
 i <- 1
-for (k in classes) {
-  for (n in N) {
+for (n in N) {
 
-    invisible(gc())
+  invisible(gc())
 
-    # 2.1) create available
-    # factors
-    actual <- create_factor(k = k, n = n)
-    predicted <- create_factor(k = k, n = n)
+  # 2.1) create available
+  # factors
+  actual <- create_factor(k = k, n = n)
+  predicted <- create_factor(k = k, n = n)
 
-    # 2.1) evaluate
-    # performance
-    test_results <- data.table::as.data.table(
-      microbenchmark::microbenchmark(
-        `{SLmetrics}`    = SLmetrics::cmatrix(actual, predicted),
-        `{yardstick}`    = yardstick::conf_mat(table(actual, predicted)),
-        `{MLmetrics}`    = MLmetrics::ConfusionMatrix(predicted, actual),
-        `{mlr3measures}` = mlr3measures::confusion_matrix(predicted, actual,positive = "a"),
-        times = 1000
+  # 2.1) evaluate
+  # performance
+  test_results <- data.table::as.data.table(
+    microbenchmark::microbenchmark(
+      `{SLmetrics}`    = SLmetrics::cmatrix(actual, predicted),
+      `{yardstick}`    = yardstick::conf_mat(table(actual, predicted)),
+      `{MLmetrics}`    = MLmetrics::ConfusionMatrix(predicted, actual),
+      `{mlr3measures}` = mlr3measures::confusion_matrix(predicted, actual, positive = "a"),
+      times = 1000
+    )
+  )[
+    ,
+    .(
+      sample_size = n,
+      classes     = k,
+      mean        = mean(
+        time
       )
-    )[
-      ,
-      .(
-        sample_size = n,
-        classes     = k,
-        median      = median(
-          time
-        )
-      )
-      ,
-      by = .(
-        expr
-      )
-    ]
+    )
+    ,
+    by = .(
+      expr
+    )
+  ]
 
-    confusion_matrix_performance[[i]] <- test_results
+  confusion_matrix_performance[[i]] <- test_results
 
-    i <<- i + 1
+  i <<- i + 1
 
-  }
 }
 
 # 2) conduct test
@@ -91,7 +89,7 @@ for (n in N) {
     ,
     .(
       sample_size = n,
-      median      = median(
+      mean        = mean(
         time
       )
     )
@@ -114,12 +112,12 @@ DT <- list(
   rmse             = data.table::rbindlist(rmse_performance)
 )
 
-
+# 4) write data for
+# internal usage
 usethis::use_data(
   DT,
-  internal = TRUE,
+  internal  = TRUE,
   overwrite = TRUE
 )
 
 # script end;
-

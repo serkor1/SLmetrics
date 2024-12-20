@@ -114,6 +114,7 @@ In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 
 \section{Calculation}{
 
+
 The metric is calculated for each class \eqn{k} as follows,
 
 \deqn{
