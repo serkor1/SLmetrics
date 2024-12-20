@@ -18,9 +18,9 @@ constructs a data.frame() grouped by \(k\)-classes where each class is treated a
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/SLmetrics.html"><span class="fa fa-info"></span> Why?</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html"><span class="fa fa-book-open"></span> Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../articles/regression_problems.html"><span class="fa fa-chart-line"></span> Regression</a></li>
 <li class="nav-item"><a class="nav-link" href="../articles/classification_problems.html"><span class="fa fa-diagram-project"></span> Classification</a></li>
-<li class="active nav-item"><a class="nav-link" href="../reference/index.html"><span class="fa fa-book-open"></span> Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html"><span class="fa fa-code"></span> Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -60,7 +60,7 @@ constructs a <code><a href="https://rdrr.io/r/base/data.frame.html" class="exter
 
 
 <dl><dt id="arg-actual">actual<a class="anchor" aria-label="anchor" href="#arg-actual"></a></dt>
-<dd><p>A &lt;<a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a>&gt;-vector of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(n\), and \(k\) levels.</p></dd>
+<dd><p>A vector of &lt;<a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a>&gt;- of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(n\), and \(k\) levels.</p></dd>
 
 
 <dt id="arg-response">response<a class="anchor" aria-label="anchor" href="#arg-response"></a></dt>
@@ -68,16 +68,19 @@ constructs a <code><a href="https://rdrr.io/r/base/data.frame.html" class="exter
 
 
 <dt id="arg-micro">micro<a class="anchor" aria-label="anchor" href="#arg-micro"></a></dt>
-<dd><p>A &lt;<a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>&gt;-value of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(1\). <a href="https://rdrr.io/r/base/NULL.html" class="external-link">NULL</a> by default. If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a> it returns the
-micro average across all \(k\) classes, if <a href="https://rdrr.io/r/base/logical.html" class="external-link">FALSE</a> it returns the macro average. Otherwise class wise performance evaluation.</p></dd>
+<dd><p>A &lt;<a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>&gt;-value of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(1\) (default: <a href="https://rdrr.io/r/base/NULL.html" class="external-link">NULL</a>). If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a> it returns the
+micro average across all \(k\) classes, if <a href="https://rdrr.io/r/base/logical.html" class="external-link">FALSE</a> it returns the macro average.</p></dd>
 
 
 <dt id="arg-thresholds">thresholds<a class="anchor" aria-label="anchor" href="#arg-thresholds"></a></dt>
-<dd><p>An optional &lt;<a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a>&gt;-vector of non-zero <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a>. <a href="https://rdrr.io/r/base/NULL.html" class="external-link">NULL</a> by default.</p></dd>
+<dd><p>An optional &lt;<a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a>&gt;-vector of non-zero <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> (default: <a href="https://rdrr.io/r/base/NULL.html" class="external-link">NULL</a>).</p></dd>
 
 
 <dt id="arg-na-rm">na.rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
-<dd><p>A &lt;<a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>&gt;-value of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(1\). <a href="https://rdrr.io/r/base/logical.html" class="external-link">FALSE</a> by default. If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a> NA values will be removed from the computation.</p></dd>
+<dd><p>A &lt;<a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>&gt; value of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(1\) (default: <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a>). If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a>, <a href="https://rdrr.io/r/base/NA.html" class="external-link">NA</a> values are removed from the computation.
+This argument is only relevant when <code>micro != NULL</code>.
+When <code>na.rm = TRUE</code>, the computation corresponds to <code>sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))</code>.
+When <code>na.rm = FALSE</code>, the computation corresponds to <code>sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -104,8 +107,11 @@ micro average across all \(k\) classes, if <a href="https://rdrr.io/r/base/logic
 
 </dl></div>
     <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Consider a classification problem with three classes: <code>A</code>, <code>B</code>, and <code>C</code>. The actual vector of <code><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor()</a></code> values is defined as follows:</p>
+    <h2 id="creating-lt-factor-gt-">Creating &lt;<a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a>&gt;<a class="anchor" aria-label="anchor" href="#creating-lt-factor-gt-"></a></h2>
+
+
+
+<p>Consider a classification problem with three classes: <code>A</code>, <code>B</code>, and <code>C</code>. The actual vector of <code><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor()</a></code> values is defined as follows:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="co">## set seed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1903</span><span class="op">)</span></span>
 <span></span>
@@ -135,23 +141,20 @@ micro average across all \(k\) classes, if <a href="https://rdrr.io/r/base/logic
     <h2 id="calculation">Calculation<a class="anchor" aria-label="anchor" href="#calculation"></a></h2>
 
 
+
 <p>The metric is calculated for each class \(k\) as follows,</p>
 <p>$$
   \frac{\#TN_k}{\#TN_k+\#FP_k}
 $$</p>
 <p>Where \(\#TN_k\) and \(\#FP_k\) is the number of true negatives and false positives, respectively, for each class \(k\).</p>
-<p>When <code>aggregate = TRUE</code> the <code>micro</code>-average is calculated,</p>
-<p>$$
-  \frac{\sum_{k=1}^k \#TN_k}{\sum_{k=1}^k \#TN_k + \sum_{k=1}^k \#FP_k}
-$$</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other classification:
+    <div class="dont-index"><p>Other Classification:
 <code><a href="accuracy.html">accuracy.factor</a>()</code>,
 <code><a href="baccuracy.html">baccuracy.factor</a>()</code>,
 <code><a href="ckappa.html">ckappa.factor</a>()</code>,
-<code><a href="cmatrix.html">cmatrix</a>()</code>,
+<code><a href="cmatrix.html">cmatrix.factor</a>()</code>,
 <code><a href="dor.html">dor.factor</a>()</code>,
 <code><a href="fbeta.html">fbeta.factor</a>()</code>,
 <code><a href="fdr.html">fdr.factor</a>()</code>,
@@ -168,8 +171,39 @@ $$</p>
 <code><a href="recall.html">recall.factor</a>()</code>,
 <code><a href="specificity.html">specificity.factor</a>()</code>,
 <code><a href="zerooneloss.html">zerooneloss.factor</a>()</code></p>
-<p>Other reciever operator characteristics:
-<code><a href="prROC.html">prROC.factor</a>()</code></p></div>
+<p>Other Supervised Learning:
+<code><a href="accuracy.html">accuracy.factor</a>()</code>,
+<code><a href="baccuracy.html">baccuracy.factor</a>()</code>,
+<code><a href="ccc.html">ccc.numeric</a>()</code>,
+<code><a href="ckappa.html">ckappa.factor</a>()</code>,
+<code><a href="cmatrix.html">cmatrix.factor</a>()</code>,
+<code><a href="dor.html">dor.factor</a>()</code>,
+<code><a href="fbeta.html">fbeta.factor</a>()</code>,
+<code><a href="fdr.html">fdr.factor</a>()</code>,
+<code><a href="fer.html">fer.factor</a>()</code>,
+<code><a href="fpr.html">fpr.factor</a>()</code>,
+<code><a href="huberloss.html">huberloss.numeric</a>()</code>,
+<code><a href="jaccard.html">jaccard.factor</a>()</code>,
+<code><a href="mae.html">mae.numeric</a>()</code>,
+<code><a href="mape.html">mape.numeric</a>()</code>,
+<code><a href="mcc.html">mcc.factor</a>()</code>,
+<code><a href="mpe.html">mpe.numeric</a>()</code>,
+<code><a href="mse.html">mse.numeric</a>()</code>,
+<code><a href="nlr.html">nlr.factor</a>()</code>,
+<code><a href="npv.html">npv.factor</a>()</code>,
+<code><a href="pinball.html">pinball.numeric</a>()</code>,
+<code><a href="plr.html">plr.factor</a>()</code>,
+<code><a href="prROC.html">prROC.factor</a>()</code>,
+<code><a href="precision.html">precision.factor</a>()</code>,
+<code><a href="rae.html">rae.numeric</a>()</code>,
+<code><a href="recall.html">recall.factor</a>()</code>,
+<code><a href="rmse.html">rmse.numeric</a>()</code>,
+<code><a href="rmsle.html">rmsle.numeric</a>()</code>,
+<code><a href="rrmse.html">rrmse.numeric</a>()</code>,
+<code><a href="rsq.html">rsq.numeric</a>()</code>,
+<code><a href="smape.html">smape.numeric</a>()</code>,
+<code><a href="specificity.html">specificity.factor</a>()</code>,
+<code><a href="zerooneloss.html">zerooneloss.factor</a>()</code></p></div>
     </div>
 
     <div class="section level2">

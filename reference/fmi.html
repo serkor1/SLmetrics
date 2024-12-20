@@ -18,9 +18,9 @@ two vectors of predicted and observed factor() values."><meta property="og:image
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/SLmetrics.html"><span class="fa fa-info"></span> Why?</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html"><span class="fa fa-book-open"></span> Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../articles/regression_problems.html"><span class="fa fa-chart-line"></span> Regression</a></li>
 <li class="nav-item"><a class="nav-link" href="../articles/classification_problems.html"><span class="fa fa-diagram-project"></span> Classification</a></li>
-<li class="active nav-item"><a class="nav-link" href="../reference/index.html"><span class="fa fa-book-open"></span> Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html"><span class="fa fa-code"></span> Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -63,28 +63,42 @@ two vectors of predicted and observed <code><a href="https://rdrr.io/r/base/fact
 
 
 <dl><dt id="arg-actual">actual<a class="anchor" aria-label="anchor" href="#arg-actual"></a></dt>
-<dd><p>A &lt;<a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a>&gt;-vector of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(n\), and \(k\) levels.</p></dd>
+<dd><p>A vector of &lt;<a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a>&gt;- of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(n\), and \(k\) levels</p></dd>
 
 
 <dt id="arg-predicted">predicted<a class="anchor" aria-label="anchor" href="#arg-predicted"></a></dt>
-<dd><p>A &lt;<a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a>&gt;-vector of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(n\), and \(k\) levels.</p></dd>
+<dd><p>A vector of &lt;<a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a>&gt;-vector of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(n\), and \(k\) levels</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments passed into other methods.</p></dd>
+<dd><p>Arguments passed into other methods</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>A confusion matrix created by <code><a href="https://rdrr.io/r/base/table.html" class="external-link">table()</a></code> or <code><a href="cmatrix.html">cmatrix()</a></code></p></dd>
+<dd><p>A confusion matrix created <code><a href="cmatrix.html">cmatrix()</a></code></p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A &lt;<a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a>&gt; vector of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> 1</p>
+    <p>A &lt;<a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a>&gt;-vector of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> 1</p>
     </div>
     <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Consider a classification problem with three classes: <code>A</code>, <code>B</code>, and <code>C</code>. The actual vector of <code><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor()</a></code> values is defined as follows:</p>
+    <h2 id="calculation">Calculation<a class="anchor" aria-label="anchor" href="#calculation"></a></h2>
+
+
+
+<p>The metric is calculated for each class \(k\) as follows,</p>
+<p>$$
+  \sqrt{\frac{\#TP_k}{\#TP_k + \#FP_k} \times \frac{\#TP_k}{\#TP_k + \#FN_k}}
+$$</p>
+<p>Where \(\#TP_k\), \(\#FP_k\), and \(\#FN_k\) represent the number of true positives, false positives, and false negatives for each class \(k\), respectively.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="creating-lt-factor-gt-">Creating &lt;<a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a>&gt;<a class="anchor" aria-label="anchor" href="#creating-lt-factor-gt-"></a></h2>
+
+
+
+<p>Consider a classification problem with three classes: <code>A</code>, <code>B</code>, and <code>C</code>. The actual vector of <code><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor()</a></code> values is defined as follows:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="co">## set seed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1903</span><span class="op">)</span></span>
 <span></span>
@@ -111,24 +125,13 @@ two vectors of predicted and observed <code><a href="https://rdrr.io/r/base/fact
 <p>In both cases, \(k = 3\), determined indirectly by the <code>levels</code> argument.</p>
     </div>
     <div class="section level2">
-    <h2 id="calculation">Calculation<a class="anchor" aria-label="anchor" href="#calculation"></a></h2>
-
-
-
-<p>The metric is calculated for each class \(k\) as follows,</p>
-<p>$$
-  \sqrt{\frac{\#TP_k}{\#TP_k + \#FP_k} \times \frac{\#TP_k}{\#TP_k + \#FN_k}}
-$$</p>
-<p>Where \(\#TP_k\), \(\#FP_k\), and \(\#FN_k\) represent the number of true positives, false positives, and false negatives for each class \(k\), respectively.</p>
-    </div>
-    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other classification:
+    <div class="dont-index"><p>Other Classification:
 <code><a href="ROC.html">ROC.factor</a>()</code>,
 <code><a href="accuracy.html">accuracy.factor</a>()</code>,
 <code><a href="baccuracy.html">baccuracy.factor</a>()</code>,
 <code><a href="ckappa.html">ckappa.factor</a>()</code>,
-<code><a href="cmatrix.html">cmatrix</a>()</code>,
+<code><a href="cmatrix.html">cmatrix.factor</a>()</code>,
 <code><a href="dor.html">dor.factor</a>()</code>,
 <code><a href="fbeta.html">fbeta.factor</a>()</code>,
 <code><a href="fdr.html">fdr.factor</a>()</code>,
@@ -183,12 +186,17 @@ $$</p>
 <span class="r-in"><span>  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Virginica"</span>, <span class="st">"Others"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># 4) evaluate performance</span></span></span>
-<span class="r-in"><span><span class="fu">fmi</span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="co"># 4) evaluate model performance</span></span></span>
+<span class="r-in"><span><span class="co"># using Fowlkes Mallows Index</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"Fowlkes Mallows Index"</span>, <span class="fu">fmi</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  actual    <span class="op">=</span> <span class="va">actual</span>,</span></span>
 <span class="r-in"><span>  predicted <span class="op">=</span> <span class="va">predicted</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  sep <span class="op">=</span> <span class="st">"\n"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.717045</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fowlkes Mallows Index</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.717045</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
