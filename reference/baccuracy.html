@@ -50,13 +50,13 @@ vectors of predicted and observed <code><a href="https://rdrr.io/r/base/factor.h
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'factor'</span></span>
-<span><span class="fu">baccuracy</span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span>, adjust <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">baccuracy</span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span>, adjust <span class="op">=</span> <span class="cn">FALSE</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'factor'</span></span>
-<span><span class="fu">weighted.baccuracy</span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span>, <span class="va">w</span>, adjust <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">weighted.baccuracy</span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span>, <span class="va">w</span>, adjust <span class="op">=</span> <span class="cn">FALSE</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'cmatrix'</span></span>
-<span><span class="fu">baccuracy</span><span class="op">(</span><span class="va">x</span>, adjust <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">baccuracy</span><span class="op">(</span><span class="va">x</span>, adjust <span class="op">=</span> <span class="cn">FALSE</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">baccuracy</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -76,7 +76,11 @@ vectors of predicted and observed <code><a href="https://rdrr.io/r/base/factor.h
 
 
 <dt id="arg-adjust">adjust<a class="anchor" aria-label="anchor" href="#arg-adjust"></a></dt>
-<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> value (default: <a href="https://rdrr.io/r/base/logical.html" class="external-link">FALSE</a>). If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a> the metric is adjusted for random chance \(\frac{1}{k}\)</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> value (default: <a href="https://rdrr.io/r/base/logical.html" class="external-link">FALSE</a>). If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a> the metric is adjusted for random chance \(\frac{1}{k}\).</p></dd>
+
+
+<dt id="arg-na-rm">na.rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> values (default: <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a>).  If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a> calculation of the metric is based on valid classes.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -188,7 +192,7 @@ $$</p>
 <code><a href="recall.html">recall.factor</a>()</code>,
 <code><a href="rmse.html">rmse.numeric</a>()</code>,
 <code><a href="rmsle.html">rmsle.numeric</a>()</code>,
-<code><a href="rrmse.html">rrmse.numeric</a>()</code>,
+<code><a href="rrse.html">rrse.numeric</a>()</code>,
 <code><a href="rsq.html">rsq.numeric</a>()</code>,
 <code><a href="smape.html">smape.numeric</a>()</code>,
 <code><a href="specificity.html">specificity.factor</a>()</code>,

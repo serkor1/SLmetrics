@@ -182,7 +182,7 @@ and <span class="math inline">\(\bar{y}\)</span> is the mean of <span class="mat
 <span>        <span class="co"># 1) extract values</span></span>
 <span>        <span class="va">actual</span>    <span class="op">&lt;-</span> <span class="fu">xgboost</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/xgboost/man/getinfo.html" class="external-link">getinfo</a></span><span class="op">(</span><span class="va">dtrain</span>, <span class="st">"label"</span><span class="op">)</span></span>
 <span>        <span class="va">predicted</span> <span class="op">&lt;-</span> <span class="va">preds</span></span>
-<span>        <span class="va">value</span>     <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rrmse.html">rrmse</a></span><span class="op">(</span></span>
+<span>        <span class="va">value</span>     <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rrse.html">rrse</a></span><span class="op">(</span></span>
 <span>            actual    <span class="op">=</span> <span class="va">actual</span>,</span>
 <span>            predicted <span class="op">=</span> <span class="va">predicted</span></span>
 <span>        <span class="op">)</span></span>
@@ -237,12 +237,12 @@ correlation coefficient</em></p>
 <span><span class="co"># performance measures </span></span>
 <span><span class="co"># in data.frame</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>    RRMSE  <span class="op">=</span> <span class="fu"><a href="../reference/rrmse.html">rrmse</a></span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span><span class="op">)</span>, </span>
+<span>    RRMSE  <span class="op">=</span> <span class="fu"><a href="../reference/rrse.html">rrse</a></span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span><span class="op">)</span>, </span>
 <span>    RMSE   <span class="op">=</span> <span class="fu"><a href="../reference/rmse.html">rmse</a></span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span><span class="op">)</span>,</span>
 <span>    CCC    <span class="op">=</span> <span class="fu"><a href="../reference/ccc.html">ccc</a></span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt;      RRMSE     RMSE       CCC</span></span>
-<span><span class="co">#&gt; 1 2.437598 3.705342 0.8840932</span></span></code></pre></div>
+<span><span class="co">#&gt;       RRMSE     RMSE       CCC</span></span>
+<span><span class="co">#&gt; 1 0.4578544 3.705342 0.8840932</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

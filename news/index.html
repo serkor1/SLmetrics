@@ -100,7 +100,9 @@
 <span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">#&gt; [1] 0.4379208</span></span></code></pre></div>
 <p>Please note, however, that it is not possible to pass <code>cmatix()</code>-into <code>weighted.accurracy()</code>,</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<ul><li>
+<strong>Unit-testing:</strong> All functions are now being tested for edge-cases in balanced and imbalanced classifcation problems, and regression problems, individually. This will enable a more robust development process and prevent avoidable bugs.</li>
+</ul><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span></span>
 <span>    <span class="fu">SLmetrics</span><span class="fu">::</span><span class="fu"><a href="../reference/accuracy.html">weighted.accuracy</a></span><span class="op">(</span></span>
 <span>        <span class="va">confusion_matrix</span></span>
@@ -115,6 +117,9 @@
 <li><p><strong>Miscalculation of Confusion Matrix elements:</strong> An error in how <code>FN</code>, <code>TN</code>, <code>FP</code> and <code>TP</code> were calculated have been fixed. No issue has been raised for this bug. This was not something that was caught by the unit-tests, as the total samples were too high to spot this error. It has, however, been fixed now. This means that all metrics that uses these explicitly are now stable, and produces the desired output.</p></li>
 <li><p><strong>Calculation Error in Fowlks Mallows Index:</strong> A bug in the calculation of the <code><a href="../reference/fmi.html">fmi()</a></code>-function has been fixed. The <code><a href="../reference/fmi.html">fmi()</a></code>-function now correctly calculates the measure.</p></li>
 <li><p><strong>Calculation Error in Pinball Deviance and Concordance Correlation Coefficient:</strong> See issue <a href="https://github.com/serkor1/SLmetrics/issues/19" class="external-link uri">https://github.com/serkor1/SLmetrics/issues/19</a>. Switched to unbiased variance calculation in <code><a href="../reference/ccc.html">ccc()</a></code>-function. The <code><a href="../reference/pinball.html">pinball()</a></code>-function were missing a weighted quantile function. The issue is now fixed.</p></li>
+<li><p><strong>Calculation Error in Balanced Accuracy:</strong> See issue <a href="https://github.com/serkor1/SLmetrics/issues/24" class="external-link uri">https://github.com/serkor1/SLmetrics/issues/24</a>. The function now correctly adjusts for random chance, and the result matches that of {scikit-learn}</p></li>
+<li><p><strong>Calculation Error in F-beta Score:</strong> See issue <a href="https://github.com/serkor1/SLmetrics/issues/23" class="external-link uri">https://github.com/serkor1/SLmetrics/issues/23</a>. The function werent respecting <code>na.rm</code> and <code>micro</code>, this has been fixed accordingly.</p></li>
+<li><p><strong>Calculation Error in Relative Absolute Error:</strong> The function was incorrectly calculating means, instead of sums. This has been fixed.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="breaking-changes-0-2-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-2-0"></a></h3>
@@ -132,7 +137,8 @@
 <code class="sourceCode R"><span><span class="co"># 3) weighted metrics</span></span>
 <span><span class="fu">SLmetrics</span><span class="fu">::</span><span class="fu"><a href="../reference/rmse.html">weighted.rmse</a></span><span class="op">(</span><span class="va">actual</span>, <span class="va">predicted</span>, w <span class="op">=</span> <span class="va">w</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co">#&gt; [1] 0.957806</span></span></code></pre></div>
-</div>
+<ul><li>The <code>rrmse()</code>-function have been removed in favor of the <code><a href="../reference/rrse.html">rrse()</a></code>-function. This function was incorrectly specified and described in the package.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1-1" id="version-01-1">Version 0.1-1<a class="anchor" aria-label="anchor" href="#version-01-1"></a></h2>
