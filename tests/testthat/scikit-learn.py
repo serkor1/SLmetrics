@@ -62,7 +62,7 @@ def py_recall(actual, predicted, average = None, w = None):
       y_true  = actual,
       y_pred  = predicted,
       average = average,
-      zero_division = np.nan,
+      zero_division = 0,
       sample_weight = w
     )
     

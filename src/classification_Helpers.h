@@ -22,37 +22,99 @@ using namespace Rcpp;
     NOTE: This should warn or give a message when there is missing values
 
 */
+#include <Eigen/Dense>
+#include <Rcpp.h>
 
-inline __attribute__((always_inline)) Rcpp::NumericVector micro(const Eigen::ArrayXd& numerator, const Eigen::ArrayXd& denominator, bool na_rm) {
 
-    if (na_rm)
+template <typename ReturnType = Rcpp::NumericVector>
+inline __attribute__((always_inline)) ReturnType micro(
+    const Eigen::ArrayXd& numerator,
+    const Eigen::ArrayXd& denominator,
+    bool na_rm);
 
-    {
-        return Rcpp::wrap(numerator.sum() / denominator.sum());
-    }
+template <>
+inline __attribute__((always_inline)) Eigen::ArrayXd micro<Eigen::ArrayXd>(
+    const Eigen::ArrayXd& numerator,
+    const Eigen::ArrayXd& denominator,
+    bool na_rm)
+{
+    double result = numerator.sum() / denominator.sum();
+    return Eigen::ArrayXd::Constant(1, result);
+}
 
-    return Rcpp::wrap(numerator.sum() / denominator.sum());
+template <>
+inline __attribute__((always_inline)) Rcpp::NumericVector micro<Rcpp::NumericVector>(
+    const Eigen::ArrayXd& numerator,
+    const Eigen::ArrayXd& denominator,
+    bool na_rm)
+{
+    double result = numerator.sum() / denominator.sum();
+    return Rcpp::wrap(result);
+}
 
+template <typename ReturnType = Rcpp::NumericVector>
+inline __attribute__((always_inline)) ReturnType macro(
+    const Eigen::ArrayXd& numerator,
+    const Eigen::ArrayXd& denominator,
+    bool na_rm);
+
+
+template <>
+inline __attribute__((always_inline)) Eigen::ArrayXd macro<Eigen::ArrayXd>(
+    const Eigen::ArrayXd& numerator,
+    const Eigen::ArrayXd& denominator,
+    bool na_rm)
+{
+    Eigen::ArrayXd z = numerator / denominator;
+    double result = na_rm
+                        ? z.isNaN().select(0, z).sum() / (z.isNaN() == false).count()
+                        : z.isNaN().select(0, z).sum() / z.size();
+    return Eigen::ArrayXd::Constant(1, result);
+}
+
+template <>
+inline __attribute__((always_inline)) Rcpp::NumericVector macro<Rcpp::NumericVector>(
+    const Eigen::ArrayXd& numerator,
+    const Eigen::ArrayXd& denominator,
+    bool na_rm)
+{
+    Eigen::ArrayXd z = numerator / denominator;
+    double result = na_rm
+                        ? z.isNaN().select(0, z).sum() / (z.isNaN() == false).count()
+                        : z.isNaN().select(0, z).sum() / z.size();
+    return Rcpp::wrap(result);
 }
 
 
-inline __attribute__((always_inline)) Rcpp::NumericVector macro(const Eigen::ArrayXd& numerator, const Eigen::ArrayXd& denominator, bool na_rm) {
+/*
 
-    /*
-        NOTE: If you test this function by itself, isFinite() works. But when compiling only is.NaN works.
-        The reason behind this is currently unkown. However, isNaN() produces the same result as {scikit-learn}.
-
-        If .isFinite() is used, it will not do respect it. And return NA even if na_rm is set to true.
-     */
-
-    Eigen::ArrayXd z(numerator.size());
-    z = numerator / denominator;
-
-    return na_rm
-            ? Rcpp::wrap(z.isNaN().select(0, z).sum() / (z.isNaN() == false).count())
-            : Rcpp::wrap(z.isNaN().select(0, z).sum() / z.size());
-
+template <typename EigenType>
+inline __attribute__((always_inline)) EigenType micro(
+    const EigenType& numerator,
+    const EigenType& denominator,
+    bool na_rm)
+{
+    double result = numerator.sum() / denominator.sum();
+    return EigenType::Constant(1, result); // Use EigenType to determine both argument and return type
 }
+
+template <typename EigenType>
+inline __attribute__((always_inline)) EigenType macro(
+    const EigenType& numerator,
+    const EigenType& denominator,
+    bool na_rm)
+{
+    EigenType z = numerator / denominator;
+    double result = na_rm
+                        ? z.isNaN().select(0, z).sum() / (z.isNaN() == false).count()
+                        : z.isNaN().select(0, z).sum() / z.size();
+
+    return EigenType::Constant(1, result); // Use EigenType to determine both argument and return type
+}
+*/
+
+
+
 
 
 /*
