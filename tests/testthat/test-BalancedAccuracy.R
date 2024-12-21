@@ -10,17 +10,20 @@ testthat::test_that(
     wrapped_baccuracy <- function(
       actual,
       predicted,
+      adjust,
       w = NULL) {
         if (is.null(w)) {
           baccuracy(
             actual     = actual,
-            predicted  = predicted
+            predicted  = predicted,
+            adjust     = adjust
           )
         } else {
           weighted.baccuracy(
             actual     = actual,
             predicted  = predicted,
-            w          = w
+            w          = w,
+            adjust     = adjust
           )
         }
       }
@@ -52,7 +55,8 @@ testthat::test_that(
           score <- wrapped_baccuracy(
             actual     = actual,
             predicted  = predicted,
-            w          = if (weighted) w else NULL
+            w          = if (weighted) w else NULL,
+            adjust     = adjust
           )
 
           # 2.3) test that the values

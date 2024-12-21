@@ -11,7 +11,8 @@
 #'
 #'
 #' @inherit accuracy
-#' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}
+#' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
+#' @param na.rm A [logical] values (default: [TRUE]).  If [TRUE] calculation of the metric is based on valid classes.
 #'
 #' @section Calculation:
 #'
