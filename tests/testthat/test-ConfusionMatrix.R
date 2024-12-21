@@ -48,8 +48,8 @@ testthat::test_that(
         # 2.5) test for equality
         testthat::expect_true(
           object = set_equal(
-            current = confusion_matrix,
-            target  = py_confusion_matrix
+            current = as.numeric(confusion_matrix),
+            target  = as.numeric(py_confusion_matrix)
           ),
           info = info
         )

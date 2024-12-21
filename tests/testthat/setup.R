@@ -262,12 +262,11 @@ py_cmatrix <- function(
   )
   
   dimnames(confusion_matrix) <- list(
-    levels(actual),
-    levels(actual)
+    attributes(actual)$levels,
+    attributes(actual)$levels
   )
 
   class(confusion_matrix) <- "cmatrix"
-  
 
   confusion_matrix
 }
