@@ -449,7 +449,7 @@ ref_prROC <- function(actual, response, thresholds) {
 }
 
 # Regression Functions
-py_rrmse <- function(
+py_rrse <- function(
   actual,
   predicted,
   w = NULL

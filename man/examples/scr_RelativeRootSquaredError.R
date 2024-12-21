@@ -12,13 +12,13 @@ actual    <- mtcars$mpg
 predicted <- fitted(model)
 
 # 2) evaluate in-sample model
-# performance using Relative Root Mean Squared Error (RRMSE)
+# performance using Relative Root Squared Errror (RRSE)
 cat(
-  "Relative Root Mean Squared Error", rrmse(
+  "Relative Root Squared Errror", rrse(
     actual    = actual,
     predicted = predicted,
   ),
-  "Relative Root Mean Squared Error (weighted)", weighted.rrmse(
+  "Relative Root Squared Errror (weighted)", weighted.rrse(
     actual    = actual,
     predicted = predicted,
     w         = mtcars$mpg/mean(mtcars$mpg)

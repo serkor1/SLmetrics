@@ -7,8 +7,8 @@
 #' Compute the \eqn{\text{relative}} \eqn{\text{root}} \eqn{\text{mean}} \eqn{\text{squared}}  \eqn{\text{error}}
 #'
 #' @description
-#' The [rrmse()]-function calculates the normalized [root mean squared error](https://en.wikipedia.org/wiki/Root_mean_square_deviation) between
-#' the predicted and observed <[numeric]> vectors. The [weighted.rrmse()] function computes the weighed relative root mean squared error.
+#' The [rrse()]-function calculates the normalized [root mean squared error](https://en.wikipedia.org/wiki/Root_mean_square_deviation) between
+#' the predicted and observed <[numeric]> vectors. The [weighted.rrse()] function computes the weighed relative root mean squared error.
 #'
 #' @inherit huberloss
 #'
@@ -27,18 +27,18 @@
 #' @family Regression
 #' @family Supervised Learning
 #' @export
-rrmse <- function(...) {
+rrse <- function(...) {
   UseMethod(
-    generic = "rrmse",
+    generic = "rrse",
     object  = ..1
   )
 }
 
-#' @rdname rrmse
+#' @rdname rrse
 #' @export
-weighted.rrmse <- function(...) {
+weighted.rrse <- function(...) {
   UseMethod(
-    generic = "weighted.rrmse",
+    generic = "weighted.rrse",
     object  = ..1
   )
 }

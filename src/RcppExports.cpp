@@ -1384,28 +1384,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rrmse
-double rrmse(const std::vector<double>& actual, const std::vector<double>& predicted);
-RcppExport SEXP _SLmetrics_rrmse(SEXP actualSEXP, SEXP predictedSEXP) {
+// rrse
+double rrse(const std::vector<double>& actual, const std::vector<double>& predicted);
+RcppExport SEXP _SLmetrics_rrse(SEXP actualSEXP, SEXP predictedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
-    rcpp_result_gen = Rcpp::wrap(rrmse(actual, predicted));
+    rcpp_result_gen = Rcpp::wrap(rrse(actual, predicted));
     return rcpp_result_gen;
 END_RCPP
 }
-// weighted_rrmse
-double weighted_rrmse(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w);
-RcppExport SEXP _SLmetrics_weighted_rrmse(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+// weighted_rrse
+double weighted_rrse(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w);
+RcppExport SEXP _SLmetrics_weighted_rrse(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
     Rcpp::traits::input_parameter< const std::vector<double>& >::type w(wSEXP);
-    rcpp_result_gen = Rcpp::wrap(weighted_rrmse(actual, predicted, w));
+    rcpp_result_gen = Rcpp::wrap(weighted_rrse(actual, predicted, w));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1588,8 +1588,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_weighted_pinball", (DL_FUNC) &_SLmetrics_weighted_pinball, 5},
     {"_SLmetrics_rae", (DL_FUNC) &_SLmetrics_rae, 2},
     {"_SLmetrics_weighted_rae", (DL_FUNC) &_SLmetrics_weighted_rae, 3},
-    {"_SLmetrics_rrmse", (DL_FUNC) &_SLmetrics_rrmse, 2},
-    {"_SLmetrics_weighted_rrmse", (DL_FUNC) &_SLmetrics_weighted_rrmse, 3},
+    {"_SLmetrics_rrse", (DL_FUNC) &_SLmetrics_rrse, 2},
+    {"_SLmetrics_weighted_rrse", (DL_FUNC) &_SLmetrics_weighted_rrse, 3},
     {"_SLmetrics_rmse", (DL_FUNC) &_SLmetrics_rmse, 2},
     {"_SLmetrics_weighted_rmse", (DL_FUNC) &_SLmetrics_weighted_rmse, 3},
     {"_SLmetrics_rmsle", (DL_FUNC) &_SLmetrics_rmsle, 2},

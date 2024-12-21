@@ -3,20 +3,20 @@
 # target functions.
 
 testthat::test_that(
-  desc = "Test `rrmse()`-function", code = {
+  desc = "Test `rrse()`-function", code = {
 
-    # 0) construct rrmse-wrapperr
-    wrapped_rrmse <- function(
+    # 0) construct rrse-wrapperr
+    wrapped_rrse <- function(
       actual,
       predicted,
       w = NULL) {
         if (is.null(w)) {
-          rrmse(
+          rrse(
             actual = actual,
             predicted = predicted
           )
         } else {
-          weighted.rrmse(
+          weighted.rrse(
             actual = actual,
             predicted = predicted,
             w = w
@@ -41,7 +41,7 @@ testthat::test_that(
 
       # 2) generate score
       # from {slmetrics}
-      score <- wrapped_rrmse(
+      score <- wrapped_rrse(
         actual     = actual,
         predicted  = predicted,
         w          = w
@@ -54,7 +54,7 @@ testthat::test_that(
       testthat::expect_true(length(score) == 1, info = info)
 
       # 2.2) calculate reference value
-      py_score <- py_rrmse(
+      py_score <- py_rrse(
         actual     = actual,
         predicted  = predicted,
         w          = w
