@@ -46,8 +46,8 @@ testthat::test_that(
     # 2.1) test for equality
     # in content
     testthat::expect_equal(
-      object   = sl_matrix,
-      expected = py_matrix,
+      object   = sl_wmatrix,
+      expected = py_wmatrix,
       ignore_attr = TRUE
     )
 
@@ -167,6 +167,12 @@ testthat::test_that(
     testthat::expect_equal(
       object   = sl_matrix,
       expected = py_matrix,
+      ignore_attr = TRUE
+    )
+
+    testthat::expect_equal(
+      object   = sl_wmatrix,
+      expected = py_wmatrix,
       ignore_attr = TRUE
     )
 

@@ -88,7 +88,7 @@ def py_baccuracy(actual, predicted, adjust = False, average = None, w = None):
       sample_weight = w
     )
     
-def py_cmatrix(actual, predicted, w = None):
+def py_confusion(actual, predicted, w = None):
     return metrics.confusion_matrix(
       y_true = actual,
       y_pred = predicted,
