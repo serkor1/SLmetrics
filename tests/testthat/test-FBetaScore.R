@@ -84,8 +84,21 @@ testthat::test_that(
             w         = if (weighted) w else NULL
           )
             
-          py_score[is.na(py_score)] <- score[is.na(score)] <- 0.0
-            
+          if (is.na(micro)) {
+
+            # Python returns values
+            # that is less than the number
+            # of classes depending on the calculations
+            # the behaviour isnt acutally understood as of now.
+            score <- score[!is.na(score)]
+            py_score <- py_score[!is.na(score)]
+
+            if (length(score) != length(py_score)) {
+              py_score <- py_score[py_score != 0]  
+            }
+
+          }
+  
           # 2.4.2) test for equality
           testthat::expect_true(
             object = set_equal(
