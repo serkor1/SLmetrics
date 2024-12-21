@@ -13,9 +13,9 @@
 # Concordance Correlation Coefficient
 # The values have been verified with yardstick and 
 # epiR
-py_ccc <- function(actual, predicted, w = NULL, bias = FALSE) {
+py_ccc <- function(actual, predicted, w = NULL, correction = FALSE) {
 
-  actual <- as.numeric(actual)
+  actual    <- as.numeric(actual)
   predicted <- as.numeric(predicted)
   
   if (is.null(w)) {
@@ -39,7 +39,7 @@ py_ccc <- function(actual, predicted, w = NULL, bias = FALSE) {
   predicted_variance <- cov_matrix$cov[2, 2]
   covariance <- cov_matrix$cov[1, 2]
   
-  if (bias) {
+  if (correction) {
     n <- sum(w) 
     actual_variance <- actual_variance * (n - 1) / n
     predicted_variance <- predicted_variance * (n - 1) / n
@@ -54,6 +54,59 @@ py_ccc <- function(actual, predicted, w = NULL, bias = FALSE) {
 }
 
 
+
+py_specificity <- function(
+  actual,
+  predicted,
+  average = NULL,
+  w       = NULL,
+  na.rm   = TRUE
+) {
+
+  # 1) Construct matrix
+  conf_mat <- SLmetrics::cmatrix(
+    actual = actual,
+    predicted = predicted,
+    w = w
+  )
+
+  TN <- sum(conf_mat) - rowSums(conf_mat) - colSums(conf_mat) + diag(conf_mat)
+  FP <- colSums(conf_mat) - diag(conf_mat)
+
+
+  output <- TN/(TN+FP)
+
+  # 2) calculate values
+  if (!is.null(average)) {
+
+    average <- as.logical(average == "micro")
+
+    if (average) {
+
+      output <-  sum(TN, na.rm = TRUE) / (sum(TN, na.rm = TRUE) + sum(FP, na.rm = TRUE))
+
+    } else {
+
+      if (!na.rm) {
+
+        output[!is.finite(output)] <- 0
+
+      }
+
+      output <- mean(
+        output,
+        na.rm = na.rm
+      )
+
+    }
+
+  }
+
+  return(
+    output
+  )
+
+}
 
 # False Discovery Rate
 py_fdr <- function(
@@ -394,6 +447,51 @@ ref_prROC <- function(actual, response, thresholds) {
   output
 
 }
+
+# Regression Functions
+py_rrmse <- function(
+  actual,
+  predicted,
+  w = NULL
+) {
+
+  if (is.null(w)) {
+    w <- rep(1, length(actual))
+  }
+
+  sqrt(sum((w * actual - w * predicted)^2) / sum((w * actual - weighted.mean(actual, w = w))^2))
+
+}
+
+
+py_rae <- function(
+  actual,
+  predicted,
+  w = NULL) {
+  
+  if (is.null(w)) {
+    w <- rep(1, length(actual))
+  }
+  
+    sum(abs(actual - predicted)) / sum(abs(actual - weighted.mean(actual, w = w)))
+}
+
+
+py_mpe <- function(
+  predicted, 
+  actual, 
+  w = NULL) {
+  
+  if (is.null(w)) {
+    w <- rep(1, length(actual))
+  }
+  
+  error <- (actual - predicted) / actual
+  weighted_mpe <- sum(w * error) / sum(w)
+  
+  weighted_mpe
+}
+
 
 
 # script end;

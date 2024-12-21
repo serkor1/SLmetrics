@@ -5,7 +5,7 @@ from torchmetrics import ConcordanceCorrCoef
 from torchmetrics.functional import symmetric_mean_absolute_percentage_error
 
 # Classification metrics
-def py_huber(actual, predicted, delta=1.0, w=None):
+def py_huberloss(actual, predicted, delta=1.0, w=None):
   
     actual = torch.tensor(actual, dtype=torch.float64)
     predicted = torch.tensor(predicted, dtype=torch.float64)

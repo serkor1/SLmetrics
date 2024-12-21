@@ -112,14 +112,6 @@ def py_entropy(actual, response, normalize = True, w = None):
       sample_weight = w
     )
 
-def py_specificity(actual, response, average = None, w = None):
-    return specificity_score(
-      y_true    = actual,
-      y_pred    = response,
-      average   = average,
-      sample_weight = w
-    )
-
 def py_roc(actual, response, pos_label = 1, w = None):
     return metrics.roc_curve(
       actual,
