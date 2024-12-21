@@ -11,8 +11,7 @@ class FBetaMetric : public classification {
 public:
 
     Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm, double beta) const override {
-        Rcpp::Rcout << "do_micro: " << (do_micro ? "true" : "false") << ", na_rm: " << (na_rm ? "true" : "false") << std::endl;
-
+        
         // 0) Declare variables and size
         // for efficiency.
         // NOTE: Micro and macro already wraps and exports as Rcpp
