@@ -86,6 +86,11 @@ SLmetrics::weighted.accuracy(
 Please note, however, that it is not possible to pass `cmatix()`-into
 `weighted.accurracy()`,
 
+- **Unit-testing:** All functions are now being tested for edge-cases in
+  balanced and imbalanced classifcation problems, and regression
+  problems, individually. This will enable a more robust development
+  process and prevent avoidable bugs.
+
 ``` r
 try(
     SLmetrics::weighted.accuracy(
@@ -123,6 +128,18 @@ try(
   variance calculation in `ccc()`-function. The `pinball()`-function
   were missing a weighted quantile function. The issue is now fixed.
 
+- **Calculation Error in Balanced Accuracy:** See issue
+  <https://github.com/serkor1/SLmetrics/issues/24>. The function now
+  correctly adjusts for random chance, and the result matches that of
+  {scikit-learn}
+
+- **Calculation Error in F-beta Score:** See issue
+  <https://github.com/serkor1/SLmetrics/issues/23>. The function werent
+  respecting `na.rm` and `micro`, this has been fixed accordingly.
+
+- **Calculation Error in Relative Absolute Error:** The function was
+  incorrectly calculating means, instead of sums. This has been fixed.
+
 ## Breaking changes
 
 - All regression metrics have had `na.rm`- and `w`-arguments removed.
@@ -148,6 +165,10 @@ SLmetrics::weighted.rmse(actual, predicted, w = w)
 ```
 
     #> [1] 0.957806
+
+- The `rrmse()`-function have been removed in favor of the
+  `rrse()`-function. This function was incorrectly specified and
+  described in the package.
 
 # Version 0.1-1
 
