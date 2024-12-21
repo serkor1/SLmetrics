@@ -57,15 +57,6 @@ def py_likelihood(actual, predicted, w = None, labels = None):
       labels = labels
     )
     
-def py_recall(actual, predicted, average = None, w = None):
-    return metrics.recall_score(
-      y_true  = actual,
-      y_pred  = predicted,
-      average = average,
-      zero_division = 0,
-      sample_weight = w
-    )
-    
 def py_zerooneloss(actual, predicted, average = None, w = None):
     return metrics.zero_one_loss(
       y_true  = actual,

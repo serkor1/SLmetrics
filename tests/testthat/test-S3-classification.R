@@ -37,20 +37,18 @@ testthat::test_that(
 
     # 2.1) test for equality
     # in content
-    testthat::expect_true(
-      object = set_equal(
-        current    = as.table(py_matrix),
-        target     = as.table(sl_matrix)
-      )
+    testthat::expect_equal(
+      object   = sl_matrix,
+      expected = py_matrix,
+      ignore_attr = TRUE
     )
 
     # 2.1) test for equality
     # in content
-    testthat::expect_true(
-      object = set_equal(
-        current    = as.table(py_wmatrix),
-        target     = as.table(sl_wmatrix)
-      )
+    testthat::expect_equal(
+      object   = sl_matrix,
+      expected = py_matrix,
+      ignore_attr = TRUE
     )
 
     # 3) test that the functions
@@ -166,11 +164,10 @@ testthat::test_that(
 
     # 2.1) test for equality
     # in content
-    testthat::expect_true(
-      object = set_equal(
-        current    = as.table(py_matrix),
-        target     = as.table(sl_matrix)
-      )
+    testthat::expect_equal(
+      object   = sl_matrix,
+      expected = py_matrix,
+      ignore_attr = TRUE
     )
 
     # 3) test that the functions

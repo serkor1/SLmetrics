@@ -5,7 +5,7 @@
 \alias{weighted.rrse.numeric}
 \alias{rrse}
 \alias{weighted.rrse}
-\title{Compute the \eqn{\text{relative}} \eqn{\text{root}} \eqn{\text{mean}} \eqn{\text{squared}}  \eqn{\text{error}}}
+\title{Compute the \eqn{\text{relative}} \eqn{\text{root}} \eqn{\text{squared}}  \eqn{\text{error}}}
 \usage{
 \method{rrse}{numeric}(actual, predicted, ...)
 
@@ -28,13 +28,13 @@ weighted.rrse(...)
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-The \code{\link[=rrse]{rrse()}}-function calculates the normalized \href{https://en.wikipedia.org/wiki/Root_mean_square_deviation}{root mean squared error} between
-the predicted and observed <\link{numeric}> vectors. The \code{\link[=weighted.rrse]{weighted.rrse()}} function computes the weighed relative root mean squared error.
+The \code{\link[=rrse]{rrse()}}-function calculates the \href{https://en.wikipedia.org/wiki/Root_mean_square_deviation}{relative root squared error} between
+the predicted and observed <\link{numeric}> vectors. The \code{\link[=weighted.rrse]{weighted.rrse()}} function computes the weighed relative relative root squared errorr.
 }
 \section{Calculation}{
 
 
-The Relative Root Mean Squared Error (RRMSE) is calculated as:
+The metric is calculated as,
 
 \deqn{
   \text{RRSE} = \sqrt{\frac{\sum_{i=1}^n (y_i - \upsilon_i)^2}{\sum_{i=1}^n (y_i - \bar{y})^2}}
@@ -59,13 +59,13 @@ actual    <- mtcars$mpg
 predicted <- fitted(model)
 
 # 2) evaluate in-sample model
-# performance using Relative Root Mean Squared Error (RRMSE)
+# performance using Relative Root Squared Errror (RRSE)
 cat(
-  "Relative Root Mean Squared Error", rrmse(
+  "Relative Root Squared Errror", rrse(
     actual    = actual,
     predicted = predicted,
   ),
-  "Relative Root Mean Squared Error (weighted)", weighted.rrmse(
+  "Relative Root Squared Errror (weighted)", weighted.rrse(
     actual    = actual,
     predicted = predicted,
     w         = mtcars$mpg/mean(mtcars$mpg)

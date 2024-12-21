@@ -10,22 +10,42 @@
  */
 class RelativeAbsoluteError : public RegressionBase {
 public:
-    // Unweighted RAE
-    double compute(const std::vector<double>& actual, const std::vector<double>& predicted) const override {
-        auto errorFunc = [&actual](const double& a, const double& p) {
-            static double mean_actual = calculate_mean(actual);
-            return std::abs(a - p) / std::abs(a - mean_actual);
-        };
-        return calculate(actual, predicted, errorFunc);
-    }
-
     // Weighted RAE
     double compute(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights) const override {
-        auto errorFunc = [&actual, &weights](const double& a, const double& p) {
-            static double mean_actual = calculate_weighted_mean(actual, weights);
-            return std::abs(a - p) / std::abs(a - mean_actual);
+        // Calculate weighted mean of actual
+        double mean_actual = calculate_weighted_mean(actual, weights);
+
+        // Define numerator and denominator functions
+        auto numeratorFunc = [](double a, double p) {
+            return std::abs(a - p);
         };
-        return calculate(actual, predicted, weights, errorFunc);
+        auto denominatorFunc = [mean_actual](double a, double /*p*/) {
+            return std::abs(a - mean_actual);
+        };
+
+        // Calculate numerator and denominator simultaneously
+        auto [numerator, denominator] = sum(actual, predicted, weights, numeratorFunc, denominatorFunc);
+
+        return numerator / denominator;
+    }
+
+    // Unweighted RAE
+    double compute(const std::vector<double>& actual, const std::vector<double>& predicted) const override {
+        // Calculate mean of actual
+        double mean_actual = calculate_mean(actual);
+
+        // Define numerator and denominator functions
+        auto numeratorFunc = [](double a, double p) {
+            return std::abs(a - p);
+        };
+        auto denominatorFunc = [mean_actual](double a, double /*p*/) {
+            return std::abs(a - mean_actual);
+        };
+
+        // Calculate numerator and denominator simultaneously
+        auto [numerator, denominator] = sum(actual, predicted, numeratorFunc, denominatorFunc);
+
+        return numerator / denominator;
     }
 
 private:
