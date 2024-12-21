@@ -124,7 +124,7 @@ evaluation_metric <- function(
         # 1) extract values
         actual    <- xgboost::getinfo(dtrain, "label")
         predicted <- preds
-        value     <- rrmse(
+        value     <- rrse(
             actual    = actual,
             predicted = predicted
         )
@@ -179,7 +179,7 @@ We summarize the performance using the *relative root mean squared error*, *root
 # performance measures 
 # in data.frame
 data.frame(
-    RRMSE  = rrmse(actual, predicted), 
+    RRMSE  = rrse(actual, predicted), 
     RMSE   = rmse(actual, predicted),
     CCC    = ccc(actual, predicted)
 )

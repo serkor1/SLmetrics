@@ -53,6 +53,55 @@ py_ccc <- function(actual, predicted, w = NULL, correction = FALSE) {
   return(ccc_value)
 }
 
+py_recall <- function(
+  actual,
+  predicted,
+  average = NULL,
+  w       = NULL,
+  na.rm   = TRUE
+) {
+
+  # 1) Construct matrix
+  conf_mat <- SLmetrics::cmatrix(
+    actual = actual,
+    predicted = predicted,
+    w = w
+  )
+
+  TP <- diag(conf_mat) # True Positives
+  FN <- rowSums(conf_mat) - diag(conf_mat) # False Negatives
+
+  # Recall calculation
+  output <- TP / (TP + FN)
+
+  # 2) Handle averaging
+  if (!is.null(average)) {
+
+    average <- as.logical(average == "micro")
+
+    if (average) {
+
+      # Micro-averaged recall
+      output <- sum(TP, na.rm = TRUE) / (sum(TP, na.rm = TRUE) + sum(FN, na.rm = TRUE))
+
+    } else {
+
+      # Macro-averaged recall
+      if (!na.rm) {
+        output[!is.finite(output)] <- 0
+      }
+
+      output <- mean(
+        output,
+        na.rm = na.rm
+      )
+
+    }
+
+  }
+
+  return(output)
+}
 
 
 py_specificity <- function(
@@ -449,7 +498,7 @@ ref_prROC <- function(actual, response, thresholds) {
 }
 
 # Regression Functions
-py_rrmse <- function(
+py_rrse <- function(
   actual,
   predicted,
   w = NULL

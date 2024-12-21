@@ -1,51 +1,51 @@
-#ifndef REGRESSION_RELATIVEABSOLUTEERROR_H
-#define REGRESSION_RELATIVEABSOLUTEERROR_H
+#ifndef REGRESSION_RELATIVEROOTSQUAREDERROR_H
+#define REGRESSION_RELATIVEROOTSQUAREDERROR_H
 
 #include "regression_Utils.h"
 #include <cmath>
 #include <vector>
 
 /**
- * Relative Absolute Error (RAE) implementation using RegressionBase.
+ * Relative Root Mean Squared Error (RRMSE) implementation using RegressionBase.
  */
-class RelativeAbsoluteError : public RegressionBase {
+class RelativeRootMeanSquaredError : public RegressionBase {
 public:
-    // Weighted RAE
+    // Weighted RRMSE
     double compute(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights) const override {
         // Calculate weighted mean of actual
         double mean_actual = calculate_weighted_mean(actual, weights);
 
         // Define numerator and denominator functions
         auto numeratorFunc = [](double a, double p) {
-            return std::abs(a - p);
+            return (a - p) * (a - p);
         };
         auto denominatorFunc = [mean_actual](double a, double /*p*/) {
-            return std::abs(a - mean_actual);
+            return (a - mean_actual) * (a - mean_actual);
         };
 
         // Calculate numerator and denominator simultaneously
         auto [numerator, denominator] = sum(actual, predicted, weights, numeratorFunc, denominatorFunc);
 
-        return numerator / denominator;
+        return std::sqrt(numerator / denominator);
     }
 
-    // Unweighted RAE
+    // Unweighted RRMSE
     double compute(const std::vector<double>& actual, const std::vector<double>& predicted) const override {
         // Calculate mean of actual
         double mean_actual = calculate_mean(actual);
 
         // Define numerator and denominator functions
         auto numeratorFunc = [](double a, double p) {
-            return std::abs(a - p);
+            return (a - p) * (a - p);
         };
         auto denominatorFunc = [mean_actual](double a, double /*p*/) {
-            return std::abs(a - mean_actual);
+            return (a - mean_actual) * (a - mean_actual);
         };
 
         // Calculate numerator and denominator simultaneously
         auto [numerator, denominator] = sum(actual, predicted, numeratorFunc, denominatorFunc);
 
-        return numerator / denominator;
+        return std::sqrt(numerator / denominator);
     }
 
 private:
@@ -68,4 +68,4 @@ private:
     }
 };
 
-#endif // REGRESSION_RELATIVEABSOLUTEERROR_H
+#endif // REGRESSION_RELATIVEROOTSQUAREDERROR_H

@@ -58,7 +58,7 @@ testthat::test_that(
             actual     = actual,
             predicted  = predicted,
             w          = if (weighted) w else NULL,
-            micro      = if (is.na(NA)) { NULL } else micro
+            micro      = if (is.na(micro)) { NULL } else micro
           )
 
           # 2.3) test that the values
@@ -73,15 +73,15 @@ testthat::test_that(
           py_score <- py_recall(
             actual    = actual,
             predicted = predicted,
-            average   = if (is.na(NA)) { NULL } else ifelse(micro, "micro", "macro"),
+            average   = if (is.na(micro)) { NULL } else ifelse(micro, "micro", "macro"),
             w         = if (weighted) w else NULL
           )
 
           # 2.4.2) test for equality
           testthat::expect_true(
             object = set_equal(
-              current = score,
-              target  = py_score
+              current = as.numeric(score),
+              target  = as.numeric(py_score)
             ),
             info = info
           )

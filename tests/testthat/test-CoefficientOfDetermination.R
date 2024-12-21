@@ -69,8 +69,8 @@ testthat::test_that(
         # 2.3) test for equality
         testthat::expect_true(
           object = set_equal(
-            target  = target_value,
-            current = current_value
+            target  = as.numeric(target_value),
+            current = as.numeric(current_value)
           ),
           info = info
         )

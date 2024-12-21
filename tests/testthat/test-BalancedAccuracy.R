@@ -10,17 +10,20 @@ testthat::test_that(
     wrapped_baccuracy <- function(
       actual,
       predicted,
+      adjust,
       w = NULL) {
         if (is.null(w)) {
           baccuracy(
             actual     = actual,
-            predicted  = predicted
+            predicted  = predicted,
+            adjust     = adjust
           )
         } else {
           weighted.baccuracy(
             actual     = actual,
             predicted  = predicted,
-            w          = w
+            w          = w,
+            adjust     = adjust
           )
         }
       }
@@ -52,7 +55,8 @@ testthat::test_that(
           score <- wrapped_baccuracy(
             actual     = actual,
             predicted  = predicted,
-            w          = if (weighted) w else NULL
+            w          = if (weighted) w else NULL,
+            adjust     = adjust
           )
 
           # 2.3) test that the values
@@ -75,8 +79,8 @@ testthat::test_that(
           # 2.4.2) test for equality
           testthat::expect_true(
             object = set_equal(
-              current = score,
-              target  = py_score
+              current = as.numeric(score),
+              target  = as.numeric(py_score)
             ),
             info = info
           )

@@ -106,6 +106,63 @@ protected:
 
         return numerator / denominator;
     }
+
+    
+    template <typename NumeratorFunction, typename DenominatorFunction>
+    static std::pair<double, double> sum(
+        const std::vector<double>& actual,
+        const std::vector<double>& predicted,
+        const std::vector<double>& weights,
+        NumeratorFunction numeratorFunc,
+        DenominatorFunction denominatorFunc)
+    {
+        const std::size_t n = actual.size();
+        const double* actual_ptr = actual.data();
+        const double* predicted_ptr = predicted.data();
+        const double* weights_ptr = weights.data();
+
+        double numerator = 0.0;
+        double denominator = 0.0;
+
+        
+        for (std::size_t i = 0; i < n; ++i) {
+            const double& weight = *weights_ptr++;
+            const double actual_val = *actual_ptr++;
+            const double predicted_val = *predicted_ptr++;
+
+            numerator += numeratorFunc(actual_val, predicted_val) * weight;
+            denominator += denominatorFunc(actual_val, predicted_val) * weight;
+        }
+
+        return {numerator, denominator};
+    }
+
+    
+    template <typename NumeratorFunction, typename DenominatorFunction>
+    static std::pair<double, double> sum(
+        const std::vector<double>& actual,
+        const std::vector<double>& predicted,
+        NumeratorFunction numeratorFunc,
+        DenominatorFunction denominatorFunc)
+    {
+        const std::size_t n = actual.size();
+        const double* actual_ptr = actual.data();
+        const double* predicted_ptr = predicted.data();
+
+        double numerator = 0.0;
+        double denominator = 0.0;
+
+        for (std::size_t i = 0; i < n; ++i) {
+            const double actual_val = *actual_ptr++;
+            const double predicted_val = *predicted_ptr++;
+
+            numerator += numeratorFunc(actual_val, predicted_val);
+            denominator += denominatorFunc(actual_val, predicted_val);
+        }
+
+        return {numerator, denominator};
+    }
+
 };
 
 #endif // REGRESSION_UTILS_H

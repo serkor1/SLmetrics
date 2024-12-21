@@ -8,11 +8,11 @@
 \alias{weighted.baccuracy}
 \title{Compute the \eqn{\text{balanced}} \eqn{\text{accuracy}}}
 \usage{
-\method{baccuracy}{factor}(actual, predicted, adjust = FALSE, ...)
+\method{baccuracy}{factor}(actual, predicted, adjust = FALSE, na.rm = TRUE, ...)
 
-\method{weighted.baccuracy}{factor}(actual, predicted, w, adjust = FALSE, ...)
+\method{weighted.baccuracy}{factor}(actual, predicted, w, adjust = FALSE, na.rm = TRUE, ...)
 
-\method{baccuracy}{cmatrix}(x, adjust = FALSE, ...)
+\method{baccuracy}{cmatrix}(x, adjust = FALSE, na.rm = TRUE, ...)
 
 baccuracy(...)
 
@@ -23,7 +23,9 @@ weighted.baccuracy(...)
 
 \item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{adjust}{A \link{logical} value (default: \link{FALSE}). If \link{TRUE} the metric is adjusted for random chance \eqn{\frac{1}{k}}}
+\item{adjust}{A \link{logical} value (default: \link{FALSE}). If \link{TRUE} the metric is adjusted for random chance \eqn{\frac{1}{k}}.}
+
+\item{na.rm}{A \link{logical} values (default: \link{TRUE}).  If \link{TRUE} calculation of the metric is based on valid classes.}
 
 \item{...}{Arguments passed into other methods}
 
@@ -189,7 +191,7 @@ Other Supervised Learning:
 \code{\link{recall.factor}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
-\code{\link{rrmse.numeric}()},
+\code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()},
 \code{\link{specificity.factor}()},

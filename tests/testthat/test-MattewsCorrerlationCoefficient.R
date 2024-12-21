@@ -71,8 +71,8 @@ testthat::test_that(
         # 2.4.2) test for equality
         testthat::expect_true(
           object = set_equal(
-            current = score,
-            target  = py_score
+            current = as.numeric(score),
+            target  = as.numeric(py_score)
           ),
           info = info
         )

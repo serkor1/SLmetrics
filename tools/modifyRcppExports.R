@@ -43,7 +43,7 @@ foo_update <- c(
   "mae",
   "ccc",
   "rae",
-  "rrmse",
+  "rrse",
   "pinball"
   # ,
   # "ROC",

@@ -10,7 +10,7 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 class FBetaMetric : public classification {
 public:
 
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, double beta, bool do_micro, bool na_rm) const override {
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm, double beta) const override {
         
         // 0) Declare variables and size
         // for efficiency.
@@ -25,18 +25,25 @@ public:
 
         // 1) define recall 
         // and recall
-        const Eigen::ArrayXd& precision = tp / (tp + fp);
-        const Eigen::ArrayXd& recall    = tp / (tp + fn);
+        Eigen::ArrayXd precision = do_micro
+            ? micro<Eigen::ArrayXd>(tp, (tp + fp), na_rm)
+            : macro<Eigen::ArrayXd>(tp, (tp + fp), na_rm);
+
+        Eigen::ArrayXd recall = do_micro
+            ? micro<Eigen::ArrayXd>(tp, (tp + fn), na_rm)
+            : macro<Eigen::ArrayXd>(tp, (tp + fn), na_rm);
+
 
         // 2) retun with 
         // ternary expression
         return do_micro
-            ? micro((1 + beta_sq) * (precision * recall), (beta_sq * precision + recall), na_rm)
-            : macro((1 + beta_sq) * (precision * recall), (beta_sq * precision + recall), na_rm);
+            ? micro((1+beta_sq) * tp, (1+beta_sq) * tp + beta_sq * fn + fp, na_rm)
+            : macro((1+beta_sq) * tp, (1+beta_sq) * tp + beta_sq * fn + fp, na_rm);
+
 
     }
 
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, double beta, bool na_rm) const override {
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm,  double beta) const override {
         Eigen::ArrayXd output(matrix.rows());
         Eigen::ArrayXd tp(matrix.rows()), fp(matrix.rows()), fn(matrix.rows());
         double beta_sq = beta * beta;
@@ -46,7 +53,7 @@ public:
         FN(matrix, fn);
 
         Eigen::ArrayXd precision = tp / (tp + fp);
-        Eigen::ArrayXd recall = tp / (tp + fn);
+        Eigen::ArrayXd recall    = tp / (tp + fn);
 
         output = (1 + beta_sq) * (precision * recall) / (beta_sq * precision + recall);
         return Rcpp::wrap(output);

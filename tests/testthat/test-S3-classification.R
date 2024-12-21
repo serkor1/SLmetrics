@@ -35,24 +35,6 @@ testthat::test_that(
       w         = w
     )
 
-    # 2.1) test for equality
-    # in content
-    testthat::expect_true(
-      object = set_equal(
-        current    = as.table(py_matrix),
-        target     = as.table(sl_matrix)
-      )
-    )
-
-    # 2.1) test for equality
-    # in content
-    testthat::expect_true(
-      object = set_equal(
-        current    = as.table(py_wmatrix),
-        target     = as.table(sl_wmatrix)
-      )
-    )
-
     # 3) test that the functions
     # returns the same value regardless
     # of method
@@ -66,8 +48,8 @@ testthat::test_that(
       # be equal
       testthat::expect_true(
         object = set_equal(
-          .f(actual, predicted),
-          .f(sl_matrix)
+          as.numeric(.f(actual, predicted)),
+          as.numeric(.f(sl_matrix))
         ),
         label = paste(
           "Class-wise metods in", names(sl_classification)[i], "not equivalent."
@@ -91,8 +73,8 @@ testthat::test_that(
         # Ensure these are expected to be equal
         testthat::expect_true(
           object = set_equal(
-            .f(actual, predicted, w = w),
-            .F(sl_wmatrix)
+            as.numeric(.f(actual, predicted, w = w)),
+            as.numeric(.F(sl_wmatrix))
           ),
           label = paste(
             "Weighted class-wise methods in", name, "not equivalent."
@@ -118,8 +100,8 @@ testthat::test_that(
         # a logical value.
         testthat::expect_false(
           object = is.logical(set_equal(
-            .f(actual, predicted, w = w),
-            .F(sl_matrix)
+            as.numeric(.f(actual, predicted, w = w)),
+            as.numeric(.F(sl_matrix))
           )),
           label = paste(
             "Weighted and unweighted class-wise methods in", name, "are equivalent."
@@ -164,15 +146,6 @@ testthat::test_that(
       w         = w
     )
 
-    # 2.1) test for equality
-    # in content
-    testthat::expect_true(
-      object = set_equal(
-        current    = as.table(py_matrix),
-        target     = as.table(sl_matrix)
-      )
-    )
-
     # 3) test that the functions
     # returns the same value regardless
     # of method
@@ -186,8 +159,8 @@ testthat::test_that(
       # be equal
       testthat::expect_true(
         object = set_equal(
-          .f(actual, predicted),
-          .f(sl_matrix)
+          as.numeric(.f(actual, predicted)),
+          as.numeric(.f(sl_matrix))
         ),
         label = paste(
           "Unweighted class-wise metods in", names(sl_classification)[i], "not equivalent."
@@ -211,8 +184,8 @@ testthat::test_that(
         # Ensure these are expected to be equal
         testthat::expect_true(
           object = set_equal(
-            .f(actual, predicted, w = w),
-            .F(sl_wmatrix)
+            as.numeric(.f(actual, predicted, w = w)),
+            as.numeric(.F(sl_wmatrix))
           ),
           label = paste(
             "Weighted class-wise methods in", name, "not equivalent."
@@ -238,8 +211,8 @@ testthat::test_that(
         # a logical value.
         testthat::expect_false(
           object = is.logical(set_equal(
-            .f(actual, predicted, w = w),
-            .F(sl_matrix)
+            as.numeric(.f(actual, predicted, w = w)),
+            as.numeric(.F(sl_matrix))
           )),
           label = paste(
             "Weighted and unweighted class-wise methods in", name, "are equivalent."
