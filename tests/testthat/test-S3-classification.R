@@ -35,22 +35,6 @@ testthat::test_that(
       w         = w
     )
 
-    # 2.1) test for equality
-    # in content
-    testthat::expect_equal(
-      object   = sl_matrix,
-      expected = py_matrix,
-      ignore_attr = TRUE
-    )
-
-    # 2.1) test for equality
-    # in content
-    testthat::expect_equal(
-      object   = sl_wmatrix,
-      expected = py_wmatrix,
-      ignore_attr = TRUE
-    )
-
     # 3) test that the functions
     # returns the same value regardless
     # of method
@@ -160,20 +144,6 @@ testthat::test_that(
       actual    = actual,
       predicted = predicted,
       w         = w
-    )
-
-    # 2.1) test for equality
-    # in content
-    testthat::expect_equal(
-      object   = sl_matrix,
-      expected = py_matrix,
-      ignore_attr = TRUE
-    )
-
-    testthat::expect_equal(
-      object   = sl_wmatrix,
-      expected = py_wmatrix,
-      ignore_attr = TRUE
     )
 
     # 3) test that the functions

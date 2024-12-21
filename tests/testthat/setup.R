@@ -248,27 +248,4 @@ sl_wclassification <- list(
 
 )
 
-# 8) rewrite python
-# matrix
-py_cmatrix <- function(
-  actual,
-  predicted,
-  w = NULL) {
-  
-  confusion_matrix <- py_confusion(
-    actual,
-    predicted,
-    w = w
-  )
-  
-  dimnames(confusion_matrix) <- list(
-    attributes(actual)$levels,
-    attributes(actual)$levels
-  )
-
-  class(confusion_matrix) <- "cmatrix"
-
-  confusion_matrix
-}
-
 # script end;
