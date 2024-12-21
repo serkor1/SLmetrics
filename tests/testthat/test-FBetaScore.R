@@ -90,8 +90,8 @@ testthat::test_that(
             # that is less than the number
             # of classes depending on the calculations
             # the behaviour isnt acutally understood as of now.
-            score <- score[!is.na(score)]
-            py_score <- py_score[!is.na(score)]
+            score <- score[!is.na(score) & !is.nan(score)]
+            py_score <- py_score[!is.na(score) & !is.nan(score)]
 
             if (length(score) != length(py_score)) {
               py_score <- py_score[py_score != 0]  
