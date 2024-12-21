@@ -8,6 +8,9 @@
 #
 # script start;
 
+# 0) set amount of test failures
+testthat::set_max_fails(Inf)
+
 # 1) set seed for all
 # samples
 set.seed(1903)
