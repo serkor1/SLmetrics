@@ -2,42 +2,65 @@
 % Please edit documentation in R/RcppExports.R, R/S3_NegativePredictiveValue.R
 \name{npv.factor}
 \alias{npv.factor}
+\alias{weighted.npv.factor}
 \alias{npv.cmatrix}
 \alias{npv}
+\alias{weighted.npv}
 \title{Compute the \eqn{\text{negative}} \eqn{\text{predictive}} \eqn{\text{value}}}
 \usage{
 \method{npv}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
+\method{weighted.npv}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+
 \method{npv}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 npv(...)
+
+weighted.npv(...)
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{NULL} by default. If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average. Otherwise class wise performance evaluation.}
+\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
+micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
 
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
+\item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
+This argument is only relevant when \code{micro != NULL}.
+When \code{na.rm = TRUE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))}.
+When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))}.}
 
-\item{...}{Arguments passed into other methods.}
+\item{...}{Arguments passed into other methods}
 
-\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
+
+\item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 }
 \value{
-If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vector of \link{length} k
+If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
 
-If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
+If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=npv]{npv()}}-function computes the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{negative predictive value}, also known as the True Negative Predictive Value, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
-
-When \code{aggregate = TRUE}, the function returns the micro-average NPV across all classes \eqn{k}. By default, it returns the class-wise NPV.
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.npv]{weighted.npv()}} function computes the weighted negative predictive value.
 }
-\details{
+\section{Calculation}{
+
+
+The metric is calculated for each class \eqn{k} as follows,
+
+\deqn{
+  \frac{\#TN_k}{\#TN_k + \#FN_k}
+}
+
+Where \eqn{\#TN_k} and \eqn{\#FN_k} are the number of true negatives and false negatives, respectively, for each class \eqn{k}.
+}
+
+\section{Creating <\link{factor}>}{
+
+
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
@@ -69,23 +92,6 @@ factor(
 }\if{html}{\out{</div>}}
 
 In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
-}
-\section{Calculation}{
-
-
-The metric is calculated for each class \eqn{k} as follows,
-
-\deqn{
-  \frac{\#TN_k}{\#TN_k + \#FN_k}
-}
-
-Where \eqn{\#TN_k} and \eqn{\#FN_k} are the number of true negatives and false negatives, respectively, for each class \eqn{k}.
-
-When \code{aggregate = TRUE}, the \code{micro}-average is calculated,
-
-\deqn{
-  \frac{\sum_{k=1}^k \#TN_k}{\sum_{k=1}^k \#TN_k + \sum_{k=1}^k \#FN_k}
-}
 }
 
 \examples{
@@ -124,34 +130,46 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) evaluate performance
-# 4.1) by class
+# 4) evaluate class-wise performance
+# using Negative Predictive Value
+
+# 4.1) unweighted Negative Predictive Value
 npv(
   actual    = actual,
   predicted = predicted
 )
 
-# 4.2) macro-average
-npv(
+# 4.2) weighted Negative Predictive Value
+weighted.npv(
   actual    = actual,
   predicted = predicted,
-  micro     = FALSE
+  w         = iris$Petal.Length/mean(iris$Petal.Length)
 )
 
-# 4.3) micro-average
-npv(
-  actual    = actual,
-  predicted = predicted,
-  micro     = TRUE
+# 5) evaluate overall performance
+# using micro-averaged Negative Predictive Value
+cat(
+  "Micro-averaged Negative Predictive Value", npv(
+    actual    = actual,
+    predicted = predicted,
+    micro     = TRUE
+  ),
+  "Micro-averaged Negative Predictive Value (weighted)", weighted.npv(
+    actual    = actual,
+    predicted = predicted,
+    w         = iris$Petal.Length/mean(iris$Petal.Length),
+    micro     = TRUE
+  ),
+  sep = "\n"
 )
 }
 \seealso{
-Other classification: 
+Other Classification: 
 \code{\link{ROC.factor}()},
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},
@@ -167,5 +185,40 @@ Other classification:
 \code{\link{recall.factor}()},
 \code{\link{specificity.factor}()},
 \code{\link{zerooneloss.factor}()}
+
+Other Supervised Learning: 
+\code{\link{ROC.factor}()},
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
+\code{\link{ccc.numeric}()},
+\code{\link{ckappa.factor}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{dor.factor}()},
+\code{\link{fbeta.factor}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
+\code{\link{fpr.factor}()},
+\code{\link{huberloss.numeric}()},
+\code{\link{jaccard.factor}()},
+\code{\link{mae.numeric}()},
+\code{\link{mape.numeric}()},
+\code{\link{mcc.factor}()},
+\code{\link{mpe.numeric}()},
+\code{\link{mse.numeric}()},
+\code{\link{nlr.factor}()},
+\code{\link{pinball.numeric}()},
+\code{\link{plr.factor}()},
+\code{\link{prROC.factor}()},
+\code{\link{precision.factor}()},
+\code{\link{rae.numeric}()},
+\code{\link{recall.factor}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
+\code{\link{rrse.numeric}()},
+\code{\link{rsq.numeric}()},
+\code{\link{smape.numeric}()},
+\code{\link{specificity.factor}()},
+\code{\link{zerooneloss.factor}()}
 }
-\concept{classification}
+\concept{Classification}
+\concept{Supervised Learning}

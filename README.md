@@ -36,7 +36,7 @@ latter will be the core philosophy and include unsupervised learning
 metrics. If not, then it will remain a {pkg} for Supervised Learning
 metrics, and a sandbox for me to develop my `C++` skills.
 
-## :information\_source: Why?
+## :information_source: Why?
 
 Machine Learning (ML) in itself can be a complicated task; the steps
 taken from feature engineering to the deployment of the model requires
@@ -65,7 +65,10 @@ summary see below,
 
 <details>
 
-<summary> Showcase: speed comparison </summary>
+<summary>
+
+Showcase: speed comparison
+</summary>
 
 Below is two simple cases that any {pkg} should be able to handle
 gracefully; computing a confusion matrix and computing the root mean
@@ -96,7 +99,10 @@ most essential class-wise and aggregated metrics.
 
 <details>
 
-<summary> Showcase: simplicity and flexibility </summary>
+<summary>
+
+Showcase: simplicity and flexibility
+</summary>
 
 Consider the classification problem below,
 
@@ -123,17 +129,17 @@ follows,
 # 1) recall
 recall(actual, predicted)
 #>         a         b         c 
-#> 0.5000000 0.3695652 0.1785714
+#> 0.4736842 0.2444444 0.2500000
 
 # 2) precision
 precision(actual, predicted)
 #>         a         b         c 
-#> 0.2407407 0.5312500 0.3571429
+#> 0.1764706 0.4782609 0.3461538
 
 # 3) specificity
 specificity(actual, predicted)
 #>         a         b         c 
-#> 0.4459459 0.7222222 0.8750000
+#> 0.4814815 0.7818182 0.7343750
 ```
 
 Each function returns the class-wise metric; there is no need to specify
@@ -145,12 +151,12 @@ with a single `<[logical]>`-argument,
 # 1) micro-averaged
 # recall
 recall(actual, predicted, micro = TRUE)
-#> [1] 0.35
+#> [1] 0.29
 
 # 2) macro-averaged
 # recall
 recall(actual, predicted, micro = FALSE)
-#> [1] 0.3493789
+#> [1] 0.3227096
 ```
 
 However, it is not efficient to loop through the entire range of the
@@ -168,17 +174,17 @@ confusion_matrix <- cmatrix(
 # 1) recall
 recall(confusion_matrix)
 #>         a         b         c 
-#> 0.5000000 0.3695652 0.1785714
+#> 0.4736842 0.2444444 0.2500000
 
 # 2) precision
 precision(confusion_matrix)
 #>         a         b         c 
-#> 0.2407407 0.5312500 0.3571429
+#> 0.1764706 0.4782609 0.3461538
 
 # 3) specificity
 specificity(confusion_matrix)
 #>         a         b         c 
-#> 0.4459459 0.7222222 0.8750000
+#> 0.4814815 0.7818182 0.7343750
 ```
 
 It is the same call and metric with slightly different arguments; this
@@ -193,7 +199,10 @@ tidy, or untidy, pipeline you would want to.
 
 <details>
 
-<summary> Showcase: Low level and (in)dependency </summary>
+<summary>
+
+Showcase: Low level and (in)dependency
+</summary>
 
 Currently [{SLmetrics}](https://serkor1.github.io/SLmetrics/) depends on
 three {pkgs}; [{Rcpp}](https://github.com/RcppCore/Rcpp),
@@ -224,7 +233,10 @@ has been battle tested with
 
 <details>
 
-<summary> Showcase: repertoire and unit-testing </summary>
+<summary>
+
+Showcase: repertoire and unit-testing
+</summary>
 
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) is build as the
 `R`-version of
@@ -237,7 +249,7 @@ functions implemented in
 
 </details>
 
-## :information\_source: Basic usage
+## :information_source: Basic usage
 
 In its most basic form the functions can be used as-is without any
 pipelines, data.frames or recipes. Below are two simple examples.
@@ -350,7 +362,10 @@ plot(roc)
 
 <details>
 
-<summary> Class-wise and aggregated metrics </summary>
+<summary>
+
+Class-wise and aggregated metrics
+</summary>
 
 **Classwise specificity**
 
@@ -385,7 +400,7 @@ sensitivity(
 
 </details>
 
-## :information\_source: Installation
+## :information_source: Installation
 
 ### :shield: Stable version
 
@@ -397,7 +412,7 @@ devtools::install_github(
 )
 ```
 
-### :hammer\_and\_wrench: Development version
+### :hammer_and_wrench: Development version
 
 ``` r
 ## install development version
@@ -407,7 +422,7 @@ devtools::install_github(
 )
 ```
 
-## :information\_source: Code of Conduct
+## :information_source: Code of Conduct
 
 Please note that the [{SLmetrics}](https://serkor1.github.io/SLmetrics/)
 project is released with a [Contributor Code of

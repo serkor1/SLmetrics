@@ -2,30 +2,34 @@
 % Please edit documentation in R/RcppExports.R, R/S3_RelativeAbsoluteError.R
 \name{rae.numeric}
 \alias{rae.numeric}
+\alias{weighted.rae.numeric}
 \alias{rae}
+\alias{weighted.rae}
 \title{Compute the \eqn{\text{relative}} \eqn{\text{absolute}} \eqn{\text{error}}}
 \usage{
-\method{rae}{numeric}(actual, predicted, w = NULL, na.rm = FALSE, ...)
+\method{rae}{numeric}(actual, predicted, ...)
+
+\method{weighted.rae}{numeric}(actual, predicted, w, ...)
 
 rae(...)
+
+weighted.rae(...)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}
 
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
-
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
-
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
 The \code{\link[=rae]{rae()}}-function calculates the normalized \href{https://www.statisticshowto.com/relative-absolute-error/}{relative absolute error} between
-the predicted and observed <\link{numeric}> vectors. If \code{w} is not \link{NULL} the function returns the weighted averages.
+the predicted and observed <\link{numeric}> vectors. The \code{\link[=weighted.rae]{weighted.rae()}} function computes the weigthed relative absolute error.
 }
 \section{Calculation}{
 
@@ -38,19 +42,6 @@ The Relative Absolute Error (RAE) is calculated as:
 
 Where \eqn{y_i} are the \code{actual} values, \eqn{\upsilon_i} are the \code{predicted} values,
 and \eqn{\bar{y}} is the mean of the \code{actual} values.
-
-If weights \eqn{w_i} are provided, the Weighted RAE is calculated as:
-
-\deqn{
-  \text{Weighted RAE} = \frac{\sum_{i=1}^n w_i |y_i - \upsilon_i|}{\sum_{i=1}^n w_i |y_i - \bar{y}_w|}
-}
-
-Where \eqn{\bar{y}_w} is the weighted mean of the \code{actual} values, calculated as:
-\deqn{
-  \bar{y}_w = \frac{\sum_{i=1}^n w_i y_i}{\sum_{i=1}^n w_i}
-}
-
-This metric provides a relative measure by comparing the total absolute prediction error to the total absolute deviation from the mean of the actual values.
 }
 
 \examples{
@@ -67,30 +58,23 @@ model <- lm(
 actual    <- mtcars$mpg
 predicted <- fitted(model)
 
-
-# 2) calculate the metric
-rae(
-  actual     = actual,
-  predicted  = predicted
-)
-
-# 3) calculate
-# the weighted metric
-w <- rbeta(
-  n = 1e3,
-  shape1 = 10,
-  shape2 = 2
-)
-
-
-rae(
-  actual     = actual,
-  predicted  = predicted,
-  w          = w
+# 2) evaluate in-sample model
+# performance using Relative Absolute Error (RAE)
+cat(
+  "Relative Absolute Error", rae(
+    actual    = actual,
+    predicted = predicted,
+  ),
+  "Relative Absolute Error (weighted)", weighted.rae(
+    actual    = actual,
+    predicted = predicted,
+    w         = mtcars$mpg/mean(mtcars$mpg)
+  ),
+  sep = "\n"
 )
 }
 \seealso{
-Other regression: 
+Other Regression: 
 \code{\link{ccc.numeric}()},
 \code{\link{huberloss.numeric}()},
 \code{\link{mae.numeric}()},
@@ -100,8 +84,43 @@ Other regression:
 \code{\link{pinball.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
-\code{\link{rrmse.numeric}()},
+\code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()}
+
+Other Supervised Learning: 
+\code{\link{ROC.factor}()},
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
+\code{\link{ccc.numeric}()},
+\code{\link{ckappa.factor}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{dor.factor}()},
+\code{\link{fbeta.factor}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
+\code{\link{fpr.factor}()},
+\code{\link{huberloss.numeric}()},
+\code{\link{jaccard.factor}()},
+\code{\link{mae.numeric}()},
+\code{\link{mape.numeric}()},
+\code{\link{mcc.factor}()},
+\code{\link{mpe.numeric}()},
+\code{\link{mse.numeric}()},
+\code{\link{nlr.factor}()},
+\code{\link{npv.factor}()},
+\code{\link{pinball.numeric}()},
+\code{\link{plr.factor}()},
+\code{\link{prROC.factor}()},
+\code{\link{precision.factor}()},
+\code{\link{recall.factor}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
+\code{\link{rrse.numeric}()},
+\code{\link{rsq.numeric}()},
+\code{\link{smape.numeric}()},
+\code{\link{specificity.factor}()},
+\code{\link{zerooneloss.factor}()}
 }
-\concept{regression}
+\concept{Regression}
+\concept{Supervised Learning}

@@ -1,146 +1,103 @@
 #ifndef REGRESSION_PINBALLLOSS_H
 #define REGRESSION_PINBALLLOSS_H
 
+#include "regression_Utils.h"
 #include <vector>
-#include <cmath>
-#include <cstddef>
-#include <limits>
+#include <algorithm>
+#include <numeric>
 
-// Weighted version of pinball loss
-inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights, double alpha = 0.5, bool na_rm = false) {
-    const std::size_t n = actual.size();
-    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
-
-    if (n == 0) {
-        return NA_DOUBLE;
-    }
-
-    const double* actual_ptr = actual.data();
-    const double* predicted_ptr = predicted.data();
-    const double* weight_ptr = weights.data();
-
-    double loss = 0.0;
-    double weight_sum = 0.0;
-
-    for (std::size_t i = 0; i < n; ++i) {
-        double actual_value = *(actual_ptr++);
-        double predicted_value = *(predicted_ptr++);
-        double weight = *(weight_ptr++);
-
-        bool is_valid = !std::isnan(actual_value) && !std::isnan(predicted_value) && !std::isnan(weight);
-
-        if (is_valid) {
-            double diff = actual_value - predicted_value;
-            double sign = (diff >= 0) ? 1.0 : 0.0;
-
-            loss += weight * (alpha * sign * diff - (1 - alpha) * (1 - sign) * diff);
-            weight_sum += weight;
-        }
-    }
-
-    if (!na_rm && weight_sum == 0) {
-        return NA_DOUBLE;
-    }
-
-    return weight_sum > 0 ? (loss / weight_sum) : NA_DOUBLE;
-}
-
-// Unweighted version of pinball loss
-inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, double alpha = 0.5, bool na_rm = false) {
-    const std::size_t n = actual.size();
-    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
-
-    if (n == 0) {
-        return NA_DOUBLE;
-    }
-
-    const double* actual_ptr = actual.data();
-    const double* predicted_ptr = predicted.data();
-
-    double loss = 0.0;
-    std::size_t valid_count = 0;
-
-    for (std::size_t i = 0; i < n; ++i) {
-        double actual_value = *(actual_ptr++);
-        double predicted_value = *(predicted_ptr++);
-
-        bool is_valid = !std::isnan(actual_value) && !std::isnan(predicted_value);
-        valid_count += is_valid;
-
-        if (is_valid) {
-            double diff = actual_value - predicted_value;
-            double sign = (diff >= 0) ? 1.0 : 0.0;
-
-            loss += alpha * sign * diff - (1 - alpha) * (1 - sign) * diff;
-        }
-    }
-
-    if (!na_rm && valid_count != n) {
-        return NA_DOUBLE;
-    }
-
-    return valid_count > 0 ? (loss / valid_count) : NA_DOUBLE;
-}
-
-/*
- * Quantile Function:
- *
- * This function is a faster implementation
- * of the R quantile()-function. At the moment
- * it is only used for the pinball loss; if there
- * is need for it further, it should be moved to helpers
- * or utilities
- *
+/**
+ * Pinball Loss implementation using RegressionBase.
  */
+class PinballLoss : public RegressionBase {
+public:
+    explicit PinballLoss(double alpha = 0.5) : alpha_(alpha) {}
 
-inline __attribute__((always_inline)) std::vector<double> _quantile_(std::vector<double>& x, const double alpha = 0.5, bool na_rm = false) {
-    const std::size_t n = x.size();
-    std::vector<double> quantiles(n);
-    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
+    // Unweighted Pinball Loss
+    double compute(const std::vector<double>& actual, const std::vector<double>& predicted) const override {
+        auto errorFunc = [this](double a, double p) {
+            double diff = a - p;
+            return (diff >= 0 ? alpha_ * diff : (1 - alpha_) * (-diff));
+        };
+        return calculate(actual, predicted, errorFunc);
+    }
 
-    if (n == 0) {
+    // Weighted Pinball Loss
+    double compute(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights) const override {
+        auto errorFunc = [this](double a, double p) {
+            double diff = a - p;
+            return (diff >= 0 ? alpha_ * diff : (1 - alpha_) * (-diff));
+        };
+        return calculate(actual, predicted, weights, errorFunc);
+    }
+
+    // Unweighted Quantile Calculation
+    template <typename Iterator>
+    double quantile(Iterator begin, Iterator end) const {
+        std::vector<typename std::iterator_traits<Iterator>::value_type> temp(begin, end); // Create a temporary mutable copy
+        const std::size_t n = temp.size();
+
+        double pos = alpha_ * (n - 1);
+        std::size_t pos_int = static_cast<std::size_t>(pos);
+        double frac = pos - pos_int;
+
+        // Use nth_element on the mutable temporary copy
+        auto nth = temp.begin() + pos_int;
+        std::nth_element(temp.begin(), nth, temp.end());
+        double lower = *nth;
+
+        // Find the upper element only if necessary
+        double upper = lower;
+        if (pos_int + 1 < n) {
+            upper = *std::min_element(nth + 1, temp.end());
+        }
+
+        return lower + frac * (upper - lower);
+    }
+
+
+    // Weighted Quantile Calculation
+    std::vector<double> quantile(const std::vector<double>& x, const std::vector<double>& weights) const {
+        const std::size_t n = x.size();
+        std::vector<double> quantiles(n);
+
+        // Create a vector of indices for sorting
+        std::vector<std::size_t> sorted_indices(n);
+        std::iota(sorted_indices.begin(), sorted_indices.end(), 0);
+        std::sort(sorted_indices.begin(), sorted_indices.end(),
+                  [&x](std::size_t i1, std::size_t i2) { return x[i1] < x[i2]; });
+
+        // Normalize weights and compute cumulative weights on-the-fly
+        double total_weight = std::accumulate(weights.begin(), weights.end(), 0.0);
+        double cumulative_weight = 0.0;
+        double target_weight = alpha_ * total_weight;
+
+        double lower = 0.0, upper = 0.0;
+        bool lower_set = false;
+
+        for (const std::size_t& idx : sorted_indices) {
+            cumulative_weight += weights[idx];
+
+            if (!lower_set && cumulative_weight >= target_weight) {
+                lower = x[idx];
+                lower_set = true;
+            }
+
+            if (cumulative_weight >= target_weight) {
+                upper = x[idx];
+                break;
+            }
+        }
+
+        // Interpolate quantile value
+        double quantile_value = lower + (upper - lower) * ((target_weight - cumulative_weight) / total_weight);
+        std::fill(quantiles.begin(), quantiles.end(), quantile_value);
+
         return quantiles;
     }
 
-    // Remove NA values if na_rm is true
-    if (na_rm) {
-        double* data_ptr = x.data();
-        double* end_ptr = data_ptr + n;
-        auto valid_end = std::remove_if(data_ptr, end_ptr, [](double val) { return std::isnan(val); });
-        x.resize(std::distance(data_ptr, valid_end));
-    }
-
-    if (x.empty()) {
-        std::fill(quantiles.begin(), quantiles.end(), NA_DOUBLE);
-        return quantiles;
-    }
-
-    // Calculate the quantile index position
-    double pos = alpha * (x.size() - 1);
-    std::size_t pos_int = static_cast<std::size_t>(pos);
-    double frac = pos - pos_int;
-
-    // Use nth_element for partial sorting
-    double* data_ptr = x.data();
-    std::nth_element(data_ptr, data_ptr + pos_int, data_ptr + x.size());
-    double lower = data_ptr[pos_int];
-
-    double upper;
-    if (pos_int + 1 < x.size()) {
-        std::nth_element(data_ptr, data_ptr + pos_int + 1, data_ptr + x.size());
-        upper = data_ptr[pos_int + 1];
-    } else {
-        upper = lower;
-    }
-
-    double quantile_value = lower + frac * (upper - lower);
-
-    double* quant_ptr = quantiles.data();
-    for (std::size_t i = 0; i < n; ++i) {
-        *(quant_ptr++) = quantile_value;
-    }
-
-    return quantiles;
-}
+private:
+    double alpha_;
+};
 
 #endif // REGRESSION_PINBALLLOSS_H

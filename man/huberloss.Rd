@@ -2,32 +2,36 @@
 % Please edit documentation in R/RcppExports.R, R/S3_HuberLoss.R
 \name{huberloss.numeric}
 \alias{huberloss.numeric}
+\alias{weighted.huberloss.numeric}
 \alias{huberloss}
+\alias{weighted.huberloss}
 \title{Compute the \eqn{\text{huber}} \eqn{\text{loss}}}
 \usage{
-\method{huberloss}{numeric}(actual, predicted, delta = 1, w = NULL, na.rm = FALSE, ...)
+\method{huberloss}{numeric}(actual, predicted, delta = 1, ...)
+
+\method{weighted.huberloss}{numeric}(actual, predicted, w, delta = 1, ...)
 
 huberloss(...)
+
+weighted.huberloss(...)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}
 
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
-\item{delta}{A <\link{numeric}>-vector of \link{length} 1. 1 by default. The threshold value for switch between functions (see calculation).}
-
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
-
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
+\item{delta}{A <\link{numeric}>-vector of \link{length} \eqn{1} (default: \eqn{1}). The threshold value for switch between functions (see calculation).}
 
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
 The \code{\link[=huberloss]{huberloss()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Huber_loss}{huber loss} between
-the predicted and observed <\link{numeric}> vectors.If \code{w} is not \link{NULL} the function returns the weighted averages.
+the predicted and observed <\link{numeric}> vectors. The \code{\link[=weighted.huberloss]{weighted.huberloss()}} function computes the weighted Huber Loss.
 }
 \section{Calculation}{
 
@@ -87,7 +91,7 @@ huberloss(
 )
 }
 \seealso{
-Other regression: 
+Other Regression: 
 \code{\link{ccc.numeric}()},
 \code{\link{mae.numeric}()},
 \code{\link{mape.numeric}()},
@@ -97,8 +101,43 @@ Other regression:
 \code{\link{rae.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
-\code{\link{rrmse.numeric}()},
+\code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()}
+
+Other Supervised Learning: 
+\code{\link{ROC.factor}()},
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
+\code{\link{ccc.numeric}()},
+\code{\link{ckappa.factor}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{dor.factor}()},
+\code{\link{fbeta.factor}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
+\code{\link{fpr.factor}()},
+\code{\link{jaccard.factor}()},
+\code{\link{mae.numeric}()},
+\code{\link{mape.numeric}()},
+\code{\link{mcc.factor}()},
+\code{\link{mpe.numeric}()},
+\code{\link{mse.numeric}()},
+\code{\link{nlr.factor}()},
+\code{\link{npv.factor}()},
+\code{\link{pinball.numeric}()},
+\code{\link{plr.factor}()},
+\code{\link{prROC.factor}()},
+\code{\link{precision.factor}()},
+\code{\link{rae.numeric}()},
+\code{\link{recall.factor}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
+\code{\link{rrse.numeric}()},
+\code{\link{rsq.numeric}()},
+\code{\link{smape.numeric}()},
+\code{\link{specificity.factor}()},
+\code{\link{zerooneloss.factor}()}
 }
-\concept{regression}
+\concept{Regression}
+\concept{Supervised Learning}

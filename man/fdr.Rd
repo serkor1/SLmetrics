@@ -2,42 +2,65 @@
 % Please edit documentation in R/RcppExports.R, R/S3_FalseDiscoveryRate.R
 \name{fdr.factor}
 \alias{fdr.factor}
+\alias{weighted.fdr.factor}
 \alias{fdr.cmatrix}
 \alias{fdr}
+\alias{weighted.fdr}
 \title{Compute the \eqn{\text{false}} \eqn{\text{discovery}} \eqn{\text{rate}}}
 \usage{
 \method{fdr}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
+\method{weighted.fdr}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+
 \method{fdr}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
 fdr(...)
+
+weighted.fdr(...)
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{NULL} by default. If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average. Otherwise class wise performance evaluation.}
+\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
+micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
 
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
+\item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
+This argument is only relevant when \code{micro != NULL}.
+When \code{na.rm = TRUE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))}.
+When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))}.}
 
-\item{...}{Arguments passed into other methods.}
+\item{...}{Arguments passed into other methods}
 
-\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
+
+\item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 }
 \value{
-If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vector of \link{length} k
+If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
 
-If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
+If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=fdr]{fdr()}}-function computes the \href{https://en.wikipedia.org/wiki/False_discovery_rate}{false discovery rate} (FDR), the proportion of false positives among the predicted positives, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
-
-When \code{aggregate = TRUE}, the function returns the micro-average FDR across all classes \eqn{k}. By default, it returns the class-wise FDR.
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.fdr]{weighted.fdr()}} function computes the weighted false discovery rate.
 }
-\details{
+\section{Calculation}{
+
+
+The metric is calculated for each class \eqn{k} as follows,
+
+\deqn{
+  \frac{\#FP_k}{\#TP_k+\#FP_k}
+}
+
+Where \eqn{\#TP_k} and \eqn{\#FP_k} is the number of true psotives and false positives, respectively, for each class \eqn{k}.
+}
+
+\section{Creating <\link{factor}>}{
+
+
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
@@ -69,23 +92,6 @@ factor(
 }\if{html}{\out{</div>}}
 
 In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
-}
-\section{Calculation}{
-
-
-The metric is calculated for each class \eqn{k} as follows,
-
-\deqn{
-  \frac{\#FP_k}{\#TP_k+\#FP_k}
-}
-
-Where \eqn{\#TP_k} and \eqn{\#FP_k} is the number of true psotives and false positives, respectively, for each class \eqn{k}.
-
-When \code{aggregate = TRUE} the \code{micro}-average is calculated,
-
-\deqn{
- \frac{\sum_{k=1}^k \#FP_k}{\sum_{k=1}^k \#TP_k + \sum_{k=1}^k \#FP_k}
-}
 }
 
 \examples{
@@ -124,35 +130,47 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
+# 4) evaluate class-wise performance
+# using False Discovery Rate
 
-# 4) evaluate performance
-# 4.1) by class
+# 4.1) unweighted False Discovery Rate
 fdr(
   actual    = actual,
   predicted = predicted
 )
 
-# 4.2) macro-average
-fdr(
+# 4.2) weighted False Discovery Rate
+weighted.fdr(
   actual    = actual,
   predicted = predicted,
-  micro     = FALSE
+  w         = iris$Petal.Length/mean(iris$Petal.Length)
 )
 
-# 4.3) micro-average
-fdr(
-  actual    = actual,
-  predicted = predicted,
-  micro     = TRUE
+# 5) evaluate overall performance
+# using micro-averaged False Discovery Rate
+cat(
+  "Micro-averaged False Discovery Rate", fdr(
+    actual    = actual,
+    predicted = predicted,
+    micro     = TRUE
+  ),
+  "Micro-averaged False Discovery Rate (weighted)", weighted.fdr(
+    actual    = actual,
+    predicted = predicted,
+    w         = iris$Petal.Length/mean(iris$Petal.Length),
+    micro     = TRUE
+  ),
+  sep = "\n"
 )
+
 }
 \seealso{
-Other classification: 
+Other Classification: 
 \code{\link{ROC.factor}()},
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fer.factor}()},
@@ -168,5 +186,40 @@ Other classification:
 \code{\link{recall.factor}()},
 \code{\link{specificity.factor}()},
 \code{\link{zerooneloss.factor}()}
+
+Other Supervised Learning: 
+\code{\link{ROC.factor}()},
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
+\code{\link{ccc.numeric}()},
+\code{\link{ckappa.factor}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{dor.factor}()},
+\code{\link{fbeta.factor}()},
+\code{\link{fer.factor}()},
+\code{\link{fpr.factor}()},
+\code{\link{huberloss.numeric}()},
+\code{\link{jaccard.factor}()},
+\code{\link{mae.numeric}()},
+\code{\link{mape.numeric}()},
+\code{\link{mcc.factor}()},
+\code{\link{mpe.numeric}()},
+\code{\link{mse.numeric}()},
+\code{\link{nlr.factor}()},
+\code{\link{npv.factor}()},
+\code{\link{pinball.numeric}()},
+\code{\link{plr.factor}()},
+\code{\link{prROC.factor}()},
+\code{\link{precision.factor}()},
+\code{\link{rae.numeric}()},
+\code{\link{recall.factor}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
+\code{\link{rrse.numeric}()},
+\code{\link{rsq.numeric}()},
+\code{\link{smape.numeric}()},
+\code{\link{specificity.factor}()},
+\code{\link{zerooneloss.factor}()}
 }
-\concept{classification}
+\concept{Classification}
+\concept{Supervised Learning}

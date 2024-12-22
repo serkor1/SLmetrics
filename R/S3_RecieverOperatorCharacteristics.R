@@ -14,11 +14,11 @@
 #'
 #' @inherit specificity
 #' @param response A <[numeric]>-vector of [length] \eqn{n}. The estimated response probabilities.
-#' @param thresholds An optional <[numeric]>-vector of non-zero [length]. [NULL] by default.
+#' @param thresholds An optional <[numeric]>-vector of non-zero [length] (default: [NULL]).
 #' @param ... Arguments passed into other methods.
 #'
 #'
-#' @example man/examples/scr_ROC.R
+#' @example man/examples/scr_RecieverOperatorCurve.R
 #'
 #' @returns A [data.frame] on the following form,
 #'
@@ -28,8 +28,8 @@
 #' \item{fpr}{<[numeric]> The false positive rate}
 #' \item{tpr}{<[numeric]> The true positve rate}
 #'
-#' @family classification
-#' @family reciever operator characteristics
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @export
 ROC <- function(...) {

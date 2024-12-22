@@ -3,24 +3,30 @@
 %   R/S3_CoefficientOfDetermination.R
 \name{rsq.numeric}
 \alias{rsq.numeric}
+\alias{weighted.rsq.numeric}
 \alias{rsq}
+\alias{weighted.rsq}
 \title{Compute the \eqn{R^2}}
 \usage{
-\method{rsq}{numeric}(actual, predicted, k = 0, na.rm = FALSE, ...)
+\method{rsq}{numeric}(actual, predicted, k = 0, ...)
+
+\method{weighted.rsq}{numeric}(actual, predicted, w, k = 0, ...)
 
 rsq(...)
+
+weighted.rsq(...)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}
 
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
-\item{k}{A <\link{numeric}>-vector of \link{length} 1. 0 by default. If \eqn{k>0}
+\item{k}{A <\link{numeric}>-vector of \link{length} 1 (default: 0). If \eqn{k>0}
 the function returns the adjusted \eqn{R^2}.}
 
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
-
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
@@ -51,36 +57,28 @@ model <- lm(
 
 # 1.1) define actual
 # and predicted values
-# to measure performance
+# to measure in-sample performance
 actual    <- mtcars$mpg
 predicted <- fitted(model)
 
-
-# 2) calculate the metric
-# with delta 0.5
-huberloss(
-  actual = actual,
-  predicted = predicted,
-  delta = 0.5
-)
-
-# 3) caclulate weighted
-# metric using arbitrary weights
-w <- rbeta(
-  n = 1e3,
-  shape1 = 10,
-  shape2 = 2
-)
-
-huberloss(
-  actual = actual,
-  predicted = predicted,
-  delta = 0.5,
-  w     = w
+# 2) calculate performance
+# using R squared adjusted and
+# unadjused for features
+cat(
+  "Rsq", rsq(
+    actual    = actual,
+    predicted = fitted(model)
+  ),
+  "Rsq (Adjusted)", rsq(
+    actual    = actual,
+    predicted = fitted(model),
+    k = ncol(model.matrix(model)) - 1
+  ),
+  sep = "\n"
 )
 }
 \seealso{
-Other regression: 
+Other Regression: 
 \code{\link{ccc.numeric}()},
 \code{\link{huberloss.numeric}()},
 \code{\link{mae.numeric}()},
@@ -91,7 +89,42 @@ Other regression:
 \code{\link{rae.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
-\code{\link{rrmse.numeric}()},
+\code{\link{rrse.numeric}()},
 \code{\link{smape.numeric}()}
+
+Other Supervised Learning: 
+\code{\link{ROC.factor}()},
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
+\code{\link{ccc.numeric}()},
+\code{\link{ckappa.factor}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{dor.factor}()},
+\code{\link{fbeta.factor}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
+\code{\link{fpr.factor}()},
+\code{\link{huberloss.numeric}()},
+\code{\link{jaccard.factor}()},
+\code{\link{mae.numeric}()},
+\code{\link{mape.numeric}()},
+\code{\link{mcc.factor}()},
+\code{\link{mpe.numeric}()},
+\code{\link{mse.numeric}()},
+\code{\link{nlr.factor}()},
+\code{\link{npv.factor}()},
+\code{\link{pinball.numeric}()},
+\code{\link{plr.factor}()},
+\code{\link{prROC.factor}()},
+\code{\link{precision.factor}()},
+\code{\link{rae.numeric}()},
+\code{\link{recall.factor}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
+\code{\link{rrse.numeric}()},
+\code{\link{smape.numeric}()},
+\code{\link{specificity.factor}()},
+\code{\link{zerooneloss.factor}()}
 }
-\concept{regression}
+\concept{Regression}
+\concept{Supervised Learning}

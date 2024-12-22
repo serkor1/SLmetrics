@@ -1,53 +1,55 @@
-#include "src_Helpers.h"
+#ifndef CLASSIFICATION_FALSE_OMISSION_RATE_H
+#define CLASSIFICATION_FALSE_OMISSION_RATE_H
+
+#include "classification_Helpers.h"
 #include <RcppEigen.h>
+#include <cmath>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x)
-{
+/*
+    NOTE:
+        To increase maintainability all functions are passed through
+        the confusion matrix. So there is no need to add an overloaded function
+        for the weighted metrics.
+*/
+class FalseOmissionRateMetric : public classification {
+public:
 
-  // 1) calcuculate
-  // relevent metrics
-  const Eigen::ArrayXd& fn = FN(x).cast<double>().array();
-  const Eigen::ArrayXd& tn = TN(x).cast<double>().array();
+    // Compute FOR with micro or macro aggregation
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm) const override {
+        // 0) Declare variables and size
+        // for efficiency.
+        // NOTE: Micro and macro already wraps and exports as Rcpp
+        Rcpp::NumericVector output(1);
+        Eigen::ArrayXd fn(matrix.rows()), tn(matrix.rows());
 
-  // 2) return value
-  // by class
-  return Rcpp::wrap(
-    fn / (fn + tn)
-  );
+        // Create FN and TN arrays for calculations
+        FN(matrix, fn);
+        TN(matrix, tn);
 
+        return do_micro
+            ? micro(fn, fn + tn, na_rm)
+            : macro(fn, fn + tn, na_rm);
+        
+    }
 
-}
+    // Compute FOR without micro aggregation
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
+        // Declare the output value and FN/TN arrays
+        Eigen::ArrayXd output(matrix.rows());
+        Eigen::ArrayXd fn(matrix.rows()), tn(matrix.rows());
 
+        // Create FN and TN arrays for calculations
+        FN(matrix, fn);
+        TN(matrix, tn);
 
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x, const bool& micro, const bool& na_rm)
-{
+        // Calculate metric
+        output = fn / (fn + tn);
 
-  // 1) calcuculate
-  // relevent metrics
-  const Eigen::ArrayXd& fn = FN(x).cast<double>().array();
-  const Eigen::ArrayXd& tn = TN(x).cast<double>().array();
+        // Return with R-compatible class
+        return Rcpp::wrap(output);
+    }
+};
 
-
-  // 2) return
-  // micro average
-  // and end function
-  if (micro) {
-
-    const double& fn_sum = fn.sum();
-    const double& tn_sum = tn.sum();
-
-    return Rcpp::wrap(
-      (fn_sum + tn_sum == 0) ? NA_REAL : fn_sum / (fn_sum + tn_sum)
-    );
-
-  }
-
-  Eigen::ArrayXd outnut = fn / (fn + tn);
-
-  return Rcpp::wrap(
-    outnut.isNaN().select(0,outnut).sum() / ((na_rm) ? (outnut.isNaN() == false).count() : outnut.size())
-  );
-
-}
+#endif // CLASSIFICATION_FALSE_OMISSION_RATE_H

@@ -1,43 +1,49 @@
-#include "src_Helpers.h"
+#ifndef CLASSIFICATION_FMI_H
+#define CLASSIFICATION_FMI_H
+
+#include "classification_Helpers.h"
 #include <RcppEigen.h>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
 
 /*
- * Calculation of the Fawlks Mallows
- * Index follows that of https://en.wikipedia.org/wiki/Fowlkes%E2%80%93Mallows_index
- * for any specific value k.
- *
- * Using the sqrt(PPV * TPR)-approach directly yields
- * a different result than scikit-learn.Hence this approach
- * is prefferred
- */
-inline __attribute__((always_inline)) double _metric_(const Eigen::MatrixXi& x)
-{
-  // Dimensions and sum of matrix
-  double N = x.sum();
-  int k = x.rows();
+* Calculation of the Fawlks Mallows
+* Index follows that of https://en.wikipedia.org/wiki/Fowlkes%E2%80%93Mallows_index
+* for any specific value k.
+*
+* Using the sqrt(PPV * TPR)-approach directly yields
+* a different result than scikit-learn.Hence this approach
+* is prefferred
+*/
+class FMIMetric : public classification {
+public:
 
-  // Calculate tk, pk, and qk without copying x
-  double tk = x.cast<double>().array().square().sum();
+  Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
 
-  Eigen::VectorXd rowSums = x.cast<double>().rowwise().sum();
-  Eigen::VectorXd colSums = x.cast<double>().colwise().sum();
+    // 0) set sizes
+    // of arrays
+    Eigen::ArrayXd output(1), N(1), pk(1), qk(1), tk(1);
+    Eigen::VectorXd col_sum(matrix.rows()), row_sum(matrix.rows());
 
-  double pk = colSums.squaredNorm();
-  double qk = rowSums.squaredNorm();
+    // 1) calculate values
+    // accordingly
+    N       = matrix.sum();
+    row_sum = matrix.rowwise().sum();
+    col_sum = matrix.colwise().sum();
+    tk      = matrix.cwiseProduct(matrix).sum() - N;
+    pk      = col_sum.squaredNorm() - N;
+    qk      = row_sum.squaredNorm() - N;
 
-  // Adjust tk, pk, and qk by subtracting N
-  tk -= N;
-  pk -= N;
-  qk -= N;
+    // 2) calculate output
+    // value
+    output  = (tk / pk) * (tk / qk);
 
-  // Check for non-positive values to avoid division by zero or negative roots
-  if (tk <= 0 || pk <= 0 || qk <= 0) {
-    return 0.0;
+    return Rcpp::wrap(output.array().sqrt());
+
   }
 
-  // Return the Fowlkes-Mallows Index calculation
-  return std::sqrt(tk * tk / (pk * qk));
-}
+
+};
+
+#endif

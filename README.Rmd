@@ -72,7 +72,7 @@ Below is two simple cases that any {pkg} should be able to handle gracefully; co
 
 ```{r performance-classification, echo = FALSE}
 lattice::xyplot(
-  median ~ sample_size,
+  mean ~ sample_size,
   data = DT[[1]],
   groups = expr,
   type = 'l', 
@@ -82,11 +82,10 @@ lattice::xyplot(
     x = list(log = FALSE)
     ),
   xlab = "Sample Size (N)",
-  ylab = "Median Execution Time (Microseconds)",
+  ylab = "Mean Execution Time (Microseconds)",
   panel = function(...) {
     lattice::panel.grid(...)
     lattice::panel.xyplot(...)
-    
   }
 )
 ```
@@ -95,17 +94,17 @@ lattice::xyplot(
 
 ```{r performance-regression, echo = FALSE}
 lattice::xyplot(
-  median ~ sample_size,
+  mean ~ sample_size,
   data = DT[[2]],
   groups = expr,
-  type = "l",
+  type = 'l',
   scales = list(
     y = list(log = FALSE),
     x = list(log = FALSE)
     ),
   auto.key = list(columns = 2, col = "#848e9c"),
   xlab = "Sample Size (N)",
-  ylab = "Median Execution Time (Microseconds)",
+  ylab = "Mean Execution Time (Microseconds)",
   panel = function(...) {
     lattice::panel.grid(...)
     lattice::panel.xyplot(...)

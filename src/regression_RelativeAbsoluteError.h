@@ -1,128 +1,71 @@
 #ifndef REGRESSION_RELATIVEABSOLUTEERROR_H
 #define REGRESSION_RELATIVEABSOLUTEERROR_H
 
-#include <vector>
+#include "regression_Utils.h"
 #include <cmath>
-#include <cstddef>
-#include <limits>
+#include <vector>
 
-// Unweighted Relative Absolute Error
-inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, bool na_rm = false) {
-    const std::size_t n = actual.size();
-    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
+/**
+ * Relative Absolute Error (RAE) implementation using RegressionBase.
+ */
+class RelativeAbsoluteError : public RegressionBase {
+public:
+    // Weighted RAE
+    double compute(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights) const override {
+        // Calculate weighted mean of actual
+        double mean_actual = calculate_weighted_mean(actual, weights);
 
-    if (n == 0) {
-        return NA_DOUBLE;
+        // Define numerator and denominator functions
+        auto numeratorFunc = [](double a, double p) {
+            return std::abs(a - p);
+        };
+        auto denominatorFunc = [mean_actual](double a, double /*p*/) {
+            return std::abs(a - mean_actual);
+        };
+
+        // Calculate numerator and denominator simultaneously
+        auto [numerator, denominator] = sum(actual, predicted, weights, numeratorFunc, denominatorFunc);
+
+        return numerator / denominator;
     }
 
-    const double* actual_ptr = actual.data();
+    // Unweighted RAE
+    double compute(const std::vector<double>& actual, const std::vector<double>& predicted) const override {
+        // Calculate mean of actual
+        double mean_actual = calculate_mean(actual);
 
-    double mean_actual = 0.0;
-    std::size_t valid_count_mean = 0;
+        // Define numerator and denominator functions
+        auto numeratorFunc = [](double a, double p) {
+            return std::abs(a - p);
+        };
+        auto denominatorFunc = [mean_actual](double a, double /*p*/) {
+            return std::abs(a - mean_actual);
+        };
 
-    for (std::size_t i = 0; i < n; ++i) {
-        double actual_value = *(actual_ptr++);
-        if (!std::isnan(actual_value)) {
-            mean_actual += actual_value;
-            ++valid_count_mean;
+        // Calculate numerator and denominator simultaneously
+        auto [numerator, denominator] = sum(actual, predicted, numeratorFunc, denominatorFunc);
+
+        return numerator / denominator;
+    }
+
+private:
+    static double calculate_mean(const std::vector<double>& values) {
+        double sum = 0.0;
+        for (const auto& v : values) {
+            sum += v;
         }
+        return sum / static_cast<double>(values.size());
     }
 
-    if (valid_count_mean == 0) {
-        return NA_DOUBLE;
-    }
-
-    mean_actual /= static_cast<double>(valid_count_mean);
-
-    actual_ptr = actual.data(); // Reset pointer
-    const double* predicted_ptr = predicted.data();
-
-    double numerator = 0.0;
-    double denominator = 0.0;
-    std::size_t valid_count = 0;
-
-    for (std::size_t i = 0; i < n; ++i) {
-        double actual_value = *(actual_ptr++);
-        double predicted_value = *(predicted_ptr++);
-
-        bool is_valid = !std::isnan(actual_value) && !std::isnan(predicted_value);
-        valid_count += is_valid;
-
-        if (is_valid) {
-            double diff = std::abs(actual_value - predicted_value);
-            numerator += diff;
-
-            double diff_mean = std::abs(actual_value - mean_actual);
-            denominator += diff_mean;
+    static double calculate_weighted_mean(const std::vector<double>& values, const std::vector<double>& weights) {
+        double weighted_sum = 0.0;
+        double weight_sum = 0.0;
+        for (std::size_t i = 0; i < values.size(); ++i) {
+            weighted_sum += values[i] * weights[i];
+            weight_sum += weights[i];
         }
+        return weighted_sum / weight_sum;
     }
+};
 
-    if (!na_rm && valid_count != n) {
-        return NA_DOUBLE;
-    }
-
-    return denominator > 0 ? numerator / denominator : NA_DOUBLE;
-}
-
-// Weighted Relative Absolute Error
-inline __attribute__((always_inline)) double _metric_(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights, bool na_rm = false) {
-    const std::size_t n = actual.size();
-    const double NA_DOUBLE = std::numeric_limits<double>::quiet_NaN();
-
-    if (n == 0) {
-        return NA_DOUBLE;
-    }
-
-    const double* actual_ptr = actual.data();
-    const double* weights_ptr = weights.data();
-
-    double weight_sum = 0.0;
-    double mean_actual = 0.0;
-
-    for (std::size_t i = 0; i < n; ++i) {
-        double actual_value = *(actual_ptr++);
-        double weight = *(weights_ptr++);
-
-        if (!std::isnan(actual_value) && !std::isnan(weight)) {
-            weight_sum += weight;
-            mean_actual += weight * actual_value;
-        }
-    }
-
-    if (weight_sum == 0.0) {
-        return NA_DOUBLE;
-    }
-
-    mean_actual /= weight_sum;
-
-    actual_ptr = actual.data(); // Reset pointer
-    weights_ptr = weights.data();
-    const double* predicted_ptr = predicted.data();
-
-    double numerator = 0.0;
-    double denominator = 0.0;
-
-    for (std::size_t i = 0; i < n; ++i) {
-        double actual_value = *(actual_ptr++);
-        double predicted_value = *(predicted_ptr++);
-        double weight = *(weights_ptr++);
-
-        bool is_valid = !std::isnan(actual_value) && !std::isnan(predicted_value) && !std::isnan(weight);
-
-        if (is_valid) {
-            double diff = std::abs(actual_value - predicted_value);
-            numerator += weight * diff;
-
-            double diff_mean = std::abs(actual_value - mean_actual);
-            denominator += weight * diff_mean;
-        }
-    }
-
-    if (!na_rm && denominator == 0) {
-        return NA_DOUBLE;
-    }
-
-    return denominator > 0 ? numerator / denominator : NA_DOUBLE;
-}
-
-#endif //REGRESSION_RELATIVEABSOLUTEERROR_H
+#endif // REGRESSION_RELATIVEABSOLUTEERROR_H

@@ -2,30 +2,34 @@
 % Please edit documentation in R/RcppExports.R, R/S3_MeanSquaredError.R
 \name{mse.numeric}
 \alias{mse.numeric}
+\alias{weighted.mse.numeric}
 \alias{mse}
+\alias{weighted.mse}
 \title{Compute the \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{error}}}
 \usage{
-\method{mse}{numeric}(actual, predicted, w = NULL, na.rm = FALSE, ...)
+\method{mse}{numeric}(actual, predicted, ...)
+
+\method{weighted.mse}{numeric}(actual, predicted, w, ...)
 
 mse(...)
+
+weighted.mse(...)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}
 
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
-
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
-
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-The \code{\link[=mse]{mse()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Mean_squared_error}{mean squared error} between
-the observed and predicted <\link{numeric}> vectors. If \code{w} is not \link{NULL}, the function returns the weighted mean squared error.
+The \code{\link[=mse]{mse()}}-function computes the \href{https://en.wikipedia.org/wiki/Mean_squared_error}{mean squared error} between
+the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.mse]{weighted.mse()}} function computes the weighted mean squared error.
 }
 \section{Calculation}{
 
@@ -36,7 +40,7 @@ The metric is calculated as,
   \frac{1}{n} \sum_i^n (y_i - \upsilon_i)^2
 }
 
-Where \eqn{y_i} and \eqn{\upsilon_i} are the \code{actual} and \code{predicted} values respectively. If \eqn{\text{w}} is not \link{NULL}, the weighted version is calculated.
+Where \eqn{y_i} and \eqn{\upsilon_i} are the \code{actual} and \code{predicted} values respectively.
 }
 
 \examples{
@@ -53,31 +57,23 @@ model <- lm(
 actual    <- mtcars$mpg
 predicted <- fitted(model)
 
-
-# 2) calculate
-# the metric
-mse(
-  actual     = actual,
-  predicted  = predicted
-)
-
-# 3) calculate
-# the weighted metric
-# using arbtrary weights
-w <- rbeta(
-  n = 1e3,
-  shape1 = 10,
-  shape2 = 2
-)
-
-mse(
-  actual     = actual,
-  predicted  = predicted,
-  w          = w
+# 2) evaluate in-sample model
+# performance using Mean Squared Error (MSE)
+cat(
+  "Mean Squared Error", mse(
+    actual    = actual,
+    predicted = predicted,
+  ),
+  "Mean Squared Error (weighted)", weighted.mse(
+    actual    = actual,
+    predicted = predicted,
+    w         = mtcars$mpg/mean(mtcars$mpg)
+  ),
+  sep = "\n"
 )
 }
 \seealso{
-Other regression: 
+Other Regression: 
 \code{\link{ccc.numeric}()},
 \code{\link{huberloss.numeric}()},
 \code{\link{mae.numeric}()},
@@ -87,8 +83,43 @@ Other regression:
 \code{\link{rae.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
-\code{\link{rrmse.numeric}()},
+\code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()}
+
+Other Supervised Learning: 
+\code{\link{ROC.factor}()},
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
+\code{\link{ccc.numeric}()},
+\code{\link{ckappa.factor}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{dor.factor}()},
+\code{\link{fbeta.factor}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
+\code{\link{fpr.factor}()},
+\code{\link{huberloss.numeric}()},
+\code{\link{jaccard.factor}()},
+\code{\link{mae.numeric}()},
+\code{\link{mape.numeric}()},
+\code{\link{mcc.factor}()},
+\code{\link{mpe.numeric}()},
+\code{\link{nlr.factor}()},
+\code{\link{npv.factor}()},
+\code{\link{pinball.numeric}()},
+\code{\link{plr.factor}()},
+\code{\link{prROC.factor}()},
+\code{\link{precision.factor}()},
+\code{\link{rae.numeric}()},
+\code{\link{recall.factor}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
+\code{\link{rrse.numeric}()},
+\code{\link{rsq.numeric}()},
+\code{\link{smape.numeric}()},
+\code{\link{specificity.factor}()},
+\code{\link{zerooneloss.factor}()}
 }
-\concept{regression}
+\concept{Regression}
+\concept{Supervised Learning}

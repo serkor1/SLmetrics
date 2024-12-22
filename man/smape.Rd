@@ -3,29 +3,34 @@
 %   R/S3_SymmetricMeanAbsolutePercentageError.R
 \name{smape.numeric}
 \alias{smape.numeric}
+\alias{weighted.smape.numeric}
 \alias{smape}
+\alias{weighted.smape}
 \title{Compute the \eqn{\text{symmetric}} \eqn{\text{mean}} \eqn{\text{absolute}} \eqn{\text{percentage}} \eqn{\text{error}}}
 \usage{
-\method{smape}{numeric}(actual, predicted, w = NULL, na.rm = FALSE, ...)
+\method{smape}{numeric}(actual, predicted, ...)
+
+\method{weighted.smape}{numeric}(actual, predicted, w, ...)
 
 smape(...)
+
+weighted.smape(...)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}
 
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
-
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
-
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-The \code{\link[=smape]{smape()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error}{symmetric mean absolute percentage error}.
+The \code{\link[=smape]{smape()}}-function computes the  \href{https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error}{symmetric mean absolute percentage error} between
+the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.smape]{weighted.smape()}} function computes the weighted symmetric mean absolute percentage error.
 }
 \section{Calculation}{
 
@@ -36,8 +41,7 @@ The metric is calculated as follows,
   \sum_i^n \frac{1}{n} \frac{|y_i - \upsilon_i|}{\frac{|y_i|+|\upsilon_i|}{2}}
 }
 
-where \eqn{y_i} and \eqn{\upsilon_i} is the \code{actual} and \code{predicted} values respectively. If \code{w} is not \link{NULL}, the metric is calculated
-using weights.
+where \eqn{y_i} and \eqn{\upsilon_i} is the \code{actual} and \code{predicted} values respectively.
 }
 
 \examples{
@@ -54,29 +58,23 @@ model <- lm(
 actual    <- mtcars$mpg
 predicted <- fitted(model)
 
-
-# 2) calculate the metric
-smape(
-  actual     = actual,
-  predicted  = predicted
-)
-
-# 3) calculate
-# the weighted metric
-w <- rbeta(
-  n = 1e3,
-  shape1 = 10,
-  shape2 = 2
-)
-
-smape(
-  actual     = actual,
-  predicted  = predicted,
-  w          = w
+# 2) evaluate in-sample model
+# performance using Symmetric Mean Absolute Percentage Error (MAPE)
+cat(
+  "Symmetric Mean Absolute Percentage Error", mape(
+    actual    = actual,
+    predicted = predicted,
+  ),
+  "Symmetric Mean Absolute Percentage Error (weighted)", weighted.mape(
+    actual    = actual,
+    predicted = predicted,
+    w         = mtcars$mpg/mean(mtcars$mpg)
+  ),
+  sep = "\n"
 )
 }
 \seealso{
-Other regression: 
+Other Regression: 
 \code{\link{ccc.numeric}()},
 \code{\link{huberloss.numeric}()},
 \code{\link{mae.numeric}()},
@@ -87,7 +85,42 @@ Other regression:
 \code{\link{rae.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
-\code{\link{rrmse.numeric}()},
+\code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()}
+
+Other Supervised Learning: 
+\code{\link{ROC.factor}()},
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
+\code{\link{ccc.numeric}()},
+\code{\link{ckappa.factor}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{dor.factor}()},
+\code{\link{fbeta.factor}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
+\code{\link{fpr.factor}()},
+\code{\link{huberloss.numeric}()},
+\code{\link{jaccard.factor}()},
+\code{\link{mae.numeric}()},
+\code{\link{mape.numeric}()},
+\code{\link{mcc.factor}()},
+\code{\link{mpe.numeric}()},
+\code{\link{mse.numeric}()},
+\code{\link{nlr.factor}()},
+\code{\link{npv.factor}()},
+\code{\link{pinball.numeric}()},
+\code{\link{plr.factor}()},
+\code{\link{prROC.factor}()},
+\code{\link{precision.factor}()},
+\code{\link{rae.numeric}()},
+\code{\link{recall.factor}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
+\code{\link{rrse.numeric}()},
+\code{\link{rsq.numeric}()},
+\code{\link{specificity.factor}()},
+\code{\link{zerooneloss.factor}()}
 }
-\concept{regression}
+\concept{Regression}
+\concept{Supervised Learning}

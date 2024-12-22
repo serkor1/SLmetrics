@@ -2,35 +2,55 @@
 % Please edit documentation in R/RcppExports.R, R/S3_ZeroOneLoss.R
 \name{zerooneloss.factor}
 \alias{zerooneloss.factor}
+\alias{weighted.zerooneloss.factor}
 \alias{zerooneloss.cmatrix}
 \alias{zerooneloss}
+\alias{weighted.zerooneloss}
 \title{Compute the \eqn{\text{Zero}}-\eqn{\text{One}} \eqn{\text{Loss}}}
 \usage{
-\method{zerooneloss}{factor}(actual, predicted, na.rm = FALSE, ...)
+\method{zerooneloss}{factor}(actual, predicted, ...)
+
+\method{weighted.zerooneloss}{factor}(actual, predicted, w, ...)
 
 \method{zerooneloss}{cmatrix}(x, ...)
 
 zerooneloss(...)
+
+weighted.zerooneloss(...)
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
+\item{...}{Arguments passed into other methods}
 
-\item{...}{Arguments passed into other methods.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default}
 
-\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
+\item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}}
 }
 \value{
 A <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=zerooneloss]{zerooneloss()}}-function computes the \href{https://en.wikipedia.org/wiki/Loss_functions_for_classification}{Zero-One Loss}, a classification loss function that calculates the proportion of misclassified instances between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+The \code{\link[=zerooneloss]{zerooneloss()}}-function computes the \href{https://en.wikipedia.org/wiki/Loss_functions_for_classification}{zero-one Loss}, a classification loss function that calculates the proportion of misclassified instances between
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.zerooneloss]{weighted.zerooneloss()}} function computes the weighted zero-one loss.
 }
-\details{
+\section{Calculation}{
+
+
+The metric is calculated as follows,
+
+\deqn{
+  \frac{\#FP + \#FN}{\#TP + \#TN + \#FP + \#FN}
+}
+
+Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} represent the true positives, true negatives, false positives, and false negatives, respectively.
+}
+
+\section{Creating <\link{factor}>}{
+
+
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
@@ -62,19 +82,6 @@ factor(
 }\if{html}{\out{</div>}}
 
 In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
-}
-\section{Calculation}{
-
-
-Zero-One Loss is a global metric that measures the proportion of incorrect predictions made by the model. It is calculated as follows,
-
-\deqn{
-  \frac{\#FP + \#FN}{\#TP + \#TN + \#FP + \#FN}
-}
-
-Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} represent the true positives, true negatives, false positives, and false negatives, respectively.
-
-Zero-One Loss provides an overall measure of the model's prediction errors across all classes.
 }
 
 \examples{
@@ -113,19 +120,28 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) Zero-One Loss
-zerooneloss(
-  actual    = actual,
-  predicted = predicted
+# 4) evaluate model
+# performance using Zero-One Loss
+cat(
+  "Zero-One Loss", zerooneloss(
+    actual    = actual,
+    predicted = predicted
+  ),
+  "Zero-One Loss (weigthed)", weighted.zerooneloss(
+    actual    = actual,
+    predicted = predicted,
+    w         = iris$Petal.Length/mean(iris$Petal.Length)
+  ),
+  sep = "\n"
 )
 }
 \seealso{
-Other classification: 
+Other Classification: 
 \code{\link{ROC.factor}()},
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},
@@ -141,5 +157,40 @@ Other classification:
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
 \code{\link{specificity.factor}()}
+
+Other Supervised Learning: 
+\code{\link{ROC.factor}()},
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
+\code{\link{ccc.numeric}()},
+\code{\link{ckappa.factor}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{dor.factor}()},
+\code{\link{fbeta.factor}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
+\code{\link{fpr.factor}()},
+\code{\link{huberloss.numeric}()},
+\code{\link{jaccard.factor}()},
+\code{\link{mae.numeric}()},
+\code{\link{mape.numeric}()},
+\code{\link{mcc.factor}()},
+\code{\link{mpe.numeric}()},
+\code{\link{mse.numeric}()},
+\code{\link{nlr.factor}()},
+\code{\link{npv.factor}()},
+\code{\link{pinball.numeric}()},
+\code{\link{plr.factor}()},
+\code{\link{prROC.factor}()},
+\code{\link{precision.factor}()},
+\code{\link{rae.numeric}()},
+\code{\link{recall.factor}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
+\code{\link{rrse.numeric}()},
+\code{\link{rsq.numeric}()},
+\code{\link{smape.numeric}()},
+\code{\link{specificity.factor}()}
 }
-\concept{classification}
+\concept{Classification}
+\concept{Supervised Learning}

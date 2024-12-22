@@ -1,60 +1,43 @@
-#include "src_Helpers.h"
+#ifndef CLASSIFICATION_JACCARD_H
+#define CLASSIFICATION_JACCARD_H
+
+#include "classification_Helpers.h"
 #include <RcppEigen.h>
 #include <cmath>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
+class JaccardIndexMetric : public classification {
+public:
 
-/*
- * Classwise metric
- */
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x)
-{
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm) const override {
+        Eigen::ArrayXd output(1);
+        Eigen::ArrayXd tp(matrix.rows()), fp(matrix.rows()), fn(matrix.rows());
 
-  /*
-   * Extract
-   */
-  const Eigen::ArrayXd& tp = TP(x).cast<double>().array();
-  const Eigen::ArrayXd& fp = FP(x).cast<double>().array();
-  const Eigen::ArrayXd& fn = FN(x).cast<double>().array();
-
-  return Rcpp::wrap(
-    tp / (tp + fp + fn)
-  );
-
-}
+        TP(matrix, tp);
+        FP(matrix, fp);
+        FN(matrix, fn);
 
 
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x, const bool& micro, const bool& na_rm)
-{
+        // 2) retun with 
+        // ternary expression
+        return do_micro
+            ? micro(tp, (tp + fp + fn), na_rm)
+            : macro(tp, (tp + fp + fn), na_rm);
 
-  /*
-   * Extract
-   */
-  const Eigen::ArrayXd& tp = TP(x).cast<double>().array();
-  const Eigen::ArrayXd& fp = FP(x).cast<double>().array();
-  const Eigen::ArrayXd& fn = FN(x).cast<double>().array();
+    }
 
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
+        Eigen::ArrayXd output(matrix.rows());
+        Eigen::ArrayXd tp(matrix.rows()), fp(matrix.rows()), fn(matrix.rows());
 
-  if (micro) {
+        TP(matrix, tp);
+        FP(matrix, fp);
+        FN(matrix, fn);
 
+        output = tp / (tp + fp + fn);
+        return Rcpp::wrap(output);
+    }
+};
 
-    const double& tp_sum = tp.sum();
-    const double& fp_sum = fp.sum();
-    const double& fn_sum = fn.sum();
-
-
-    return Rcpp::wrap(
-      tp_sum / (tp_sum + fp_sum + fn_sum)
-    );
-
-  }
-
-
-  const Eigen::ArrayXd& output = tp / (tp + fp + fn);
-
-  return Rcpp::wrap(output.isNaN().select(0,output).sum() / ((na_rm) ? (output.isNaN() == false).count() : output.size()));
-
-
-
-}
+#endif // CLASSIFICATION_JACCARD_H

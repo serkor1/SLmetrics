@@ -11,16 +11,19 @@
 ROC(...)
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{response}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated response probabilities.}
 
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{NULL} by default. If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average. Otherwise class wise performance evaluation.}
+\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
+micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
 
-\item{thresholds}{An optional <\link{numeric}>-vector of non-zero \link{length}. \link{NULL} by default.}
+\item{thresholds}{An optional <\link{numeric}>-vector of non-zero \link{length} (default: \link{NULL}).}
 
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
+\item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
+This argument is only relevant when \code{micro != NULL}.
+When \code{na.rm = TRUE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))}.
+When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))}.}
 
 \item{...}{Arguments passed into other methods.}
 }
@@ -37,7 +40,9 @@ A \link{data.frame} on the following form,
 The \code{\link[=ROC]{ROC()}}-function computes the \code{\link[=tpr]{tpr()}} and \code{\link[=fpr]{fpr()}} at thresholds provided by the \eqn{response}- or \eqn{thresholds}-vector. The function
 constructs a \code{\link[=data.frame]{data.frame()}} grouped by \eqn{k}-classes where each class is treated as a binary classification problem.
 }
-\details{
+\section{Creating <\link{factor}>}{
+
+
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
@@ -70,7 +75,9 @@ factor(
 
 In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 }
+
 \section{Calculation}{
+
 
 The metric is calculated for each class \eqn{k} as follows,
 
@@ -79,12 +86,6 @@ The metric is calculated for each class \eqn{k} as follows,
 }
 
 Where \eqn{\#TN_k} and \eqn{\#FP_k} is the number of true negatives and false positives, respectively, for each class \eqn{k}.
-
-When \code{aggregate = TRUE} the \code{micro}-average is calculated,
-
-\deqn{
-  \frac{\sum_{k=1}^k \#TN_k}{\sum_{k=1}^k \#TN_k + \sum_{k=1}^k \#FP_k}
-}
 }
 
 \examples{
@@ -143,11 +144,11 @@ roc <- ROC(
 plot(roc)
 }
 \seealso{
-Other classification: 
+Other Classification: 
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},
@@ -165,8 +166,39 @@ Other classification:
 \code{\link{specificity.factor}()},
 \code{\link{zerooneloss.factor}()}
 
-Other reciever operator characteristics: 
-\code{\link{prROC.factor}()}
+Other Supervised Learning: 
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
+\code{\link{ccc.numeric}()},
+\code{\link{ckappa.factor}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{dor.factor}()},
+\code{\link{fbeta.factor}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
+\code{\link{fpr.factor}()},
+\code{\link{huberloss.numeric}()},
+\code{\link{jaccard.factor}()},
+\code{\link{mae.numeric}()},
+\code{\link{mape.numeric}()},
+\code{\link{mcc.factor}()},
+\code{\link{mpe.numeric}()},
+\code{\link{mse.numeric}()},
+\code{\link{nlr.factor}()},
+\code{\link{npv.factor}()},
+\code{\link{pinball.numeric}()},
+\code{\link{plr.factor}()},
+\code{\link{prROC.factor}()},
+\code{\link{precision.factor}()},
+\code{\link{rae.numeric}()},
+\code{\link{recall.factor}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
+\code{\link{rrse.numeric}()},
+\code{\link{rsq.numeric}()},
+\code{\link{smape.numeric}()},
+\code{\link{specificity.factor}()},
+\code{\link{zerooneloss.factor}()}
 }
-\concept{classification}
-\concept{reciever operator characteristics}
+\concept{Classification}
+\concept{Supervised Learning}

@@ -7,14 +7,12 @@
 #' Compute the \eqn{\text{false}} \eqn{\text{omission}} \eqn{\text{rate}}
 #'
 #' @description
+#' 
 #' The [fer()]-function computes the [false omission rate](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate) (FOR), the proportion of false negatives among the predicted negatives, between
-#' two vectors of predicted and observed [factor()] values.
+#' two vectors of predicted and observed [factor()] values.  The [weighted.fer()] function computes the weighted false omission rate.
 #'
-#' When `aggregate = TRUE`, the function returns the micro-average FOR across all classes \eqn{k}. By default, it returns the class-wise FOR.
-#'
-#' @example man/examples/scr_for.R
-#'
-#'
+#' @example man/examples/scr_FalseOmissionRate.R
+#' 
 #' @inherit specificity
 #'
 #' @section Calculation:
@@ -27,17 +25,22 @@
 #'
 #' Where \eqn{\#FN_k} and \eqn{\#TN_k} are the number of false negatives and true negatives, respectively, for each class \eqn{k}.
 #'
-#' When `aggregate = TRUE`, the `micro`-average is calculated,
-#'
-#' \deqn{
-#'   \frac{\sum_{k=1}^k \#FN_k}{\sum_{k=1}^k \#FN_k + \sum_{k=1}^k \#TN_k}
-#' }
-#'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
+#' 
 #' @export
 fer <- function(...) {
   UseMethod(
     generic = "fer",
+    object  = ..1
+  )
+}
+
+#' @rdname fer
+#' @export
+weighted.fer <- function(...) {
+  UseMethod(
+    generic = "weighted.fer",
     object  = ..1
   )
 }

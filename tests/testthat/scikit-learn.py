@@ -9,12 +9,13 @@ import numpy as np
 
 # classification 
 # functions
-def py_jaccard(actual, predicted, average = None):
+def py_jaccard(actual, predicted, average = None, w = None):
     return metrics.jaccard_score(
       y_true = actual, 
       y_pred = predicted, 
       average = average,
-      zero_division = 0.0
+      zero_division = 0.0,
+      sample_weight = w
     )
 
 def py_fmi(actual, predicted, average = None):
@@ -23,104 +24,101 @@ def py_fmi(actual, predicted, average = None):
       labels_pred = predicted
     )
 
-def py_ckappa(actual, predicted, penalty = "linear", average = None):
+def py_ckappa(actual, predicted, penalty = None, average = None, w = None):
     return metrics.cohen_kappa_score(
       y1 = actual,
       y2 = predicted,
       weights = penalty,
-      sample_weight = None
+      sample_weight = w
     )
 
-def py_mcc(actual, predicted, average = None):
+def py_mcc(actual, predicted, average = None, w = None):
     return metrics.matthews_corrcoef(
       y_true = actual,
-      y_pred = predicted
+      y_pred = predicted,
+      sample_weight = w
     )
 
-def py_fbeta(actual, predicted, beta = 1, average = None):
+def py_fbeta(actual, predicted, beta = 1, average = None, w = None):
     return metrics.fbeta_score(
       y_true  = actual,
       y_pred  = predicted,
       beta    = beta,
       average = average,
-      zero_division = np.nan
+      zero_division = np.nan,
+      sample_weight = w
     )
 
-def py_likelihood(actual, predicted):
+def py_likelihood(actual, predicted, w = None, labels = None):
     return metrics.class_likelihood_ratios(
       y_true = actual,
-      y_pred = predicted
+      y_pred = predicted,
+      sample_weight = w,
+      labels = labels
     )
     
-def py_recall(actual, predicted, average = None):
-    return metrics.recall_score(
-      y_true  = actual,
-      y_pred  = predicted,
-      average = average,
-      zero_division = np.nan
-    )
-    
-def py_zerooneloss(actual, predicted, average = None):
+def py_zerooneloss(actual, predicted, average = None, w = None):
     return metrics.zero_one_loss(
       y_true  = actual,
-      y_pred  = predicted
+      y_pred  = predicted,
+      sample_weight = w
     )
 
-def py_precision(actual, predicted, average = None):
+def py_precision(actual, predicted, average = None, w = None):
     return metrics.precision_score(
       y_true  = actual,
       y_pred  = predicted,
       average = average,
-      zero_division = np.nan
+      zero_division = np.nan,
+      sample_weight = w
     )
 
-def py_accuracy(actual, predicted, average = None):
+def py_accuracy(actual, predicted, average = None, w = None):
     return metrics.accuracy_score(
       y_true = actual,
-      y_pred = predicted
+      y_pred = predicted,
+      sample_weight = w
     )
     
-def py_baccuracy(actual, predicted, adjust = False, average = None):
+def py_baccuracy(actual, predicted, adjust = False, average = None, w = None):
     return metrics.balanced_accuracy_score(
       y_true   = actual,
       y_pred   = predicted,
-      adjusted = adjust 
+      adjusted = adjust,
+      sample_weight = w
     )
     
-def py_cmatrix(actual, predicted):
+def py_cmatrix(actual, predicted, w = None):
     return metrics.confusion_matrix(
       y_true = actual,
-      y_pred = predicted
+      y_pred = predicted,
+      sample_weight = w
     )
     
-def py_entropy(actual, response, normalize = True):
+def py_entropy(actual, response, normalize = True, w = None):
     return metrics.log_loss(
       y_true    = actual,
       y_pred    = response,
-      normalize = normalize
+      normalize = normalize,
+      sample_weight = w
     )
 
-def py_specificity(actual, response, average = None):
-    return specificity_score(
-      y_true    = actual,
-      y_pred    = response,
-      average   = average
-    )
-
-def py_roc(actual, response, pos_label = 1):
+def py_roc(actual, response, pos_label = 1, w = None):
     return metrics.roc_curve(
       actual,
       response,
       drop_intermediate = False,
-      pos_label = pos_label
+      pos_label = pos_label,
+      sample_weight = w
       
     )
-def py_prROC(actual, response, pos_label = 1):
+def py_prROC(actual, response, pos_label = 1, w = None):
   return metrics.precision_recall_curve(
     y_true    = actual,
     y_score   = response,
     drop_intermediate = False,
-    pos_label = pos_label
+    pos_label = pos_label,
+    sample_weight = w
   )
 
 

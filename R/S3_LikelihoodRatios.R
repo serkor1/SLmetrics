@@ -9,12 +9,9 @@
 #'
 #' @description
 #' The [nlr()]-function computes the [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing), also known as the likelihood ratio for negative results, between
-#' two vectors of predicted and observed [factor()] values.
+#' two vectors of predicted and observed [factor()] values. The [weighted.nlr()] function computes the weighted negative likelihood ratio.
 #'
-#' When `aggregate = TRUE`, the function returns the micro-average NLR across all classes \eqn{k}.
-#' By default, it returns the class-wise NLR.
-#'
-#' @example man/examples/scr_nlr.R
+#' @example man/examples/scr_NegativeLikelihoodRatio.R
 #'
 #' @inherit specificity
 #'
@@ -27,18 +24,13 @@
 #' }
 #'
 #' Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
-#'
-#' When `aggregate = TRUE`, the `micro`-average is calculated,
-#'
-#' \deqn{
-#'   \frac{\sum_{k=1}^k (1 - \text{Sensitivity}_k)}{\sum_{k=1}^k \text{Specificity}_k}
-#' }
-#'
+#' 
 #' @seealso
 #'
 #' The [plr()]-function for the Positive Likehood Ratio (LR+)
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @export
 nlr <- function(...) {
@@ -48,16 +40,23 @@ nlr <- function(...) {
   )
 }
 
+#' @rdname nlr
+#' @export
+weighted.nlr <- function(...) {
+  UseMethod(
+    generic = "weighted.nlr",
+    object  = ..1
+  )
+}
+
 #' Compute the \eqn{\text{positive}} \eqn{\text{likelihood}} \eqn{\text{ratio}}
 #'
 #' @description
 #' The [plr()]-function computes the [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing), also known as the likelihood ratio for positive results, between
-#' two vectors of predicted and observed [factor()] values.
+#' two vectors of predicted and observed [factor()] values.  The [weighted.plr()] function computes the weighted positive likelihood ratio.
+#
 #'
-#' When `aggregate = TRUE`, the function returns the micro-average PLR across all classes \eqn{k}.
-#' By default, it returns the class-wise PLR.
-#'
-#' @example man/examples/scr_plr.R
+#' @example man/examples/scr_PositiveLikelihoodRatio.R
 #'
 #' @inherit specificity
 #'
@@ -81,7 +80,8 @@ nlr <- function(...) {
 #'
 #' The [nlr()]-function for the Negative Likehood Ratio (LR-)
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #' @export
 plr <- function(...) {
   UseMethod(
@@ -90,15 +90,24 @@ plr <- function(...) {
   )
 }
 
+#' @rdname plr
+#' @export
+weighted.plr <- function(...) {
+  UseMethod(
+    generic = "weighted.plr",
+    object  = ..1
+  )
+}
+
 #' Compute the \eqn{\text{diagnostic}} \eqn{\text{odds}} \eqn{\text{ratio}}
 #'
 #' @description
 #' The [dor()]-function computes the [Diagnostic Odds Ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) (DOR), a single indicator of test performance, between
-#' two vectors of predicted and observed [factor()] values.
+#' two vectors of predicted and observed [factor()] values. The [weighted.dor()] function computes the weighted diagnostic odds ratio.
 #'
 #' When `aggregate = TRUE`, the function returns the micro-average DOR across all classes \eqn{k}. By default, it returns the class-wise DOR.
 #'
-#' @example man/examples/scr_diagnosticodssratio.R
+#' @example man/examples/scr_DiagnosticOddsRatio.R
 #'
 #' @inherit specificity
 #'
@@ -120,7 +129,8 @@ plr <- function(...) {
 #'
 #' Where \eqn{\overline{\text{PLR}}} and \eqn{\overline{\text{NLR}}} is the micro-averaged is the positive and negative likelihood ratio, respectively.
 #'
-#' @family classification
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @export
 dor <- function(...) {
@@ -129,5 +139,15 @@ dor <- function(...) {
     object  = ..1
   )
 }
+
+#' @rdname dor
+#' @export
+weighted.dor <- function(...) {
+  UseMethod(
+    generic = "weighted.dor",
+    object  = ..1
+  )
+}
+
 
 # script end;

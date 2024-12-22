@@ -1,137 +1,63 @@
-#include "src_Helpers.h"
+#ifndef CLASSIFICATION_RECALL_H
+#define CLASSIFICATION_RECALL_H
+
+#include "classification_Utils.h" 
+#include "classification_Helpers.h"
 #include <RcppEigen.h>
 #include <cmath>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-/* classification_Recall.h
- *
- * This header file includes programs
- * to calculate the metrics found in classification_recall.cpp
- *
- * There are currently two methods:
- *
- * 1. Matrix: with and without aggregation
- * 2. Vectors: with and without aggregation
- *
- */
+/*
+    NOTE:
+        To increase maintainability all functions are passed through
+        the confusion matrix. So there is no need to add a overloaded function
+        for the weighted metrics.
+*/
+class RecallMetric : public classification {
+public:
 
-// Matrix based methods
+    // Compute recall with micro or macro aggregation
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm) const override {
+        
+        // 0) Declare variables and size
+        // for efficiency.
+        // NOTE: Micro and macro already wraps and exports as Rcpp
+        Rcpp::NumericVector output(1);
+        Eigen::ArrayXd tp(matrix.rows()), fn(matrix.rows());
 
-// Metric:
-//
-// input: matrix, and Nullable bool for micro
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x)
-{
+        // 1) create TP and FP arrays
+        // for calculations
+        TP(matrix, tp);
+        FN(matrix, fn);
 
-  /*
-   * Calculate the metric based on
-   * the confusion matrix.
-   *
-   * NOTE: The function is very fragile in how
-   * you define the vectors.
-   */
+        return do_micro
+            ?  micro(tp, tp + fn, na_rm)
+            :  macro(tp, tp + fn, na_rm);
 
-  // 0) calculate TP and FN
-  //
-  // was vectorXd
-  Eigen::VectorXd tp = TP(x).cast<double>().array();
-  Eigen::VectorXd fn = FN(x).cast<double>().array();
+    }
 
+    // Compute recall without micro aggregation
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
+        
+        // 0) declare the
+        // output value and 
+        // TP/FP
+        Eigen::ArrayXd output(matrix.rows());
+        Eigen::ArrayXd tp(matrix.rows()), fn(matrix.rows());
 
-  // Default behavior: element-wise recall calculation
-  Eigen::ArrayXd output = tp.array() / (tp.array() + fn.array());
+        // 1) create TP and FP arrays
+        // for calculations
+        TP(matrix, tp);
+        FN(matrix, fn); 
 
-  // Return the default recall output
-  return Rcpp::wrap(output);
-}
+        // 2) calculate metric
+        output = tp / (tp + fn);
 
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x, const bool& micro, const bool& na_rm)
-{
+        // 3) rerturn with 
+        // wrap (R compatible classes)   
+        return Rcpp::wrap(output);
+    }
+};
 
-  /*
-   * Calculate the metric based on
-   * the confusion matrix.
-   *
-   * NOTE: The function is very fragile in how
-   * you define the vectors.
-   */
-
-  // 0) calculate TP and FN
-  //
-  // was vectorXd
-  Eigen::ArrayXd tp = TP(x).cast<double>().array();
-  Eigen::ArrayXd fn = FN(x).cast<double>().array();
-
-  if (micro) {
-
-    // Micro-average calculation
-    return Rcpp::wrap((tp.sum() + fn.sum() == 0) ? R_NaReal : tp.sum() / (tp.sum() + fn.sum()));
-
-
-  }
-
-  Eigen::ArrayXd output = tp/ (tp + fn);
-  return Rcpp::wrap(output.array().isNaN().select(0,output).sum() /  ((na_rm) ? (output.isNaN() == false).count() : output.size()));
-
-
-}
-
-
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const IntegerVector& actual, const IntegerVector& predicted) {
-
-  const Eigen::MatrixXi& x = confmat(actual, predicted);
-
-  /*
-   * Calculate the metric based on
-   * the confusion matrix.
-   *
-   * NOTE: The function is very fragile in how
-   * you define the vectors.
-   */
-
-  // 0) calculate TP and FN
-  //
-  // was vectorXd
-  Eigen::VectorXd tp = TP(x).cast<double>().array();
-  Eigen::VectorXd fn = FN(x).cast<double>().array();
-
-
-  // Default behavior: element-wise recall calculation
-  Eigen::ArrayXd output = tp.array() / (tp.array() + fn.array());
-
-  // Return the default recall output
-  return Rcpp::wrap(output);
-
-}
-
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const IntegerVector& actual, const IntegerVector& predicted, const bool& micro, const bool& na_rm) {
-
-  const Eigen::MatrixXi& x = confmat(actual, predicted);
-
-  /*
-   * Calculate the metric based on
-   * the confusion matrix.
-   *
-   * NOTE: The function is very fragile in how
-   * you define the vectors.
-   */
-
-  // 0) calculate TP and FN
-  //
-  // was vectorXd
-  Eigen::ArrayXd tp = TP(x).cast<double>().array();
-  Eigen::ArrayXd fn = FN(x).cast<double>().array();
-
-  // Check if the micro argument is not null and handle accordingly
-  if (micro) {
-
-    return Rcpp::wrap((tp.sum() + fn.sum() == 0) ? R_NaReal : tp.sum() / (tp.sum() + fn.sum()));
-
-
-  }
-
-  Eigen::ArrayXd output = tp / (tp + fn);
-  return Rcpp::wrap(output.isNaN().select(0,output).sum() /   ((na_rm) ? (output.isNaN() == false).count() : output.size()));
-
-}
+#endif // CLASSIFICATION_RECALL_H

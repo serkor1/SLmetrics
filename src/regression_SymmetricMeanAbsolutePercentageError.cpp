@@ -1,20 +1,23 @@
 #include <Rcpp.h>
-#include <cmath>
 #include "regression_SymmetricMeanAbsolutePercentageError.h"
+using namespace Rcpp;
 
 //' @rdname smape
 //' @method smape numeric
 //' @export
 // [[Rcpp::export(smape.numeric)]]
-double smape(const std::vector<double>& actual, const std::vector<double>& predicted,  Rcpp::Nullable<std::vector<double>> w = R_NilValue, bool na_rm = false)
+double smape(const std::vector<double>& actual, const std::vector<double>& predicted) 
 {
+    SymmetricMeanAbsolutePercentageError smapeMetric; // Instantiate SMAPE class
+    return smapeMetric.compute(actual, predicted);
+}
 
-   if (w.isNull()) {
-
-      return _metric_(actual, predicted, na_rm);
-
-   }
-
-   return _metric_(actual, predicted, Rcpp::as<std::vector<double>>(w), na_rm);
-
+//' @rdname smape
+//' @method weighted.smape numeric
+//' @export
+// [[Rcpp::export(weighted.smape.numeric)]]
+double weighted_smape(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w) 
+{
+    SymmetricMeanAbsolutePercentageError smapeMetric; // Instantiate SMAPE class
+    return smapeMetric.compute(actual, predicted, w);
 }

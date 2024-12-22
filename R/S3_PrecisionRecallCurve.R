@@ -13,10 +13,10 @@
 #'
 #' @inherit ROC
 #'
-#' @example man/examples/scr_prROC.R
+#' @example man/examples/scr_PrecisionRecallCurve.R
 #'
-#' @family classification
-#' @family reciever operator characteristics
+#' @family Classification
+#' @family Supervised Learning
 #' 
 #' @returns A [data.frame] on the following form,
 #'

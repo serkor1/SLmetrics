@@ -3,42 +3,68 @@
 %   R/S3_MatthewsCorrelationCoefficient.R
 \name{mcc.factor}
 \alias{mcc.factor}
+\alias{weighted.mcc.factor}
 \alias{mcc.cmatrix}
 \alias{phi.factor}
+\alias{weighted.phi.factor}
 \alias{phi.cmatrix}
 \alias{mcc}
 \alias{phi}
+\alias{weighted.mcc}
+\alias{weighted.phi}
 \title{Compute the \eqn{\text{Matthews}} \eqn{\text{Correlation}} \eqn{\text{Coefficient}}}
 \usage{
 \method{mcc}{factor}(actual, predicted, ...)
+
+\method{weighted.mcc}{factor}(actual, predicted, w, ...)
 
 \method{mcc}{cmatrix}(x, ...)
 
 \method{phi}{factor}(actual, predicted, ...)
 
+\method{weighted.phi}{factor}(actual, predicted, w, ...)
+
 \method{phi}{cmatrix}(x, ...)
 
 mcc(...)
 
+weighted.mcc(...)
+
 phi(...)
+
+weighted.phi(...)
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{...}{Arguments passed into other methods.}
+\item{...}{Arguments passed into other methods}
 
-\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default}
+
+\item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}}
 }
 \value{
-A named <\link{numeric}> vector of length k
+A <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=mcc]{mcc()}}-function computes the \href{https://en.wikipedia.org/wiki/Matthews_correlation_coefficient}{Matthews Correlation Coefficient} (MCC), also known as the \eqn{\phi}-coefficient, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.mcc]{weighted.mcc()}} function computes the weighted Matthews Correlation Coefficient.
 }
-\details{
+\section{Calculation}{
+
+
+The metric is calculated as follows,
+
+\deqn{
+  \frac{\#TP \times \#TN - \#FP \times \#FN}{\sqrt{(\#TP + \#FP)(\#TP + \#FN)(\#TN + \#FP)(\#TN + \#FN)}}
+}
+}
+
+\section{Creating <\link{factor}>}{
+
+
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
@@ -70,15 +96,6 @@ factor(
 }\if{html}{\out{</div>}}
 
 In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
-}
-\section{Calculation}{
-
-
-The metric is calculated as follows,
-
-\deqn{
-  \frac{\#TP \times \#TN - \#FP \times \#FN}{\sqrt{(\#TP + \#FP)(\#TP + \#FN)(\#TN + \#FP)(\#TN + \#FN)}}
-}
 }
 
 \examples{
@@ -118,19 +135,28 @@ actual <- factor(
 )
 
 # 4) evaluate performance
-# 4.1) by class
-mcc(
-  actual    = actual,
-  predicted = predicted
+# using Matthews Correlation Coefficient
+cat(
+  "Matthews Correlation Coefficient", mcc(
+    actual    = actual,
+    predicted = predicted
+  ),
+  "Matthews Correlation Coefficient (weighted)", weighted.mcc(
+    actual    = actual,
+    predicted = predicted,
+    w         = iris$Petal.Length/mean(iris$Petal.Length)
+  ),
+  sep = "\n"
 )
+
 }
 \seealso{
-Other classification: 
+Other Classification: 
 \code{\link{ROC.factor}()},
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},
@@ -146,5 +172,40 @@ Other classification:
 \code{\link{recall.factor}()},
 \code{\link{specificity.factor}()},
 \code{\link{zerooneloss.factor}()}
+
+Other Supervised Learning: 
+\code{\link{ROC.factor}()},
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
+\code{\link{ccc.numeric}()},
+\code{\link{ckappa.factor}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{dor.factor}()},
+\code{\link{fbeta.factor}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
+\code{\link{fpr.factor}()},
+\code{\link{huberloss.numeric}()},
+\code{\link{jaccard.factor}()},
+\code{\link{mae.numeric}()},
+\code{\link{mape.numeric}()},
+\code{\link{mpe.numeric}()},
+\code{\link{mse.numeric}()},
+\code{\link{nlr.factor}()},
+\code{\link{npv.factor}()},
+\code{\link{pinball.numeric}()},
+\code{\link{plr.factor}()},
+\code{\link{prROC.factor}()},
+\code{\link{precision.factor}()},
+\code{\link{rae.numeric}()},
+\code{\link{recall.factor}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
+\code{\link{rrse.numeric}()},
+\code{\link{rsq.numeric}()},
+\code{\link{smape.numeric}()},
+\code{\link{specificity.factor}()},
+\code{\link{zerooneloss.factor}()}
 }
-\concept{classification}
+\concept{Classification}
+\concept{Supervised Learning}

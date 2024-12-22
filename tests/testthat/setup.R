@@ -8,6 +8,9 @@
 #
 # script start;
 
+# 0) set amount of test failures
+testthat::set_max_fails(Inf)
+
 # 1) set seed for all
 # samples
 set.seed(1903)
@@ -113,7 +116,7 @@ set_equal <- function(
     current,
     target,
     tolerance = 1e-9) {
-
+  
   all.equal(
     target = target,
     current = current,
@@ -124,5 +127,125 @@ set_equal <- function(
 
 }
 
+# 6) load scripts
+# globally
+reticulate::source_python(
+  "scikit-learn.py"
+)
+reticulate::source_python(
+  "pytorch.py"
+)
+source("ref-manual.R")
+
+# 7) define all classification
+# functions in {SLmetrics}
+sl_classification <- list(
+  # accuracy
+  "accuracy"    = accuracy,
+  "baccuracy"   = baccuracy,
+
+  # Zero-One Loss
+  "zerooneloss" = zerooneloss,
+
+  # specificity methods
+  "specificity" = specificity,
+  "tnr"         = tnr,
+  "selectivity" = selectivity,
+
+
+  # recall methods;
+  "recall"      = recall,
+  "sensitivity" = sensitivity,
+  "tpr"         = tpr,
+
+  # precision methods
+  "precision"   = precision,
+  "ppv"         = ppv,
+
+  # fbeta methods
+  "fbeta"       = fbeta,
+
+  # likelihood methods
+  "dor"         = dor,
+  "plr"         = plr,
+  "nlr"         = nlr,
+
+  # jaccard methods
+  "jaccard"     = jaccard,
+  "tscore"      = tscore,
+  "csi"         = csi,
+
+  # mcc methods
+  "mcc"         = mcc,
+  "phi"         = phi,
+
+  # false positive
+  "fpr"         = fpr,
+  "fallout"     = fallout,
+
+  # fmi methods
+  "fmi"         = fmi,
+
+  "fdr"         = fdr,
+  "npv"         = npv,
+  "fer"         = fer,
+
+  "ckappa"      = ckappa
+
+)
+
+# 7) define all weighted classification
+# functions in {SLmetrics}
+sl_wclassification <- list(
+  # accuracy
+  "accuracy"    = weighted.accuracy,
+  "baccuracy"   = weighted.baccuracy,
+
+  # Zero-One Loss
+  "zerooneloss" = weighted.zerooneloss,
+
+  # specificity methods
+  "specificity" = weighted.specificity,
+  "tnr"         = weighted.tnr,
+  "selectivity" = weighted.selectivity,
+
+
+  # recall methods;
+  "recall"      = weighted.recall,
+  "sensitivity" = weighted.sensitivity,
+  "tpr"         = weighted.tpr,
+
+  # precision methods
+  "precision"   = weighted.precision,
+  "ppv"         = weighted.ppv,
+
+  # fbeta methods
+  "fbeta"       = weighted.fbeta,
+
+  # likelihood methods
+  "dor"         = weighted.dor,
+  "plr"         = weighted.plr,
+  "nlr"         = weighted.nlr,
+
+  # jaccard methods
+  "jaccard"     = weighted.jaccard,
+  "tscore"      = weighted.tscore,
+  "csi"         = weighted.csi,
+
+  # mcc methods
+  "mcc"         = weighted.mcc,
+  "phi"         = weighted.phi,
+
+  # false positive
+  "fpr"         = weighted.fpr,
+  "fallout"     = weighted.fallout,
+
+  "fdr"         = weighted.fdr,
+  "npv"         = weighted.npv,
+  "fer"         = weighted.fer,
+
+  "ckappa"      = weighted.ckappa
+
+)
 
 # script end;

@@ -9,14 +9,11 @@
 #'
 #' @description
 #' The [fpr()]-function computes the [False Positive Rate](https://en.wikipedia.org/wiki/False_positive_rate) (FPR), also known as the fall-out ([fallout()]), between
-#' two vectors of predicted and observed [factor()] values.
-#'
-#' When `aggregate = TRUE`, the function returns the micro-average FPR across all classes \eqn{k}.
-#' By default, it returns the class-wise FPR.
+#' two vectors of predicted and observed [factor()] values. The [weighted.fpr()] function computes the weighted false positive rate.
 #'
 #' @inherit specificity
 #'
-#' @example man/examples/scr_fpr.R
+#' @example man/examples/scr_FalsePositiveRate.R
 #'
 #' @section Calculation:
 #'
@@ -27,16 +24,9 @@
 #' }
 #'
 #' Where \eqn{\#FP_k} and \eqn{\#TN_k} represent the number of false positives and true negatives, respectively, for each class \eqn{k}.
-#'
-#' When `aggregate = TRUE`, the micro-average is calculated across all classes,
-#'
-#' \deqn{
-#'   \frac{\sum_{k=1}^k \#FP_k}{\sum_{k=1}^k \#FP_k + \sum_{k=1}^k \#TN_k}
-#' }
-#'
-#' The FPR is the complement of specificity, such that \eqn{\text{FPR} = 1 - \text{Specificity}}.
-#'
-#' @family classification
+#' 
+#' @family Classification
+#' @family Supervised Learning
 #'
 #' @aliases fpr fallout
 #'
@@ -53,6 +43,24 @@ fpr <- function(...) {
 fallout <- function(...) {
   UseMethod(
     generic = "fallout",
+    object  = ..1
+  )
+}
+
+#' @rdname fpr
+#' @export
+weighted.fpr <- function(...) {
+  UseMethod(
+    generic = "weighted.fpr",
+    object  = ..1
+  )
+}
+
+#' @rdname fpr
+#' @export
+weighted.fallout <- function(...) {
+  UseMethod(
+    generic = "weighted.fallout",
     object  = ..1
   )
 }

@@ -9,14 +9,6 @@ testthat::test_that(
   desc = "Test that `ROC()`-function works as expected",
   code = {
 
-    # 0) load functions from
-    # {scikit-learn} and {pytorch}
-    reticulate::source_python(
-      "scikit-learn.py"
-    )
-
-    source("ref-manual.R")
-
     n <- 1e3
     k <- 4
     # 1) generate
@@ -46,6 +38,34 @@ testthat::test_that(
       actual     = actual,
       response   = response,
       threshold = response
+    )
+
+    # 3.2) check if summaries
+    # and print methods responds
+    # correctly
+
+    # 3.2.1) print method
+    testthat::expect_no_error(
+      print.ROC(
+        target
+      )
+    )
+   
+
+    # 3.2.2) summary
+    # method
+    testthat::expect_no_error(
+      summary.ROC(
+        target
+      )
+    )
+    
+
+    # 3.2.3) plot method
+    testthat::expect_no_error(
+      plot.ROC(
+        target
+      )
     )
 
     # 4) test if its
@@ -133,14 +153,6 @@ testthat::test_that(
   desc = "Test that `prROC()`-function works as expected",
   code = {
 
-    # 0) load functions from
-    # {scikit-learn} and {pytorch}
-    reticulate::source_python(
-      "scikit-learn.py"
-    )
-
-    source("ref-manual.R")
-
     n <- 1e3
     k <- 4
     # 1) generate
@@ -171,6 +183,35 @@ testthat::test_that(
       response   = response,
       threshold = response
     )
+
+    # 3.2) check if summaries
+    # and print methods responds
+    # correctly
+
+    # 3.2.1) print method
+    testthat::expect_no_error(
+      print.prROC(
+        target
+      )
+    )
+   
+
+    # 3.2.2) summary
+    # method
+    testthat::expect_no_error(
+      summary.prROC(
+        target
+      )
+    )
+    
+
+    # 3.2.3) plot method
+    testthat::expect_no_error(
+      plot.prROC(
+        target
+      )
+    )
+    
 
     # 4) test if its
     # equal

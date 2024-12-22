@@ -1,57 +1,44 @@
-#include "src_Helpers.h"
+#ifndef CLASSIFICATION_FPR_H
+#define CLASSIFICATION_FPR_H
+
+#include "classification_Helpers.h"
 #include <RcppEigen.h>
 #include <cmath>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
+class FalsePositiveRateMetric : public classification {
+public:
 
-/*
- * Classwise fpr
- */
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x)
-{
+    // Compute FPR with micro or macro aggregation
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm) const override {
+        
+        // 0) Declare variables and size
+        // for efficiency.
+        // NOTE: Micro and macro already wraps and exports as Rcpp
+        Rcpp::NumericVector output(1);
+        Eigen::ArrayXd fp(matrix.rows()), tn(matrix.rows()), auxillary(matrix.rows());
 
-  // 1) calcuculate
-  // relevent metrics
-  const Eigen::ArrayXd& fp = FP(x).cast<double>().array();
-  const Eigen::ArrayXd& tn = TN(x).cast<double>().array();
+        FP(matrix, fp);
+        TN(matrix, tn);
 
-  // 2) return value
-  // by class
-  return Rcpp::wrap(
-    fp / (fp + tn)
-  );
+        return do_micro
+            ? micro(fp, fp + tn, na_rm)
+            : macro(fp, fp + tn, na_rm);
 
+    }
 
-}
+    // Compute FPR without micro aggregation
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
+        Eigen::ArrayXd output(matrix.rows());
+        Eigen::ArrayXd fp(matrix.rows()), tn(matrix.rows());
 
+        FP(matrix, fp);
+        TN(matrix, tn);
 
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x, const bool& micro, const bool& na_rm)
-{
+        output = fp / (fp + tn);
+        return Rcpp::wrap(output);
+    }
+};
 
-  // 1) calcuculate
-  // relevent metrics
-  const Eigen::ArrayXd& fp = FP(x).cast<double>().array();
-  const Eigen::ArrayXd& tn = TN(x).cast<double>().array();
-
-  // 2) return
-  // micro average
-  // and end function
-  if (micro) {
-
-    const double& fp_sum = fp.sum();
-    const double& tn_sum = tn.sum();
-
-    return Rcpp::wrap(
-      (fp_sum + tn_sum == 0) ? NA_REAL : fp_sum / (fp_sum + tn_sum)
-    );
-
-  }
-
-  Eigen::ArrayXd output =  fp / (fp + tn);
-
-  return Rcpp::wrap(
-    output.isNaN().select(0,output).sum() / ((na_rm) ? (output.isNaN() == false).count() : output.size())
-    );
-
-}
+#endif // CLASSIFICATION_FPR_H

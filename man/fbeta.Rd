@@ -2,44 +2,67 @@
 % Please edit documentation in R/RcppExports.R, R/S3_FBetaScore.R
 \name{fbeta.factor}
 \alias{fbeta.factor}
+\alias{weighted.fbeta.factor}
 \alias{fbeta.cmatrix}
 \alias{fbeta}
+\alias{weighted.fbeta}
 \title{Compute the \eqn{F_{\beta}}-score}
 \usage{
 \method{fbeta}{factor}(actual, predicted, beta = 1, micro = NULL, na.rm = TRUE, ...)
 
+\method{weighted.fbeta}{factor}(actual, predicted, w, beta = 1, micro = NULL, na.rm = TRUE, ...)
+
 \method{fbeta}{cmatrix}(x, beta = 1, micro = NULL, na.rm = TRUE, ...)
 
 fbeta(...)
+
+weighted.fbeta(...)
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{beta}{A <\link{numeric}> vector of length 1. 1 by default, see calculations.}
+\item{beta}{A <\link{numeric}> vector of \link{length} \eqn{1} (default: \eqn{1}).}
 
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{NULL} by default. If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average. Otherwise class wise performance evaluation.}
+\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
+micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
 
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
+\item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
+This argument is only relevant when \code{micro != NULL}.
+When \code{na.rm = TRUE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))}.
+When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))}.}
 
-\item{...}{Arguments passed into other methods.}
+\item{...}{Arguments passed into other methods}
 
-\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
+
+\item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 }
 \value{
-If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vector of \link{length} k
+If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
 
-If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
+If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=fbeta]{fbeta()}}-function computes the \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_\beta} score}, the weighted harmonic mean of \code{\link[=precision]{precision()}} and \code{\link[=recall]{recall()}}, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The parameter \eqn{\beta} determines the weight of precision and recall in the combined score.
-
-When \code{aggregate = TRUE}, the function returns the micro-average \eqn{F_\beta} score across all classes \eqn{k}. By default, it returns the class-wise \eqn{F_\beta} score.
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The parameter \eqn{\beta} determines the weight of precision and recall in the combined score. The \code{\link[=weighted.fbeta]{weighted.fbeta()}} function computes the weighted \eqn{F_\beta} score.
 }
-\details{
+\section{Calculation}{
+
+
+The metric is calculated for each class \eqn{k} as follows,
+
+\deqn{
+  (1 + \beta^2) \frac{\text{Precision}_k \cdot \text{Recall}_k}{(\beta^2 \cdot \text{Precision}_k) + \text{Recall}_k}
+}
+
+Where precision is \eqn{\frac{\#TP_k}{\#TP_k + \#FP_k}} and recall (sensitivity) is \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}}, and \eqn{\beta} determines the weight of precision relative to recall.
+}
+
+\section{Creating <\link{factor}>}{
+
+
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
@@ -71,23 +94,6 @@ factor(
 }\if{html}{\out{</div>}}
 
 In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
-}
-\section{Calculation}{
-
-
-The metric is calculated for each class \eqn{k} as follows,
-
-\deqn{
-  (1 + \beta^2) \frac{\text{Precision}_k \cdot \text{Recall}_k}{(\beta^2 \cdot \text{Precision}_k) + \text{Recall}_k}
-}
-
-Where precision is \eqn{\frac{\#TP_k}{\#TP_k + \#FP_k}} and recall (sensitivity) is \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}}, and \eqn{\beta} determines the weight of precision relative to recall.
-
-When \code{aggregate = TRUE}, the \code{micro}-average \eqn{F_\beta} score is calculated,
-
-\deqn{
-  (1 + \beta^2) \frac{\sum_{k=1}^K \text{Precision}_k \cdot \sum_{k=1}^K \text{Recall}_k}{(\beta^2 \cdot \sum_{k=1}^K \text{Precision}_k) + \sum_{k=1}^K \text{Recall}_k}
-}
 }
 
 \examples{
@@ -126,35 +132,50 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
+# 4) evaluate class-wise performance
+# using F1-score
 
-# 4) class-wise f1
-# score
-fbeta(
-  actual    = actual,
-  predicted = predicted
-)
-
-# 4.1) micro-averaged F1 score
+# 4.1) unweighted F1-score
 fbeta(
   actual    = actual,
   predicted = predicted,
-  micro = TRUE
+  beta      = 1
 )
 
-# 4.2 macro-averaged F1 score
-fbeta(
+# 4.2) weighted F1-score
+weighted.fbeta(
   actual    = actual,
   predicted = predicted,
-  micro     = FALSE
+  w         = iris$Petal.Length/mean(iris$Petal.Length),
+  beta      = 1
+)
+
+# 5) evaluate overall performance
+# using micro-averaged F1-score
+cat(
+  "Micro-averaged F1-score", fbeta(
+    actual    = actual,
+    predicted = predicted,
+    beta      = 1,
+    micro     = TRUE
+  ),
+  "Micro-averaged F1-score (weighted)", weighted.fbeta(
+    actual    = actual,
+    predicted = predicted,
+    w         = iris$Petal.Length/mean(iris$Petal.Length),
+    beta      = 1,
+    micro     = TRUE
+  ),
+  sep = "\n"
 )
 }
 \seealso{
-Other classification: 
+Other Classification: 
 \code{\link{ROC.factor}()},
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fdr.factor}()},
 \code{\link{fer.factor}()},
@@ -170,5 +191,40 @@ Other classification:
 \code{\link{recall.factor}()},
 \code{\link{specificity.factor}()},
 \code{\link{zerooneloss.factor}()}
+
+Other Supervised Learning: 
+\code{\link{ROC.factor}()},
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
+\code{\link{ccc.numeric}()},
+\code{\link{ckappa.factor}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{dor.factor}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
+\code{\link{fpr.factor}()},
+\code{\link{huberloss.numeric}()},
+\code{\link{jaccard.factor}()},
+\code{\link{mae.numeric}()},
+\code{\link{mape.numeric}()},
+\code{\link{mcc.factor}()},
+\code{\link{mpe.numeric}()},
+\code{\link{mse.numeric}()},
+\code{\link{nlr.factor}()},
+\code{\link{npv.factor}()},
+\code{\link{pinball.numeric}()},
+\code{\link{plr.factor}()},
+\code{\link{prROC.factor}()},
+\code{\link{precision.factor}()},
+\code{\link{rae.numeric}()},
+\code{\link{recall.factor}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
+\code{\link{rrse.numeric}()},
+\code{\link{rsq.numeric}()},
+\code{\link{smape.numeric}()},
+\code{\link{specificity.factor}()},
+\code{\link{zerooneloss.factor}()}
 }
-\concept{classification}
+\concept{Classification}
+\concept{Supervised Learning}

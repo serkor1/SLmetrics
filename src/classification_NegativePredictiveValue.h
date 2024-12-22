@@ -1,52 +1,56 @@
-#include "src_Helpers.h"
+#ifndef CLASSIFICATION_NEGATIVE_PREDICTIVE_VALUE_H
+#define CLASSIFICATION_NEGATIVE_PREDICTIVE_VALUE_H
+
+#include "classification_Helpers.h"
 #include <RcppEigen.h>
+#include <cmath>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x)
-{
+/*
+    NOTE:
+        To increase maintainability, all functions are passed through
+        the confusion matrix. So there is no need to add an overloaded function
+        for the weighted metrics.
+*/
+class NegativePredictiveValueMetric : public classification {
+public:
 
-  // 1) calcuculate
-  // relevent metrics
-  const Eigen::ArrayXd& tn = TN(x).cast<double>().array();
-  const Eigen::ArrayXd& fn = FN(x).cast<double>().array();
+    // Compute NPV with micro or macro aggregation
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm) const override {
+        // Declare the output value and TN/FN arrays
+        Eigen::ArrayXd output(1);
+        Eigen::ArrayXd tn(matrix.rows()), fn(matrix.rows());
 
-  // 2) return value
-  // by class
-  return Rcpp::wrap(
-    tn / (tn + fn)
-  );
-
-
-}
+        // Populate TN and FN arrays for calculations
+        TN(matrix, tn);
+        FN(matrix, fn);
 
 
-inline __attribute__((always_inline)) Rcpp::NumericVector _metric_(const Eigen::MatrixXi& x, const bool& micro, const bool& na_rm)
-{
+        // 2) retun with 
+        // ternary expression
+        return do_micro
+            ? micro(tn, (tn + fn), na_rm)
+            : macro(tn, (tn + fn), na_rm);
 
-  // 1) calcuculate
-  // relevent metrics
-  const Eigen::ArrayXd& tn = TN(x).cast<double>().array();
-  const Eigen::ArrayXd& fn = FN(x).cast<double>().array();
+    }
 
-  // 2) return
-  // micro average
-  // and end function
-  if (micro) {
+    // Compute NPV without micro aggregation
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
+        // Declare the output value and TN/FN arrays
+        Eigen::ArrayXd output(matrix.rows());
+        Eigen::ArrayXd tn(matrix.rows()), fn(matrix.rows());
 
-    const double& tn_sum = tn.sum();
-    const double& fn_sum = fn.sum();
+        // Populate TN and FN arrays for calculations
+        TN(matrix, tn);
+        FN(matrix, fn);
 
-    return Rcpp::wrap(
-      (tn_sum + fn_sum == 0) ? NA_REAL : tn_sum / (tn_sum + fn_sum)
-    );
+        // Calculate metric
+        output = tn / (tn + fn);
 
-  }
+        // Return with R-compatible class
+        return Rcpp::wrap(output);
+    }
+};
 
-  Eigen::ArrayXd output = tn / (tn + fn);
-
-  return Rcpp::wrap(
-    output.isNaN().select(0,output).sum() / ((na_rm) ? (output.isNaN() == false).count() : output.size())
-  );
-
-}
+#endif // CLASSIFICATION_NEGATIVE_PREDICTIVE_VALUE_H

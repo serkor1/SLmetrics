@@ -3,34 +3,37 @@
 %   R/S3_ConcordanceCorrelationCoefficient.R
 \name{ccc.numeric}
 \alias{ccc.numeric}
+\alias{weighted.ccc.numeric}
 \alias{ccc}
+\alias{weighted.ccc}
 \title{Compute the \eqn{\text{concordance}} \eqn{\text{correlation}} \eqn{\text{coefficient}}}
 \usage{
-\method{ccc}{numeric}(actual, predicted, correction = FALSE, w = NULL, na.rm = FALSE, ...)
+\method{ccc}{numeric}(actual, predicted, correction = FALSE, ...)
+
+\method{weighted.ccc}{numeric}(actual, predicted, w, correction = FALSE, ...)
 
 ccc(...)
+
+weighted.ccc(...)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}
 
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
-\item{correction}{A <\link{logical}> vector of \link{length} 1. \link{FALSE} by default. If \link{TRUE} the variance and covariance
+\item{correction}{A <\link{logical}> vector of \link{length} \eqn{1} (default: \link{FALSE}). If \link{TRUE} the variance and covariance
 will be adjusted with \eqn{\frac{1-n}{n}}}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data. See \code{\link[stats:weighted.mean]{stats::weighted.mean()}} for more details.}
-
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
-
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The weight assigned to each observation in the data.}
 }
 \value{
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
 The \code{\link[=ccc]{ccc()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Concordance_correlation_coefficient}{concordance correlation coefficient} between
-the two vectors of predicted and observed <\link{numeric}> values. If \code{w} is not \link{NULL}, the function returns the weighted \href{https://en.wikipedia.org/wiki/Concordance_correlation_coefficient}{concordance correlation coefficient}.
-
+the two vectors of predicted and observed <\link{numeric}> values.  The \code{\link[=weighted.ccc]{weighted.ccc()}} function computes the weighted Concordance Correlation Coefficient.
 If \code{correction} is \link{TRUE} \eqn{\sigma^2} is adjusted by \eqn{\frac{1-n}{n}} in the intermediate steps.
 }
 \section{Calculation}{
@@ -43,8 +46,6 @@ The metric is calculated as follows,
 }
 
 Where \eqn{\rho} is the \eqn{\text{pearson correlation coefficient}}, \eqn{\sigma} is the \eqn{\text{standard deviation}} and \eqn{\mu} is the simple mean of \code{actual} and \code{predicted}.
-
-If \code{w} is not \link{NULL}, all calculations are based on the weighted measures.
 }
 
 \examples{
@@ -61,33 +62,30 @@ model <- lm(
 actual    <- mtcars$mpg
 predicted <- fitted(model)
 
-
-# 2) calculate
-# the metric
-ccc(
-  actual     = actual,
-  predicted  = predicted,
-  correction = TRUE
-)
-
-# 3) calculate
-# the weighted metric
-# using arbtrary weights
-w <- rbeta(
-  n = 1e3,
-  shape1 = 10,
-  shape2 = 2
-)
-
-ccc(
-  actual     = actual,
-  predicted  = predicted,
-  w          = w,
-  correction = TRUE
+# 2) evaluate in-sample model
+# performance
+cat(
+  "Concordance Correlation Coefficient", ccc(
+    actual     = actual,
+    predicted  = predicted,
+    correction = FALSE
+  ),
+  "Concordance Correlation Coefficient (corrected)", ccc(
+    actual     = actual,
+    predicted  = predicted,
+    correction = TRUE
+  ),
+  "Concordance Correlation Coefficient (weigthed)", weighted.ccc(
+    actual     = actual,
+    predicted  = predicted,
+    w          = mtcars$mpg/mean(mtcars$mpg),
+    correction = FALSE
+  ),
+  sep = "\n"
 )
 }
 \seealso{
-Other regression: 
+Other Regression: 
 \code{\link{huberloss.numeric}()},
 \code{\link{mae.numeric}()},
 \code{\link{mape.numeric}()},
@@ -97,8 +95,43 @@ Other regression:
 \code{\link{rae.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
-\code{\link{rrmse.numeric}()},
+\code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()}
+
+Other Supervised Learning: 
+\code{\link{ROC.factor}()},
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
+\code{\link{ckappa.factor}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{dor.factor}()},
+\code{\link{fbeta.factor}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
+\code{\link{fpr.factor}()},
+\code{\link{huberloss.numeric}()},
+\code{\link{jaccard.factor}()},
+\code{\link{mae.numeric}()},
+\code{\link{mape.numeric}()},
+\code{\link{mcc.factor}()},
+\code{\link{mpe.numeric}()},
+\code{\link{mse.numeric}()},
+\code{\link{nlr.factor}()},
+\code{\link{npv.factor}()},
+\code{\link{pinball.numeric}()},
+\code{\link{plr.factor}()},
+\code{\link{prROC.factor}()},
+\code{\link{precision.factor}()},
+\code{\link{rae.numeric}()},
+\code{\link{recall.factor}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
+\code{\link{rrse.numeric}()},
+\code{\link{rsq.numeric}()},
+\code{\link{smape.numeric}()},
+\code{\link{specificity.factor}()},
+\code{\link{zerooneloss.factor}()}
 }
-\concept{regression}
+\concept{Regression}
+\concept{Supervised Learning}

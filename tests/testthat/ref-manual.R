@@ -10,17 +10,167 @@
 # was convienient.
 # script start;
 
+# Concordance Correlation Coefficient
+# The values have been verified with yardstick and 
+# epiR
+py_ccc <- function(actual, predicted, w = NULL, correction = FALSE) {
+
+  actual    <- as.numeric(actual)
+  predicted <- as.numeric(predicted)
+  
+  if (is.null(w)) {
+    w <- rep(1, length(actual))
+  } else {
+    w <- as.numeric(w)
+  }
+  
+  data <- cbind(actual = actual, predicted = predicted)
+  cov_matrix <- stats::cov.wt(
+    x = data,
+    wt = w,
+    cor = FALSE,
+    center = TRUE,
+    method = "unbiased"
+  )
+  
+  actual_mean <- weighted.mean(actual, w = w)
+  predicted_mean <- weighted.mean(predicted, w = w)
+  actual_variance <- cov_matrix$cov[1, 1]
+  predicted_variance <- cov_matrix$cov[2, 2]
+  covariance <- cov_matrix$cov[1, 2]
+  
+  if (correction) {
+    n <- sum(w) 
+    actual_variance <- actual_variance * (n - 1) / n
+    predicted_variance <- predicted_variance * (n - 1) / n
+    covariance <- covariance * (n - 1) / n
+  }
+  
+  numerator <- 2 * covariance
+  denominator <- actual_variance + predicted_variance + (actual_mean - predicted_mean)^2
+  ccc_value <- numerator / denominator
+  
+  return(ccc_value)
+}
+
+
+py_recall <- function(
+  actual,
+  predicted,
+  average = NULL,
+  w       = NULL,
+  na.rm   = TRUE
+) {
+
+  # 1) Construct matrix
+  conf_mat <- SLmetrics::cmatrix(
+    actual = actual,
+    predicted = predicted,
+    w = w
+  )
+
+  TP <- diag(conf_mat) # True Positives
+  FN <- rowSums(conf_mat) - diag(conf_mat) # False Negatives
+
+  # Recall calculation
+  output <- TP / (TP + FN)
+
+  # 2) Handle averaging
+  if (!is.null(average)) {
+
+    average <- as.logical(average == "micro")
+
+    if (average) {
+
+      # Micro-averaged recall
+      output <- sum(TP, na.rm = TRUE) / (sum(TP, na.rm = TRUE) + sum(FN, na.rm = TRUE))
+
+    } else {
+
+      # Macro-averaged recall
+      if (!na.rm) {
+        output[!is.finite(output)] <- 0
+      }
+
+      output <- mean(
+        output,
+        na.rm = na.rm
+      )
+
+    }
+
+  }
+
+  return(output)
+}
+
+
+py_specificity <- function(
+  actual,
+  predicted,
+  average = NULL,
+  w       = NULL,
+  na.rm   = TRUE
+) {
+
+  # 1) Construct matrix
+  conf_mat <- SLmetrics::cmatrix(
+    actual = actual,
+    predicted = predicted,
+    w = w
+  )
+
+  TN <- sum(conf_mat) - rowSums(conf_mat) - colSums(conf_mat) + diag(conf_mat)
+  FP <- colSums(conf_mat) - diag(conf_mat)
+
+
+  output <- TN/(TN+FP)
+
+  # 2) calculate values
+  if (!is.null(average)) {
+
+    average <- as.logical(average == "micro")
+
+    if (average) {
+
+      output <-  sum(TN, na.rm = TRUE) / (sum(TN, na.rm = TRUE) + sum(FP, na.rm = TRUE))
+
+    } else {
+
+      if (!na.rm) {
+
+        output[!is.finite(output)] <- 0
+
+      }
+
+      output <- mean(
+        output,
+        na.rm = na.rm
+      )
+
+    }
+
+  }
+
+  return(
+    output
+  )
+
+}
+
 # False Discovery Rate
 py_fdr <- function(
     actual,
     predicted,
     average = NULL,
+    w = NULL,
     na.rm = TRUE) {
 
   # 1) Construct matrix
-  conf_mat <- table(
-    actual,
-    predicted
+  conf_mat <- SLmetrics::cmatrix(
+    actual = actual,
+    predicted = predicted,
+    w = w
   )
 
   # 2) Construct elements
@@ -63,10 +213,13 @@ py_fdr <- function(
 
 }
 
-py_fpr <- function(actual, predicted, average = NULL, na.rm = TRUE) {
-  # Construct confusion matrix
-  conf_mat <- table(actual, predicted)
-
+py_fpr <- function(actual, predicted, average = NULL, na.rm = TRUE, w = NULL) {
+  # 1) Construct matrix
+  conf_mat <- SLmetrics::cmatrix(
+    actual = actual,
+    predicted = predicted,
+    w = w
+  )
   # Calculate False Positives and True Negatives per class
   FP <- colSums(conf_mat) - diag(conf_mat)
   TN <- sum(conf_mat) - rowSums(conf_mat) - colSums(conf_mat) + diag(conf_mat)
@@ -89,9 +242,13 @@ py_fpr <- function(actual, predicted, average = NULL, na.rm = TRUE) {
   return(fpr_class)
 }
 
-py_npv <- function(actual, predicted, average = NULL, na.rm = TRUE) {
-  # Construct confusion matrix
-  conf_mat <- table(actual, predicted)
+py_npv <- function(actual, predicted, average = NULL, na.rm = TRUE, w = NULL) {
+  # 1) Construct matrix
+  conf_mat <- SLmetrics::cmatrix(
+    actual = actual,
+    predicted = predicted,
+    w = w
+  )
 
   # Calculate True Negatives and False Negatives per class
   TN <- sum(conf_mat) - rowSums(conf_mat) - colSums(conf_mat) + diag(conf_mat)
@@ -115,9 +272,13 @@ py_npv <- function(actual, predicted, average = NULL, na.rm = TRUE) {
   return(npv_class)
 }
 
-py_fer <- function(actual, predicted, average = NULL, na.rm = TRUE) {
-  # Construct confusion matrix
-  conf_mat <- table(actual, predicted)
+py_fer <- function(actual, predicted, average = NULL, na.rm = TRUE, w = NULL) {
+  # 1) Construct matrix
+  conf_mat <- SLmetrics::cmatrix(
+    actual = actual,
+    predicted = predicted,
+    w = w
+  )
 
   # Calculate False Negatives and True Negatives per class
   FN <- rowSums(conf_mat) - diag(conf_mat)
@@ -141,9 +302,13 @@ py_fer <- function(actual, predicted, average = NULL, na.rm = TRUE) {
   return(for_class)
 }
 
-py_plr <- function(actual, predicted, average = NULL, na.rm = TRUE) {
-  # Construct confusion matrix
-  conf_mat <- table(actual, predicted)
+py_plr <- function(actual, predicted, average = NULL, na.rm = TRUE, w = NULL) {
+ # 1) Construct matrix
+ conf_mat <- SLmetrics::cmatrix(
+  actual = actual,
+  predicted = predicted,
+  w = w
+)
 
   # Calculate True Positives, False Positives, False Negatives, and True Negatives
   TP <- diag(conf_mat)
@@ -158,29 +323,16 @@ py_plr <- function(actual, predicted, average = NULL, na.rm = TRUE) {
   # Calculate Positive Likelihood Ratio per class
   plr_class <- TPR / FPR
 
-  # If averaging is requested
-  if (!is.null(average)) {
-    if (average == "micro") {
-      # Micro-average
-      overall_tpr <- sum(TP, na.rm = TRUE) / (sum(TP, na.rm = TRUE) + sum(FN, na.rm = TRUE))
-      overall_fpr <- sum(FP, na.rm = TRUE) / (sum(FP, na.rm = TRUE) + sum(TN, na.rm = TRUE))
-      return(overall_tpr / overall_fpr)
-    } else {
-      # Handle non-finite values in macro-average case
-      if (!na.rm) {
-        plr_class[!is.finite(plr_class)] <- 0
-      }
-      return(mean(plr_class, na.rm = na.rm))
-    }
-  }
-
   return(plr_class)
 }
 
-py_nlr <- function(actual, predicted, average = NULL, na.rm = TRUE) {
-  # Construct confusion matrix
-  conf_mat <- table(actual, predicted)
-
+py_nlr <- function(actual, predicted, average = NULL, na.rm = TRUE, w = NULL) {
+  # 1) Construct matrix
+  conf_mat <- SLmetrics::cmatrix(
+    actual = actual,
+    predicted = predicted,
+    w = w
+  )
   # Calculate True Positives, False Positives, False Negatives, and True Negatives
   TP <- diag(conf_mat)
   FP <- colSums(conf_mat) - TP
@@ -213,9 +365,14 @@ py_nlr <- function(actual, predicted, average = NULL, na.rm = TRUE) {
   return(nlr_class)
 }
 
-py_dor <- function(actual, predicted, average = NULL, na.rm = TRUE) {
+py_dor <- function(actual, predicted, average = NULL, na.rm = TRUE, w = NULL) {
   # Construct confusion matrix
-  conf_mat <- table(actual, predicted)
+  # 1) Construct matrix
+  conf_mat <- SLmetrics::cmatrix(
+    actual = actual,
+    predicted = predicted,
+    w = w
+  )
 
   # Calculate True Positives, False Positives, False Negatives, and True Negatives
   TP <- diag(conf_mat)
@@ -340,6 +497,53 @@ ref_prROC <- function(actual, response, thresholds) {
   output
 
 }
+
+# Regression Functions
+py_rrse <- function(
+  actual,
+  predicted,
+  w = NULL
+) {
+
+  if (is.null(w)) {
+    w <- rep(1, length(actual))
+  }
+
+  sqrt(
+    sum(w * (actual - predicted)^2) / 
+    sum(w*( actual - weighted.mean(actual, w = w))^2))
+
+}
+
+
+py_rae <- function(
+  actual,
+  predicted,
+  w = NULL) {
+  
+  if (is.null(w)) {
+    w <- rep(1, length(actual))
+  }
+  
+    sum(w * abs(actual - predicted)) / sum( w * abs(actual - weighted.mean(actual, w = w)))
+}
+
+
+py_mpe <- function(
+  predicted, 
+  actual, 
+  w = NULL) {
+  
+  if (is.null(w)) {
+    w <- rep(1, length(actual))
+  }
+  
+  error <- (actual - predicted) / actual
+  weighted_mpe <- sum(w * error) / sum(w)
+  
+  weighted_mpe
+}
+
 
 
 # script end;

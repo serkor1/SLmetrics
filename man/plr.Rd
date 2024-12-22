@@ -2,43 +2,66 @@
 % Please edit documentation in R/RcppExports.R, R/S3_LikelihoodRatios.R
 \name{plr.factor}
 \alias{plr.factor}
+\alias{weighted.plr.factor}
 \alias{plr.cmatrix}
 \alias{plr}
+\alias{weighted.plr}
 \title{Compute the \eqn{\text{positive}} \eqn{\text{likelihood}} \eqn{\text{ratio}}}
 \usage{
-\method{plr}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+\method{plr}{factor}(actual, predicted, micro = NULL, ...)
 
-\method{plr}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
+\method{weighted.plr}{factor}(actual, predicted, w, micro = NULL, ...)
+
+\method{plr}{cmatrix}(x, micro = NULL, ...)
 
 plr(...)
+
+weighted.plr(...)
 }
 \arguments{
-\item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{NULL} by default. If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average. Otherwise class wise performance evaluation.}
+\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
+micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
 
-\item{na.rm}{A <\link{logical}>-value of \link{length} \eqn{1}. \link{FALSE} by default. If \link{TRUE} NA values will be removed from the computation.}
+\item{...}{Arguments passed into other methods}
 
-\item{...}{Arguments passed into other methods.}
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 
-\item{x}{A confusion matrix created by \code{\link[=table]{table()}} or \code{\link[=cmatrix]{cmatrix()}}}
+\item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 }
 \value{
-If \code{aggregate} is \link{FALSE} (the default), a named <\link{numeric}>-vector of \link{length} k
+If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
 
-If \code{aggregate} is \link{TRUE}, a <\link{numeric}>-vector of \link{length} 1
+If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
 The \code{\link[=plr]{plr()}}-function computes the \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{positive likelihood ratio}, also known as the likelihood ratio for positive results, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
-
-When \code{aggregate = TRUE}, the function returns the micro-average PLR across all classes \eqn{k}.
-By default, it returns the class-wise PLR.
+two vectors of predicted and observed \code{\link[=factor]{factor()}} values.  The \code{\link[=weighted.plr]{weighted.plr()}} function computes the weighted positive likelihood ratio.
 }
-\details{
+\section{Calculation}{
+
+
+The metric is calculated for each class \eqn{k} as follows,
+
+\deqn{
+  \frac{\text{Sensitivity}_k}{1 - \text{Specificity}_k}
+}
+
+Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
+
+When \code{aggregate = TRUE}, the \code{micro}-average is calculated,
+
+\deqn{
+  \frac{\sum_{k=1}^k \text{Sensitivity}_k}{1 - \sum_{k=1}^k \text{Specificity}_k}
+}
+}
+
+\section{Creating <\link{factor}>}{
+
+
 Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
@@ -70,23 +93,6 @@ factor(
 }\if{html}{\out{</div>}}
 
 In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
-}
-\section{Calculation}{
-
-
-The metric is calculated for each class \eqn{k} as follows,
-
-\deqn{
-  \frac{\text{Sensitivity}_k}{1 - \text{Specificity}_k}
-}
-
-Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
-
-When \code{aggregate = TRUE}, the \code{micro}-average is calculated,
-
-\deqn{
-  \frac{\sum_{k=1}^k \text{Sensitivity}_k}{1 - \sum_{k=1}^k \text{Specificity}_k}
-}
 }
 
 \examples{
@@ -125,38 +131,30 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) positive likelihood
-# ratio
+# 4) evaluate model performance
+# with class-wise positive likelihood ratios
+cat("Positive Likelihood Ratio", sep = "\n")
 plr(
-  actual    = actual,
+  actual    = actual, 
   predicted = predicted
 )
 
-# 4.1) micro averaged
-# plr
-plr(
+cat("Positive Likelihood Ratio (weighted)", sep = "\n")
+weighted.plr(
   actual    = actual,
   predicted = predicted,
-  micro     = TRUE 
-)
-
-# macro averaged
-# plr
-plr(
-  actual    = actual,
-  predicted = predicted,
-  micro     = FALSE 
+  w         = iris$Petal.Length/mean(iris$Petal.Length)
 )
 }
 \seealso{
 The \code{\link[=nlr]{nlr()}}-function for the Negative Likehood Ratio (LR-)
 
-Other classification: 
+Other Classification: 
 \code{\link{ROC.factor}()},
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
-\code{\link{cmatrix}()},
+\code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},
@@ -172,5 +170,40 @@ Other classification:
 \code{\link{recall.factor}()},
 \code{\link{specificity.factor}()},
 \code{\link{zerooneloss.factor}()}
+
+Other Supervised Learning: 
+\code{\link{ROC.factor}()},
+\code{\link{accuracy.factor}()},
+\code{\link{baccuracy.factor}()},
+\code{\link{ccc.numeric}()},
+\code{\link{ckappa.factor}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{dor.factor}()},
+\code{\link{fbeta.factor}()},
+\code{\link{fdr.factor}()},
+\code{\link{fer.factor}()},
+\code{\link{fpr.factor}()},
+\code{\link{huberloss.numeric}()},
+\code{\link{jaccard.factor}()},
+\code{\link{mae.numeric}()},
+\code{\link{mape.numeric}()},
+\code{\link{mcc.factor}()},
+\code{\link{mpe.numeric}()},
+\code{\link{mse.numeric}()},
+\code{\link{nlr.factor}()},
+\code{\link{npv.factor}()},
+\code{\link{pinball.numeric}()},
+\code{\link{prROC.factor}()},
+\code{\link{precision.factor}()},
+\code{\link{rae.numeric}()},
+\code{\link{recall.factor}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
+\code{\link{rrse.numeric}()},
+\code{\link{rsq.numeric}()},
+\code{\link{smape.numeric}()},
+\code{\link{specificity.factor}()},
+\code{\link{zerooneloss.factor}()}
 }
-\concept{classification}
+\concept{Classification}
+\concept{Supervised Learning}

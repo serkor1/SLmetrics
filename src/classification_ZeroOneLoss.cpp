@@ -7,18 +7,25 @@ using namespace Rcpp;
 //' @method zerooneloss factor
 //' @export
 // [[Rcpp::export(zerooneloss.factor)]]
-double zerooneloss(const std::vector<int>& actual, const std::vector<int>& predicted, bool na_rm = false) {
+Rcpp::NumericVector zerooneloss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) {
+    ZeroOneLossMetric foo; // Instantiate ZeroOneLossMetric
+    return classification_base(actual, predicted, foo);
+}
 
-  return _metric_(actual, predicted, na_rm);
-
+//' @rdname zerooneloss
+//' @method weighted.zerooneloss factor
+//' @export
+// [[Rcpp::export(weighted.zerooneloss.factor)]]
+Rcpp::NumericVector weighted_zerooneloss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const NumericVector& w) {
+    ZeroOneLossMetric foo; // Instantiate ZeroOneLossMetric
+    return classification_base(actual, predicted, w, foo);
 }
 
 //' @rdname zerooneloss
 //' @method zerooneloss cmatrix
 //' @export
 // [[Rcpp::export(zerooneloss.cmatrix)]]
-double zerooneloss_cmatrix(const IntegerMatrix& x) {
-
-  return _metric_(Rcpp::as<Eigen::MatrixXi>(x));
-
+Rcpp::NumericVector zerooneloss_cmatrix(const Rcpp::NumericMatrix& x) {
+  ZeroOneLossMetric foo; // Instantiate ZeroOneLossMetric
+  return classification_base(x, foo);
 }
