@@ -717,20 +717,6 @@ weighted.rae.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_rae`, actual, predicted, w)
 }
 
-#' @rdname rrse
-#' @method rrse numeric
-#' @export
-rrse.numeric <- function(actual, predicted, ...) {
-    .Call(`_SLmetrics_rrse`, actual, predicted)
-}
-
-#' @rdname rrse
-#' @method weighted.rrse numeric
-#' @export
-weighted.rrse.numeric <- function(actual, predicted, w, ...) {
-    .Call(`_SLmetrics_weighted_rrse`, actual, predicted, w)
-}
-
 #' @rdname rmse
 #' @method rmse numeric
 #' @export
@@ -757,6 +743,20 @@ rmsle.numeric <- function(actual, predicted, ...) {
 #' @export
 weighted.rmsle.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_rmsle`, actual, predicted, w)
+}
+
+#' @rdname rrse
+#' @method rrse numeric
+#' @export
+rrse.numeric <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_rrse`, actual, predicted)
+}
+
+#' @rdname rrse
+#' @method weighted.rrse numeric
+#' @export
+weighted.rrse.numeric <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_rrse`, actual, predicted, w)
 }
 
 #' @rdname smape

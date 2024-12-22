@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include "regression_RelativeRootSquaredError.h"
+#include "regression_RootRelativeSquaredError.h"
 using namespace Rcpp;
 
 //' @rdname rrse

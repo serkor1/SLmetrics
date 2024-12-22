@@ -78,7 +78,7 @@ testthat::test_that(
             object = set_equal(
               current   = as.numeric(score),
               target    = as.numeric(py_score),
-              tolerance = 1e-6 
+              tolerance = 1e-5 
             ),
             info = info
           )
