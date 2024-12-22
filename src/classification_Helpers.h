@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <vector>
 #include <numeric>
+#include <optional>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
@@ -241,6 +242,8 @@ inline __attribute__((always_inline)) MatrixType confusionMatrix(
 }
 
 
+
+
 /*
     Note to future self:
 
@@ -411,3 +414,115 @@ Rcpp::NumericVector classification_base(
     output = foo.compute(matrix, Rcpp::as<bool>(micro), std::forward<Args>(args)...);
     return output;
 }
+
+/*
+    Handling of classification applications:
+    ----------------------------------------
+
+    1) recipe:
+        These templates handles the passed arguments, and passes the relevant args to be prepared. The baseic
+        ingredients of the recipe are the following args in order:
+            1. This what is passed down from the .cpp-files, and is then process by the class in
+            "classification_Utils.H". 
+            NOTE: This is ALWAYS the first argument in the .cpp-files. If done otherwise, it will NOT compile.
+            2. The R method to process:
+                1. It's either an IntegerVector pair (actual, predicted) or NumericMatrix. 
+                    TODO: It should also handle NumericVectors for probability based methods.
+            3. An (optional) NumericVector for weighted classification metrics.
+            4. A Rcpp::Nullable<bool> micro-flag that determines if micro-aggregation should
+            be done.
+                TODO: Test if this can be optional too, and still appear as NULL in the exported function?
+            5. Optional arguments to class.
+                NOTE: With this is mostly kept for backwards, and forwards compatibility. If we want to add
+                defensive measures this template doesn't need to be updated, as these can be passed into
+                the class, and then define default behaviour in there.
+    
+    2) prepare:
+        This template prepares the the arguments passed from the recipe-template, and processes them
+        so they can be computed class. 
+        NOTE: It doesn't matter what you call the functions on the .cpp-side, as long as it's instantiated
+        as a function. This behaviour corresponds to FUN in lapply().
+        The basic args passed into the preparation are the following args in order:
+            1. The derived class, ie. the function that calculates the
+            relevant metric.
+            2. The matrix which are passed onto the class. This what the calculations
+            are done on.
+            3. Optional arguments to class.
+                NOTE: With this is mostly kept for backwards, and forwards compatibility. If we want to add
+                defensive measures this template doesn't need to be updated, as these can be passed into
+                the class, and then define default behaviour in there.
+
+    3) usage:
+
+        Rcpp::NumericVector metric(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) {
+            DerivedClassMetric myFoo;
+            return recipe(myFoo, actual, predicted);
+            }
+    
+*/
+template <typename Function, typename MatrixType, typename... Args>
+Rcpp::NumericVector prepare(
+    const Function& cook,
+    const MatrixType& matrix,
+    const Rcpp::Nullable<bool>& micro,
+    const Rcpp::CharacterVector& names,
+    Args&&... args) {
+
+    if (micro.isNull()) {
+        Rcpp::NumericVector output(names.size());
+        output = cook.compute(matrix, std::forward<Args>(args)...);
+        output.attr("names") = names; // Assign names as attribute
+        return output;
+    }
+
+    Rcpp::NumericVector output(1);
+    output = cook.compute(matrix, Rcpp::as<bool>(micro), std::forward<Args>(args)...);
+    return output;
+    
+}
+
+
+template <typename... Args>
+Rcpp::NumericVector recipe(
+    const classification& cook,
+    const Rcpp::NumericMatrix& matrix,
+    const Rcpp::Nullable<bool>& micro = R_NilValue,
+    Args&&... args) {
+
+    const Eigen::MatrixXd eigen_matrix = Rcpp::as<Eigen::MatrixXd>(matrix);
+
+    if (micro.isNull()) {
+        return cook.compute(eigen_matrix, std::forward<Args>(args)...);
+    }
+
+    const Rcpp::List dimnames = matrix.attr("dimnames");
+    const Rcpp::CharacterVector names = Rcpp::as<Rcpp::CharacterVector>(dimnames[1]);
+
+    return prepare(cook, eigen_matrix, micro, names, std::forward<Args>(args)...);
+}
+
+template <typename... Args>
+Rcpp::NumericVector recipe(
+    const classification& cook,
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::IntegerVector& predicted,
+    const std::optional<Rcpp::NumericVector>& w = std::nullopt,
+    const Rcpp::Nullable<bool>& micro = R_NilValue,
+    Args&&... args)
+{
+    const Rcpp::CharacterVector levels = actual.attr("levels");
+    const int k = levels.size();
+    Eigen::MatrixXd matrix(k + 1, k + 1);
+
+    matrix = w.has_value()
+        ? confusionMatrix<Eigen::MatrixXd>(actual, predicted, k + 1, *w)
+        : confusionMatrix<Eigen::MatrixXd>(actual, predicted, k + 1);
+    
+    if (micro.isNull()) {
+        return cook.compute(matrix, std::forward<Args>(args)...);
+    }
+
+    return prepare(cook, matrix, micro, levels, std::forward<Args>(args)...);
+}
+
+
