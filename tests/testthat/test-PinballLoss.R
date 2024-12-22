@@ -61,7 +61,7 @@ testthat::test_that(
       values <- create_regression()
       actual <- values$actual
       predicted <- values$predicted
-      w         <- values$weights
+      w         <- values$weight
 
       for (weighted in c(TRUE, FALSE)) {
         for (deviance in c(TRUE, FALSE)) {

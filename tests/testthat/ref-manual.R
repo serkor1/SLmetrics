@@ -53,6 +53,7 @@ py_ccc <- function(actual, predicted, w = NULL, correction = FALSE) {
   return(ccc_value)
 }
 
+
 py_recall <- function(
   actual,
   predicted,
@@ -508,7 +509,9 @@ py_rrse <- function(
     w <- rep(1, length(actual))
   }
 
-  sqrt(sum((w * actual - w * predicted)^2) / sum((w * actual - weighted.mean(actual, w = w))^2))
+  sqrt(
+    sum(w * (actual - predicted)^2) / 
+    sum(w*( actual - weighted.mean(actual, w = w))^2))
 
 }
 
@@ -522,7 +525,7 @@ py_rae <- function(
     w <- rep(1, length(actual))
   }
   
-    sum(abs(actual - predicted)) / sum(abs(actual - weighted.mean(actual, w = w)))
+    sum(w * abs(actual - predicted)) / sum( w * abs(actual - weighted.mean(actual, w = w)))
 }
 
 

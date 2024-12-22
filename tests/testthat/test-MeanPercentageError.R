@@ -31,7 +31,7 @@ testthat::test_that(
       values    <- create_regression()
       actual    <- values$actual
       predicted <- values$predicted
-      w         <- if (weighted) NULL else values$weights
+      w         <- if (weighted) values$weight else NULL
 
       # 1) generate sensible
       # label information

@@ -32,7 +32,7 @@ testthat::test_that(
       values <- create_regression()
       actual <- values$actual
       predicted <- values$predicted
-      w         <- values$weights
+      w         <- values$weight
 
       for (weighted in c(TRUE, FALSE)) {
       
@@ -76,8 +76,9 @@ testthat::test_that(
           # 2.4.2) test for equality
           testthat::expect_true(
             object = set_equal(
-              current = as.numeric(score),
-              target  = as.numeric(py_score)
+              current   = as.numeric(score),
+              target    = as.numeric(py_score),
+              tolerance = 1e-6 
             ),
             info = info
           )
