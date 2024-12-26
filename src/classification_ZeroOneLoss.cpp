@@ -7,25 +7,28 @@ using namespace Rcpp;
 //' @method zerooneloss factor
 //' @export
 // [[Rcpp::export(zerooneloss.factor)]]
-Rcpp::NumericVector zerooneloss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) {
-    ZeroOneLossMetric foo; // Instantiate ZeroOneLossMetric
-    return classification_base(actual, predicted, foo);
+Rcpp::NumericVector ZeroOneLoss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) 
+{
+    ZeroOneLossClass cook;
+    return recipe(cook, actual, predicted);
 }
 
 //' @rdname zerooneloss
 //' @method weighted.zerooneloss factor
 //' @export
 // [[Rcpp::export(weighted.zerooneloss.factor)]]
-Rcpp::NumericVector weighted_zerooneloss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const NumericVector& w) {
-    ZeroOneLossMetric foo; // Instantiate ZeroOneLossMetric
-    return classification_base(actual, predicted, w, foo);
+Rcpp::NumericVector weighted_ZeroOneLoss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w) 
+{
+    ZeroOneLossClass cook;
+    return recipe(cook, actual, predicted, w);
 }
 
 //' @rdname zerooneloss
 //' @method zerooneloss cmatrix
 //' @export
 // [[Rcpp::export(zerooneloss.cmatrix)]]
-Rcpp::NumericVector zerooneloss_cmatrix(const Rcpp::NumericMatrix& x) {
-  ZeroOneLossMetric foo; // Instantiate ZeroOneLossMetric
-  return classification_base(x, foo);
+Rcpp::NumericVector cmatrix_ZeroOneLoss(const Rcpp::NumericMatrix& x) 
+{
+  ZeroOneLossClass cook;
+  return recipe(cook, x);
 }

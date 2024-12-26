@@ -8,25 +8,28 @@ using namespace Rcpp;
 //' @method baccuracy factor
 //' @export
 // [[Rcpp::export(baccuracy.factor)]]
-NumericVector baccuracy(const IntegerVector& actual, const IntegerVector& predicted, const bool& adjust = false, bool na_rm = true) {
-    BalancedAccuracyMetric foo; // Instantiate BalancedAccuracyMetric
-    return classification_base(actual, predicted, foo, adjust, na_rm);
+Rcpp::NumericVector BalancedAccuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const bool& adjust = false, bool na_rm = true) 
+{
+    BalancedAccuracyClass cook(adjust, na_rm);
+    return recipe(cook, actual, predicted);
 }
 
 //' @rdname baccuracy
 //' @method weighted.baccuracy factor
 //' @export
 // [[Rcpp::export(weighted.baccuracy.factor)]]
-NumericVector weighted_baccuracy(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w,  const bool& adjust = false, bool na_rm = true) {
-    BalancedAccuracyMetric foo; // Instantiate BalancedAccuracyMetric
-    return classification_base(actual, predicted, w, foo, adjust, na_rm);
+Rcpp::NumericVector weighted_BalancedAccuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w,  const bool& adjust = false, bool na_rm = true) 
+{
+    BalancedAccuracyClass cook(adjust, na_rm);
+    return recipe(cook, actual, predicted, w);
 }
 
 //' @rdname baccuracy
 //' @method baccuracy cmatrix
 //' @export
 // [[Rcpp::export(baccuracy.cmatrix)]]
-NumericVector baccuracy_cmatrix(const NumericMatrix& x, const bool& adjust = false, bool na_rm = true) {
-    BalancedAccuracyMetric foo; // Instantiate BalancedAccuracyMetric
-    return classification_base(x, foo, adjust, na_rm);
+Rcpp::NumericVector cmatrix_BalancedAccuracy(const NumericMatrix& x, const bool& adjust = false, bool na_rm = true) 
+{
+    BalancedAccuracyClass cook(adjust, na_rm);
+    return recipe(cook, x);
 }

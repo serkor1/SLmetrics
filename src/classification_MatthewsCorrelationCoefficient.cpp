@@ -9,30 +9,30 @@ using namespace Rcpp;
 //' @method mcc factor
 //' @export
 // [[Rcpp::export(mcc.factor)]]
-Rcpp::NumericVector mcc(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
+Rcpp::NumericVector MatthewsCorrelationCoefficient(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
 {
-   MCCMetric foo; // Instantiate MCCMetric
-   return classification_base(actual, predicted, foo);
+   MatthewsCorrelationCoefficientClass cook;
+   return recipe(cook, actual, predicted);
 }
 
 //' @rdname mcc
 //' @method weighted.mcc factor
 //' @export
 // [[Rcpp::export(weighted.mcc.factor)]]
-Rcpp::NumericVector weigthed_mcc(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector w)
+Rcpp::NumericVector weigthed_MatthewsCorrelationCoefficient(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector w)
 {
-   MCCMetric foo; // Instantiate MCCMetric
-   return classification_base(actual, predicted, w, foo);
+   MatthewsCorrelationCoefficientClass cook;
+   return recipe(cook, actual, predicted, w);
 }
 
 //' @rdname mcc
 //' @method mcc cmatrix
 //' @export
 // [[Rcpp::export(mcc.cmatrix)]]
-Rcpp::NumericVector mcc_cmatrix(const Rcpp::NumericMatrix& x)
+Rcpp::NumericVector cmatrix_MatthewsCorrelationCoefficient(const Rcpp::NumericMatrix& x)
 {
-   MCCMetric foo; // Instantiate MCCMetric
-   return classification_base(x, foo);
+   MatthewsCorrelationCoefficientClass cook;
+   return recipe(cook, x);
 
 }
 
@@ -40,10 +40,10 @@ Rcpp::NumericVector mcc_cmatrix(const Rcpp::NumericMatrix& x)
 //' @method phi factor
 //' @export
 // [[Rcpp::export(phi.factor)]]
-Rcpp::NumericVector phi(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
+Rcpp::NumericVector PhiCoefficient(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
 {
-   MCCMetric foo; // Instantiate MCCMetric
-   return classification_base(actual, predicted, foo);
+   MatthewsCorrelationCoefficientClass cook;
+   return recipe(cook, actual, predicted);
 
 }
 
@@ -51,10 +51,10 @@ Rcpp::NumericVector phi(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVe
 //' @method weighted.phi factor
 //' @export
 // [[Rcpp::export(weighted.phi.factor)]]
-Rcpp::NumericVector weighted_phi(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector w)
+Rcpp::NumericVector weighted_PhiCoefficient(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector w)
 {
-   MCCMetric foo; // Instantiate MCCMetric
-   return classification_base(actual, predicted, w, foo);
+   MatthewsCorrelationCoefficientClass cook;
+   return recipe(cook, actual, predicted, w);
 
 }
 
@@ -63,10 +63,10 @@ Rcpp::NumericVector weighted_phi(const Rcpp::IntegerVector& actual, const Rcpp::
 //' @method phi cmatrix
 //' @export
 // [[Rcpp::export(phi.cmatrix)]]
-Rcpp::NumericVector phi_cmatrix(const Rcpp::NumericMatrix& x)
+Rcpp::NumericVector cmatrix_PhiCoefficient(const Rcpp::NumericMatrix& x)
 {
-   MCCMetric foo; // Instantiate MCCMetric
-   return classification_base(x, foo);
+   MatthewsCorrelationCoefficientClass cook;
+   return recipe(cook, x);
 
 }
 

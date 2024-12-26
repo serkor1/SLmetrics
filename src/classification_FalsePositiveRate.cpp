@@ -8,52 +8,58 @@ using namespace Rcpp;
 //' @method fpr factor
 //' @export
 // [[Rcpp::export(fpr.factor)]]
-NumericVector fpr(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    FalsePositiveRateMetric foo; // Instantiate FPR metric
-    return classification_base(actual, predicted, foo, micro, na_rm);
+Rcpp::NumericVector FalsePositiveRate(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    FalsePositiveRateClass cook(na_rm);
+    return recipe(cook, actual, predicted, std::nullopt, micro);
 }
 
 //' @rdname fpr
 //' @method weighted.fpr factor
 //' @export
 // [[Rcpp::export(weighted.fpr.factor)]]
-NumericVector weighted_fpr(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    FalsePositiveRateMetric foo; // Instantiate FPR metric
-    return classification_base(actual, predicted, w, foo, micro, na_rm);
+Rcpp::NumericVector weighted_FalsePositiveRate(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    FalsePositiveRateClass cook(na_rm);
+    return recipe(cook, actual, predicted, w, micro);
 }
 
 //' @rdname fpr
 //' @method fpr cmatrix
 //' @export
 // [[Rcpp::export(fpr.cmatrix)]]
-NumericVector fpr_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    FalsePositiveRateMetric foo; // Instantiate FPR metric
-    return classification_base(x, foo, micro, na_rm);
+Rcpp::NumericVector cmatrix_FalsePositiveRate(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    FalsePositiveRateClass cook(na_rm);
+    return recipe(cook, x, micro);
 }
 
 //' @rdname fpr
 //' @method fallout factor
 //' @export
 // [[Rcpp::export(fallout.factor)]]
-NumericVector fallout(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    FalsePositiveRateMetric foo; // Instantiate FPR metric
-    return classification_base(actual, predicted, foo, micro, na_rm);
+Rcpp::NumericVector Fallout(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    FalsePositiveRateClass cook(na_rm);
+    return recipe(cook, actual, predicted, std::nullopt, micro);
 }
 
 //' @rdname fpr
 //' @method weighted.fallout factor
 //' @export
 // [[Rcpp::export(weighted.fallout.factor)]]
-NumericVector weighted_fallout(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    FalsePositiveRateMetric foo; // Instantiate FPR metric
-    return classification_base(actual, predicted, w, foo, micro, na_rm);
+Rcpp::NumericVector weighted_Fallout(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    FalsePositiveRateClass cook(na_rm);
+    return recipe(cook, actual, predicted, w, micro);
 }
 
 //' @rdname fpr
 //' @method fallout cmatrix
 //' @export
 // [[Rcpp::export(fallout.cmatrix)]]
-NumericVector fallout_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    FalsePositiveRateMetric foo; // Instantiate FPR metric
-    return classification_base(x, foo, micro, na_rm);
+Rcpp::NumericVector cmatrix_Fallout(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    FalsePositiveRateClass cook(na_rm);
+    return recipe(cook, x, micro);
 }

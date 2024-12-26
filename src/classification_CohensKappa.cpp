@@ -8,25 +8,28 @@ using namespace Rcpp;
 //' @method ckappa factor
 //' @export
 // [[Rcpp::export(ckappa.factor)]]
-NumericVector ckappa(const IntegerVector& actual, const IntegerVector& predicted, const double& beta = 0.0) {
-    CohensKappaMetric foo; // Instantiate CohensKappaMetric
-    return classification_base(actual, predicted, foo, beta);
+Rcpp::NumericVector CohensKappa(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const double& beta = 0.0) 
+{
+    CohensKappaClass cook(beta);
+    return recipe(cook, actual, predicted);
 }
 
 //' @rdname ckappa
 //' @method weighted.ckappa factor
 //' @export
 // [[Rcpp::export(weighted.ckappa.factor)]]
-NumericVector weighted_ckappa(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, const double& beta = 0.0) {
-    CohensKappaMetric foo; // Instantiate CohensKappaMetric
-    return classification_base(actual, predicted, w, foo, beta);
+Rcpp::NumericVector weighted_CohensKappa(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, const double& beta = 0.0) 
+{
+    CohensKappaClass cook(beta);
+    return recipe(cook, actual, predicted, w);
 }
 
 //' @rdname ckappa
 //' @method ckappa cmatrix
 //' @export
 // [[Rcpp::export(ckappa.cmatrix)]]
-NumericVector ckappa_cmatrix(const NumericMatrix& x, const double& beta = 0.0) {
-    CohensKappaMetric foo; // Instantiate CohensKappaMetric
-    return classification_base(x, foo, beta);
+Rcpp::NumericVector cmatrix_CohensKappa(const Rcpp::NumericMatrix& x, const double& beta = 0.0) 
+{
+    CohensKappaClass cook(beta);
+    return recipe(cook, x);
 }

@@ -1,0 +1,11 @@
+#ifndef CLASSIFICATION_CONFUSIONMATRIX_H
+#define CLASSIFICATION_CONFUSIONMATRIX_H
+
+#include "classification_Helpers.h"
+#include <RcppEigen.h>
+#include <cmath>
+#define EIGEN_USE_MKL_ALL
+EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
+
+#endif // CLASSIFICATION_CONFUSIONMATRIX_H

@@ -15,7 +15,6 @@
 #' @param predicted A vector of <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels
 #' @param w A <[numeric]>-vector of [length] \eqn{n}. [NULL] by default
 #' @param x A confusion matrix created [cmatrix()]
-#' @param ... Arguments passed into other methods
 #' 
 #' @inherit specificity
 #'

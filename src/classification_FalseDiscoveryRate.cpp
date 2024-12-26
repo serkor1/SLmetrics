@@ -8,25 +8,28 @@ using namespace Rcpp;
 //' @method fdr factor
 //' @export
 // [[Rcpp::export(fdr.factor)]]
-NumericVector fdr(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    FalseDiscoveryRateMetric foo; // Instantiate FDR metric
-    return classification_base(actual, predicted, foo, micro, na_rm);
+Rcpp::NumericVector FalseDiscoveryRate(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    FalseDiscoveryRateClass cook(na_rm);
+    return recipe(cook, actual, predicted, std::nullopt, micro);
 }
 
 //' @rdname fdr
 //' @method weighted.fdr factor
 //' @export
 // [[Rcpp::export(weighted.fdr.factor)]]
-NumericVector weighted_fdr(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    FalseDiscoveryRateMetric foo; // Instantiate FDR metric
-    return classification_base(actual, predicted, w, foo, micro, na_rm);
+Rcpp::NumericVector weighted_FalseDiscoveryRate(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    FalseDiscoveryRateClass cook(na_rm);
+    return recipe(cook, actual, predicted, w, micro);
 }
 
 //' @rdname fdr
 //' @method fdr cmatrix
 //' @export
 // [[Rcpp::export(fdr.cmatrix)]]
-NumericVector fdr_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    FalseDiscoveryRateMetric foo; // Instantiate FDR metric
-    return classification_base(x, foo, micro, na_rm);
+Rcpp::NumericVector cmatrix_FalseDiscoveryRate(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    FalseDiscoveryRateClass cook(na_rm);
+    return recipe(cook, x, micro);
 }

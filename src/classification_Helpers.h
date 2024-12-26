@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <vector>
 #include <numeric>
+#include <optional>
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
@@ -240,174 +241,114 @@ inline __attribute__((always_inline)) MatrixType confusionMatrix(
         return placeholder.block(1, 1, k - 1, k - 1);
 }
 
-
 /*
-    Note to future self:
+    Handling of classification applications:
+    ----------------------------------------
 
-        - This implementation relies on variadic templates (https://www.geeksforgeeks.org/variadic-function-templates-c/)
-        it basically works like ellipsis (...) in R. 
+    1) recipe:
+        These templates handles the passed arguments, and passes the relevant args to be prepared. The baseic
+        ingredients of the recipe are the following args in order:
+            1. This what is passed down from the .cpp-files, and is then process by the class in
+            "classification_Utils.H". 
+            NOTE: This is ALWAYS the first argument in the .cpp-files. If done otherwise, it will NOT compile.
+            2. The R method to process:
+                1. It's either an IntegerVector pair (actual, predicted) or NumericMatrix. 
+                    TODO: It should also handle NumericVectors for probability based methods.
+            3. An (optional) NumericVector for weighted classification metrics.
+            4. A Rcpp::Nullable<bool> micro-flag that determines if micro-aggregation should
+            be done.
+                TODO: Test if this can be optional too, and still appear as NULL in the exported function?
+            5. Optional arguments to class.
+                NOTE: With this is mostly kept for backwards, and forwards compatibility. If we want to add
+                defensive measures this template doesn't need to be updated, as these can be passed into
+                the class, and then define default behaviour in there.
+    
+    2) prepare:
+        This template prepares the the arguments passed from the recipe-template, and processes them
+        so they can be computed class. 
+        NOTE: It doesn't matter what you call the functions on the .cpp-side, as long as it's instantiated
+        as a function. This behaviour corresponds to FUN in lapply().
+        The basic args passed into the preparation are the following args in order:
+            1. The derived class, ie. the function that calculates the
+            relevant metric.
+            2. The matrix which are passed onto the class. This what the calculations
+            are done on.
+            3. Optional arguments to class.
+                NOTE: With this is mostly kept for backwards, and forwards compatibility. If we want to add
+                defensive measures this template doesn't need to be updated, as these can be passed into
+                the class, and then define default behaviour in there.
 
-            + Why? The main issue is that for a vast majority of the classification metric we would need additional arguments
-            that extends beyond the micro, na_rm arguments. And a further benefit is that we can add additional aguments
-            to the functions without having to recode the whole code-base.
+    3) usage:
 
-        - The classification_base functions works as follows
-            
-            + (actual, predicted), (actual, predicted, micro), (actual, predicted, w), (actual, predicted, w, micro),  (matrix) and (matrix, micro)
-                - So it's one overloaded function per function specification. 
-
-            NOTE: Working OOP here might be a huge benefit. But this won't be implement before anytime soon. The base package has
-            to be done first.
-
+        Rcpp::NumericVector metric(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) {
+            DerivedClassMetric myFoo;
+            return recipe(myFoo, actual, predicted);
+            }
+    
 */
+template <typename Function, typename MatrixType, typename... Args>
+Rcpp::NumericVector prepare(
+    const Function& cook,
+    const MatrixType& matrix,
+    const Rcpp::Nullable<bool>& micro,
+    const Rcpp::CharacterVector& names,
+    Args&&... args) {
 
-// matrix templates //
+    if (micro.isNull()) {
+        Rcpp::NumericVector output(names.size());
+        output = cook.compute(matrix, std::forward<Args>(args)...);
+        output.attr("names") = names; // Assign names as attribute
+        return output;
+    }
 
-// 1) matrix template
-// without micro-agument
+    Rcpp::NumericVector output(1);
+    output = cook.compute(matrix, Rcpp::as<bool>(micro), std::forward<Args>(args)...);
+    return output;
+    
+}
+
+
 template <typename... Args>
-Rcpp::NumericVector classification_base(
+Rcpp::NumericVector recipe(
+    const classification& cook,
     const Rcpp::NumericMatrix& matrix,
-    const classification& foo,
-    Args&&... args)
-{
-    // 0) Convert matrix to Eigen format
-    Eigen::MatrixXd eigen_matrix = Rcpp::as<Eigen::MatrixXd>(matrix);
+    const Rcpp::Nullable<bool>& micro = R_NilValue,
+    Args&&... args) {
 
-    // 1) Forward the additional arguments to foo.compute
-    return foo.compute(eigen_matrix, std::forward<Args>(args)...);
-}
+    const Eigen::MatrixXd eigen_matrix = Rcpp::as<Eigen::MatrixXd>(matrix);
 
-// 2) matrix template
-// with micro argument
-template <typename... Args>
-Rcpp::NumericVector classification_base(
-    const Rcpp::NumericMatrix& matrix,
-    const classification& foo,
-    Rcpp::Nullable<bool> micro,
-    Args&&... args)
-{
-    // 0) Extract dimension names
-    const Rcpp::List& dimnames = matrix.attr("dimnames");
-    const Rcpp::CharacterVector& names = dimnames[1];
-    const int k = names.size();
-
-    // 1) Convert matrix to Eigen format
-    Eigen::MatrixXd eigen_matrix = Rcpp::as<Eigen::MatrixXd>(matrix);
-
-    // 2) Handle micro or macro aggregation
     if (micro.isNull()) {
-        Rcpp::NumericVector output(k);
-        output = foo.compute(eigen_matrix, std::forward<Args>(args)...);
-        output.attr("names") = names; // Assign column names as names
-        return output;
+        return cook.compute(eigen_matrix, std::forward<Args>(args)...);
     }
 
-    Rcpp::NumericVector output(1);
-    output = foo.compute(eigen_matrix, Rcpp::as<bool>(micro), std::forward<Args>(args)...);
-    return output;
+    const Rcpp::List dimnames = matrix.attr("dimnames");
+    const Rcpp::CharacterVector names = Rcpp::as<Rcpp::CharacterVector>(dimnames[1]);
+
+    return prepare(cook, eigen_matrix, micro, names, std::forward<Args>(args)...);
 }
 
-// IntegerVectorr templates //
-
-// 1) IntegerVector template without
-// micro-argument
 template <typename... Args>
-Rcpp::NumericVector classification_base(
+Rcpp::NumericVector recipe(
+    const classification& cook,
     const Rcpp::IntegerVector& actual,
     const Rcpp::IntegerVector& predicted,
-    const classification& foo,
+    const std::optional<Rcpp::NumericVector>& w = std::nullopt,
+    const Rcpp::Nullable<bool>& micro = R_NilValue,
     Args&&... args)
 {
-    // 0) Extract the number of classes
-    Rcpp::CharacterVector levels = actual.attr("levels");
-    int k = levels.length();
+    const Rcpp::CharacterVector levels = actual.attr("levels");
+    const int k = levels.size();
+    Eigen::MatrixXd matrix(k + 1, k + 1);
 
-    // 1) Construct the confusion matrix
-    Eigen::MatrixXd matrix = confusionMatrix<Eigen::MatrixXd>(actual, predicted, k + 1);
-
-    // 2) Forward the additional arguments to foo.compute
-    return foo.compute(matrix, std::forward<Args>(args)...);
-}
-
-// 2) IntegerVector template without
-// micro-argument with weights
-template <typename... Args>
-Rcpp::NumericVector classification_base(
-    const Rcpp::IntegerVector& actual,
-    const Rcpp::IntegerVector& predicted,
-    const Rcpp::NumericVector& w,
-    const classification& foo,
-    Args&&... args)
-{
-    // 0) Extract the number of classes
-    Rcpp::CharacterVector levels = actual.attr("levels");
-    int k = levels.length();
-
-    // 1) Construct the confusion matrix with weights
-    Eigen::MatrixXd matrix = confusionMatrix<Eigen::MatrixXd>(actual, predicted, k + 1, w);
-
-    // 2) Forward the additional arguments to foo.compute
-    return foo.compute(matrix, std::forward<Args>(args)...);
-}
-
-// 3) IntegerVector template with
-// micro-argument
-template <typename... Args>
-Rcpp::NumericVector classification_base(
-    const Rcpp::IntegerVector& actual,
-    const Rcpp::IntegerVector& predicted,
-    const classification& foo,
-    Rcpp::Nullable<bool> micro,
-    Args&&... args)
-{
-    // 0) Extract the number of classes
-    Rcpp::CharacterVector levels = actual.attr("levels");
-    int k = levels.length();
-
-    // 1) Construct the confusion matrix
-    Eigen::MatrixXd matrix = confusionMatrix<Eigen::MatrixXd>(actual, predicted, k + 1);
-
-    // 2) Handle micro or macro aggregation
+    matrix = w.has_value()
+        ? confusionMatrix<Eigen::MatrixXd>(actual, predicted, k + 1, *w)
+        : confusionMatrix<Eigen::MatrixXd>(actual, predicted, k + 1);
+    
     if (micro.isNull()) {
-        Rcpp::NumericVector output(k);
-        output = foo.compute(matrix, std::forward<Args>(args)...);
-        output.attr("names") = levels; // Assign levels as names
-        return output;
+        return cook.compute(matrix, std::forward<Args>(args)...);
     }
 
-    Rcpp::NumericVector output(1);
-    output = foo.compute(matrix, Rcpp::as<bool>(micro), std::forward<Args>(args)...);
-    return output;
+    return prepare(cook, matrix, micro, levels, std::forward<Args>(args)...);
 }
 
-// 4) IntegerVector template with
-// micro-argument and w
-template <typename... Args>
-Rcpp::NumericVector classification_base(
-    const Rcpp::IntegerVector& actual,
-    const Rcpp::IntegerVector& predicted,
-    const Rcpp::NumericVector& w,
-    const classification& foo,
-    Rcpp::Nullable<bool> micro,
-    Args&&... args)
-{
-    // 0) Extract the number of classes
-    Rcpp::CharacterVector levels = actual.attr("levels");
-    int k = levels.length();
 
-    // 1) Construct the confusion matrix
-    Eigen::MatrixXd matrix = confusionMatrix<Eigen::MatrixXd>(actual, predicted, k + 1, w);
-
-    // 2) Handle micro or macro aggregation
-    if (micro.isNull()) {
-        Rcpp::NumericVector output(k);
-        output = foo.compute(matrix, std::forward<Args>(args)...);
-        output.attr("names") = levels; // Assign levels as names
-        return output;
-    }
-
-    Rcpp::NumericVector output(1);
-    output = foo.compute(matrix, Rcpp::as<bool>(micro), std::forward<Args>(args)...);
-    return output;
-}
