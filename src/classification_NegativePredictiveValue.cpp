@@ -8,25 +8,28 @@ using namespace Rcpp;
 //' @method npv factor
 //' @export
 // [[Rcpp::export(npv.factor)]]
-NumericVector npv(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    NegativePredictiveValueMetric foo; // Instantiate NPV metric
-    return classification_base(actual, predicted, foo, micro, na_rm);
+Rcpp::NumericVector NegativePredictitveValue(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    NegativePredictiveValueClass cook(na_rm);
+    return recipe(cook, actual, predicted, std::nullopt, micro);
 }
 
 //' @rdname npv
 //' @method weighted.npv factor
 //' @export
 // [[Rcpp::export(weighted.npv.factor)]]
-NumericVector weighted_npv(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    NegativePredictiveValueMetric foo; // Instantiate NPV metric
-    return classification_base(actual, predicted, w, foo, micro, na_rm);
+Rcpp::NumericVector weighted_NegativePredictitveValue(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    NegativePredictiveValueClass cook(na_rm);
+    return recipe(cook, actual, predicted, w, micro);
 }
 
 //' @rdname npv
 //' @method npv cmatrix
 //' @export
 // [[Rcpp::export(npv.cmatrix)]]
-NumericVector npv_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    NegativePredictiveValueMetric foo; // Instantiate NPV metric
-    return classification_base(x, foo, micro, na_rm);
+Rcpp::NumericVector cmatrix_NegativePredictitveValue(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    NegativePredictiveValueClass cook(na_rm);
+    return recipe(cook, x, micro);
 }

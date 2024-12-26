@@ -8,20 +8,20 @@ using namespace Rcpp;
 //' @method fmi factor
 //' @export
 // [[Rcpp::export(fmi.factor)]]
-Rcpp::NumericVector fmi(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
+Rcpp::NumericVector FowlkesMallowsIndex(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
 {
-  FMIMetric foo; // Instantiate AccuracyMetric
-  return classification_base(actual, predicted, foo);
+  FowlkesMallowsIndexClass cook;
+  return recipe(cook, actual, predicted);
 }
 
 //' @rdname fmi
 //' @method fmi cmatrix
 //' @export
 // [[Rcpp::export(fmi.cmatrix)]]
-Rcpp::NumericVector fmi_cmatrix(const NumericMatrix& x)
+Rcpp::NumericVector cmatrix_FowlkesMallowsIndexClass(const Rcpp::NumericMatrix& x)
 {
-  FMIMetric foo; // Instantiate AccuracyMetric
-  return classification_base(x, foo);
+  FowlkesMallowsIndexClass cook;
+  return recipe(cook, x);
 }
 
 

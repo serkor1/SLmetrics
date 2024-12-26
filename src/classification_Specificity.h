@@ -13,44 +13,51 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
         the confusion matrix. So there is no need to add an overloaded function
         for the weighted metrics.
 */
-class SpecificityMetric : public classification {
-public:
+class SpecificityClass : public classification {
 
-    // Compute specificity with micro or macro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm) const override {
+    private:
+        bool na_rm;
 
-        // 0) Declare variables and size
-        // for efficiency.
-        // NOTE: Micro and macro already wraps and exports as Rcpp
-        Rcpp::NumericVector output(1);
-        Eigen::ArrayXd tn(matrix.rows()), fp(matrix.rows());
+    public:
 
-        TN(matrix, tn);
-        FP(matrix, fp);
+        SpecificityClass(bool na_rm)
+            : na_rm(na_rm) {}
 
-        return do_micro
-            ?  micro(tn, tn + fp, na_rm)
-            :  macro(tn, tn + fp, na_rm);
+        // Compute specificity with micro or macro aggregation
+        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro) const override {
 
-    }
+            // 0) Declare variables and size
+            // for efficiency.
+            // NOTE: Micro and macro already wraps and exports as Rcpp
+            Rcpp::NumericVector output(1);
+            Eigen::ArrayXd tn(matrix.rows()), fp(matrix.rows());
 
-    // Compute specificity without micro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
+            TN(matrix, tn);
+            FP(matrix, fp);
 
-        // 0) Declare output value and TN/FP arrays
-        Eigen::ArrayXd output(matrix.rows());
-        Eigen::ArrayXd tn(matrix.rows()), fp(matrix.rows());
+            return do_micro
+                ?  micro(tn, tn + fp, na_rm)
+                :  macro(tn, tn + fp, na_rm);
 
-        // 1) Create TN and FP arrays
-        TN(matrix, tn);
-        FP(matrix, fp);
+        }
 
-        // 2) Calculate metric
-        output = tn / (tn + fp);
+        // Compute specificity without micro aggregation
+        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
 
-        // 3) Return wrapped (R-compatible classes)
-        return Rcpp::wrap(output);
-    }
+            // 0) Declare output value and TN/FP arrays
+            Eigen::ArrayXd output(matrix.rows());
+            Eigen::ArrayXd tn(matrix.rows()), fp(matrix.rows());
+
+            // 1) Create TN and FP arrays
+            TN(matrix, tn);
+            FP(matrix, fp);
+
+            // 2) Calculate metric
+            output = tn / (tn + fp);
+
+            // 3) Return wrapped (R-compatible classes)
+            return Rcpp::wrap(output);
+        }
 };
 
-#endif // CLASSIFICATION_SPECIFICITY_H
+#endif

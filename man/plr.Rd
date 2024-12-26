@@ -8,11 +8,11 @@
 \alias{weighted.plr}
 \title{Compute the \eqn{\text{positive}} \eqn{\text{likelihood}} \eqn{\text{ratio}}}
 \usage{
-\method{plr}{factor}(actual, predicted, micro = NULL, ...)
+\method{plr}{factor}(actual, predicted, ...)
 
-\method{weighted.plr}{factor}(actual, predicted, w, micro = NULL, ...)
+\method{weighted.plr}{factor}(actual, predicted, w, ...)
 
-\method{plr}{cmatrix}(x, micro = NULL, ...)
+\method{plr}{cmatrix}(x, ...)
 
 plr(...)
 
@@ -22,9 +22,6 @@ weighted.plr(...)
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
-
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
 
 \item{...}{Arguments passed into other methods}
 

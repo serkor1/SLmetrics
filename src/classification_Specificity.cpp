@@ -1,6 +1,6 @@
 // [[Rcpp::depends(RcppEigen)]]
 #include <RcppEigen.h>
-#include "classification_Specificity.h" // SpecificityMetric definition
+#include "classification_Specificity.h" // SpecificityClass definition
 
 using namespace Rcpp;
 
@@ -8,80 +8,88 @@ using namespace Rcpp;
 //' @method specificity factor
 //' @export
 // [[Rcpp::export(specificity.factor)]]
-NumericVector specificity(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-
-    SpecificityMetric foo; // Instantiate SpecificityMetric
-    return classification_base(actual, predicted, foo, micro, na_rm);
+Rcpp::NumericVector Specificity(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    SpecificityClass cook(na_rm);
+    return recipe(cook, actual, predicted, std::nullopt, micro);
 }
 
 //' @rdname specificity
 //' @method weighted.specificity factor
 //' @export
 // [[Rcpp::export(weighted.specificity.factor)]]
-NumericVector weighted_specificity(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    SpecificityMetric foo; // Instantiate SpecificityMetric
-    return classification_base(actual, predicted, w, foo, micro, na_rm);
+Rcpp::NumericVector weighted_Specificity(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    SpecificityClass cook(na_rm);
+    return recipe(cook, actual, predicted, w, micro);
 }
 
 //' @rdname specificity
 //' @method specificity cmatrix
 //' @export
 // [[Rcpp::export(specificity.cmatrix)]]
-NumericVector specificity_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    SpecificityMetric foo; // Instantiate SpecificityMetric
-    return classification_base(x, foo, micro, na_rm);
+Rcpp::NumericVector cmatrix_Specificity(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    SpecificityClass cook(na_rm);
+    return recipe(cook, x, micro);
 }
 
 //' @rdname specificity
 //' @method tnr factor
 //' @export
 // [[Rcpp::export(tnr.factor)]]
-NumericVector tnr(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    SpecificityMetric foo; // Instantiate SpecificityMetric
-    return classification_base(actual, predicted, foo, micro, na_rm);
+Rcpp::NumericVector TrueNegativeRate(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    SpecificityClass cook(na_rm);
+    return recipe(cook, actual, predicted, std::nullopt, micro);
 }
 
 //' @rdname specificity
 //' @method weighted.tnr factor
 //' @export
 // [[Rcpp::export(weighted.tnr.factor)]]
-NumericVector weighted_tnr(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    SpecificityMetric foo; // Instantiate SpecificityMetric
-    return classification_base(actual, predicted, w, foo, micro, na_rm);
+Rcpp::NumericVector weighted_TrueNegativeRate(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    SpecificityClass cook(na_rm);
+    return recipe(cook, actual, predicted, w, micro);
 }
 
 //' @rdname specificity
 //' @method tnr cmatrix
 //' @export
 // [[Rcpp::export(tnr.cmatrix)]]
-NumericVector tnr_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    SpecificityMetric foo; // Instantiate SpecificityMetric
-    return classification_base(x, foo, micro, na_rm);
+Rcpp::NumericVector cmatrix_TrueNegativeRate(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    SpecificityClass cook(na_rm);
+    return recipe(cook, x, micro);
 }
 
 //' @rdname specificity
 //' @method selectivity factor
 //' @export
 // [[Rcpp::export(selectivity.factor)]]
-NumericVector selectivity(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    SpecificityMetric foo; // Instantiate SpecificityMetric
-    return classification_base(actual, predicted, foo, micro, na_rm);
+Rcpp::NumericVector Selectivity(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    SpecificityClass cook(na_rm);
+    return recipe(cook, actual, predicted, std::nullopt, micro);
 }
 
 //' @rdname specificity
 //' @method weighted.selectivity factor
 //' @export
 // [[Rcpp::export(weighted.selectivity.factor)]]
-NumericVector weighted_selectivity(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    SpecificityMetric foo; // Instantiate SpecificityMetric
-    return classification_base(actual, predicted, w, foo, micro, na_rm);
+Rcpp::NumericVector weighted_Selectivity(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    SpecificityClass cook(na_rm);
+    return recipe(cook, actual, predicted, w, micro);
 }
 
 //' @rdname specificity
 //' @method selectivity cmatrix
 //' @export
 // [[Rcpp::export(selectivity.cmatrix)]]
-NumericVector selectivity_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    SpecificityMetric foo; // Instantiate SpecificityMetric
-    return classification_base(x, foo, micro, na_rm);
+Rcpp::NumericVector cmatrix_Selectivity(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    SpecificityClass cook(na_rm);
+    return recipe(cook, x, micro);
 }

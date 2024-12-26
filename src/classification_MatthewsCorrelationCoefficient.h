@@ -11,37 +11,37 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     Calculates the Matthews Correlation Coefficient (MCC) using the provided
     confusion matrix or actual/predicted labels.
 */
-class MCCMetric : public classification {
-public:
-    // Compute MCC or Phi Coefficient
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
+class MatthewsCorrelationCoefficientClass : public classification {
 
-      // 0) set sizes
-      // of arrays
-      Eigen::ArrayXd output(1), N(1), row_sum(matrix.rows()), col_sum(matrix.cols()), tp_sum(1), cov_ytyp(1), cov_ypyp(1), cov_ytyt(1), product(1);
+    public:
+        
+        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
 
-      
-      // 1) calculate values
-      // accordingly
-      tp_sum  = matrix.diagonal().sum();
-      row_sum = matrix.rowwise().sum();
-      col_sum = matrix.colwise().sum();
-      N       = matrix.sum();
+            Eigen::ArrayXd output(1), N(1), row_sum(matrix.rows()), col_sum(matrix.cols()), tp_sum(1), cov_ytyp(1), cov_ypyp(1), cov_ytyt(1), product(1);
 
-      // 2) calculate covariances
-      cov_ytyp = tp_sum * N - row_sum.matrix().dot(col_sum.matrix());
-      cov_ypyp = N * N - col_sum.matrix().squaredNorm();
-      cov_ytyt = N * N - row_sum.matrix().squaredNorm();
+            
+            // 1) calculate values
+            // accordingly
+            tp_sum  = matrix.diagonal().sum();
+            row_sum = matrix.rowwise().sum();
+            col_sum = matrix.colwise().sum();
+            N       = matrix.sum();
 
-      // 3) calcualte the product
-      product = cov_ypyp * cov_ytyt;
+            // 2) calculate covariances
+            cov_ytyp = tp_sum * N - row_sum.matrix().dot(col_sum.matrix());
+            cov_ypyp = N * N - col_sum.matrix().squaredNorm();
+            cov_ytyt = N * N - row_sum.matrix().squaredNorm();
 
-      // 4) calculate output
-      // value
-      output  = cov_ytyp / product.array().sqrt();
+            // 3) calcualte the product
+            product = cov_ypyp * cov_ytyt;
 
-      return Rcpp::wrap(output);
-    }
+            // 4) calculate output
+            // value
+            output  = cov_ytyp / product.array().sqrt();
+
+            return Rcpp::wrap(output);
+        }
+
 };
 
-#endif // CLASSIFICATION_MCC_H
+#endif

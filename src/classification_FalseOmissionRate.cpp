@@ -8,25 +8,28 @@ using namespace Rcpp;
 //' @method fer factor
 //' @export
 // [[Rcpp::export(fer.factor)]]
-NumericVector fer(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    FalseOmissionRateMetric foo; // Instantiate FOR metric
-    return classification_base(actual, predicted, foo, micro, na_rm);
+Rcpp::NumericVector FalseOmissionRate(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    FalseOmissionRateClass cook(na_rm);
+    return recipe(cook, actual, predicted, std::nullopt, micro);
 }
 
 //' @rdname fer
 //' @method weighted.fer factor
 //' @export
 // [[Rcpp::export(weighted.fer.factor)]]
-NumericVector weighted_fer(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    FalseOmissionRateMetric foo; // Instantiate FOR metric
-    return classification_base(actual, predicted, w, foo, micro, na_rm);
+Rcpp::NumericVector weighted_FalseOmissionRate(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    FalseOmissionRateClass cook(na_rm);
+    return recipe(cook, actual, predicted, w, micro);
 }
 
 //' @rdname fer
 //' @method fer cmatrix
 //' @export
 // [[Rcpp::export(fer.cmatrix)]]
-NumericVector fer_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    FalseOmissionRateMetric foo; // Instantiate FOR metric
-    return classification_base(x, foo, micro, na_rm);
+Rcpp::NumericVector cmatrix_FalseOmissionRate(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    FalseOmissionRateClass cook(na_rm);
+    return recipe(cook, x, micro);
 }

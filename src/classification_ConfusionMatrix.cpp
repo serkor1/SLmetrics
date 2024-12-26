@@ -1,6 +1,6 @@
 // [[Rcpp::depends(RcppEigen)]]
 #include <RcppEigen.h>
-#include "classification_Helpers.h"
+#include "classification_ConfusionMatrix.h"
 #include <Rcpp.h>
 using namespace Rcpp;
 
@@ -8,10 +8,8 @@ using namespace Rcpp;
 //' @method cmatrix factor
 //' @export
 // [[Rcpp::export(cmatrix.factor)]]
-Rcpp::NumericMatrix cmatrix(
-    const Rcpp::IntegerVector& actual,
-    const Rcpp::IntegerVector& predicted,
-    const Rcpp::Nullable<Rcpp::NumericVector>& w = R_NilValue) {
+Rcpp::NumericMatrix ConfusionMatrix(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::Nullable<Rcpp::NumericVector>& w = R_NilValue) 
+{
 
     // 1) declare the output matrix
     // compiler doesn't recognize it in if-statements
@@ -27,7 +25,7 @@ Rcpp::NumericMatrix cmatrix(
     // the content of the confusion matrix
      if (w.isNull()) {
         
-        output = Rcpp::wrap(confusionMatrix<Eigen::MatrixXi>(actual, predicted, k));
+        output = Rcpp::wrap(confusionMatrix<Eigen::MatrixXd>(actual, predicted, k));
 
     } else {
         

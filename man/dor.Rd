@@ -8,11 +8,11 @@
 \alias{weighted.dor}
 \title{Compute the \eqn{\text{diagnostic}} \eqn{\text{odds}} \eqn{\text{ratio}}}
 \usage{
-\method{dor}{factor}(actual, predicted, micro = NULL, ...)
+\method{dor}{factor}(actual, predicted, ...)
 
-\method{weighted.dor}{factor}(actual, predicted, w, micro = NULL, ...)
+\method{weighted.dor}{factor}(actual, predicted, w, ...)
 
-\method{dor}{cmatrix}(x, micro = NULL, ...)
+\method{dor}{cmatrix}(x, ...)
 
 dor(...)
 
@@ -22,9 +22,6 @@ weighted.dor(...)
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
-
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
 
 \item{...}{Arguments passed into other methods}
 

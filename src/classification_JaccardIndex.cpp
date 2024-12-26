@@ -8,27 +8,30 @@ using namespace Rcpp;
 //' @method jaccard factor
 //' @export
 // [[Rcpp::export(jaccard.factor)]]
-NumericVector jaccard(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    JaccardIndexMetric foo; // Instantiate Jaccard Index metric
-    return classification_base(actual, predicted, foo, micro, na_rm);
+Rcpp::NumericVector JaccardIndex(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    JaccardIndexClass cook(na_rm);
+    return recipe(cook, actual, predicted, std::nullopt, micro);
 }
 
 //' @rdname jaccard
 //' @method weighted.jaccard factor
 //' @export
 // [[Rcpp::export(weighted.jaccard.factor)]]
-NumericVector weighted_jaccard(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    JaccardIndexMetric foo; // Instantiate Jaccard Index metric
-    return classification_base(actual, predicted, w, foo, micro, na_rm);
+Rcpp::NumericVector weighted_JaccardIndex(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    JaccardIndexClass cook(na_rm);
+    return recipe(cook, actual, predicted, w, micro);
 }
 
 //' @rdname jaccard
 //' @method jaccard cmatrix
 //' @export
 // [[Rcpp::export(jaccard.cmatrix)]]
-NumericVector jaccard_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    JaccardIndexMetric foo; // Instantiate Jaccard Index metric
-    return classification_base(x, foo, micro, na_rm);
+Rcpp::NumericVector cmatrix_JaccardIndex(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    JaccardIndexClass cook(na_rm);
+    return recipe(cook, x, micro);
 }
 
 
@@ -36,27 +39,30 @@ NumericVector jaccard_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_N
 //' @method csi factor
 //' @export
 // [[Rcpp::export(csi.factor)]]
-NumericVector csi(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    JaccardIndexMetric foo; // Instantiate Jaccard Index metric
-    return classification_base(actual, predicted, foo, micro, na_rm);
+Rcpp::NumericVector CriticalSuccessIndex(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    JaccardIndexClass cook(na_rm);
+    return recipe(cook, actual, predicted, std::nullopt, micro);
 }
 
 //' @rdname jaccard
 //' @method weighted.csi factor
 //' @export
 // [[Rcpp::export(weighted.csi.factor)]]
-NumericVector weighted_csi(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    JaccardIndexMetric foo; // Instantiate Jaccard Index metric
-    return classification_base(actual, predicted, w, foo, micro, na_rm);
+Rcpp::NumericVector weighted_CriticalSuccessIndex(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    JaccardIndexClass cook(na_rm);
+    return recipe(cook, actual, predicted, w, micro);
 }
 
 //' @rdname jaccard
 //' @method csi cmatrix
 //' @export
 // [[Rcpp::export(csi.cmatrix)]]
-NumericVector csi_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    JaccardIndexMetric foo; // Instantiate Jaccard Index metric
-    return classification_base(x, foo, micro, na_rm);
+Rcpp::NumericVector cmatrix_CriticalSuccessIndex(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    JaccardIndexClass cook(na_rm);
+    return recipe(cook, x, micro);
 }
 
 
@@ -64,25 +70,28 @@ NumericVector csi_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilVa
 //' @method tscore factor
 //' @export
 // [[Rcpp::export(tscore.factor)]]
-NumericVector tscore(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    JaccardIndexMetric foo; // Instantiate Jaccard Index metric
-    return classification_base(actual, predicted, foo, micro, na_rm);
+Rcpp::NumericVector ThreatScore(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    JaccardIndexClass cook(na_rm);
+    return recipe(cook, actual, predicted, std::nullopt, micro);
 }
 
 //' @rdname jaccard
 //' @method weighted.tscore factor
 //' @export
 // [[Rcpp::export(weighted.tscore.factor)]]
-NumericVector weighted_tscore(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    JaccardIndexMetric foo; // Instantiate Jaccard Index metric
-    return classification_base(actual, predicted, w, foo, micro, na_rm);
+Rcpp::NumericVector weighted_ThreatScore(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    JaccardIndexClass cook(na_rm);
+    return recipe(cook, actual, predicted, w, micro);
 }
 
 //' @rdname jaccard
 //' @method tscore cmatrix
 //' @export
 // [[Rcpp::export(tscore.cmatrix)]]
-NumericVector tscore_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue, const bool& na_rm = true) {
-    JaccardIndexMetric foo; // Instantiate Jaccard Index metric
-    return classification_base(x, foo, micro, na_rm);
+Rcpp::NumericVector cmatrix_ThreatScore(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
+{
+    JaccardIndexClass cook(na_rm);
+    return recipe(cook, x, micro);
 }
