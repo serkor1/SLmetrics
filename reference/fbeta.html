@@ -254,8 +254,7 @@ $$</p>
 <span class="r-in"><span>  predicted <span class="op">=</span> <span class="va">predicted</span>,</span></span>
 <span class="r-in"><span>  beta      <span class="op">=</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Virginica    Others </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.7070707 0.8557214 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7070707 0.8557214</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># 4.2) weighted F1-score</span></span></span>
 <span class="r-in"><span><span class="fu">weighted.fbeta</span><span class="op">(</span></span></span>
@@ -264,8 +263,7 @@ $$</p>
 <span class="r-in"><span>  w         <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  beta      <span class="op">=</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Virginica    Others </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.7392265 0.7577002 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7392265 0.7577002</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># 5) evaluate overall performance</span></span></span>
 <span class="r-in"><span><span class="co"># using micro-averaged F1-score</span></span></span>
