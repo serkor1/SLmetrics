@@ -7,28 +7,27 @@
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-class PLRMetric : public classification {
-public:
+class PositiveLikelihoodRatioClass : public classification {
 
-    // Compute PLR without micro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
-        Eigen::ArrayXd output(matrix.rows());
-        Eigen::ArrayXd tp(matrix.rows()), fn(matrix.rows()), tn(matrix.rows()), fp(matrix.rows());
-        Eigen::ArrayXd tpr(matrix.rows()), fpr(matrix.rows());
+    public:
 
+        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
+            Eigen::ArrayXd output(matrix.rows());
+            Eigen::ArrayXd tp(matrix.rows()), fn(matrix.rows()), tn(matrix.rows()), fp(matrix.rows());
+            Eigen::ArrayXd tpr(matrix.rows()), fpr(matrix.rows());
 
-        TP(matrix, tp);
-        FN(matrix, fn);
-        TN(matrix, tn);
-        FP(matrix, fp);
+            TP(matrix, tp);
+            FN(matrix, fn);
+            TN(matrix, tn);
+            FP(matrix, fp);
 
-        tpr = tp / (tp + fn);
-        fpr = fp / (fp + tn);
+            tpr = tp / (tp + fn);
+            fpr = fp / (fp + tn);
 
-        output = tpr / fpr;
+            output = tpr / fpr;
 
-        return Rcpp::wrap(output);
-    }
+            return Rcpp::wrap(output);
+        }
     
 };
 

@@ -7,22 +7,22 @@
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-class DORMetric : public classification {
-public:
+class DiagnosticOddsRatioClass : public classification {
 
-    // Compute DOR without micro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
-        Eigen::ArrayXd output(matrix.rows());
-        Eigen::ArrayXd tp(matrix.rows()), fn(matrix.rows()), tn(matrix.rows()), fp(matrix.rows());
+    public:
 
-        TP(matrix, tp);
-        FN(matrix, fn);
-        TN(matrix, tn);
-        FP(matrix, fp);
+        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
+            Eigen::ArrayXd output(matrix.rows());
+            Eigen::ArrayXd tp(matrix.rows()), fn(matrix.rows()), tn(matrix.rows()), fp(matrix.rows());
 
-        output = (tp * tn) / (fp * fn);
-        return Rcpp::wrap(output);
-    }
+            TP(matrix, tp);
+            FN(matrix, fn);
+            TN(matrix, tn);
+            FP(matrix, fp);
+
+            output = (tp * tn) / (fp * fn);
+            return Rcpp::wrap(output);
+        }
 };
 
 #endif // CLASSIFICATION_DOR_H
