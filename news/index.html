@@ -121,6 +121,11 @@
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; b 3.506631 5.426818 8.358687</span></span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; c 6.615661 6.390454 2.233511</span></span></code></pre></div>
 </div>
+<div class="section level3">
+<h3 id="bug-fixes-0-3-0">Bug-fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-0"></a></h3>
+<ul><li>
+<strong>Return named vectors:</strong> The classification metrics when <code>micro == NULL</code> were not returning named vectors. This has been fixed.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2-0" id="version-02-0">Version 0.2-0<a class="anchor" aria-label="anchor" href="#version-02-0"></a></h2>
@@ -352,7 +357,8 @@
 <span><span class="fu">SLmetrics</span><span class="fu">::</span><span class="fu"><a href="../reference/fpr.html">fpr</a></span><span class="op">(</span></span>
 <span>    <span class="va">confusion_matrix</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="co">#&gt; [1] 0.3333333 0.3333333 0.0000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="co">#&gt;         a         b         c </span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="co">#&gt; 0.3333333 0.3333333 0.0000000</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="supervised-regression-metrics-0-1-0">Supervised regression metrics<a class="anchor" aria-label="anchor" href="#supervised-regression-metrics-0-1-0"></a></h4>
