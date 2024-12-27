@@ -23,6 +23,36 @@ set.seed(1903)
 
 ## Improvements
 
+## New Feature
+
+* **Relative Root Mean Squared Error:** The function normalizes the Root Mean Squared Error by a facttor. There is no official way of normalizing it - and in {SLmetrics} the RMSE can be normalized using three options; mean-, range- and IQR-normalization. It can be used as follows,
+
+```{r}
+# 1) define values
+actual <- rnorm(1e3)
+predicted <- actual + rnorm(1e3)
+
+# 2) calculate Relative Root Mean Squared Error
+cat(
+  "Mean Relative Root Mean Squared Error", SLmetrics::rrmse(
+    actual        = actual,
+    predicted     = predicted,
+    normalization = 0
+  ),
+  "Range Relative Root Mean Squared Error", SLmetrics::rrmse(
+    actual        = actual,
+    predicted     = predicted,
+    normalization = 1
+  ),
+  "IQR Relative Root Mean Squared Error", SLmetrics::rrmse(
+    actual        = actual,
+    predicted     = predicted,
+    normalization = 2
+  ),
+  sep = "\n"
+)
+```
+
 ## Breaking Changes
 
 * **Weighted Confusion Matix:** The `w`-argument in `cmatrix()` has been removed in favor of the more verbose weighted confusion matrix call `weighted.cmatrix()`-function. See below,
