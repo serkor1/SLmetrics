@@ -177,7 +177,7 @@ Rcpp::NumericVector prepare(
     if (micro.isNull()) {
         Rcpp::NumericVector output(names.size());
         output = cook.compute(matrix, std::forward<Args>(args)...);
-        output.attr("names") = names; // Assign names as attribute
+        output.attr("names") = names;
         return output;
     }
 
@@ -192,19 +192,17 @@ template <typename... Args>
 Rcpp::NumericVector recipe(
     const classification& cook,
     const Rcpp::NumericMatrix& matrix,
-    const Rcpp::Nullable<bool>& micro = R_NilValue,
+    const std::optional<Rcpp::Nullable<bool>>& micro = std::nullopt,
     Args&&... args) {
 
-    const Eigen::MatrixXd eigen_matrix = Rcpp::as<Eigen::MatrixXd>(matrix);
+        const Rcpp::List dimnames = matrix.attr("dimnames");
+        const Rcpp::CharacterVector names = Rcpp::as<Rcpp::CharacterVector>(dimnames[1]);
+        const Eigen::MatrixXd eigen_matrix = Rcpp::as<Eigen::MatrixXd>(matrix);
 
-    if (micro.isNull()) {
-        return cook.compute(eigen_matrix, std::forward<Args>(args)...);
-    }
-
-    const Rcpp::List dimnames = matrix.attr("dimnames");
-    const Rcpp::CharacterVector names = Rcpp::as<Rcpp::CharacterVector>(dimnames[1]);
-
-    return prepare(cook, eigen_matrix, micro, names, std::forward<Args>(args)...);
+        return micro.has_value()
+            ? prepare(cook, eigen_matrix, *micro, names, std::forward<Args>(args)...)
+            : cook.compute(eigen_matrix, std::forward<Args>(args)...);
+    
 }
 
 template <typename... Args>
@@ -213,25 +211,27 @@ Rcpp::NumericVector recipe(
     const Rcpp::IntegerVector& actual,
     const Rcpp::IntegerVector& predicted,
     const std::optional<Rcpp::NumericVector>& w = std::nullopt,
-    const Rcpp::Nullable<bool>& micro = R_NilValue,
+    const std::optional<Rcpp::Nullable<bool>>& micro = std::nullopt,
     Args&&... args){
 
-    const Rcpp::CharacterVector levels = actual.attr("levels");
-    const int k = levels.size();
-    Eigen::MatrixXd matrix(k + 1, k + 1);
+        /*
+            TODO: Check if its faster to have an if-else statement instead
+                - The names are only used if micro != NULL, so the calculations 
+                are redundant.
+        */
 
-    // Use ConfusionMatrixClass to construct the matrix
-    ConfusionMatrixClass matrixConstructor(actual, predicted);
-    matrix = w.has_value()
-        ? matrixConstructor.InputMatrix(*w)  // Weighted confusion matrix
-        : matrixConstructor.InputMatrix();   // Unweighted confusion matrix
+        const Rcpp::CharacterVector names = actual.attr("levels");
+        const int k = names.size();
+        Eigen::MatrixXd matrix(k + 1, k + 1);
 
-    // Compute based on micro or macro aggregation
-    if (micro.isNull()) {
-        return cook.compute(matrix, std::forward<Args>(args)...);
-    }
+        ConfusionMatrixClass matrixConstructor(actual, predicted);
+        matrix = w.has_value()
+            ? matrixConstructor.InputMatrix(*w)  
+            : matrixConstructor.InputMatrix();
 
-    return prepare(cook, matrix, micro, levels, std::forward<Args>(args)...);
+        return micro.has_value()
+            ? prepare(cook, matrix, *micro, names, std::forward<Args>(args)...)
+            : cook.compute(matrix, std::forward<Args>(args)...);
 }
 
 #endif

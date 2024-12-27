@@ -102,6 +102,11 @@ SLmetrics::weighted.cmatrix(
     #> b 3.506631 5.426818 8.358687
     #> c 6.615661 6.390454 2.233511
 
+## Bug-fixes
+
+- **Return named vectors:** The classification metrics when
+  `micro == NULL` were not returning named vectors. This has been fixed.
+
 # Version 0.2-0
 
 ## Improvements
@@ -429,7 +434,8 @@ SLmetrics::fpr(
 )
 ```
 
-    #> [1] 0.3333333 0.3333333 0.0000000
+    #>         a         b         c 
+    #> 0.3333333 0.3333333 0.0000000
 
 ### Supervised regression metrics
 
