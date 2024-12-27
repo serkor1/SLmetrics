@@ -129,13 +129,33 @@ set_equal <- function(
 
 # 6) load scripts
 # globally
-reticulate::source_python(
-  "scikit-learn.py"
-)
-reticulate::source_python(
-  "pytorch.py"
-)
-source("ref-manual.R")
+if (interactive()) {
+
+  reticulate::source_python(
+    "tests/testthat/scikit-learn.py"
+  )
+
+  reticulate::source_python(
+    "tests/testthat/pytorch.py"
+  )
+
+  source("tests/testthat/ref-manual.R")
+
+} else {
+
+  reticulate::source_python(
+    "scikit-learn.py"
+  )
+
+  reticulate::source_python(
+    "pytorch.py"
+  )
+  
+  source("ref-manual.R")
+
+
+}
+
 
 # 7) define all classification
 # functions in {SLmetrics}
