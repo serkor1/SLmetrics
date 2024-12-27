@@ -1,16 +1,57 @@
+#ifndef CLASSIFICATION_HELPERS_H
+#define CLASSIFICATION_HELPERS_H
+
 #include <RcppEigen.h>
 #include <Rcpp.h>
-#include "classification_Utils.h"
 #include <Eigen/Dense>
 #include <cmath>
+#include <optional>
 #include <algorithm>
 #include <vector>
 #include <numeric>
-#include <optional>
+#include "classification_ConfusionMatrix.h"
+
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
 using namespace Rcpp;
+
+class classification {
+    public:
+
+        /*
+            Note to future self:
+                
+                1.) These are just signatures. So in essence it doesn't matter
+                what you call them. The imporant thing is that they are distinguishable
+
+                2.) All functions have the same signature
+                    2.1) A Matrix (passed via helpers)
+                    2.2) Booleans to determine behaviour inside
+                    the respective functions. For example:
+                        + boolean 1: Controls missing values
+                        + boolean 2: Controls wether  micro/macro values are
+                        to be rerrturned
+                        + boolean k: Other behaviour that I can't think of as of now.
+
+                It seems somewhat redundant and excessive to do it like this, but until a better
+                solution is found, this is what we do.
+
+                Warning: ALL signatures has to be used (I think)
+        */
+
+        virtual Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const {
+            return Rcpp::NumericVector();
+        };
+        
+        virtual Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const {
+            return Rcpp::NumericVector();
+        };
+
+        virtual ~classification() = default;
+};
+
+
 
 /*
     Micro and Macro averages with missing value handling.
@@ -88,37 +129,6 @@ inline __attribute__((always_inline)) Rcpp::NumericVector macro<Rcpp::NumericVec
 
 
 /*
-
-template <typename EigenType>
-inline __attribute__((always_inline)) EigenType micro(
-    const EigenType& numerator,
-    const EigenType& denominator,
-    bool na_rm)
-{
-    double result = numerator.sum() / denominator.sum();
-    return EigenType::Constant(1, result); // Use EigenType to determine both argument and return type
-}
-
-template <typename EigenType>
-inline __attribute__((always_inline)) EigenType macro(
-    const EigenType& numerator,
-    const EigenType& denominator,
-    bool na_rm)
-{
-    EigenType z = numerator / denominator;
-    double result = na_rm
-                        ? z.isNaN().select(0, z).sum() / (z.isNaN() == false).count()
-                        : z.isNaN().select(0, z).sum() / z.size();
-
-    return EigenType::Constant(1, result); // Use EigenType to determine both argument and return type
-}
-*/
-
-
-
-
-
-/*
   Calculating TP, FP, TN and FN from matrices.
 
   NOTE: The template is redundant, and will be removed at a later point.
@@ -153,139 +163,9 @@ inline __attribute__((always_inline)) void FN(const MatrixType& matrix, Eigen::A
 }
 
 
-/*
-Confusion Matrix:
 
-    ***ARGS***
-    `actual`: IntegerVector 
-    `predicted`: IntegerVector
-    `k`: int (NOTE: has to be passed as k + 1)
-    `weights`: Nullable NumericVector
 
-    1. This template returns a Eigen::MatrixX<T> in weighted or unweighted form
-    depending on the argument `weight`
 
-    The tests shows that for 1e7 observations it is still faster than the original implementation
-    up to v0.1-1; it runs 5.77 ms on average, while the original are 5.89 ms on average. This might be a chance
-    finding, but it seems they are equivalent in terms of speed, efficiency and memory handling.
-
-    For lower values this function is not faster. In fact its 8 times slower than the original implementation
-    this is due to the overhead cost of the if-statements in relation to weighted
-    and unweighted version.
-
-    It does not handle missing values, and will not handle missing values as this is inefficient. More on this
-    will come later.
-
-*/
-template <typename MatrixType>
-inline __attribute__((always_inline)) MatrixType confusionMatrix(
-    const Rcpp::IntegerVector& actual,
-    const Rcpp::IntegerVector& predicted,
-    const int& k, 
-    const Rcpp::Nullable<Rcpp::NumericVector>& weights = R_NilValue) {
-
-        // 1) general setup of the function
-        // 1.1) initialize a k x k placeholder matrix
-        MatrixType placeholder = MatrixType::Zero(k, k).eval();
-
-        // 1.2) determine the size of
-        // the actual vector - used for the loop
-        const int n = actual.size();
-
-        // 1.3) initialize the pointers
-        // for efficient loops
-        const int* actual_ptr = actual.begin();
-        const int* predicted_ptr = predicted.begin();
-        const double* weights_ptr = weights.isNotNull() ? Rcpp::NumericVector(weights).begin() : nullptr;
-        auto matrix_ptr = placeholder.data();
-        
-        // 2) populate the matrix
-        // according to location conditional
-        // on wether weights are passed
-        int i = 0;
-        if (weights_ptr) {
-
-            for (; i <= n - 6; i += 6) {
-                matrix_ptr[predicted_ptr[i] * k + actual_ptr[i]] += weights_ptr[i];
-                matrix_ptr[predicted_ptr[i + 1] * k + actual_ptr[i + 1]] += weights_ptr[i + 1];
-                matrix_ptr[predicted_ptr[i + 2] * k + actual_ptr[i + 2]] += weights_ptr[i + 2];
-                matrix_ptr[predicted_ptr[i + 3] * k + actual_ptr[i + 3]] += weights_ptr[i + 3];
-                matrix_ptr[predicted_ptr[i + 4] * k + actual_ptr[i + 4]] += weights_ptr[i + 4];
-                matrix_ptr[predicted_ptr[i + 5] * k + actual_ptr[i + 5]] += weights_ptr[i + 5];
-            }
-
-            for (; i < n; ++i) {
-                matrix_ptr[predicted_ptr[i] * k + actual_ptr[i]] += weights_ptr[i];
-            }
-
-        } else {
-
-            for (; i <= n - 6; i += 6) {
-                ++matrix_ptr[predicted_ptr[i] * k + actual_ptr[i]];
-                ++matrix_ptr[predicted_ptr[i + 1] * k + actual_ptr[i + 1]];
-                ++matrix_ptr[predicted_ptr[i + 2] * k + actual_ptr[i + 2]];
-                ++matrix_ptr[predicted_ptr[i + 3] * k + actual_ptr[i + 3]];
-                ++matrix_ptr[predicted_ptr[i + 4] * k + actual_ptr[i + 4]];
-                ++matrix_ptr[predicted_ptr[i + 5] * k + actual_ptr[i + 5]];
-            }
-
-            for (; i < n; ++i) {
-                ++matrix_ptr[predicted_ptr[i] * k + actual_ptr[i]];
-            }
-        }
-        
-
-        // 3) return the matrix
-        // but leave index 
-        // (NOTE: Cpp is 0-indexed, and <factor> can't include zero)
-        return placeholder.block(1, 1, k - 1, k - 1);
-}
-
-/*
-    Handling of classification applications:
-    ----------------------------------------
-
-    1) recipe:
-        These templates handles the passed arguments, and passes the relevant args to be prepared. The baseic
-        ingredients of the recipe are the following args in order:
-            1. This what is passed down from the .cpp-files, and is then process by the class in
-            "classification_Utils.H". 
-            NOTE: This is ALWAYS the first argument in the .cpp-files. If done otherwise, it will NOT compile.
-            2. The R method to process:
-                1. It's either an IntegerVector pair (actual, predicted) or NumericMatrix. 
-                    TODO: It should also handle NumericVectors for probability based methods.
-            3. An (optional) NumericVector for weighted classification metrics.
-            4. A Rcpp::Nullable<bool> micro-flag that determines if micro-aggregation should
-            be done.
-                TODO: Test if this can be optional too, and still appear as NULL in the exported function?
-            5. Optional arguments to class.
-                NOTE: With this is mostly kept for backwards, and forwards compatibility. If we want to add
-                defensive measures this template doesn't need to be updated, as these can be passed into
-                the class, and then define default behaviour in there.
-    
-    2) prepare:
-        This template prepares the the arguments passed from the recipe-template, and processes them
-        so they can be computed class. 
-        NOTE: It doesn't matter what you call the functions on the .cpp-side, as long as it's instantiated
-        as a function. This behaviour corresponds to FUN in lapply().
-        The basic args passed into the preparation are the following args in order:
-            1. The derived class, ie. the function that calculates the
-            relevant metric.
-            2. The matrix which are passed onto the class. This what the calculations
-            are done on.
-            3. Optional arguments to class.
-                NOTE: With this is mostly kept for backwards, and forwards compatibility. If we want to add
-                defensive measures this template doesn't need to be updated, as these can be passed into
-                the class, and then define default behaviour in there.
-
-    3) usage:
-
-        Rcpp::NumericVector metric(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) {
-            DerivedClassMetric myFoo;
-            return recipe(myFoo, actual, predicted);
-            }
-    
-*/
 template <typename Function, typename MatrixType, typename... Args>
 Rcpp::NumericVector prepare(
     const Function& cook,
@@ -334,16 +214,19 @@ Rcpp::NumericVector recipe(
     const Rcpp::IntegerVector& predicted,
     const std::optional<Rcpp::NumericVector>& w = std::nullopt,
     const Rcpp::Nullable<bool>& micro = R_NilValue,
-    Args&&... args)
-{
+    Args&&... args){
+
     const Rcpp::CharacterVector levels = actual.attr("levels");
     const int k = levels.size();
     Eigen::MatrixXd matrix(k + 1, k + 1);
 
+    // Use ConfusionMatrixClass to construct the matrix
+    ConfusionMatrixClass matrixConstructor(actual, predicted);
     matrix = w.has_value()
-        ? confusionMatrix<Eigen::MatrixXd>(actual, predicted, k + 1, *w)
-        : confusionMatrix<Eigen::MatrixXd>(actual, predicted, k + 1);
-    
+        ? matrixConstructor.InputMatrix(*w)  // Weighted confusion matrix
+        : matrixConstructor.InputMatrix();   // Unweighted confusion matrix
+
+    // Compute based on micro or macro aggregation
     if (micro.isNull()) {
         return cook.compute(matrix, std::forward<Args>(args)...);
     }
@@ -351,4 +234,4 @@ Rcpp::NumericVector recipe(
     return prepare(cook, matrix, micro, levels, std::forward<Args>(args)...);
 }
 
-
+#endif
