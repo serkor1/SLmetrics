@@ -18,7 +18,7 @@ testthat::test_that(
       predicted = predicted
     )
 
-    sl_wmatrix <- cmatrix(
+    sl_wmatrix <- weighted.cmatrix(
       actual    = actual,
       predicted = predicted,
       w         = w
@@ -129,7 +129,7 @@ testthat::test_that(
       predicted = predicted
     )
 
-    sl_wmatrix <- cmatrix(
+    sl_wmatrix <- weighted.cmatrix(
       actual    = actual,
       predicted = predicted,
       w         = w

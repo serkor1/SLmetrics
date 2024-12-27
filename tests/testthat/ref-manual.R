@@ -10,6 +10,21 @@
 # was convienient.
 # script start;
 
+confusion_matrix <- function(actual, predicted, w = NULL) {
+  if (is.null(w)) {
+    SLmetrics::cmatrix(
+      actual,
+      predicted
+    )
+  } else {
+    SLmetrics::weighted.cmatrix(
+      actual,
+      predicted,
+      w
+    )
+  }
+}
+
 # Concordance Correlation Coefficient
 # The values have been verified with yardstick and 
 # epiR
@@ -63,11 +78,7 @@ py_recall <- function(
 ) {
 
   # 1) Construct matrix
-  conf_mat <- SLmetrics::cmatrix(
-    actual = actual,
-    predicted = predicted,
-    w = w
-  )
+  conf_mat <- confusion_matrix(actual, predicted, w = w)
 
   TP <- diag(conf_mat) # True Positives
   FN <- rowSums(conf_mat) - diag(conf_mat) # False Negatives
@@ -114,11 +125,7 @@ py_specificity <- function(
 ) {
 
   # 1) Construct matrix
-  conf_mat <- SLmetrics::cmatrix(
-    actual = actual,
-    predicted = predicted,
-    w = w
-  )
+  conf_mat <- confusion_matrix(actual, predicted, w = w)
 
   TN <- sum(conf_mat) - rowSums(conf_mat) - colSums(conf_mat) + diag(conf_mat)
   FP <- colSums(conf_mat) - diag(conf_mat)
@@ -167,11 +174,7 @@ py_fdr <- function(
     na.rm = TRUE) {
 
   # 1) Construct matrix
-  conf_mat <- SLmetrics::cmatrix(
-    actual = actual,
-    predicted = predicted,
-    w = w
-  )
+  conf_mat <- confusion_matrix(actual, predicted, w = w)
 
   # 2) Construct elements
   # of the calculation
@@ -215,11 +218,7 @@ py_fdr <- function(
 
 py_fpr <- function(actual, predicted, average = NULL, na.rm = TRUE, w = NULL) {
   # 1) Construct matrix
-  conf_mat <- SLmetrics::cmatrix(
-    actual = actual,
-    predicted = predicted,
-    w = w
-  )
+  conf_mat <- confusion_matrix(actual, predicted, w = w)
   # Calculate False Positives and True Negatives per class
   FP <- colSums(conf_mat) - diag(conf_mat)
   TN <- sum(conf_mat) - rowSums(conf_mat) - colSums(conf_mat) + diag(conf_mat)
@@ -244,11 +243,7 @@ py_fpr <- function(actual, predicted, average = NULL, na.rm = TRUE, w = NULL) {
 
 py_npv <- function(actual, predicted, average = NULL, na.rm = TRUE, w = NULL) {
   # 1) Construct matrix
-  conf_mat <- SLmetrics::cmatrix(
-    actual = actual,
-    predicted = predicted,
-    w = w
-  )
+  conf_mat <- confusion_matrix(actual, predicted, w = w)
 
   # Calculate True Negatives and False Negatives per class
   TN <- sum(conf_mat) - rowSums(conf_mat) - colSums(conf_mat) + diag(conf_mat)
@@ -274,11 +269,7 @@ py_npv <- function(actual, predicted, average = NULL, na.rm = TRUE, w = NULL) {
 
 py_fer <- function(actual, predicted, average = NULL, na.rm = TRUE, w = NULL) {
   # 1) Construct matrix
-  conf_mat <- SLmetrics::cmatrix(
-    actual = actual,
-    predicted = predicted,
-    w = w
-  )
+  conf_mat <- confusion_matrix(actual, predicted, w = w)
 
   # Calculate False Negatives and True Negatives per class
   FN <- rowSums(conf_mat) - diag(conf_mat)
@@ -328,11 +319,7 @@ py_plr <- function(actual, predicted, average = NULL, na.rm = TRUE, w = NULL) {
 
 py_nlr <- function(actual, predicted, average = NULL, na.rm = TRUE, w = NULL) {
   # 1) Construct matrix
-  conf_mat <- SLmetrics::cmatrix(
-    actual = actual,
-    predicted = predicted,
-    w = w
-  )
+  conf_mat <- confusion_matrix(actual, predicted, w = w)
   # Calculate True Positives, False Positives, False Negatives, and True Negatives
   TP <- diag(conf_mat)
   FP <- colSums(conf_mat) - TP
@@ -368,11 +355,7 @@ py_nlr <- function(actual, predicted, average = NULL, na.rm = TRUE, w = NULL) {
 py_dor <- function(actual, predicted, average = NULL, na.rm = TRUE, w = NULL) {
   # Construct confusion matrix
   # 1) Construct matrix
-  conf_mat <- SLmetrics::cmatrix(
-    actual = actual,
-    predicted = predicted,
-    w = w
-  )
+  conf_mat <- confusion_matrix(actual, predicted, w = w)
 
   # Calculate True Positives, False Positives, False Negatives, and True Negatives
   TP <- diag(conf_mat)
