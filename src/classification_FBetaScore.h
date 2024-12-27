@@ -10,12 +10,12 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 class FBetaScoreClass : public classification {
 
     private:
-        bool beta;
+        double beta;
         bool na_rm;
 
     public:
 
-        FBetaScoreClass(bool beta, bool na_rm)
+        FBetaScoreClass(double beta, bool na_rm)
             : beta(beta), na_rm(na_rm) {}
 
         Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro) const override {
@@ -45,8 +45,8 @@ class FBetaScoreClass : public classification {
             // 2) retun with 
             // ternary expression
             return do_micro
-                ? micro((1+beta_sq) * tp, (1+beta_sq) * tp + beta_sq * fn + fp, na_rm)
-                : macro((1+beta_sq) * tp, (1+beta_sq) * tp + beta_sq * fn + fp, na_rm);
+                ? micro((1.0 + beta_sq) * tp, (1.0 + beta_sq) * tp + beta_sq * fn + fp, na_rm)
+                : macro((1.0 + beta_sq) * tp, (1.0 + beta_sq) * tp + beta_sq * fn + fp, na_rm);
 
 
         }
@@ -63,7 +63,7 @@ class FBetaScoreClass : public classification {
             Eigen::ArrayXd precision = tp / (tp + fp);
             Eigen::ArrayXd recall    = tp / (tp + fn);
 
-            output = (1 + beta_sq) * (precision * recall) / (beta_sq * precision + recall);
+            output = (1.0 + beta_sq) * (precision * recall) / (beta_sq * precision + recall);
             return Rcpp::wrap(output);
         }
 };
