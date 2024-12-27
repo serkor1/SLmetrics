@@ -244,6 +244,7 @@ Other Supervised Learning:
 \code{\link{rae.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{rrmse.numeric}()},
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()},

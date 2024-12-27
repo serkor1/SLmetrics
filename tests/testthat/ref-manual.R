@@ -527,6 +527,85 @@ py_mpe <- function(
   weighted_mpe
 }
 
+ref_rrmse <- function(actual, predicted, w = NULL, normalization = 0) {
 
+  weighted_quantile <- function(values, weights, alpha) {
+    # Pair values with weights
+    data <- data.frame(values = values, weights = weights)
+    
+    # Sort by values
+    data <- data[order(data$values), ]
+    
+    # Compute total weight
+    total_weight <- sum(data$weights)
+    
+    # Compute target cumulative weight
+    target_weight <- alpha * total_weight
+    
+    # Initialize cumulative weight
+    cumulative_weight <- 0.0
+    
+    # Variables to store the lower and upper bounds
+    lower <- 0.0
+    upper <- 0.0
+    lower_set <- FALSE
+    
+    # Iterate through the sorted data
+    for (i in seq_len(nrow(data))) {
+      cumulative_weight <- cumulative_weight + data$weights[i]
+      
+      if (!lower_set && cumulative_weight >= target_weight) {
+        lower <- data$values[i]
+        lower_set <- TRUE
+      }
+      
+      if (cumulative_weight >= target_weight) {
+        upper <- data$values[i]
+        break
+      }
+    }
+    
+    # Interpolation
+    return(lower + (upper - lower) * ((target_weight - (cumulative_weight - data$weights[i])) / total_weight))
+  }
+  
+  
+
+  # Calculate RMSE
+  RMSE <- sqrt(weighted.mean(
+    (actual - predicted)^2,
+    w = if (is.null(w)) rep(1, length(actual)) else w
+  ))
+
+  if (normalization == 0) {
+    denominator <- weighted.mean(
+      actual,
+      w = if (is.null(w)) rep(1, length(actual)) else w
+    )
+  } 
+
+  if (normalization == 1) {
+    denominator <- diff(range(actual))
+  }
+
+  
+  
+  if (normalization == 2) {
+    if (is.null(w)) {
+      denominator <- IQR(
+        actual
+      )
+    } else {
+      denominator <- weighted_quantile(actual, weights = w, alpha = 0.75) - weighted_quantile(actual, weights = w, alpha = 0.25)
+    }
+    
+  }
+
+
+  RMSE / denominator
+  
+  
+
+}
 
 # script end;
