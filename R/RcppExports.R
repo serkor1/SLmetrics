@@ -724,6 +724,20 @@ weighted.rae.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_rae`, actual, predicted, w)
 }
 
+#' @rdname rrmse
+#' @method rrmse numeric
+#' @export
+rrmse.numeric <- function(actual, predicted, normalization = 1L, ...) {
+    .Call(`_SLmetrics_RelativeRootMeanSquaredError`, actual, predicted, normalization)
+}
+
+#' @rdname rrmse
+#' @method weighted.rrmse numeric
+#' @export
+weighted.rrmse.numeric <- function(actual, predicted, w, normalization = 1L, ...) {
+    .Call(`_SLmetrics_weighted_RelativeRootMeanSquaredError`, actual, predicted, w, normalization)
+}
+
 #' @rdname rmse
 #' @method rmse numeric
 #' @export

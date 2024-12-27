@@ -85,6 +85,7 @@ Other Regression:
 \code{\link{rae.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{rrmse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()}
 
@@ -117,6 +118,7 @@ Other Supervised Learning:
 \code{\link{recall.factor}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{rrmse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()},
 \code{\link{specificity.factor}()},

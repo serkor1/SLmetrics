@@ -1387,6 +1387,33 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// RelativeRootMeanSquaredError
+double RelativeRootMeanSquaredError(const std::vector<double>& actual, const std::vector<double>& predicted, const int& normalization);
+RcppExport SEXP _SLmetrics_RelativeRootMeanSquaredError(SEXP actualSEXP, SEXP predictedSEXP, SEXP normalizationSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const int& >::type normalization(normalizationSEXP);
+    rcpp_result_gen = Rcpp::wrap(RelativeRootMeanSquaredError(actual, predicted, normalization));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_RelativeRootMeanSquaredError
+double weighted_RelativeRootMeanSquaredError(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double> w, const int& normalization);
+RcppExport SEXP _SLmetrics_weighted_RelativeRootMeanSquaredError(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP normalizationSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double> >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const int& >::type normalization(normalizationSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_RelativeRootMeanSquaredError(actual, predicted, w, normalization));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rmse
 double rmse(const std::vector<double>& actual, const std::vector<double>& predicted);
 RcppExport SEXP _SLmetrics_rmse(SEXP actualSEXP, SEXP predictedSEXP) {
@@ -1592,6 +1619,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_weighted_pinball", (DL_FUNC) &_SLmetrics_weighted_pinball, 5},
     {"_SLmetrics_rae", (DL_FUNC) &_SLmetrics_rae, 2},
     {"_SLmetrics_weighted_rae", (DL_FUNC) &_SLmetrics_weighted_rae, 3},
+    {"_SLmetrics_RelativeRootMeanSquaredError", (DL_FUNC) &_SLmetrics_RelativeRootMeanSquaredError, 3},
+    {"_SLmetrics_weighted_RelativeRootMeanSquaredError", (DL_FUNC) &_SLmetrics_weighted_RelativeRootMeanSquaredError, 4},
     {"_SLmetrics_rmse", (DL_FUNC) &_SLmetrics_rmse, 2},
     {"_SLmetrics_weighted_rmse", (DL_FUNC) &_SLmetrics_weighted_rmse, 3},
     {"_SLmetrics_rmsle", (DL_FUNC) &_SLmetrics_rmsle, 2},
