@@ -15,11 +15,51 @@ knitr::opts_chunk$set(
 set.seed(1903) 
 ```
 
-# Version 0.2-0
+# Version 0.3-0
 
-> Version 0.2-0 is considered pre-release of {SLmetrics}. We do not
+> Version 0.3-0 is considered pre-release of {SLmetrics}. We do not
 > expect any breaking changes, unless a major bug/issue is reported and its nature
 > forces breaking changes.
+
+## Improvements
+
+## Breaking Changes
+
+* **Weighted Confusion Matix:** The `w`-argument in `cmatrix()` has been removed in favor of the more verbose weighted confusion matrix call `weighted.cmatrix()`-function. See below,
+
+Prior to version `0.3-0` the weighted confusion matrix were a part of the `cmatrix()`-function and were called as follows,
+
+```{r, eval = FALSE}
+SLmetrics::cmatrix(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+```
+
+This solution, although simple, were inconsistent with the remaining implementation of weighted metrics in {SLmetrics}. To regain consistency and simplicity the weighted confusion matrix are now retrieved as follows,
+
+```{r}
+# 1) define factors
+actual    <- factor(sample(letters[1:3], 100, replace = TRUE))
+predicted <- factor(sample(letters[1:3], 100, replace = TRUE))
+weights   <- runif(length(actual))
+
+# 2) without weights
+SLmetrics::cmatrix(
+    actual    = actual,
+    predicted = predicted
+)
+
+# 2) with weights
+SLmetrics::weighted.cmatrix(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+```
+
+# Version 0.2-0
 
 ## Improvements
 
@@ -40,7 +80,7 @@ SLmetrics::cmatrix(
 )
 
 # 2) with weights
-SLmetrics::cmatrix(
+SLmetrics::weighted.cmatrix(
     actual    = actual,
     predicted = predicted,
     w         = weights
