@@ -1,24 +1,24 @@
-# script: Reciever Operator Characteristics
-# date: 2024-10-25
+# script: Precision Recall Curve
+# date: 2024-12-28
 # author: Serkan Korkmaz, serkor1@duck.com
 # objective: Test that it returns
 # whatever it should return - and correctly.
 # script start;
 
 testthat::test_that(
-  desc = "Test that `ROC()`-function works as expected",
+  desc = "Test that `prROC()`-function works as expected",
   code = {
 
-     # 0) construct ROC
+    # 0) construct ROC
     # wrapper
-    wrapped_ROC <- function(
+    wrapped_prROC <- function(
       actual,
       response,
       thresholds = NULL,
       w = NULL,
       micro = TRUE) {
       
-      ROC(
+      prROC(
         actual,
         response,
         thresholds = if (is.null(thresholds))  {NULL} else thresholds
@@ -48,7 +48,7 @@ testthat::test_that(
 
         # 2.2) generate score
         # from {slmetrics}
-        score <- wrapped_ROC(
+        score <- wrapped_prROC(
           actual     = actual,
           response   = response,
           w          = if (weighted) w else NULL,
@@ -58,12 +58,12 @@ testthat::test_that(
         # 2.3) Test that methods
         # works as expected
         testthat::expect_no_condition(
-          object = invisible(capture.output(SLmetrics:::print.ROC(score))),
+          object = invisible(capture.output(SLmetrics:::print.prROC(score))),
           message = info
         )
 
         testthat::expect_no_condition(
-          object  = SLmetrics:::plot.ROC(score),
+          object  = SLmetrics:::plot.prROC(score),
           message = info
         )
         
@@ -74,7 +74,7 @@ testthat::test_that(
         # 2.4.1) calculate py_score
         py_score <- do.call(
           rbind,
-          lapply(py_ROC(
+          lapply(py_prROC(
             actual    = actual,
             response  = response,
             w         = NULL),

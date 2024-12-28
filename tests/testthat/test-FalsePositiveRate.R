@@ -69,11 +69,11 @@ testthat::test_that(
           # 2.4) test that the values
           # are equal to target value
 
-          # 2.4.1) calculate py_score
-          py_score <- py_fpr(
+          # 2.4.1) calculate ref_score
+          ref_score <- ref_fpr(
             actual    = actual,
             predicted = predicted,
-            average   = if (is.na(micro)) { NULL } else ifelse(micro, "micro", "macro"),
+            micro     = if (is.na(micro)) { NULL } else micro,
             w         = if (weighted) w else NULL
           )
 
@@ -81,7 +81,7 @@ testthat::test_that(
           testthat::expect_true(
             object = set_equal(
               current = as.numeric(score),
-              target  = as.numeric(py_score)
+              target  = as.numeric(ref_score)
             ),
             info = info
           )

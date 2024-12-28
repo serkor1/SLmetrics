@@ -139,7 +139,9 @@ if (interactive()) {
     "tests/testthat/pytorch.py"
   )
 
-  source("tests/testthat/ref-manual.R")
+  source("tests/testthat/ref-classification-utils.R")
+  source("tests/testthat/ref-classification.R")
+  source("tests/testthat/ref-regression.R")
 
 } else {
 
@@ -150,8 +152,10 @@ if (interactive()) {
   reticulate::source_python(
     "pytorch.py"
   )
-  
-  source("ref-manual.R")
+
+  source("ref-classification-utils.R")
+  source("ref-classification.R")
+  source("ref-regression.R")
 
 
 }
