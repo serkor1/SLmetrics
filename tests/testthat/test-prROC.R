@@ -18,17 +18,31 @@ testthat::test_that(
       w = NULL,
       micro = TRUE) {
       
-      prROC(
-        actual,
-        response,
-        thresholds = if (is.null(thresholds))  {NULL} else thresholds
-      )
+      if (is.null(w)) {
+
+        prROC(
+          actual,
+          response,
+          thresholds = if (is.null(thresholds))  {NULL} else thresholds
+        )
+
+      } else {
+
+        weighted.prROC(
+          actual,
+          response,
+          thresholds = if (is.null(thresholds))  {NULL} else thresholds,
+          w = w
+        )
+
+      }
+      
       
     }
 
     # 1) generate class
     # values
-    actual     <- create_factor()
+    actual     <- create_factor(n = 100, k = 5)
     response   <- runif(n = length(actual))
     w          <- runif(n = length(actual))
     thresholds <- seq(0.1, 0.9, by = 0.1)
@@ -77,15 +91,15 @@ testthat::test_that(
           lapply(py_prROC(
             actual    = actual,
             response  = response,
-            w         = NULL),
+            w         = if (weighted) w else NULL),
             FUN = as.data.frame)
           )
 
         # 2.4.2) test for equality
         testthat::expect_true(
           object = set_equal(
-            current = score,
-            target  = py_score[is.finite(py_score$threshold),]
+            current = score[is.finite(score$thresholds),],
+            target  = py_score[is.finite(py_score$thresholds),]
           ),
           info = info
         )
