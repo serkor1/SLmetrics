@@ -50,7 +50,10 @@ constructs a <code><a href="https://rdrr.io/r/base/data.frame.html" class="exter
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'factor'</span></span>
-<span><span class="fu">prROC</span><span class="op">(</span><span class="va">actual</span>, <span class="va">response</span>, micro <span class="op">=</span> <span class="cn">NULL</span>, thresholds <span class="op">=</span> <span class="cn">NULL</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">prROC</span><span class="op">(</span><span class="va">actual</span>, <span class="va">response</span>, thresholds <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'factor'</span></span>
+<span><span class="fu"><a href="ROC.html">weighted.prROC</a></span><span class="op">(</span><span class="va">actual</span>, <span class="va">response</span>, <span class="va">w</span>, thresholds <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">prROC</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -67,30 +70,22 @@ constructs a <code><a href="https://rdrr.io/r/base/data.frame.html" class="exter
 <dd><p>A &lt;<a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a>&gt;-vector of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(n\). The estimated response probabilities.</p></dd>
 
 
-<dt id="arg-micro">micro<a class="anchor" aria-label="anchor" href="#arg-micro"></a></dt>
-<dd><p>A &lt;<a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>&gt;-value of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(1\) (default: <a href="https://rdrr.io/r/base/NULL.html" class="external-link">NULL</a>). If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a> it returns the
-micro average across all \(k\) classes, if <a href="https://rdrr.io/r/base/logical.html" class="external-link">FALSE</a> it returns the macro average.</p></dd>
-
-
 <dt id="arg-thresholds">thresholds<a class="anchor" aria-label="anchor" href="#arg-thresholds"></a></dt>
 <dd><p>An optional &lt;<a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a>&gt;-vector of non-zero <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> (default: <a href="https://rdrr.io/r/base/NULL.html" class="external-link">NULL</a>).</p></dd>
-
-
-<dt id="arg-na-rm">na.rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
-<dd><p>A &lt;<a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>&gt; value of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(1\) (default: <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a>). If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a>, <a href="https://rdrr.io/r/base/NA.html" class="external-link">NA</a> values are removed from the computation.
-This argument is only relevant when <code>micro != NULL</code>.
-When <code>na.rm = TRUE</code>, the computation corresponds to <code>sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))</code>.
-When <code>na.rm = FALSE</code>, the computation corresponds to <code>sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Arguments passed into other methods.</p></dd>
 
+
+<dt id="arg-w">w<a class="anchor" aria-label="anchor" href="#arg-w"></a></dt>
+<dd><p>A &lt;<a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a>&gt;-vector of <a href="https://rdrr.io/r/base/length.html" class="external-link">length</a> \(n\). <a href="https://rdrr.io/r/base/NULL.html" class="external-link">NULL</a> by default.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> on the following form,</p>
-<dl><dt>thresholds</dt>
+<dl><dt>threshold</dt>
 <dd><p>&lt;<a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a>&gt; Thresholds used to determine <code><a href="recall.html">recall()</a></code> and <code><a href="precision.html">precision()</a></code></p></dd>
 
 <dt>level</dt>
@@ -258,7 +253,7 @@ $$</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> AUC</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  - Others: 0.473</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  - Virginica: 0.764</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  - Virginica: 0.775</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># 6) provide custom</span></span></span>
 <span class="r-in"><span><span class="co"># threholds</span></span></span>

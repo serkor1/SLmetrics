@@ -293,19 +293,19 @@ class. We want to maximize the micro-average.</p>
 <span><span class="co"># object</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">roc</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    threshold level label    fpr    tpr</span></span>
-<span><span class="co">#&gt; 1   3.60e-15     1     1 0.0370 0.0000</span></span>
-<span><span class="co">#&gt; 2   2.70e-15     1     1 0.0370 0.0625</span></span>
-<span><span class="co">#&gt; 3   1.46e-15     1     1 0.0741 0.0625</span></span>
-<span><span class="co">#&gt; 4   1.16e-15     1     1 0.1111 0.0625</span></span>
-<span><span class="co">#&gt; 5   1.15e-15     1     1 0.1481 0.0625</span></span>
-<span><span class="co">#&gt; 6   1.12e-15     1     1 0.1852 0.0625</span></span>
-<span><span class="co">#&gt; 7   1.03e-15     1     1 0.2222 0.0625</span></span>
-<span><span class="co">#&gt; 8   9.87e-16     1     1 0.2222 0.1250</span></span>
-<span><span class="co">#&gt; 9   9.45e-16     1     1 0.2593 0.1250</span></span>
-<span><span class="co">#&gt; 10  9.36e-16     1     1 0.2963 0.1250</span></span>
-<span><span class="co">#&gt;  [ reached 'max' / getOption("max.print") -- omitted 248 rows ]</span></span></code></pre></div>
+<span><span class="co">#&gt; 1        Inf     1     1 0.0000 0.0000</span></span>
+<span><span class="co">#&gt; 2   3.60e-15     1     1 0.0370 0.0000</span></span>
+<span><span class="co">#&gt; 3   2.70e-15     1     1 0.0370 0.0625</span></span>
+<span><span class="co">#&gt; 4   1.46e-15     1     1 0.0741 0.0625</span></span>
+<span><span class="co">#&gt; 5   1.16e-15     1     1 0.1111 0.0625</span></span>
+<span><span class="co">#&gt; 6   1.15e-15     1     1 0.1481 0.0625</span></span>
+<span><span class="co">#&gt; 7   1.12e-15     1     1 0.1852 0.0625</span></span>
+<span><span class="co">#&gt; 8   1.03e-15     1     1 0.2222 0.0625</span></span>
+<span><span class="co">#&gt; 9   9.87e-16     1     1 0.2222 0.1250</span></span>
+<span><span class="co">#&gt; 10  9.45e-16     1     1 0.2593 0.1250</span></span>
+<span><span class="co">#&gt;  [ reached 'max' / getOption("max.print") -- omitted 254 rows ]</span></span></code></pre></div>
 <p>The <code><a href="../reference/ROC.html">ROC()</a></code>-function returns a
-<code>data.frame</code>-object, with 258 rows corresponding to the
+<code>data.frame</code>-object, with 264 rows corresponding to the
 <code>length</code> of <code>response</code> multiplied with number of
 classes in the data. The <code>roc</code>-object can be plotted as
 follows,</p>
@@ -320,8 +320,8 @@ follows,</p>
 <code class="sourceCode R"><span><span class="co"># 1) create custom</span></span>
 <span><span class="co"># thresholds</span></span>
 <span><span class="va">thresholds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span></span>
-<span>    from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">roc</span><span class="op">$</span><span class="va">threshold</span><span class="op">)</span>,</span>
-<span>    to   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">roc</span><span class="op">$</span><span class="va">threshold</span><span class="op">)</span>,</span>
+<span>    from <span class="op">=</span> <span class="fl">0.9</span>,</span>
+<span>    to   <span class="op">=</span> <span class="fl">0.1</span>,</span>
 <span>    length.out <span class="op">=</span> <span class="fl">10</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -337,18 +337,18 @@ follows,</p>
 <span><span class="co"># object</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">roc</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    threshold level label    fpr    tpr</span></span>
-<span><span class="co">#&gt; 1   3.60e-15     1     1 0.0370 0.0000</span></span>
-<span><span class="co">#&gt; 2   3.20e-15     1     1 0.0370 0.0000</span></span>
-<span><span class="co">#&gt; 3   2.80e-15     1     1 0.0370 0.0000</span></span>
-<span><span class="co">#&gt; 4   2.40e-15     1     1 0.0370 0.0625</span></span>
-<span><span class="co">#&gt; 5   2.01e-15     1     1 0.0370 0.0625</span></span>
-<span><span class="co">#&gt; 6   1.61e-15     1     1 0.0370 0.0625</span></span>
-<span><span class="co">#&gt; 7   1.21e-15     1     1 0.0741 0.0625</span></span>
-<span><span class="co">#&gt; 8   8.11e-16     1     1 0.3704 0.1875</span></span>
-<span><span class="co">#&gt; 9   4.12e-16     1     1 0.6296 0.4375</span></span>
-<span><span class="co">#&gt; 10  1.37e-17     1     1 1.0000 1.0000</span></span>
-<span><span class="co">#&gt;  [ reached 'max' / getOption("max.print") -- omitted 50 rows ]</span></span></code></pre></div>
-<p>The new object has 60 rows.</p>
+<span><span class="co">#&gt; 1        Inf     1     1 0.0000 0.0000</span></span>
+<span><span class="co">#&gt; 2   3.60e-15     1     1 0.0370 0.0000</span></span>
+<span><span class="co">#&gt; 3   2.70e-15     1     1 0.0370 0.0625</span></span>
+<span><span class="co">#&gt; 4   1.46e-15     1     1 0.0741 0.0625</span></span>
+<span><span class="co">#&gt; 5   1.16e-15     1     1 0.1111 0.0625</span></span>
+<span><span class="co">#&gt; 6   1.15e-15     1     1 0.1481 0.0625</span></span>
+<span><span class="co">#&gt; 7   1.12e-15     1     1 0.1852 0.0625</span></span>
+<span><span class="co">#&gt; 8   1.03e-15     1     1 0.2222 0.0625</span></span>
+<span><span class="co">#&gt; 9   9.87e-16     1     1 0.2222 0.1250</span></span>
+<span><span class="co">#&gt; 10  9.45e-16     1     1 0.2593 0.1250</span></span>
+<span><span class="co">#&gt;  [ reached 'max' / getOption("max.print") -- omitted 254 rows ]</span></span></code></pre></div>
+<p>The new object has 264 rows.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 1) viasualize</span></span>
 <span><span class="co"># ROC</span></span>
@@ -360,12 +360,12 @@ follows,</p>
 <span><span class="co">#&gt; Reciever Operator Characteristics </span></span>
 <span><span class="co">#&gt; ================================================================================</span></span>
 <span><span class="co">#&gt; AUC</span></span>
-<span><span class="co">#&gt;  - 1: 0.387</span></span>
-<span><span class="co">#&gt;  - 2: 0.749</span></span>
-<span><span class="co">#&gt;  - 3: 0.39</span></span>
+<span><span class="co">#&gt;  - 1: 0.414</span></span>
+<span><span class="co">#&gt;  - 2: 0.761</span></span>
+<span><span class="co">#&gt;  - 3: 0.524</span></span>
 <span><span class="co">#&gt;  - 5: 0</span></span>
-<span><span class="co">#&gt;  - 6: 0.812</span></span>
-<span><span class="co">#&gt;  - 7: 0.167</span></span></code></pre></div>
+<span><span class="co">#&gt;  - 6: 0.846</span></span>
+<span><span class="co">#&gt;  - 7: 0.024</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
