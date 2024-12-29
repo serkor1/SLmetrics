@@ -1,4 +1,14 @@
 
+> \[!IMPORTANT\]
+>
+> [SLmetrics](https://serkor1.github.io/SLmetrics/) is still under
+> active development. Some functions may be unstable and could cause
+> your R session to crash. The target date for CRAN submission is
+> **March 2025**.
+>
+> All feedback is welcome — thank you for helping us improve
+> [SLmetrics](https://serkor1.github.io/SLmetrics/)!
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # {SLmetrics}: Machine learning performance evaluation on steroids <img src="man/figures/logo.png" align="right" height="150" alt="" />
