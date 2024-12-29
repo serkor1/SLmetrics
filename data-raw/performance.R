@@ -44,10 +44,10 @@ for (n in N) {
     ,
     .(
       sample_size = n,
-      classes     = k,
-      mean        = mean(
+      median        = median(
         time
-      )
+      ),
+      measure     = "Confusion Matrix"
     )
     ,
     by = .(
@@ -89,9 +89,10 @@ for (n in N) {
     ,
     .(
       sample_size = n,
-      mean        = mean(
+      median      = median(
         time
-      )
+      ),
+      measure     = "Root Mean Squared Error"
     )
     ,
     by = .(
@@ -108,11 +109,49 @@ for (n in N) {
 # 3) collect results
 # in data.table
 DT <- list(
-  confusion_matrix = data.table::rbindlist(confusion_matrix_performance),
-  rmse             = data.table::rbindlist(rmse_performance)
+  speed = list(
+    confusion_matrix = data.table::rbindlist(confusion_matrix_performance),
+    rmse             = data.table::rbindlist(rmse_performance)
+  )
 )
 
-# 4) write data for
+# 4) test memory usage
+memory <- list()
+
+# 4.1) Confusion Matrix
+actual    <- create_factor(k = 2, n = 1e7)
+predicted <- create_factor(k = 2, n = 1e7)
+
+test_results <- bench::mark(
+  `{SLmetrics}`    = SLmetrics::cmatrix(actual, predicted),
+  `{yardstick}`    = yardstick::conf_mat(table(actual, predicted)),
+  `{MLmetrics}`    = MLmetrics::ConfusionMatrix(predicted, actual),
+  `{mlr3measures}` = mlr3measures::confusion_matrix(predicted, actual, positive = "a"),
+  check = FALSE,
+  iterations = 100
+)
+
+memory$confusion_matrix <- test_results
+
+# 4.2) RMSE
+actual <- rnorm(n = 1e7)
+predicted <- actual + rnorm(n = 1e7)
+
+test_results <- bench::mark(
+  `{SLmetrics}`    = SLmetrics::rmse(actual, predicted),
+  `{yardstick}`    = yardstick::rmse_vec(actual, predicted),
+  `{MLmetrics}`    = MLmetrics::RMSE(predicted, actual),
+  `{mlr3measures}` = mlr3measures::rmse(actual, predicted),
+   check = FALSE,
+   iterations = 100
+)
+
+memory$rmse <- test_results
+
+# 4.3) append to list
+DT$memory <- memory
+
+# 5) write data for
 # internal usage
 usethis::use_data(
   DT,
