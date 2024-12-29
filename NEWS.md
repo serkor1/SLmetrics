@@ -48,6 +48,13 @@ cat(
     #> IQR Relative Root Mean Squared Error
     #> 0.7323898
 
+- **Weighted Receiver Operator Characteristics:** `weighted.ROC()`, the
+  function calculates the weighted True Positive and False Positive
+  Rates for each threshold.
+
+- **Weighted Precision-Recall Curve:** `weighted.prROC()`, the function
+  calculates the weighted Recall and Precsion for each threshold.
+
 ## Breaking Changes
 
 - **Weighted Confusion Matix:** The `w`-argument in `cmatrix()` has been
@@ -353,6 +360,245 @@ plot(
 )
 ```
 
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
 ![](NEWS_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ``` r
@@ -361,6 +607,245 @@ plot(
     panels = FALSE
 )
 ```
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy.coords(x, y), type = type, ...): "panels" is not a
+    #> graphical parameter
+
+    #> Warning in plot.window(...): "panels" is not a graphical parameter
+
+    #> Warning in plot.xy(xy, type, ...): "panels" is not a graphical parameter
+
+    #> Warning in title(...): "panels" is not a graphical parameter
+
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
+    #> Warning in axis(side = side, at = at, labels = labels, ...): "panels" is not a
+    #> graphical parameter
 
 ![](NEWS_files/figure-gfm/unnamed-chunk-9-2.png)<!-- -->
 
