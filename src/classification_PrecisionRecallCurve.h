@@ -52,12 +52,17 @@ public:
             }
         }
 
-        return Rcpp::DataFrame::create(
+        Rcpp::DataFrame output = Rcpp::DataFrame::create(
             Rcpp::Named("threshold") = thresholds_all,
             Rcpp::Named("level") = levels_all,
             Rcpp::Named("label") = labels_all,
             Rcpp::Named("precision") = precision_all,
             Rcpp::Named("recall") = recall_all
         );
+
+        // Add "prROC" class to the DataFrame
+        output.attr("class") = Rcpp::CharacterVector::create("prROC", "data.frame");
+
+        return output;
     }
 };
