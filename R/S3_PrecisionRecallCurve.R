@@ -155,7 +155,7 @@ plot.prROC <- function(
     xlab     = xlab,
     ylab     = ylab,
     main     = main,
-    DT       = x[!is.finite(x$threshold), ],
+    DT       = x[is.finite(x$threshold), ],
     add_poly = panels,
     ...  
   )
