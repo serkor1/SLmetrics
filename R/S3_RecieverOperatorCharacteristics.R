@@ -22,7 +22,7 @@
 #'
 #' @returns A [data.frame] on the following form,
 #'
-#' \item{thresholds}{<[numeric]> Thresholds used to determine [tpr()] and [fpr()]}
+#' \item{threshold}{<[numeric]> Thresholds used to determine [tpr()] and [fpr()]}
 #' \item{level}{<[character]> The level of the actual <[factor]>}
 #' \item{label}{<[character]> The levels of the actual <[factor]>}
 #' \item{fpr}{<[numeric]> The false positive rate}
@@ -35,6 +35,15 @@
 ROC <- function(...) {
   UseMethod(
     generic = "ROC",
+    object  = ..1
+  )
+}
+
+#' @rdname ROC
+#' @export
+weighted.ROC <- function(...) {
+  UseMethod(
+    generic = "weighted.ROC",
     object  = ..1
   )
 }
@@ -155,7 +164,7 @@ plot.ROC <- function(
     xlab     = xlab,
     ylab     = ylab,
     main     = main,
-    DT       = x,
+    DT       = x[!is.finite(x$threshold), ],
     add_poly = panels,
     ...  
   )
