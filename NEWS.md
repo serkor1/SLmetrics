@@ -48,6 +48,13 @@ cat(
     #> IQR Relative Root Mean Squared Error
     #> 0.7323898
 
+- **Weighted Receiver Operator Characteristics:** `weighted.ROC()`, the
+  function calculates the weighted True Positive and False Positive
+  Rates for each threshold.
+
+- **Weighted Precision-Recall Curve:** `weighted.prROC()`, the function
+  calculates the weighted Recall and Precsion for each threshold.
+
 ## Breaking Changes
 
 - **Weighted Confusion Matix:** The `w`-argument in `cmatrix()` has been

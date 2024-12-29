@@ -161,7 +161,7 @@ ref_dor <- function(
   )
 }
 
-ref_ROC <-function(actual, response, thresholds = NULL) {
+ref_ROC <-function(actual, response, thresholds = NULL, w = NULL, micro = NULL) {
 
   n_levels <- length(levels(actual))
 
@@ -188,15 +188,19 @@ ref_ROC <-function(actual, response, thresholds = NULL) {
     )
 
     fpr_list[i] <- generalized_metric(
-      actual = actual,
-      predicted = predicted,
-      metric_expr = FP / (FP + TN)
+      actual      = actual,
+      predicted   = predicted,
+      metric_expr = FP / (FP + TN),
+      micro       = micro,
+      w           = w
     )[level]
 
     tpr_list[i] <- generalized_metric(
       actual = actual,
       predicted = predicted,
-      metric_expr = TP / (TP + FN)
+      metric_expr = TP / (TP + FN),
+      micro = micro,
+      w = w
     )[level]
   }
 

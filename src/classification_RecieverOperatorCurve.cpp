@@ -14,41 +14,16 @@ double auc(const Rcpp::NumericVector y, const Rcpp::NumericVector x, const int& 
 //' @method ROC factor
 //' @export
 // [[Rcpp::export(ROC.factor)]]
-Rcpp::DataFrame ROC(const Rcpp::IntegerVector &actual,
-                    const Rcpp::NumericVector &response,
-                    Nullable<bool> micro = R_NilValue,
-                    Rcpp::Nullable<Rcpp::NumericVector> thresholds = R_NilValue,
-                    const bool& na_rm = true) {
-
-  /*
-   *  Calculate ROC based
-   * on micro values and
-   * thresholds if passed
-   */
-
-  // 1) default return
-  // value
-  if (micro.isNull()) {
-
-    return _metric_(actual, response, thresholds);
-
-  }
-
-  std::vector<double> empty_numeric;
-  std::vector<int> empty_integer;
-  CharacterVector empty_character;
-
-  Rcpp::DataFrame empty_df = Rcpp::DataFrame::create(
-    Named("threshold") = empty_numeric,
-    Named("level") = empty_integer,
-    Named("label") = empty_character,
-    Named("fpr") = empty_numeric,
-    Named("tpr") = empty_numeric,
-    Named("class") = CharacterVector::create("ROC", "data.frame")
-  );
-
-  return empty_df;
-
+Rcpp::DataFrame RecieverOperatorCharacteristics(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, Rcpp::Nullable<Rcpp::NumericVector> thresholds = R_NilValue) {
+    ROCCalculator roc_calculator(actual, response, thresholds);
+    return roc_calculator.calculate();
 }
 
-
+//' @rdname ROC
+//' @method weighted.ROC factor
+//' @export
+// [[Rcpp::export(weighted.ROC.factor)]]
+Rcpp::DataFrame weighted_RecieverOperatorCharacteristics(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, const Rcpp::NumericVector& w, Rcpp::Nullable<Rcpp::NumericVector> thresholds = R_NilValue) {
+    ROCCalculator roc_calculator(actual, response, w, thresholds);
+    return roc_calculator.calculate();
+}
