@@ -431,8 +431,15 @@ ppv.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
 #' @rdname prROC
 #' @method prROC factor
 #' @export
-prROC.factor <- function(actual, response, micro = NULL, thresholds = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_prROC`, actual, response, micro, thresholds, na_rm = na.rm)
+prROC.factor <- function(actual, response, thresholds = NULL, ...) {
+    .Call(`_SLmetrics_PrecisionRecallCurve`, actual, response, thresholds)
+}
+
+#' @rdname prROC
+#' @method weighted.prROC factor
+#' @export
+weighted.prROC.factor <- function(actual, response, w, thresholds = NULL, ...) {
+    .Call(`_SLmetrics_weighted_PrecisionRecallCurve`, actual, response, w, thresholds)
 }
 
 #' @rdname recall
@@ -510,8 +517,15 @@ auc <- function(y, x, method = 0L) {
 #' @rdname ROC
 #' @method ROC factor
 #' @export
-ROC.factor <- function(actual, response, micro = NULL, thresholds = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_ROC`, actual, response, micro, thresholds, na_rm = na.rm)
+ROC.factor <- function(actual, response, thresholds = NULL, ...) {
+    .Call(`_SLmetrics_RecieverOperatorCharacteristics`, actual, response, thresholds)
+}
+
+#' @rdname ROC
+#' @method weighted.ROC factor
+#' @export
+weighted.ROC.factor <- function(actual, response, w, thresholds = NULL, ...) {
+    .Call(`_SLmetrics_weighted_RecieverOperatorCharacteristics`, actual, response, w, thresholds)
 }
 
 #' @rdname specificity

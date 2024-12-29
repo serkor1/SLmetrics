@@ -821,18 +821,30 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// prROC
-Rcpp::DataFrame prROC(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, Nullable<bool> micro, Rcpp::Nullable<Rcpp::NumericVector> thresholds, const bool& na_rm);
-RcppExport SEXP _SLmetrics_prROC(SEXP actualSEXP, SEXP responseSEXP, SEXP microSEXP, SEXP thresholdsSEXP, SEXP na_rmSEXP) {
+// PrecisionRecallCurve
+Rcpp::DataFrame PrecisionRecallCurve(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, Rcpp::Nullable<Rcpp::NumericVector> thresholds);
+RcppExport SEXP _SLmetrics_PrecisionRecallCurve(SEXP actualSEXP, SEXP responseSEXP, SEXP thresholdsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
-    Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type thresholds(thresholdsSEXP);
-    Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(prROC(actual, response, micro, thresholds, na_rm));
+    rcpp_result_gen = Rcpp::wrap(PrecisionRecallCurve(actual, response, thresholds));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_PrecisionRecallCurve
+Rcpp::DataFrame weighted_PrecisionRecallCurve(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, const Rcpp::NumericVector& w, Rcpp::Nullable<Rcpp::NumericVector> thresholds);
+RcppExport SEXP _SLmetrics_weighted_PrecisionRecallCurve(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP thresholdsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type thresholds(thresholdsSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_PrecisionRecallCurve(actual, response, w, thresholds));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -975,18 +987,30 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// ROC
-Rcpp::DataFrame ROC(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, Nullable<bool> micro, Rcpp::Nullable<Rcpp::NumericVector> thresholds, const bool& na_rm);
-RcppExport SEXP _SLmetrics_ROC(SEXP actualSEXP, SEXP responseSEXP, SEXP microSEXP, SEXP thresholdsSEXP, SEXP na_rmSEXP) {
+// RecieverOperatorCharacteristics
+Rcpp::DataFrame RecieverOperatorCharacteristics(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, Rcpp::Nullable<Rcpp::NumericVector> thresholds);
+RcppExport SEXP _SLmetrics_RecieverOperatorCharacteristics(SEXP actualSEXP, SEXP responseSEXP, SEXP thresholdsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
-    Rcpp::traits::input_parameter< Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type thresholds(thresholdsSEXP);
-    Rcpp::traits::input_parameter< const bool& >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(ROC(actual, response, micro, thresholds, na_rm));
+    rcpp_result_gen = Rcpp::wrap(RecieverOperatorCharacteristics(actual, response, thresholds));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_RecieverOperatorCharacteristics
+Rcpp::DataFrame weighted_RecieverOperatorCharacteristics(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, const Rcpp::NumericVector& w, Rcpp::Nullable<Rcpp::NumericVector> thresholds);
+RcppExport SEXP _SLmetrics_weighted_RecieverOperatorCharacteristics(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP thresholdsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type thresholds(thresholdsSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_RecieverOperatorCharacteristics(actual, response, w, thresholds));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1577,7 +1601,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_PositivePredictiveValue", (DL_FUNC) &_SLmetrics_PositivePredictiveValue, 4},
     {"_SLmetrics_weighted_PositivePredictiveValue", (DL_FUNC) &_SLmetrics_weighted_PositivePredictiveValue, 5},
     {"_SLmetrics_cmatrix_PositivePredictiveValue", (DL_FUNC) &_SLmetrics_cmatrix_PositivePredictiveValue, 3},
-    {"_SLmetrics_prROC", (DL_FUNC) &_SLmetrics_prROC, 5},
+    {"_SLmetrics_PrecisionRecallCurve", (DL_FUNC) &_SLmetrics_PrecisionRecallCurve, 3},
+    {"_SLmetrics_weighted_PrecisionRecallCurve", (DL_FUNC) &_SLmetrics_weighted_PrecisionRecallCurve, 4},
     {"_SLmetrics_Recall", (DL_FUNC) &_SLmetrics_Recall, 4},
     {"_SLmetrics_weighted_Recall", (DL_FUNC) &_SLmetrics_weighted_Recall, 5},
     {"_SLmetrics_cmatrix_Recall", (DL_FUNC) &_SLmetrics_cmatrix_Recall, 3},
@@ -1588,7 +1613,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_weighted_TruePositiveRate", (DL_FUNC) &_SLmetrics_weighted_TruePositiveRate, 5},
     {"_SLmetrics_cmatrix_TruePositiveRate", (DL_FUNC) &_SLmetrics_cmatrix_TruePositiveRate, 3},
     {"_SLmetrics_auc", (DL_FUNC) &_SLmetrics_auc, 3},
-    {"_SLmetrics_ROC", (DL_FUNC) &_SLmetrics_ROC, 5},
+    {"_SLmetrics_RecieverOperatorCharacteristics", (DL_FUNC) &_SLmetrics_RecieverOperatorCharacteristics, 3},
+    {"_SLmetrics_weighted_RecieverOperatorCharacteristics", (DL_FUNC) &_SLmetrics_weighted_RecieverOperatorCharacteristics, 4},
     {"_SLmetrics_Specificity", (DL_FUNC) &_SLmetrics_Specificity, 4},
     {"_SLmetrics_weighted_Specificity", (DL_FUNC) &_SLmetrics_weighted_Specificity, 5},
     {"_SLmetrics_cmatrix_Specificity", (DL_FUNC) &_SLmetrics_cmatrix_Specificity, 3},
