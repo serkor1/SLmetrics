@@ -238,8 +238,8 @@ The `ROC()`-function accepts a custom `threshold`-argument, which can be passed 
 # 1) create custom
 # thresholds
 thresholds <- seq(
-    from = min(roc$threshold),
-    to   = max(roc$threshold),
+    from = 0.9,
+    to   = 0.1,
     length.out = 10
 )
 
