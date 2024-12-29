@@ -1,14 +1,4 @@
 
-> \[!IMPORTANT\]
->
-> [SLmetrics](https://serkor1.github.io/SLmetrics/) is still under
-> active development. Some functions may be unstable and could cause
-> your R session to crash. The target date for CRAN submission is
-> **March 2025**.
->
-> All feedback is welcome — thank you for helping us improve
-> [SLmetrics](https://serkor1.github.io/SLmetrics/)!
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # {SLmetrics}: Machine learning performance evaluation on steroids <img src="man/figures/logo.png" align="right" height="150" alt="" />
@@ -39,6 +29,17 @@ array of metrics as
 [{reticulate}](https://github.com/rstudio/reticulate) and the Python
 compile-run-(crash)-debug cylce.
 
+> \[!IMPORTANT\]
+>
+> [SLmetrics](https://serkor1.github.io/SLmetrics/) is still under
+> active development. Some functions may be unstable and could cause
+> your R session to crash. The target date for CRAN submission is
+> **March 2025**.
+>
+> All feedback is welcome, and highly appreciated — thank you for
+> helping in improving [SLmetrics](https://serkor1.github.io/SLmetrics/)
+> :heart:
+
 Depending on the mood and alignment of planets
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) stands for
 Supervised Learning metrics, or Statistical Learning metrics. If
@@ -49,12 +50,24 @@ metrics, and a sandbox for me to develop my `C++` skills.
 
 ## :books: Table of Contents
 
-- [Getting Started](#quickstart)
-- [Why?](#why)
-- [Performance Comparison](#comparison)
-- [Basic Usage](#usage)
-- [Installation](#installation)
-- [Code of Conduct](#code-of-conduct)
+- [:books: Table of Contents](#-books--table-of-contents)
+- [:rocket: Gettting Started](#-rocket--gettting-started)
+  - [:hammer: Installation](#-hammer--installation)
+  - [:wrench: Basic Usage](#-wrench--basic-usage)
+- [:information_source: Why?](#-information-source--why-)
+- [:zap: Performance Comparison](#-zap--performance-comparison)
+  - [:fast_forward: Speed comparison](#-fast-forward--speed-comparison)
+  - [:floppy_disk: Memory-efficiency](#-floppy-disk--memory-efficiency)
+- [:information_source: Basic usage](#-information-source--basic-usage)
+  - [:books: Regression](#-books--regression)
+  - [:books: Classification](#-books--classification)
+- [:information_source:
+  Installation](#-information-source--installation)
+  - [:shield: Stable version](#-shield--stable-version)
+  - [:hammer_and_wrench: Development
+    version](#-hammer-and-wrench--development-version)
+- [:information_source: Code of
+  Conduct](#-information-source--code-of-conduct)
 
 ## :rocket: Gettting Started
 
