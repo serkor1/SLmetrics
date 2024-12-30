@@ -156,7 +156,7 @@ RMSE[^1].
 
 As shown in the chart,
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) maintains
-consistently low execution times across different sample sizes.
+consistently low(er) execution times across different sample sizes.
 
 ### :floppy_disk: Memory-efficiency
 
@@ -188,11 +188,11 @@ remains extremely memory-efficient, even at large sample sizes.
 
 > \[!IMPORTANT\]
 >
-> From [{benc}](https://github.com/r-lib/bench) documentation: Total
+> From [{benc}](https://github.com/r-lib/bench) documentation: *Total
 > amount of memory allocated by R while running the expression. Memory
 > allocated outside the R heap, e.g. by `malloc()` or new directly is
 > not tracked, take care to avoid misinterpreting the results if running
-> code that may do this.
+> code that may do this.*
 
 ## :information_source: Basic usage
 
