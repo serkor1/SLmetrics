@@ -56,10 +56,9 @@ Depending on the mood and alignment of planets [{SLmetrics}](https://serkor1.git
 
 ## :books: Table of Contents
 
-* [:books: Table of Contents](#books-table-of-contents)
 * [:rocket: Gettting Started](#rocket-gettting-started)
-  + [:hammer: Installation](#hammer-installation)
-  + [:wrench: Basic Usage](#wrench-basic-usage)
+  + [:shield: Installation](#shield-installation)
+  + [:books: Basic Usage](#books-basic-usage)
 * [:information_source: Why?](#information_source-why)
 * [:zap: Performance Comparison](#zap-performance-comparison)
   + [:fast_forward: Speed comparison](#fast_forward-speed-comparison)
@@ -77,7 +76,7 @@ Depending on the mood and alignment of planets [{SLmetrics}](https://serkor1.git
 
 Below you’ll find instructions to install [{SLmetrics}](https://serkor1.github.io/SLmetrics/) and get started with your first metric, the Root Mean Squared Error (RMSE).
 
-### :hammer: Installation 
+### :shield: Installation 
 
 ```{r, eval = FALSE}
 ## install stable release
@@ -87,7 +86,7 @@ devtools::install_github(
 )
 ```
 
-### :wrench: Basic Usage
+### :books: Basic Usage
 
 Below is a minimal example demonstrating how to compute both unweighted and weighted RMSE.
 

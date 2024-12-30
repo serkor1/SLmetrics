@@ -39,10 +39,9 @@ metrics, and a sandbox for me to develop my `C++` skills.
 
 ## :books: Table of Contents
 
-- [:books: Table of Contents](#books-table-of-contents)
 - [:rocket: Gettting Started](#rocket-gettting-started)
-  - [:hammer: Installation](#hammer-installation)
-  - [:wrench: Basic Usage](#wrench-basic-usage)
+  - [:shield: Installation](#shield-installation)
+  - [:books: Basic Usage](#books-basic-usage)
 - [:information_source: Why?](#information_source-why)
 - [:zap: Performance Comparison](#zap-performance-comparison)
   - [:fast_forward: Speed comparison](#fast_forward-speed-comparison)
@@ -63,7 +62,7 @@ Below you’ll find instructions to install
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) and get started with
 your first metric, the Root Mean Squared Error (RMSE).
 
-### :hammer: Installation
+### :shield: Installation
 
 ``` r
 ## install stable release
@@ -73,7 +72,7 @@ devtools::install_github(
 )
 ```
 
-### :wrench: Basic Usage
+### :books: Basic Usage
 
 Below is a minimal example demonstrating how to compute both unweighted
 and weighted RMSE.
