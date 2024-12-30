@@ -188,7 +188,7 @@ remains extremely memory-efficient, even at large sample sizes.
 
 > \[!IMPORTANT\]
 >
-> From [{benc}](https://github.com/r-lib/bench) documentation: *Total
+> From [{bench}](https://github.com/r-lib/bench) documentation: *Total
 > amount of memory allocated by R while running the expression. Memory
 > allocated outside the R heap, e.g. by `malloc()` or new directly is
 > not tracked, take care to avoid misinterpreting the results if running

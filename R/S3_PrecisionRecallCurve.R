@@ -34,7 +34,7 @@ prROC <- function(...) {
   )
 }
 
-#' @rdname ROC
+#' @rdname prROC
 #' @export
 weighted.prROC <- function(...) {
   UseMethod(

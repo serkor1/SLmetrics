@@ -4,6 +4,7 @@
 \alias{prROC.factor}
 \alias{weighted.prROC.factor}
 \alias{prROC}
+\alias{weighted.prROC}
 \title{Compute the \eqn{\text{reciever}} \eqn{\text{operator}} \eqn{\text{characteristics}}}
 \usage{
 \method{prROC}{factor}(actual, response, thresholds = NULL, ...)
@@ -11,6 +12,8 @@
 \method{weighted.prROC}{factor}(actual, response, w, thresholds = NULL, ...)
 
 prROC(...)
+
+weighted.prROC(...)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
