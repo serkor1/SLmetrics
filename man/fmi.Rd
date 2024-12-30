@@ -130,6 +130,7 @@ Other Classification:
 \code{\link{ckappa.factor}()},
 \code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
+\code{\link{entropy.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},
 \code{\link{fer.factor}()},
