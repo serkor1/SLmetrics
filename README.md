@@ -29,17 +29,6 @@ array of metrics as
 [{reticulate}](https://github.com/rstudio/reticulate) and the Python
 compile-run-(crash)-debug cylce.
 
-> \[!IMPORTANT\]
->
-> [SLmetrics](https://serkor1.github.io/SLmetrics/) is still under
-> active development. Some functions may be unstable and could cause
-> your R session to crash. The target date for CRAN submission is
-> **March 2025**.
->
-> All feedback is welcome, and highly appreciated — thank you for
-> helping in improving [SLmetrics](https://serkor1.github.io/SLmetrics/)
-> :heart:
-
 Depending on the mood and alignment of planets
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) stands for
 Supervised Learning metrics, or Statistical Learning metrics. If
@@ -71,8 +60,8 @@ metrics, and a sandbox for me to develop my `C++` skills.
 ## :rocket: Gettting Started
 
 Below you’ll find instructions to install
-[{SLmetrics}](https://serkor1.github.io/SLmetrics/) and quickly compute
-your first metric.
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) and get started with
+your first metric, the Root Mean Squared Error (RMSE).
 
 ### :hammer: Installation
 
@@ -123,32 +112,35 @@ usage, performance comparisons, and more details about
 Machine learning can be a complicated task; the steps from feature
 engineering to model deployment require carefully measured actions and
 decisions. One low-hanging fruit to simplify this process is
-*performance evaluation*. At its core, performance evaluation is
-essentially just comparing two vectors—a programmatically and, at times,
-mathematically trivial step in the ML pipeline, but one that can become
-complicated due to:
+*performance evaluation*.
 
-1.  Dependencies and potential deprecations  
+At its core, performance evaluation is essentially just comparing two
+vectors — a programmatically and, at times, mathematically trivial step
+in the machine learning pipeline, but one that can become complicated
+due to:
+
+1.  Dependencies and potential deprecations
 2.  Needlessly complex or repetitive arguments  
-3.  Performance bottlenecks at scale
+3.  Performance and memory bottlenecks at scale
 
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) solves these issues
 by being:
 
 1.  **Fast:** Powered by `C++` and
-    [Rcpp](https://github.com/RcppCore/Rcpp).  
+    [Rcpp](https://github.com/RcppCore/Rcpp)  
 2.  **Memory-efficient:** Everything is structured around pointers and
-    references.  
+    references
 3.  **Lightweight:** Only depends on
     [Rcpp](https://github.com/RcppCore/Rcpp),
     [RcppEigen](https://github.com/RcppCore/RcppEigen), and
-    [lattice](https://github.com/deepayan/lattice).  
-4.  **Simple:** S3-based, minimal overhead, and flexible inputs.
+    [lattice](https://github.com/deepayan/lattice)
+4.  **Simple:** S3-based, minimal overhead, and flexible inputs
 
 Performance evaluation should be plug-and-play and “just work” out of
 the box — there’s no need to worry about *quasiquations*,
 *dependencies*, *deprecations*, or variations of the same functions
-relative to their arguments.
+relative to their arguments when using
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/).
 
 ## :zap: Performance Comparison
 
@@ -156,10 +148,8 @@ One, obviously, can’t build an `R`-package on `C++` and
 [{Rcpp}](https://github.com/RcppCore/Rcpp) without a proper pissing
 contest at the urinals - below is a comparison in execution time and
 memory efficiency of two simple cases that any {pkg} should be able to
-handle with gracefully; computing a 2 x 2 confusion matrix and computing
-the root mean squared error. The source code for these benchmarks is
-available
-[here](https://github.com/serkor1/SLmetrics/blob/main/data-raw/performance.R).
+handle gracefully; computing a 2 x 2 confusion matrix and computing the
+RMSE[^1].
 
 ### :fast_forward: Speed comparison
 
@@ -192,18 +182,27 @@ requires no GC calls for these operations.
 | {MLmetrics} | 100 | 19 | 2.39 | 76 |
 | {mlr3measures} | 100 | 12 | 1.27 | 76 |
 
-Root Mean Squared Error (N = 1e7)
+RMSE (N = 1e7)
 
 In both tasks, [{SLmetrics}](https://serkor1.github.io/SLmetrics/)
 remains extremely memory-efficient, even at large sample sizes.
 
+> \[!IMPORTANT\]
+>
+> From [{benc}](https://github.com/r-lib/bench) documentation: Total
+> amount of memory allocated by R while running the expression. Memory
+> allocated outside the R heap, e.g. by `malloc()` or new directly is
+> not tracked, take care to avoid misinterpreting the results if running
+> code that may do this.
+
 ## :information_source: Basic usage
 
 In its simplest form,
-[{SLmetrics}](https://serkor1.github.io/SLmetrics/) functions work
-directly with pairs of <numeric> vectors (for regression) or <factor>
-vectors (for classification). Below we demonstrate this on two
-well-known datasets, `mtcars` (regression) and `iris` (classification).
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/)-functions work
+directly with pairs of \<numeric\> vectors (for regression) or
+\<factor\> vectors (for classification). Below we demonstrate this on
+two well-known datasets, `mtcars` (regression) and `iris`
+(classification).
 
 ### :books: Regression
 
@@ -219,9 +218,9 @@ rmse(mtcars$mpg, fitted(model))
 
 ### :books: Classification
 
-Now we recode the iris dataset into a binary problem (“virginica”
+Now we recode the `iris` dataset into a binary problem (“virginica”
 vs. “others”) and fit a logistic regression. Then we generate predicted
-classes, compute the confusion matrix, and calculate ROC metrics.
+classes, compute the confusion matrix and summarize it.
 
 ``` r
 # 1) recode iris
@@ -282,28 +281,6 @@ summary(
 #>  - Precision:         0.81
 ```
 
-``` r
-# 5) generate
-# roc object
-summary(
-  roc <- ROC(
-    actual    = actual,
-    response  = predict(model, type = "response")
-  )
-)
-#> Reciever Operator Characteristics 
-#> ================================================================================
-#> AUC
-#>  - Others: 0.114
-#>  - Virginica: 0.887
-
-# 6) plot roc
-# object
-plot(roc)
-```
-
-<img src="man/figures/README-ROC-1.png" width="100%" />
-
 ## :information_source: Installation
 
 ### :shield: Stable version
@@ -332,3 +309,6 @@ Please note that the [{SLmetrics}](https://serkor1.github.io/SLmetrics/)
 project is released with a [Contributor Code of
 Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
+
+[^1]: The source code for these benchmarks is available
+    [here](https://github.com/serkor1/SLmetrics/blob/main/data-raw/performance.R).
