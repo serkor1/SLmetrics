@@ -8,25 +8,28 @@ using namespace Rcpp;
 //' @method plr factor
 //' @export
 // [[Rcpp::export(plr.factor)]]
-NumericVector plr(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue) {
-    PLRMetric foo; // Instantiate PLRMetric
-    return classification_base(actual, predicted, foo, micro);
+Rcpp::NumericVector PositiveLikelihoodRatio(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) 
+{
+    PositiveLikelihoodRatioClass cook;
+    return recipe(cook, actual, predicted);
 }
 
 //' @rdname plr
 //' @method weighted.plr factor
 //' @export
 // [[Rcpp::export(weighted.plr.factor)]]
-NumericVector weighted_plr(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue) {
-    PLRMetric foo; // Instantiate PLRMetric
-    return classification_base(actual, predicted, w, foo, micro);
+Rcpp::NumericVector weighted_PositiveLikelihoodRatio(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w) 
+{
+    PositiveLikelihoodRatioClass cook;
+    return recipe(cook, actual, predicted, w);
 }
 
 //' @rdname plr
 //' @method plr cmatrix
 //' @export
 // [[Rcpp::export(plr.cmatrix)]]
-NumericVector plr_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue) {
-    PLRMetric foo; // Instantiate PLRMetric
-    return classification_base(x, foo, micro);
+Rcpp::NumericVector cmatrix_PositiveLikelihoodRatio(const Rcpp::NumericMatrix& x) 
+{
+    PositiveLikelihoodRatioClass cook;
+    return recipe(cook, x);
 }

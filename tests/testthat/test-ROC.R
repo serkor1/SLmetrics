@@ -9,306 +9,104 @@ testthat::test_that(
   desc = "Test that `ROC()`-function works as expected",
   code = {
 
-    n <- 1e3
-    k <- 4
-    # 1) generate
-    # factors
-    set.seed(1903)
-    actual <- create_factor(
-      k = k,
-      n = n
-    )
+     # 0) construct ROC
+    # wrapper
+    wrapped_ROC <- function(
+      actual,
+      response,
+      thresholds = NULL,
+      w = NULL,
+      micro = TRUE) {
+      
+        if (is.null(w)) {
 
-    # 2) generate
-    # response variable
-    response <- rbeta(
-      n = n,
-      shape1 = 20,
-      shape2 = 2
-    )
-
-    # 3) generate datasets
-    # with ROC
-    current <- SLmetrics::ROC(
-      actual   = actual,
-      response = response
-    )
-
-    target <- ROC(
-      actual     = actual,
-      response   = response,
-      threshold = response
-    )
-
-    # 3.2) check if summaries
-    # and print methods responds
-    # correctly
-
-    # 3.2.1) print method
-    testthat::expect_no_error(
-      print.ROC(
-        target
-      )
-    )
-   
-
-    # 3.2.2) summary
-    # method
-    testthat::expect_no_error(
-      summary.ROC(
-        target
-      )
-    )
-    
-
-    # 3.2.3) plot method
-    testthat::expect_no_error(
-      plot.ROC(
-        target
-      )
-    )
-
-    # 4) test if its
-    # equal
-    testthat::expect_true(
-      set_equal(
-        current = current,
-        target  = target
-      )
-    )
-
-    # 5) calculate
-    # values using
-    # scikit-learn
-    py_value <- list()
-    for (i in 1:k) {
-
-      py_metric <- py_roc(
-        actual = as.numeric(
-          as.numeric(actual) == i
-        ),
-        response = response,
-        pos_label = 1
-      )
-
-      names(py_metric) <- c("fpr", "tpr", "threshold")
-
-      py_metric <- as.data.frame(py_metric)[-1,]
-
-
-      py_metric$level <- i
-      py_metric$label <- letters[i]
-
-      py_metric[[i]] <- py_metric
-
-    }
-
-
-    py_value <- do.call(
-      rbind,
-      py_value
-    )
-
-    py_value <- py_value[ , names(current)]
-
-    # 6) test if its
-    # equal
-    testthat::expect_true(
-      set_equal(
-        current = current,
-        target  = target
-      )
-    )
-
-
-    # 7) Test that custom
-    # thresholds works
-    # as expected
-    thresholds <- seq(
-      0,
-      1,
-      length.out = 10
-    )
-
-    testthat::expect_true(
-      set_equal(
-        current = ROC(
-          actual     = actual,
-          response   = response,
-          thresholds = thresholds
-        ),
-        target  = ref_ROC(
-          actual     = actual,
-          response   = response,
-          thresholds = thresholds
-        )
-      )
-    )
-
-
-  }
-)
-
-testthat::test_that(
-  desc = "Test that `prROC()`-function works as expected",
-  code = {
-
-    n <- 1e3
-    k <- 4
-    # 1) generate
-    # factors
-    set.seed(1903)
-    actual <- create_factor(
-      k = k,
-      n = n
-    )
-
-    # 2) generate
-    # response variable
-    response <- rbeta(
-      n = n,
-      shape1 = 20,
-      shape2 = 2
-    )
-
-    # 3) generate datasets
-    # with ROC
-    current <- prROC(
-      actual   = actual,
-      response = response
-    )
-
-    target <- prROC(
-      actual     = actual,
-      response   = response,
-      threshold = response
-    )
-
-    # 3.2) check if summaries
-    # and print methods responds
-    # correctly
-
-    # 3.2.1) print method
-    testthat::expect_no_error(
-      print.prROC(
-        target
-      )
-    )
-   
-
-    # 3.2.2) summary
-    # method
-    testthat::expect_no_error(
-      summary.prROC(
-        target
-      )
-    )
-    
-
-    # 3.2.3) plot method
-    testthat::expect_no_error(
-      plot.prROC(
-        target
-      )
-    )
-    
-
-    # 4) test if its
-    # equal
-    testthat::expect_true(
-      set_equal(
-        current = current,
-        target  = target
-      )
-    )
-
-    # 5) calculate
-    # values using
-    # scikit-learn
-    py_value <- list()
-    for (i in 1:k) {
-
-      py_metric <- py_prROC(
-        actual = as.numeric(
-          as.numeric(actual) == i
-        ),
-        response = response,
-        pos_label = 1
-      )
-
-
-      py_metric <- lapply(
-        py_metric,
-        function(x) {
-          x[1:n]
+          ROC(
+            actual,
+            response,
+            thresholds = if (is.null(thresholds))  {NULL} else thresholds
+          )
+  
+        } else {
+  
+          weighted.ROC(
+            actual,
+            response,
+            thresholds = if (is.null(thresholds))  {NULL} else thresholds,
+            w = w
+          )
+  
         }
-      )
+      
+    }
 
-      names(py_metric) <- c("precision", "recall", "threshold")
+    # 1) generate class
+    # values
+    actual     <- create_factor(n = 100, k = 5)
+    response   <- runif(n = length(actual))
+    w          <- runif(n = length(actual))
+    thresholds <- seq(0.1, 0.9, by = 0.1)
+
+    for (weighted in c(TRUE, FALSE)) {
+    
+      # 2) test that the are 
+      # equal to target values
+      for (micro in c(NA, TRUE, FALSE)) {
+
+        # 2.1) generate sensible 
+        # label information
+        info <- paste(
+          "Weighted = ", weighted,
+          "Micro = ", micro
+        )
+
+        # 2.2) generate score
+        # from {slmetrics}
+        score <- wrapped_ROC(
+          actual     = actual,
+          response   = response,
+          w          = if (weighted) w else NULL,
+          micro      = if (is.na(micro)) { NULL } else micro
+        )
+
+        # 2.3) Test that methods
+        # works as expected
+        testthat::expect_no_condition(
+          object = invisible(capture.output(SLmetrics:::print.ROC(score))),
+          message = info
+        )
+
+        testthat::expect_no_condition(
+          object  = SLmetrics:::plot.ROC(score),
+          message = info
+        )
+        
+
+        # 2.4) test that the values
+        # are equal to target value
+
+        # 2.4.1) calculate py_score
+        py_score <- do.call(
+          rbind,
+          lapply(py_ROC(
+            actual    = actual,
+            response  = response,
+            w         = if (weighted) w else NULL),
+            FUN = as.data.frame))
+
+        # 2.4.2) test for equality
+        testthat::expect_true(
+          object = set_equal(
+            current = score[is.finite(score$thresholds),],
+            target  = py_score[is.finite(py_score$thresholds),]
+          ),
+          info = info
+        )
 
 
-
-      py_metric$level <- i
-      py_metric$label <- letters[i]
-
-
-      py_metric <- as.data.frame(py_metric)
-      py_metric <- py_metric[order(-py_metric$threshold, py_metric$level, decreasing = FALSE),]
-
-      py_value[[i]] <- py_metric
+      }
 
     }
 
 
-    py_value <- do.call(
-      rbind,
-      py_value
-    )
-
-    py_value <- py_value[ , names(current)]
-
-    # 6) test if its
-    # equal
-    testthat::expect_true(
-      set_equal(
-        current = prROC(
-          actual,
-          response
-        ),
-        target  = py_value
-      )
-    )
-
-
-    # 7) Test that custom
-    # thresholds works
-    # as expected
-    thresholds <- seq(
-      0,
-      1,
-      length.out = 10
-    )
-
-    testthat::expect_true(
-      set_equal(
-        current = prROC(
-          actual     = actual,
-          response   = response,
-          thresholds = thresholds
-        ),
-        target  = ref_prROC(
-          actual     = actual,
-          response   = response,
-          thresholds = thresholds
-        )
-      )
-    )
-
-
   }
 )
-
-# script end;
-
-
-

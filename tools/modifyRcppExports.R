@@ -23,37 +23,21 @@ updated_content <- gsub(", na_rm = (TRUE|FALSE)\\) \\{", ", na.rm = \\1) {", con
 # to pass the argument
 updated_content <- gsub("na_rm)", "na_rm = na.rm)", updated_content)
 
-# 4) update eveything function wise
-foo_update <- c(
-  "accuracy",
-  "baccuracy",
-  "mcc",
-  "phi",
-  "fmi",
-  "ckappa",
-  "zerooneloss",
-  "rmse",
-  "mse",
-  "huberloss",
-  "rmsle",
-  "mpe",
-  "mape",
-  "smape",
-  "rsq",
-  "mae",
-  "ccc",
-  "rae",
-  "rrse",
-  "pinball"
-  # ,
-  # "ROC",
-  # "prROC"
+# 4) Modify all functions
+# so it ends with ", ...)"
+foo_update <- as.vector(
+  outer(
+    "[a-z]*",
+     c("cmatrix", "factor", "numeric", "default"),
+     paste, 
+     sep = "."
+  )
 )
 
-foo_update <- as.vector(outer("[a-z]*", c("cmatrix", "factor", "numeric", "default"), paste, sep = "."))
-
-# 5) Modify the function signatures in RcppExports to append ', ...' to the argument list
+# 4.1) iterate through all
+# functions
 for (fname in foo_update) {
+  
   # Match the exact function definition, capture arguments, and append ', ...'
   pattern <- paste0("\\b(", fname, " <- function\\(.*)\\)")
   replacement <- "\\1, ...)"
@@ -61,8 +45,6 @@ for (fname in foo_update) {
   # Ensure we append ', ...' to the existing arguments
   updated_content <- gsub(pattern, replacement, updated_content, perl = TRUE)
 }
-
-
 
 # Write the updated content back to the file
 writeLines(updated_content, file_path)

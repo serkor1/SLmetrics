@@ -58,28 +58,19 @@ model <- lm(
 actual    <- mtcars$mpg
 predicted <- fitted(model)
 
-
-# 2) calculate the metric
-# with delta 0.5
-huberloss(
-  actual = actual,
-  predicted = predicted,
-  delta = 0.5
-)
-
-# 3) caclulate weighted
-# metric using arbitrary weights
-w <- rbeta(
-  n = 1e3,
-  shape1 = 10,
-  shape2 = 2
-)
-
-huberloss(
-  actual = actual,
-  predicted = predicted,
-  delta = 0.5,
-  w     = w
+# 2) evaluate in-sample model
+# performance using Relative Root Squared Errror (RRSE)
+cat(
+  "Relative Root Squared Errror", rrse(
+    actual    = actual,
+    predicted = predicted,
+  ),
+  "Relative Root Squared Errror (weighted)", weighted.rrse(
+    actual    = actual,
+    predicted = predicted,
+    w         = mtcars$mpg/mean(mtcars$mpg)
+  ),
+  sep = "\n"
 )
 }
 \seealso{
@@ -94,6 +85,7 @@ Other Regression:
 \code{\link{rae.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{rrmse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()}
 
@@ -105,6 +97,7 @@ Other Supervised Learning:
 \code{\link{ckappa.factor}()},
 \code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
+\code{\link{entropy.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},
 \code{\link{fer.factor}()},
@@ -126,6 +119,7 @@ Other Supervised Learning:
 \code{\link{recall.factor}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{rrmse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()},
 \code{\link{specificity.factor}()},

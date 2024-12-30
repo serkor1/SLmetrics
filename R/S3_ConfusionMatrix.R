@@ -50,6 +50,15 @@ cmatrix <- function(...) {
   )
 }
 
+#' @rdname cmatrix
+#' @export
+weighted.cmatrix <- function(...) {
+  UseMethod(
+    generic = "weighted.cmatrix",
+    object  = ..1 
+  )
+}
+
 
 #' @export
 print.cmatrix <- function(

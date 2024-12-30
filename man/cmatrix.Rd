@@ -2,21 +2,27 @@
 % Please edit documentation in R/RcppExports.R, R/S3_ConfusionMatrix.R
 \name{cmatrix.factor}
 \alias{cmatrix.factor}
+\alias{weighted.cmatrix.factor}
 \alias{cmatrix}
+\alias{weighted.cmatrix}
 \title{Confusion Matrix}
 \usage{
-\method{cmatrix}{factor}(actual, predicted, w = NULL, ...)
+\method{cmatrix}{factor}(actual, predicted, ...)
+
+\method{weighted.cmatrix}{factor}(actual, predicted, w, ...)
 
 cmatrix(...)
+
+weighted.cmatrix(...)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{predicted}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n} (default: \link{NULL}) If passed it will return a weighted confusion matrix.}
-
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n} (default: \link{NULL}) If passed it will return a weighted confusion matrix.}
 }
 \value{
 A named \eqn{k} x \eqn{k} <\link{matrix}> of \link{class} \if{html}{\out{<cmatrix>}}
@@ -96,7 +102,7 @@ plot(
 )
 
 # 4.2) weighted matrix
-confusion_matrix <- cmatrix(
+confusion_matrix <- weighted.cmatrix(
   actual    = actual,
   predicted = predicted,
   w         = iris$Petal.Length/mean(iris$Petal.Length)
@@ -120,6 +126,7 @@ Other Classification:
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
 \code{\link{dor.factor}()},
+\code{\link{entropy.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},
 \code{\link{fer.factor}()},
@@ -143,6 +150,7 @@ Other Supervised Learning:
 \code{\link{ccc.numeric}()},
 \code{\link{ckappa.factor}()},
 \code{\link{dor.factor}()},
+\code{\link{entropy.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},
 \code{\link{fer.factor}()},
@@ -164,6 +172,7 @@ Other Supervised Learning:
 \code{\link{recall.factor}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{rrmse.numeric}()},
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()},

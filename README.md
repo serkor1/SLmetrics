@@ -15,18 +15,19 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![codecov](https://codecov.io/gh/serkor1/SLmetrics/branch/development/graph/badge.svg?token=X2osJDSRlN)](https://codecov.io/gh/serkor1/SLmetrics)
 <!-- badges: end -->
 
-[{SLmetrics}](https://serkor1.github.io/SLmetrics/) is a collection of
-*lightning fast* performance evaluation metrics for regression and
-classification models written in `C++` and
-[{Rcpp}](https://github.com/RcppCore/Rcpp); it’s like using a
-supercharged [{yardstick}](https://github.com/tidymodels/yardstick) to
-measure model performance, without the risk of soft to super-hard
-deprecations. [{SLmetrics}](https://serkor1.github.io/SLmetrics/)
-provides (almost) the same array of metrics as in
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) is a lightweight `R`
+package written in `C++` and [{Rcpp}](https://github.com/RcppCore/Rcpp)
+for *memory-efficient* and *lightning-fast* machine learning performance
+evaluation; it’s like using a supercharged
+[{yardstick}](https://github.com/tidymodels/yardstick) but without the
+risk of soft to super-hard deprecations.
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) covers both
+regression and classification metrics and provides (almost) the same
+array of metrics as
 [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and
-[{pytorch}](https://github.com/pytorch/pytorch) but without having to
-[{reticulate}](https://github.com/rstudio/reticulate) or go through the
-whole compile, run and debug cycle in `Python`.
+[{PyTorch}](https://github.com/pytorch/pytorch) all without
+[{reticulate}](https://github.com/rstudio/reticulate) and the Python
+compile-run-(crash)-debug cylce.
 
 Depending on the mood and alignment of planets
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) stands for
@@ -36,248 +37,189 @@ latter will be the core philosophy and include unsupervised learning
 metrics. If not, then it will remain a {pkg} for Supervised Learning
 metrics, and a sandbox for me to develop my `C++` skills.
 
+## :books: Table of Contents
+
+- [:rocket: Gettting Started](#rocket-gettting-started)
+  - [:shield: Installation](#shield-installation)
+  - [:books: Basic Usage](#books-basic-usage)
+- [:information_source: Why?](#information_source-why)
+- [:zap: Performance Comparison](#zap-performance-comparison)
+  - [:fast_forward: Speed comparison](#fast_forward-speed-comparison)
+  - [:floppy_disk: Memory-efficiency](#floppy_disk-memory-efficiency)
+- [:information_source: Basic usage](#information_source-basic-usage)
+  - [:books: Regression](#books-regression)
+  - [:books: Classification](#books-classification)
+- [:information_source: Installation](#information_source-installation)
+  - [:shield: Stable version](#shield-stable-version)
+  - [:hammer_and_wrench: Development
+    version](#hammer_and_wrench-development-version)
+- [:information_source: Code of
+  Conduct](#information_source-code-of-conduct)
+
+## :rocket: Gettting Started
+
+Below you’ll find instructions to install
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) and get started with
+your first metric, the Root Mean Squared Error (RMSE).
+
+### :shield: Installation
+
+``` r
+## install stable release
+devtools::install_github(
+  repo = 'https://github.com/serkor1/SLmetrics@*release',
+  ref  = 'main'
+)
+```
+
+### :books: Basic Usage
+
+Below is a minimal example demonstrating how to compute both unweighted
+and weighted RMSE.
+
+``` r
+library(SLmetrics)
+
+actual    <- c(10.2, 12.5, 14.1)
+predicted <- c(9.8, 11.5, 14.2)
+weights   <- c(0.2, 0.5, 0.3)
+
+cat(
+  "Root Mean Squared Error", rmse(
+    actual    = actual,
+    predicted = predicted,
+  ),
+  "Root Mean Squared Error (weighted)", weighted.rmse(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+  ),
+  sep = "\n"
+)
+#> Root Mean Squared Error
+#> 0.6244998
+#> Root Mean Squared Error (weighted)
+#> 0.7314369
+```
+
+That’s all! Now you can explore the rest of this README for in-depth
+usage, performance comparisons, and more details about
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/).
+
 ## :information_source: Why?
 
-Machine Learning (ML) in itself can be a complicated task; the steps
-taken from feature engineering to the deployment of the model requires
-carefully measured actions, and decisions. One low-hanging of fruit of
-easing this task is *performance evaluation*. In it’s core, performance
-evaluation is essentially *just* a comparison of two vectors; a
-programmatically and, at times, mathematically trivial step in the ML
-pipeline. And therefore a {pkg} that implements performance evaluations
-of ML models can, and should, be proportional to the triviality of the
-application itself; ie. be efficient, fast, straightforward and simple.
-There should be no need to consider *quasiquations*, *dependencies*,
-*deprecations* or variations of the same functions relative to its
-arguments; it should be plug-and-play, and “just” work out of the box.
+Machine learning can be a complicated task; the steps from feature
+engineering to model deployment require carefully measured actions and
+decisions. One low-hanging fruit to simplify this process is
+*performance evaluation*.
 
-Below is four arguments of why
-[{SLmetrics}](https://serkor1.github.io/SLmetrics/) should be considered
-in your ML pipeline,
+At its core, performance evaluation is essentially just comparing two
+vectors — a programmatically and, at times, mathematically trivial step
+in the machine learning pipeline, but one that can become complicated
+due to:
 
-Firstly, [{SLmetrics}](https://serkor1.github.io/SLmetrics/) is *fast*.
+1.  Dependencies and potential deprecations
+2.  Needlessly complex or repetitive arguments  
+3.  Performance and memory bottlenecks at scale
+
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) solves these issues
+by being:
+
+1.  **Fast:** Powered by `C++` and
+    [Rcpp](https://github.com/RcppCore/Rcpp)  
+2.  **Memory-efficient:** Everything is structured around pointers and
+    references
+3.  **Lightweight:** Only depends on
+    [Rcpp](https://github.com/RcppCore/Rcpp),
+    [RcppEigen](https://github.com/RcppCore/RcppEigen), and
+    [lattice](https://github.com/deepayan/lattice)
+4.  **Simple:** S3-based, minimal overhead, and flexible inputs
+
+Performance evaluation should be plug-and-play and “just work” out of
+the box — there’s no need to worry about *quasiquations*,
+*dependencies*, *deprecations*, or variations of the same functions
+relative to their arguments when using
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/).
+
+## :zap: Performance Comparison
+
 One, obviously, can’t build an `R`-package on `C++` and
 [{Rcpp}](https://github.com/RcppCore/Rcpp) without a proper pissing
-contest at the urinals; a detailed [blog
-post](https://www.r-bloggers.com/) about the difference in speed has
-been posted on [R-bloggers](https://www.r-bloggers.com/). For a quick
-summary see below,
+contest at the urinals - below is a comparison in execution time and
+memory efficiency of two simple cases that any {pkg} should be able to
+handle gracefully; computing a 2 x 2 confusion matrix and computing the
+RMSE[^1].
 
-<details>
+### :fast_forward: Speed comparison
 
-<summary>
+<img src="man/figures/README-performance-1.png" width="100%" />
 
-Showcase: speed comparison
-</summary>
+As shown in the chart,
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) maintains
+consistently low(er) execution times across different sample sizes.
 
-Below is two simple cases that any {pkg} should be able to handle
-gracefully; computing a confusion matrix and computing the root mean
-squared error. The source code of the performance test can be found
-[here](https://github.com/serkor1/SLmetrics/blob/main/data-raw/performance.R).
+### :floppy_disk: Memory-efficiency
 
-## Execution time: Computing a 2 x 2 Confusion Matrix
+Below are the results for garbage collections and total memory
+allocations when computing a 2×2 confusion matrix (N = 1e7) and RMSE (N
+= 1e7). Notice that [{SLmetrics}](https://serkor1.github.io/SLmetrics/)
+requires no GC calls for these operations.
 
-<img src="man/figures/README-performance-classification-1.png" width="100%" />
+|  | Iterations | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
+|:---|---:|---:|---:|---:|
+| {SLmetrics} | 100 | 0 | 0.00 | 0 |
+| {yardstick} | 100 | 186 | 4.53 | 381 |
+| {MLmetrics} | 100 | 186 | 4.47 | 381 |
+| {mlr3measures} | 100 | 386 | 3.57 | 916 |
 
-## Execution time: Computing the Root Mean Squared Error (RMSE)
+2 x 2 Confusion Matrix (N = 1e7)
 
-<img src="man/figures/README-performance-regression-1.png" width="100%" />
+|  | Iterations | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
+|:---|---:|---:|---:|---:|
+| {SLmetrics} | 100 | 0 | 0.00 | 0 |
+| {yardstick} | 100 | 157 | 4.47 | 420 |
+| {MLmetrics} | 100 | 19 | 2.39 | 76 |
+| {mlr3measures} | 100 | 12 | 1.27 | 76 |
 
-In both cases the execution time is diverging in favor of
-[{SLmetrics}](https://serkor1.github.io/SLmetrics/); we promised speed
-and efficiency - and that is what you get.
+RMSE (N = 1e7)
 
-> In all fairness, {yardstick} is more defensive in its implementation
-> of some of its functions. However, the difference in the average
-> runtime can’t be entirely attributed to this element.
+In both tasks, [{SLmetrics}](https://serkor1.github.io/SLmetrics/)
+remains extremely memory-efficient, even at large sample sizes.
 
-</details>
-
-Secondly, [{SLmetrics}](https://serkor1.github.io/SLmetrics/) is
-*simple* and *flexible* to use; it is based on `S3` and provides the
-most essential class-wise and aggregated metrics.
-
-<details>
-
-<summary>
-
-Showcase: simplicity and flexibility
-</summary>
-
-Consider the classification problem below,
-
-``` r
-# 1) actual classes
-actual <- factor(
-  x = sample(x = 1:3, size = 100, replace = TRUE,prob = c(0.25,0.5,0.5)),
-  levels = c(1:3),
-  labels = letters[1:3]
-)
-
-# 2) predicted classes
-predicted <- factor(
-  x = sample(x = 1:3, size = 100, replace = TRUE,prob = c(0.5,0.25,0.25)),
-  levels = c(1:3),
-  labels = letters[1:3]
-)
-```
-
-The `recall`, `precision` and `specificity` can be calculated as
-follows,
-
-``` r
-# 1) recall
-recall(actual, predicted)
-#>         a         b         c 
-#> 0.4736842 0.2444444 0.2500000
-
-# 2) precision
-precision(actual, predicted)
-#>         a         b         c 
-#> 0.1764706 0.4782609 0.3461538
-
-# 3) specificity
-specificity(actual, predicted)
-#>         a         b         c 
-#> 0.4814815 0.7818182 0.7343750
-```
-
-Each function returns the class-wise metric; there is no need to specify
-the “positive” class - it just returns everything as defined by the
-`factor()`-function. The overall `recall`, for example, can be computed
-with a single `<[logical]>`-argument,
-
-``` r
-# 1) micro-averaged
-# recall
-recall(actual, predicted, micro = TRUE)
-#> [1] 0.29
-
-# 2) macro-averaged
-# recall
-recall(actual, predicted, micro = FALSE)
-#> [1] 0.3227096
-```
-
-However, it is not efficient to loop through the entire range of the
-`actual`- and `predicted`-vector to calculate three metrics; we could
-just pass the functions a confusion matrix, and base the calculations
-off of that as below,
-
-``` r
-# 0) confusion matrix
-confusion_matrix <- cmatrix(
-  actual,
-  predicted
-)
-
-# 1) recall
-recall(confusion_matrix)
-#>         a         b         c 
-#> 0.4736842 0.2444444 0.2500000
-
-# 2) precision
-precision(confusion_matrix)
-#>         a         b         c 
-#> 0.1764706 0.4782609 0.3461538
-
-# 3) specificity
-specificity(confusion_matrix)
-#>         a         b         c 
-#> 0.4814815 0.7818182 0.7343750
-```
-
-It is the same call and metric with slightly different arguments; this
-is the power and simplicity of `S3`.
-
-</details>
-
-Thirdly, [{SLmetrics}](https://serkor1.github.io/SLmetrics/) is *low
-level* and free of any *{pkg}verse*-regimes; this provides the freedom
-to develop it further as a part of your own {pkg}, or use it in any
-tidy, or untidy, pipeline you would want to.
-
-<details>
-
-<summary>
-
-Showcase: Low level and (in)dependency
-</summary>
-
-Currently [{SLmetrics}](https://serkor1.github.io/SLmetrics/) depends on
-three {pkgs}; [{Rcpp}](https://github.com/RcppCore/Rcpp),
-[{RcppEigen}](https://github.com/RcppCore/RcppEigen) and
-[{lattice}](https://github.com/deepayan/lattice). Three incredibly
-stable, flexible and efficient R packages. There is basically zero risk
-of downstream breaking changes, {pkg} bloating and/or compatibility
-issues.
-
-The source code of [{SLmetrics}](https://serkor1.github.io/SLmetrics/)
-are primarily made up of unrolled loops and matrix algebra using
-[{RcppEigen}](https://github.com/RcppCore/RcppEigen). There is, at most,
-one conversion between `R` and `C++` compatible objects without
-redundant type-checks, or various mapping functions; this makes
-[{SLmetrics}](https://serkor1.github.io/SLmetrics/) lightweight and
-ideal for high-speed computing.
-
-</details>
-
-Fourthly, [{SLmetrics}](https://serkor1.github.io/SLmetrics/) has a
-*larger* repertoire of supervised machine learning metrics; all of which
-has been battle tested with
-[{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and
-[{pytorch}](https://github.com/pytorch/pytorch) against
-[{yardstick}](https://github.com/tidymodels/yardstick),
-[{mlr3measures}](https://github.com/mlr-org/mlr3measures) and
-[{MLmetrics}](https://github.com/yanyachen/MLmetrics).
-
-<details>
-
-<summary>
-
-Showcase: repertoire and unit-testing
-</summary>
-
-[{SLmetrics}](https://serkor1.github.io/SLmetrics/) is build as the
-`R`-version of
-[{scikit-learn}](https://github.com/scikit-learn/scikit-learn) but with
-a larger focus on versatility, speed and the simplicity of `R`. All the
-functions implemented in
-[{SLmetrics}](https://serkor1.github.io/SLmetrics/) are tested using
-[{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and
-[{pytorch}](https://github.com/pytorch/pytorch) as reference values.
-
-</details>
+> \[!IMPORTANT\]
+>
+> From [{bench}](https://github.com/r-lib/bench) documentation: *Total
+> amount of memory allocated by R while running the expression. Memory
+> allocated outside the R heap, e.g. by `malloc()` or new directly is
+> not tracked, take care to avoid misinterpreting the results if running
+> code that may do this.*
 
 ## :information_source: Basic usage
 
-In its most basic form the functions can be used as-is without any
-pipelines, data.frames or recipes. Below are two simple examples.
+In its simplest form,
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/)-functions work
+directly with pairs of \<numeric\> vectors (for regression) or
+\<factor\> vectors (for classification). Below we demonstrate this on
+two well-known datasets, `mtcars` (regression) and `iris`
+(classification).
 
 ### :books: Regression
 
-Below is an example evaluating the in-sample performance of a linear
-regression on `mpg` from the `mtcars` data set,
+We first fit a linear model to predict `mpg` in the `mtcars` dataset,
+then compute the in-sample RMSE:
 
 ``` r
-# 1) run regression
-model <- lm(
-  formula = mpg ~ .,
-  data    = mtcars
-)
-
-# 2) evaluate RMSE
-rmse(
-  actual    = mtcars$mpg,
-  predicted = fitted(model)
-)
+# Evaluate a linear model on mpg (mtcars)
+model <- lm(mpg ~ ., data = mtcars)
+rmse(mtcars$mpg, fitted(model))
 #> [1] 2.146905
 ```
 
 ### :books: Classification
 
-Below is an example evaluating the in-sample performance of a logistic
-regression on `Species` from the `iris` data set,
+Now we recode the `iris` dataset into a binary problem (“virginica”
+vs. “others”) and fit a logistic regression. Then we generate predicted
+classes, compute the confusion matrix and summarize it.
 
 ``` r
 # 1) recode iris
@@ -338,68 +280,6 @@ summary(
 #>  - Precision:         0.81
 ```
 
-``` r
-# 5) generate
-# roc object
-summary(
-  roc <- ROC(
-    actual    = actual,
-    response  = predict(model, type = "response")
-  )
-)
-#> Reciever Operator Characteristics 
-#> ================================================================================
-#> AUC
-#>  - Others: 0.116
-#>  - Virginica: 0.887
-
-# 6) plot roc
-# object
-plot(roc)
-```
-
-<img src="man/figures/README-ROC-1.png" width="100%" />
-
-<details>
-
-<summary>
-
-Class-wise and aggregated metrics
-</summary>
-
-**Classwise specificity**
-
-``` r
-sensitivity(
-  confusion_matrix,
-  micro = NULL
-)
-#> Virginica    Others 
-#>      0.70      0.86
-```
-
-**Micro averaged specificity**
-
-``` r
-sensitivity(
-  confusion_matrix,
-  micro = TRUE
-)
-#> [1] 0.8066667
-```
-
-**Macro averaged specificity**
-
-``` r
-sensitivity(
-  confusion_matrix,
-  micro = FALSE
-)
-#> [1] 0.78
-```
-
-</details>
-
 ## :information_source: Installation
 
 ### :shield: Stable version
@@ -428,3 +308,6 @@ Please note that the [{SLmetrics}](https://serkor1.github.io/SLmetrics/)
 project is released with a [Contributor Code of
 Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
+
+[^1]: The source code for these benchmarks is available
+    [here](https://github.com/serkor1/SLmetrics/blob/main/data-raw/performance.R).

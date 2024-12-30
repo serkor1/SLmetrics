@@ -6,13 +6,9 @@
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-/*
-    Simplified AccuracyMetric class:
-    Calculates accuracy as (tp + tn) / N.
-*/
-class AccuracyMetric : public classification {
+class AccuracyClass : public classification {
 public:
-    // Compute overall accuracy
+
     Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
 
         // 0) set sizes
@@ -34,4 +30,4 @@ public:
     }
 };
 
-#endif // CLASSIFICATION_ACCURACY_H
+#endif

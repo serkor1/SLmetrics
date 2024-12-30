@@ -16,33 +16,33 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 * a different result than scikit-learn.Hence this approach
 * is prefferred
 */
-class FMIMetric : public classification {
-public:
+class FowlkesMallowsIndexClass : public classification {
 
-  Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
+    public:
 
-    // 0) set sizes
-    // of arrays
-    Eigen::ArrayXd output(1), N(1), pk(1), qk(1), tk(1);
-    Eigen::VectorXd col_sum(matrix.rows()), row_sum(matrix.rows());
+        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
 
-    // 1) calculate values
-    // accordingly
-    N       = matrix.sum();
-    row_sum = matrix.rowwise().sum();
-    col_sum = matrix.colwise().sum();
-    tk      = matrix.cwiseProduct(matrix).sum() - N;
-    pk      = col_sum.squaredNorm() - N;
-    qk      = row_sum.squaredNorm() - N;
+            // 0) set sizes
+            // of arrays
+            Eigen::ArrayXd output(1), N(1), pk(1), qk(1), tk(1);
+            Eigen::VectorXd col_sum(matrix.rows()), row_sum(matrix.rows());
 
-    // 2) calculate output
-    // value
-    output  = (tk / pk) * (tk / qk);
+            // 1) calculate values
+            // accordingly
+            N       = matrix.sum();
+            row_sum = matrix.rowwise().sum();
+            col_sum = matrix.colwise().sum();
+            tk      = matrix.cwiseProduct(matrix).sum() - N;
+            pk      = col_sum.squaredNorm() - N;
+            qk      = row_sum.squaredNorm() - N;
 
-    return Rcpp::wrap(output.array().sqrt());
+            // 2) calculate output
+            // value
+            output  = (tk / pk) * (tk / qk);
 
-  }
+            return Rcpp::wrap(output.array().sqrt());
 
+        }
 
 };
 

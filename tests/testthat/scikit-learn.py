@@ -2,6 +2,7 @@
 # sklearn and define functions
 # that corresponds to SLmetrics
 from sklearn import metrics
+import string
 from imblearn.metrics import sensitivity_score
 from imblearn.metrics import specificity_score
 from sklearn.metrics import confusion_matrix
@@ -95,12 +96,13 @@ def py_cmatrix(actual, predicted, w = None):
       sample_weight = w
     )
     
-def py_entropy(actual, response, normalize = True, w = None):
+def py_entropy(actual, response, normalize = True, w = None, labels = None):
     return metrics.log_loss(
       y_true    = actual,
       y_pred    = response,
       normalize = normalize,
-      sample_weight = w
+      sample_weight = w,
+      labels = labels
     )
 
 def py_roc(actual, response, pos_label = 1, w = None):
@@ -184,3 +186,77 @@ def py_d2pinball(actual, predicted, w = None, alpha = 0.5):
       alpha = alpha,
       multioutput = "raw_values"
     )
+
+def py_ROC(actual, response, w=None):
+
+    actual = np.asarray(actual)
+    response = np.asarray(response)
+    
+    unique_labels = np.unique(actual)
+    results = {}
+    
+    for i, label in enumerate(unique_labels):
+        
+        letter = string.ascii_lowercase[i]
+        
+        fpr, tpr, thresholds = metrics.roc_curve(
+            actual,
+            response,
+            pos_label=label,
+            sample_weight=w,
+            drop_intermediate=False
+        )
+        
+        results[letter] = {
+            'threshold': thresholds.tolist(),
+            'level': i + 1,
+            'label': letter,
+            'fpr': fpr.tolist(),
+            'tpr': tpr.tolist(),
+            
+        }
+    
+    return results
+
+def py_prROC(actual, response, w=None):
+   
+    actual = np.asarray(actual)
+    response = np.asarray(response)
+    
+    unique_labels = np.unique(actual)
+    results = {}
+    
+    for i, label in enumerate(unique_labels):
+        
+        letter = string.ascii_lowercase[i]
+        
+        precision, recall, thresholds = metrics.precision_recall_curve(
+            actual,
+            response,
+            pos_label = label,
+            sample_weight = w,
+            drop_intermediate = False
+        )
+
+        # Drop the last element
+        # scikit-learn adds a (1, 0) for recall and precision
+        precision = precision[:-1]
+        recall = recall[:-1]
+
+        # Values are returned in ascending
+        # order. It is needed in descending order
+        # as in ROC
+        sorted_indices = np.argsort(-thresholds)
+        thresholds = thresholds[sorted_indices]
+        precision = precision[sorted_indices]
+        recall = recall[sorted_indices]
+        
+        results[letter] = {
+            'threshold': thresholds.tolist(),
+            'level': i + 1,
+            'label': letter,
+            'precision': precision.tolist(),
+            'recall': recall.tolist(),
+        }
+    
+    return results

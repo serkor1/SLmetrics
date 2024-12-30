@@ -13,50 +13,54 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
         the confusion matrix. So there is no need to add an overloaded function
         for the weighted metrics.
 */
-class PrecisionMetric : public classification {
-public:
+class PrecisionClass : public classification {
 
-    // Compute precision with micro or macro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm) const override {
+    private:
+        bool na_rm;
         
-        // 0) Declare variables and size
-        // for efficiency.
-        // NOTE: Micro and macro already wraps and exports as Rcpp
-        Rcpp::NumericVector output(1);
-        Eigen::ArrayXd tp(matrix.rows()), fp(matrix.rows());
+    public:
+        PrecisionClass(bool na_rm)
+            : na_rm(na_rm) {}
 
-        // 1) create TP and FP arrays
-        // for calculations
-        TP(matrix, tp);
-        FP(matrix, fp);
+        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro) const override {
+            
+            // 0) Declare variables and size
+            // for efficiency.
+            // NOTE: Micro and macro already wraps and exports as Rcpp
+            Rcpp::NumericVector output(1);
+            Eigen::ArrayXd tp(matrix.rows()), fp(matrix.rows());
 
-        return do_micro
-            ? micro(tp, tp + fp, na_rm)
-            : macro(tp, tp + fp, na_rm);
+            // 1) create TP and FP arrays
+            // for calculations
+            TP(matrix, tp);
+            FP(matrix, fp);
 
-    }
+            return do_micro
+                ? micro(tp, tp + fp, na_rm)
+                : macro(tp, tp + fp, na_rm);
 
-    // Compute precision without micro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
-        
-        // 0) declare the
-        // output value and 
-        // TP/FP
-        Eigen::ArrayXd output(matrix.rows());
-        Eigen::ArrayXd tp(matrix.rows()), fp(matrix.rows());
+        }
 
-        // 1) create TP and FP arrays
-        // for calculations
-        TP(matrix, tp);
-        FP(matrix, fp);
+        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
+            
+            // 0) declare the
+            // output value and 
+            // TP/FP
+            Eigen::ArrayXd output(matrix.rows());
+            Eigen::ArrayXd tp(matrix.rows()), fp(matrix.rows());
 
-        // 2) calculate metric
-        output = tp / (tp + fp);
+            // 1) create TP and FP arrays
+            // for calculations
+            TP(matrix, tp);
+            FP(matrix, fp);
 
-        // 3) return with 
-        // wrap (R compatible classes)   
-        return Rcpp::wrap(output);
-    }
+            // 2) calculate metric
+            output = tp / (tp + fp);
+
+            // 3) return with 
+            // wrap (R compatible classes)   
+            return Rcpp::wrap(output);
+        }
 };
 
 #endif // CLASSIFICATION_PRECISION_H

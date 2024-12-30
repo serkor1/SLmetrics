@@ -1,6 +1,6 @@
 // [[Rcpp::depends(RcppEigen)]]
 #include <RcppEigen.h>
-#include "classification_DiagnosticOddsRatio.h" // DORMetric definition
+#include "classification_DiagnosticOddsRatio.h" // DiagnosticOddsRatioClass definition
 
 using namespace Rcpp;
 
@@ -8,25 +8,28 @@ using namespace Rcpp;
 //' @method dor factor
 //' @export
 // [[Rcpp::export(dor.factor)]]
-NumericVector dor(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue) {
-    DORMetric foo; // Instantiate DORMetric
-    return classification_base(actual, predicted, foo, micro);
+Rcpp::NumericVector DiagnosticOddsRatio(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) 
+{
+    DiagnosticOddsRatioClass cook;
+    return recipe(cook, actual, predicted);
 }
 
 //' @rdname dor
 //' @method weighted.dor factor
 //' @export
 // [[Rcpp::export(weighted.dor.factor)]]
-NumericVector weighted_dor(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue) {
-    DORMetric foo; // Instantiate DORMetric
-    return classification_base(actual, predicted, w, foo, micro);
+Rcpp::NumericVector weighted_DiagnosticOddsRatio(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w) 
+{
+    DiagnosticOddsRatioClass cook;
+    return recipe(cook, actual, predicted, w);
 }
 
 //' @rdname dor
 //' @method dor cmatrix
 //' @export
 // [[Rcpp::export(dor.cmatrix)]]
-NumericVector dor_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue) {
-    DORMetric foo; // Instantiate DORMetric
-    return classification_base(x, foo, micro);
+Rcpp::NumericVector cmatrix_DiagnosticOddsRatio(const Rcpp::NumericMatrix& x) 
+{
+    DiagnosticOddsRatioClass cook;
+    return recipe(cook, x);
 }

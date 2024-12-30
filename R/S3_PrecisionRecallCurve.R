@@ -20,7 +20,7 @@
 #' 
 #' @returns A [data.frame] on the following form,
 #'
-#' \item{thresholds}{<[numeric]> Thresholds used to determine [recall()] and [precision()]}
+#' \item{threshold}{<[numeric]> Thresholds used to determine [recall()] and [precision()]}
 #' \item{level}{<[character]> The level of the actual <[factor]>}
 #' \item{label}{<[character]> The levels of the actual <[factor]>}
 #' \item{recall}{<[numeric]> The recall}
@@ -30,6 +30,15 @@
 prROC <- function(...) {
   UseMethod(
     generic = "prROC",
+    object  = ..1
+  )
+}
+
+#' @rdname prROC
+#' @export
+weighted.prROC <- function(...) {
+  UseMethod(
+    generic = "weighted.prROC",
     object  = ..1
   )
 }
@@ -146,7 +155,7 @@ plot.prROC <- function(
     xlab     = xlab,
     ylab     = ylab,
     main     = main,
-    DT       = x,
+    DT       = x[is.finite(x$threshold), ],
     add_poly = panels,
     ...  
   )

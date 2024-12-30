@@ -1,6 +1,6 @@
 // [[Rcpp::depends(RcppEigen)]]
 #include <RcppEigen.h>
-#include "classification_NegativeLikelihoodRatio.h" // NLRMetric definition
+#include "classification_NegativeLikelihoodRatio.h" // NegativeLikelihoodRatio definition
 
 using namespace Rcpp;
 
@@ -8,25 +8,28 @@ using namespace Rcpp;
 //' @method nlr factor
 //' @export
 // [[Rcpp::export(nlr.factor)]]
-NumericVector nlr(const IntegerVector& actual, const IntegerVector& predicted, Nullable<bool> micro = R_NilValue) {
-    NLRMetric foo; // Instantiate NLRMetric
-    return classification_base(actual, predicted, foo, micro);
+Rcpp::NumericVector NegativeLikelihoodRatio(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) 
+{
+    NegativeLikelihoodRatioClass cook;
+    return recipe(cook, actual, predicted);
 }
 
 //' @rdname nlr
 //' @method weighted.nlr factor
 //' @export
 // [[Rcpp::export(weighted.nlr.factor)]]
-NumericVector weighted_nlr(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w, Nullable<bool> micro = R_NilValue) {
-    NLRMetric foo; // Instantiate NLRMetric
-    return classification_base(actual, predicted, w, foo, micro);
+Rcpp::NumericVector weighted_NegativeLikelihoodRatio(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w) 
+{
+    NegativeLikelihoodRatioClass cook;
+    return recipe(cook, actual, predicted, w);
 }
 
 //' @rdname nlr
 //' @method nlr cmatrix
 //' @export
 // [[Rcpp::export(nlr.cmatrix)]]
-NumericVector nlr_cmatrix(const NumericMatrix& x, Nullable<bool> micro = R_NilValue) {
-    NLRMetric foo; // Instantiate NLRMetric
-    return classification_base(x, foo, micro);
+Rcpp::NumericVector cmatrix_NegativeLikelihoodRatio(const Rcpp::NumericMatrix& x) 
+{
+    NegativeLikelihoodRatioClass cook;
+    return recipe(cook, x);
 }

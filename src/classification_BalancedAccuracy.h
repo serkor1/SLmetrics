@@ -7,16 +7,18 @@
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-/*
-    BalancedAccuracyMetric class:
-    Calculates the average recall across classes,
-    with an optional adjustment for chance agreement.
-*/
+class BalancedAccuracyClass : public classification {
 
-class BalancedAccuracyMetric : public classification {
+private:
+    bool adjust;
+    bool na_rm;
+
 public:
+    // Constructor
+    BalancedAccuracyClass(bool adjust, bool na_rm)
+        : adjust(adjust), na_rm(na_rm) {}
 
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool adjust, bool na_rm) const override {
+    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
         // 0) define values
         Eigen::ArrayXd output(1);                       
         Eigen::ArrayXd tp(matrix.rows()); 
@@ -59,4 +61,4 @@ public:
 
 };
 
-#endif // CLASSIFICATION_BALANCED_ACCURACY_H
+#endif

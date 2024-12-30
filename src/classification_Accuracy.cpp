@@ -8,25 +8,28 @@ using namespace Rcpp;
 //' @method accuracy factor
 //' @export
 // [[Rcpp::export(accuracy.factor)]]
-NumericVector accuracy(const IntegerVector& actual, const IntegerVector& predicted) {
-    AccuracyMetric foo; // Instantiate AccuracyMetric
-    return classification_base(actual, predicted, foo);
+Rcpp::NumericVector Accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) 
+{
+    AccuracyClass cook;
+    return recipe(cook, actual, predicted);
 }
 
 //' @rdname accuracy
 //' @method weighted.accuracy factor
 //' @export
 // [[Rcpp::export(weighted.accuracy.factor)]]
-NumericVector weighted_accuracy(const IntegerVector& actual, const IntegerVector& predicted, const NumericVector& w) {
-    AccuracyMetric foo; // Instantiate AccuracyMetric
-    return classification_base(actual, predicted, w, foo);
+Rcpp::NumericVector weighted_Accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w) 
+{
+    AccuracyClass cook;
+    return recipe(cook, actual, predicted, w);
 }
 
 //' @rdname accuracy
 //' @method accuracy cmatrix
 //' @export
 // [[Rcpp::export(accuracy.cmatrix)]]
-NumericVector accuracy_cmatrix(const NumericMatrix& x) {
-    AccuracyMetric foo; // Instantiate AccuracyMetric
-    return classification_base(x, foo);
+Rcpp::NumericVector cmatrix_Accuracy(const Rcpp::NumericMatrix& x) 
+{
+    AccuracyClass cook;
+    return recipe(cook, x);
 }

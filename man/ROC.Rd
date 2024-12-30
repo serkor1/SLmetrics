@@ -3,34 +3,34 @@
 %   R/S3_RecieverOperatorCharacteristics.R
 \name{ROC.factor}
 \alias{ROC.factor}
+\alias{weighted.ROC.factor}
 \alias{ROC}
+\alias{weighted.ROC}
 \title{Compute the \eqn{\text{reciever}} \eqn{\text{operator}} \eqn{\text{characteristics}}}
 \usage{
-\method{ROC}{factor}(actual, response, micro = NULL, thresholds = NULL, na.rm = TRUE, ...)
+\method{ROC}{factor}(actual, response, thresholds = NULL, ...)
+
+\method{weighted.ROC}{factor}(actual, response, w, thresholds = NULL, ...)
 
 ROC(...)
+
+weighted.ROC(...)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{response}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated response probabilities.}
 
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
-
 \item{thresholds}{An optional <\link{numeric}>-vector of non-zero \link{length} (default: \link{NULL}).}
 
-\item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
-This argument is only relevant when \code{micro != NULL}.
-When \code{na.rm = TRUE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))}.
-When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))}.}
-
 \item{...}{Arguments passed into other methods.}
+
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 }
 \value{
 A \link{data.frame} on the following form,
 
-\item{thresholds}{<\link{numeric}> Thresholds used to determine \code{\link[=tpr]{tpr()}} and \code{\link[=fpr]{fpr()}}}
+\item{threshold}{<\link{numeric}> Thresholds used to determine \code{\link[=tpr]{tpr()}} and \code{\link[=fpr]{fpr()}}}
 \item{level}{<\link{character}> The level of the actual <\link{factor}>}
 \item{label}{<\link{character}> The levels of the actual <\link{factor}>}
 \item{fpr}{<\link{numeric}> The false positive rate}
@@ -150,6 +150,7 @@ Other Classification:
 \code{\link{ckappa.factor}()},
 \code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
+\code{\link{entropy.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},
 \code{\link{fer.factor}()},
@@ -173,6 +174,7 @@ Other Supervised Learning:
 \code{\link{ckappa.factor}()},
 \code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
+\code{\link{entropy.factor}()},
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},
 \code{\link{fer.factor}()},
@@ -194,6 +196,7 @@ Other Supervised Learning:
 \code{\link{recall.factor}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{rrmse.numeric}()},
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()},

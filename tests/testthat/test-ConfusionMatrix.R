@@ -26,11 +26,23 @@ testthat::test_that(
 
         # 2.3) generate confusion
         # matrix
-        confusion_matrix <- cmatrix(
-          actual    = actual,
-          predicted = predicted,
-          w         = if (weighted) w else NULL 
-        )
+        if (weighted) {
+
+          confusion_matrix <- weighted.cmatrix(
+            actual    = actual,
+            predicted = predicted,
+            w         = w
+          )
+          
+        } else {
+
+          confusion_matrix <- cmatrix(
+            actual    = actual,
+            predicted = predicted
+          )
+
+        }
+        
 
         # 2.3) test that the values
         # are sensible
@@ -52,6 +64,24 @@ testthat::test_that(
             target  = as.numeric(py_confusion_matrix)
           ),
           info = info
+        )
+
+        # 2.6) test that
+        # methods works
+
+        # 2.6.1) print method
+        testthat::expect_no_condition(
+          object = invisible(SLmetrics:::print.cmatrix(confusion_matrix))
+        )
+
+        # 2.6.2) summary method
+        testthat::expect_no_condition(
+          object = invisible(SLmetrics:::summary.cmatrix(confusion_matrix))
+        )
+
+        # 2.6.3) plot method
+        testthat::expect_no_condition(
+          object = invisible(SLmetrics:::plot.cmatrix(confusion_matrix))
         )
 
 

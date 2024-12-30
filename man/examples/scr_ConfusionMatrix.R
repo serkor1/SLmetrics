@@ -54,7 +54,7 @@ plot(
 )
 
 # 4.2) weighted matrix
-confusion_matrix <- cmatrix(
+confusion_matrix <- weighted.cmatrix(
   actual    = actual,
   predicted = predicted,
   w         = iris$Petal.Length/mean(iris$Petal.Length)

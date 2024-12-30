@@ -13,43 +13,48 @@ EIGEN_MAKE_ALIGNED_OPERATOR_NEW
         the confusion matrix. So there is no need to add an overloaded function
         for the weighted metrics.
 */
-class FalseOmissionRateMetric : public classification {
-public:
+class FalseOmissionRateClass : public classification {
 
-    // Compute FOR with micro or macro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro, bool na_rm) const override {
-        // 0) Declare variables and size
-        // for efficiency.
-        // NOTE: Micro and macro already wraps and exports as Rcpp
-        Rcpp::NumericVector output(1);
-        Eigen::ArrayXd fn(matrix.rows()), tn(matrix.rows());
+    private:
+        bool na_rm;
 
-        // Create FN and TN arrays for calculations
-        FN(matrix, fn);
-        TN(matrix, tn);
+    public:
 
-        return do_micro
-            ? micro(fn, fn + tn, na_rm)
-            : macro(fn, fn + tn, na_rm);
-        
-    }
+        FalseOmissionRateClass(bool na_rm)
+            : na_rm(na_rm) {}
 
-    // Compute FOR without micro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool na_rm) const override {
-        // Declare the output value and FN/TN arrays
-        Eigen::ArrayXd output(matrix.rows());
-        Eigen::ArrayXd fn(matrix.rows()), tn(matrix.rows());
+        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro) const override {
+            // 0) Declare variables and size
+            // for efficiency.
+            // NOTE: Micro and macro already wraps and exports as Rcpp
+            Rcpp::NumericVector output(1);
+            Eigen::ArrayXd fn(matrix.rows()), tn(matrix.rows());
 
-        // Create FN and TN arrays for calculations
-        FN(matrix, fn);
-        TN(matrix, tn);
+            // Create FN and TN arrays for calculations
+            FN(matrix, fn);
+            TN(matrix, tn);
 
-        // Calculate metric
-        output = fn / (fn + tn);
+            return do_micro
+                ? micro(fn, fn + tn, na_rm)
+                : macro(fn, fn + tn, na_rm);
+            
+        }
 
-        // Return with R-compatible class
-        return Rcpp::wrap(output);
-    }
+        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
+            // Declare the output value and FN/TN arrays
+            Eigen::ArrayXd output(matrix.rows());
+            Eigen::ArrayXd fn(matrix.rows()), tn(matrix.rows());
+
+            // Create FN and TN arrays for calculations
+            FN(matrix, fn);
+            TN(matrix, tn);
+
+            // Calculate metric
+            output = fn / (fn + tn);
+
+            // Return with R-compatible class
+            return Rcpp::wrap(output);
+        }
 };
 
-#endif // CLASSIFICATION_FALSE_OMISSION_RATE_H
+#endif

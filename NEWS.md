@@ -1,9 +1,154 @@
 
-# Version 0.2-0
+# Version 0.3-0
 
-> Version 0.2-0 is considered pre-release of {SLmetrics}. We do not
+> Version 0.3-0 is considered pre-release of {SLmetrics}. We do not
 > expect any breaking changes, unless a major bug/issue is reported and
 > its nature forces breaking changes.
+
+## Improvements
+
+## New Feature
+
+- **Relative Root Mean Squared Error:** The function normalizes the Root
+  Mean Squared Error by a facttor. There is no official way of
+  normalizing it - and in {SLmetrics} the RMSE can be normalized using
+  three options; mean-, range- and IQR-normalization. It can be used as
+  follows,
+
+``` r
+# 1) define values
+actual <- rnorm(1e3)
+predicted <- actual + rnorm(1e3)
+
+# 2) calculate Relative Root Mean Squared Error
+cat(
+  "Mean Relative Root Mean Squared Error", SLmetrics::rrmse(
+    actual        = actual,
+    predicted     = predicted,
+    normalization = 0
+  ),
+  "Range Relative Root Mean Squared Error", SLmetrics::rrmse(
+    actual        = actual,
+    predicted     = predicted,
+    normalization = 1
+  ),
+  "IQR Relative Root Mean Squared Error", SLmetrics::rrmse(
+    actual        = actual,
+    predicted     = predicted,
+    normalization = 2
+  ),
+  sep = "\n"
+)
+```
+
+    #> Mean Relative Root Mean Squared Error
+    #> 2751.381
+    #> Range Relative Root Mean Squared Error
+    #> 0.1564043
+    #> IQR Relative Root Mean Squared Error
+    #> 0.7323898
+
+- **Cross Entropy:** Weighted and unweighted Cross Entropy, with and
+  without normalization. The function can be used as follows,
+
+``` r
+# Create factors and response probabilities
+actual   <- factor(c("Class A", "Class B", "Class A"))
+weights  <- c(0.3,0.9,1) 
+response <- matrix(cbind(
+    0.2, 0.8,
+    0.8, 0.2,
+    0.7, 0.3
+),nrow = 3, ncol = 2)
+
+cat(
+    "Unweighted Cross Entropy:",
+    SLmetrics::entropy(
+        actual,
+        response
+    ),
+    "Weighted Cross Entropy:",
+    SLmetrics::weighted.entropy(
+        actual   = actual,
+        response = response,
+        w        = weights
+    ),
+    sep = "\n"
+)
+```
+
+    #> Unweighted Cross Entropy:
+    #> 0.7297521
+    #> Weighted Cross Entropy:
+    #> 0.4668102
+
+- **Weighted Receiver Operator Characteristics:** `weighted.ROC()`, the
+  function calculates the weighted True Positive and False Positive
+  Rates for each threshold.
+
+- **Weighted Precision-Recall Curve:** `weighted.prROC()`, the function
+  calculates the weighted Recall and Precsion for each threshold.
+
+## Breaking Changes
+
+- **Weighted Confusion Matix:** The `w`-argument in `cmatrix()` has been
+  removed in favor of the more verbose weighted confusion matrix call
+  `weighted.cmatrix()`-function. See below,
+
+Prior to version `0.3-0` the weighted confusion matrix were a part of
+the `cmatrix()`-function and were called as follows,
+
+``` r
+SLmetrics::cmatrix(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+```
+
+This solution, although simple, were inconsistent with the remaining
+implementation of weighted metrics in {SLmetrics}. To regain consistency
+and simplicity the weighted confusion matrix are now retrieved as
+follows,
+
+``` r
+# 1) define factors
+actual    <- factor(sample(letters[1:3], 100, replace = TRUE))
+predicted <- factor(sample(letters[1:3], 100, replace = TRUE))
+weights   <- runif(length(actual))
+
+# 2) without weights
+SLmetrics::cmatrix(
+    actual    = actual,
+    predicted = predicted
+)
+```
+
+    #>    a  b  c
+    #> a  7  8 18
+    #> b  6 13 15
+    #> c 15 14  4
+
+``` r
+# 2) with weights
+SLmetrics::weighted.cmatrix(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+```
+
+    #>          a        b        c
+    #> a 3.627355 4.443065 7.164199
+    #> b 3.506631 5.426818 8.358687
+    #> c 6.615661 6.390454 2.233511
+
+## Bug-fixes
+
+- **Return named vectors:** The classification metrics when
+  `micro == NULL` were not returning named vectors. This has been fixed.
+
+# Version 0.2-0
 
 ## Improvements
 
@@ -32,13 +177,13 @@ SLmetrics::cmatrix(
 ```
 
     #>    a  b  c
-    #> a 16  6  8
-    #> b 14 10 11
-    #> c  5 15 15
+    #> a 15 10  4
+    #> b 11 18 10
+    #> c 10  8 14
 
 ``` r
 # 2) with weights
-SLmetrics::cmatrix(
+SLmetrics::weighted.cmatrix(
     actual    = actual,
     predicted = predicted,
     w         = weights
@@ -46,9 +191,9 @@ SLmetrics::cmatrix(
 ```
 
     #>          a        b        c
-    #> a 8.796270 3.581817 3.422532
-    #> b 6.471277 4.873632 5.732148
-    #> c 0.908202 8.319738 8.484611
+    #> a 7.578554 4.232749 2.170964
+    #> b 3.818030 9.816465 4.838924
+    #> c 6.280916 3.577268 6.219229
 
 Calculating weighted metrics manually or by using
 `foo.cmatrix()`-method,
@@ -69,7 +214,7 @@ SLmetrics::accuracy(
 )
 ```
 
-    #> [1] 0.4379208
+    #> [1] 0.47
 
 ``` r
 # 3) calculate the weighted
@@ -81,7 +226,7 @@ SLmetrics::weighted.accuracy(
 )
 ```
 
-    #> [1] 0.4379208
+    #> [1] 0.4865597
 
 Please note, however, that it is not possible to pass `cmatix()`-into
 `weighted.accurracy()`,
@@ -157,14 +302,14 @@ w         <- runif(n = 1e3)
 SLmetrics::rmse(actual, predicted)
 ```
 
-    #> [1] 0.9613081
+    #> [1] 1.008854
 
 ``` r
 # 3) weighted metrics
 SLmetrics::weighted.rmse(actual, predicted, w = w)
 ```
 
-    #> [1] 0.957806
+    #> [1] 0.9904359
 
 - The `rrmse()`-function have been removed in favor of the
   `rrse()`-function. This function was incorrectly specified and
@@ -249,7 +394,7 @@ plot(
 )
 ```
 
-![](NEWS_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](NEWS_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 ``` r
 plot(
@@ -258,7 +403,7 @@ plot(
 )
 ```
 
-![](NEWS_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->
+![](NEWS_files/figure-gfm/unnamed-chunk-10-2.png)<!-- -->
 
 # Version 0.1-0
 
@@ -281,7 +426,7 @@ print(
 )
 ```
 
-    #>  [1] b b a c a a c b a b
+    #>  [1] c c c a b c c b b b
     #> Levels: a b c
 
 ``` r
@@ -293,7 +438,7 @@ print(
 )
 ```
 
-    #>  [1] a b b c c a a a c a
+    #>  [1] a a c b b c b b b a
     #> Levels: a b c
 
 ``` r
@@ -311,16 +456,16 @@ summary(
     #> Confusion Matrix (3 x 3) 
     #> ================================================================================
     #>   a b c
-    #> a 1 1 2
-    #> b 3 1 0
-    #> c 1 0 1
+    #> a 0 1 0
+    #> b 1 3 0
+    #> c 2 1 2
     #> ================================================================================
     #> Overall Statistics (micro average)
-    #>  - Accuracy:          0.30
-    #>  - Balanced Accuracy: 0.33
-    #>  - Sensitivity:       0.30
-    #>  - Specificity:       0.65
-    #>  - Precision:         0.30
+    #>  - Accuracy:          0.50
+    #>  - Balanced Accuracy: 0.38
+    #>  - Sensitivity:       0.50
+    #>  - Specificity:       0.75
+    #>  - Precision:         0.50
 
 ``` r
 # 2) calculate false positive
@@ -331,7 +476,7 @@ SLmetrics::fpr(
 ```
 
     #>         a         b         c 
-    #> 0.6666667 0.1666667 0.2500000
+    #> 0.3333333 0.3333333 0.0000000
 
 ### Supervised regression metrics
 
@@ -352,4 +497,4 @@ SLmetrics::huberloss(
 )
 ```
 
-    #> [1] 0.5326572
+    #> [1] 0.4698688

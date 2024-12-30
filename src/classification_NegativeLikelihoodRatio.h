@@ -7,27 +7,27 @@
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-class NLRMetric : public classification {
-public:
+class NegativeLikelihoodRatioClass : public classification {
 
-    // Compute NLR without micro aggregation
-    Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
-        Eigen::ArrayXd output(matrix.rows());
-        Eigen::ArrayXd tp(matrix.rows()), fn(matrix.rows()), tn(matrix.rows()), fp(matrix.rows());
-        Eigen::ArrayXd fnr(matrix.rows()), tnr(matrix.rows());
+    public:
 
-        TP(matrix, tp);
-        FN(matrix, fn);
-        TN(matrix, tn);
-        FP(matrix, fp);
+        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
+            Eigen::ArrayXd output(matrix.rows());
+            Eigen::ArrayXd tp(matrix.rows()), fn(matrix.rows()), tn(matrix.rows()), fp(matrix.rows());
+            Eigen::ArrayXd fnr(matrix.rows()), tnr(matrix.rows());
 
-        fnr = fn / (tp + fn);
-        tnr = tn / (fp + tn);
+            TP(matrix, tp);
+            FN(matrix, fn);
+            TN(matrix, tn);
+            FP(matrix, fp);
 
-        output = fnr / tnr;
+            fnr = fn / (tp + fn);
+            tnr = tn / (fp + tn);
 
-        return Rcpp::wrap(output);
-    }
+            output = fnr / tnr;
+
+            return Rcpp::wrap(output);
+        }
 
 };
 
