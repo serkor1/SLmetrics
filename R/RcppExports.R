@@ -78,6 +78,34 @@ weighted.cmatrix.factor <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_WeightedConfusionMatrix`, actual, predicted, w)
 }
 
+#' @rdname entropy
+#' @method entropy factor
+#' @export
+entropy.factor <- function(actual, response, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_CrossEntropy`, actual, response, normalize)
+}
+
+#' @rdname weighted.entropy
+#' @method weighted.entropy factor
+#' @export
+weighted.entropy.factor <- function(actual, response, w, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_CrossEntropy`, actual, response, w, normalize)
+}
+
+#' @rdname entropy
+#' @method logloss factor
+#' @export
+logloss.factor <- function(actual, response, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_LogLoss`, actual, response, normalize)
+}
+
+#' @rdname weighted.entropy
+#' @method weighted.logloss factor
+#' @export
+weighted.logloss.factor <- function(actual, response, w, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_LogLoss`, actual, response, w, normalize)
+}
+
 #' @rdname dor
 #' @method dor factor
 #' @export

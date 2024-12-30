@@ -48,6 +48,40 @@ cat(
     #> IQR Relative Root Mean Squared Error
     #> 0.7323898
 
+- **Cross Entropy:** Weighted and unweighted Cross Entropy, with and
+  without normalization. The function can be used as follows,
+
+``` r
+# Create factors and response probabilities
+actual   <- factor(c("Class A", "Class B", "Class A"))
+weights  <- c(0.3,0.9,1) 
+response <- matrix(cbind(
+    0.2, 0.8,
+    0.8, 0.2,
+    0.7, 0.3
+),nrow = 3, ncol = 2)
+
+cat(
+    "Unweighted Cross Entropy:",
+    SLmetrics::entropy(
+        actual,
+        response
+    ),
+    "Weighted Cross Entropy:",
+    SLmetrics::weighted.entropy(
+        actual   = actual,
+        response = response,
+        w        = weights
+    ),
+    sep = "\n"
+)
+```
+
+    #> Unweighted Cross Entropy:
+    #> 0.7297521
+    #> Weighted Cross Entropy:
+    #> 0.4668102
+
 - **Weighted Receiver Operator Characteristics:** `weighted.ROC()`, the
   function calculates the weighted True Positive and False Positive
   Rates for each threshold.
@@ -360,7 +394,7 @@ plot(
 )
 ```
 
-![](NEWS_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](NEWS_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 ``` r
 plot(
@@ -369,7 +403,7 @@ plot(
 )
 ```
 
-![](NEWS_files/figure-gfm/unnamed-chunk-9-2.png)<!-- -->
+![](NEWS_files/figure-gfm/unnamed-chunk-10-2.png)<!-- -->
 
 # Version 0.1-0
 

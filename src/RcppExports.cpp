@@ -153,6 +153,60 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// CrossEntropy
+double CrossEntropy(const IntegerVector& actual, const NumericMatrix& response, const bool normalize);
+RcppExport SEXP _SLmetrics_CrossEntropy(SEXP actualSEXP, SEXP responseSEXP, SEXP normalizeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(CrossEntropy(actual, response, normalize));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_CrossEntropy
+double weighted_CrossEntropy(const IntegerVector& actual, const NumericMatrix& response, const NumericVector& w, const bool normalize);
+RcppExport SEXP _SLmetrics_weighted_CrossEntropy(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP normalizeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_CrossEntropy(actual, response, w, normalize));
+    return rcpp_result_gen;
+END_RCPP
+}
+// LogLoss
+double LogLoss(const IntegerVector& actual, const NumericMatrix& response, const bool normalize);
+RcppExport SEXP _SLmetrics_LogLoss(SEXP actualSEXP, SEXP responseSEXP, SEXP normalizeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(LogLoss(actual, response, normalize));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_LogLoss
+double weighted_LogLoss(const IntegerVector& actual, const NumericMatrix& response, const NumericVector& w, const bool normalize);
+RcppExport SEXP _SLmetrics_weighted_LogLoss(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP normalizeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_LogLoss(actual, response, w, normalize));
+    return rcpp_result_gen;
+END_RCPP
+}
 // DiagnosticOddsRatio
 Rcpp::NumericVector DiagnosticOddsRatio(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
 RcppExport SEXP _SLmetrics_DiagnosticOddsRatio(SEXP actualSEXP, SEXP predictedSEXP) {
@@ -1551,6 +1605,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_cmatrix_CohensKappa", (DL_FUNC) &_SLmetrics_cmatrix_CohensKappa, 2},
     {"_SLmetrics_UnweightedConfusionMatrix", (DL_FUNC) &_SLmetrics_UnweightedConfusionMatrix, 2},
     {"_SLmetrics_WeightedConfusionMatrix", (DL_FUNC) &_SLmetrics_WeightedConfusionMatrix, 3},
+    {"_SLmetrics_CrossEntropy", (DL_FUNC) &_SLmetrics_CrossEntropy, 3},
+    {"_SLmetrics_weighted_CrossEntropy", (DL_FUNC) &_SLmetrics_weighted_CrossEntropy, 4},
+    {"_SLmetrics_LogLoss", (DL_FUNC) &_SLmetrics_LogLoss, 3},
+    {"_SLmetrics_weighted_LogLoss", (DL_FUNC) &_SLmetrics_weighted_LogLoss, 4},
     {"_SLmetrics_DiagnosticOddsRatio", (DL_FUNC) &_SLmetrics_DiagnosticOddsRatio, 2},
     {"_SLmetrics_weighted_DiagnosticOddsRatio", (DL_FUNC) &_SLmetrics_weighted_DiagnosticOddsRatio, 3},
     {"_SLmetrics_cmatrix_DiagnosticOddsRatio", (DL_FUNC) &_SLmetrics_cmatrix_DiagnosticOddsRatio, 1},

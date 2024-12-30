@@ -96,12 +96,13 @@ def py_cmatrix(actual, predicted, w = None):
       sample_weight = w
     )
     
-def py_entropy(actual, response, normalize = True, w = None):
+def py_entropy(actual, response, normalize = True, w = None, labels = None):
     return metrics.log_loss(
       y_true    = actual,
       y_pred    = response,
       normalize = normalize,
-      sample_weight = w
+      sample_weight = w,
+      labels = labels
     )
 
 def py_roc(actual, response, pos_label = 1, w = None):
