@@ -62,23 +62,24 @@ Depending on the mood and alignment of planets [{SLmetrics}](https://serkor1.git
 
 ## :books: Table of Contents
 
-* [:books: Table of Contents](#-books--table-of-contents)
-* [:rocket: Gettting Started](#-rocket--gettting-started)
-    + [:hammer: Installation](#-hammer--installation)
-    + [:wrench: Basic Usage](#-wrench--basic-usage)
-* [:information_source: Why?](#-information-source--why-)
-* [:zap: Performance Comparison](#-zap--performance-comparison)
-    + [:fast_forward: Speed comparison](#-fast-forward--speed-comparison)
-    + [:floppy_disk: Memory-efficiency](#-floppy-disk--memory-efficiency)
-* [:information_source: Basic usage](#-information-source--basic-usage)
-    + [:books: Regression](#-books--regression)
-    + [:books: Classification](#-books--classification)
-* [:information_source: Installation](#-information-source--installation)
-    + [:shield: Stable version](#-shield--stable-version)
-    + [:hammer_and_wrench: Development version](#-hammer-and-wrench--development-version)
-* [:information_source: Code of Conduct](#-information-source--code-of-conduct)
+* [:books: Table of Contents](#books-table-of-contents)
+* [:rocket: Gettting Started](#rocket-gettting-started)
+  + [:hammer: Installation](#hammer-installation)
+  + [:wrench: Basic Usage](#wrench-basic-usage)
+* [:information_source: Why?](#information_source-why)
+* [:zap: Performance Comparison](#zap-performance-comparison)
+  + [:fast_forward: Speed comparison](#fast_forward-speed-comparison)
+  + [:floppy_disk: Memory-efficiency](#floppy_disk-memory-efficiency)
+* [:information_source: Basic usage](#information_source-basic-usage)
+  + [:books: Regression](#books-regression)
+  + [:books: Classification](#books-classification)
+* [:information_source: Installation](#information_source-installation)
+  + [:shield: Stable version](#shield-stable-version)
+  + [:hammer_and_wrench: Development version](#hammer_and_wrench-development-version)
+* [:information_source: Code of Conduct](#information_source-code-of-conduct)
 
-## :rocket: Gettting Started {#quickstart}
+
+## :rocket: Gettting Started
 
 Below you’ll find instructions to install [{SLmetrics}](https://serkor1.github.io/SLmetrics/) and quickly compute your first metric.
 
@@ -119,7 +120,7 @@ cat(
 
 That’s all! Now you can explore the rest of this README for in-depth usage, performance comparisons, and more details about [{SLmetrics}](https://serkor1.github.io/SLmetrics/).
 
-## :information_source: Why? {#why}
+## :information_source: Why?
 
 Machine learning can be a complicated task; the steps from feature engineering to model deployment require carefully measured actions and decisions. One low-hanging fruit to simplify this process is *performance evaluation*. At its core, performance evaluation is essentially just comparing two vectors—a programmatically and, at times, mathematically trivial step in the ML pipeline, but one that can become complicated due to:
 
@@ -137,7 +138,7 @@ Machine learning can be a complicated task; the steps from feature engineering t
 Performance evaluation should be plug-and-play and “just work” out of the box — there’s no need to worry about *quasiquations*, *dependencies*, *deprecations*, or variations of the same functions relative to their arguments.
 
 
-## :zap: Performance Comparison {#comparison}
+## :zap: Performance Comparison
 
 One, obviously, can't build an `R`-package on `C++` and [{Rcpp}](https://github.com/RcppCore/Rcpp) without a proper pissing contest at the urinals - below is a comparison in execution time and memory efficiency of two simple cases  that any {pkg} should be able to handle with gracefully; computing a 2 x 2 confusion matrix and computing the root mean squared error. The source code for these benchmarks is available
 [here](https://github.com/serkor1/SLmetrics/blob/main/data-raw/performance.R).
@@ -199,7 +200,7 @@ knitr::kable(DT_, caption = "Root Mean Squared Error (N = 1e7)", digits = 2)
 
 In both tasks, [{SLmetrics}](https://serkor1.github.io/SLmetrics/) remains extremely memory-efficient, even at large sample sizes.
 
-## :information_source: Basic usage {#usage}
+## :information_source: Basic usage
 
 In its simplest form, [{SLmetrics}](https://serkor1.github.io/SLmetrics/) functions work directly with pairs of <numeric> vectors (for regression) or <factor> vectors (for classification). Below we demonstrate this on two well-known datasets, `mtcars` (regression) and `iris` (classification).
 
@@ -279,7 +280,7 @@ summary(
 plot(roc)
 ```
 
-## :information_source: Installation {#installation}
+## :information_source: Installation
 
 ### :shield: Stable version
 ```{r stable version guide, eval = FALSE, echo=TRUE}

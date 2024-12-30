@@ -50,24 +50,23 @@ metrics, and a sandbox for me to develop my `C++` skills.
 
 ## :books: Table of Contents
 
-- [:books: Table of Contents](#-books--table-of-contents)
-- [:rocket: Gettting Started](#-rocket--gettting-started)
-  - [:hammer: Installation](#-hammer--installation)
-  - [:wrench: Basic Usage](#-wrench--basic-usage)
-- [:information_source: Why?](#-information-source--why-)
-- [:zap: Performance Comparison](#-zap--performance-comparison)
-  - [:fast_forward: Speed comparison](#-fast-forward--speed-comparison)
-  - [:floppy_disk: Memory-efficiency](#-floppy-disk--memory-efficiency)
-- [:information_source: Basic usage](#-information-source--basic-usage)
-  - [:books: Regression](#-books--regression)
-  - [:books: Classification](#-books--classification)
-- [:information_source:
-  Installation](#-information-source--installation)
-  - [:shield: Stable version](#-shield--stable-version)
+- [:books: Table of Contents](#books-table-of-contents)
+- [:rocket: Gettting Started](#rocket-gettting-started)
+  - [:hammer: Installation](#hammer-installation)
+  - [:wrench: Basic Usage](#wrench-basic-usage)
+- [:information_source: Why?](#information_source-why)
+- [:zap: Performance Comparison](#zap-performance-comparison)
+  - [:fast_forward: Speed comparison](#fast_forward-speed-comparison)
+  - [:floppy_disk: Memory-efficiency](#floppy_disk-memory-efficiency)
+- [:information_source: Basic usage](#information_source-basic-usage)
+  - [:books: Regression](#books-regression)
+  - [:books: Classification](#books-classification)
+- [:information_source: Installation](#information_source-installation)
+  - [:shield: Stable version](#shield-stable-version)
   - [:hammer_and_wrench: Development
-    version](#-hammer-and-wrench--development-version)
+    version](#hammer_and_wrench-development-version)
 - [:information_source: Code of
-  Conduct](#-information-source--code-of-conduct)
+  Conduct](#information_source-code-of-conduct)
 
 ## :rocket: Gettting Started
 
