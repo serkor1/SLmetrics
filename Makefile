@@ -26,7 +26,7 @@ check: document
 	@echo "Checking {$(PKGNAME)}"
 	rm -f src/*.o src/*.so
 	R CMD build .
-	R CMD check $(TARBALL)
+	R CMD check --no-manual --as-cran $(TARBALL)
 	rm -f $(TARBALL)
 	rm -rf $(PKGNAME).Rcheck
 	rm -f src/*.o src/*.so
