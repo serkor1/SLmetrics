@@ -130,44 +130,46 @@ plot.ROC <- function(
     x,
     panels = TRUE,
     ...) {
+  
+    # 0) exract the finite
+    # data.frame
+    x <- x[is.finite(x$threshold), ]
+
+    # 1) Plot options
+    #
+    # All common options for the
+    # plot goes her
+    pformula <- tpr ~ fpr
+    groups   <- x$label
+    xlab     <- "False Positive Rate (FPR)"
+    ylab     <- "True Positive Rate (TPR)"
+    main     <- "Reciever Operator Characteristics"
+
+    # 1.1) conditional plotting
+    # statements
+    if (panels) {
+
+      # 1.2) grouped by
+      # label.
+      pformula <- tpr ~ fpr | factor(label, labels = unique(label))
+
+      # 1.3) disable grouping
+      # if panelwise
+      groups  <- NULL
+
+    }
 
 
-
-  # 1) Plot options
-  #
-  # All common options for the
-  # plot goes her
-  pformula <- tpr ~ fpr
-  groups   <- x$label
-  xlab     <- "False Positive Rate (FPR)"
-  ylab     <- "True Positive Rate (TPR)"
-  main     <- "Reciever Operator Characteristics"
-
-  # 1.1) conditional plotting
-  # statements
-  if (panels) {
-
-    # 1.2) grouped by
-    # label.
-    pformula <- tpr ~ fpr | factor(label, labels = unique(label))
-
-    # 1.3) disable grouping
-    # if panelwise
-    groups  <- NULL
-
-  }
-
-
-  roc_plot(
-    formula  = pformula,
-    groups   = groups,
-    xlab     = xlab,
-    ylab     = ylab,
-    main     = main,
-    DT       = x[is.finite(x$threshold), ],
-    add_poly = panels,
-    ...  
-  )
+    roc_plot(
+      formula  = pformula,
+      groups   = groups,
+      xlab     = xlab,
+      ylab     = ylab,
+      main     = main,
+      DT       = x,
+      add_poly = panels,
+      ...  
+    )
   
 }
 

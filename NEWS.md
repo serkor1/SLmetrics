@@ -1,9 +1,18 @@
 
-# Version 0.3-0
+# Version 0.3-1
 
-> Version 0.3-0 is considered pre-release of {SLmetrics}. We do not
+> Version 0.3-1 is considered pre-release of {SLmetrics}. We do not
 > expect any breaking changes, unless a major bug/issue is reported and
 > its nature forces breaking changes.
+
+## :bug: Bug-fixes
+
+- **Plot-method in ROC and prROC
+  (<https://github.com/serkor1/SLmetrics/issues/36>):** Fixed a bug in
+  `plot.ROC()` and `plot.prROC()` where if `panels = FALSE` additional
+  lines would be added to the plot.
+
+# Version 0.3-0
 
 ## Improvements
 
@@ -143,7 +152,7 @@ SLmetrics::weighted.cmatrix(
     #> b 3.506631 5.426818 8.358687
     #> c 6.615661 6.390454 2.233511
 
-## Bug-fixes
+## :bug: Bug-fixes
 
 - **Return named vectors:** The classification metrics when
   `micro == NULL` were not returning named vectors. This has been fixed.
@@ -247,7 +256,7 @@ try(
     #> Error in UseMethod(generic = "weighted.accuracy", object = ..1) : 
     #>   no applicable method for 'weighted.accuracy' applied to an object of class "cmatrix"
 
-## Bug-fixes
+## :bug: Bug-fixes
 
 - **Floating precision:** Metrics would give different results based on
   the method used. This means that `foo.cmatrix()` and `foo.factor()`
@@ -353,7 +362,7 @@ SLmetrics::accuracy(
 )
 ```
 
-## Bug-fixes
+## :bug: Bug-fixes
 
 - The `plot.prROC()`- and `plot.ROC()`-functions now adds a line to the
   plot when `panels = FALSE`. See Issue
