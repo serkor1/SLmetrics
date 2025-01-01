@@ -50,6 +50,7 @@ lattice::trellis.par.set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/serkor1/SLmetrics/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/serkor1/SLmetrics/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/serkor1/SLmetrics/branch/development/graph/badge.svg?token=X2osJDSRlN)](https://app.codecov.io/gh/serkor1/SLmetrics)
+[![CodeFactor](https://www.codefactor.io/repository/github/serkor1/slmetrics/badge)](https://www.codefactor.io/repository/github/serkor1/slmetrics)
 <!-- badges: end -->
 
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) is a lightweight `R` package written in `C++` and  [{Rcpp}](https://github.com/RcppCore/Rcpp) for *memory-efficient* and *lightning-fast* machine learning performance evaluation; it's like using a supercharged [{yardstick}](https://github.com/tidymodels/yardstick) but without the risk of soft to super-hard deprecations. [{SLmetrics}](https://serkor1.github.io/SLmetrics/) covers both regression and classification metrics and provides (almost) the same array of metrics as [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and [{PyTorch}](https://github.com/pytorch/pytorch) all without [{reticulate}](https://github.com/rstudio/reticulate) and the Python compile-run-(crash)-debug cylce.
