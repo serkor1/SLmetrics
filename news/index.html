@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">SLmetrics</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3-0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3-1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,6 +39,18 @@
 
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3-1" id="version-03-1">Version 0.3-1<a class="anchor" aria-label="anchor" href="#version-03-1"></a></h2>
+<blockquote>
+<p>Version 0.3-1 is considered pre-release of {SLmetrics}. We do not expect any breaking changes, unless a major bug/issue is reported and its nature forces breaking changes.</p>
+</blockquote>
+<div class="section level3">
+<h3 id="bug-bug-fixes-0-3-1">
+<span class="emoji" data-emoji="bug">🐛</span> Bug-fixes<a class="anchor" aria-label="anchor" href="#bug-bug-fixes-0-3-1"></a></h3>
+<ul><li>
+<strong>Plot-method in ROC and prROC (<a href="https://github.com/serkor1/SLmetrics/issues/36" class="external-link uri">https://github.com/serkor1/SLmetrics/issues/36</a>):</strong> Fixed a bug in <code>plot.ROC()</code> and <code>plot.prROC()</code> where if <code>panels = FALSE</code> additional lines would be added to the plot.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3-0" id="version-03-0">Version 0.3-0<a class="anchor" aria-label="anchor" href="#version-03-0"></a></h2>
 <blockquote>
@@ -154,7 +166,8 @@
 <span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt; c 6.615661 6.390454 2.233511</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="bug-fixes-0-3-0">Bug-fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-0"></a></h3>
+<h3 id="bug-bug-fixes-0-3-0">
+<span class="emoji" data-emoji="bug">🐛</span> Bug-fixes<a class="anchor" aria-label="anchor" href="#bug-bug-fixes-0-3-0"></a></h3>
 <ul><li>
 <strong>Return named vectors:</strong> The classification metrics when <code>micro == NULL</code> were not returning named vectors. This has been fixed.</li>
 </ul></div>
@@ -229,7 +242,8 @@
 <span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="co">#&gt;   no applicable method for 'weighted.accuracy' applied to an object of class "cmatrix"</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="bug-fixes-0-2-0">Bug-fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-0"></a></h3>
+<h3 id="bug-bug-fixes-0-2-0">
+<span class="emoji" data-emoji="bug">🐛</span> Bug-fixes<a class="anchor" aria-label="anchor" href="#bug-bug-fixes-0-2-0"></a></h3>
 <ul><li><p><strong>Floating precision:</strong> Metrics would give different results based on the method used. This means that <code>foo.cmatrix()</code> and <code>foo.factor()</code> would produce different results (See Issue <a href="https://github.com/serkor1/SLmetrics/issues/16" class="external-link uri">https://github.com/serkor1/SLmetrics/issues/16</a>). This has been fixed by using higher precision <code>Rcpp::NumericMatrix</code> instead of <code>Rcpp::IntegerMatrix</code>.</p></li>
 <li><p><strong>Miscalculation of Confusion Matrix elements:</strong> An error in how <code>FN</code>, <code>TN</code>, <code>FP</code> and <code>TP</code> were calculated have been fixed. No issue has been raised for this bug. This was not something that was caught by the unit-tests, as the total samples were too high to spot this error. It has, however, been fixed now. This means that all metrics that uses these explicitly are now stable, and produces the desired output.</p></li>
 <li><p><strong>Calculation Error in Fowlks Mallows Index:</strong> A bug in the calculation of the <code><a href="../reference/fmi.html">fmi()</a></code>-function has been fixed. The <code><a href="../reference/fmi.html">fmi()</a></code>-function now correctly calculates the measure.</p></li>
@@ -288,7 +302,8 @@
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="bug-fixes-0-1-1">Bug-fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-1"></a></h3>
+<h3 id="bug-bug-fixes-0-1-1">
+<span class="emoji" data-emoji="bug">🐛</span> Bug-fixes<a class="anchor" aria-label="anchor" href="#bug-bug-fixes-0-1-1"></a></h3>
 <ul><li>The <code>plot.prROC()</code>- and <code>plot.ROC()</code>-functions now adds a line to the plot when <code>panels = FALSE</code>. See Issue <a href="https://github.com/serkor1/SLmetrics/issues/9" class="external-link uri">https://github.com/serkor1/SLmetrics/issues/9</a>.</li>
 </ul><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 1) define actual</span></span>
