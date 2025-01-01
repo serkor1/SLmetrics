@@ -71,12 +71,22 @@ testthat::test_that(
         # 2.3) Test that methods
         # works as expected
         testthat::expect_no_condition(
-          object = invisible(capture.output(SLmetrics:::print.ROC(score))),
+          object = invisible(capture.output(print(score))),
           message = info
         )
 
         testthat::expect_no_condition(
-          object  = SLmetrics:::plot.ROC(score),
+          object = invisible(capture.output(summary(score))),
+          message = info
+        )
+
+        testthat::expect_no_condition(
+          object  = plot(score, panels = FALSE),
+          message = info
+        )
+
+        testthat::expect_no_condition(
+          object  = plot(score, panels = TRUE),
           message = info
         )
         
