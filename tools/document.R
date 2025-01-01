@@ -41,4 +41,18 @@ roxygen2::roxygenize(
   roclets = c("collate", "namespace", "rd")
 )
 
+# 4) Render README and NEWS
+# while documenting
+rmarkdown::render(
+  input = "README.Rmd",
+  output_format = "github_document",
+  clean = TRUE
+)
+
+rmarkdown::render(
+  input = "NEWS.Rmd",
+  output_format = "github_document",
+  clean = TRUE
+)
+
 # script end;
