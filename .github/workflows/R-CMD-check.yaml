@@ -2,9 +2,9 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches: [development, documentation, weighted-metrics]
+    branches: [development, documentation, CRAN-prep]
   pull_request:
-    branches: [development, documentation, weighted-metrics]
+    branches: [development, documentation, CRAN-prep]
 
 name: R-CMD-check
 
@@ -81,4 +81,4 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
-          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+          build_args: 'c("--no-manual", "--compact-vignettes=gs+qpdf")'

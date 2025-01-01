@@ -1,5 +1,8 @@
 ---
-output: github_document
+output:
+  github_document:
+    html_preview: false
+always_allow_html: true
 ---
 
 ```{r setup, echo = FALSE}

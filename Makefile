@@ -12,6 +12,7 @@ TARBALL = $(PKGNAME)_$(VERSION).tar.gz
 document:
 	clear
 	@echo "Documenting {$(PKGNAME)}"
+	@rm -f NEWS.md README.md
 	@Rscript tools/document.R
 
 build: document
@@ -24,12 +25,12 @@ build: document
 
 check: document
 	@echo "Checking {$(PKGNAME)}"
-	rm -f src/*.o src/*.so
+	@rm -f src/*.o src/*.so
 	R CMD build .
-	R CMD check $(TARBALL)
-	rm -f $(TARBALL)
-	rm -rf $(PKGNAME).Rcheck
-	rm -f src/*.o src/*.so
+	R CMD check --no-manual --as-cran $(TARBALL)
+	@rm -f $(TARBALL)
+	@rm -rf $(PKGNAME).Rcheck
+	@rm -f src/*.o src/*.so
 
 build-site:
 	@echo "Building {pkgdown}"

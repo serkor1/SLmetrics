@@ -26,7 +26,7 @@ In this vignette, we will demonstrate how to use [{SLmetrics}](https://github.co
 
 > **Prerequisite:** Familiarity with [{lightgbm}](https://github.com/microsoft/LightGBM)  and the general AI/ML-workflow is assumed.
 
-We will use the [Glass](https://archive.ics.uci.edu/dataset/42/glass+identification) dataset, made available via [{mlbench}](https://cran.r-project.org/web/packages/mlbench/index.html), as an example throughout this vignette.
+We will use the [Glass](https://archive.ics.uci.edu/dataset/42/glass+identification) dataset, made available via [{mlbench}](https://cran.r-project.org/package=mlbench), as an example throughout this vignette.
 
 ## Setup
 

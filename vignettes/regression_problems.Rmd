@@ -26,7 +26,7 @@ In this vignette, we demonstrate how to use [{SLmetrics}](https://github.com/ser
 
 > **Prerequisite:** Familiarity with {xgboost} and the general AI/ML-workflow is assumed.
 
-We will use the [Boston Housing](https://www.archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.names) dataset, made available via [{mlbench}](https://cran.r-project.org/web/packages/mlbench/index.html), as an example throughout this vignette.
+We will use the [Boston Housing](https://www.archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.names) dataset, made available via [{mlbench}](https://cran.r-project.org/package=mlbench), as an example throughout this vignette.
 
 ## Setup
 

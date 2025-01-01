@@ -3,6 +3,7 @@
 ^README\.Rmd$
 ^LICENSE\.md$
 ^playground
+^sandbox
 ^\.github$
 ^CODE_OF_CONDUCT\.md$
 ^codecov\.yml$
@@ -20,3 +21,4 @@ src/cmake-build-debug
 src/.idea
 tools/
 .venv/
+^NEWs_files
