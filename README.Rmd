@@ -69,10 +69,9 @@ Depending on the mood and alignment of planets [{SLmetrics}](https://serkor1.git
 * [:information_source: Basic usage](#information_source-basic-usage)
   + [:books: Regression](#books-regression)
   + [:books: Classification](#books-classification)
-* [:information_source: OpenMP support](#information_source-openmp-support)
-  + [:books: With OpenMP](#books-with-openmp)
+* [:information_source: Enable OpenMP](#information_source-enable-openmp)
   + [:books: Without OpenMP](#books-without-openmp)
-  + [:books: Installation](#books-installation)
+  + [:books: With OpenMP](#books-with-openmp)
 * [:information_source: Installation](#information_source-installation)
   + [:shield: Stable version](#shield-stable-version)
   + [:hammer_and_wrench: Development version](#hammer_and_wrench-development-version)
@@ -269,7 +268,7 @@ summary(
 )
 ```
 
-## :information_source: OpenMP support
+## :information_source: Enable OpenMP
 ```{r OpenMP setup, echo = FALSE}
 # Set column names for both
 # examples
@@ -315,10 +314,6 @@ colnames(DT_) <- column_names
 
 knitr::kable(DT_, caption = "1e6 x 200 matrix without OpenMP", digits = 2)
 ```
-
-### :books: Installation
-
-## :information_source: Installation
 
 ### :shield: Stable version
 ```{r stable version guide, eval = FALSE, echo=TRUE}

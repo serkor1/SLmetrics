@@ -50,11 +50,10 @@ metrics, and a sandbox for me to develop my `C++` skills.
 - [:information_source: Basic usage](#information_source-basic-usage)
   - [:books: Regression](#books-regression)
   - [:books: Classification](#books-classification)
-- [:information_source: OpenMP
-  support](#information_source-openmp-support)
-  - [:books: With OpenMP](#books-with-openmp)
+- [:information_source: Enable
+  OpenMP](#information_source-enable-openmp)
   - [:books: Without OpenMP](#books-without-openmp)
-  - [:books: Installation](#books-installation)
+  - [:books: With OpenMP](#books-with-openmp)
 - [:information_source: Installation](#information_source-installation)
   - [:shield: Stable version](#shield-stable-version)
   - [:hammer_and_wrench: Development
@@ -286,7 +285,7 @@ summary(
 #>  - Precision:         0.81
 ```
 
-## :information_source: OpenMP support
+## :information_source: Enable OpenMP
 
 > \[!IMPORTANT\]
 >
@@ -328,10 +327,6 @@ iterations[^2].
 | 100 | 2.5 | 0 | 0 | 0 |
 
 1e6 x 200 matrix without OpenMP
-
-### :books: Installation
-
-## :information_source: Installation
 
 ### :shield: Stable version
 
