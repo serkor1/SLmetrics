@@ -270,10 +270,27 @@ summary(
 ```
 
 ## :information_source: OpenMP support
+```{r OpenMP setup, echo = FALSE}
+# Set column names for both
+# examples
+column_names <- c("Iterations", "Runtime (sec)" ,"Garbage Collections [gc()]", "gc() pr. second", "Memory Allocation (MB)")
+```
 
 > [!IMPORTANT]  
 >
-> OpenMP in [{SLmetrics}](https://serkor1.github.io/SLmetrics/) is purely experimental, and should be used with caution.
+> OpenMP support in [{SLmetrics}](https://serkor1.github.io/SLmetrics/) is experimental. Use it with caution, as performance gains and stability may vary based on your system configuration and workload.
+
+You can control OpenMP usage within [{SLmetrics}](https://serkor1.github.io/SLmetrics/) using the setUseOpenMP function. Below are examples demonstrating how to enable and disable OpenMP:
+
+```{r}
+# enable OpenMP
+SLmetrics::setUseOpenMP(TRUE)
+
+# disable OpenMP
+SLmetrics::setUseOpenMP(FALSE)
+```
+
+To illustrate the impact of OpenMP on performance, consider the following benchmarks conducted on a 1,000,000 x 200 matrix over 100 iterations[^1].
 
 ### :books: With OpenMP
 
@@ -281,9 +298,10 @@ summary(
 # 1) extract data;
 DT_ <- DT$OpenMP$TRUE_[,c("n_itr", "median" , "n_gc", "gc/sec", "mem_alloc")]
 DT_$mem_alloc <- round(DT_$mem_alloc/(1024^2))
+DT_$median <- round(DT_$median, 2)
 colnames(DT_) <- column_names
 
-knitr::kable(DT_, caption = "1e6 x 200 matrix", digits = 2)
+knitr::kable(DT_, caption = "1e6 x 200 matrix with OpenMP", digits = 2)
 ```
 
 ### :books: Without OpenMP
@@ -292,9 +310,10 @@ knitr::kable(DT_, caption = "1e6 x 200 matrix", digits = 2)
 # 1) extract data;
 DT_ <- DT$OpenMP$FALSE_[,c("n_itr", "median" , "n_gc", "gc/sec", "mem_alloc")]
 DT_$mem_alloc <- round(DT_$mem_alloc/(1024^2))
+DT_$median <- round(DT_$median, 2)
 colnames(DT_) <- column_names
 
-knitr::kable(DT_, caption = "1e6 x 200 matrix", digits = 2)
+knitr::kable(DT_, caption = "1e6 x 200 matrix without OpenMP", digits = 2)
 ```
 
 ### :books: Installation

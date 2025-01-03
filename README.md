@@ -290,24 +290,44 @@ summary(
 
 > \[!IMPORTANT\]
 >
-> OpenMP in [{SLmetrics}](https://serkor1.github.io/SLmetrics/) is
-> purely experimental, and should be used with caution.
+> OpenMP support in [{SLmetrics}](https://serkor1.github.io/SLmetrics/)
+> is experimental. Use it with caution, as performance gains and
+> stability may vary based on your system configuration and workload.
+
+You can control OpenMP usage within
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) using the
+setUseOpenMP function. Below are examples demonstrating how to enable
+and disable OpenMP:
+
+``` r
+# enable OpenMP
+SLmetrics::setUseOpenMP(TRUE)
+#> OpenMP usage set to: enabled
+
+# disable OpenMP
+SLmetrics::setUseOpenMP(FALSE)
+#> OpenMP usage set to: disabled
+```
+
+To illustrate the impact of OpenMP on performance, consider the
+following benchmarks conducted on a 1,000,000 x 200 matrix over 100
+iterations[^2].
 
 ### :books: With OpenMP
 
-| Iterations | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) | NA |
+| Iterations | Runtime (sec) | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
 |---:|---:|---:|---:|---:|
-| 100 | 0.6426583 | 0 | 0 | 0 |
+| 100 | 0.64 | 0 | 0 | 0 |
 
-RMSE (N = 1e7)
+1e6 x 200 matrix with OpenMP
 
 ### :books: Without OpenMP
 
-| Iterations | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) | NA |
+| Iterations | Runtime (sec) | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
 |---:|---:|---:|---:|---:|
-| 100 | 2.496898 | 0 | 0 | 0 |
+| 100 | 2.5 | 0 | 0 | 0 |
 
-RMSE (N = 1e7)
+1e6 x 200 matrix without OpenMP
 
 ### :books: Installation
 
@@ -341,4 +361,7 @@ Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
 [^1]: The source code for these benchmarks is available
+    [here](https://github.com/serkor1/SLmetrics/blob/main/data-raw/performance.R).
+
+[^2]: The source code for these benchmarks is available
     [here](https://github.com/serkor1/SLmetrics/blob/main/data-raw/performance.R).
