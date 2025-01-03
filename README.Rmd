@@ -69,6 +69,10 @@ Depending on the mood and alignment of planets [{SLmetrics}](https://serkor1.git
 * [:information_source: Basic usage](#information_source-basic-usage)
   + [:books: Regression](#books-regression)
   + [:books: Classification](#books-classification)
+* [:information_source: OpenMP support](#information_source-openmp-support)
+  + [:books: With OpenMP](#books-with-openmp)
+  + [:books: Without OpenMP](#books-without-openmp)
+  + [:books: Installation](#books-installation)
 * [:information_source: Installation](#information_source-installation)
   + [:shield: Stable version](#shield-stable-version)
   + [:hammer_and_wrench: Development version](#hammer_and_wrench-development-version)
@@ -264,6 +268,36 @@ summary(
   )
 )
 ```
+
+## :information_source: OpenMP support
+
+> [!IMPORTANT]  
+>
+> OpenMP in [{SLmetrics}](https://serkor1.github.io/SLmetrics/) is purely experimental, and should be used with caution.
+
+### :books: With OpenMP
+
+```{r With OpenMP, echo = FALSE}
+# 1) extract data;
+DT_ <- DT$OpenMP$TRUE_[,c("n_itr", "median" , "n_gc", "gc/sec", "mem_alloc")]
+DT_$mem_alloc <- round(DT_$mem_alloc/(1024^2))
+colnames(DT_) <- column_names
+
+knitr::kable(DT_, caption = "1e6 x 200 matrix", digits = 2)
+```
+
+### :books: Without OpenMP
+
+```{r Without OpenMP, echo = FALSE}
+# 1) extract data;
+DT_ <- DT$OpenMP$FALSE_[,c("n_itr", "median" , "n_gc", "gc/sec", "mem_alloc")]
+DT_$mem_alloc <- round(DT_$mem_alloc/(1024^2))
+colnames(DT_) <- column_names
+
+knitr::kable(DT_, caption = "1e6 x 200 matrix", digits = 2)
+```
+
+### :books: Installation
 
 ## :information_source: Installation
 

@@ -50,6 +50,11 @@ metrics, and a sandbox for me to develop my `C++` skills.
 - [:information_source: Basic usage](#information_source-basic-usage)
   - [:books: Regression](#books-regression)
   - [:books: Classification](#books-classification)
+- [:information_source: OpenMP
+  support](#information_source-openmp-support)
+  - [:books: With OpenMP](#books-with-openmp)
+  - [:books: Without OpenMP](#books-without-openmp)
+  - [:books: Installation](#books-installation)
 - [:information_source: Installation](#information_source-installation)
   - [:shield: Stable version](#shield-stable-version)
   - [:hammer_and_wrench: Development
@@ -169,18 +174,18 @@ requires no GC calls for these operations.
 |  | Iterations | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
 |:---|---:|---:|---:|---:|
 | {SLmetrics} | 100 | 0 | 0.00 | 0 |
-| {yardstick} | 100 | 186 | 4.53 | 381 |
-| {MLmetrics} | 100 | 186 | 4.47 | 381 |
-| {mlr3measures} | 100 | 386 | 3.57 | 916 |
+| {yardstick} | 100 | 190 | 4.44 | 381 |
+| {MLmetrics} | 100 | 186 | 4.50 | 381 |
+| {mlr3measures} | 100 | 371 | 3.93 | 916 |
 
 2 x 2 Confusion Matrix (N = 1e7)
 
 |  | Iterations | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
 |:---|---:|---:|---:|---:|
 | {SLmetrics} | 100 | 0 | 0.00 | 0 |
-| {yardstick} | 100 | 157 | 4.47 | 420 |
-| {MLmetrics} | 100 | 19 | 2.39 | 76 |
-| {mlr3measures} | 100 | 12 | 1.27 | 76 |
+| {yardstick} | 100 | 149 | 4.30 | 420 |
+| {MLmetrics} | 100 | 15 | 2.00 | 76 |
+| {mlr3measures} | 100 | 12 | 1.29 | 76 |
 
 RMSE (N = 1e7)
 
@@ -280,6 +285,31 @@ summary(
 #>  - Specificity:       0.81
 #>  - Precision:         0.81
 ```
+
+## :information_source: OpenMP support
+
+> \[!IMPORTANT\]
+>
+> OpenMP in [{SLmetrics}](https://serkor1.github.io/SLmetrics/) is
+> purely experimental, and should be used with caution.
+
+### :books: With OpenMP
+
+| Iterations | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) | NA |
+|---:|---:|---:|---:|---:|
+| 100 | 0.6426583 | 0 | 0 | 0 |
+
+RMSE (N = 1e7)
+
+### :books: Without OpenMP
+
+| Iterations | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) | NA |
+|---:|---:|---:|---:|---:|
+| 100 | 2.496898 | 0 | 0 | 0 |
+
+RMSE (N = 1e7)
+
+### :books: Installation
 
 ## :information_source: Installation
 

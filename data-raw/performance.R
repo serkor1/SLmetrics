@@ -151,7 +151,48 @@ memory$rmse <- test_results
 # 4.3) append to list
 DT$memory <- memory
 
-# 5) write data for
+
+
+# 5) parallel performance
+# using OpenMP
+OpenMP <- list()
+
+rand.sum <- function(n){
+  x <- sort(runif(n-1))
+  c(x,1) - c(0,x)
+}
+
+# 5.1) Test performance
+# with and without OpenMP
+
+# 5.1.0) stage test ground
+pk <- t(replicate(200,rand.sum(1e6)))
+
+# 5.1.1) Test without
+# OpenMP
+gc()
+SLmetrics::setUseOpenMP(FALSE)
+
+OpenMP$FALSE_ <- bench::mark(
+  SLmetrics::entropy(pk),
+  min_iterations = 100
+)
+
+# 5.1.1) Test with
+# OpenMP
+gc()
+SLmetrics::setUseOpenMP(TRUE)
+
+OpenMP$TRUE_ <- bench::mark(
+  SLmetrics::entropy(pk),
+  min_iterations = 100
+)
+
+# 5.2) append to DT-list
+DT$OpenMP <- OpenMP
+
+
+# 6) write data for
 # internal usage
 usethis::use_data(
   DT,
