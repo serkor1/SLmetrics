@@ -41,8 +41,8 @@ testthat::test_that(desc = "Test `entropy()`-function", code ={
         # 2.1.3) verify equivalence
         testthat::expect_true(
           set_equal(
-            score,
-            py_score
+            as.numeric(score),
+            as.numeric(py_score)
           ),
           info = paste(
             "OpenMP = ", lgl,
