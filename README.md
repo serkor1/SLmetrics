@@ -52,8 +52,8 @@ metrics, and a sandbox for me to develop my `C++` skills.
   - [:books: Classification](#books-classification)
 - [:information_source: Enable
   OpenMP](#information_source-enable-openmp)
-  - [:books: Without OpenMP](#books-without-openmp)
-  - [:books: With OpenMP](#books-with-openmp)
+  - [:books: Entropy without OpenMP](#books-entropy-without-openmp)
+  - [:books: Entropy with OpenMP](#books-entropy-with-openmp)
 - [:information_source: Installation](#information_source-installation)
   - [:shield: Stable version](#shield-stable-version)
   - [:hammer_and_wrench: Development
@@ -309,24 +309,24 @@ SLmetrics::setUseOpenMP(FALSE)
 ```
 
 To illustrate the impact of OpenMP on performance, consider the
-following benchmarks conducted on a 1,000,000 x 200 matrix over 100
-iterations[^2].
+following benchmarks for calculating entropy on a 1,000,000 x 200 matrix
+over 100 iterations[^2].
 
-### :books: With OpenMP
-
-| Iterations | Runtime (sec) | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
-|---:|---:|---:|---:|---:|
-| 100 | 0.64 | 0 | 0 | 0 |
-
-1e6 x 200 matrix with OpenMP
-
-### :books: Without OpenMP
+### :books: Entropy without OpenMP
 
 | Iterations | Runtime (sec) | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
 |---:|---:|---:|---:|---:|
 | 100 | 2.5 | 0 | 0 | 0 |
 
 1e6 x 200 matrix without OpenMP
+
+### :books: Entropy with OpenMP
+
+| Iterations | Runtime (sec) | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
+|---:|---:|---:|---:|---:|
+| 100 | 0.64 | 0 | 0 | 0 |
+
+1e6 x 200 matrix with OpenMP
 
 ### :shield: Stable version
 
