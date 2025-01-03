@@ -2,9 +2,9 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches: [development, documentation, CRAN-prep]
+    branches: [development, documentation, entropy]
   pull_request:
-    branches: [development, documentation, CRAN-prep]
+    branches: [development, documentation, entropy]
 
 name: R-CMD-check
 

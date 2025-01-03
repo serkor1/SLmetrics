@@ -78,34 +78,6 @@ weighted.cmatrix.factor <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_WeightedConfusionMatrix`, actual, predicted, w)
 }
 
-#' @rdname entropy
-#' @method entropy factor
-#' @export
-entropy.factor <- function(actual, response, normalize = TRUE, ...) {
-    .Call(`_SLmetrics_CrossEntropy`, actual, response, normalize)
-}
-
-#' @rdname weighted.entropy
-#' @method weighted.entropy factor
-#' @export
-weighted.entropy.factor <- function(actual, response, w, normalize = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_CrossEntropy`, actual, response, w, normalize)
-}
-
-#' @rdname entropy
-#' @method logloss factor
-#' @export
-logloss.factor <- function(actual, response, normalize = TRUE, ...) {
-    .Call(`_SLmetrics_LogLoss`, actual, response, normalize)
-}
-
-#' @rdname weighted.entropy
-#' @method weighted.logloss factor
-#' @export
-weighted.logloss.factor <- function(actual, response, w, normalize = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_LogLoss`, actual, response, w, normalize)
-}
-
 #' @rdname dor
 #' @method dor factor
 #' @export
@@ -307,6 +279,20 @@ weighted.tscore.factor <- function(actual, predicted, w, micro = NULL, na.rm = T
 #' @export
 tscore.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_ThreatScore`, x, micro, na_rm = na.rm)
+}
+
+#' @rdname logloss
+#' @method logloss factor
+#' @export
+logloss.factor <- function(actual, response, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_LogLoss`, actual, response, normalize)
+}
+
+#' @rdname logloss
+#' @method weighted.logloss factor
+#' @export
+weighted.logloss.factor <- function(actual, response, w, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_LogLoss`, actual, response, w, normalize)
 }
 
 #' @rdname mcc
@@ -554,6 +540,13 @@ ROC.factor <- function(actual, response, thresholds = NULL, ...) {
 #' @export
 weighted.ROC.factor <- function(actual, response, w, thresholds = NULL, ...) {
     .Call(`_SLmetrics_weighted_RecieverOperatorCharacteristics`, actual, response, w, thresholds)
+}
+
+#' @rdname entropy
+#' @method entropy matrix
+#' @export
+entropy.matrix <- function(pk, axis = 0L, base = -1.0, ...) {
+    .Call(`_SLmetrics_ShannonsEntropy`, pk, axis, base)
 }
 
 #' @rdname specificity
@@ -834,5 +827,16 @@ smape.numeric <- function(actual, predicted, ...) {
 #' @export
 weighted.smape.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_smape`, actual, predicted, w)
+}
+
+#' Use OpenMP
+#'
+#' @param value A <[logical]> value of [length] 1 (Default: [FALSE]). If [TRUE] OpenMP will be used to parallelize computations.
+#'
+#' @family Utils
+#'
+#' @export
+setUseOpenMP <- function(value = FALSE) {
+    invisible(.Call(`_SLmetrics_setUseOpenMP`, value))
 }
 

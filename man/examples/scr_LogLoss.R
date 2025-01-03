@@ -24,26 +24,26 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# For cross-entropy, we need predicted probabilities for each class.
+# For Log Loss, we need predicted probabilities for each class.
 # Since it's a binary model, we create a 2-column matrix:
 #   1st column = P("Virginica")
 #   2nd column = P("Others") = 1 - P("Virginica")
 predicted_probs <- predict(model, type = "response")
 response_matrix <- cbind(predicted_probs, 1 - predicted_probs)
 
-# 4) Evaluate unweighted cross-entropy
-#    'entropy' takes (actual, response_matrix, normalize=TRUE/FALSE).
+# 4) Evaluate unweighted Log Loss
+#    'logloss' takes (actual, response_matrix, normalize=TRUE/FALSE).
 #    The factor 'actual' must have the positive class (Virginica) as its first level.
-unweighted_CrossEntropy <- entropy(
+unweighted_LogLoss <- logloss(
   actual    = actual,           # factor
   response  = response_matrix,  # numeric matrix of probabilities
   normalize = TRUE              # normalize = TRUE
 )
 
-# 5) Evaluate weighted cross-entropy
+# 5) Evaluate weighted Log Loss
 #    We introduce a weight vector, for example:
 weights <- iris$Petal.Length / mean(iris$Petal.Length)
-weighted_CrossEntropy <- weighted.entropy(
+weighted_LogLoss <- weighted.logloss(
   actual    = actual,
   response  = response_matrix,
   w         = weights,
@@ -52,7 +52,7 @@ weighted_CrossEntropy <- weighted.entropy(
 
 # 6) Print Results
 cat(
-  "Unweighted Cross-Entropy:", unweighted_CrossEntropy,
-  "Weighted Cross-Entropy:", weighted_CrossEntropy,
+  "Unweighted Log Loss:", unweighted_LogLoss,
+  "Weighted Log Loss:", weighted_LogLoss,
   sep = "\n"
 )
