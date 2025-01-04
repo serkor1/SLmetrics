@@ -60,6 +60,7 @@ check: document
 	@rm -f $(TARBALL)
 	@rm -rf $(PKGNAME).Rcheck
 	@rm -f src/*.o src/*.so
+	@Rscript tools/render.R
 	@echo "✅ R CMD check process done!"
 
 build-site:
