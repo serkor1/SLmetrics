@@ -61,4 +61,8 @@ reference:
   desc: |
     The collection of evaluation metrics for supervised and unsupervised classification problems. All functions are grouped by aliases and alternative terminology; the `recall()`- and `sensitivity()`-function calculates the same metric, for example.
 - contents: has_concept('Classification')
+- subtitle: Utilities
+  desc: |
+    Utilities in {SLmetrics}
+- contents: has_concept('Utils')
 
