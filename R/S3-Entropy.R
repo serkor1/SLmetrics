@@ -13,50 +13,6 @@
 #'
 #' @section Calculation:
 #' 
-#' ## **Entropy**
-#'
-#' **Entropy** measures the uncertainty inherent in the true distribution of classes. It is defined as:
-#'
-#' \deqn{
-#'   H(Y) = -\sum_{k=1}^{K} P(Y = k) \log P(Y = k)
-#' }
-#'
-#' where:
-#' \itemize{
-#'   \item \eqn{P(Y = k)} is the true probability of class \eqn{k}.
-#'   \item \eqn{K} is the total number of classes.
-#' }
-#'
-#' ## **Cross-Entropy**
-#'
-#' **Cross-Entropy** quantifies the difference between the true distribution and the predicted distribution. It is defined as:
-#'
-#' \deqn{
-#'   H(P, Q) = -\sum_{k=1}^{K} P(Y = k) \log Q(Y = k)
-#' }
-#'
-#' where:
-#' \itemize{
-#'   \item \eqn{P(Y = k)} is the true probability of class \eqn{k}.
-#'   \item \eqn{Q(Y = k)} is the predicted probability of class \eqn{k}.
-#' }
-#'
-#' ## **Relative Entropy (Kullback-Leibler Divergence)**
-#'
-#' **Relative Entropy**, also known as **Kullback-Leibler (KL) Divergence**, measures how one probability distribution diverges from a second, reference probability distribution. It is defined as:
-#'
-#' \deqn{
-#'   D_{KL}(P \parallel Q) = \sum_{k=1}^{K} P(Y = k) \log \frac{P(Y = k)}{Q(Y = k)} = H(P, Q) - H(Y)
-# #' }
-#'
-#' where:
-#' \itemize{
-#'   \item \eqn{P(Y = k)} is the true probability of class \eqn{k}.
-#'   \item \eqn{Q(Y = k)} is the predicted probability of class \eqn{k}.
-#'   \item \eqn{H(Y)} is the entropy of the true distribution.
-#'   \item \eqn{H(P, Q)} is the cross-entropy between the true and predicted distributions.
-#' }
-#' 
 #' @example man/examples/scr_Entropy.R
 #' @family Classification
 #' @family Supervised Learning

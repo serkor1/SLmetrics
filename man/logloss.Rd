@@ -39,21 +39,6 @@ The \code{\link[=logloss]{logloss()}} function computes the \strong{Log Loss} be
 }
 \section{Calculation}{
 
-
-Let \eqn{y_{i,k}} be the one-hot encoding of the actual class label for the \eqn{i}-th observation (that is, \eqn{y_{i,k} = 1} if observation \eqn{i} belongs to class \eqn{k}, and 0 otherwise), and let \eqn{\hat{p}_{i,k}} be the predicted probability of class \eqn{k} for observation \eqn{i}.
-The cross-entropy loss \eqn{L} is:
-
-\deqn{
-  L = -\sum_{i=1}^N \sum_{k=1}^K y_{i,k}\,\log(\hat{p}_{i,k}).
-}
-
-This can be interpreted as the \strong{Cross-Entropy} between the true distribution \( P \) and the predicted distribution \( Q \), where:
-
-\deqn{
-  H(P, Q) = H(P) + D_{KL}(P \parallel Q)
-}
-
-Here, \( H(P) \) is the \strong{Entropy} of the true distribution, and \( D_{KL}(P \parallel Q) \) is the \strong{Kullback-Leibler Divergence} (Relative Entropy) from \( P \) to \( Q \). If \code{normalize = TRUE}, this sum is divided by \eqn{N} (the number of observations). When weights \eqn{w_i} are supplied, each term is multiplied by \eqn{w_i}, and if \code{normalize = TRUE}, the final sum is divided by \eqn{\sum_i w_i}.
 }
 
 \section{Creating <\link{factor}>}{

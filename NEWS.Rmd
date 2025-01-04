@@ -38,7 +38,8 @@ rand.sum <- function(n){
 
 # 2) generate probability
 # matrix
-pk <- t(replicate(10,rand.sum(1e3)))
+set.seed(1903)
+pk <- t(replicate(100,rand.sum(1e3)))
 
 # 3) Enable OpenMP
 SLmetrics::setUseOpenMP(TRUE)

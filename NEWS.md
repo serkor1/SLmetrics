@@ -22,7 +22,8 @@ rand.sum <- function(n){
 
 # 2) generate probability
 # matrix
-pk <- t(replicate(10,rand.sum(1e3)))
+set.seed(1903)
+pk <- t(replicate(100,rand.sum(1e3)))
 
 # 3) Enable OpenMP
 SLmetrics::setUseOpenMP(TRUE)
@@ -35,7 +36,7 @@ system.time(SLmetrics::entropy(pk))
 ```
 
     #>    user  system elapsed 
-    #>   0.000   0.000   0.001
+    #>   0.001   0.001   0.001
 
 ``` r
 # 3) Disable OpenMP
@@ -49,7 +50,7 @@ system.time(SLmetrics::entropy(pk))
 ```
 
     #>    user  system elapsed 
-    #>   0.000   0.000   0.001
+    #>   0.002   0.000   0.002
 
 ## :bug: Bug-fixes
 
@@ -97,11 +98,11 @@ cat(
 ```
 
     #> Mean Relative Root Mean Squared Error
-    #> -154.0821
+    #> 40.74819
     #> Range Relative Root Mean Squared Error
-    #> 0.1518287
+    #> 0.1556036
     #> IQR Relative Root Mean Squared Error
-    #> 0.7446883
+    #> 0.738214
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
   normalization. The function can be used as follows,
@@ -180,9 +181,9 @@ SLmetrics::cmatrix(
 ```
 
     #>    a  b  c
-    #> a 10 12 17
-    #> b 11 11 18
-    #> c  5  6 10
+    #> a 12 10 15
+    #> b 10 15  8
+    #> c  5 14 11
 
 ``` r
 # 2) with weights
@@ -194,9 +195,9 @@ SLmetrics::weighted.cmatrix(
 ```
 
     #>          a        b        c
-    #> a 5.193625 6.826692 7.878041
-    #> b 4.537427 6.380587 7.822719
-    #> c 2.083717 2.453927 3.711357
+    #> a 3.846279 5.399945 7.226539
+    #> b 4.988230 7.617554 4.784221
+    #> c 2.959719 5.045980 4.725642
 
 ## :bug: Bug-fixes
 
@@ -232,9 +233,9 @@ SLmetrics::cmatrix(
 ```
 
     #>    a  b  c
-    #> a 15  7 16
-    #> b 12 10  9
-    #> c 13  8 10
+    #> a 14  9 14
+    #> b 12 15 10
+    #> c  6  9 11
 
 ``` r
 # 2) with weights
@@ -246,9 +247,9 @@ SLmetrics::weighted.cmatrix(
 ```
 
     #>          a        b        c
-    #> a 8.413344 2.688579 5.307813
-    #> b 5.512899 6.649545 3.799325
-    #> c 7.431983 3.859395 3.385076
+    #> a 6.197341 4.717194 6.122321
+    #> b 6.244226 7.511618 5.114025
+    #> c 2.417569 5.487810 5.760531
 
 Calculating weighted metrics manually or by using
 `foo.cmatrix()`-method,
@@ -269,7 +270,7 @@ SLmetrics::accuracy(
 )
 ```
 
-    #> [1] 0.35
+    #> [1] 0.4
 
 ``` r
 # 3) calculate the weighted
@@ -281,7 +282,7 @@ SLmetrics::weighted.accuracy(
 )
 ```
 
-    #> [1] 0.3921098
+    #> [1] 0.3927467
 
 Please note, however, that it is not possible to pass `cmatix()`-into
 `weighted.accurracy()`,
@@ -357,14 +358,14 @@ w         <- runif(n = 1e3)
 SLmetrics::rmse(actual, predicted)
 ```
 
-    #> [1] 1.015463
+    #> [1] 0.9989386
 
 ``` r
 # 3) weighted metrics
 SLmetrics::weighted.rmse(actual, predicted, w = w)
 ```
 
-    #> [1] 1.021705
+    #> [1] 1.013139
 
 - The `rrmse()`-function have been removed in favor of the
   `rrse()`-function. This function was incorrectly specified and
@@ -481,7 +482,7 @@ print(
 )
 ```
 
-    #>  [1] c c b b c a c b a c
+    #>  [1] a b a c b a a a c b
     #> Levels: a b c
 
 ``` r
@@ -493,7 +494,7 @@ print(
 )
 ```
 
-    #>  [1] c b c b c b c b a b
+    #>  [1] b a c c c c c c a a
     #> Levels: a b c
 
 ``` r
@@ -511,16 +512,16 @@ summary(
     #> Confusion Matrix (3 x 3) 
     #> ================================================================================
     #>   a b c
-    #> a 1 1 0
-    #> b 0 2 1
-    #> c 0 2 3
+    #> a 0 1 4
+    #> b 2 0 1
+    #> c 1 0 1
     #> ================================================================================
     #> Overall Statistics (micro average)
-    #>  - Accuracy:          0.60
-    #>  - Balanced Accuracy: 0.59
-    #>  - Sensitivity:       0.60
-    #>  - Specificity:       0.80
-    #>  - Precision:         0.60
+    #>  - Accuracy:          0.10
+    #>  - Balanced Accuracy: 0.17
+    #>  - Sensitivity:       0.10
+    #>  - Specificity:       0.55
+    #>  - Precision:         0.10
 
 ``` r
 # 2) calculate false positive
@@ -531,7 +532,7 @@ SLmetrics::fpr(
 ```
 
     #>         a         b         c 
-    #> 0.0000000 0.4285714 0.2000000
+    #> 0.6000000 0.1428571 0.6250000
 
 ### Supervised regression metrics
 
@@ -552,4 +553,4 @@ SLmetrics::huberloss(
 )
 ```
 
-    #> [1] 0.434507
+    #> [1] 0.4389594
