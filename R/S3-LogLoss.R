@@ -1,8 +1,8 @@
 #' Compute the \eqn{\text{Cross}} \eqn{\text{Entropy}} \eqn{\text{Loss}}
 #'
 #' @description
-#' The [entropy()] function computes the **Cross-Entropy Loss** — often called  **Log Loss** — between observed classes (as a <[factor]>) and their predicted probability distributions (a <[numeric]> matrix). 
-#' The [weighted.entropy()] function is the weighted version, applying observation-specific weights.
+#' The [logloss()] function computes the **Cross-Entropy Loss** — often called  **Log Loss** — between observed classes (as a <[factor]>) and their predicted probability distributions (a <[numeric]> matrix). 
+#' The [weighted.logloss()] function is the weighted version, applying observation-specific weights.
 #'
 #' @inherit accuracy
 #' @param response A \eqn{N \times k} <[numeric]>-matrix of predicted probabilities.
@@ -24,31 +24,13 @@
 #'
 #' If \code{normalize = TRUE}, this sum is divided by \eqn{N} (the number of observations). When weights \eqn{w_i} are supplied, each term is multiplied by \eqn{w_i}, and if \code{normalize = TRUE}, the final sum is divided by \eqn{\sum_i w_i}.
 #' 
-#' @example man/examples/scr_CrossEntropyLoss.R
+#' @example man/examples/scr_LogLoss.R
 #'
 #' @family Classification
 #' @family Supervised Learning
 #'
-#' @aliases entropy logloss
+#' @aliases logloss
 #'
-#' @export
-entropy <- function(...) {
-  UseMethod(
-    generic = "entropy",
-    object  = ..1
-  )
-}
-
-#' @rdname entropy
-#' @export
-weighted.entropy <- function(...) {
-  UseMethod(
-    generic = "weighted.entropy",
-    object  = ..1
-  )
-}
-
-#' @rdname entropy
 #' @export
 logloss <- function(...) {
   UseMethod(
@@ -57,7 +39,7 @@ logloss <- function(...) {
   )
 }
 
-#' @rdname entropy
+#' @rdname logloss
 #' @export
 weighted.logloss <- function(...) {
   UseMethod(

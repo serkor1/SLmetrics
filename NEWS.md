@@ -57,8 +57,8 @@ cat(
     #> IQR Relative Root Mean Squared Error
     #> 0.7323898
 
-- **Cross Entropy:** Weighted and unweighted Cross Entropy, with and
-  without normalization. The function can be used as follows,
+- **Log Loss:** Weighted and unweighted Log Loss, with and without
+  normalization. The function can be used as follows,
 
 ``` r
 # Create factors and response probabilities
@@ -71,13 +71,13 @@ response <- matrix(cbind(
 ),nrow = 3, ncol = 2)
 
 cat(
-    "Unweighted Cross Entropy:",
-    SLmetrics::entropy(
+    "Unweighted Log Loss:",
+    SLmetrics::logloss(
         actual,
         response
     ),
-    "Weighted Cross Entropy:",
-    SLmetrics::weighted.entropy(
+    "Weighted log Loss:",
+    SLmetrics::weighted.logloss(
         actual   = actual,
         response = response,
         w        = weights
@@ -86,9 +86,9 @@ cat(
 )
 ```
 
-    #> Unweighted Cross Entropy:
+    #> Unweighted Log Loss:
     #> 0.7297521
-    #> Weighted Cross Entropy:
+    #> Weighted log Loss:
     #> 0.4668102
 
 - **Weighted Receiver Operator Characteristics:** `weighted.ROC()`, the

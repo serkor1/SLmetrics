@@ -1,0 +1,9 @@
+# See: https://stackoverflow.com/questions/54056594/cran-acceptable-way-of-linking-to-openmp-some-c-code-called-from-rcpp
+# Use C++23 standard
+PKG_CXX_STD = CXX23
+
+# Compiler flags
+PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS)
+
+# Linker flags
+PKG_LIBS     = $(SHLIB_OPENMP_CXXFLAGS)

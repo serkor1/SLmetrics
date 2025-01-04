@@ -9,12 +9,12 @@
     as long as the probility matrix is correctly specified.
 */
 
-class CrossEntropyClass {
+class LogLossClass {
     private:
         bool normalize_;
 
     public:
-        CrossEntropyClass(bool normalize) : normalize_(normalize) {}
+        LogLossClass(bool normalize) : normalize_(normalize) {}
 
 
         double compute(const Rcpp::IntegerVector &actual, const Rcpp::NumericMatrix &response) const {

@@ -4,20 +4,20 @@
 
 testthat::test_that(desc = "Test `entropy()`-function", code = {
   
-  wrapped_entropy <- function(
+  wrapped_logloss <- function(
     actual, 
     response, 
     w = NULL, 
     normalize = TRUE) {
     
     if (is.null(w)) {
-      entropy(
+      logloss(
         actual   = actual,
         response = response,
         normalize = normalize
       )
     } else {
-      weighted.entropy(
+      weighted.logloss(
         actual    = actual,
         response  = response,
         w         = w,
@@ -42,7 +42,7 @@ testthat::test_that(desc = "Test `entropy()`-function", code = {
         for (normalize in c(FALSE, TRUE)) {
           
       
-          score <- wrapped_entropy(
+          score <- wrapped_logloss(
             actual    = actual,
             response  = response,
             w         = if (weighted) w else NULL,
