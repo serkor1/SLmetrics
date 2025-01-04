@@ -2,7 +2,7 @@
 # implemented in {SLmetrics} is aligned
 # with target functions
 
-testthat::test_that(desc = "Test `entropy()`-function", code ={
+testthat::test_that(desc = "Test `cross.entropy()`-function", code ={
 
   # 0) matrix generator
   # for the tests
@@ -29,14 +29,14 @@ testthat::test_that(desc = "Test `entropy()`-function", code ={
         invisible({ setUseOpenMP(lgl) })
       
         # 2.1.2) calculate scores
-        score <- entropy(pk, dim = axis, base = if (is.na(base)) {-1} else {base})
+        score <- cross.entropy(pk, qk, dim = axis, base = if (is.na(base)) {-1} else {base})
         
         # Map SLmetrics axis to scipy axis:
         # SLmetrics: axis = 0 -> scipy: NULL
         # SLmetrics: axis = 1 -> scipy: 0
         # SLmetrics: axis = 2 -> scipy: 1
         py_axis <- if (axis == 0) NULL else as.integer(axis - 1)
-        py_score <- ref_entropy(pk, axis = py_axis, base = if (is.na(base)) {NULL} else {base} )
+        py_score <- ref_entropy(pk, qk, type = 2, axis = py_axis, base = if (is.na(base)) {NULL} else {base})
         
         # 2.1.3) verify equivalence
         testthat::expect_true(

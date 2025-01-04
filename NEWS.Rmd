@@ -50,6 +50,47 @@ SLmetrics::setUseOpenMP(FALSE)
 system.time(SLmetrics::entropy(pk))
 ```
 
+* **Entropy with soft labels (https://github.com/serkor1/SLmetrics/issues/37):** `entropy()`, `cross.entropy()` and `relative.entropy()` have been introduced. These functions are heavily inspired by {scipy}.  The functions can be used as follows:
+
+```{r}
+# 1) Define actual
+# and observed probabilities
+
+# 1.1) actual probabilies
+pk <- matrix(
+  cbind(1/2, 1/2),
+  ncol = 2
+)
+
+# 1.2) observed (estimated) probabilites
+qk <- matrix(
+  cbind(9/10, 1/10), 
+  ncol = 2
+)
+
+# 2) calculate
+# Entropy
+cat(
+  "Entropy", SLmetrics::entropy(
+    pk
+  ),
+  "Relative Entropy", SLmetrics::relative.entropy(
+    pk,
+    qk
+  ),
+  "Cross Entropy", SLmetrics::cross.entropy(
+    pk,
+    qk
+  ),
+  sep = "\n"
+)
+```
+
+## :warning: Breaking changes
+
+* **logloss:** The argument `response` have ben renamed to `qk` as in the `entropy()`-family to maintain some degree of consistency.
+* **entropy.factor():** The function have been deleted and is no more. This was mainly due to avoid the documentation from being too large. The `logloss()`-function replaces it.
+
 ## :bug: Bug-fixes
 
 * **Plot-method in ROC and prROC (https://github.com/serkor1/SLmetrics/issues/36):** Fixed a bug in  `plot.ROC()` and `plot.prROC()` where if `panels = FALSE` additional lines would be added to the plot.
@@ -91,10 +132,10 @@ cat(
 * **Log Loss:** Weighted and unweighted Log Loss, with and without normalization. The function can be used as follows,
 
 ```{r}
-# Create factors and response probabilities
+# Create factors and response probabilities (qk)
 actual   <- factor(c("Class A", "Class B", "Class A"))
 weights  <- c(0.3,0.9,1) 
-response <- matrix(cbind(
+qk <- matrix(cbind(
     0.2, 0.8,
     0.8, 0.2,
     0.7, 0.3
@@ -104,12 +145,12 @@ cat(
     "Unweighted Log Loss:",
     SLmetrics::logloss(
         actual,
-        response
+        qk
     ),
     "Weighted log Loss:",
     SLmetrics::weighted.logloss(
         actual   = actual,
-        response = response,
+        qk       = qk,
         w        = weights
     ),
     sep = "\n"

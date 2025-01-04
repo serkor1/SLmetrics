@@ -6,20 +6,20 @@ testthat::test_that(desc = "Test `entropy()`-function", code = {
   
   wrapped_logloss <- function(
     actual, 
-    response, 
+    qk, 
     w = NULL, 
     normalize = TRUE) {
     
     if (is.null(w)) {
       logloss(
         actual   = actual,
-        response = response,
+        qk = qk,
         normalize = normalize
       )
     } else {
       weighted.logloss(
         actual    = actual,
-        response  = response,
+        qk  = qk,
         w         = w,
         normalize = normalize
       )
@@ -34,7 +34,7 @@ testthat::test_that(desc = "Test `entropy()`-function", code = {
       
       raw_probs <- matrix(rexp(n * k, rate = 1), nrow = n, ncol = k)
       row_sums  <- rowSums(raw_probs)
-      response  <- raw_probs / row_sums 
+      qk  <- raw_probs / row_sums 
     
       w <- runif(n)
       
@@ -44,7 +44,7 @@ testthat::test_that(desc = "Test `entropy()`-function", code = {
       
           score <- wrapped_logloss(
             actual    = actual,
-            response  = response,
+            qk        = qk,
             w         = if (weighted) w else NULL,
             normalize = normalize
           )
@@ -54,7 +54,7 @@ testthat::test_that(desc = "Test `entropy()`-function", code = {
           
           py_score <- py_entropy(
             actual    = actual_int,
-            response  = response,
+            qk        = qk,
             normalize = normalize,
             w         = if (weighted) w else NULL,
             labels    = label_seq

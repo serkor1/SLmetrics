@@ -167,8 +167,9 @@ consistently low(er) execution times across different sample sizes.
 
 Below are the results for garbage collections and total memory
 allocations when computing a 2×2 confusion matrix (N = 1e7) and RMSE (N
-= 1e7). Notice that [{SLmetrics}](https://serkor1.github.io/SLmetrics/)
-requires no GC calls for these operations.
+= 1e7) [^2]. Notice that
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) requires no GC calls
+for these operations.
 
 |  | Iterations | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
 |:---|---:|---:|---:|---:|
@@ -310,7 +311,7 @@ SLmetrics::setUseOpenMP(FALSE)
 
 To illustrate the impact of OpenMP on performance, consider the
 following benchmarks for calculating entropy on a 1,000,000 x 200 matrix
-over 100 iterations[^2].
+over 100 iterations[^3].
 
 ### :books: Entropy without OpenMP
 
@@ -355,8 +356,13 @@ project is released with a [Contributor Code of
 Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
-[^1]: The source code for these benchmarks is available
-    [here](https://github.com/serkor1/SLmetrics/blob/main/data-raw/performance.R).
+[^1]: The source code is available
+    [here](https://github.com/serkor1/SLmetrics/blob/development/data-raw/classification_performance.R)
+    and
+    [here](https://github.com/serkor1/SLmetrics/blob/development/data-raw/regression_performance.R).
 
-[^2]: The source code for these benchmarks is available
-    [here](https://github.com/serkor1/SLmetrics/blob/main/data-raw/performance.R).
+[^2]: The source code is available
+    [here](https://github.com/serkor1/SLmetrics/blob/development/data-raw/memory_performance.R).
+
+[^3]: The source code is available
+    [here](https://github.com/serkor1/SLmetrics/blob/development/data-raw/OpenMP_performance.R).
