@@ -19,11 +19,22 @@ public:
         const int n = pk.nrow();
         const int k = pk.ncol();
 
+        // Precompute log(base) if needed
+        double log_base = 0.0;
+        bool adjust_base = (base != -1.0);
+        if (adjust_base) {
+            log_base = std::log(base);
+            // Handle the case where base <= 0
+            if (log_base == 0.0) {
+                Rcpp::stop("Log base cannot be 1 or non-positive.");
+            }
+        }
+
         switch (axis) {
             case 1: { // Column-wise
                 Rcpp::NumericVector output(k);
 
-                #pragma omp parallel for if (getUseOpenMP())
+                #pragma omp parallel for if(getUseOpenMP()) schedule(static)
                 for (int j = 0; j < k; ++j) {
                     double sum_pk = 0.0;
                     double sum_qk = 0.0;
@@ -34,20 +45,22 @@ public:
                         sum_qk += qk(i, j);
                     }
 
+                    double inv_sum_pk = 1.0 / sum_pk;
+                    double inv_sum_qk = 1.0 / sum_qk;
                     double cross_entropy = 0.0;
 
                     // Compute cross entropy for the j-th column
                     for (int i = 0; i < n; ++i) {
-                        double normalized_pk = pk(i, j) / sum_pk;
-                        double normalized_qk = qk(i, j) / sum_qk;
-                        if (normalized_pk > 0.0 && normalized_qk > 0.0) {
-                            cross_entropy -= normalized_pk * std::log(normalized_qk);
+                        double p = pk(i, j) * inv_sum_pk;
+                        double q = qk(i, j) * inv_sum_qk;
+                        if (p > 0.0 && q > 0.0) {
+                            cross_entropy -= p * std::log(q);
                         }
                     }
 
                     // Adjust base if specified
-                    if (base != -1.0) {
-                        cross_entropy /= std::log(base);
+                    if (adjust_base) {
+                        cross_entropy /= log_base;
                     }
 
                     output[j] = cross_entropy;
@@ -59,7 +72,7 @@ public:
             case 2: { // Row-wise
                 Rcpp::NumericVector output(n);
 
-                #pragma omp parallel for if (getUseOpenMP())
+                #pragma omp parallel for if(getUseOpenMP()) schedule(static)
                 for (int i = 0; i < n; ++i) {
                     double sum_pk = 0.0;
                     double sum_qk = 0.0;
@@ -70,20 +83,22 @@ public:
                         sum_qk += qk(i, j);
                     }
 
+                    double inv_sum_pk = 1.0 / sum_pk;
+                    double inv_sum_qk = 1.0 / sum_qk;
                     double cross_entropy = 0.0;
 
                     // Compute cross entropy for the i-th row
                     for (int j = 0; j < k; ++j) {
-                        double normalized_pk = pk(i, j) / sum_pk;
-                        double normalized_qk = qk(i, j) / sum_qk;
-                        if (normalized_pk > 0.0 && normalized_qk > 0.0) {
-                            cross_entropy -= normalized_pk * std::log(normalized_qk);
+                        double p = pk(i, j) * inv_sum_pk;
+                        double q = qk(i, j) * inv_sum_qk;
+                        if (p > 0.0 && q > 0.0) {
+                            cross_entropy -= p * std::log(q);
                         }
                     }
 
                     // Adjust base if specified
-                    if (base != -1.0) {
-                        cross_entropy /= std::log(base);
+                    if (adjust_base) {
+                        cross_entropy /= log_base;
                     }
 
                     output[i] = cross_entropy;
@@ -97,7 +112,7 @@ public:
                 double sum_qk = 0.0;
 
                 // Compute total sums for normalization
-                #pragma omp parallel for reduction(+:sum_pk, sum_qk) if (getUseOpenMP())
+                #pragma omp parallel for reduction(+:sum_pk, sum_qk) if(getUseOpenMP()) schedule(static)
                 for(int i = 0; i < n; ++i) {
                     for(int j = 0; j < k; ++j) {
                         sum_pk += pk(i, j);
@@ -105,23 +120,25 @@ public:
                     }
                 }
 
+                double inv_sum_pk = 1.0 / sum_pk;
+                double inv_sum_qk = 1.0 / sum_qk;
                 double cross_entropy = 0.0;
 
                 // Compute total cross entropy
-                #pragma omp parallel for reduction(+:cross_entropy) if (getUseOpenMP())
+                #pragma omp parallel for reduction(+:cross_entropy) if(getUseOpenMP()) schedule(static)
                 for(int i = 0; i < n; ++i) {
                     for(int j = 0; j < k; ++j) {
-                        double normalized_pk = pk(i, j) / sum_pk;
-                        double normalized_qk = qk(i, j) / sum_qk;
-                        if (normalized_pk > 0.0 && normalized_qk > 0.0) {
-                            cross_entropy -= normalized_pk * std::log(normalized_qk);
+                        double p = pk(i, j) * inv_sum_pk;
+                        double q = qk(i, j) * inv_sum_qk;
+                        if (p > 0.0 && q > 0.0) {
+                            cross_entropy -= p * std::log(q);
                         }
                     }
                 }
 
                 // Adjust base if specified
-                if (base != -1.0) {
-                    cross_entropy /= std::log(base);
+                if (adjust_base) {
+                    cross_entropy /= log_base;
                 }
 
                 return Rcpp::NumericVector::create(cross_entropy);
