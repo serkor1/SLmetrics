@@ -36,7 +36,7 @@ system.time(SLmetrics::entropy(pk))
 ```
 
     #>    user  system elapsed 
-    #>   0.001   0.001   0.001
+    #>   0.280   0.001   0.012
 
 ``` r
 # 3) Disable OpenMP
@@ -50,7 +50,7 @@ system.time(SLmetrics::entropy(pk))
 ```
 
     #>    user  system elapsed 
-    #>   0.002   0.000   0.002
+    #>   0.001   0.000   0.001
 
 ## :bug: Bug-fixes
 
