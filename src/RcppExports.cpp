@@ -190,43 +190,43 @@ BEGIN_RCPP
 END_RCPP
 }
 // ShannonsEntropy
-Rcpp::NumericVector ShannonsEntropy(const Rcpp::NumericMatrix& pk, const int& axis, const double& base);
-RcppExport SEXP _SLmetrics_ShannonsEntropy(SEXP pkSEXP, SEXP axisSEXP, SEXP baseSEXP) {
+Rcpp::NumericVector ShannonsEntropy(const Rcpp::NumericMatrix& pk, const int& dim, const double& base);
+RcppExport SEXP _SLmetrics_ShannonsEntropy(SEXP pkSEXP, SEXP dimSEXP, SEXP baseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type pk(pkSEXP);
-    Rcpp::traits::input_parameter< const int& >::type axis(axisSEXP);
+    Rcpp::traits::input_parameter< const int& >::type dim(dimSEXP);
     Rcpp::traits::input_parameter< const double& >::type base(baseSEXP);
-    rcpp_result_gen = Rcpp::wrap(ShannonsEntropy(pk, axis, base));
+    rcpp_result_gen = Rcpp::wrap(ShannonsEntropy(pk, dim, base));
     return rcpp_result_gen;
 END_RCPP
 }
 // RelativeEntropy
-Rcpp::NumericVector RelativeEntropy(const Rcpp::NumericMatrix& pk, const Rcpp::NumericMatrix& qk, const int& axis, const double& base);
-RcppExport SEXP _SLmetrics_RelativeEntropy(SEXP pkSEXP, SEXP qkSEXP, SEXP axisSEXP, SEXP baseSEXP) {
+Rcpp::NumericVector RelativeEntropy(const Rcpp::NumericMatrix& pk, const Rcpp::NumericMatrix& qk, const int& dim, const double& base);
+RcppExport SEXP _SLmetrics_RelativeEntropy(SEXP pkSEXP, SEXP qkSEXP, SEXP dimSEXP, SEXP baseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type pk(pkSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type qk(qkSEXP);
-    Rcpp::traits::input_parameter< const int& >::type axis(axisSEXP);
+    Rcpp::traits::input_parameter< const int& >::type dim(dimSEXP);
     Rcpp::traits::input_parameter< const double& >::type base(baseSEXP);
-    rcpp_result_gen = Rcpp::wrap(RelativeEntropy(pk, qk, axis, base));
+    rcpp_result_gen = Rcpp::wrap(RelativeEntropy(pk, qk, dim, base));
     return rcpp_result_gen;
 END_RCPP
 }
 // CrossEntropy
-Rcpp::NumericVector CrossEntropy(const Rcpp::NumericMatrix& pk, const Rcpp::NumericMatrix& qk, const int& axis, const double& base);
-RcppExport SEXP _SLmetrics_CrossEntropy(SEXP pkSEXP, SEXP qkSEXP, SEXP axisSEXP, SEXP baseSEXP) {
+Rcpp::NumericVector CrossEntropy(const Rcpp::NumericMatrix& pk, const Rcpp::NumericMatrix& qk, const int& dim, const double& base);
+RcppExport SEXP _SLmetrics_CrossEntropy(SEXP pkSEXP, SEXP qkSEXP, SEXP dimSEXP, SEXP baseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type pk(pkSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type qk(qkSEXP);
-    Rcpp::traits::input_parameter< const int& >::type axis(axisSEXP);
+    Rcpp::traits::input_parameter< const int& >::type dim(dimSEXP);
     Rcpp::traits::input_parameter< const double& >::type base(baseSEXP);
-    rcpp_result_gen = Rcpp::wrap(CrossEntropy(pk, qk, axis, base));
+    rcpp_result_gen = Rcpp::wrap(CrossEntropy(pk, qk, dim, base));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -593,29 +593,29 @@ BEGIN_RCPP
 END_RCPP
 }
 // LogLoss
-double LogLoss(const IntegerVector& actual, const NumericMatrix& response, const bool normalize);
-RcppExport SEXP _SLmetrics_LogLoss(SEXP actualSEXP, SEXP responseSEXP, SEXP normalizeSEXP) {
+double LogLoss(const IntegerVector& actual, const NumericMatrix& qk, const bool normalize);
+RcppExport SEXP _SLmetrics_LogLoss(SEXP actualSEXP, SEXP qkSEXP, SEXP normalizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type qk(qkSEXP);
     Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
-    rcpp_result_gen = Rcpp::wrap(LogLoss(actual, response, normalize));
+    rcpp_result_gen = Rcpp::wrap(LogLoss(actual, qk, normalize));
     return rcpp_result_gen;
 END_RCPP
 }
 // weighted_LogLoss
-double weighted_LogLoss(const IntegerVector& actual, const NumericMatrix& response, const NumericVector& w, const bool normalize);
-RcppExport SEXP _SLmetrics_weighted_LogLoss(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP normalizeSEXP) {
+double weighted_LogLoss(const IntegerVector& actual, const NumericMatrix& qk, const NumericVector& w, const bool normalize);
+RcppExport SEXP _SLmetrics_weighted_LogLoss(SEXP actualSEXP, SEXP qkSEXP, SEXP wSEXP, SEXP normalizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type qk(qkSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type w(wSEXP);
     Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
-    rcpp_result_gen = Rcpp::wrap(weighted_LogLoss(actual, response, w, normalize));
+    rcpp_result_gen = Rcpp::wrap(weighted_LogLoss(actual, qk, w, normalize));
     return rcpp_result_gen;
 END_RCPP
 }

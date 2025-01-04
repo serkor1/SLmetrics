@@ -7,9 +7,9 @@
 \alias{weighted.logloss}
 \title{Compute the Log Loss}
 \usage{
-\method{logloss}{factor}(actual, response, normalize = TRUE, ...)
+\method{logloss}{factor}(actual, qk, normalize = TRUE, ...)
 
-\method{weighted.logloss}{factor}(actual, response, w, normalize = TRUE, ...)
+\method{weighted.logloss}{factor}(actual, qk, w, normalize = TRUE, ...)
 
 logloss(...)
 
@@ -18,7 +18,7 @@ weighted.logloss(...)
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{response}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
+\item{qk}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
 The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 over the \eqn{k} classes). The first column corresponds to the first factor
 level in \code{actual}, the second column to the second factor level, and so on.}
@@ -39,6 +39,14 @@ The \code{\link[=logloss]{logloss()}} function computes the \strong{Log Loss} be
 }
 \section{Calculation}{
 
+
+\deqn{H(p, qk) = -\sum_{i} \sum_{j} y_{ij} \log_2(qk_{ij})}{
+H(p, qk) = -\sum_{i} \sum_{j} y_ij log(qk_ij)}
+where:
+\itemize{
+\item \eqn{y_{ij}} is the \code{actual}-values, where \eqn{y_{ij}} = 1 if the \code{i}-th sample belongs to class \code{j}, and 0 otherwise.
+\item \eqn{qk_{ij}} is the estimated probability for the \code{i}-th sample belonging to class \code{j}.
+}
 }
 
 \section{Creating <\link{factor}>}{
@@ -109,14 +117,14 @@ actual <- factor(
 #   1st column = P("Virginica")
 #   2nd column = P("Others") = 1 - P("Virginica")
 predicted_probs <- predict(model, type = "response")
-response_matrix <- cbind(predicted_probs, 1 - predicted_probs)
+qk_matrix <- cbind(predicted_probs, 1 - predicted_probs)
 
 # 4) Evaluate unweighted Log Loss
-#    'logloss' takes (actual, response_matrix, normalize=TRUE/FALSE).
+#    'logloss' takes (actual, qk_matrix, normalize=TRUE/FALSE).
 #    The factor 'actual' must have the positive class (Virginica) as its first level.
 unweighted_LogLoss <- logloss(
   actual    = actual,           # factor
-  response  = response_matrix,  # numeric matrix of probabilities
+  qk        = qk_matrix,        # numeric matrix of probabilities
   normalize = TRUE              # normalize = TRUE
 )
 
@@ -125,7 +133,7 @@ unweighted_LogLoss <- logloss(
 weights <- iris$Petal.Length / mean(iris$Petal.Length)
 weighted_LogLoss <- weighted.logloss(
   actual    = actual,
-  response  = response_matrix,
+  qk  = qk_matrix,
   w         = weights,
   normalize = TRUE
 )

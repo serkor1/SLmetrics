@@ -9,11 +9,11 @@
 \alias{cross.entropy}
 \title{Compute the Entropy}
 \usage{
-\method{entropy}{matrix}(pk, axis = 0L, base = -1, ...)
+\method{entropy}{matrix}(pk, dim = 0L, base = -1, ...)
 
-\method{relative.entropy}{matrix}(pk, qk, axis = 0L, base = -1, ...)
+\method{relative.entropy}{matrix}(pk, qk, dim = 0L, base = -1, ...)
 
-\method{cross.entropy}{matrix}(pk, qk, axis = 0L, base = -1, ...)
+\method{cross.entropy}{matrix}(pk, qk, dim = 0L, base = -1, ...)
 
 entropy(...)
 
@@ -27,7 +27,7 @@ The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 over the \eqn{k} classes). The first column corresponds to the first factor
 level in \code{actual}, the second column to the second factor level, and so on.}
 
-\item{axis}{An <\link{integer}> value of \link{length} 1 (Default: 0). Defines the dimensions of to calculate the entropy. 0: Total entropy, 1: row-wise, 2: column-wise}
+\item{dim}{An <\link{integer}> value of \link{length} 1 (Default: 0). Defines the dimensions of to calculate the entropy. 0: Total entropy, 1: row-wise, 2: column-wise}
 
 \item{base}{A <\link{numeric}> value of \link{length} 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.}
 
@@ -38,15 +38,62 @@ The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 over the \eqn{k} classes). The first column corresponds to the first factor
 level in \code{actual}, the second column to the second factor level, and so on.}
 }
+\value{
+A <\link{numeric}> value or vector:
+\itemize{
+\item A single <\link{numeric}> value (length 1) if \code{dim == 0}.
+\item A <\link{numeric}> vector with length equal to the \link{length} of rows if \code{dim == 1}.
+\item A <\link{numeric}> vector with length equal to the \link{length} of columns if \code{dim == 2}.
+}
+}
 \description{
 The \code{\link[=entropy]{entropy()}} function calculates the \strong{Entropy} of given probability distributions.
 }
 \section{Calculation}{
 
+
+\strong{Entropy:}
+\deqn{H(pk) = -\sum_{i} pk_i \log(pk_i)}{H(pk) = -∑ pk_i log(pk_i)}
+
+\strong{Cross Entropy:}
+\deqn{H(pk, qk) = -\sum_{i} pk_i \log(qk_i)}{H(pk, qk) = -∑ pk_i log(qk_i)}
+
+\strong{Relative Entropy}
+\deqn{D_{KL}(pk \parallel qk) = \sum_{i} pk_i \log\left(\frac{pk_i}{qk_i}\right)}{D_KL(pk || qk) = ∑ pk_i log(pk_i / qk_i)}
 }
 
 \examples{
+# 1) Define actual
+# and observed probabilities
 
+# 1.1) actual probabilies
+pk <- matrix(
+  cbind(1/2, 1/2),
+  ncol = 2
+)
+
+# 1.2) observed (estimated) probabilites
+qk <- matrix(
+  cbind(9/10, 1/10), 
+  ncol = 2
+)
+
+# 2) calculate
+# Entropy
+cat(
+  "Entropy", entropy(
+    pk
+  ),
+  "Relative Entropy", relative.entropy(
+    pk,
+    qk
+  ),
+  "Cross Entropy", cross.entropy(
+    pk,
+    qk
+  ),
+  sep = "\n"
+)
 }
 \seealso{
 Other Classification: 

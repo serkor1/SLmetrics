@@ -102,22 +102,22 @@ dor.cmatrix <- function(x, ...) {
 #' @rdname entropy
 #' @method entropy matrix
 #' @export
-entropy.matrix <- function(pk, axis = 0L, base = -1.0, ...) {
-    .Call(`_SLmetrics_ShannonsEntropy`, pk, axis, base)
+entropy.matrix <- function(pk, dim = 0L, base = -1.0, ...) {
+    .Call(`_SLmetrics_ShannonsEntropy`, pk, dim, base)
 }
 
 #' @rdname entropy
 #' @method relative.entropy matrix
 #' @export
-relative.entropy.matrix <- function(pk, qk, axis = 0L, base = -1.0, ...) {
-    .Call(`_SLmetrics_RelativeEntropy`, pk, qk, axis, base)
+relative.entropy.matrix <- function(pk, qk, dim = 0L, base = -1.0, ...) {
+    .Call(`_SLmetrics_RelativeEntropy`, pk, qk, dim, base)
 }
 
 #' @rdname entropy
 #' @method cross.entropy matrix
 #' @export
-cross.entropy.matrix <- function(pk, qk, axis = 0L, base = -1.0, ...) {
-    .Call(`_SLmetrics_CrossEntropy`, pk, qk, axis, base)
+cross.entropy.matrix <- function(pk, qk, dim = 0L, base = -1.0, ...) {
+    .Call(`_SLmetrics_CrossEntropy`, pk, qk, dim, base)
 }
 
 #' @rdname fbeta
@@ -305,15 +305,15 @@ tscore.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
 #' @rdname logloss
 #' @method logloss factor
 #' @export
-logloss.factor <- function(actual, response, normalize = TRUE, ...) {
-    .Call(`_SLmetrics_LogLoss`, actual, response, normalize)
+logloss.factor <- function(actual, qk, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_LogLoss`, actual, qk, normalize)
 }
 
 #' @rdname logloss
 #' @method weighted.logloss factor
 #' @export
-weighted.logloss.factor <- function(actual, response, w, normalize = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_LogLoss`, actual, response, w, normalize)
+weighted.logloss.factor <- function(actual, qk, w, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_LogLoss`, actual, qk, w, normalize)
 }
 
 #' @rdname mcc

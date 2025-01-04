@@ -29,7 +29,7 @@ testthat::test_that(desc = "Test `relative.entropy()`-function", code ={
         invisible({ setUseOpenMP(lgl) })
       
         # 2.1.2) calculate scores
-        score <- relative.entropy(pk, qk, axis = axis, base = if (is.na(base)) {-1} else {base})
+        score <- relative.entropy(pk, qk, dim = axis, base = if (is.na(base)) {-1} else {base})
         
         # Map SLmetrics axis to scipy axis:
         # SLmetrics: axis = 0 -> scipy: NULL

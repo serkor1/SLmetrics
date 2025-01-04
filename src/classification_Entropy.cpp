@@ -11,25 +11,25 @@ using namespace Rcpp;
 //' @method entropy matrix
 //' @export
 // [[Rcpp::export(entropy.matrix)]]
-Rcpp::NumericVector ShannonsEntropy(const Rcpp::NumericMatrix& pk, const int& axis = 0, const double& base = -1.0)
+Rcpp::NumericVector ShannonsEntropy(const Rcpp::NumericMatrix& pk, const int& dim = 0, const double& base = -1.0)
 {
-    return ShannonsEntropyClass::Entropy(pk, axis, base);
+    return ShannonsEntropyClass::Entropy(pk, dim, base);
 }
 
 //' @rdname entropy
 //' @method relative.entropy matrix
 //' @export
 // [[Rcpp::export(relative.entropy.matrix)]]
-Rcpp::NumericVector RelativeEntropy(const Rcpp::NumericMatrix& pk, const Rcpp::NumericMatrix& qk, const int& axis = 0, const double& base = -1.0)
+Rcpp::NumericVector RelativeEntropy(const Rcpp::NumericMatrix& pk, const Rcpp::NumericMatrix& qk, const int& dim = 0, const double& base = -1.0)
 {
-    return RelativeEntropyClass::Entropy(pk, qk, axis, base);
+    return RelativeEntropyClass::Entropy(pk, qk, dim, base);
 }
 
 //' @rdname entropy
 //' @method cross.entropy matrix
 //' @export
 // [[Rcpp::export(cross.entropy.matrix)]]
-Rcpp::NumericVector CrossEntropy(const Rcpp::NumericMatrix& pk, const Rcpp::NumericMatrix& qk, const int& axis = 0, const double& base = -1.0)
+Rcpp::NumericVector CrossEntropy(const Rcpp::NumericMatrix& pk, const Rcpp::NumericMatrix& qk, const int& dim = 0, const double& base = -1.0)
 {
-    return CrossEntropyClass::Entropy(pk, qk, axis, base);
+    return CrossEntropyClass::Entropy(pk, qk, dim, base);
 }

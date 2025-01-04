@@ -29,7 +29,7 @@ testthat::test_that(desc = "Test `entropy()`-function", code ={
         invisible({ setUseOpenMP(lgl) })
       
         # 2.1.2) calculate scores
-        score <- entropy(pk, axis = axis, base = if (is.na(base)) {-1} else {base})
+        score <- entropy(pk, dim = axis, base = if (is.na(base)) {-1} else {base})
         
         # Map SLmetrics axis to scipy axis:
         # SLmetrics: axis = 0 -> scipy: NULL

@@ -36,7 +36,7 @@ system.time(SLmetrics::entropy(pk))
 ```
 
     #>    user  system elapsed 
-    #>   0.313   0.000   0.015
+    #>   0.008   0.000   0.001
 
 ``` r
 # 3) Disable OpenMP
@@ -50,7 +50,7 @@ system.time(SLmetrics::entropy(pk))
 ```
 
     #>    user  system elapsed 
-    #>   0.001   0.000   0.001
+    #>   0.000   0.000   0.001
 
 ## :bug: Bug-fixes
 
@@ -108,10 +108,10 @@ cat(
   normalization. The function can be used as follows,
 
 ``` r
-# Create factors and response probabilities
+# Create factors and response probabilities (qk)
 actual   <- factor(c("Class A", "Class B", "Class A"))
 weights  <- c(0.3,0.9,1) 
-response <- matrix(cbind(
+qk <- matrix(cbind(
     0.2, 0.8,
     0.8, 0.2,
     0.7, 0.3
@@ -121,12 +121,12 @@ cat(
     "Unweighted Log Loss:",
     SLmetrics::logloss(
         actual,
-        response
+        qk
     ),
     "Weighted log Loss:",
     SLmetrics::weighted.logloss(
         actual   = actual,
-        response = response,
+        qk       = qk,
         w        = weights
     ),
     sep = "\n"
