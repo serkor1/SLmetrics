@@ -77,27 +77,7 @@ jobs:
             sprintf("RETICULATE_PYTHON=%s", path_to_python),
             Sys.getenv("GITHUB_ENV")
           )
-
-      - name: Install GCC on macOS
-        if: runner.os == 'macOS'
-        run: |
-          brew update
-          brew install gcc
           
-      - name: Set GCC as Default Compiler on macOS
-        if: runner.os == 'macOS'
-        run: |
-          # Identify the installed GCC version
-          GCC_VERSION=$(brew list gcc | grep bin/gcc- | head -n1 | sed 's#.*/gcc-##')
-          echo "Detected GCC version: $GCC_VERSION"
-
-          # Set CC and CXX environment variables
-          echo "CC=$(brew --prefix gcc)/bin/gcc-$GCC_VERSION" >> $GITHUB_ENV
-          echo "CXX=$(brew --prefix gcc)/bin/g++-$GCC_VERSION" >> $GITHUB_ENV
-
-          # Optionally, add GCC to PATH
-          echo "$(brew --prefix gcc)/bin" >> $GITHUB_PATH
-
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
