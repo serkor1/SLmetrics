@@ -1588,6 +1588,16 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// setNumberThreads
+void setNumberThreads(int value);
+RcppExport SEXP _SLmetrics_setNumberThreads(SEXP valueSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type value(valueSEXP);
+    setNumberThreads(value);
+    return R_NilValue;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_Accuracy", (DL_FUNC) &_SLmetrics_Accuracy, 2},
@@ -1709,6 +1719,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_smape", (DL_FUNC) &_SLmetrics_smape, 2},
     {"_SLmetrics_weighted_smape", (DL_FUNC) &_SLmetrics_weighted_smape, 3},
     {"_SLmetrics_setUseOpenMP", (DL_FUNC) &_SLmetrics_setUseOpenMP, 1},
+    {"_SLmetrics_setNumberThreads", (DL_FUNC) &_SLmetrics_setNumberThreads, 1},
     {NULL, NULL, 0}
 };
 

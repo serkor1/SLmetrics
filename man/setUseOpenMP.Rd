@@ -2,14 +2,24 @@
 % Please edit documentation in R/RcppExports.R
 \name{setUseOpenMP}
 \alias{setUseOpenMP}
-\title{Use OpenMP}
+\title{Enable or Disable OpenMP Parallelization}
 \usage{
 setUseOpenMP(value = FALSE)
 }
 \arguments{
-\item{value}{A <\link{logical}> value of \link{length} 1 (Default: \link{FALSE}). If \link{TRUE} OpenMP will be used to parallelize computations.}
+\item{value}{A <\link{logical}> value of \link{length} 1 (Default: \link{FALSE}). If \link{length}, OpenMP will be used to parallelize computations.}
 }
 \description{
-Use OpenMP
+This function allows you to enable or disable the use of OpenMP for parallelizing computations.
+}
+\examples{
+\dontrun{
+setUseOpenMP(TRUE)
+}
+
+}
+\seealso{
+Other Utils: 
+\code{\link{setNumberThreads}()}
 }
 \concept{Utils}

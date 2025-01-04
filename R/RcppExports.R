@@ -829,14 +829,39 @@ weighted.smape.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_smape`, actual, predicted, w)
 }
 
-#' Use OpenMP
+#' Enable or Disable OpenMP Parallelization
 #'
-#' @param value A <[logical]> value of [length] 1 (Default: [FALSE]). If [TRUE] OpenMP will be used to parallelize computations.
+#' This function allows you to enable or disable the use of OpenMP for parallelizing computations.
+#'
+#' @param value A <[logical]> value of [length] 1 (Default: [FALSE]). If [length], OpenMP will be used to parallelize computations.
 #'
 #' @family Utils
+#'
+#' @examples
+#' \dontrun{
+#' setUseOpenMP(TRUE)
+#' }
 #'
 #' @export
 setUseOpenMP <- function(value = FALSE) {
     invisible(.Call(`_SLmetrics_setUseOpenMP`, value))
+}
+
+#' Set the Number of Threads for Parallel Computations
+#'
+#' This function sets the number of threads to be used for parallel computations. If set to `-1`, all available threads will be utilized.
+#'
+#' @param value An <[integer]> specifying the number of threads to use (Default: -1). Default is `-1`, which uses all available threads.
+#'
+#' @family Utils
+#'
+#' @examples
+#' \dontrun{
+#' setNumberThreads(4)
+#' }
+#'
+#' @export
+setNumberThreads <- function(value = -1L) {
+    invisible(.Call(`_SLmetrics_setNumberThreads`, value))
 }
 
