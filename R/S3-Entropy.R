@@ -1,25 +1,63 @@
-#' Compute the \eqn{\text{Cross}} \eqn{\text{Entropy}} \eqn{\text{Loss}}
+#' Compute the Entropy
 #'
 #' @description
-#' The [entropy()] function computes the **Cross-Entropy Loss** — often called  **Log Loss** — between observed classes (as a <[factor]>) and their predicted probability distributions (a <[numeric]> matrix).
-#'
-#' @param pk A <[numeric]> matrix.
+#' The [entropy()] function calculates the **Entropy** of given probability distributions. 
+#' 
+#' @param pk A \eqn{n \times k} <[numeric]>-matrix of predicted probabilities.
+#'   The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
+#'   over the \eqn{k} classes). The first column corresponds to the first factor
+#'   level in \code{actual}, the second column to the second factor level, and so on.
 #' @param axis An <[integer]> value of [length] 1 (Default: 0). Defines the dimensions of to calculate the entropy. 0: Total entropy, 1: row-wise, 2: column-wise
 #' @param base A <[numeric]> value of [length] 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.
 #' @param ... Arguments passed into other methods
 #'
 #' @section Calculation:
+#' 
+#' ## **Entropy**
 #'
-#' Let \eqn{y_{i,k}} be the one-hot encoding of the actual class label for the \eqn{i}-th observation (that is, \eqn{y_{i,k} = 1} if observation \eqn{i} belongs to class \eqn{k}, and 0 otherwise), and let \eqn{\hat{p}_{i,k}} be the predicted probability of class \eqn{k} for observation \eqn{i}. 
-#' The cross-entropy loss \eqn{L} is:
+#' **Entropy** measures the uncertainty inherent in the true distribution of classes. It is defined as:
 #'
 #' \deqn{
-#'   L = -\sum_{i=1}^N \sum_{k=1}^K y_{i,k}\,\log(\hat{p}_{i,k}).
+#'   H(Y) = -\sum_{k=1}^{K} P(Y = k) \log P(Y = k)
 #' }
 #'
-#' If \code{normalize = TRUE}, this sum is divided by \eqn{N} (the number of observations). When weights \eqn{w_i} are supplied, each term is multiplied by \eqn{w_i}, and if \code{normalize = TRUE}, the final sum is divided by \eqn{\sum_i w_i}.
-#' 
+#' where:
+#' \itemize{
+#'   \item \eqn{P(Y = k)} is the true probability of class \eqn{k}.
+#'   \item \eqn{K} is the total number of classes.
+#' }
 #'
+#' ## **Cross-Entropy**
+#'
+#' **Cross-Entropy** quantifies the difference between the true distribution and the predicted distribution. It is defined as:
+#'
+#' \deqn{
+#'   H(P, Q) = -\sum_{k=1}^{K} P(Y = k) \log Q(Y = k)
+#' }
+#'
+#' where:
+#' \itemize{
+#'   \item \eqn{P(Y = k)} is the true probability of class \eqn{k}.
+#'   \item \eqn{Q(Y = k)} is the predicted probability of class \eqn{k}.
+#' }
+#'
+#' ## **Relative Entropy (Kullback-Leibler Divergence)**
+#'
+#' **Relative Entropy**, also known as **Kullback-Leibler (KL) Divergence**, measures how one probability distribution diverges from a second, reference probability distribution. It is defined as:
+#'
+#' \deqn{
+#'   D_{KL}(P \parallel Q) = \sum_{k=1}^{K} P(Y = k) \log \frac{P(Y = k)}{Q(Y = k)} = H(P, Q) - H(Y)
+# #' }
+#'
+#' where:
+#' \itemize{
+#'   \item \eqn{P(Y = k)} is the true probability of class \eqn{k}.
+#'   \item \eqn{Q(Y = k)} is the predicted probability of class \eqn{k}.
+#'   \item \eqn{H(Y)} is the entropy of the true distribution.
+#'   \item \eqn{H(P, Q)} is the cross-entropy between the true and predicted distributions.
+#' }
+#' 
+#' @example man/examples/scr_Entropy.R
 #' @family Classification
 #' @family Supervised Learning
 #'

@@ -5,7 +5,7 @@
 \alias{weighted.logloss.factor}
 \alias{logloss}
 \alias{weighted.logloss}
-\title{Compute the \eqn{\text{Cross}} \eqn{\text{Entropy}} \eqn{\text{Loss}}}
+\title{Compute the Log Loss}
 \usage{
 \method{logloss}{factor}(actual, response, normalize = TRUE, ...)
 
@@ -18,7 +18,7 @@ weighted.logloss(...)
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{response}{A \eqn{N \times k} <\link{numeric}>-matrix of predicted probabilities.
+\item{response}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
 The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 over the \eqn{k} classes). The first column corresponds to the first factor
 level in \code{actual}, the second column to the second factor level, and so on.}
@@ -35,8 +35,7 @@ sum of cross-entropies is returned.}
 A <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=logloss]{logloss()}} function computes the \strong{Cross-Entropy Loss} — often called  \strong{Log Loss} — between observed classes (as a <\link{factor}>) and their predicted probability distributions (a <\link{numeric}> matrix).
-The \code{\link[=weighted.logloss]{weighted.logloss()}} function is the weighted version, applying observation-specific weights.
+The \code{\link[=logloss]{logloss()}} function computes the \strong{Log Loss} between observed classes (as a <\link{factor}>) and their predicted probability distributions (a <\link{numeric}> matrix). The \code{\link[=weighted.logloss]{weighted.logloss()}} function is the weighted version, applying observation-specific weights.
 }
 \section{Calculation}{
 
@@ -48,7 +47,13 @@ The cross-entropy loss \eqn{L} is:
   L = -\sum_{i=1}^N \sum_{k=1}^K y_{i,k}\,\log(\hat{p}_{i,k}).
 }
 
-If \code{normalize = TRUE}, this sum is divided by \eqn{N} (the number of observations). When weights \eqn{w_i} are supplied, each term is multiplied by \eqn{w_i}, and if \code{normalize = TRUE}, the final sum is divided by \eqn{\sum_i w_i}.
+This can be interpreted as the \strong{Cross-Entropy} between the true distribution \( P \) and the predicted distribution \( Q \), where:
+
+\deqn{
+  H(P, Q) = H(P) + D_{KL}(P \parallel Q)
+}
+
+Here, \( H(P) \) is the \strong{Entropy} of the true distribution, and \( D_{KL}(P \parallel Q) \) is the \strong{Kullback-Leibler Divergence} (Relative Entropy) from \( P \) to \( Q \). If \code{normalize = TRUE}, this sum is divided by \eqn{N} (the number of observations). When weights \eqn{w_i} are supplied, each term is multiplied by \eqn{w_i}, and if \code{normalize = TRUE}, the final sum is divided by \eqn{\sum_i w_i}.
 }
 
 \section{Creating <\link{factor}>}{
