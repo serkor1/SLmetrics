@@ -3,7 +3,11 @@
 #' @description
 #' The [entropy()] function calculates the **Entropy** of given probability distributions. 
 #' 
-#' @param pk A \eqn{n \times k} <[numeric]>-matrix of predicted probabilities.
+#' @param pk A \eqn{n \times k} <[numeric]>-matrix of observed probabilities.
+#'   The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
+#'   over the \eqn{k} classes). The first column corresponds to the first factor
+#'   level in \code{actual}, the second column to the second factor level, and so on.
+#' @param qk A \eqn{n \times k} <[numeric]>-matrix of predicted probabilities.
 #'   The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 #'   over the \eqn{k} classes). The first column corresponds to the first factor
 #'   level in \code{actual}, the second column to the second factor level, and so on.
@@ -23,6 +27,24 @@
 entropy <- function(...) {
   UseMethod(
     generic = "entropy",
+    object  = ..1
+  )
+}
+
+#' @rdname entropy
+#' @export
+relative.entropy <- function(...) {
+  UseMethod(
+    generic = "relative.entropy",
+    object  = ..1
+  )
+}
+
+#' @rdname entropy
+#' @export
+cross.entropy <- function(...) {
+  UseMethod(
+    generic = "cross.entropy",
     object  = ..1
   )
 }
