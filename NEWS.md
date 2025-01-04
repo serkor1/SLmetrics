@@ -36,7 +36,7 @@ system.time(SLmetrics::entropy(pk))
 ```
 
     #>    user  system elapsed 
-    #>   0.008   0.000   0.001
+    #>   0.053   0.002   0.004
 
 ``` r
 # 3) Disable OpenMP
@@ -50,7 +50,62 @@ system.time(SLmetrics::entropy(pk))
 ```
 
     #>    user  system elapsed 
-    #>   0.000   0.000   0.001
+    #>   0.001   0.000   0.001
+
+- **Entropy with soft labels
+  (<https://github.com/serkor1/SLmetrics/issues/37>):** `entropy()`,
+  `cross.entropy()` and `relative.entropy()` have been introduced. These
+  functions are heavily inspired by {scipy}. The functions can be used
+  as follows:
+
+``` r
+# 1) Define actual
+# and observed probabilities
+
+# 1.1) actual probabilies
+pk <- matrix(
+  cbind(1/2, 1/2),
+  ncol = 2
+)
+
+# 1.2) observed (estimated) probabilites
+qk <- matrix(
+  cbind(9/10, 1/10), 
+  ncol = 2
+)
+
+# 2) calculate
+# Entropy
+cat(
+  "Entropy", entropy(
+    pk
+  ),
+  "Relative Entropy", relative.entropy(
+    pk,
+    qk
+  ),
+  "Cross Entropy", cross.entropy(
+    pk,
+    qk
+  ),
+  sep = "\n"
+)
+```
+
+    #> Entropy
+    #> 0.6931472
+    #> Relative Entropy
+    #> 0.5108256
+    #> Cross Entropy
+    #> 1.203973
+
+## :warning: Breaking changes
+
+- **logloss:** The argument `response` have ben renamed to `qk` as in
+  the `entropy()`-family to maintain some degree of consistency.
+- **entropy.factor():** The function have been deleted and is no more.
+  This was mainly due to avoid the documentation from being too large.
+  The `logloss()`-function replaces it.
 
 ## :bug: Bug-fixes
 
@@ -450,7 +505,7 @@ plot(
 )
 ```
 
-![](NEWS_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](NEWS_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 ``` r
 plot(
@@ -459,7 +514,7 @@ plot(
 )
 ```
 
-![](NEWS_files/figure-gfm/unnamed-chunk-11-2.png)<!-- -->
+![](NEWS_files/figure-gfm/unnamed-chunk-12-2.png)<!-- -->
 
 # Version 0.1-0
 
