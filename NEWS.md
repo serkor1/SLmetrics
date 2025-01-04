@@ -5,6 +5,52 @@
 > expect any breaking changes, unless a major bug/issue is reported and
 > its nature forces breaking changes.
 
+## :rocket: Improvements
+
+- **OpenMP Support (PR
+  <https://github.com/serkor1/SLmetrics/pull/40>):** {SLmetrics} now
+  supports parallelization through OpenMP. The OpenMP can be utilized as
+  follows:
+
+``` r
+# 1) probability distribution
+# generator
+rand.sum <- function(n){
+    x <- sort(runif(n-1))
+    c(x,1) - c(0,x)
+  }
+
+# 2) generate probability
+# matrix
+pk <- t(replicate(10,rand.sum(1e3)))
+
+# 3) Enable OpenMP
+SLmetrics::setUseOpenMP(TRUE)
+```
+
+    #> OpenMP usage set to: enabled
+
+``` r
+system.time(SLmetrics::entropy(pk))
+```
+
+    #>    user  system elapsed 
+    #>   0.000   0.000   0.001
+
+``` r
+# 3) Disable OpenMP
+SLmetrics::setUseOpenMP(FALSE)
+```
+
+    #> OpenMP usage set to: disabled
+
+``` r
+system.time(SLmetrics::entropy(pk))
+```
+
+    #>    user  system elapsed 
+    #>   0.000   0.000   0.001
+
 ## :bug: Bug-fixes
 
 - **Plot-method in ROC and prROC
@@ -51,11 +97,11 @@ cat(
 ```
 
     #> Mean Relative Root Mean Squared Error
-    #> 2751.381
+    #> -154.0821
     #> Range Relative Root Mean Squared Error
-    #> 0.1564043
+    #> 0.1518287
     #> IQR Relative Root Mean Squared Error
-    #> 0.7323898
+    #> 0.7446883
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
   normalization. The function can be used as follows,
@@ -134,9 +180,9 @@ SLmetrics::cmatrix(
 ```
 
     #>    a  b  c
-    #> a  7  8 18
-    #> b  6 13 15
-    #> c 15 14  4
+    #> a 10 12 17
+    #> b 11 11 18
+    #> c  5  6 10
 
 ``` r
 # 2) with weights
@@ -148,9 +194,9 @@ SLmetrics::weighted.cmatrix(
 ```
 
     #>          a        b        c
-    #> a 3.627355 4.443065 7.164199
-    #> b 3.506631 5.426818 8.358687
-    #> c 6.615661 6.390454 2.233511
+    #> a 5.193625 6.826692 7.878041
+    #> b 4.537427 6.380587 7.822719
+    #> c 2.083717 2.453927 3.711357
 
 ## :bug: Bug-fixes
 
@@ -186,9 +232,9 @@ SLmetrics::cmatrix(
 ```
 
     #>    a  b  c
-    #> a 15 10  4
-    #> b 11 18 10
-    #> c 10  8 14
+    #> a 15  7 16
+    #> b 12 10  9
+    #> c 13  8 10
 
 ``` r
 # 2) with weights
@@ -200,9 +246,9 @@ SLmetrics::weighted.cmatrix(
 ```
 
     #>          a        b        c
-    #> a 7.578554 4.232749 2.170964
-    #> b 3.818030 9.816465 4.838924
-    #> c 6.280916 3.577268 6.219229
+    #> a 8.413344 2.688579 5.307813
+    #> b 5.512899 6.649545 3.799325
+    #> c 7.431983 3.859395 3.385076
 
 Calculating weighted metrics manually or by using
 `foo.cmatrix()`-method,
@@ -223,7 +269,7 @@ SLmetrics::accuracy(
 )
 ```
 
-    #> [1] 0.47
+    #> [1] 0.35
 
 ``` r
 # 3) calculate the weighted
@@ -235,7 +281,7 @@ SLmetrics::weighted.accuracy(
 )
 ```
 
-    #> [1] 0.4865597
+    #> [1] 0.3921098
 
 Please note, however, that it is not possible to pass `cmatix()`-into
 `weighted.accurracy()`,
@@ -311,14 +357,14 @@ w         <- runif(n = 1e3)
 SLmetrics::rmse(actual, predicted)
 ```
 
-    #> [1] 1.008854
+    #> [1] 1.015463
 
 ``` r
 # 3) weighted metrics
 SLmetrics::weighted.rmse(actual, predicted, w = w)
 ```
 
-    #> [1] 0.9904359
+    #> [1] 1.021705
 
 - The `rrmse()`-function have been removed in favor of the
   `rrse()`-function. This function was incorrectly specified and
@@ -403,7 +449,7 @@ plot(
 )
 ```
 
-![](NEWS_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](NEWS_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 ``` r
 plot(
@@ -412,7 +458,7 @@ plot(
 )
 ```
 
-![](NEWS_files/figure-gfm/unnamed-chunk-10-2.png)<!-- -->
+![](NEWS_files/figure-gfm/unnamed-chunk-11-2.png)<!-- -->
 
 # Version 0.1-0
 
@@ -435,7 +481,7 @@ print(
 )
 ```
 
-    #>  [1] c c c a b c c b b b
+    #>  [1] c c b b c a c b a c
     #> Levels: a b c
 
 ``` r
@@ -447,7 +493,7 @@ print(
 )
 ```
 
-    #>  [1] a a c b b c b b b a
+    #>  [1] c b c b c b c b a b
     #> Levels: a b c
 
 ``` r
@@ -465,16 +511,16 @@ summary(
     #> Confusion Matrix (3 x 3) 
     #> ================================================================================
     #>   a b c
-    #> a 0 1 0
-    #> b 1 3 0
-    #> c 2 1 2
+    #> a 1 1 0
+    #> b 0 2 1
+    #> c 0 2 3
     #> ================================================================================
     #> Overall Statistics (micro average)
-    #>  - Accuracy:          0.50
-    #>  - Balanced Accuracy: 0.38
-    #>  - Sensitivity:       0.50
-    #>  - Specificity:       0.75
-    #>  - Precision:         0.50
+    #>  - Accuracy:          0.60
+    #>  - Balanced Accuracy: 0.59
+    #>  - Sensitivity:       0.60
+    #>  - Specificity:       0.80
+    #>  - Precision:         0.60
 
 ``` r
 # 2) calculate false positive
@@ -485,7 +531,7 @@ SLmetrics::fpr(
 ```
 
     #>         a         b         c 
-    #> 0.3333333 0.3333333 0.0000000
+    #> 0.0000000 0.4285714 0.2000000
 
 ### Supervised regression metrics
 
@@ -506,4 +552,4 @@ SLmetrics::huberloss(
 )
 ```
 
-    #> [1] 0.4698688
+    #> [1] 0.434507

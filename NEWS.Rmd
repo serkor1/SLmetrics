@@ -24,6 +24,31 @@ set.seed(1903)
 > expect any breaking changes, unless a major bug/issue is reported and its nature
 > forces breaking changes.
 
+## :rocket: Improvements
+
+* **OpenMP Support (PR https://github.com/serkor1/SLmetrics/pull/40):** {SLmetrics} now supports parallelization through OpenMP. The OpenMP can be utilized as follows:
+
+```{r}
+# 1) probability distribution
+# generator
+rand.sum <- function(n){
+    x <- sort(runif(n-1))
+    c(x,1) - c(0,x)
+  }
+
+# 2) generate probability
+# matrix
+pk <- t(replicate(10,rand.sum(1e3)))
+
+# 3) Enable OpenMP
+SLmetrics::setUseOpenMP(TRUE)
+system.time(SLmetrics::entropy(pk))
+
+# 3) Disable OpenMP
+SLmetrics::setUseOpenMP(FALSE)
+system.time(SLmetrics::entropy(pk))
+```
+
 ## :bug: Bug-fixes
 
 * **Plot-method in ROC and prROC (https://github.com/serkor1/SLmetrics/issues/36):** Fixed a bug in  `plot.ROC()` and `plot.prROC()` where if `panels = FALSE` additional lines would be added to the plot.
