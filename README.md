@@ -50,6 +50,10 @@ metrics, and a sandbox for me to develop my `C++` skills.
 - [:information_source: Basic usage](#information_source-basic-usage)
   - [:books: Regression](#books-regression)
   - [:books: Classification](#books-classification)
+- [:information_source: Enable
+  OpenMP](#information_source-enable-openmp)
+  - [:books: Entropy without OpenMP](#books-entropy-without-openmp)
+  - [:books: Entropy with OpenMP](#books-entropy-with-openmp)
 - [:information_source: Installation](#information_source-installation)
   - [:shield: Stable version](#shield-stable-version)
   - [:hammer_and_wrench: Development
@@ -169,18 +173,18 @@ requires no GC calls for these operations.
 |  | Iterations | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
 |:---|---:|---:|---:|---:|
 | {SLmetrics} | 100 | 0 | 0.00 | 0 |
-| {yardstick} | 100 | 186 | 4.53 | 381 |
-| {MLmetrics} | 100 | 186 | 4.47 | 381 |
-| {mlr3measures} | 100 | 386 | 3.57 | 916 |
+| {yardstick} | 100 | 190 | 4.44 | 381 |
+| {MLmetrics} | 100 | 186 | 4.50 | 381 |
+| {mlr3measures} | 100 | 371 | 3.93 | 916 |
 
 2 x 2 Confusion Matrix (N = 1e7)
 
 |  | Iterations | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
 |:---|---:|---:|---:|---:|
 | {SLmetrics} | 100 | 0 | 0.00 | 0 |
-| {yardstick} | 100 | 157 | 4.47 | 420 |
-| {MLmetrics} | 100 | 19 | 2.39 | 76 |
-| {mlr3measures} | 100 | 12 | 1.27 | 76 |
+| {yardstick} | 100 | 149 | 4.30 | 420 |
+| {MLmetrics} | 100 | 15 | 2.00 | 76 |
+| {mlr3measures} | 100 | 12 | 1.29 | 76 |
 
 RMSE (N = 1e7)
 
@@ -281,7 +285,48 @@ summary(
 #>  - Precision:         0.81
 ```
 
-## :information_source: Installation
+## :information_source: Enable OpenMP
+
+> \[!IMPORTANT\]
+>
+> OpenMP support in [{SLmetrics}](https://serkor1.github.io/SLmetrics/)
+> is experimental. Use it with caution, as performance gains and
+> stability may vary based on your system configuration and workload.
+
+You can control OpenMP usage within
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) using the
+setUseOpenMP function. Below are examples demonstrating how to enable
+and disable OpenMP:
+
+``` r
+# enable OpenMP
+SLmetrics::setUseOpenMP(TRUE)
+#> OpenMP usage set to: enabled
+
+# disable OpenMP
+SLmetrics::setUseOpenMP(FALSE)
+#> OpenMP usage set to: disabled
+```
+
+To illustrate the impact of OpenMP on performance, consider the
+following benchmarks for calculating entropy on a 1,000,000 x 200 matrix
+over 100 iterations[^2].
+
+### :books: Entropy without OpenMP
+
+| Iterations | Runtime (sec) | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
+|---:|---:|---:|---:|---:|
+| 100 | 2.5 | 0 | 0 | 0 |
+
+1e6 x 200 matrix without OpenMP
+
+### :books: Entropy with OpenMP
+
+| Iterations | Runtime (sec) | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
+|---:|---:|---:|---:|---:|
+| 100 | 0.64 | 0 | 0 | 0 |
+
+1e6 x 200 matrix with OpenMP
 
 ### :shield: Stable version
 
@@ -311,4 +356,7 @@ Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
 [^1]: The source code for these benchmarks is available
+    [here](https://github.com/serkor1/SLmetrics/blob/main/data-raw/performance.R).
+
+[^2]: The source code for these benchmarks is available
     [here](https://github.com/serkor1/SLmetrics/blob/main/data-raw/performance.R).

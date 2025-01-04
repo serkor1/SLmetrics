@@ -139,6 +139,10 @@ if (interactive()) {
     "tests/testthat/pytorch.py"
   )
 
+  reticulate::source_python(
+    "tests/testthat/ref-scipy.py"
+  )
+
   source("tests/testthat/ref-classification-utils.R")
   source("tests/testthat/ref-classification.R")
   source("tests/testthat/ref-regression.R")
@@ -151,6 +155,10 @@ if (interactive()) {
 
   reticulate::source_python(
     "pytorch.py"
+  )
+
+  reticulate::source_python(
+    "ref-scipy.py"
   )
 
   source("ref-classification-utils.R")

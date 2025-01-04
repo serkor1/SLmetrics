@@ -1,3 +1,21 @@
+# Reference Precision
+ref_precision <- function(
+  actual,
+  predicted,
+  w = NULL ,
+  micro = NULL,
+  na.rm = TRUE) {
+  
+  generalized_metric(
+    actual      = actual,
+    predicted   = predicted,
+    w           = w,
+    micro       = micro,
+    na.rm       = na.rm,
+    metric_expr = TP / (TP + FP)
+  )
+}
+
 
 # Reference Recall
 ref_recall <- function(

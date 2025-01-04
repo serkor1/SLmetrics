@@ -5,6 +5,53 @@
 > expect any breaking changes, unless a major bug/issue is reported and
 > its nature forces breaking changes.
 
+## :rocket: Improvements
+
+- **OpenMP Support (PR
+  <https://github.com/serkor1/SLmetrics/pull/40>):** {SLmetrics} now
+  supports parallelization through OpenMP. The OpenMP can be utilized as
+  follows:
+
+``` r
+# 1) probability distribution
+# generator
+rand.sum <- function(n){
+    x <- sort(runif(n-1))
+    c(x,1) - c(0,x)
+  }
+
+# 2) generate probability
+# matrix
+set.seed(1903)
+pk <- t(replicate(100,rand.sum(1e3)))
+
+# 3) Enable OpenMP
+SLmetrics::setUseOpenMP(TRUE)
+```
+
+    #> OpenMP usage set to: enabled
+
+``` r
+system.time(SLmetrics::entropy(pk))
+```
+
+    #>    user  system elapsed 
+    #>   0.001   0.001   0.001
+
+``` r
+# 3) Disable OpenMP
+SLmetrics::setUseOpenMP(FALSE)
+```
+
+    #> OpenMP usage set to: disabled
+
+``` r
+system.time(SLmetrics::entropy(pk))
+```
+
+    #>    user  system elapsed 
+    #>   0.002   0.000   0.002
+
 ## :bug: Bug-fixes
 
 - **Plot-method in ROC and prROC
@@ -51,14 +98,14 @@ cat(
 ```
 
     #> Mean Relative Root Mean Squared Error
-    #> 2751.381
+    #> 40.74819
     #> Range Relative Root Mean Squared Error
-    #> 0.1564043
+    #> 0.1556036
     #> IQR Relative Root Mean Squared Error
-    #> 0.7323898
+    #> 0.738214
 
-- **Cross Entropy:** Weighted and unweighted Cross Entropy, with and
-  without normalization. The function can be used as follows,
+- **Log Loss:** Weighted and unweighted Log Loss, with and without
+  normalization. The function can be used as follows,
 
 ``` r
 # Create factors and response probabilities
@@ -71,13 +118,13 @@ response <- matrix(cbind(
 ),nrow = 3, ncol = 2)
 
 cat(
-    "Unweighted Cross Entropy:",
-    SLmetrics::entropy(
+    "Unweighted Log Loss:",
+    SLmetrics::logloss(
         actual,
         response
     ),
-    "Weighted Cross Entropy:",
-    SLmetrics::weighted.entropy(
+    "Weighted log Loss:",
+    SLmetrics::weighted.logloss(
         actual   = actual,
         response = response,
         w        = weights
@@ -86,9 +133,9 @@ cat(
 )
 ```
 
-    #> Unweighted Cross Entropy:
+    #> Unweighted Log Loss:
     #> 0.7297521
-    #> Weighted Cross Entropy:
+    #> Weighted log Loss:
     #> 0.4668102
 
 - **Weighted Receiver Operator Characteristics:** `weighted.ROC()`, the
@@ -134,9 +181,9 @@ SLmetrics::cmatrix(
 ```
 
     #>    a  b  c
-    #> a  7  8 18
-    #> b  6 13 15
-    #> c 15 14  4
+    #> a 12 10 15
+    #> b 10 15  8
+    #> c  5 14 11
 
 ``` r
 # 2) with weights
@@ -148,9 +195,9 @@ SLmetrics::weighted.cmatrix(
 ```
 
     #>          a        b        c
-    #> a 3.627355 4.443065 7.164199
-    #> b 3.506631 5.426818 8.358687
-    #> c 6.615661 6.390454 2.233511
+    #> a 3.846279 5.399945 7.226539
+    #> b 4.988230 7.617554 4.784221
+    #> c 2.959719 5.045980 4.725642
 
 ## :bug: Bug-fixes
 
@@ -186,9 +233,9 @@ SLmetrics::cmatrix(
 ```
 
     #>    a  b  c
-    #> a 15 10  4
-    #> b 11 18 10
-    #> c 10  8 14
+    #> a 14  9 14
+    #> b 12 15 10
+    #> c  6  9 11
 
 ``` r
 # 2) with weights
@@ -200,9 +247,9 @@ SLmetrics::weighted.cmatrix(
 ```
 
     #>          a        b        c
-    #> a 7.578554 4.232749 2.170964
-    #> b 3.818030 9.816465 4.838924
-    #> c 6.280916 3.577268 6.219229
+    #> a 6.197341 4.717194 6.122321
+    #> b 6.244226 7.511618 5.114025
+    #> c 2.417569 5.487810 5.760531
 
 Calculating weighted metrics manually or by using
 `foo.cmatrix()`-method,
@@ -223,7 +270,7 @@ SLmetrics::accuracy(
 )
 ```
 
-    #> [1] 0.47
+    #> [1] 0.4
 
 ``` r
 # 3) calculate the weighted
@@ -235,7 +282,7 @@ SLmetrics::weighted.accuracy(
 )
 ```
 
-    #> [1] 0.4865597
+    #> [1] 0.3927467
 
 Please note, however, that it is not possible to pass `cmatix()`-into
 `weighted.accurracy()`,
@@ -311,14 +358,14 @@ w         <- runif(n = 1e3)
 SLmetrics::rmse(actual, predicted)
 ```
 
-    #> [1] 1.008854
+    #> [1] 0.9989386
 
 ``` r
 # 3) weighted metrics
 SLmetrics::weighted.rmse(actual, predicted, w = w)
 ```
 
-    #> [1] 0.9904359
+    #> [1] 1.013139
 
 - The `rrmse()`-function have been removed in favor of the
   `rrse()`-function. This function was incorrectly specified and
@@ -403,7 +450,7 @@ plot(
 )
 ```
 
-![](NEWS_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](NEWS_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 ``` r
 plot(
@@ -412,7 +459,7 @@ plot(
 )
 ```
 
-![](NEWS_files/figure-gfm/unnamed-chunk-10-2.png)<!-- -->
+![](NEWS_files/figure-gfm/unnamed-chunk-11-2.png)<!-- -->
 
 # Version 0.1-0
 
@@ -435,7 +482,7 @@ print(
 )
 ```
 
-    #>  [1] c c c a b c c b b b
+    #>  [1] a b a c b a a a c b
     #> Levels: a b c
 
 ``` r
@@ -447,7 +494,7 @@ print(
 )
 ```
 
-    #>  [1] a a c b b c b b b a
+    #>  [1] b a c c c c c c a a
     #> Levels: a b c
 
 ``` r
@@ -465,16 +512,16 @@ summary(
     #> Confusion Matrix (3 x 3) 
     #> ================================================================================
     #>   a b c
-    #> a 0 1 0
-    #> b 1 3 0
-    #> c 2 1 2
+    #> a 0 1 4
+    #> b 2 0 1
+    #> c 1 0 1
     #> ================================================================================
     #> Overall Statistics (micro average)
-    #>  - Accuracy:          0.50
-    #>  - Balanced Accuracy: 0.38
-    #>  - Sensitivity:       0.50
-    #>  - Specificity:       0.75
-    #>  - Precision:         0.50
+    #>  - Accuracy:          0.10
+    #>  - Balanced Accuracy: 0.17
+    #>  - Sensitivity:       0.10
+    #>  - Specificity:       0.55
+    #>  - Precision:         0.10
 
 ``` r
 # 2) calculate false positive
@@ -485,7 +532,7 @@ SLmetrics::fpr(
 ```
 
     #>         a         b         c 
-    #> 0.3333333 0.3333333 0.0000000
+    #> 0.6000000 0.1428571 0.6250000
 
 ### Supervised regression metrics
 
@@ -506,4 +553,4 @@ SLmetrics::huberloss(
 )
 ```
 
-    #> [1] 0.4698688
+    #> [1] 0.4389594

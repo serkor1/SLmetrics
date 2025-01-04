@@ -24,6 +24,32 @@ set.seed(1903)
 > expect any breaking changes, unless a major bug/issue is reported and its nature
 > forces breaking changes.
 
+## :rocket: Improvements
+
+* **OpenMP Support (PR https://github.com/serkor1/SLmetrics/pull/40):** {SLmetrics} now supports parallelization through OpenMP. The OpenMP can be utilized as follows:
+
+```{r}
+# 1) probability distribution
+# generator
+rand.sum <- function(n){
+    x <- sort(runif(n-1))
+    c(x,1) - c(0,x)
+  }
+
+# 2) generate probability
+# matrix
+set.seed(1903)
+pk <- t(replicate(100,rand.sum(1e3)))
+
+# 3) Enable OpenMP
+SLmetrics::setUseOpenMP(TRUE)
+system.time(SLmetrics::entropy(pk))
+
+# 3) Disable OpenMP
+SLmetrics::setUseOpenMP(FALSE)
+system.time(SLmetrics::entropy(pk))
+```
+
 ## :bug: Bug-fixes
 
 * **Plot-method in ROC and prROC (https://github.com/serkor1/SLmetrics/issues/36):** Fixed a bug in  `plot.ROC()` and `plot.prROC()` where if `panels = FALSE` additional lines would be added to the plot.
@@ -62,7 +88,7 @@ cat(
 )
 ```
 
-* **Cross Entropy:** Weighted and unweighted Cross Entropy, with and without normalization. The function can be used as follows,
+* **Log Loss:** Weighted and unweighted Log Loss, with and without normalization. The function can be used as follows,
 
 ```{r}
 # Create factors and response probabilities
@@ -75,13 +101,13 @@ response <- matrix(cbind(
 ),nrow = 3, ncol = 2)
 
 cat(
-    "Unweighted Cross Entropy:",
-    SLmetrics::entropy(
+    "Unweighted Log Loss:",
+    SLmetrics::logloss(
         actual,
         response
     ),
-    "Weighted Cross Entropy:",
-    SLmetrics::weighted.entropy(
+    "Weighted log Loss:",
+    SLmetrics::weighted.logloss(
         actual   = actual,
         response = response,
         w        = weights
