@@ -6,7 +6,6 @@
 # twice.
 # script start;
 
-
 # 0) Compile attributes
 # to avoid trouble when running
 # document more than once.
@@ -39,20 +38,6 @@ source("tools/modifyRcppExports.R")
 roxygen2::roxygenize(
   clean   = TRUE,
   roclets = c("collate", "namespace", "rd")
-)
-
-# 4) Render README and NEWS
-# while documenting
-rmarkdown::render(
-  input = "README.Rmd",
-  output_format = "github_document",
-  clean = TRUE
-)
-
-rmarkdown::render(
-  input = "NEWS.Rmd",
-  output_format = "github_document",
-  clean = TRUE
 )
 
 # script end;
