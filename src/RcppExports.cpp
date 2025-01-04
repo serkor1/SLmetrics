@@ -189,6 +189,47 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// ShannonsEntropy
+Rcpp::NumericVector ShannonsEntropy(const Rcpp::NumericMatrix& pk, const int& axis, const double& base);
+RcppExport SEXP _SLmetrics_ShannonsEntropy(SEXP pkSEXP, SEXP axisSEXP, SEXP baseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< const int& >::type axis(axisSEXP);
+    Rcpp::traits::input_parameter< const double& >::type base(baseSEXP);
+    rcpp_result_gen = Rcpp::wrap(ShannonsEntropy(pk, axis, base));
+    return rcpp_result_gen;
+END_RCPP
+}
+// RelativeEntropy
+Rcpp::NumericVector RelativeEntropy(const Rcpp::NumericMatrix& pk, const Rcpp::NumericMatrix& qk, const int& axis, const double& base);
+RcppExport SEXP _SLmetrics_RelativeEntropy(SEXP pkSEXP, SEXP qkSEXP, SEXP axisSEXP, SEXP baseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type qk(qkSEXP);
+    Rcpp::traits::input_parameter< const int& >::type axis(axisSEXP);
+    Rcpp::traits::input_parameter< const double& >::type base(baseSEXP);
+    rcpp_result_gen = Rcpp::wrap(RelativeEntropy(pk, qk, axis, base));
+    return rcpp_result_gen;
+END_RCPP
+}
+// CrossEntropy
+Rcpp::NumericVector CrossEntropy(const Rcpp::NumericMatrix& pk, const Rcpp::NumericMatrix& qk, const int& axis, const double& base);
+RcppExport SEXP _SLmetrics_CrossEntropy(SEXP pkSEXP, SEXP qkSEXP, SEXP axisSEXP, SEXP baseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type qk(qkSEXP);
+    Rcpp::traits::input_parameter< const int& >::type axis(axisSEXP);
+    Rcpp::traits::input_parameter< const double& >::type base(baseSEXP);
+    rcpp_result_gen = Rcpp::wrap(CrossEntropy(pk, qk, axis, base));
+    return rcpp_result_gen;
+END_RCPP
+}
 // FBetaScore
 Rcpp::NumericVector FBetaScore(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const double& beta, Rcpp::Nullable<bool> micro, bool na_rm);
 RcppExport SEXP _SLmetrics_FBetaScore(SEXP actualSEXP, SEXP predictedSEXP, SEXP betaSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
@@ -1041,19 +1082,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// ShannonsEntropy
-Rcpp::NumericVector ShannonsEntropy(const Rcpp::NumericMatrix& pk, const int& axis, const double& base);
-RcppExport SEXP _SLmetrics_ShannonsEntropy(SEXP pkSEXP, SEXP axisSEXP, SEXP baseSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type pk(pkSEXP);
-    Rcpp::traits::input_parameter< const int& >::type axis(axisSEXP);
-    Rcpp::traits::input_parameter< const double& >::type base(baseSEXP);
-    rcpp_result_gen = Rcpp::wrap(ShannonsEntropy(pk, axis, base));
-    return rcpp_result_gen;
-END_RCPP
-}
 // Specificity
 Rcpp::NumericVector Specificity(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro, const bool& na_rm);
 RcppExport SEXP _SLmetrics_Specificity(SEXP actualSEXP, SEXP predictedSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
@@ -1614,6 +1642,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_DiagnosticOddsRatio", (DL_FUNC) &_SLmetrics_DiagnosticOddsRatio, 2},
     {"_SLmetrics_weighted_DiagnosticOddsRatio", (DL_FUNC) &_SLmetrics_weighted_DiagnosticOddsRatio, 3},
     {"_SLmetrics_cmatrix_DiagnosticOddsRatio", (DL_FUNC) &_SLmetrics_cmatrix_DiagnosticOddsRatio, 1},
+    {"_SLmetrics_ShannonsEntropy", (DL_FUNC) &_SLmetrics_ShannonsEntropy, 3},
+    {"_SLmetrics_RelativeEntropy", (DL_FUNC) &_SLmetrics_RelativeEntropy, 4},
+    {"_SLmetrics_CrossEntropy", (DL_FUNC) &_SLmetrics_CrossEntropy, 4},
     {"_SLmetrics_FBetaScore", (DL_FUNC) &_SLmetrics_FBetaScore, 5},
     {"_SLmetrics_weighted_FBetaScore", (DL_FUNC) &_SLmetrics_weighted_FBetaScore, 6},
     {"_SLmetrics_cmatrix_FBetaScore", (DL_FUNC) &_SLmetrics_cmatrix_FBetaScore, 4},
@@ -1677,7 +1708,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_auc", (DL_FUNC) &_SLmetrics_auc, 3},
     {"_SLmetrics_RecieverOperatorCharacteristics", (DL_FUNC) &_SLmetrics_RecieverOperatorCharacteristics, 3},
     {"_SLmetrics_weighted_RecieverOperatorCharacteristics", (DL_FUNC) &_SLmetrics_weighted_RecieverOperatorCharacteristics, 4},
-    {"_SLmetrics_ShannonsEntropy", (DL_FUNC) &_SLmetrics_ShannonsEntropy, 3},
     {"_SLmetrics_Specificity", (DL_FUNC) &_SLmetrics_Specificity, 4},
     {"_SLmetrics_weighted_Specificity", (DL_FUNC) &_SLmetrics_weighted_Specificity, 5},
     {"_SLmetrics_cmatrix_Specificity", (DL_FUNC) &_SLmetrics_cmatrix_Specificity, 3},

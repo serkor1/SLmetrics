@@ -99,6 +99,27 @@ dor.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_DiagnosticOddsRatio`, x)
 }
 
+#' @rdname entropy
+#' @method entropy matrix
+#' @export
+entropy.matrix <- function(pk, axis = 0L, base = -1.0, ...) {
+    .Call(`_SLmetrics_ShannonsEntropy`, pk, axis, base)
+}
+
+#' @rdname entropy
+#' @method relative.entropy matrix
+#' @export
+relative.entropy.matrix <- function(pk, qk, axis = 0L, base = -1.0, ...) {
+    .Call(`_SLmetrics_RelativeEntropy`, pk, qk, axis, base)
+}
+
+#' @rdname entropy
+#' @method cross.entropy matrix
+#' @export
+cross.entropy.matrix <- function(pk, qk, axis = 0L, base = -1.0, ...) {
+    .Call(`_SLmetrics_CrossEntropy`, pk, qk, axis, base)
+}
+
 #' @rdname fbeta
 #' @method fbeta factor
 #' @export
@@ -540,13 +561,6 @@ ROC.factor <- function(actual, response, thresholds = NULL, ...) {
 #' @export
 weighted.ROC.factor <- function(actual, response, w, thresholds = NULL, ...) {
     .Call(`_SLmetrics_weighted_RecieverOperatorCharacteristics`, actual, response, w, thresholds)
-}
-
-#' @rdname entropy
-#' @method entropy matrix
-#' @export
-entropy.matrix <- function(pk, axis = 0L, base = -1.0, ...) {
-    .Call(`_SLmetrics_ShannonsEntropy`, pk, axis, base)
 }
 
 #' @rdname specificity

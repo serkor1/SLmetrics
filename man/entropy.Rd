@@ -2,15 +2,27 @@
 % Please edit documentation in R/RcppExports.R, R/S3-Entropy.R
 \name{entropy.matrix}
 \alias{entropy.matrix}
+\alias{relative.entropy.matrix}
+\alias{cross.entropy.matrix}
 \alias{entropy}
+\alias{relative.entropy}
+\alias{cross.entropy}
 \title{Compute the Entropy}
 \usage{
 \method{entropy}{matrix}(pk, axis = 0L, base = -1, ...)
 
+\method{relative.entropy}{matrix}(pk, qk, axis = 0L, base = -1, ...)
+
+\method{cross.entropy}{matrix}(pk, qk, axis = 0L, base = -1, ...)
+
 entropy(...)
+
+relative.entropy(...)
+
+cross.entropy(...)
 }
 \arguments{
-\item{pk}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
+\item{pk}{A \eqn{n \times k} <\link{numeric}>-matrix of observed probabilities.
 The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 over the \eqn{k} classes). The first column corresponds to the first factor
 level in \code{actual}, the second column to the second factor level, and so on.}
@@ -20,6 +32,11 @@ level in \code{actual}, the second column to the second factor level, and so on.
 \item{base}{A <\link{numeric}> value of \link{length} 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.}
 
 \item{...}{Arguments passed into other methods}
+
+\item{qk}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
+The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
+over the \eqn{k} classes). The first column corresponds to the first factor
+level in \code{actual}, the second column to the second factor level, and so on.}
 }
 \description{
 The \code{\link[=entropy]{entropy()}} function calculates the \strong{Entropy} of given probability distributions.
