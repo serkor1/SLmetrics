@@ -61,6 +61,7 @@ check: document
 	@rm -rf $(PKGNAME).Rcheck
 	@rm -f src/*.o src/*.so
 	@quarto render README.qmd
+	@quarto render NEWS.qmd
 	@echo "✅ R CMD check process done!"
 
 

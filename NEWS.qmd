@@ -1,7 +1,7 @@
 ---
-output:
-  github_document:
-    html_preview: false
+format: 
+    gfm:
+        default-image-extension: ""
 always_allow_html: true
 ---
 
@@ -167,7 +167,8 @@ cat(
 
 Prior to version `0.3-0` the weighted confusion matrix were a part of the `cmatrix()`-function and were called as follows,
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
 SLmetrics::cmatrix(
     actual    = actual,
     predicted = predicted,
@@ -312,7 +313,9 @@ SLmetrics::weighted.rmse(actual, predicted, w = w)
 
 * **NA-controls:** All pair-wise metrics that doesn't have a `micro`-argument were handling missing values as according to C++ and {Rcpp} internals. See [Issue](https://github.com/serkor1/SLmetrics/issues/8). Thank you @EmilHvitfeldt for pointing this out. This has now been fixed so functions uses an `na.rm`-argument to explicitly control for this. See below,
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 # 1) define factors
 actual    <- factor(c("no", "yes"))
 predicted <- factor(c(NA, "no"))
