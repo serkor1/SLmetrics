@@ -62,11 +62,3 @@ check: document
 	@rm -f src/*.o src/*.so
 	@Rscript tools/render.R
 	@echo "✅ R CMD check process done!"
-
-build-site:
-	@clear
-	@echo "📚 Building {pkgdown}"
-	@Rscript -e "pkgdown::build_site()"
-	
-preview:
-	@xdg-open docs/index.html
