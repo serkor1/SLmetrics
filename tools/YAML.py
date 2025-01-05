@@ -6,9 +6,15 @@ book_structure = {
         "type": "book"
     },
     'book': {
-        'title': "{SLmetrics} Docs",
-        'author': "Norah Jones",
-        'date': "1/5/2025",
+        'title': "{SLmetrics}: Machine Learning Performance Evaluation on Steroids",
+        'author': "Serkan Korkmaz",
+        'repo-url': "https://github.com/serkor1/SLmetrics",
+        'repo-actions': ["edit", "source", "issue"],
+        'downloads': ["pdf", "epub"],
+        'sharing': ["twitter", "facebook", "linkedin"],
+        'sidebar':{
+            'title': "Documentation"
+        },
         'chapters': [
             'index.qmd',
             'intro.qmd',
@@ -21,10 +27,12 @@ book_structure = {
     },
     'bibliography': 'references.bib',
     'format': {
-        'html': {'theme': {
+        'html': {
+            'theme': {
             "light": "flatly",
             "dark":  "flatly"
-        }},
+        }
+        },
         'pdf': {'documentclass': 'scrreprt'}
     },
     "execute": {
