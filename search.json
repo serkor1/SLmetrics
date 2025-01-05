@@ -1,0 +1,32 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "{SLmetrics} Docs",
+    "section": "",
+    "text": "Index!",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>index.html</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "Preface",
+    "section": "",
+    "text": "This is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "{SLmetrics} Docs",
+    "section": "",
+    "text": "Summary!",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>summary.html</span>"
+    ]
+  }
+]
