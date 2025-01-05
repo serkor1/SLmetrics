@@ -18,8 +18,8 @@ jobs:
         uses: quarto-dev/quarto-actions/setup@v2
 
       - name: Render and Publish
-        working-directory: ./docs
         uses: quarto-dev/quarto-actions/publish@v2
+        working-directory: ./docs
         with:
           target: gh-pages
         env:
