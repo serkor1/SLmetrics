@@ -1,4 +1,5 @@
 
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # {SLmetrics}: Machine learning performance evaluation on steroids <img src="man/figures/logo.png" align="right" height="150" alt="" />
@@ -157,7 +158,8 @@ RMSE[^1].
 
 ### :fast_forward: Speed comparison
 
-<img src="man/figures/README-performance-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png"
+style="width:100.0%" />
 
 As shown in the chart,
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) maintains

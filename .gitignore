@@ -61,3 +61,4 @@ docs/*/
 # html-files
 # (from rendering markdown/quarto)
 *.html
+/README_files
