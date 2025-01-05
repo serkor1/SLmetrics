@@ -22,7 +22,8 @@ book_structure = {
             {
                 'part': "References",
                 'chapters': []
-            }
+            },
+            "references.qmd"
         ]
     },
     'bibliography': 'references.bib',

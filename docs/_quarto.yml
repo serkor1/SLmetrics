@@ -23,6 +23,7 @@ book:
   - summary.qmd
   - part: References
     chapters: []
+  - references.qmd
 bibliography: references.bib
 format:
   html:
