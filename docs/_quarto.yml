@@ -1,0 +1,22 @@
+project:
+  type: book
+book:
+  title: '{SLmetrics} Docs'
+  author: Norah Jones
+  date: 1/5/2025
+  chapters:
+  - index.qmd
+  - intro.qmd
+  - summary.qmd
+  - part: References
+    chapters: []
+bibliography: references.bib
+format:
+  html:
+    theme:
+      light: flatly
+      dark: flatly
+  pdf:
+    documentclass: scrreprt
+execute:
+  freeze: auto
