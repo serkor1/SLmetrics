@@ -2,6 +2,7 @@ on:
   workflow_dispatch:
   push:
     branches: [development, quarto-docs]
+    paths: ['docs/**']
 
 name: Build Docs
 
@@ -32,6 +33,8 @@ jobs:
         with:
           packages:
             local::.
+            deps::.
+          extra-packages:
             any::MLmetrics
             any::mlr3measures
             any::yardstick
