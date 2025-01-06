@@ -1,0 +1,52 @@
+name: "Setup Reticulate Environment"
+
+description: "Sets up Python and Reticulate virtual environment for R projects."
+inputs:
+  python-version:
+    description: "Python version to install"
+    required: true
+    default: "3.13.x"
+    
+outputs:
+  reticulate-python:
+    description: "Path to the Reticulate Python environment"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install system dependencies (Ubuntu only)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-venv
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Setup venv with Reticulate
+      shell: Rscript {0}
+      run: |
+        path_to_python <- reticulate::virtualenv_create(
+          envname = "r-reticulate",
+          python = Sys.which("python"),
+          packages = c(
+            "numpy",
+            "scipy",
+            "torch",
+            "torchmetrics",
+            "scikit-learn",
+            "imblearn"
+          )
+        )
+
+        writeLines(
+          sprintf("RETICULATE_PYTHON=%s", path_to_python),
+          Sys.getenv("GITHUB_ENV")
+        )
+
+    - name: Install R Packages
+      uses: r-lib/actions/setup-r-dependencies@v2
+      with:
+        extra-packages: any::reticulate
