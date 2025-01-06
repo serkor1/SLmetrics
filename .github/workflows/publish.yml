@@ -34,6 +34,7 @@ jobs:
       - name: Setup R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          cache: 'always'
           packages:
             local::.
             deps::.
@@ -48,6 +49,7 @@ jobs:
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
         with:
+          to: html
           target: gh-pages
           path: docs/
         
