@@ -10,7 +10,6 @@ book_structure = {
         'author': "Serkan Korkmaz",
         'repo-url': "https://github.com/serkor1/SLmetrics",
         'repo-actions': ["edit", "source", "issue"],
-        'downloads': ["pdf", "epub"],
         'sharing': ["twitter", "facebook", "linkedin"],
         'sidebar':{
             'title': "Documentation"
