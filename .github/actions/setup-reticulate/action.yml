@@ -22,7 +22,7 @@ runs:
         sudo apt-get install -y python3-venv
 
     - name: Setup Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ inputs.python-version }}
 
@@ -32,21 +32,46 @@ runs:
         PYTHON_VERSION: ${{ inputs.python-version }}
       run: |
 
-        # 2) create virtual environment
+        # 1) create virtual environment
         # with specified version
-        path_to_python <- reticulate::virtualenv_create(
-          envname        = "r-reticulate",
-          python_version =  Sys.getenv("PYTHON_VERSION"),
-          packages = c(
-            "numpy",
-            "scipy",
-            "torch",
-            "torchmetrics",
-            "scikit-learn",
-            "imblearn"
-          )
+        
+        path_to_python <- tryCatch(
+          expr = {
+
+            reticulate::virtualenv_create(
+              envname        = "r-reticulate",
+              python         =  Sys.which("python"),
+              packages = c(
+                "numpy",
+                "scipy",
+                "torch",
+                "torchmetrics",
+                "scikit-learn",
+                "imblearn"
+              )
+            )
+          
+          },
+          error = function(cond) {
+
+            reticulate::virtualenv_create(
+              envname        = "r-reticulate",
+              python_version =  Sys.getenv("PYTHON_VERSION"),
+              packages = c(
+                "numpy",
+                "scipy",
+                "torch",
+                "torchmetrics",
+                "scikit-learn",
+                "imblearn"
+              )
+            )
+
+          }
         )
 
+        # 2) write path to
+        # environment
         writeLines(
           sprintf("RETICULATE_PYTHON=%s", path_to_python),
           Sys.getenv("GITHUB_ENV")
