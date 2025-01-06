@@ -58,6 +58,8 @@ src/.idea
 
 /.quarto/
 docs/*/
+!docs/_freeze/
+
 # html-files
 # (from rendering markdown/quarto)
 *.html
