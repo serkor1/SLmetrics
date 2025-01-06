@@ -30,7 +30,7 @@ runs:
       shell: Rscript {0}
       run: |
 
-        install_python(
+        reticulate::install_python(
           version = "3.12:latest",
           list = FALSE,
           force = FALSE,
