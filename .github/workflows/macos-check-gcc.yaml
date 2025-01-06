@@ -27,7 +27,8 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Install GCC on macOS
         if: runner.os == 'macOS'
@@ -48,15 +49,18 @@ jobs:
 
           echo "$(brew --prefix gcc)/bin" >> $GITHUB_PATH
 
+      - name: Setup pandoc
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - uses: r-lib/actions/setup-r@v2
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - name: Installing {pkgs}
+        uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck reticulate
           needs: check
@@ -64,6 +68,7 @@ jobs:
       - name: Setup Python and {reticulate}
         uses: ./.github/actions/setup-reticulate
 
+      - name: R CMD check
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
