@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
   push:
     branches: [development, quarto-docs]
-    paths: ['docs/**']
+    paths: ['docs/**', '.github/publish.yml']
 
 name: Build Docs
 
@@ -50,5 +50,6 @@ jobs:
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
+          render: false
           path: docs/
         
