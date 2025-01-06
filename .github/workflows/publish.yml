@@ -17,11 +17,22 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         
-      - name: Install TinyTex
+      - name: Setup R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages:
+            any::MLmetrics
+            any::mlr3measures
+            any::yardstick
+            any::bench
+            any::devtools
+        
+      - name: Install TinyTex and {SLmetrics}
         if: runner.os == 'Linux'
         run: |
           quarto install tinytex
-
+          sudo Rscript -e "devtools::install_github(repo = 'https://github.com/serkor1/SLmetrics@*release', ref  = 'main')"
+          
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
         with:
