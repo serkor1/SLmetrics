@@ -5,7 +5,7 @@ inputs:
   python-version:
     description: "Python version to install"
     required: true
-    default: "3.12.x"
+    default: "3.12.8"
     
 outputs:
   reticulate-python:
@@ -32,19 +32,11 @@ runs:
         PYTHON_VERSION: ${{ inputs.python-version }}
       run: |
 
-        # 1) get python version
-        # NOTE: it's on the form 3.12.x
-        python_version <- paste0(">=",gsub(
-          pattern = ".x",
-          replacement = "",
-          x  = Sys.getenv("PYTHON_VERSION")
-        ))
-
         # 2) create virtual environment
         # with specified version
         path_to_python <- reticulate::virtualenv_create(
           envname        = "r-reticulate",
-          python_version =  python_version,
+          python_version =  Sys.getenv("PYTHON_VERSION"),
           packages = c(
             "numpy",
             "scipy",
