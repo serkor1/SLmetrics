@@ -36,7 +36,7 @@ testthat::test_that(
       # values
       actual    <- create_factor(balanced = balanced)
       predicted <- create_factor(balanced = balanced)
-      w         <- c(0.3, 0.5)
+      w         <- runif(n = length(actual))
 
       for (weighted in c(TRUE, FALSE)) {
       
@@ -55,8 +55,8 @@ testthat::test_that(
           # 2.2) generate score
           # from {slmetrics}
           score <- wrapped_jaccard(
-            actual     = factor(c("a","a"), levels = c("a", "b")),
-            predicted  = factor(c("a", "a")),
+            actual     = actual,
+            predicted  = predicted,
             w          = if (weighted) w else NULL,
             micro      = if (is.na(micro)) { NULL } else micro
           )
@@ -70,18 +70,18 @@ testthat::test_that(
           # are equal to target value
 
           # 2.4.1) calculate py_score
-          # py_score <- py_jaccard(
-          #   actual    = actual,
-          #   predicted = predicted,
-          #   average   = if (is.na(micro)) { NULL } else ifelse(micro, "micro", "macro"),
-          #   w         = if (weighted) w else NULL
-          # )
+          py_score <- py_jaccard(
+            actual    = actual,
+            predicted = predicted,
+            average   = if (is.na(micro)) { NULL } else ifelse(micro, "micro", "macro"),
+            w         = if (weighted) w else NULL
+          )
 
           # 2.4.2) test for equality
           testthat::expect_true(
             object = set_equal(
-              current = length(as.numeric(score)),
-              target  = if (is.na(micro)) 2 else 1 # as.numeric(py_score)
+              current = as.numeric(score),
+              target  = as.numeric(py_score)
             ),
             info = info
           )

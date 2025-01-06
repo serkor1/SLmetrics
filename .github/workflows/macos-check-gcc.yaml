@@ -2,7 +2,7 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches: [development, FIX-45-checks-on-macos]
+    branches: [development]
   pull_request:
     branches: [development]
 
@@ -61,7 +61,8 @@ jobs:
           extra-packages: any::rcmdcheck reticulate
           needs: check
 
-      - uses: ./.github/actions/setup-reticulate
+      - name: Setup Python and {reticulate}
+        uses: ./.github/actions/setup-reticulate
 
       - uses: r-lib/actions/check-r-package@v2
         with:

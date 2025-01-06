@@ -2,9 +2,9 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches: [development, documentation, OpenMP]
+    branches: [development]
   pull_request:
-    branches: [development, documentation, OpenMP]
+    branches: [development]
 
 name: R-CMD-check
 
@@ -20,7 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          # - {os: macos-latest,    r: 'release'}
+          - {os: macos-latest,    r: 'release'}
           - {os: windows-latest,  r: 'release'}
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
@@ -52,51 +52,8 @@ jobs:
           extra-packages: any::rcmdcheck reticulate
           needs: check
 
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.10.x"
-
-      - name: Setup venv with {reticulate}
-        shell: Rscript {0}
-        run: |
-
-          path_to_python <- reticulate::virtualenv_create(
-            envname = "r-reticulate",
-            python = Sys.which("python"), # placed on PATH by the setup-python action
-            packages = c(
-              "numpy",
-              "scipy",
-              "torch",
-              "torchmetrics",
-              "scikit-learn",
-              "imblearn"
-            )
-          )
-
-          writeLines(
-            sprintf("RETICULATE_PYTHON=%s", path_to_python),
-            Sys.getenv("GITHUB_ENV")
-          )
-
-      - name: Install GCC on macOS
-        if: runner.os == 'macOS'
-        run: |
-          brew update
-          brew install gcc
-          
-      - name: Set GCC as Default Compiler on macOS
-        if: runner.os == 'macOS'
-        run: |
-          # Identify the installed GCC version
-          GCC_VERSION=$(brew list gcc | grep bin/gcc- | head -n1 | sed 's#.*/gcc-##')
-          echo "Detected GCC version: $GCC_VERSION"
-
-          # Set CC and CXX environment variables
-          echo "CC=$(brew --prefix gcc)/bin/gcc-$GCC_VERSION" >> $GITHUB_ENV
-          echo "CXX=$(brew --prefix gcc)/bin/g++-$GCC_VERSION" >> $GITHUB_ENV
-
-          # Optionally, add GCC to PATH
-          echo "$(brew --prefix gcc)/bin" >> $GITHUB_PATH
+      - name: Setup Python and {reticulate}
+        uses: ./.github/actions/setup-reticulate
 
       - uses: r-lib/actions/check-r-package@v2
         with:

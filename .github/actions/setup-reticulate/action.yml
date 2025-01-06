@@ -1,4 +1,4 @@
-name: "Setup Reticulate Environment"
+name: "Setup {reticulate} environment"
 
 description: "Sets up Python and Reticulate virtual environment for R projects."
 inputs:
@@ -26,7 +26,7 @@ runs:
       with:
         python-version: ${{ inputs.python-version }}
 
-    - name: Setup venv with Reticulate
+    - name: Setup venv with {Reticulate}
       shell: Rscript {0}
       run: |
         path_to_python <- reticulate::virtualenv_create(
@@ -46,8 +46,3 @@ runs:
           sprintf("RETICULATE_PYTHON=%s", path_to_python),
           Sys.getenv("GITHUB_ENV")
         )
-
-    - name: Install R Packages
-      uses: r-lib/actions/setup-r-dependencies@v2
-      with:
-        extra-packages: any::reticulate
