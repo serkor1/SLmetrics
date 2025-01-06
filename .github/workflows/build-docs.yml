@@ -2,12 +2,12 @@ on:
   workflow_dispatch:
   push:
     branches: [development, quarto-docs]
-    paths: ['docs/**', '.github/workflows/publish.yml']
+    paths: ['docs/**', '.github/workflows/build-docs.yml']
 
 name: Build Docs
 
 jobs:
-  build-deploy:
+  build-docs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -47,13 +47,13 @@ jobs:
             any::tidyverse
             any::tidymodels
             
-      - name: Render Quarto Project
+      - name: Render docs
         uses: quarto-dev/quarto-actions/render@v2
         with:
           to: html 
           path: docs/
           
-      - name: Publish
+      - name: Publish docs
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
