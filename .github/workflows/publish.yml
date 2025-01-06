@@ -46,8 +46,14 @@ jobs:
             any::bench
             any::tidyverse
             any::tidymodels
+            
+      - name: Render Quarto Project
+        uses: quarto-dev/quarto-actions/render@v2
+        with:
+          to: html 
+          path: docs/
           
-      - name: Render and Publish
+      - name: Publish
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
