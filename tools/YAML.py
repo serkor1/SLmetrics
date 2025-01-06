@@ -1,5 +1,15 @@
 import os
 import yaml
+import re
+
+def version():
+    # 1) open DESCRIPTION
+    with open("DESCRIPTION", 'r') as file:
+        content = file.read()
+
+    # 2) find path from
+    return re.search(r'^Version:\s*(\S+)', content, re.MULTILINE).group(1)
+
 
 book_structure = {
     "project": {
@@ -7,7 +17,9 @@ book_structure = {
     },
     'book': {
         'title': "{SLmetrics}: Machine Learning Performance Evaluation on Steroids",
+        'subtitle': f"Version {version()}",
         'author': "Serkan Korkmaz",
+        'version': version(),
         'repo-url': "https://github.com/serkor1/SLmetrics",
         'repo-actions': ["edit", "source", "issue"],
         'sharing': ["twitter", "facebook", "linkedin"],

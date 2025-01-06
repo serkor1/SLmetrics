@@ -2,7 +2,9 @@ project:
   type: book
 book:
   title: '{SLmetrics}: Machine Learning Performance Evaluation on Steroids'
+  subtitle: Version 0.3-1
   author: Serkan Korkmaz
+  version: 0.3-1
   repo-url: https://github.com/serkor1/SLmetrics
   repo-actions:
   - edit
