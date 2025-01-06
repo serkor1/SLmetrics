@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
   push:
     branches: [development, quarto-docs]
-    paths: ['docs/**', '.github/publish.yml']
+    paths: ['docs/**', '.github/workflows/publish.yml']
 
 name: Build Docs
 
