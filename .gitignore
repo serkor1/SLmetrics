@@ -39,9 +39,6 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
-# pkgdown site
-docs/
-
 # translation temp files
 po/*~
 
@@ -51,7 +48,6 @@ rsconnect/
 
 # sandbox
 sandbox/
-docs
 inst/doc
 
 
@@ -61,7 +57,8 @@ src/cmake-build-debug
 src/.idea
 
 /.quarto/
-
+docs/*/
 # html-files
 # (from rendering markdown/quarto)
 *.html
+/README_files

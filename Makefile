@@ -42,8 +42,9 @@ build: document
 	@echo "✅ Done!"
 	@rm -f $(TARBALL)
 	@rm -f src/*.o src/*.so
-	@Rscript tools/render.R
-	$(MAKE) build-site
+	@quarto render README.qmd
+	@quarto render NEWS.qmd
+	$(MAKE) build-docs
 	@echo "✅ Build process done!"
 
 check: document
@@ -60,13 +61,12 @@ check: document
 	@rm -f $(TARBALL)
 	@rm -rf $(PKGNAME).Rcheck
 	@rm -f src/*.o src/*.so
-	@Rscript tools/render.R
+	@quarto render README.qmd
+	@quarto render NEWS.qmd
 	@echo "✅ R CMD check process done!"
 
-build-site:
-	@clear
-	@echo "📚 Building {pkgdown}"
-	@Rscript -e "pkgdown::build_site()"
-	
-preview:
-	@xdg-open docs/index.html
+
+build-docs:
+	@echo "📚 Building Quarto Book"
+	@python3 tools/YAML.py
+	cd docs/ && quarto preview

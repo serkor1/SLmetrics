@@ -1,4 +1,5 @@
 
+
 # Version 0.3-1
 
 > Version 0.3-1 is considered pre-release of {SLmetrics}. We do not
@@ -7,10 +8,9 @@
 
 ## :rocket: Improvements
 
-- **OpenMP Support (PR
-  <https://github.com/serkor1/SLmetrics/pull/40>):** {SLmetrics} now
-  supports parallelization through OpenMP. The OpenMP can be utilized as
-  follows:
+- **OpenMP Support (PR https://github.com/serkor1/SLmetrics/pull/40):**
+  {SLmetrics} now supports parallelization through OpenMP. The OpenMP
+  can be utilized as follows:
 
 ``` r
 # 1) probability distribution
@@ -36,7 +36,7 @@ system.time(SLmetrics::entropy(pk))
 ```
 
     #>    user  system elapsed 
-    #>   0.053   0.002   0.004
+    #>   0.007   0.002   0.001
 
 ``` r
 # 3) Disable OpenMP
@@ -50,10 +50,10 @@ system.time(SLmetrics::entropy(pk))
 ```
 
     #>    user  system elapsed 
-    #>   0.001   0.000   0.001
+    #>   0.000   0.000   0.001
 
 - **Entropy with soft labels
-  (<https://github.com/serkor1/SLmetrics/issues/37>):** `entropy()`,
+  (https://github.com/serkor1/SLmetrics/issues/37):** `entropy()`,
   `cross.entropy()` and `relative.entropy()` have been introduced. These
   functions are heavily inspired by {scipy}. The functions can be used
   as follows:
@@ -77,14 +77,14 @@ qk <- matrix(
 # 2) calculate
 # Entropy
 cat(
-  "Entropy", entropy(
+  "Entropy", SLmetrics::entropy(
     pk
   ),
-  "Relative Entropy", relative.entropy(
+  "Relative Entropy", SLmetrics::relative.entropy(
     pk,
     qk
   ),
-  "Cross Entropy", cross.entropy(
+  "Cross Entropy", SLmetrics::cross.entropy(
     pk,
     qk
   ),
@@ -110,7 +110,7 @@ cat(
 ## :bug: Bug-fixes
 
 - **Plot-method in ROC and prROC
-  (<https://github.com/serkor1/SLmetrics/issues/36>):** Fixed a bug in
+  (https://github.com/serkor1/SLmetrics/issues/36):** Fixed a bug in
   `plot.ROC()` and `plot.prROC()` where if `panels = FALSE` additional
   lines would be added to the plot.
 
@@ -363,7 +363,7 @@ try(
 - **Floating precision:** Metrics would give different results based on
   the method used. This means that `foo.cmatrix()` and `foo.factor()`
   would produce different results (See Issue
-  <https://github.com/serkor1/SLmetrics/issues/16>). This has been fixed
+  https://github.com/serkor1/SLmetrics/issues/16). This has been fixed
   by using higher precision `Rcpp::NumericMatrix` instead of
   `Rcpp::IntegerMatrix`.
 
@@ -380,17 +380,17 @@ try(
 
 - **Calculation Error in Pinball Deviance and Concordance Correlation
   Coefficient:** See issue
-  <https://github.com/serkor1/SLmetrics/issues/19>. Switched to unbiased
+  https://github.com/serkor1/SLmetrics/issues/19. Switched to unbiased
   variance calculation in `ccc()`-function. The `pinball()`-function
   were missing a weighted quantile function. The issue is now fixed.
 
 - **Calculation Error in Balanced Accuracy:** See issue
-  <https://github.com/serkor1/SLmetrics/issues/24>. The function now
+  https://github.com/serkor1/SLmetrics/issues/24. The function now
   correctly adjusts for random chance, and the result matches that of
   {scikit-learn}
 
 - **Calculation Error in F-beta Score:** See issue
-  <https://github.com/serkor1/SLmetrics/issues/23>. The function werent
+  https://github.com/serkor1/SLmetrics/issues/23. The function werent
   respecting `na.rm` and `micro`, this has been fixed accordingly.
 
 - **Calculation Error in Relative Absolute Error:** The function was
@@ -468,7 +468,7 @@ SLmetrics::accuracy(
 
 - The `plot.prROC()`- and `plot.ROC()`-functions now adds a line to the
   plot when `panels = FALSE`. See Issue
-  <https://github.com/serkor1/SLmetrics/issues/9>.
+  https://github.com/serkor1/SLmetrics/issues/9.
 
 ``` r
 # 1) define actual
@@ -505,7 +505,7 @@ plot(
 )
 ```
 
-![](NEWS_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](NEWS_files/figure-commonmark/unnamed-chunk-12-1.png)
 
 ``` r
 plot(
@@ -514,7 +514,7 @@ plot(
 )
 ```
 
-![](NEWS_files/figure-gfm/unnamed-chunk-12-2.png)<!-- -->
+![](NEWS_files/figure-commonmark/unnamed-chunk-12-2.png)
 
 # Version 0.1-0
 

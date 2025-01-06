@@ -1,12 +1,14 @@
 ---
-output:
-  github_document:
-    html_preview: false
+format: 
+    gfm:
+        default-image-extension: ""
 always_allow_html: true
 ---
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
+```{r}
+#| include: false
+
 # load {SLmetrics}
 library(SLmetrics)
 
@@ -84,7 +86,9 @@ Below you’ll find instructions to install [{SLmetrics}](https://serkor1.github
 
 ### :shield: Installation 
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
+
 ## install stable release
 devtools::install_github(
   repo = 'https://github.com/serkor1/SLmetrics@*release',
@@ -97,6 +101,7 @@ devtools::install_github(
 Below is a minimal example demonstrating how to compute both unweighted and weighted RMSE.
 
 ```{r}
+#| message: false
 library(SLmetrics)
 
 actual    <- c(10.2, 12.5, 14.1)
@@ -144,7 +149,9 @@ One, obviously, can't build an `R`-package on `C++` and [{Rcpp}](https://github.
 
 ### :fast_forward: Speed comparison
 
-```{r performance, echo = FALSE}
+```{r}
+#| echo: false
+
 lattice::xyplot(
   median ~ sample_size | measure,
   data = do.call(rbind, DT$speed),
@@ -170,14 +177,17 @@ As shown in the chart, [{SLmetrics}](https://serkor1.github.io/SLmetrics/) maint
 
 Below are the results for garbage collections and total memory allocations when computing a 2×2 confusion matrix (N = 1e7) and RMSE (N = 1e7) [^2]. Notice that [{SLmetrics}](https://serkor1.github.io/SLmetrics/) requires no GC calls for these operations.
 
-```{r prepare-memory, echo = FALSE}
+```{r}
+#| echo: false
+
 # 1) prepare data
 packages <- c("{SLmetrics}", "{yardstick}", "{MLmetrics}", "{mlr3measures}")
 measures <- c("Confusion Matrix", "Root Mean Squared Error")
 column_names <- c("Iterations", "Garbage Collections [gc()]", "gc() pr. second", "Memory Allocation (MB)")
 ```
 
-```{r, echo = FALSE}
+```{r}
+#| echo: false
 # 1) extract data;
 DT_ <- DT$memory[[1]][,c("n_itr", "n_gc", "gc/sec", "mem_alloc")]
 DT_$mem_alloc <- round(DT_$mem_alloc/(1024^2))
@@ -187,7 +197,9 @@ rownames(DT_) <- packages
 knitr::kable(DT_, caption = "2 x 2 Confusion Matrix (N = 1e7)", digits = 2)
 ```
 
-```{r, echo = FALSE}
+```{r}
+#| echo: false
+
 # 1) extract data;
 DT_ <- DT$memory[[2]][,c("n_itr", "n_gc", "gc/sec", "mem_alloc")]
 DT_$mem_alloc <- round(DT_$mem_alloc/(1024^2))
@@ -211,7 +223,7 @@ In its simplest form, [{SLmetrics}](https://serkor1.github.io/SLmetrics/)-functi
 
 We first fit a linear model to predict `mpg` in the `mtcars` dataset, then compute the in-sample RMSE:
 
-```{r mtcars regression (example)}
+```{r}
 # Evaluate a linear model on mpg (mtcars)
 model <- lm(mpg ~ ., data = mtcars)
 rmse(mtcars$mpg, fitted(model))
@@ -221,7 +233,7 @@ rmse(mtcars$mpg, fitted(model))
 
 Now we recode the `iris` dataset into a binary problem ("virginica" vs. "others") and fit a logistic regression. Then we generate predicted classes, compute the confusion matrix and summarize it.
 
-```{r iris classification (example)}
+```{r}
 # 1) recode iris
 # to binary problem
 iris$species_num <- as.numeric(
@@ -257,7 +269,7 @@ actual <- factor(
 )
 ```
 
-```{r confusion matrix}
+```{r}
 # 4) generate
 # confusion matrix
 summary(
@@ -269,7 +281,9 @@ summary(
 ```
 
 ## :information_source: Enable OpenMP
-```{r OpenMP setup, echo = FALSE}
+```{r}
+#| echo: false
+
 # Set column names for both
 # examples
 column_names <- c("Iterations", "Runtime (sec)" ,"Garbage Collections [gc()]", "gc() pr. second", "Memory Allocation (MB)")
@@ -293,7 +307,9 @@ To illustrate the impact of OpenMP on performance, consider the following benchm
 
 ### :books: Entropy without OpenMP
 
-```{r Without OpenMP, echo = FALSE}
+```{r}
+#| echo: false
+
 # 1) extract data;
 DT_ <- DT$OpenMP$FALSE_[,c("n_itr", "median" , "n_gc", "gc/sec", "mem_alloc")]
 DT_$mem_alloc <- round(DT_$mem_alloc/(1024^2))
@@ -305,7 +321,9 @@ knitr::kable(DT_, caption = "1e6 x 200 matrix without OpenMP", digits = 2)
 
 ### :books: Entropy with OpenMP
 
-```{r With OpenMP, echo = FALSE}
+```{r}
+#| echo: false
+
 # 1) extract data;
 DT_ <- DT$OpenMP$TRUE_[,c("n_itr", "median" , "n_gc", "gc/sec", "mem_alloc")]
 DT_$mem_alloc <- round(DT_$mem_alloc/(1024^2))
@@ -318,7 +336,10 @@ knitr::kable(DT_, caption = "1e6 x 200 matrix with OpenMP", digits = 2)
 
 
 ### :shield: Stable version
-```{r stable version guide, eval = FALSE, echo=TRUE}
+```{r}
+#| echo: TRUE
+#| eval: FALSE
+
 ## install stable release
 devtools::install_github(
   repo = 'https://github.com/serkor1/SLmetrics@*release',
@@ -327,7 +348,10 @@ devtools::install_github(
 ```
 
 ### :hammer_and_wrench: Development version
-```{r development version guide, eval = FALSE, echo=TRUE}
+```{r}
+#| echo: TRUE
+#| eval: FALSE
+
 ## install development version
 devtools::install_github(
   repo = 'https://github.com/serkor1/SLmetrics',
@@ -338,7 +362,6 @@ devtools::install_github(
 ## :information_source: Code of Conduct
 
 Please note that the [{SLmetrics}](https://serkor1.github.io/SLmetrics/) project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
-
 
 [^1]: The source code is available [here](https://github.com/serkor1/SLmetrics/blob/development/data-raw/classification_performance.R) and [here](https://github.com/serkor1/SLmetrics/blob/development/data-raw/regression_performance.R).
 [^2]: The source code is available [here](https://github.com/serkor1/SLmetrics/blob/development/data-raw/memory_performance.R).

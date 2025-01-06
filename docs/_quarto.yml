@@ -1,0 +1,35 @@
+project:
+  type: book
+book:
+  title: '{SLmetrics}: Machine Learning Performance Evaluation on Steroids'
+  subtitle: Version 0.3-1
+  author: Serkan Korkmaz
+  version: 0.3-1
+  repo-url: https://github.com/serkor1/SLmetrics
+  repo-actions:
+  - edit
+  - source
+  - issue
+  sharing:
+  - twitter
+  - facebook
+  - linkedin
+  sidebar:
+    title: Documentation
+  chapters:
+  - index.qmd
+  - intro.qmd
+  - summary.qmd
+  - part: References
+    chapters: []
+  - references.qmd
+bibliography: references.bib
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+  pdf:
+    documentclass: scrreprt
+execute:
+  freeze: auto
