@@ -1,0 +1,93 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+on:
+  push:
+    branches: [development, FIX-45-checks-on-macos]
+  pull_request:
+    branches: [development]
+
+name: macOS-gcc
+
+permissions: read-all
+
+jobs:
+  R-CMD-check:
+    runs-on: ${{ matrix.config.os }}
+
+    name: macOS-gcc
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: macos-latest,    r: 'release'}
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install GCC on macOS
+        if: runner.os == 'macOS'
+        run: |
+          brew update
+          brew install gcc
+
+      - name: Set GCC as Default Compiler on macOS
+        if: runner.os == 'macOS'
+        run: |
+          # Identify the installed GCC version
+          GCC_VERSION=$(brew list gcc | grep bin/gcc- | head -n1 | sed 's#.*/gcc-##')
+          echo "Detected GCC version: $GCC_VERSION"
+
+          # Set CC and CXX environment variables
+          echo "CC=$(brew --prefix gcc)/bin/gcc-$GCC_VERSION" >> $GITHUB_ENV
+          echo "CXX=$(brew --prefix gcc)/bin/g++-$GCC_VERSION" >> $GITHUB_ENV
+
+          echo "$(brew --prefix gcc)/bin" >> $GITHUB_PATH
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck reticulate
+          needs: check
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10.x"
+
+      - name: Setup venv with {reticulate}
+        shell: Rscript {0}
+        run: |
+
+          path_to_python <- reticulate::virtualenv_create(
+            envname = "r-reticulate",
+            python = Sys.which("python"), # placed on PATH by the setup-python action
+            packages = c(
+              "numpy",
+              "scipy",
+              "torch",
+              "torchmetrics",
+              "scikit-learn",
+              "imblearn"
+            )
+          )
+
+          writeLines(
+            sprintf("RETICULATE_PYTHON=%s", path_to_python),
+            Sys.getenv("GITHUB_ENV")
+          )
+
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          upload-snapshots: true
+          build_args: 'c("--no-manual", "--compact-vignettes=gs+qpdf")'
