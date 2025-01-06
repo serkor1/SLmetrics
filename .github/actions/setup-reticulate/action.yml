@@ -29,6 +29,14 @@ runs:
     - name: Setup venv with {Reticulate}
       shell: Rscript {0}
       run: |
+
+        install_python(
+          version = "3.12:latest",
+          list = FALSE,
+          force = FALSE,
+          optimized = TRUE
+        )
+        
         path_to_python <- reticulate::virtualenv_create(
           envname = "r-reticulate",
           python = Sys.which("python"),
