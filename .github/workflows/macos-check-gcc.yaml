@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [development]
 
-name: R-CMD-check
+name: macOS-gcc
 
 permissions: read-all
 
@@ -14,16 +14,13 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: macOS-gcc
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest,  r: 'release'}
-          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: 'oldrel-1'}
+          - {os: macos-latest,    r: 'release'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -32,6 +29,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Install GCC on macOS
+        if: runner.os == 'macOS'
+        run: |
+          brew update
+          brew install gcc
+
+      - name: Set GCC as Default Compiler on macOS
+        if: runner.os == 'macOS'
+        run: |
+          # Identify the installed GCC version
+          GCC_VERSION=$(brew list gcc | grep bin/gcc- | head -n1 | sed 's#.*/gcc-##')
+          echo "Detected GCC version: $GCC_VERSION"
+
+          # Set CC and CXX environment variables
+          echo "CC=$(brew --prefix gcc)/bin/gcc-$GCC_VERSION" >> $GITHUB_ENV
+          echo "CXX=$(brew --prefix gcc)/bin/g++-$GCC_VERSION" >> $GITHUB_ENV
+
+          echo "$(brew --prefix gcc)/bin" >> $GITHUB_PATH
 
       - name: Setup pandoc
         uses: r-lib/actions/setup-pandoc@v2

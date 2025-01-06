@@ -1,7 +1,7 @@
 on:
   workflow_dispatch:
   push:
-    branches: [development, quarto-docs]
+    branches: [development]
     paths: ['docs/**', '.github/workflows/build-docs.yml']
 
 name: Build Docs
@@ -18,7 +18,7 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - name: Check out repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Quarto

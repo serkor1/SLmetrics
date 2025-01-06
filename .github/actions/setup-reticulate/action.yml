@@ -1,0 +1,61 @@
+name: "Setup {reticulate} environment"
+
+description: "Sets up Python and Reticulate virtual environment for R projects."
+inputs:
+  python-version:
+    description: "Python version to install"
+    required: true
+    default: "3.12.x"
+    
+outputs:
+  reticulate-python:
+    description: "Path to the Reticulate Python environment"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install system dependencies (Ubuntu only)
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-venv
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Setup venv with {Reticulate}
+      shell: Rscript {0}
+      env:
+        PYTHON_VERSION: ${{ inputs.python-version }}
+      run: |
+
+        # 1) get python version
+        # NOTE: it's on the form 3.12.x
+        python_version <- paste0(">=",gsub(
+          pattern = ".x",
+          replacement = "",
+          x  = Sys.getenv("PYTHON_VERSION")
+        ))
+
+        # 2) create virtual environment
+        # with specified version
+        path_to_python <- reticulate::virtualenv_create(
+          envname        = "r-reticulate",
+          python_version =  python_version,
+          packages = c(
+            "numpy",
+            "scipy",
+            "torch",
+            "torchmetrics",
+            "scikit-learn",
+            "imblearn"
+          )
+        )
+
+        writeLines(
+          sprintf("RETICULATE_PYTHON=%s", path_to_python),
+          Sys.getenv("GITHUB_ENV")
+        )
