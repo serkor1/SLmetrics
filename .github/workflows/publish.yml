@@ -34,9 +34,11 @@ jobs:
         
       - name: Install TinyTex and {SLmetrics}
         if: runner.os == 'Linux'
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
           quarto install tinytex
-          Rscript -e "devtools::install_github(repo = 'https://github.com/serkor1/SLmetrics@*release', ref  = 'main')"
+          Rscript -e "devtools::install_github('serkor1/SLmetrics', ref = 'main', auth_token = Sys.getenv('GITHUB_PAT'))"
           
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
