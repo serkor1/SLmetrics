@@ -28,8 +28,8 @@ bibliography: references.bib
 format:
   html:
     theme:
-      light: flatly
-      dark: flatly
+      light: cosmo
+      dark: darkly
   pdf:
     documentclass: scrreprt
 execute:

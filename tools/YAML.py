@@ -30,8 +30,8 @@ book_structure = {
     'format': {
         'html': {
             'theme': {
-            "light": "flatly",
-            "dark":  "flatly"
+            "light": "cosmo",
+            "dark":  "darkly"
         }
         },
         'pdf': {'documentclass': 'scrreprt'}

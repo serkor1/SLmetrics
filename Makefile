@@ -42,8 +42,9 @@ build: document
 	@echo "✅ Done!"
 	@rm -f $(TARBALL)
 	@rm -f src/*.o src/*.so
-	@Rscript tools/render.R
-	$(MAKE) build-site
+	@quarto render README.qmd
+	@quarto render NEWS.qmd
+	$(MAKE) build-docs
 	@echo "✅ Build process done!"
 
 check: document
