@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "{SLmetrics}: Machine Learning Performance Evaluation on Steroids",
     "section": "",
-    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.",
+    "text": "Preface\n{SLmetrics} started as a personal project to learn C++, and was never really meant to be published nor, infact, named {SLmetrics}. But as time went by, and the committed time and commits grew the name stayed, and the goal to publish a functioning data science R package seemed like the natural next step.\nThe primary goal of {SLmetrics} is to be a fast, memory efficient and reliable low-level successor to {MLmetrics}; and the current benchmarks (Reference) suggets that this goal, in fact, have been achieved.\n\n\n\n\n\n\nWarning\n\n\n\n{SLmetrics} and the documentation is currently under development",
     "crumbs": [
       "Preface"
     ]
@@ -14,7 +14,37 @@
     "href": "intro.html",
     "title": "1  Introduction",
     "section": "",
-    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
+    "text": "1.1 The status-quo of {pkgs}\nThere are currently three {pkgs} that are developed with machine leaning performance evaluation in mind: {MLmetrics}, {yardstick}, {mlr3measures}. These {pkgs} have historically bridged the gap between R and Python in terms of machine learning and data science.\n{MLmetrics} can be considered the legacy code when it comes to performance evaluation, and it served as a backend in {yardstick} up to version 0.0.2. It is built entirely on base R, and has been stable since its inception almost 10 years ago.\nHowever, it appears that the development has reached it’s peak and is currently stale - see, for example, this stale PR related to this issue. Micro- and macro-averages have been implented in {scikit-learn} for many years, and {MLmetrics} simply didn’t keep up with the development.\n{yardstick}, on the other hand, carried the torch forward and implemented these modern features. {yardstick} closely follows the syntax, naming and functionality of {scikit-learn} but is built with {tidyverse} tools; although the source code is nice to look at, it does introduce some serious overhead and carries the risk of deprecations.\nFurthermore, it complicates a simple application by its verbose function naming, see for example metric()-function for &lt;tbl&gt; and metric_vec()-function for &lt;numeric&gt; - the output is the same, but the call is different. {yardstick} can’t handle more than one positive class at a time, so the end-user is forced to run the same function more than once to get performance metrics for the adjacent classes.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#the-status-quo-of-pkgs",
+    "href": "intro.html#the-status-quo-of-pkgs",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "1.1.1 Summary\nIn short, the existing {pkgs} are outdated, inefficient and insufficient for modern large-scale machine learning applications.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#why-slmetrics",
+    "href": "intro.html#why-slmetrics",
+    "title": "1  Introduction",
+    "section": "1.2 Why {SLmetrics}?",
+    "text": "1.2 Why {SLmetrics}?\nAs the name suggests, {SLmetrics} closely resembles {MLmetrics} in it’s simplistic and low-level implementation of machine learning metrics. The resemblance ends there, however.\n{SLmetrics} are developed with three things in mind: speed, efficiency and scalability. And therefore addresses the shortcomings of the status-quo by construction - the {pkg} is built on c++ and {Rcpp} from the ground up. See Table 1.1 where\n\nCode\nset.seed(1903)\nactual &lt;- rnorm(1e7)\npredicted &lt;- actual + rnorm(1e7)\n\nbench::mark(\n    `{SLmetrics}` = SLmetrics::rmse(actual, predicted),\n    `{MLmetrics}` = MLmetrics::RMSE(predicted, actual),\n    iterations    = 100\n)\n\n\n\n\nTable 1.1: Calculating RMSE on 1e7 vectors\n\n\n\n# A tibble: 2 × 6\n  expression       min   median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;\n1 {SLmetrics}   30.2ms   30.5ms      32.8    6.13MB      0  \n2 {MLmetrics}   60.2ms   60.8ms      16.5   76.39MB     80.4\n\n\n\n\nThis shows that well-written R-code is hard to beat speed-wise. {MLmetrics} is roughly 20% faster - but uses 30,000 times more memory. How about constructing a confusion matrix\n\nCode\nset.seed(1903)\nactual &lt;- factor(sample(letters[1:3], size = 1e7, replace = TRUE))\npredicted &lt;- factor(sample(letters[1:3], size = 1e7, replace = TRUE))\n\nbench::mark(\n    `{SLmetrics}` = SLmetrics::cmatrix(actual, predicted),\n    `{MLmetrics}` = MLmetrics::ConfusionMatrix(actual, predicted),\n    check         = FALSE,\n    iterations    = 100\n)\n\n\n\n\nTable 1.2: Computing a 3x3 confusion matrix on 1e7 vectors\n\n\n\n# A tibble: 2 × 6\n  expression       min   median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;\n1 {SLmetrics}   8.55ms   8.59ms    116.      4.12KB     0   \n2 {MLmetrics} 246.53ms 250.83ms      3.68   381.6MB     7.58\n\n\n\n\n{SLmetrics} uses 1/50th of the time {MLmetrics} and the memory usage is equivalent as the previous example but uses significantly less memory than {MLmetrics}.\n\n1.2.1 Summary\n{SLmetrics} is, in the worst-case scenario, on par with low-level R implementations of equivalent metrics and is a multitude more memory-efficient than any of the {pkgs}. A detailed benchmark can be found here.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#key-takeaways",
+    "href": "intro.html#key-takeaways",
+    "title": "1  Introduction",
+    "section": "1.3 Key takeaways",
+    "text": "1.3 Key takeaways",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
@@ -24,19 +54,19 @@
     "href": "summary.html",
     "title": "2  Summary",
     "section": "",
-    "text": "In summary, this book has no content whatsoever.",
+    "text": "2.1 Basic Usage",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Summary</span>"
     ]
   },
   {
-    "objectID": "references.html",
-    "href": "references.html",
-    "title": "References",
-    "section": "",
-    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
+    "objectID": "summary.html#installation",
+    "href": "summary.html#installation",
+    "title": "2  Summary",
+    "section": "2.2 Installation",
+    "text": "2.2 Installation\n\n2.2.1 Stable version\n\n## install stable release\ndevtools::install_github(\n  repo = 'https://github.com/serkor1/SLmetrics@*release',\n  ref  = 'main'\n)\n\n\n\n2.2.2 Development version\n\n## install development version\ndevtools::install_github(\n  repo = 'https://github.com/serkor1/SLmetrics',\n  ref  = 'development'\n)",
     "crumbs": [
-      "References"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Summary</span>"
     ]
   }
 ]
