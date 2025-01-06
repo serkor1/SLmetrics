@@ -34,17 +34,17 @@ runs:
 
         # 1) get python version
         # NOTE: it's on the form 3.12.x
-        python_version <- gsub(
+        python_version <- paste0(">=",gsub(
           pattern = ".x",
-          replacement = ":latest",
+          replacement = "",
           x  = Sys.getenv("PYTHON_VERSION")
-        )
+        ))
 
         # 2) create virtual environment
         # with specified version
         path_to_python <- reticulate::virtualenv_create(
-          envname = "r-reticulate",
-          version =  python_version,
+          envname        = "r-reticulate",
+          python_version =  python_version,
           packages = c(
             "numpy",
             "scipy",
