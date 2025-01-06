@@ -28,7 +28,7 @@ jobs:
       - name: Installing {pkgs}
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::covr, any::xml2, any::reticulate
+          extra-packages: any::covr, any::xml2, reticulate
           needs: coverage
 
       - name: Setup Python and {reticulate}
