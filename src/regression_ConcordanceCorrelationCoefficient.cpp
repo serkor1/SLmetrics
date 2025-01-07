@@ -8,8 +8,9 @@ using namespace Rcpp;
 // [[Rcpp::export(ccc.numeric)]]
 double ccc(const std::vector<double>& actual, const std::vector<double>& predicted, bool correction = false) 
 {
-    ConcordanceCorrelationCoefficient cccMetric(correction); // Instantiate CCC class
-    return cccMetric.compute(actual, predicted);
+    return ConcordanceCorrelationCalculator::computeUnweighted(
+        actual, predicted, correction
+    );
 }
 
 //' @rdname ccc
@@ -18,6 +19,7 @@ double ccc(const std::vector<double>& actual, const std::vector<double>& predict
 // [[Rcpp::export(weighted.ccc.numeric)]]
 double weighted_ccc(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w, bool correction = false) 
 {
-    ConcordanceCorrelationCoefficient cccMetric(correction); // Instantiate CCC class
-    return cccMetric.compute(actual, predicted, w);
+     return ConcordanceCorrelationCalculator::computeWeighted(
+        actual, predicted, w, correction
+    );
 }
