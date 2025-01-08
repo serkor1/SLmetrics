@@ -58,7 +58,11 @@ src/.idea
 
 /.quarto/
 docs/*/
+
 # html-files
 # (from rendering markdown/quarto)
 *.html
 /README_files
+/README_cache
+/NEWS_files
+/NEWS_cache

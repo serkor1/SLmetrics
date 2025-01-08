@@ -29,28 +29,28 @@ pk <- t(replicate(100,rand.sum(1e3)))
 SLmetrics::setUseOpenMP(TRUE)
 ```
 
-    #> OpenMP usage set to: enabled
+    OpenMP usage set to: enabled
 
 ``` r
 system.time(SLmetrics::entropy(pk))
 ```
 
-    #>    user  system elapsed 
-    #>   0.007   0.002   0.001
+       user  system elapsed 
+      0.004   0.001   0.001 
 
 ``` r
 # 3) Disable OpenMP
 SLmetrics::setUseOpenMP(FALSE)
 ```
 
-    #> OpenMP usage set to: disabled
+    OpenMP usage set to: disabled
 
 ``` r
 system.time(SLmetrics::entropy(pk))
 ```
 
-    #>    user  system elapsed 
-    #>   0.000   0.000   0.001
+       user  system elapsed 
+      0.000   0.000   0.001 
 
 - **Entropy with soft labels
   (https://github.com/serkor1/SLmetrics/issues/37):** `entropy()`,
@@ -92,12 +92,12 @@ cat(
 )
 ```
 
-    #> Entropy
-    #> 0.6931472
-    #> Relative Entropy
-    #> 0.5108256
-    #> Cross Entropy
-    #> 1.203973
+    Entropy
+    0.6931472
+    Relative Entropy
+    0.5108256
+    Cross Entropy
+    1.203973
 
 ## :warning: Breaking changes
 
@@ -152,12 +152,12 @@ cat(
 )
 ```
 
-    #> Mean Relative Root Mean Squared Error
-    #> 40.74819
-    #> Range Relative Root Mean Squared Error
-    #> 0.1556036
-    #> IQR Relative Root Mean Squared Error
-    #> 0.738214
+    Mean Relative Root Mean Squared Error
+    40.74819
+    Range Relative Root Mean Squared Error
+    0.1556036
+    IQR Relative Root Mean Squared Error
+    0.738214
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
   normalization. The function can be used as follows,
@@ -188,10 +188,10 @@ cat(
 )
 ```
 
-    #> Unweighted Log Loss:
-    #> 0.7297521
-    #> Weighted log Loss:
-    #> 0.4668102
+    Unweighted Log Loss:
+    0.7297521
+    Weighted log Loss:
+    0.4668102
 
 - **Weighted Receiver Operator Characteristics:** `weighted.ROC()`, the
   function calculates the weighted True Positive and False Positive
@@ -235,10 +235,10 @@ SLmetrics::cmatrix(
 )
 ```
 
-    #>    a  b  c
-    #> a 12 10 15
-    #> b 10 15  8
-    #> c  5 14 11
+       a  b  c
+    a 12 10 15
+    b 10 15  8
+    c  5 14 11
 
 ``` r
 # 2) with weights
@@ -249,10 +249,10 @@ SLmetrics::weighted.cmatrix(
 )
 ```
 
-    #>          a        b        c
-    #> a 3.846279 5.399945 7.226539
-    #> b 4.988230 7.617554 4.784221
-    #> c 2.959719 5.045980 4.725642
+             a        b        c
+    a 3.846279 5.399945 7.226539
+    b 4.988230 7.617554 4.784221
+    c 2.959719 5.045980 4.725642
 
 ## :bug: Bug-fixes
 
@@ -287,10 +287,10 @@ SLmetrics::cmatrix(
 )
 ```
 
-    #>    a  b  c
-    #> a 14  9 14
-    #> b 12 15 10
-    #> c  6  9 11
+       a  b  c
+    a 14  9 14
+    b 12 15 10
+    c  6  9 11
 
 ``` r
 # 2) with weights
@@ -301,10 +301,10 @@ SLmetrics::weighted.cmatrix(
 )
 ```
 
-    #>          a        b        c
-    #> a 6.197341 4.717194 6.122321
-    #> b 6.244226 7.511618 5.114025
-    #> c 2.417569 5.487810 5.760531
+             a        b        c
+    a 6.197341 4.717194 6.122321
+    b 6.244226 7.511618 5.114025
+    c 2.417569 5.487810 5.760531
 
 Calculating weighted metrics manually or by using
 `foo.cmatrix()`-method,
@@ -325,7 +325,7 @@ SLmetrics::accuracy(
 )
 ```
 
-    #> [1] 0.4
+    [1] 0.4
 
 ``` r
 # 3) calculate the weighted
@@ -337,7 +337,7 @@ SLmetrics::weighted.accuracy(
 )
 ```
 
-    #> [1] 0.3927467
+    [1] 0.3927467
 
 Please note, however, that it is not possible to pass `cmatix()`-into
 `weighted.accurracy()`,
@@ -355,8 +355,8 @@ try(
 )
 ```
 
-    #> Error in UseMethod(generic = "weighted.accuracy", object = ..1) : 
-    #>   no applicable method for 'weighted.accuracy' applied to an object of class "cmatrix"
+    Error in UseMethod(generic = "weighted.accuracy", object = ..1) : 
+      no applicable method for 'weighted.accuracy' applied to an object of class "cmatrix"
 
 ## :bug: Bug-fixes
 
@@ -413,14 +413,14 @@ w         <- runif(n = 1e3)
 SLmetrics::rmse(actual, predicted)
 ```
 
-    #> [1] 0.9989386
+    [1] 0.9989386
 
 ``` r
 # 3) weighted metrics
 SLmetrics::weighted.rmse(actual, predicted, w = w)
 ```
 
-    #> [1] 1.013139
+    [1] 1.013139
 
 - The `rrmse()`-function have been removed in favor of the
   `rrse()`-function. This function was incorrectly specified and
@@ -537,8 +537,8 @@ print(
 )
 ```
 
-    #>  [1] a b a c b a a a c b
-    #> Levels: a b c
+     [1] a b a c b a a a c b
+    Levels: a b c
 
 ``` r
 # 2) predicted classes
@@ -549,8 +549,8 @@ print(
 )
 ```
 
-    #>  [1] b a c c c c c c a a
-    #> Levels: a b c
+     [1] b a c c c c c c a a
+    Levels: a b c
 
 ``` r
 # 1) calculate confusion
@@ -564,19 +564,19 @@ summary(
 )
 ```
 
-    #> Confusion Matrix (3 x 3) 
-    #> ================================================================================
-    #>   a b c
-    #> a 0 1 4
-    #> b 2 0 1
-    #> c 1 0 1
-    #> ================================================================================
-    #> Overall Statistics (micro average)
-    #>  - Accuracy:          0.10
-    #>  - Balanced Accuracy: 0.17
-    #>  - Sensitivity:       0.10
-    #>  - Specificity:       0.55
-    #>  - Precision:         0.10
+    Confusion Matrix (3 x 3) 
+    ================================================================================
+      a b c
+    a 0 1 4
+    b 2 0 1
+    c 1 0 1
+    ================================================================================
+    Overall Statistics (micro average)
+     - Accuracy:          0.10
+     - Balanced Accuracy: 0.17
+     - Sensitivity:       0.10
+     - Specificity:       0.55
+     - Precision:         0.10
 
 ``` r
 # 2) calculate false positive
@@ -586,8 +586,8 @@ SLmetrics::fpr(
 )
 ```
 
-    #>         a         b         c 
-    #> 0.6000000 0.1428571 0.6250000
+            a         b         c 
+    0.6000000 0.1428571 0.6250000 
 
 ### Supervised regression metrics
 
@@ -608,4 +608,4 @@ SLmetrics::huberloss(
 )
 ```
 
-    #> [1] 0.4389594
+    [1] 0.4389594

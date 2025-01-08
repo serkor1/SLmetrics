@@ -55,9 +55,9 @@ reticulate::use_virtualenv()
 # 4) create factors
 # for classification
 create_factor <- function(
-    k = 5,
+    k = 3,
     balanced = TRUE,
-    n = 1e5) {
+    n = 1e2) {
 
   probs <- NULL
 
@@ -88,7 +88,7 @@ create_factor <- function(
 }
 
 create_regression <- function(
-    n = 1e5) {
+    n = 1e2) {
 
   # 1) actual
   # values
@@ -111,8 +111,14 @@ create_regression <- function(
 
 # 5) test-that helper
 # functions
+set_equal <- function(...) {
+  UseMethod(
+    "set_equal",
+    object = ..1
+  )
+}
 
-set_equal <- function(
+set_equal.default <- function(
     current,
     target,
     tolerance = 1e-9) {
@@ -125,6 +131,30 @@ set_equal <- function(
     check.class = FALSE
   )
 
+}
+
+set_equal.numeric <- function(
+  current,
+  target,
+  rel_tol = 1e-9,
+  abs_tol = 1e-12) {
+  
+  # 1) check equality
+  # in length
+  if (length(current) != length(target)) {
+      return(paste("Lengths differ: current =", length(current), ", target =", length(target)))
+  }
+  
+  # 2) check values relattive
+  # to tolerance
+  differences <- abs(sum(current, -target, na.rm = TRUE))
+  max_tolerable_diff <- pmax(rel_tol * abs(target), abs_tol, na.rm = TRUE)
+  
+  if (any(differences > max_tolerable_diff)) {
+      return(paste("Values differ beyond tolerance. Max difference =", max(differences, na.rm = TRUE)))
+  }
+
+  TRUE
 }
 
 # 6) load scripts

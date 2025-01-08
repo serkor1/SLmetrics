@@ -103,11 +103,12 @@ cat(
   ),
   sep = "\n"
 )
-#> Root Mean Squared Error
-#> 0.6244998
-#> Root Mean Squared Error (weighted)
-#> 0.7314369
 ```
+
+    Root Mean Squared Error
+    0.6244998
+    Root Mean Squared Error (weighted)
+    0.7314369
 
 That’s all! Now you can explore the rest of this README for in-depth
 usage, performance comparisons, and more details about
@@ -159,8 +160,7 @@ RMSE[^1].
 
 ### :fast_forward: Speed comparison
 
-<img src="man/figures/README-unnamed-chunk-4-1.png"
-style="width:100.0%" />
+![](README_files/figure-commonmark/unnamed-chunk-4-1.png)
 
 As shown in the chart,
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) maintains
@@ -221,8 +221,9 @@ then compute the in-sample RMSE:
 # Evaluate a linear model on mpg (mtcars)
 model <- lm(mpg ~ ., data = mtcars)
 rmse(mtcars$mpg, fitted(model))
-#> [1] 2.146905
 ```
+
+    [1] 2.146905
 
 ### :books: Classification
 
@@ -275,19 +276,20 @@ summary(
     predicted = predicted
   )
 )
-#> Confusion Matrix (2 x 2) 
-#> ================================================================================
-#>           Virginica Others
-#> Virginica        35     15
-#> Others           14     86
-#> ================================================================================
-#> Overall Statistics (micro average)
-#>  - Accuracy:          0.81
-#>  - Balanced Accuracy: 0.78
-#>  - Sensitivity:       0.81
-#>  - Specificity:       0.81
-#>  - Precision:         0.81
 ```
+
+    Confusion Matrix (2 x 2) 
+    ================================================================================
+              Virginica Others
+    Virginica        35     15
+    Others           14     86
+    ================================================================================
+    Overall Statistics (micro average)
+     - Accuracy:          0.81
+     - Balanced Accuracy: 0.78
+     - Sensitivity:       0.81
+     - Specificity:       0.81
+     - Precision:         0.81
 
 ## :information_source: Enable OpenMP
 
@@ -305,12 +307,16 @@ and disable OpenMP:
 ``` r
 # enable OpenMP
 SLmetrics::setUseOpenMP(TRUE)
-#> OpenMP usage set to: enabled
+```
 
+    OpenMP usage set to: enabled
+
+``` r
 # disable OpenMP
 SLmetrics::setUseOpenMP(FALSE)
-#> OpenMP usage set to: disabled
 ```
+
+    OpenMP usage set to: disabled
 
 To illustrate the impact of OpenMP on performance, consider the
 following benchmarks for calculating entropy on a 1,000,000 x 200 matrix
