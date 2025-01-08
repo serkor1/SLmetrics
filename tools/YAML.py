@@ -30,8 +30,9 @@ book_structure = {
             'index.qmd',
             'intro.qmd',
             'summary.qmd',
+            'benchmark.qmd',
             {
-                'part': "References",
+                'part': "metrics",
                 'chapters': []
             },
             "references.qmd"

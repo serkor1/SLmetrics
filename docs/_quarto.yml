@@ -20,6 +20,7 @@ book:
   - index.qmd
   - intro.qmd
   - summary.qmd
+  - benchmark.qmd
   - part: References
     chapters: []
   - references.qmd

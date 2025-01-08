@@ -1,0 +1,214 @@
+---
+format:
+  html:
+    code-overflow: wrap
+execute: 
+  cache: true
+knitr:
+  opts_chunk:
+    comment: "#>"
+    messages: false
+    warning: false
+---
+
+# Benchmarking
+
+## The setup
+
+### Regression problems
+```{r}
+create_regression <- function(
+    n = 1e7) {
+
+  # 1) actual
+  # values
+  actual <- abs(rnorm(n = n))
+
+  # 2) predicted
+  # values
+  predicted <- actual + abs(rnorm(n = n))
+
+  # 3) generate
+  # weights
+  w <- runif(n)
+
+  list(
+    actual    = actual,
+    predicted = predicted,
+    w         = w
+  )
+}
+```
+
+### Classification problems
+
+```{r}
+#| warnings: false
+create_factor <- function(
+    k = 3,
+    balanced = TRUE,
+    n = 1e7) {
+
+  probs <- NULL
+
+  if (!balanced) {
+
+    probs <- rbeta(
+      n = k,
+      shape1 = 10,
+      shape2 = 2
+    )
+
+    probs[which.min(probs)] <- 0
+
+    probs <- probs / sum(probs)
+
+  }
+
+  factor(
+    x = sample(
+      1:k,
+      size = n,
+      replace = TRUE,
+      prob = probs
+    ),
+    labels = letters[1:k],
+    levels = 1:k
+  )
+}
+```
+
+### Staging the testing ground
+
+```{r}
+#| warnings: false
+
+# 1) set seed for reproducibility
+set.seed(1903)
+
+# 2) create classification
+# problem
+fct_actual <- create_factor()
+fct_predicted <- create_factor()
+
+# 3) create regression
+# problem
+
+# 3.1) store results
+# in regression
+lst_regression <- create_regression()
+
+# 3.2) assign the values
+# accordingly
+num_actual <- lst_regression$actual
+num_predicted <- lst_regression$predicted
+num_weights <- lst_regression$w
+```
+
+
+```{r}
+benchmark <- function(
+  ..., 
+  m = 10) {
+  library(magrittr)
+  # 1) create list
+  # for storing values
+  performance <- list()
+  
+  for (i in 1:m) {
+
+     # 1) run the benchmarks
+    results <- bench::mark(
+      ...,
+      iterations = 10,
+      check = FALSE
+    )
+
+    # 2) extract values
+    # and calculate medians
+    performance$time[[i]]  <- setNames(lapply(results$time, mean), results$expression)
+    performance$memory[[i]] <- setNames(lapply(results$memory, function(x) { sum(x$bytes, na.rm = TRUE)}), results$expression)
+    performance$n_gc[[i]] <- setNames(lapply(results$n_gc, sum), results$expression)
+
+  }
+
+  purrr::pmap_dfr(
+  list(performance$time, performance$memory, performance$n_gc), 
+  ~{
+    tibble::tibble(
+      expression = names(..1),
+      time = unlist(..1),
+      memory = unlist(..2),
+      n_gc = unlist(..3)
+    )
+  }
+) %>%
+  dplyr::mutate(expression = factor(expression, levels = unique(expression))) %>%
+  dplyr::group_by(expression) %>%
+  dplyr::filter(dplyr::row_number() > 1) %>%
+  dplyr::summarize(
+    execution_time = bench::as_bench_time(median(time)),
+    memory_usage = bench::as_bench_bytes(median(memory)),
+    gc_calls = median(n_gc),
+    .groups = "drop"
+  )
+
+}
+```
+## Benchmarking
+
+### Regression metrics
+
+```{r}
+#| code-fold: true
+benchmark(
+    `{RMSE}`  = SLmetrics::rmse(num_actual, num_predicted),
+    `{Pinball Loss}` = SLmetrics::pinball(num_actual, num_predicted),
+    `{Huber Loss}` = SLmetrics::huberloss(num_actual, num_predicted)
+)
+```
+
+
+```{r}
+#| code-fold: true
+benchmark(
+    `{SLmetrics}` = SLmetrics::rmse(num_actual, num_predicted),
+    `{MLmetrics}` = MLmetrics::RMSE(num_actual, num_predicted),
+    `{yardstick}` = yardstick::rmse_vec(num_actual, num_predicted),
+    `{mlr3measures}` = mlr3measures::rmse(num_actual, num_predicted)
+)
+```
+
+
+### Classification metrics
+
+```{r}
+#| code-fold: true
+benchmark(
+    `{Confusion Matrix}`  = SLmetrics::cmatrix(fct_actual, fct_predicted),
+    `{Accuracy}` = SLmetrics::accuracy(fct_actual, fct_predicted),
+    `{F-beta}` = SLmetrics::fbeta(fct_actual, fct_predicted)
+)
+```
+
+
+```{r}
+#| code-fold: true
+benchmark(
+    `{SLmetrics}`    = SLmetrics::cmatrix(fct_actual, fct_predicted),
+    `{MLmetrics}`    = MLmetrics::ConfusionMatrix(fct_predicted, fct_actual),
+    `{yardstick}`    = yardstick::conf_mat(table(fct_actual, fct_predicted))
+)
+```
+
+## Discussion
+
+Does speed *really* matter at the milliseconds level, and justify the raîson d'être for [{SLmetrics}](https://github.com/serkor1/SLmetrics) - the answer is inevitably **no**. A reduction of a few milliseconds may marginally improve performance, perhaps shaving off minutes or hours in large-scale grid searches or multi-model experiments. While this might slightly reduce cloud expenses, the overall impact is often negligible unless you're operating at an enormous scale or in latency-critical environments.
+
+However, the memory efficiency of [{SLmetrics}](https://github.com/serkor1/SLmetrics) is where its real value lies. Its near-zero RAM usage allows more memory to be allocated for valuable tasks, such as feeding larger datasets into models. This can directly lead to higher-performing models, as more data generally improves learning outcomes. Furthermore, by optimizing memory usage, [{SLmetrics}](https://github.com/serkor1/SLmetrics) can reduce infrastructure costs significantly, as less powerful machines or fewer cloud resources may be required to achieve the same — or better — results.
+
+In short, while speed optimization may seem like a more visible metric, it's the memory efficiency of [{SLmetrics}](https://github.com/serkor1/SLmetrics) that has a broader, more transformative impact on machine learning workflows, from enabling better model performance to substantial cost reductions.
+
+## Conclusion
+
+[{SLmetrics}](https://github.com/serkor1/SLmetrics) is, in the worst-case scenario, on par with low-level `R` implementations of equivalent metrics and is a multitude more memory-efficient than *any* of the {pkgs}.
