@@ -1,0 +1,59 @@
+# objective: Convert all .Rd files
+# .qmd - has to be in docs/references
+# at a later (tm) point regression and classification will 
+# be divided 
+# script start;
+rm(list = ls()); invisible(gc())
+
+# 1) load look up table
+# from file
+source("tools/build-function-docs/lookup-table.R")
+
+# 1.1) load all functions
+# from parse-rd.R
+source("tools/build-function-docs/parse-rd.R")
+
+
+# 2) generate qmd-files
+# based on the look-up table
+
+N <- nrow(DT)
+pb <- txtProgressBar(
+  min = 0, 
+  max = N, 
+  style = 3
+)  
+
+for (i in seq_len(N)) {
+
+  # 2.1) generate temporary 
+  # html file
+  html <- tempfile(
+    pattern = "file", 
+    tmpdir = tempdir(), 
+    fileext = ".html"
+  )
+
+  # 2.2) convert .Rd to
+  # HTML
+  rd <- tools::Rd2HTML(
+    tools::parse_Rd(DT$rd_path[i]),
+    out = html
+  )
+
+  # 2.3) process the html
+  # file and store in docs/references
+  process_html_to_markdown(
+    input_file = html,
+    output_file = paste0("docs/references/", DT$name[i] ,".qmd"),
+    title = DT$title[i]
+  )
+  
+   # Update progress bar
+   setTxtProgressBar(pb, i)
+
+}
+
+close(pb)
+
+# script end;
