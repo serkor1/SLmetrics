@@ -22,3 +22,8 @@ src/.idea
 tools/
 .venv/
 ^NEWs_files
+\.qmd$
+README_cache
+README_files
+NEWS_cache
+NEWS_files
