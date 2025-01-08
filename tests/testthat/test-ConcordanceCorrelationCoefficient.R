@@ -65,7 +65,7 @@ testthat::test_that(
           # 2.4) test that the values
           # are equal to target value
           testthat::skip_if(
-            correction  & weigthed, 
+            correction  & weighted, 
             message = paste(
               "ccc skipped for", info, "(Error is being investigated)"
             )
