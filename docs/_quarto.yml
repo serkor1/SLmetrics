@@ -6,6 +6,8 @@ book:
   author: Serkan Korkmaz
   version: 0.3-1
   repo-url: https://github.com/serkor1/SLmetrics
+  repo-branch: development
+  repo-subdir: docs
   repo-actions:
   - edit
   - source
@@ -20,16 +22,22 @@ book:
   - index.qmd
   - intro.qmd
   - summary.qmd
-  - part: References
+  - benchmark.qmd
+  - part: metrics
     chapters: []
   - references.qmd
 bibliography: references.bib
 format:
   html:
     theme:
-      light: cosmo
-      dark: darkly
+      light:
+      - cosmo
+      - theme-light.scss
+      dark:
+      - darkly
+      - theme-dark.scss
   pdf:
     documentclass: scrreprt
 execute:
   freeze: auto
+  cache: true

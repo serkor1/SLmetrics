@@ -1,0 +1,240 @@
+---
+format:
+  html:
+    code-overflow: wrap
+execute: 
+  cache: true
+knitr:
+  opts_chunk:
+    comment: "#>"
+    messages: false
+    warning: false
+---
+
+# Benchmarking {#sec-benchmarking}
+
+In this section a detailed benchmark of [{SLmetrics}](https://github.com/serkor1/SLmetrics) is conducted. The benchmarks will be conducted on randomly selected functions, and then compared to {pkg} discussed in @sec-introduction. The benchmarks are conducted on three parameters: median execution time, memory usage and `gc()` calls.
+
+This section strucutred as follows, @sec-bench-setup sets up the infrastructure needed to conduct the benchmark in an unbiased way, in @sec-bench-mark the benchmarks are conducted and discussed and summarized in @sec-bench-discussion and @sec-bench-conclusion respectively.
+
+## The setup {#sec-bench-setup}
+
+To conduct the benchmarking two functions are defined. `create_regression()` and `create_factor()`, both functions returns a vector of `actual` and `predicted` values with a `length` of 10,000,000 rows.
+
+### Regression problems
+
+The benchmarks on regression metrics is conducted on correlated absolute value `<numeric>`-vectors, with uniformly distributed weights. `create_regression()` returns a named `list`, and is defined below:
+
+```{r}
+# regression function
+create_regression <- function(
+    n = 1e7) {
+
+  # 1) actual
+  # values
+  actual <- abs(rnorm(n = n))
+
+  # 2) predicted
+  # values
+  predicted <- actual + abs(rnorm(n = n))
+
+  # 3) generate
+  # weights
+  w <- runif(n)
+
+  list(
+    actual    = actual,
+    predicted = predicted,
+    w         = w
+  )
+}
+```
+
+### Classification problems
+
+The benchmarks on classification metrics is conducted on the randomly sampled letters `c("a", "b", "c")`. `create_regression()` returns a vector of `<factor>`, and is defined below:
+
+```{r}
+# classification function
+create_factor <- function(
+    k = 3,
+    balanced = TRUE,
+    n = 1e7) {
+
+  probs <- NULL
+
+  if (!balanced) {
+
+    probs <- rbeta(
+      n = k,
+      shape1 = 10,
+      shape2 = 2
+    )
+
+    probs[which.min(probs)] <- 0
+
+    probs <- probs / sum(probs)
+
+  }
+
+  factor(
+    x = sample(
+      1:k,
+      size = n,
+      replace = TRUE,
+      prob = probs
+    ),
+    labels = letters[1:k],
+    levels = 1:k
+  )
+}
+```
+
+### Staging the testing ground
+
+The vectors used in the benchmarks are created with the seed `1903` for reproducibility, see below:
+
+```{r}
+# 1) set seed for reproducibility
+set.seed(1903)
+
+# 2) create classification
+# problem
+fct_actual <- create_factor()
+fct_predicted <- create_factor()
+
+# 3) create regression
+# problem
+
+# 3.1) store results
+# in regression
+lst_regression <- create_regression()
+
+# 3.2) assign the values
+# accordingly
+num_actual <- lst_regression$actual
+num_predicted <- lst_regression$predicted
+num_weights <- lst_regression$w
+```
+
+## Benchmarking {#sec-bench-mark}
+
+To conduct the benchmark [{bench}](https://github.com/r-lib/bench) is used. Before the benchmarks are conducted, a `benchmark()`-wrapper is created. 
+
+This wrapper conducts `m` (Default: 10) benchmarks, with 10 iterations for each benchmarked function passed into `benchmark()` - to allow for warm-up the first iteration is discarded. The wrapper is defined as follows:
+
+```{r}
+benchmark <- function(
+  ..., 
+  m = 10) {
+  library(magrittr)
+  # 1) create list
+  # for storing values
+  performance <- list()
+  
+  for (i in 1:m) {
+
+     # 1) run the benchmarks
+    results <- bench::mark(
+      ...,
+      iterations = 10,
+      check = FALSE
+    )
+
+    # 2) extract values
+    # and calculate medians
+    performance$time[[i]]  <- setNames(lapply(results$time, mean), results$expression)
+    performance$memory[[i]] <- setNames(lapply(results$memory, function(x) { sum(x$bytes, na.rm = TRUE)}), results$expression)
+    performance$n_gc[[i]] <- setNames(lapply(results$n_gc, sum), results$expression)
+
+  }
+
+  purrr::pmap_dfr(
+  list(performance$time, performance$memory, performance$n_gc), 
+  ~{
+    tibble::tibble(
+      expression = names(..1),
+      time = unlist(..1),
+      memory = unlist(..2),
+      n_gc = unlist(..3)
+    )
+  }
+) %>%
+  dplyr::mutate(expression = factor(expression, levels = unique(expression))) %>%
+  dplyr::group_by(expression) %>%
+  dplyr::filter(dplyr::row_number() > 1) %>%
+  dplyr::summarize(
+    execution_time = bench::as_bench_time(median(time)),
+    memory_usage = bench::as_bench_bytes(median(memory)),
+    gc_calls = median(n_gc),
+    .groups = "drop"
+  )
+
+}
+```
+
+### Regression metrics
+
+```{r}
+#| code-fold: true
+#| label: tbl-regression
+#| tbl-cap: Benchmarking selected regression metrics
+benchmark(
+    `{RMSE}`  = SLmetrics::rmse(num_actual, num_predicted),
+    `{Pinball Loss}` = SLmetrics::pinball(num_actual, num_predicted),
+    `{Huber Loss}` = SLmetrics::huberloss(num_actual, num_predicted)
+)
+```
+
+
+```{r}
+#| code-fold: true
+#| label: tbl-regression-comparison
+#| tbl-cap: Benchmarking RMSE across \{pkgs\}
+benchmark(
+    `{SLmetrics}` = SLmetrics::rmse(num_actual, num_predicted),
+    `{MLmetrics}` = MLmetrics::RMSE(num_actual, num_predicted),
+    `{yardstick}` = yardstick::rmse_vec(num_actual, num_predicted),
+    `{mlr3measures}` = mlr3measures::rmse(num_actual, num_predicted)
+)
+```
+
+
+### Classification metrics
+
+```{r}
+#| code-fold: true
+#| label: tbl-classification
+#| tbl-cap: Benchmarking selected classification metrics
+benchmark(
+    `{Confusion Matrix}`  = SLmetrics::cmatrix(fct_actual, fct_predicted),
+    `{Accuracy}` = SLmetrics::accuracy(fct_actual, fct_predicted),
+    `{F-beta}` = SLmetrics::fbeta(fct_actual, fct_predicted)
+)
+```
+
+
+```{r}
+#| code-fold: true
+#| label: tbl-classification-comparison
+#| tbl-cap: Benchmarking a 3x3 confusion matrix across \{pkgs\}
+benchmark(
+    `{SLmetrics}`    = SLmetrics::cmatrix(fct_actual, fct_predicted),
+    `{MLmetrics}`    = MLmetrics::ConfusionMatrix(fct_predicted, fct_actual),
+    `{yardstick}`    = yardstick::conf_mat(table(fct_actual, fct_predicted))
+)
+```
+
+## Discussion {#sec-bench-discussion}
+
+Does speed *really* matter at the milliseconds level, and justify the raîson d'être for [{SLmetrics}](https://github.com/serkor1/SLmetrics) - the answer is inevitably **no**. A reduction of a few milliseconds may marginally improve performance, perhaps shaving off minutes or hours in large-scale grid searches or multi-model experiments. While this might slightly reduce cloud expenses, the overall impact is often negligible unless you're operating at an enormous scale or in latency-critical environments.
+
+However, the memory efficiency of [{SLmetrics}](https://github.com/serkor1/SLmetrics) is where its real value lies. Its near-zero RAM usage allows more memory to be allocated for valuable tasks, such as feeding larger datasets into models. This can directly lead to higher-performing models, as more data generally improves learning outcomes. Furthermore, by optimizing memory usage, [{SLmetrics}](https://github.com/serkor1/SLmetrics) can reduce infrastructure costs significantly, as less powerful machines or fewer cloud resources may be required to achieve the same — or better — results.
+
+In short, while speed optimization may seem like a more visible metric, it's the memory efficiency of [{SLmetrics}](https://github.com/serkor1/SLmetrics) that has a broader, more transformative impact on machine learning workflows, from enabling better model performance to substantial cost reductions.
+
+## Conclusion {#sec-bench-conclusion}
+
+The benchmarks conducted in @sec-bench-mark suggests that [{SLmetrics}](https://github.com/serkor1/SLmetrics) *is* the memory-efficient and fast alternative to [{MLmetrics}](https://github.com/yanyachen/MLmetrics), [{yardstick}](https://github.com/tidymodels/yardstick) and [{mlr3measures}](https://github.com/mlr-org/mlr3measures).
+
+In the worst performing benchmarks [{SLmetrics}](https://github.com/serkor1/SLmetrics) is on par with low-level implementations of equivalent metrics and is consistently more memory-efficient in all benchmarks.

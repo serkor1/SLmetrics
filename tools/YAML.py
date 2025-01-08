@@ -21,6 +21,8 @@ book_structure = {
         'author': "Serkan Korkmaz",
         'version': version(),
         'repo-url': "https://github.com/serkor1/SLmetrics",
+        'repo-branch': "development",
+        'repo-subdir': "docs",
         'repo-actions': ["edit", "source", "issue"],
         'sharing': ["twitter", "facebook", "linkedin"],
         'sidebar':{
@@ -30,8 +32,9 @@ book_structure = {
             'index.qmd',
             'intro.qmd',
             'summary.qmd',
+            'benchmark.qmd',
             {
-                'part': "References",
+                'part': "metrics",
                 'chapters': []
             },
             "references.qmd"
@@ -41,14 +44,15 @@ book_structure = {
     'format': {
         'html': {
             'theme': {
-            "light": "cosmo",
-            "dark":  "darkly"
+            "light": ["cosmo", "theme-light.scss"],  # Use a list here
+            "dark": ["darkly", "theme-dark.scss"],  # Use a list here
         }
         },
         'pdf': {'documentclass': 'scrreprt'}
     },
     "execute": {
-        "freeze": "auto"
+        "freeze": "auto",
+        "cache" : True
     }
 }
 
