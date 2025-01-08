@@ -28,7 +28,8 @@ performance:
 document:
 	@clear
 	@echo "📚 Documenting {$(PKGNAME)}"
-	@rm -f NEWS.md README.md
+	@quarto render README.qmd
+	@quarto render NEWS.qmd
 	@Rscript tools/document.R
 
 build: document
