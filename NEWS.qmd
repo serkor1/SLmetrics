@@ -3,6 +3,9 @@ format:
     gfm:
         default-image-extension: ""
 always_allow_html: true
+execute: 
+  cache: true
+  freeze: auto
 ---
 
 ```{r setup, echo = FALSE}
