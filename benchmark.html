@@ -423,9 +423,9 @@ Table&nbsp;3.1: Benchmarking selected regression metrics
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {RMSE}                 29.6ms           0B        0
-#&gt; 2 {Pinball Loss}         29.7ms           0B        0
-#&gt; 3 {Huber Loss}           74.3ms           0B        0</code></pre>
+#&gt; 1 {RMSE}                 30.3ms           0B        0
+#&gt; 2 {Pinball Loss}         30.1ms           0B        0
+#&gt; 3 {Huber Loss}             75ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -449,10 +449,10 @@ Table&nbsp;3.2: Benchmarking RMSE across
 <pre><code>#&gt; # A tibble: 4 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}            29.9ms           0B        0
-#&gt; 2 {MLmetrics}            60.5ms       76.3MB        1
-#&gt; 3 {yardstick}           165.7ms      419.6MB       10
-#&gt; 4 {mlr3measures}         84.5ms       76.3MB        1</code></pre>
+#&gt; 1 {SLmetrics}            30.5ms           0B        0
+#&gt; 2 {MLmetrics}            61.8ms       76.3MB        1
+#&gt; 3 {yardstick}           170.7ms      419.6MB       10
+#&gt; 4 {mlr3measures}         86.7ms       76.3MB        1</code></pre>
 </div>
 </div>
 </figure>
@@ -478,9 +478,9 @@ Table&nbsp;3.3: Benchmarking selected classification metrics
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression         execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                    &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {Confusion Matrix}         8.59ms           0B        0
-#&gt; 2 {Accuracy}                 8.59ms           0B        0
-#&gt; 3 {F-beta}                    8.6ms           0B        0</code></pre>
+#&gt; 1 {Confusion Matrix}         8.57ms           0B        0
+#&gt; 2 {Accuracy}                 8.57ms           0B        0
+#&gt; 3 {F-beta}                   8.58ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -503,9 +503,9 @@ Table&nbsp;3.4: Benchmarking a 3x3 confusion matrix across
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression  execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}         8.59ms           0B        0
-#&gt; 2 {MLmetrics}        246.6ms        381MB        7
-#&gt; 3 {yardstick}       246.84ms        381MB        7</code></pre>
+#&gt; 1 {SLmetrics}         8.56ms           0B        0
+#&gt; 2 {MLmetrics}       247.96ms        381MB        7
+#&gt; 3 {yardstick}       248.26ms        381MB        7</code></pre>
 </div>
 </div>
 </figure>

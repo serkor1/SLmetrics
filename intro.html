@@ -288,7 +288,7 @@ Note
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">iterations    =</span> <span class="dv">100</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div id="tbl-rmse-speed" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-warnings="false" data-messages="false">
+<div id="tbl-rmse-speed" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-messages="false" data-warnings="false">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-rmse-speed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1.1: Calculating RMSE on 1e7 vectors
@@ -298,8 +298,8 @@ Table&nbsp;1.1: Calculating RMSE on 1e7 vectors
 <pre><code># A tibble: 2 × 6
   expression       min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 {SLmetrics}   29.6ms   30.1ms      33.3    6.13MB      0  
-2 {MLmetrics}   58.7ms   59.3ms      16.9   76.39MB     82.3</code></pre>
+1 {SLmetrics}     30ms   30.6ms      32.1    6.13MB      0  
+2 {MLmetrics}   61.4ms   61.8ms      16.2   76.39MB     78.9</code></pre>
 </div>
 </div>
 </figure>
@@ -328,8 +328,8 @@ Table&nbsp;1.2: Computing a 3x3 confusion matrix on 1e7 vectors
 <pre><code># A tibble: 2 × 6
   expression       min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 {SLmetrics}   8.54ms   8.58ms    117.      4.12KB     0   
-2 {MLmetrics} 245.23ms 251.11ms      3.70   381.6MB     7.62</code></pre>
+1 {SLmetrics}   8.53ms   8.56ms    116.      4.12KB     0   
+2 {MLmetrics} 246.66ms 251.87ms      3.68   381.6MB     7.59</code></pre>
 </div>
 </div>
 </figure>
