@@ -134,7 +134,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Documentation</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://github.com/serkor1/SLmetrics" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/serkor1/SLmetrics/tree/development/docs/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -195,7 +195,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">References</span></span>
+ <span class="menu-text">metrics</span></span>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
@@ -213,28 +213,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-setup" id="toc-the-setup" class="nav-link active" data-scroll-target="#the-setup"><span class="header-section-number">3.1</span> The setup</a>
+  <li><a href="#sec-bench-setup" id="toc-sec-bench-setup" class="nav-link active" data-scroll-target="#sec-bench-setup"><span class="header-section-number">3.1</span> The setup</a>
   <ul class="collapse">
   <li><a href="#regression-problems" id="toc-regression-problems" class="nav-link" data-scroll-target="#regression-problems"><span class="header-section-number">3.1.1</span> Regression problems</a></li>
   <li><a href="#classification-problems" id="toc-classification-problems" class="nav-link" data-scroll-target="#classification-problems"><span class="header-section-number">3.1.2</span> Classification problems</a></li>
   <li><a href="#staging-the-testing-ground" id="toc-staging-the-testing-ground" class="nav-link" data-scroll-target="#staging-the-testing-ground"><span class="header-section-number">3.1.3</span> Staging the testing ground</a></li>
   </ul></li>
-  <li><a href="#benchmarking" id="toc-benchmarking" class="nav-link" data-scroll-target="#benchmarking"><span class="header-section-number">3.2</span> Benchmarking</a>
+  <li><a href="#sec-bench-mark" id="toc-sec-bench-mark" class="nav-link" data-scroll-target="#sec-bench-mark"><span class="header-section-number">3.2</span> Benchmarking</a>
   <ul class="collapse">
   <li><a href="#regression-metrics" id="toc-regression-metrics" class="nav-link" data-scroll-target="#regression-metrics"><span class="header-section-number">3.2.1</span> Regression metrics</a></li>
   <li><a href="#classification-metrics" id="toc-classification-metrics" class="nav-link" data-scroll-target="#classification-metrics"><span class="header-section-number">3.2.2</span> Classification metrics</a></li>
   </ul></li>
-  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">3.3</span> Discussion</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">3.4</span> Conclusion</a></li>
+  <li><a href="#sec-bench-discussion" id="toc-sec-bench-discussion" class="nav-link" data-scroll-target="#sec-bench-discussion"><span class="header-section-number">3.3</span> Discussion</a></li>
+  <li><a href="#sec-bench-conclusion" id="toc-sec-bench-conclusion" class="nav-link" data-scroll-target="#sec-bench-conclusion"><span class="header-section-number">3.4</span> Conclusion</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/main/benchmark.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/main/benchmark.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/benchmark.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/benchmark.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Benchmarking</span></h1>
+<h1 class="title"><span id="sec-benchmarking" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Benchmarking</span></span></h1>
 </div>
 
 
@@ -251,74 +251,82 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="the-setup" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="the-setup"><span class="header-section-number">3.1</span> The setup</h2>
+<p>In this section a detailed benchmark of <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> is conducted. The benchmarks will be conducted on randomly selected functions, and then compared to {pkg} discussed in <a href="intro.html" class="quarto-xref"><span>Chapter 1</span></a>. The benchmarks are conducted on three parameters: median execution time, memory usage and <code>gc()</code> calls.</p>
+<p>This section strucutred as follows, <a href="#sec-bench-setup" class="quarto-xref"><span>Section 3.1</span></a> sets up the infrastructure needed to conduct the benchmark in an unbiased way, in <a href="#sec-bench-mark" class="quarto-xref"><span>Section 3.2</span></a> the benchmarks are conducted and discussed and summarized in <a href="#sec-bench-discussion" class="quarto-xref"><span>Section 3.3</span></a> and <a href="#sec-bench-conclusion" class="quarto-xref"><span>Section 3.4</span></a> respectively.</p>
+<section id="sec-bench-setup" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-bench-setup"><span class="header-section-number">3.1</span> The setup</h2>
+<p>To conduct the benchmarking two functions are defined. <code>create_regression()</code> and <code>create_factor()</code>, both functions returns a vector of <code>actual</code> and <code>predicted</code> values with a <code>length</code> of 10,000,000 rows.</p>
 <section id="regression-problems" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="regression-problems"><span class="header-section-number">3.1.1</span> Regression problems</h3>
+<p>The benchmarks on regression metrics is conducted on correlated absolute value <code>&lt;numeric&gt;</code>-vectors, with uniformly distributed weights. <code>create_regression()</code> returns a named <code>list</code>, and is defined below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>create_regression <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fl">1e7</span>) {</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1) actual</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># values</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  actual <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(<span class="at">n =</span> n))</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2) predicted</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># values</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  predicted <span class="ot">&lt;-</span> actual <span class="sc">+</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(<span class="at">n =</span> n))</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3) generate</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># weights</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  w <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">actual    =</span> actual,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted =</span> predicted,</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">w         =</span> w</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># regression function</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>create_regression <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fl">1e7</span>) {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1) actual</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># values</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  actual <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(<span class="at">n =</span> n))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2) predicted</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># values</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  predicted <span class="ot">&lt;-</span> actual <span class="sc">+</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(<span class="at">n =</span> n))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3) generate</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># weights</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  w <span class="ot">&lt;-</span> <span class="fu">runif</span>(n)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">actual    =</span> actual,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted =</span> predicted,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">w         =</span> w</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="classification-problems" class="level3" data-number="3.1.2">
 <h3 data-number="3.1.2" class="anchored" data-anchor-id="classification-problems"><span class="header-section-number">3.1.2</span> Classification problems</h3>
-<div class="cell" data-warnings="false">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>create_factor <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">k =</span> <span class="dv">3</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">balanced =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fl">1e7</span>) {</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  probs <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>balanced) {</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    probs <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">n =</span> k,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">shape1 =</span> <span class="dv">10</span>,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">shape2 =</span> <span class="dv">2</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    probs[<span class="fu">which.min</span>(probs)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    probs <span class="ot">&lt;-</span> probs <span class="sc">/</span> <span class="fu">sum</span>(probs)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factor</span>(</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">sample</span>(</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1</span><span class="sc">:</span>k,</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> n,</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">prob =</span> probs</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> letters[<span class="dv">1</span><span class="sc">:</span>k],</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span>k</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The benchmarks on classification metrics is conducted on the randomly sampled letters <code>c("a", "b", "c")</code>. <code>create_regression()</code> returns a vector of <code>&lt;factor&gt;</code>, and is defined below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># classification function</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>create_factor <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">k =</span> <span class="dv">3</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">balanced =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fl">1e7</span>) {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  probs <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>balanced) {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    probs <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">n =</span> k,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">shape1 =</span> <span class="dv">10</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">shape2 =</span> <span class="dv">2</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    probs[<span class="fu">which.min</span>(probs)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    probs <span class="ot">&lt;-</span> probs <span class="sc">/</span> <span class="fu">sum</span>(probs)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factor</span>(</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">sample</span>(</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1</span><span class="sc">:</span>k,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> n,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">prob =</span> probs</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> letters[<span class="dv">1</span><span class="sc">:</span>k],</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span>k</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="staging-the-testing-ground" class="level3" data-number="3.1.3">
 <h3 data-number="3.1.3" class="anchored" data-anchor-id="staging-the-testing-ground"><span class="header-section-number">3.1.3</span> Staging the testing ground</h3>
-<div class="cell" data-warnings="false">
+<p>The vectors used in the benchmarks are created with the seed <code>1903</code> for reproducibility, see below:</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) set seed for reproducibility</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1903</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -340,6 +348,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>num_predicted <span class="ot">&lt;-</span> lst_regression<span class="sc">$</span>predicted</span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>num_weights <span class="ot">&lt;-</span> lst_regression<span class="sc">$</span>w</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+</section>
+<section id="sec-bench-mark" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-bench-mark"><span class="header-section-number">3.2</span> Benchmarking</h2>
+<p>To conduct the benchmark <a href="https://github.com/r-lib/bench">{bench}</a> is used. Before the benchmarks are conducted, a <code>benchmark()</code>-wrapper is created.</p>
+<p>This wrapper conducts <code>m</code> (Default: 10) benchmarks, with 10 iterations for each benchmarked function passed into <code>benchmark()</code> - to allow for warm-up the first iteration is discarded. The wrapper is defined as follows:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>benchmark <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  ..., </span>
@@ -389,13 +403,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-</section>
-<section id="benchmarking" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="benchmarking"><span class="header-section-number">3.2</span> Benchmarking</h2>
 <section id="regression-metrics" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="regression-metrics"><span class="header-section-number">3.2.1</span> Regression metrics</h3>
-<div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">benchmark</span>(</span>
@@ -404,16 +413,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">{Huber Loss}</span><span class="st">`</span> <span class="ot">=</span> SLmetrics<span class="sc">::</span><span class="fu">huberloss</span>(num_actual, num_predicted)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div id="tbl-regression" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.1: Benchmarking selected regression metrics
+</figcaption>
+<div aria-describedby="tbl-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {RMSE}                 30.9ms           0B        0
-#&gt; 2 {Pinball Loss}           31ms           0B        0
-#&gt; 3 {Huber Loss}           75.9ms           0B        0</code></pre>
+#&gt; 1 {RMSE}                 29.6ms           0B        0
+#&gt; 2 {Pinball Loss}         29.7ms           0B        0
+#&gt; 3 {Huber Loss}           74.3ms           0B        0</code></pre>
 </div>
 </div>
-<div class="cell">
+</figure>
+</div>
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">benchmark</span>(</span>
@@ -423,20 +439,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">{mlr3measures}</span><span class="st">`</span> <span class="ot">=</span> mlr3measures<span class="sc">::</span><span class="fu">rmse</span>(num_actual, num_predicted)</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div id="tbl-regression-comparison" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-regression-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.2: Benchmarking RMSE across
+</figcaption>
+<div aria-describedby="tbl-regression-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 4 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}            31.3ms           0B        0
-#&gt; 2 {MLmetrics}            62.3ms       76.3MB        1
-#&gt; 3 {yardstick}           171.3ms      419.6MB       10
-#&gt; 4 {mlr3measures}         87.8ms       76.3MB        1</code></pre>
+#&gt; 1 {SLmetrics}            29.9ms           0B        0
+#&gt; 2 {MLmetrics}            60.5ms       76.3MB        1
+#&gt; 3 {yardstick}           165.7ms      419.6MB       10
+#&gt; 4 {mlr3measures}         84.5ms       76.3MB        1</code></pre>
 </div>
+</div>
+</figure>
 </div>
 </section>
 <section id="classification-metrics" class="level3" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="classification-metrics"><span class="header-section-number">3.2.2</span> Classification metrics</h3>
-<div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">benchmark</span>(</span>
@@ -445,16 +468,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">{F-beta}</span><span class="st">`</span> <span class="ot">=</span> SLmetrics<span class="sc">::</span><span class="fu">fbeta</span>(fct_actual, fct_predicted)</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div id="tbl-classification" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.3: Benchmarking selected classification metrics
+</figcaption>
+<div aria-describedby="tbl-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression         execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                    &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {Confusion Matrix}         8.61ms           0B        0
-#&gt; 2 {Accuracy}                 8.62ms           0B        0
-#&gt; 3 {F-beta}                   8.62ms           0B        0</code></pre>
+#&gt; 1 {Confusion Matrix}         8.59ms           0B        0
+#&gt; 2 {Accuracy}                 8.59ms           0B        0
+#&gt; 3 {F-beta}                    8.6ms           0B        0</code></pre>
 </div>
 </div>
-<div class="cell">
+</figure>
+</div>
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">benchmark</span>(</span>
@@ -463,26 +493,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">{yardstick}</span><span class="st">`</span>    <span class="ot">=</span> yardstick<span class="sc">::</span><span class="fu">conf_mat</span>(<span class="fu">table</span>(fct_actual, fct_predicted))</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div id="tbl-classification-comparison" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-classification-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.4: Benchmarking a 3x3 confusion matrix across
+</figcaption>
+<div aria-describedby="tbl-classification-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression  execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}         8.61ms           0B        0
-#&gt; 2 {MLmetrics}       250.51ms        381MB        7
-#&gt; 3 {yardstick}       251.19ms        381MB        7</code></pre>
+#&gt; 1 {SLmetrics}         8.59ms           0B        0
+#&gt; 2 {MLmetrics}        246.6ms        381MB        7
+#&gt; 3 {yardstick}       246.84ms        381MB        7</code></pre>
 </div>
+</div>
+</figure>
 </div>
 </section>
 </section>
-<section id="discussion" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="discussion"><span class="header-section-number">3.3</span> Discussion</h2>
+<section id="sec-bench-discussion" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sec-bench-discussion"><span class="header-section-number">3.3</span> Discussion</h2>
 <p>Does speed <em>really</em> matter at the milliseconds level, and justify the raîson d’être for <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> - the answer is inevitably <strong>no</strong>. A reduction of a few milliseconds may marginally improve performance, perhaps shaving off minutes or hours in large-scale grid searches or multi-model experiments. While this might slightly reduce cloud expenses, the overall impact is often negligible unless you’re operating at an enormous scale or in latency-critical environments.</p>
 <p>However, the memory efficiency of <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> is where its real value lies. Its near-zero RAM usage allows more memory to be allocated for valuable tasks, such as feeding larger datasets into models. This can directly lead to higher-performing models, as more data generally improves learning outcomes. Furthermore, by optimizing memory usage, <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> can reduce infrastructure costs significantly, as less powerful machines or fewer cloud resources may be required to achieve the same — or better — results.</p>
 <p>In short, while speed optimization may seem like a more visible metric, it’s the memory efficiency of <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> that has a broader, more transformative impact on machine learning workflows, from enabling better model performance to substantial cost reductions.</p>
 </section>
-<section id="conclusion" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">3.4</span> Conclusion</h2>
-<p><a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> is, in the worst-case scenario, on par with low-level <code>R</code> implementations of equivalent metrics and is a multitude more memory-efficient than <em>any</em> of the {pkgs}.</p>
+<section id="sec-bench-conclusion" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="sec-bench-conclusion"><span class="header-section-number">3.4</span> Conclusion</h2>
+<p>The benchmarks conducted in <a href="#sec-bench-mark" class="quarto-xref"><span>Section 3.2</span></a> suggests that <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> <em>is</em> the memory-efficient and fast alternative to <a href="https://github.com/yanyachen/MLmetrics">{MLmetrics}</a>, <a href="https://github.com/tidymodels/yardstick">{yardstick}</a> and <a href="https://github.com/mlr-org/mlr3measures">{mlr3measures}</a>.</p>
+<p>In the worst performing benchmarks <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> is on par with low-level implementations of equivalent metrics and is consistently more memory-efficient in all benchmarks.</p>
 
 
 </section>
@@ -1066,4 +1105,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/main/benchmark.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/main/benchmark.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/benchmark.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/benchmark.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
