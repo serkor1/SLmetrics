@@ -53,7 +53,11 @@ jobs:
       - name: Parse Roxygen files
         shell: Rscript {0}
         run: |
-          # 1) source builders
+
+          # 1) create folder
+          dir.create("docs/references")
+
+          # 2) source builders
           source('tools/doc-builders/build-qmd.R')
             
       - name: Render docs
