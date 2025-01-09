@@ -34,8 +34,9 @@ book_structure = {
             'summary.qmd',
             'benchmark.qmd',
             {
-                'part': "metrics",
-                'chapters': []
+                'part': 'functions.qmd',
+                'chapters': [],
+                'number-sections': False
             },
             "references.qmd"
         ]
@@ -56,15 +57,23 @@ book_structure = {
     }
 }
 
+
+os.chdir(os.path.join(os.getcwd(), "docs"))
+
 try:
+    # 1) change working directory
     references_dir = 'references'
     reference_files = [f for f in os.listdir(references_dir) if f.endswith('.qmd')]
     reference_files.sort()
     reference_files = [os.path.join(references_dir, f) for f in reference_files]
-    book_structure['book']['chapters'][3]['chapters'] = reference_files
+
+    book_structure['book']['chapters'][4]['chapters'] = reference_files
+
 except:
     print("No references found! Skipping")
 
 
-with open('docs/_quarto.yml', 'w') as file:
+
+
+with open('_quarto.yml', 'w') as file:
     yaml.dump(book_structure, file, sort_keys=False)

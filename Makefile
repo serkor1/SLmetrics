@@ -70,4 +70,5 @@ check: document
 build-docs:
 	@echo "📚 Building Quarto Book"
 	@python3 tools/YAML.py
-	cd docs/ && quarto preview
+	@Rscript -e "source('tools/doc-builders/build-qmd.R')"
+	@cd docs/ && quarto preview
