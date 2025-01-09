@@ -48,6 +48,13 @@ jobs:
             any::bench
             any::tidyverse
             any::tidymodels
+            any::stringi
+
+      - name: Parse Roxygen files
+        shell: Rscript {0}
+        run: |
+          # 1) source builders
+          source('tools/doc-builders/build-qmd.R')
             
       - name: Render docs
         uses: quarto-dev/quarto-actions/render@v2
