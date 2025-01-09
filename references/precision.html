@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>diagnostic odds ratio – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
+<title>precision – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../references/entropy.html" rel="next">
-<link href="../references/cmatrix.html" rel="prev">
+<link href="../references/rae.html" rel="next">
+<link href="../references/prROC.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -146,7 +146,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../functions.html">Functions</a></li><li class="breadcrumb-item"><a href="../references/dor.html">diagnostic odds ratio</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../functions.html">Functions</a></li><li class="breadcrumb-item"><a href="../references/precision.html">precision</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -269,7 +269,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references/dor.html" class="sidebar-item-text sidebar-link active">
+  <a href="../references/dor.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">diagnostic odds ratio</span></a>
   </div>
 </li>
@@ -383,7 +383,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references/precision.html" class="sidebar-item-text sidebar-link">
+  <a href="../references/precision.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">precision</span></a>
   </div>
 </li>
@@ -484,14 +484,14 @@ window.Quarto = {
   <li><a href="#calculation" id="toc-calculation" class="nav-link" data-scroll-target="#calculation">Calculation</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/references/dor.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/references/dor.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/references/precision.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/references/precision.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../functions.html">Functions</a></li><li class="breadcrumb-item"><a href="../references/dor.html">diagnostic odds ratio</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../functions.html">Functions</a></li><li class="breadcrumb-item"><a href="../references/precision.html">precision</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">diagnostic odds ratio</h1>
+<h1 class="title">precision</h1>
 </div>
 
 
@@ -511,7 +511,7 @@ window.Quarto = {
 <table style="width: 100%;">
 <tbody><tr>
 <td>
-dor.factor
+precision.factor
 </td>
 <td style="text-align: right;">
 R Documentation
@@ -521,27 +521,37 @@ R Documentation
 <section id="description" class="level3">
 <h3 class="anchored" data-anchor-id="description">Description</h3>
 <p>
-The <code>dor()</code>-function computes the <a href="https://en.wikipedia.org/wiki/Diagnostic_odds_ratio">Diagnostic Odds Ratio</a> (DOR), a single indicator of test performance, between two vectors of predicted and observed <code>factor()</code> values. The <code>weighted.dor()</code> function computes the weighted diagnostic odds ratio.
-</p>
-<p>
-When <code>aggregate = TRUE</code>, the function returns the micro-average DOR across all classes <span class="math inline">\(k\)</span>. By default, it returns the class-wise DOR.
+The <code>precision()</code>-function computes the <a href="https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values">precision</a>, also known as the positive predictive value (PPV), between two vectors of predicted and observed <code>factor()</code> values. The <code>weighted.precision()</code> function computes the weighted precision.
 </p>
 </section>
 <section id="usage" class="level3">
 <h3 class="anchored" data-anchor-id="usage">Usage</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'factor'</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dor</span>(actual, predicted, ...)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">precision</span>(actual, predicted, <span class="at">micro =</span> <span class="cn">NULL</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, ...)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'factor'</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.dor</span>(actual, predicted, w, ...)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.precision</span>(actual, predicted, w, <span class="at">micro =</span> <span class="cn">NULL</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, ...)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'cmatrix'</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dor</span>(x, ...)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">precision</span>(x, <span class="at">micro =</span> <span class="cn">NULL</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, ...)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dor</span>(...)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.dor</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'factor'</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ppv</span>(actual, predicted, <span class="at">micro =</span> <span class="cn">NULL</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, ...)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'factor'</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.ppv</span>(actual, predicted, w, <span class="at">micro =</span> <span class="cn">NULL</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, ...)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'cmatrix'</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ppv</span>(x, <span class="at">micro =</span> <span class="cn">NULL</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, ...)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">precision</span>(...)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.precision</span>(...)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">ppv</span>(...)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.ppv</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="arguments" class="level3">
@@ -564,6 +574,26 @@ A vector of <code>&lt;factor&gt;</code>- of length <span class="math inline">\(n
 <td>
 <p>
 A vector of <code>&lt;factor&gt;</code>-vector of length <span class="math inline">\(n\)</span>, and <span class="math inline">\(k\)</span> levels.
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code id="micro">micro</code>
+</td>
+<td>
+<p>
+A <code>&lt;logical&gt;</code>-value of length <span class="math inline">\(1\)</span> (default: NULL). If TRUE it returns the micro average across all <span class="math inline">\(k\)</span> classes, if FALSE it returns the macro average.
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code id="na.rm">na.rm</code>
+</td>
+<td>
+<p>
+A <code>&lt;logical&gt;</code> value of length <span class="math inline">\(1\)</span> (default: TRUE). If TRUE, NA values are removed from the computation. This argument is only relevant when <code>micro != NULL</code>. When <code>na.rm = TRUE</code>, the computation corresponds to <code>sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))</code>. When <code>na.rm = FALSE</code>, the computation corresponds to <code>sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))</code>.
 </p>
 </td>
 </tr>
@@ -614,19 +644,10 @@ If <code>micro</code> is TRUE or FALSE, a <code>&lt;numeric&gt;</code>-vector of
 The metric is calculated for each class <span class="math inline">\(k\)</span> as follows,
 </p>
 <p><span class="math display">\[
-  \text{DOR}_k = \frac{\text{PLR}_k}{\text{NLR}_k}
+  \frac{\#TP_k}{\#TP_k + \#FP_k}
 \]</span></p>
 <p>
-Where <span class="math inline">\(\text{PLR}_k\)</span> and <span class="math inline">\(\text{NLR}_k\)</span> is the positive and negative likelihood ratio for class <span class="math inline">\(k\)</span>, respectively. See <code>plr()</code> and <code>nlr()</code> for more details.
-</p>
-<p>
-When <code>aggregate = TRUE</code>, the <code>micro</code>-average is calculated as,
-</p>
-<p><span class="math display">\[
-  \overline{\text{DOR}} = \frac{\overline{\text{PLR}_k}}{\overline{\text{NLR}_k}}
-\]</span></p>
-<p>
-Where <span class="math inline">\(\overline{\text{PLR}}\)</span> and <span class="math inline">\(\overline{\text{NLR}}\)</span> is the micro-averaged is the positive and negative likelihood ratio, respectively.
+Where <span class="math inline">\(\#TP_k\)</span> and <span class="math inline">\(\#FP_k\)</span> are the number of true positives and false positives, respectively, for each class <span class="math inline">\(k\)</span>.
 </p>
 </section>
 <section id="examples" class="level3">
@@ -667,21 +688,38 @@ Where <span class="math inline">\(\overline{\text{PLR}}\)</span> and <span class
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="at">  labels = c("Virginica", "Others")</span></span>
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span>
 <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="at"># 4) evaluate model performance</span></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="at"># with Diagnostic Odds Ratio</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="at">cat("Diagnostic Odds Ratio", sep = "</span><span class="sc">\n</span><span class="at">")</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="at">dor(</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="at">  actual    = actual, </span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="at"># 4) evaluate class-wise performance</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="at"># using Precision</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="at"># 4.1) unweighted Precision</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="at">precision(</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="at">  actual    = actual,</span></span>
 <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="at">  predicted = predicted</span></span>
 <span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span>
 <span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="at">cat("Diagnostic Odds Ratio (weighted)", sep = "</span><span class="sc">\n</span><span class="at">")</span></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="at">weighted.dor(</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="at"># 4.2) weighted Precision</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="at">weighted.precision(</span></span>
 <span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="at">  actual    = actual,</span></span>
 <span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="at">  predicted = predicted,</span></span>
 <span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="at">  w         = iris$Petal.Length/mean(iris$Petal.Length)</span></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="at"># 5) evaluate overall performance</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="at"># using micro-averaged Precision</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="at">cat(</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="at">  "Micro-averaged Precision", precision(</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="at">    actual    = actual,</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="at">    predicted = predicted,</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="at">    micro     = TRUE</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="at">  ),</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="at">  "Micro-averaged Precision (weighted)", weighted.precision(</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="at">    actual    = actual,</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="at">    predicted = predicted,</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="at">    w         = iris$Petal.Length/mean(iris$Petal.Length),</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="at">    micro     = TRUE</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="at">  ),</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="at">  sep = "</span><span class="sc">\n</span><span class="at">"</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -1251,13 +1289,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../references/cmatrix.html" class="pagination-link" aria-label="confusion matrix">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">confusion matrix</span>
+      <a href="../references/prROC.html" class="pagination-link" aria-label="Precision-Recall curve">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Precision-Recall curve</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../references/entropy.html" class="pagination-link" aria-label="entropy">
-        <span class="nav-page-text">entropy</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../references/rae.html" class="pagination-link" aria-label="relative absolute error">
+        <span class="nav-page-text">relative absolute error</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1266,4 +1304,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/references/dor.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/references/dor.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/references/precision.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/references/precision.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

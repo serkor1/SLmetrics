@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>diagnostic odds ratio – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
+<title>mean absolute error – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../references/entropy.html" rel="next">
-<link href="../references/cmatrix.html" rel="prev">
+<link href="../references/mape.html" rel="next">
+<link href="../references/logloss.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -146,7 +146,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../functions.html">Functions</a></li><li class="breadcrumb-item"><a href="../references/dor.html">diagnostic odds ratio</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../functions.html">Functions</a></li><li class="breadcrumb-item"><a href="../references/mae.html">mean absolute error</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -269,7 +269,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references/dor.html" class="sidebar-item-text sidebar-link active">
+  <a href="../references/dor.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">diagnostic odds ratio</span></a>
   </div>
 </li>
@@ -329,7 +329,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references/mae.html" class="sidebar-item-text sidebar-link">
+  <a href="../references/mae.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">mean absolute error</span></a>
   </div>
 </li>
@@ -484,14 +484,14 @@ window.Quarto = {
   <li><a href="#calculation" id="toc-calculation" class="nav-link" data-scroll-target="#calculation">Calculation</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/references/dor.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/references/dor.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/references/mae.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/references/mae.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../functions.html">Functions</a></li><li class="breadcrumb-item"><a href="../references/dor.html">diagnostic odds ratio</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../functions.html">Functions</a></li><li class="breadcrumb-item"><a href="../references/mae.html">mean absolute error</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">diagnostic odds ratio</h1>
+<h1 class="title">mean absolute error</h1>
 </div>
 
 
@@ -511,7 +511,7 @@ window.Quarto = {
 <table style="width: 100%;">
 <tbody><tr>
 <td>
-dor.factor
+mae.numeric
 </td>
 <td style="text-align: right;">
 R Documentation
@@ -521,27 +521,21 @@ R Documentation
 <section id="description" class="level3">
 <h3 class="anchored" data-anchor-id="description">Description</h3>
 <p>
-The <code>dor()</code>-function computes the <a href="https://en.wikipedia.org/wiki/Diagnostic_odds_ratio">Diagnostic Odds Ratio</a> (DOR), a single indicator of test performance, between two vectors of predicted and observed <code>factor()</code> values. The <code>weighted.dor()</code> function computes the weighted diagnostic odds ratio.
-</p>
-<p>
-When <code>aggregate = TRUE</code>, the function returns the micro-average DOR across all classes <span class="math inline">\(k\)</span>. By default, it returns the class-wise DOR.
+The <code>mae()</code>-function computes the <a href="https://en.wikipedia.org/wiki/Mean_absolute_error">mean absolute error</a> between the observed and predicted <code>&lt;numeric&gt;</code> vectors. The <code>weighted.mae()</code> function computes the weighted mean absolute error.
 </p>
 </section>
 <section id="usage" class="level3">
 <h3 class="anchored" data-anchor-id="usage">Usage</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'factor'</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dor</span>(actual, predicted, ...)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'numeric'</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mae</span>(actual, predicted, ...)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'factor'</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.dor</span>(actual, predicted, w, ...)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'numeric'</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.mae</span>(actual, predicted, w, ...)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'cmatrix'</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dor</span>(x, ...)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dor</span>(...)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.dor</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mae</span>(...)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.mae</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="arguments" class="level3">
@@ -553,7 +547,7 @@ When <code>aggregate = TRUE</code>, the function returns the micro-average DOR a
 </td>
 <td>
 <p>
-A vector of <code>&lt;factor&gt;</code>- of length <span class="math inline">\(n\)</span>, and <span class="math inline">\(k\)</span> levels.
+A <code>&lt;numeric&gt;</code>-vector of length <span class="math inline">\(n\)</span>. The observed (continuous) response variable.
 </p>
 </td>
 </tr>
@@ -563,7 +557,7 @@ A vector of <code>&lt;factor&gt;</code>- of length <span class="math inline">\(n
 </td>
 <td>
 <p>
-A vector of <code>&lt;factor&gt;</code>-vector of length <span class="math inline">\(n\)</span>, and <span class="math inline">\(k\)</span> levels.
+A <code>&lt;numeric&gt;</code>-vector of length <span class="math inline">\(n\)</span>. The estimated (continuous) response variable.
 </p>
 </td>
 </tr>
@@ -573,7 +567,7 @@ A vector of <code>&lt;factor&gt;</code>-vector of length <span class="math inlin
 </td>
 <td>
 <p>
-Arguments passed into other methods
+Arguments passed into other methods.
 </p>
 </td>
 </tr>
@@ -583,17 +577,7 @@ Arguments passed into other methods
 </td>
 <td>
 <p>
-A <code>&lt;numeric&gt;</code>-vector of length <span class="math inline">\(n\)</span>. NULL by default.
-</p>
-</td>
-</tr>
-<tr>
-<td>
-<code id="x">x</code>
-</td>
-<td>
-<p>
-A confusion matrix created <code>cmatrix()</code>.
+A <code>&lt;numeric&gt;</code>-vector of length <span class="math inline">\(n\)</span>. The weight assigned to each observation in the data.
 </p>
 </td>
 </tr>
@@ -602,86 +586,48 @@ A confusion matrix created <code>cmatrix()</code>.
 <section id="value" class="level3">
 <h3 class="anchored" data-anchor-id="value">Value</h3>
 <p>
-If <code>micro</code> is NULL (the default), a named <code>&lt;numeric&gt;</code>-vector of length k
-</p>
-<p>
-If <code>micro</code> is TRUE or FALSE, a <code>&lt;numeric&gt;</code>-vector of length 1
+A <code>&lt;numeric&gt;</code> vector of length 1.
 </p>
 </section>
 <section id="calculation" class="level3">
 <h3 class="anchored" data-anchor-id="calculation">Calculation</h3>
 <p>
-The metric is calculated for each class <span class="math inline">\(k\)</span> as follows,
+The metric is calulated as follows,
 </p>
 <p><span class="math display">\[
-  \text{DOR}_k = \frac{\text{PLR}_k}{\text{NLR}_k}
+  \frac{\sum_i^n |y_i - \upsilon_i|}{n}
 \]</span></p>
-<p>
-Where <span class="math inline">\(\text{PLR}_k\)</span> and <span class="math inline">\(\text{NLR}_k\)</span> is the positive and negative likelihood ratio for class <span class="math inline">\(k\)</span>, respectively. See <code>plr()</code> and <code>nlr()</code> for more details.
-</p>
-<p>
-When <code>aggregate = TRUE</code>, the <code>micro</code>-average is calculated as,
-</p>
-<p><span class="math display">\[
-  \overline{\text{DOR}} = \frac{\overline{\text{PLR}_k}}{\overline{\text{NLR}_k}}
-\]</span></p>
-<p>
-Where <span class="math inline">\(\overline{\text{PLR}}\)</span> and <span class="math inline">\(\overline{\text{NLR}}\)</span> is the micro-averaged is the positive and negative likelihood ratio, respectively.
-</p>
 </section>
 <section id="examples" class="level3">
 <h3 class="anchored" data-anchor-id="examples">Examples</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) recode Iris</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to binary classification</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># problem</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>species_num <span class="st">`</span><span class="at">&lt;- as.numeric(</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">  iris$Species == "virginica"</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) fit a linear</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># regression</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>model <span class="st">`</span><span class="at">&lt;- lm(</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="at">  mpg ~ .,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">  data = mtcars</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="at"># 2) fit the logistic</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at"># regression</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="at">model </span><span class="st">`</span><span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> species_num <span class="sc">~</span> Sepal.Length <span class="sc">+</span> Sepal.Width,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">data    =</span> iris,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">family  =</span> <span class="fu">binomial</span>(</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">link =</span> <span class="st">"logit"</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 3) generate predicted</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># classes</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>predicted <span class="st">`</span><span class="at">&lt;- factor(</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="at">  as.numeric(</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="at">    predict(model, type = "response") &gt;</span><span class="st">`</span> <span class="fl">0.5</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="er">)</span>,</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  levels <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>),</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  labels <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Virginica"</span>, <span class="st">"Others"</span>)</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="er">)</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 3.1) generate actual</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co"># classes</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>actual <span class="st">`</span><span class="at">&lt;- factor(</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="at">  x = iris$species_num,</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="at">  levels = c(1,0),</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="at">  labels = c("Virginica", "Others")</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="at"># 4) evaluate model performance</span></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="at"># with Diagnostic Odds Ratio</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="at">cat("Diagnostic Odds Ratio", sep = "</span><span class="sc">\n</span><span class="at">")</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="at">dor(</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="at">  actual    = actual, </span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="at">  predicted = predicted</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="at">cat("Diagnostic Odds Ratio (weighted)", sep = "</span><span class="sc">\n</span><span class="at">")</span></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="at">weighted.dor(</span></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="at">  actual    = actual,</span></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="at">  predicted = predicted,</span></span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="at">  w         = iris$Petal.Length/mean(iris$Petal.Length)</span></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="at"># 1.1) define actual</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at"># and predicted values</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="at"># to measure performance</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="at">actual    </span><span class="st">`</span><span class="ot">&lt;-</span> mtcars<span class="sc">$</span>mpg</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>predicted <span class="st">`</span><span class="at">&lt;- fitted(model)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="at"># 2) evaluate in-sample model</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="at"># performance using Mean Absolute Error (MAE)</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="at">cat(</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="at">  "Mean Absolute Error", mae(</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="at">    actual    = actual,</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="at">    predicted = predicted,</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="at">  ),</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="at">  "Mean Absolute Error (weighted)", weighted.mae(</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="at">    actual    = actual,</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="at">    predicted = predicted,</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="at">    w         = mtcars$mpg/mean(mtcars$mpg)</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="at">  ),</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="at">  sep = "</span><span class="sc">\n</span><span class="at">"</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -1251,13 +1197,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../references/cmatrix.html" class="pagination-link" aria-label="confusion matrix">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">confusion matrix</span>
+      <a href="../references/logloss.html" class="pagination-link" aria-label="log loss">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">log loss</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../references/entropy.html" class="pagination-link" aria-label="entropy">
-        <span class="nav-page-text">entropy</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../references/mape.html" class="pagination-link" aria-label="mean absolute percentage error">
+        <span class="nav-page-text">mean absolute percentage error</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1266,4 +1212,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/references/dor.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/references/dor.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/references/mae.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/references/mae.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
