@@ -23,8 +23,19 @@ book:
   - intro.qmd
   - summary.qmd
   - benchmark.qmd
-  - part: metrics
-    chapters: []
+  - part: functions.qmd
+    chapters:
+    - references/accuracy.qmd
+    - references/baccuracy.qmd
+    - references/ccc.qmd
+    - references/ckappa.qmd
+    - references/cmatrix.qmd
+    - references/dor.qmd
+    - references/entropy.qmd
+    - references/fbeta.qmd
+    - references/fdr.qmd
+    - references/fer.qmd
+    number-sections: false
   - references.qmd
 bibliography: references.bib
 format:
