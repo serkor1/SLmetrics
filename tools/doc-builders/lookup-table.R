@@ -11,7 +11,9 @@ DT_ <- data.table::data.table(
     pattern = ".Rd",
     full.names = TRUE
   )
-)
+)[
+  !grepl("SLmetrics", x = rd_path)
+]
 
 # 2) extact base-name
 # of the path without extension
@@ -30,17 +32,53 @@ DT_[
   `:=`(
     title = data.table::fcase(
       default = NA_character_,
+
+      # classification functions
       name == "accuracy", "accuracy_c",
       name == "baccuracy", "balanced accuracy_c",
-      name == "ccc", "concordance correlation coefficient_r",
-      name == "ckappa", "cohens kappa_c",
+      name == "ckappa", "Cohen's kappa_c",
       name == "cmatrix", "confusion matrix_c",
       name == "dor", "diagnostic odds ratio_c",
       name == "entropy", "entropy_c",
-      name == "fbeta", "f-beta score_c",
+      name == "fbeta", "F-beta score_c",
       name == "fdr", "false discovery rate_c",
-      name == "fer", "false omission rate_c"
+      name == "fer", "false omission rate_c",
+      name == "fmi", "Fowlkes-Mallows index_c",
+      name == "fpr", "false positive rate_c",
+      name == "jaccard", "Jaccard score_c",
+      name == "logloss", "log loss_c",
+      name == "mpe", "mean percentage error_c",
+      name == "nlr", "negative likelihood ratio_c",
+      name == "npv", "negative predictive value_c",
+      name == "plr", "positive likelihood ratio_c",
+      name == "precision", "precision_c",
+      name == "prROC", "Precision-Recall curve_c",
+      name == "recall", "recall_c",
+      name == "rsq", "coefficient of determination_c",
+      name == "ROC", "receiver operator characteristics_c",
+
+      # regression functions
+      name == "huberloss", "huber loss_r",
+      name == "mae", "mean absolute error_r",
+      name == "mape", "mean absolute percentage error_r",
+      name == "mcc", "Matthews correlation coefficient_r",
+      name == "pinball", "pinball loss_r",
+      name == "rae", "relative absolute error_r",
+      name == "rmse", "root mean squared error_r",
+      name == "rmsle", "root mean squared logarithmic error_r",
+      name == "rrmse", "relative root mean squared error_r",
+      name == "rrse", "root relative squared error_r",
+      name == "smape", "symmetric mean absolute percentage error_r",
+      name == "specificity", "specificity_r",
+      name == "zerooneloss", "zero-one loss_c",
+      name == "ccc", "concordance correlation coefficient_r",
+      name == "mse", "mean squared error_r",
+
+      # utility functions
+      name == "setNumberThreads", "set threads_u",
+      name == "setUseOpenMP", "use OpenMP_u"
     )
+
   )
   ,
 ][
@@ -52,7 +90,7 @@ DT_[
 # 4) subset such that only 
 # mapped functions are available
 DT <- DT_[
-  !is.na(title)
+  !is.na(title) 
 ]
 
 # 4.1) stop the script if

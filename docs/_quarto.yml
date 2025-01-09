@@ -25,6 +25,7 @@ book:
   - benchmark.qmd
   - part: functions.qmd
     chapters:
+    - references/ROC.qmd
     - references/accuracy.qmd
     - references/baccuracy.qmd
     - references/ccc.qmd
@@ -35,6 +36,33 @@ book:
     - references/fbeta.qmd
     - references/fdr.qmd
     - references/fer.qmd
+    - references/fmi.qmd
+    - references/fpr.qmd
+    - references/huberloss.qmd
+    - references/jaccard.qmd
+    - references/logloss.qmd
+    - references/mae.qmd
+    - references/mape.qmd
+    - references/mcc.qmd
+    - references/mpe.qmd
+    - references/nlr.qmd
+    - references/npv.qmd
+    - references/pinball.qmd
+    - references/plr.qmd
+    - references/prROC.qmd
+    - references/precision.qmd
+    - references/rae.qmd
+    - references/recall.qmd
+    - references/rmse.qmd
+    - references/rmsle.qmd
+    - references/rrmse.qmd
+    - references/rrse.qmd
+    - references/rsq.qmd
+    - references/setNumberThreads.qmd
+    - references/setUseOpenMP.qmd
+    - references/smape.qmd
+    - references/specificity.qmd
+    - references/zerooneloss.qmd
     number-sections: false
   - references.qmd
 bibliography: references.bib
