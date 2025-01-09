@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./functions.html" rel="next">
 <link href="./summary.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -194,8 +194,75 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">metrics</span></span>
+      <div class="sidebar-item-container"> 
+            <a href="./functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Functions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references/accuracy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">accuracy</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references/baccuracy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">balanced accuracy</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references/ccc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">concordance correlation coefficient</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references/ckappa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">cohens kappa</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references/cmatrix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">confusion matrix</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references/dor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">diagnostic odds ratio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references/entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">entropy</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references/fbeta.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">f-beta score</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references/fdr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">false discovery rate</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references/fer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">false omission rate</span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
@@ -423,9 +490,9 @@ Table&nbsp;3.1: Benchmarking selected regression metrics
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {RMSE}                 30.2ms           0B        0
-#&gt; 2 {Pinball Loss}         30.5ms           0B        0
-#&gt; 3 {Huber Loss}           75.2ms           0B        0</code></pre>
+#&gt; 1 {RMSE}                 30.6ms           0B        0
+#&gt; 2 {Pinball Loss}         30.7ms           0B        0
+#&gt; 3 {Huber Loss}           75.5ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -449,10 +516,10 @@ Table&nbsp;3.2: Benchmarking RMSE across
 <pre><code>#&gt; # A tibble: 4 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}            30.5ms           0B        0
-#&gt; 2 {MLmetrics}            60.9ms       76.3MB        1
-#&gt; 3 {yardstick}           167.7ms      419.6MB       10
-#&gt; 4 {mlr3measures}         85.5ms       76.3MB        1</code></pre>
+#&gt; 1 {SLmetrics}            30.7ms           0B        0
+#&gt; 2 {MLmetrics}            61.6ms       76.3MB        1
+#&gt; 3 {yardstick}           169.9ms      419.6MB       10
+#&gt; 4 {mlr3measures}         86.8ms       76.3MB        1</code></pre>
 </div>
 </div>
 </figure>
@@ -478,9 +545,9 @@ Table&nbsp;3.3: Benchmarking selected classification metrics
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression         execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                    &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {Confusion Matrix}         8.58ms           0B        0
+#&gt; 1 {Confusion Matrix}         8.59ms           0B        0
 #&gt; 2 {Accuracy}                 8.59ms           0B        0
-#&gt; 3 {F-beta}                    8.6ms           0B        0</code></pre>
+#&gt; 3 {F-beta}                   8.59ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -503,9 +570,9 @@ Table&nbsp;3.4: Benchmarking a 3x3 confusion matrix across
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression  execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}         8.59ms           0B        0
-#&gt; 2 {MLmetrics}       248.22ms        381MB        7
-#&gt; 3 {yardstick}       247.93ms        381MB        7</code></pre>
+#&gt; 1 {SLmetrics}         8.61ms           0B        0
+#&gt; 2 {MLmetrics}       248.64ms        381MB        7
+#&gt; 3 {yardstick}       249.36ms        381MB        7</code></pre>
 </div>
 </div>
 </figure>
@@ -1095,8 +1162,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./functions.html" class="pagination-link" aria-label="Functions">
+        <span class="nav-page-text">Functions</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
