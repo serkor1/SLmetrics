@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>coefficient of determination – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
+<title>mean squared error – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../references/setNumberThreads.html" rel="next">
-<link href="../references/rrse.html" rel="prev">
+<link href="../references/nlr.html" rel="next">
+<link href="../references/mpe.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -146,7 +146,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../functions.html">Functions</a></li><li class="breadcrumb-item"><a href="../references/rsq.html">coefficient of determination</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../functions.html">Functions</a></li><li class="breadcrumb-item"><a href="../references/mse.html">mean squared error</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -353,7 +353,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references/mse.html" class="sidebar-item-text sidebar-link">
+  <a href="../references/mse.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">mean squared error</span></a>
   </div>
 </li>
@@ -431,7 +431,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references/rsq.html" class="sidebar-item-text sidebar-link active">
+  <a href="../references/rsq.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">coefficient of determination</span></a>
   </div>
 </li>
@@ -490,14 +490,14 @@ window.Quarto = {
   <li><a href="#calculation" id="toc-calculation" class="nav-link" data-scroll-target="#calculation">Calculation</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/references/rsq.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/references/rsq.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/references/mse.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/references/mse.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../functions.html">Functions</a></li><li class="breadcrumb-item"><a href="../references/rsq.html">coefficient of determination</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../functions.html">Functions</a></li><li class="breadcrumb-item"><a href="../references/mse.html">mean squared error</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">coefficient of determination</h1>
+<h1 class="title">mean squared error</h1>
 </div>
 
 
@@ -517,7 +517,7 @@ window.Quarto = {
 <table style="width: 100%;">
 <tbody><tr>
 <td>
-rsq.numeric
+mse.numeric
 </td>
 <td style="text-align: right;">
 R Documentation
@@ -527,21 +527,21 @@ R Documentation
 <section id="description" class="level3">
 <h3 class="anchored" data-anchor-id="description">Description</h3>
 <p>
-The <code>rsq()</code>-function calculates the <span class="math inline">\(R^2\)</span>, the <a href="https://en.wikipedia.org/wiki/Coefficient_of_determination">coefficient of determination</a>, between the ovserved and predicted <code>&lt;numeric&gt;</code> vectors. By default <code>rsq()</code> returns the unadjusted <span class="math inline">\(R^2\)</span>. For adjusted <span class="math inline">\(R^2\)</span> set <span class="math inline">\(k = \kappa - 1\)</span>, where <span class="math inline">\(\kappa\)</span> is the number of parameters.
+The <code>mse()</code>-function computes the <a href="https://en.wikipedia.org/wiki/Mean_squared_error">mean squared error</a> between the observed and predicted <code>&lt;numeric&gt;</code> vectors. The <code>weighted.mse()</code> function computes the weighted mean squared error.
 </p>
 </section>
 <section id="usage" class="level3">
 <h3 class="anchored" data-anchor-id="usage">Usage</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'numeric'</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rsq</span>(actual, predicted, <span class="at">k =</span> <span class="dv">0</span>, ...)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mse</span>(actual, predicted, ...)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'numeric'</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.rsq</span>(actual, predicted, w, <span class="at">k =</span> <span class="dv">0</span>, ...)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.mse</span>(actual, predicted, w, ...)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rsq</span>(...)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mse</span>(...)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.rsq</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.mse</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="arguments" class="level3">
@@ -564,16 +564,6 @@ A <code>&lt;numeric&gt;</code>-vector of length <span class="math inline">\(n\)<
 <td>
 <p>
 A <code>&lt;numeric&gt;</code>-vector of length <span class="math inline">\(n\)</span>. The estimated (continuous) response variable.
-</p>
-</td>
-</tr>
-<tr>
-<td>
-<code id="k">k</code>
-</td>
-<td>
-<p>
-A <code>&lt;numeric&gt;</code>-vector of length 1 (default: 0). If <span class="math inline">\(k&gt;`0\)</span> the function returns the adjusted <span class="math inline">\(R^2\)</span>.
 </p>
 </td>
 </tr>
@@ -608,13 +598,13 @@ A <code>&lt;numeric&gt;</code> vector of length 1.
 <section id="calculation" class="level3">
 <h3 class="anchored" data-anchor-id="calculation">Calculation</h3>
 <p>
-The metric is calculated as follows,
+The metric is calculated as,
 </p>
 <p><span class="math display">\[
-  R^2 = 1 - \frac{\text{SSE}}{\text{SST}} \frac{n-1}{n - (k + 1)}
+  \frac{1}{n} \sum_i^n (y_i - \upsilon_i)^2
 \]</span></p>
 <p>
-Where <span class="math inline">\(\text{SSE}\)</span> is the sum of squared errors, <span class="math inline">\(\text{SST}\)</span> is total sum of squared errors, <span class="math inline">\(n\)</span> is the number of observations, and <span class="math inline">\(k\)</span> is the number of non-constant parameters.
+Where <span class="math inline">\(y_i\)</span> and <span class="math inline">\(\upsilon_i\)</span> are the <code>actual</code> and <code>predicted</code> values respectively.
 </p>
 </section>
 <section id="examples" class="level3">
@@ -629,25 +619,24 @@ Where <span class="math inline">\(\text{SSE}\)</span> is the sum of squared erro
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="at"># 1.1) define actual</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at"># and predicted values</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="at"># to measure in-sample performance</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="at"># to measure performance</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="at">actual    </span><span class="st">`</span><span class="ot">&lt;-</span> mtcars<span class="sc">$</span>mpg</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>predicted <span class="st">`</span><span class="at">&lt;- fitted(model)</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="at"># 2) calculate performance</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="at"># using R squared adjusted and</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="at"># unadjused for features</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="at">cat(</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="at">  "Rsq", rsq(</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="at">    actual    = actual,</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="at">    predicted = fitted(model)</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="at">  ),</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="at">  "Rsq (Adjusted)", rsq(</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="at">    actual    = actual,</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="at">    predicted = fitted(model),</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="at">    k = ncol(model.matrix(model)) - 1</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="at">  ),</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="at">  sep = "</span><span class="sc">\n</span><span class="at">"</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="at"># 2) evaluate in-sample model</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="at"># performance using Mean Squared Error (MSE)</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="at">cat(</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="at">  "Mean Squared Error", mse(</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="at">    actual    = actual,</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="at">    predicted = predicted,</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="at">  ),</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="at">  "Mean Squared Error (weighted)", weighted.mse(</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="at">    actual    = actual,</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="at">    predicted = predicted,</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="at">    w         = mtcars$mpg/mean(mtcars$mpg)</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="at">  ),</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="at">  sep = "</span><span class="sc">\n</span><span class="at">"</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -1217,13 +1206,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../references/rrse.html" class="pagination-link" aria-label="root relative squared error">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">root relative squared error</span>
+      <a href="../references/mpe.html" class="pagination-link" aria-label="mean percentage error">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">mean percentage error</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../references/setNumberThreads.html" class="pagination-link" aria-label="set threads">
-        <span class="nav-page-text">set threads</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../references/nlr.html" class="pagination-link" aria-label="negative likelihood ratio">
+        <span class="nav-page-text">negative likelihood ratio</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1232,4 +1221,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/references/rsq.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/references/rsq.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/references/mse.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/references/mse.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

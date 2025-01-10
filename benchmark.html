@@ -71,12 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-86daaaaad7353f9cc0c554efc1dd6d94.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-f8dc6eab18fde03278982b0b35885446.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-860ce882c5c8dae7a7d124b88f9858d5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-bfd7e6fb43b598484661e0bf296f8464.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-e4ea7b223cb1c3d9bf7b5cda7bb2621a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-0df716468c22f3246da81391dc078a11.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -320,6 +320,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./references/mpe.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">mean percentage error</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references/mse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">mean squared error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -658,9 +664,9 @@ Table&nbsp;3.1: Benchmarking selected regression metrics
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {RMSE}                 30.4ms           0B        0
-#&gt; 2 {Pinball Loss}         30.5ms           0B        0
-#&gt; 3 {Huber Loss}           75.4ms           0B        0</code></pre>
+#&gt; 1 {RMSE}                 30.5ms           0B        0
+#&gt; 2 {Pinball Loss}         30.6ms           0B        0
+#&gt; 3 {Huber Loss}           75.5ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -684,10 +690,10 @@ Table&nbsp;3.2: Benchmarking RMSE across
 <pre><code>#&gt; # A tibble: 4 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}            30.9ms           0B        0
-#&gt; 2 {MLmetrics}            61.4ms       76.3MB        1
-#&gt; 3 {yardstick}           169.3ms      419.6MB       10
-#&gt; 4 {mlr3measures}           86ms       76.3MB        1</code></pre>
+#&gt; 1 {SLmetrics}            30.5ms           0B        0
+#&gt; 2 {MLmetrics}            60.5ms       76.3MB        1
+#&gt; 3 {yardstick}           167.2ms      419.6MB       10
+#&gt; 4 {mlr3measures}         84.5ms       76.3MB        1</code></pre>
 </div>
 </div>
 </figure>
@@ -713,9 +719,9 @@ Table&nbsp;3.3: Benchmarking selected classification metrics
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression         execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                    &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {Confusion Matrix}         8.58ms           0B        0
-#&gt; 2 {Accuracy}                 8.58ms           0B        0
-#&gt; 3 {F-beta}                   8.59ms           0B        0</code></pre>
+#&gt; 1 {Confusion Matrix}         8.53ms           0B        0
+#&gt; 2 {Accuracy}                 8.51ms           0B        0
+#&gt; 3 {F-beta}                   8.53ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -738,9 +744,9 @@ Table&nbsp;3.4: Benchmarking a 3x3 confusion matrix across
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression  execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}          8.6ms           0B        0
-#&gt; 2 {MLmetrics}        247.7ms        381MB        7
-#&gt; 3 {yardstick}        248.3ms        381MB        7</code></pre>
+#&gt; 1 {SLmetrics}         8.48ms           0B        0
+#&gt; 2 {MLmetrics}       247.61ms        381MB        7
+#&gt; 3 {yardstick}       247.69ms        381MB        7</code></pre>
 </div>
 </div>
 </figure>
