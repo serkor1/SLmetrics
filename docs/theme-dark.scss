@@ -1,1 +1,22 @@
 /*-- scss:defaults --*/
+pre:not(.sourceCode):not(.code-with-copy) {
+    background-color: rgba(67, 67, 67, 0.65);
+    color: #abb2bf;
+    padding: 1rem;
+    border: 1px solid rgba(67, 67, 67, 0.65);
+    border-radius: 0.25rem;
+    overflow-x: auto;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+}
+  
+ 
+code:not(.sourceCode):not(.code-with-copy) {
+    background-color: rgba(67, 67, 67, 0.65);
+    color: #f97583;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 13px;
+}

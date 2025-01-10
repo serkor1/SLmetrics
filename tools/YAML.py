@@ -46,11 +46,12 @@ book_structure = {
         'html': {
             'theme': {
             "light": ["cosmo", "theme-light.scss"],  # Use a list here
-            "dark": ["darkly", "theme-dark.scss"],  # Use a list here
+            "dark": ["slate", "theme-dark.scss"],  # Use a list here
         }
         },
         'pdf': {'documentclass': 'scrreprt'}
     },
+    'highlight-style': "github",
     "execute": {
         "freeze": "auto",
         "cache" : True
