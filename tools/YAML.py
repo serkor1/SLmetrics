@@ -45,9 +45,11 @@ book_structure = {
     'format': {
         'html': {
             'theme': {
-            "light": ["cosmo", "theme-light.scss"],  # Use a list here
-            "dark": ["slate", "theme-dark.scss"],  # Use a list here
-        }
+            "light": ["cosmo", "theme-light.scss"],
+            "dark": ["slate", "theme-dark.scss"]
+        },
+            "fontsize": "18px",
+            "mainfont": "calibri"
         },
         'pdf': {'documentclass': 'scrreprt'}
     },
@@ -72,9 +74,6 @@ try:
 
 except:
     print("No references found! Skipping")
-
-
-
 
 with open('_quarto.yml', 'w') as file:
     yaml.dump(book_structure, file, sort_keys=False)

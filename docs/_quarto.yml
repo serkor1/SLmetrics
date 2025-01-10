@@ -76,6 +76,8 @@ format:
       dark:
       - slate
       - theme-dark.scss
+    fontsize: 18px
+    mainfont: calibri
   pdf:
     documentclass: scrreprt
 highlight-style: github
