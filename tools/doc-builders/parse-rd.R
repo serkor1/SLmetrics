@@ -72,6 +72,7 @@ clean_content <- function(text, title) {
       "(?s)<p\\s+style=\"text-align:\\s*center;?\">\\s*<code\\s+class=\"reqn\">(.*?)</code>\\s*</p>",
       "(?s)<code\\s+class=\"reqn\">(.*?)</code>",
       # convert >
+      "&lt;(?!-)",
       "&gt;",
       # convert <
       "&lt;",
@@ -95,8 +96,9 @@ clean_content <- function(text, title) {
       "\\$\\$$1\\$\\$",
       # $ $
       "\\$$1\\$",
-      ">`",
       "`<",
+      ">`",
+      "<",
       "`$1`",
       "```{r, eval = FALSE}\n$1\n```",
       "```{r}\n$1\n```",

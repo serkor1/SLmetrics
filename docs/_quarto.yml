@@ -45,6 +45,7 @@ book:
     - references/mape.qmd
     - references/mcc.qmd
     - references/mpe.qmd
+    - references/mse.qmd
     - references/nlr.qmd
     - references/npv.qmd
     - references/pinball.qmd
@@ -73,10 +74,13 @@ format:
       - cosmo
       - theme-light.scss
       dark:
-      - darkly
+      - slate
       - theme-dark.scss
+    fontsize: 18px
+    mainfont: calibri
   pdf:
     documentclass: scrreprt
+highlight-style: github
 execute:
   freeze: auto
   cache: true
