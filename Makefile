@@ -12,14 +12,27 @@ TARBALL = $(PKGNAME)_$(VERSION).tar.gz
 # ---------- MAKE helpers ---------- #
 # build-meta
 #
-# This command renders README.qmd and NEWS.qmd and stores
-# them in root directory. 
+# This command renders README.qmd and NEWS.qmd and moves
+# them to root directory. 
 build-meta:
 	@echo "📚 Rendering README and NEWS"
 
-	# 1) render documents
-	@quarto render meta/README.qmd --output-dir ../
-	@quarto render meta/NEWS.qmd   --output-dir ../
+	@quarto render meta/README.qmd
+	@quarto render meta/NEWS.qmd
+
+
+	@Rscript -e "file_path <- 'NEWS.md'; \
+	             file_contents <- readLines(file_path); \
+	             modified_contents <- gsub('NEWS_files/', 'meta/NEWS_files/', file_contents); \
+	             writeLines(modified_contents, file_path); \
+	             cat('Replacements completed in NEWS.md\\n')"
+
+	@Rscript -e "file_path <- 'README.md'; \
+	             file_contents <- readLines(file_path); \
+	             modified_contents <- gsub('README_files/', 'meta/README_files/', file_contents); \
+	             writeLines(modified_contents, file_path); \
+	             cat('Replacements completed in README.md\\n')"
+
 
 # preview-docs
 #
@@ -30,8 +43,10 @@ build-meta:
 # is built via Github actions.
 preview-docs:
 	@echo "📚 Building Quarto Book"
+
 	@python3 tools/doc-builders/YAML.py
 	@Rscript -e "source('tools/doc-builders/build-qmd.R')"
+
 	@cd docs/ && quarto preview
 
 # document:
