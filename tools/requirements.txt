@@ -1,1 +1,7 @@
 PyYAML
+numpy
+scipy
+torch
+torchmetrics
+scikit-learn
+imblearn

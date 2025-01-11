@@ -1,5 +1,5 @@
 import os
-import yaml
+import PyYaml as yaml
 import re
 
 def version():
