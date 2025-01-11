@@ -6,6 +6,10 @@ always_allow_html: true
 execute: 
   cache: true
   freeze: auto
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>" 
 ---
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
