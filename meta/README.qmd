@@ -6,6 +6,14 @@ always_allow_html: true
 execute: 
   cache: true
   freeze: auto
+  dir: meta
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>" 
+    dpi: 1280
+    fig.height: 6
+    out.width: 100%
 ---
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -14,15 +22,6 @@ execute:
 
 # load {SLmetrics}
 library(SLmetrics)
-
-knitr::opts_chunk$set(
-  collapse   = TRUE,
-  comment    = "#>",
-  fig.path   = "man/figures/README-",
-  out.width  = "100%",
-  dpi        = 1280,
-  fig.height = 6
-)
 
 # 1) store data
 DT <- SLmetrics:::DT

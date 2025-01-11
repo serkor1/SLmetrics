@@ -25,6 +25,12 @@ runs:
       uses: actions/setup-python@v5
       with:
         python-version: ${{ inputs.python-version }}
+        cache: pip
+
+    - name: "Setup Python dependencies"
+      shell: bash
+      run: |
+       pip install -r tools/requirements.txt
 
     - name: Setup venv with {Reticulate}
       shell: Rscript {0}
@@ -32,23 +38,25 @@ runs:
         PYTHON_VERSION: ${{ inputs.python-version }}
       run: |
 
-        # 1) create virtual environment
+        # 1) define python modules
+        py_modules <- c(
+          "numpy",
+          "scipy",
+          "torch",
+          "torchmetrics",
+          "scikit-learn",
+          "imblearn"
+        )
+
+        # 2) create virtual environment
         # with specified version
-        
         path_to_python <- tryCatch(
           expr = {
 
             reticulate::virtualenv_create(
-              envname        = "r-reticulate",
-              python         =  Sys.which("python"),
-              packages = c(
-                "numpy",
-                "scipy",
-                "torch",
-                "torchmetrics",
-                "scikit-learn",
-                "imblearn"
-              )
+              envname  = "r-reticulate",
+              python   =  Sys.which("python"),
+              packages = py_modules
             )
           
           },
@@ -57,20 +65,13 @@ runs:
             reticulate::virtualenv_create(
               envname        = "r-reticulate",
               python_version =  Sys.getenv("PYTHON_VERSION"),
-              packages = c(
-                "numpy",
-                "scipy",
-                "torch",
-                "torchmetrics",
-                "scikit-learn",
-                "imblearn"
-              )
+              packages       = py_modules
             )
 
           }
         )
 
-        # 2) write path to
+        # 3) write path to
         # environment
         writeLines(
           sprintf("RETICULATE_PYTHON=%s", path_to_python),

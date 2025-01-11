@@ -1,25 +1,19 @@
 ---
-format: 
+format:
     gfm:
-        default-image-extension: ""
+        default-image-extension: ".png"
 always_allow_html: true
 execute: 
   cache: true
   freeze: auto
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>" 
+    dpi: 1280
+    fig.height: 6
+    out.width: 100%
 ---
-
-```{r setup, echo = FALSE}
-# 1) setup common
-# values
-knitr::opts_chunk$set(
-  comment   = "#>", 
-  echo      = TRUE, 
-  fig.width = 6
-)
-
-# 2) setup seeed
-set.seed(1903) 
-```
 
 # Version 0.3-1
 

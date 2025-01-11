@@ -50,19 +50,14 @@ rsconnect/
 sandbox/
 inst/doc
 
-
-# Clion Files
-src/CMakeLists.txt
-src/cmake-build-debug
-src/.idea
-
-/.quarto/
-docs/*/
-
 # html-files
 # (from rendering markdown/quarto)
 *.html
-/README_files
-/README_cache
-/NEWS_files
-/NEWS_cache
+
+
+# Ignore all subdirectories in meta/
+meta/*
+
+# Do not ignore NEWS_files and README_files within meta/
+!meta/NEWS_files/
+!meta/README_files/
