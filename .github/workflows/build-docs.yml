@@ -50,12 +50,12 @@ jobs:
             any::tidymodels
             any::stringi
 
-      - name: Set up Python and Dependencies
+      - name: Set up Python and dependencies
         uses: actions/setup-python@v5
         with:
           python-version: '3.12.x'
           cache: pip
-      - run: pip install PyYAML
+      - run: pip install -r tools/requirements.txt
 
       - name: Build YAML-file
         run: python tools/doc-builders/YAML.py
