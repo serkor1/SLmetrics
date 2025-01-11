@@ -56,7 +56,7 @@ inst/doc
 
 
 # Ignore all subdirectories in meta/
-meta/**/
+meta/*
 
 # Do not ignore NEWS_files and README_files within meta/
 !meta/NEWS_files/
