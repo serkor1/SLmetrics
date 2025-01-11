@@ -20,9 +20,11 @@ TARBALL = $(PKGNAME)_$(VERSION).tar.gz
 build-meta:
 	@echo "📚 Rendering README and NEWS"
 
-	@quarto render meta/README.qmd --output-dir ../
-	@quarto render meta/NEWS.qmd   --output-dir ../
+	@quarto render meta/README.qmd
+	@quarto render meta/NEWS.qmd
 
+	@mv meta/README.md .
+	@mv meta/NEWS.md .
 
 	@Rscript -e "file_path <- 'NEWS.md'; \
 	             file_contents <- readLines(file_path); \
