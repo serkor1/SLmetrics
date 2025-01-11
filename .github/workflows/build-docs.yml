@@ -55,7 +55,11 @@ jobs:
         with:
           python-version: '3.12.x'
           cache: pip
-      - run: pip install -r tools/requirements.txt
+
+      - name: "Setup Python dependencies"
+        shell: bash
+        run: |
+          pip install -r tools/requirements.txt
 
       - name: Build YAML-file
         run: python tools/doc-builders/YAML.py
