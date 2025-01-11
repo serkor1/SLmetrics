@@ -30,14 +30,14 @@ SLmetrics::setUseOpenMP(TRUE)
 #> OpenMP usage set to: enabled
 system.time(SLmetrics::entropy(pk))
 #>    user  system elapsed 
-#>   0.008   0.001   0.001
+#>   0.006   0.002   0.001
 
 # 3) Disable OpenMP
 SLmetrics::setUseOpenMP(FALSE)
 #> OpenMP usage set to: disabled
 system.time(SLmetrics::entropy(pk))
 #>    user  system elapsed 
-#>   0.001   0.000   0.001
+#>   0.000   0.000   0.001
 ```
 
 - **Entropy with soft labels

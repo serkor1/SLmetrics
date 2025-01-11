@@ -159,8 +159,7 @@ RMSE[^1].
 
 ### :fast_forward: Speed comparison
 
-<img src="man/figures/README-unnamed-chunk-4-1.png"
-style="width:100.0%" />
+![](README_files/figure-commonmark/unnamed-chunk-4-1.png)
 
 As shown in the chart,
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) maintains
