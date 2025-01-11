@@ -28,8 +28,6 @@ performance:
 document:
 	@clear
 	@echo "📚 Documenting {$(PKGNAME)}"
-	@quarto render README.qmd
-	@quarto render NEWS.qmd
 	@Rscript tools/document.R
 
 build: document
@@ -43,9 +41,8 @@ build: document
 	@echo "✅ Done!"
 	@rm -f $(TARBALL)
 	@rm -f src/*.o src/*.so
-	@quarto render README.qmd
-	@quarto render NEWS.qmd
 	$(MAKE) build-docs
+	$(MAKE) build-meta
 	@echo "✅ Build process done!"
 
 check: document
@@ -62,13 +59,34 @@ check: document
 	@rm -f $(TARBALL)
 	@rm -rf $(PKGNAME).Rcheck
 	@rm -f src/*.o src/*.so
-	@quarto render README.qmd
-	@quarto render NEWS.qmd
+	$(MAKE) build-meta
 	@echo "✅ R CMD check process done!"
 
 
+clean:
+	@echo "🗑️ Cleaning reposiory"
+	@echo "====================="
+
+	# clean-up branches
+	@git branch | grep -v "main" | grep -v "development" | xargs git branch -D
+
+	# clean-up meta
+	@rm NEWS.md
+	@rm README.md
+
+	# clean-up build-files
+	@rm -f src/*.o src/*.so
+
+
+build-meta:
+	@echo "📚 Rendering README and NEWS"
+
+	# 1) render documents
+	@quarto render meta/README.qmd --output-dir ../
+	@quarto render meta/NEWS.qmd   --output-dir ../
+
 build-docs:
 	@echo "📚 Building Quarto Book"
-	@python3 tools/YAML.py
+	@python3 tools/doc-builders/YAML.py
 	@Rscript -e "source('tools/doc-builders/build-qmd.R')"
-	@cd docs/ && quarto preview
+	@cd docs/ && quarto render

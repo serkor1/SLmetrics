@@ -50,6 +50,20 @@ jobs:
             any::tidymodels
             any::stringi
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12.x'  
+
+      - name: Run YAML.py
+        run: python tools/doc-builders/YAML.py
+
+      - name: Render docs
+        uses: quarto-dev/quarto-actions/render@v2
+        with:
+          to: html 
+          path: docs/
+
       - name: Parse Roxygen files
         shell: Rscript {0}
         run: |
