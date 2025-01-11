@@ -12,19 +12,6 @@ knitr:
     comment: "#>" 
 ---
 
-```{r setup, echo = FALSE}
-# 1) setup common
-# values
-knitr::opts_chunk$set(
-  comment   = "#>", 
-  echo      = TRUE, 
-  fig.width = 6
-)
-
-# 2) setup seeed
-set.seed(1903) 
-```
-
 # Version 0.3-1
 
 > Version 0.3-1 is considered pre-release of {SLmetrics}. We do not
