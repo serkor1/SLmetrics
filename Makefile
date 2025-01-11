@@ -14,11 +14,14 @@ TARBALL = $(PKGNAME)_$(VERSION).tar.gz
 #
 # This command renders README.qmd and NEWS.qmd and moves
 # them to root directory. 
+#
+# Because of stuff, the command now replaces all dirs with meta/dir... Otherwise images are
+# not rendered
 build-meta:
 	@echo "📚 Rendering README and NEWS"
 
-	@quarto render meta/README.qmd
-	@quarto render meta/NEWS.qmd
+	@quarto render meta/README.qmd --output-dir ../
+	@quarto render meta/NEWS.qmd   --output-dir ../
 
 
 	@Rscript -e "file_path <- 'NEWS.md'; \

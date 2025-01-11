@@ -2,7 +2,6 @@
 format:
     gfm:
         default-image-extension: ".png"
-output-file: "README"
 always_allow_html: true
 execute: 
   cache: true
