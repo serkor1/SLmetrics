@@ -26,7 +26,7 @@ runs:
       with:
         python-version: ${{ inputs.python-version }}
         cache: pip
-      run: pip install -r tools/requirements.txt
+    - run: pip install -r tools/requirements.txt
 
     - name: Setup venv with {Reticulate}
       shell: Rscript {0}
