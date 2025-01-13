@@ -195,8 +195,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">regression_functions.qmd</span></a>
+            <a href="./regression_functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regression functions</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -290,8 +290,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">classification_functions.qmd</span></a>
+            <a href="./classification_functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classification functions</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -540,7 +540,7 @@ Note
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">iterations    =</span> <span class="dv">100</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div id="tbl-rmse-speed" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-messages="false" data-warnings="false">
+<div id="tbl-rmse-speed" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-warnings="false" data-messages="false">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-rmse-speed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1.1: Calculating RMSE on 1e7 vectors
@@ -550,8 +550,8 @@ Table&nbsp;1.1: Calculating RMSE on 1e7 vectors
 <pre><code># A tibble: 2 × 6
   expression       min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 {SLmetrics}   30.6ms   31.4ms      31.8    6.13MB      0  
-2 {MLmetrics}   61.2ms   61.6ms      16.2   76.39MB     79.0</code></pre>
+1 {SLmetrics}   29.3ms   30.3ms      33.0    6.13MB      0  
+2 {MLmetrics}   58.9ms   61.7ms      16.3   76.39MB     79.4</code></pre>
 </div>
 </div>
 </figure>
@@ -580,8 +580,8 @@ Table&nbsp;1.2: Computing a 3x3 confusion matrix on 1e7 vectors
 <pre><code># A tibble: 2 × 6
   expression       min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 {SLmetrics}   8.57ms   8.61ms    116.      4.12KB     0   
-2 {MLmetrics} 248.08ms 253.89ms      3.64   381.6MB     7.50</code></pre>
+1 {SLmetrics}   8.56ms    8.6ms    116.      4.12KB     0   
+2 {MLmetrics} 245.94ms  251.7ms      3.67   381.6MB     7.57</code></pre>
 </div>
 </div>
 </figure>
