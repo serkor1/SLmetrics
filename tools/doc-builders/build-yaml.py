@@ -104,7 +104,7 @@ class YAML:
             print(f"[ERROR] Could not build references: {str(e)}")
             print("Skipping reference assignment...")
 
-    def write_config(self, output_file="_quarto.yml"):
+    def write_config(self, output_file="_quarto.yaml"):
         with open(output_file, 'w') as f:
             yaml.dump(self.book_structure, f, sort_keys=False)
         print(f"Successfully wrote {output_file} in {os.getcwd()}")
@@ -117,5 +117,5 @@ if __name__ == "__main__":
     # 2) build YAML
     builder.build()
 
-    # 3) store YAML as "_quarto.yml" in docs/
-    builder.write_config("_quarto.yml")
+    # 3) store YAML as "_quarto.yaml" in docs/
+    builder.write_config("_quarto.yaml")

@@ -59,7 +59,7 @@ meta/**/
 docs/**/
 
 # ignore quarto yaml
-docs/_quarto.yml
+docs/_quarto.yaml
 
 # Do not ignore NEWS_files and README_files within meta/
 !meta/README_*/
