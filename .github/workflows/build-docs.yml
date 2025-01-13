@@ -62,7 +62,7 @@ jobs:
           pip install -r tools/requirements.txt
 
       - name: Build YAML-file
-        run: python tools/doc-builders/YAML.py
+        run: python tools/doc-builders/build-yaml.py
 
       - name: Render docs
         uses: quarto-dev/quarto-actions/render@v2
@@ -74,8 +74,9 @@ jobs:
         shell: Rscript {0}
         run: |
 
-          # 1) create folder
-          dir.create("docs/references")
+          # 1) create folders
+          dir.create("docs/ref_regression")
+          dir.create("docs/ref_classification")
 
           # 2) source builders
           source('tools/doc-builders/build-qmd.R')

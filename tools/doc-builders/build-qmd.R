@@ -43,11 +43,20 @@ for (i in seq_len(N)) {
 
   # 2.3) process the html
   # file and store in docs/references
-  process_html_to_markdown(
-    input_file = html,
-    output_file = paste0("docs/references/", DT$name[i] ,".qmd"),
-    title = DT$title[i]
-  )
+  if (DT$type[i] == "r") {
+    process_html_to_markdown(
+      input_file = html,
+      output_file = paste0("docs/ref_regression/", DT$name[i] ,".qmd"),
+      title = DT$title[i]
+    )
+  } else {
+    process_html_to_markdown(
+      input_file = html,
+      output_file = paste0("docs/ref_classification/", DT$name[i] ,".qmd"),
+      title = DT$title[i]
+    )
+  }
+  
   
    # Update progress bar
    setTxtProgressBar(pb, i)
