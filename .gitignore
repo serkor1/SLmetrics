@@ -54,9 +54,12 @@ inst/doc
 # (from rendering markdown/quarto)
 *.html
 
+# Ignore all subdirectories in meta/ and docs/
+meta/**/
+docs/**/
 
-# Ignore all subdirectories in meta/
-meta/*
+# ignore quarto yaml
+docs/_quarto.yml
 
 # Do not ignore NEWS_files and README_files within meta/
 !meta/README_*/

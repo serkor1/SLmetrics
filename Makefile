@@ -56,7 +56,7 @@ build-meta:
 preview-docs:
 	@echo "📚 Building Quarto Book"
 
-	@python3 tools/doc-builders/YAML.py
+	@python3 tools/doc-builders/build-yaml.py
 	@Rscript -e "source('tools/doc-builders/build-qmd.R')"
 
 	@cd docs/ && quarto preview
