@@ -1,7 +1,7 @@
 on:
   workflow_dispatch:
   push:
-    paths: ['docs/**', '.github/workflows/build-docs.yml']
+    paths: ['docs/**', '.github/workflows/build-docs.yaml']
     branches-ignore:
       - stable
       - main
