@@ -61,15 +61,6 @@ jobs:
         run: |
           pip install -r tools/requirements.txt
 
-      - name: Build YAML-file
-        run: python tools/doc-builders/build-yaml.py
-
-      - name: Render docs
-        uses: quarto-dev/quarto-actions/render@v2
-        with:
-          to: html 
-          path: docs/
-
       - name: Parse Roxygen files
         shell: Rscript {0}
         run: |
@@ -80,6 +71,9 @@ jobs:
 
           # 2) source builders
           source('tools/doc-builders/build-qmd.R')
+
+      - name: Build YAML-file
+        run: python tools/doc-builders/build-yaml.py
             
       - name: Render docs
         uses: quarto-dev/quarto-actions/render@v2
