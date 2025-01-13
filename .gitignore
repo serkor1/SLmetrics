@@ -59,5 +59,6 @@ inst/doc
 meta/*
 
 # Do not ignore NEWS_files and README_files within meta/
-!meta/NEWS_files/
-!meta/README_files/
+!meta/README_*/
+!meta/NEWS_*/
+!meta/_freeze/
