@@ -13,15 +13,22 @@ TARBALL = $(PKGNAME)_$(VERSION).tar.gz
 # build-meta
 #
 # This command renders README.qmd and NEWS.qmd and moves
-# them to root directory. 
+# them to root directory.
+#
+# Call it as build-meta CHECK=true to reset the cache
 #
 # Because of stuff, the command now replaces all dirs with meta/dir... Otherwise images are
 # not rendered
 build-meta:
 	@echo "📚 Rendering README and NEWS"
 
-	@quarto render meta/README.qmd
-	@quarto render meta/NEWS.qmd
+	@if [ "$(RESET)" = "true" ]; then \
+		quarto render meta/README.qmd --cache-refresh;  \
+	    quarto render meta/NEWS.qmd --cache-refresh; \
+	else \
+		quarto render  meta/README.qmd; \
+		quarto render  meta/NEWS.qmd; \
+	fi
 
 	@mv meta/README.md .
 	@mv meta/NEWS.md .
