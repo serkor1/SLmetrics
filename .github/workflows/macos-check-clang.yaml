@@ -3,6 +3,8 @@
 on:
   push:
     branches: [development]
+  push:
+    paths: ['.github/workflows/macos-check-clang.yaml']
   pull_request:
     branches: [development]
 
