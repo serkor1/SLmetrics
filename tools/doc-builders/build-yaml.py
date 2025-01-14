@@ -55,14 +55,17 @@ class YAML:
                     "fontsize": "18px",
                     "mainfont": "calibri"
                 },
-                'pdf': {'documentclass': 'scrreprt'}
+                'pdf': {
+                    'documentclass': 'scrreprt',
+                    'keep-tex': True,
+                    'latex-auto-install': True
+                    }
             },
             'highlight-style': "github",
             "execute": {
                 "freeze": "auto",
                 "cache": True
-            },
-            'pdf-engine': 'latexmk'
+            }
         }
 
     def get_version(self):
