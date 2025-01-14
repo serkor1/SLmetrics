@@ -79,15 +79,6 @@ jobs:
       - name: Build YAML-file
         run: python tools/doc-builders/build-yaml.py
 
-      - uses: r-lib/actions/setup-tinytex@v2  
-      - run: tlmgr --version
-      
-      - name: Install additional LaTeX packages
-        run: |
-          tlmgr update --self
-          tlmgr install titlesec
-          tlmgr list --only-installed
-
       - name: Render docs
         uses: quarto-dev/quarto-actions/render@v2
         with:
