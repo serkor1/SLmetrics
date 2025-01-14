@@ -7,3 +7,5 @@ The primary goal of {SLmetrics} is to be a *fast*, *memory efficient* and *relia
 ::: {.callout-warning}
 {SLmetrics} and the documentation is currently under development
 :::
+
+Mock @knuth84
