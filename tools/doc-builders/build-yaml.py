@@ -25,6 +25,7 @@ class YAML:
                 'sidebar': {
                     'title': "Documentation"
                 },
+                'downloads': ['pdf', 'epub'],
                 'chapters': [
                     'index.qmd',
                     'intro.qmd',
@@ -60,7 +61,8 @@ class YAML:
             "execute": {
                 "freeze": "auto",
                 "cache": True
-            }
+            },
+            'pdf-engine': 'latexmk'
         }
 
     def get_version(self):
