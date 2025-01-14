@@ -136,8 +136,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/serkor1/SLmetrics/tree/development/docs/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./{SLmetrics}--Machine-Learning-Performance-Evaluation-on-Steroids.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./{SLmetrics}--Machine-Learning-Performance-Evaluation-on-Steroids.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
               <i class="bi bi-twitter pe-1"></i>
@@ -681,9 +698,9 @@ Table&nbsp;3.1: Benchmarking selected regression metrics
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {RMSE}                 30.5ms           0B        0
-#&gt; 2 {Pinball Loss}         30.6ms           0B        0
-#&gt; 3 {Huber Loss}           75.7ms           0B        0</code></pre>
+#&gt; 1 {RMSE}                 31.4ms           0B        0
+#&gt; 2 {Pinball Loss}         31.6ms           0B        0
+#&gt; 3 {Huber Loss}           76.2ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -707,10 +724,10 @@ Table&nbsp;3.2: Benchmarking RMSE across
 <pre><code>#&gt; # A tibble: 4 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}            31.1ms           0B        0
-#&gt; 2 {MLmetrics}            61.4ms       76.3MB        1
-#&gt; 3 {yardstick}           168.8ms      419.6MB        9
-#&gt; 4 {mlr3measures}           86ms       76.3MB        1</code></pre>
+#&gt; 1 {SLmetrics}            31.5ms           0B        0
+#&gt; 2 {MLmetrics}            62.7ms       76.3MB        1
+#&gt; 3 {yardstick}           171.7ms      419.6MB        9
+#&gt; 4 {mlr3measures}         88.4ms       76.3MB        1</code></pre>
 </div>
 </div>
 </figure>
@@ -736,9 +753,9 @@ Table&nbsp;3.3: Benchmarking selected classification metrics
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression         execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                    &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {Confusion Matrix}         8.62ms           0B        0
-#&gt; 2 {Accuracy}                 8.62ms           0B        0
-#&gt; 3 {F-beta}                   8.62ms           0B        0</code></pre>
+#&gt; 1 {Confusion Matrix}         8.61ms           0B        0
+#&gt; 2 {Accuracy}                  8.6ms           0B        0
+#&gt; 3 {F-beta}                   8.61ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -762,8 +779,8 @@ Table&nbsp;3.4: Benchmarking a 3x3 confusion matrix across
 #&gt;   expression  execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
 #&gt; 1 {SLmetrics}         8.62ms           0B        0
-#&gt; 2 {MLmetrics}       249.41ms        381MB        7
-#&gt; 3 {yardstick}       249.42ms        381MB        7</code></pre>
+#&gt; 2 {MLmetrics}       250.24ms        381MB        7
+#&gt; 3 {yardstick}       250.34ms        381MB        7</code></pre>
 </div>
 </div>
 </figure>

@@ -136,8 +136,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/serkor1/SLmetrics/tree/development/docs/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./{SLmetrics}--Machine-Learning-Performance-Evaluation-on-Steroids.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./{SLmetrics}--Machine-Learning-Performance-Evaluation-on-Steroids.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
               <i class="bi bi-twitter pe-1"></i>
@@ -556,8 +573,8 @@ Table&nbsp;1.1: Calculating RMSE on 1e7 vectors
 <pre><code># A tibble: 2 × 6
   expression       min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 {SLmetrics}   30.2ms   31.1ms      32.1    6.13MB      0  
-2 {MLmetrics}   58.6ms   60.5ms      16.5   76.39MB     80.7</code></pre>
+1 {SLmetrics}   30.3ms   31.3ms      31.7    6.13MB      0  
+2 {MLmetrics}   61.4ms   62.1ms      16.0   76.39MB     78.3</code></pre>
 </div>
 </div>
 </figure>
@@ -586,8 +603,8 @@ Table&nbsp;1.2: Computing a 3x3 confusion matrix on 1e7 vectors
 <pre><code># A tibble: 2 × 6
   expression       min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 {SLmetrics}   8.57ms   8.59ms    116.      4.12KB     0   
-2 {MLmetrics} 247.02ms 252.84ms      3.65   381.6MB     7.52</code></pre>
+1 {SLmetrics}   8.56ms    8.6ms    114.      4.12KB     0   
+2 {MLmetrics} 247.72ms  253.5ms      3.65   381.6MB     7.51</code></pre>
 </div>
 </div>
 </figure>
