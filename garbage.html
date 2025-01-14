@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>false positive rate – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
+<title>4&nbsp; Garbage in, garbage out – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,26 +57,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../ref_classification/jaccard.html" rel="next">
-<link href="../ref_classification/fmi.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-86daaaaad7353f9cc0c554efc1dd6d94.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f8dc6eab18fde03278982b0b35885446.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-1e4f8efb79bafc196cb3722a01733606.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-5bda692e2fc8d6f043fa05fa4bba1001.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./ref_classification/zerooneloss.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-86daaaaad7353f9cc0c554efc1dd6d94.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-f8dc6eab18fde03278982b0b35885446.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-9b0aee630aa7056122d57d85be2c1a54.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-b2030a9b1d305efdacc9bf6b8f68e450.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -104,36 +104,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -146,7 +120,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../classification_functions.html">Classification functions</a></li><li class="breadcrumb-item"><a href="../ref_classification/fpr.html">false positive rate</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./garbage.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -161,7 +135,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Documentation</a> 
+      <a href="./">Documentation</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/serkor1/SLmetrics/tree/development/docs/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
@@ -200,31 +174,31 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../intro.html" class="sidebar-item-text sidebar-link">
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../summary.html" class="sidebar-item-text sidebar-link">
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../benchmark.html" class="sidebar-item-text sidebar-link">
+  <a href="./benchmark.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Benchmarking</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../regression_functions.html" class="sidebar-item-text sidebar-link">
+            <a href="./regression_functions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Regression functions</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -233,85 +207,85 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_regression/ccc.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_regression/ccc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">concordance correlation coefficient</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_regression/huberloss.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_regression/huberloss.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">huber loss</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_regression/mae.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_regression/mae.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">mean absolute error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_regression/mape.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_regression/mape.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">mean absolute percentage error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_regression/mcc.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_regression/mcc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Matthews correlation coefficient</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_regression/mse.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_regression/mse.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">mean squared error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_regression/pinball.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_regression/pinball.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">pinball loss</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_regression/rae.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_regression/rae.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">relative absolute error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_regression/rmse.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_regression/rmse.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">root mean squared error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_regression/rmsle.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_regression/rmsle.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">root mean squared logarithmic error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_regression/rrmse.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_regression/rrmse.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">relative root mean squared error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_regression/rrse.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_regression/rrse.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">root relative squared error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_regression/smape.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_regression/smape.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">symmetric mean absolute percentage error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_regression/specificity.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_regression/specificity.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">specificity</span></a>
   </div>
 </li>
@@ -319,7 +293,7 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../classification_functions.html" class="sidebar-item-text sidebar-link">
+            <a href="./classification_functions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Classification functions</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -328,151 +302,151 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/ROC.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/ROC.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">receiver operator characteristics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/accuracy.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/accuracy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">accuracy</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/baccuracy.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/baccuracy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">balanced accuracy</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/ckappa.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/ckappa.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Cohen’s kappa</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/cmatrix.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/cmatrix.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">confusion matrix</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/dor.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/dor.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">diagnostic odds ratio</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/entropy.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/entropy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">entropy</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/fbeta.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/fbeta.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">F-beta score</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/fdr.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/fdr.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">false discovery rate</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/fer.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/fer.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">false omission rate</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/fmi.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/fmi.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Fowlkes-Mallows index</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/fpr.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ref_classification/fpr.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">false positive rate</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/jaccard.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/jaccard.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Jaccard score</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/logloss.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/logloss.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">log loss</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/mpe.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/mpe.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">mean percentage error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/nlr.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/nlr.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">negative likelihood ratio</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/npv.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/npv.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">negative predictive value</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/plr.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/plr.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">positive likelihood ratio</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/prROC.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/prROC.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Precision-Recall curve</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/precision.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/precision.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">precision</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/recall.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/recall.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">recall</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/rsq.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/rsq.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">coefficient of determination</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/setNumberThreads.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/setNumberThreads.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">set threads</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/setUseOpenMP.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/setUseOpenMP.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">use OpenMP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../ref_classification/zerooneloss.html" class="sidebar-item-text sidebar-link">
+  <a href="./ref_classification/zerooneloss.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">zero-one loss</span></a>
   </div>
 </li>
@@ -480,13 +454,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../garbage.html" class="sidebar-item-text sidebar-link">
+  <a href="./garbage.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references.html" class="sidebar-item-text sidebar-link">
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -500,21 +474,20 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description">Description</a></li>
-  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
-  <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments">Arguments</a></li>
-  <li><a href="#value" id="toc-value" class="nav-link" data-scroll-target="#value">Value</a></li>
-  <li><a href="#calculation" id="toc-calculation" class="nav-link" data-scroll-target="#calculation">Calculation</a></li>
-  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
+  <li><a href="#implicit-assumptions" id="toc-implicit-assumptions" class="nav-link active" data-scroll-target="#implicit-assumptions"><span class="header-section-number">4.1</span> Implicit assumptions</a></li>
+  <li><a href="#undefined-behavior" id="toc-undefined-behavior" class="nav-link" data-scroll-target="#undefined-behavior"><span class="header-section-number">4.2</span> Undefined behavior</a></li>
+  <li><a href="#edge-cases" id="toc-edge-cases" class="nav-link" data-scroll-target="#edge-cases"><span class="header-section-number">4.3</span> Edge cases</a></li>
+  <li><a href="#staying-safe" id="toc-staying-safe" class="nav-link" data-scroll-target="#staying-safe"><span class="header-section-number">4.4</span> Staying “safe”</a></li>
+  <li><a href="#key-take-aways" id="toc-key-take-aways" class="nav-link" data-scroll-target="#key-take-aways"><span class="header-section-number">4.5</span> Key take-aways</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/ref_classification/fpr.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/ref_classification/fpr.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/garbage.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/garbage.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../classification_functions.html">Classification functions</a></li><li class="breadcrumb-item"><a href="../ref_classification/fpr.html">false positive rate</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">false positive rate</h1>
+<h1 class="title"><span id="sec-garbage_in_garbage_out" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></span></h1>
 </div>
 
 
@@ -531,221 +504,220 @@ window.Quarto = {
 </header>
 
 
-<table style="width: 100%;">
-<tbody><tr>
-<td>
-fpr.factor
-</td>
-<td style="text-align: right;">
-R Documentation
-</td>
-</tr>
-</tbody></table>
-<section id="description" class="level3">
-<h3 class="anchored" data-anchor-id="description">Description</h3>
-<p>
-The <code>fpr()</code>-function computes the <a href="https://en.wikipedia.org/wiki/False_positive_rate">False Positive Rate</a> (FPR), also known as the fall-out (<code>fallout()</code>), between two vectors of predicted and observed <code>factor()</code> values. The <code>weighted.fpr()</code> function computes the weighted false positive rate.
-</p>
-</section>
-<section id="usage" class="level3">
-<h3 class="anchored" data-anchor-id="usage">Usage</h3>
+<p>This section examines the underlying assumptions in <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a>, and how it may affect your pipeline if you decide adopt it.</p>
+<section id="implicit-assumptions" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="implicit-assumptions"><span class="header-section-number">4.1</span> Implicit assumptions</h2>
+<p>All evaluation functions in <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> assumes that end-user follows the typical AI/ML workflow:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    B(Data Cleaning)
+    B --&gt; C[Feature Engineering]
+    C --&gt; D[Training]
+    D --&gt; E{Evaluation}
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The implications of this assumption is two-fold:</p>
+<ul>
+<li>There is no handling of <strong>missing data</strong> in input variables</li>
+<li>There is no <strong>validity check</strong> of inputs</li>
+</ul>
+<p>Hence, the implicit assumption is that the end-user has a high degree of control over the training process and an understanding of <code>R</code> beyond beginner-level. See, for example, the following code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'factor'</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fpr</span>(actual, predicted, <span class="at">micro =</span> <span class="cn">NULL</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, ...)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'factor'</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.fpr</span>(actual, predicted, w, <span class="at">micro =</span> <span class="cn">NULL</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, ...)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'cmatrix'</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">fpr</span>(x, <span class="at">micro =</span> <span class="cn">NULL</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, ...)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'factor'</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">fallout</span>(actual, predicted, <span class="at">micro =</span> <span class="cn">NULL</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, ...)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'factor'</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.fallout</span>(actual, predicted, w, <span class="at">micro =</span> <span class="cn">NULL</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, ...)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'cmatrix'</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">fallout</span>(x, <span class="at">micro =</span> <span class="cn">NULL</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, ...)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">fpr</span>(...)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">fallout</span>(...)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.fpr</span>(...)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.fallout</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) define values</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>actual    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.2</span>, <span class="fl">1.3</span>, <span class="fl">2.6</span>, <span class="dv">3</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">rev</span>(actual) </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) evaluate with RMSLE</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">rmsle</span>(</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    actual,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    predicted</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] NaN</code></pre>
+</div>
+</div>
+<p>The <code>actual</code>- and <code>predicted</code>-vector contains negative values, and is being passed to the root mean squared logarithmic error (<code>rmsle()</code>)-function. It returns <code>NaN</code> without any warnings. The same action in using base <code>R</code> would lead to verbose errors:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">log</span>(actual))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; Warning in log(actual): NaNs produced</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] NaN</code></pre>
+</div>
 </div>
 </section>
-<section id="arguments" class="level3">
-<h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
-<table>
-<tbody><tr>
-<td>
-<code id="actual">actual</code>
-</td>
-<td>
-<p>
-A vector of <code>&lt;factor&gt;</code>- of length <span class="math inline">\(n\)</span>, and <span class="math inline">\(k\)</span> levels.
-</p>
-</td>
-</tr>
-<tr>
-<td>
-<code id="predicted">predicted</code>
-</td>
-<td>
-<p>
-A vector of <code>&lt;factor&gt;</code>-vector of length <span class="math inline">\(n\)</span>, and <span class="math inline">\(k\)</span> levels.
-</p>
-</td>
-</tr>
-<tr>
-<td>
-<code id="micro">micro</code>
-</td>
-<td>
-<p>
-A <code>&lt;logical&gt;</code>-value of length <span class="math inline">\(1\)</span> (default: NULL). If TRUE it returns the micro average across all <span class="math inline">\(k\)</span> classes, if FALSE it returns the macro average.
-</p>
-</td>
-</tr>
-<tr>
-<td>
-<code id="na.rm">na.rm</code>
-</td>
-<td>
-<p>
-A <code>&lt;logical&gt;</code> value of length <span class="math inline">\(1\)</span> (default: TRUE). If TRUE, NA values are removed from the computation. This argument is only relevant when <code>micro != NULL</code>. When <code>na.rm = TRUE</code>, the computation corresponds to <code>sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))</code>. When <code>na.rm = FALSE</code>, the computation corresponds to <code>sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))</code>.
-</p>
-</td>
-</tr>
-<tr>
-<td>
-<code id="...">…</code>
-</td>
-<td>
-<p>
-Arguments passed into other methods
-</p>
-</td>
-</tr>
-<tr>
-<td>
-<code id="w">w</code>
-</td>
-<td>
-<p>
-A <code>&lt;numeric&gt;</code>-vector of length <span class="math inline">\(n\)</span>. NULL by default.
-</p>
-</td>
-</tr>
-<tr>
-<td>
-<code id="x">x</code>
-</td>
-<td>
-<p>
-A confusion matrix created <code>cmatrix()</code>.
-</p>
-</td>
-</tr>
-</tbody></table>
-</section>
-<section id="value" class="level3">
-<h3 class="anchored" data-anchor-id="value">Value</h3>
-<p>
-If <code>micro</code> is NULL (the default), a named <code>&lt;numeric&gt;</code>-vector of length k
-</p>
-<p>
-If <code>micro</code> is TRUE or FALSE, a <code>&lt;numeric&gt;</code>-vector of length 1
-</p>
-</section>
-<section id="calculation" class="level3">
-<h3 class="anchored" data-anchor-id="calculation">Calculation</h3>
-<p>
-The metric is calculated for each class <span class="math inline">\(k\)</span> as follows,
-</p>
-<p><span class="math display">\[
-  \frac{\#FP_k}{\#FP_k + \#TN_k}
-\]</span></p>
-<p>
-Where <span class="math inline">\(\#FP_k\)</span> and <span class="math inline">\(\#TN_k\)</span> represent the number of false positives and true negatives, respectively, for each class <span class="math inline">\(k\)</span>.
-</p>
-</section>
-<section id="examples" class="level3">
-<h3 class="anchored" data-anchor-id="examples">Examples</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) recode Iris</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to binary classification</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># problem</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>species_num <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  iris<span class="sc">$</span>Species <span class="sc">==</span> <span class="st">"virginica"</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) fit the logistic</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># regression</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> species_num <span class="sc">~</span> Sepal.Length <span class="sc">+</span> Sepal.Width,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">data    =</span> iris,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">family  =</span> <span class="fu">binomial</span>(</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">link =</span> <span class="st">"logit"</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 3) generate predicted</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># classes</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>(</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">predict</span>(model, <span class="at">type =</span> <span class="st">"response"</span>) <span class="sc">&gt;</span><span class="st">`</span><span class="at"> 0.5</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="at">  ),</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="at">  levels = c(1,0),</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="at">  labels = c("Virginica", "Others")</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="at"># 3.1) generate actual</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="at"># classes</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="at">actual &lt;- factor(</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="at">  x = iris$species_num,</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="at">  levels = c(1,0),</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="at">  labels = c("Virginica", "Others")</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="at"># 4) evaluate class-wise performance</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="at"># using False Positive Rate</span></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="at"># 4.1) unweighted False Positive Rate</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="at">fpr(</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="at">  actual    = actual,</span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="at">  predicted = predicted</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="at"># 4.2) weighted False Positive Rate</span></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="at">weighted.fpr(</span></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="at">  actual    = actual,</span></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="at">  predicted = predicted,</span></span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="at">  w         = iris$Petal.Length/mean(iris$Petal.Length)</span></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="at"># 5) evaluate overall performance</span></span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="at"># using micro-averaged False Positive Rate</span></span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="at">cat(</span></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="at">  "Micro-averaged False Positive Rate", fpr(</span></span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="at">    actual    = actual,</span></span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="at">    predicted = predicted,</span></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="at">    micro     = TRUE</span></span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="at">  ),</span></span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="at">  "Micro-averaged False Positive Rate (weighted)", weighted.fpr(</span></span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="at">    actual    = actual,</span></span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="at">    predicted = predicted,</span></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="at">    w         = iris$Petal.Length/mean(iris$Petal.Length),</span></span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="at">    micro     = TRUE</span></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="at">  ),</span></span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="at">  sep = "</span><span class="sc">\n</span><span class="at">"</span></span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="undefined-behavior" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="undefined-behavior"><span class="header-section-number">4.2</span> Undefined behavior</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Do <strong>NOT</strong> run the chunks in this section in an <code>R</code>-session where you have important work, as your session <em>will</em> crash.</p>
+</div>
+</div>
+<p><a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> uses pointer arithmetics via <code>C++</code> which, contrary to usual practice in <code>R</code>, performs computations on memory addresses rather than the object itself. If the memory address is ill-defined, which can occur in cases where values lack valid binary representations for the operations being performed, undefined behavior<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> follows and <em>will</em> crash your <code>R</code>-session. See this code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) define values</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>actual <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">rev</span>(actual)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) pass into</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># cmatrix</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">cmatrix</span>(</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    actual,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    predicted</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; address 0x5946ff482178, cause 'memory not mapped'</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; An irrecoverable exception occurred. R is aborting now ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is not something that can prevented with, say, <code>try()</code>, as the error is undefined. See this <a href="https://stackoverflow.com/questions/32132574/does-undefined-behavior-really-permit-anything-to-happen">SO</a>-post for details.</p>
+</section>
+<section id="edge-cases" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="edge-cases"><span class="header-section-number">4.3</span> Edge cases</h2>
+<p>There are cases, where it can be hard to predict what will happen when passing a given set of actual and predicted classes. Especially if the input is too large, and it becomes inefficient to check these every iteration. In such cases <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> does help. See for example the following code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) define values</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>actual <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>],<span class="at">size =</span> <span class="fl">1e7</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="dv">0</span>)),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">rev</span>(actual)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) pass into</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># cmatrix</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">fbeta</span>(</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    actual,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    predicted</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;         a         b         c 
+#&gt; 0.4995160 0.5003817       NaN</code></pre>
+</div>
+</div>
+<p>One class, <code>c</code>, is never predicted, nor is it present in the actual labels - therefore, by construction, the value is <code>NaN</code> as there is division by zero. During aggregation to <code>micro</code> or <code>macro</code> averages these are being handled according to <code>na.rm</code>. See below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) macro average</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">fbeta</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    actual,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    predicted,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">micro =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.4999488</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) macro average</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">fbeta</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    actual,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    predicted,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">micro =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">FALSE</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.3332992</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) define values</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>actual    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.2</span>, <span class="fl">1.3</span>, <span class="fl">2.6</span>, <span class="dv">3</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">rev</span>(actual) </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) evaluate with RMSLE</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">try</span>(</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">RMSLE</span>(</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    actual,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    predicted</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; Error in RMSLE(actual, predicted) : could not find function "RMSLE"</code></pre>
+</div>
+</div>
+<p>In these cases, there is no undefined behaviour or exploding <code>R</code> sessions as all of this is handled internally.</p>
+</section>
+<section id="staying-safe" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="staying-safe"><span class="header-section-number">4.4</span> Staying “safe”</h2>
+<p>To avoid undefined behavior when passing ill-defined input one option is to write a wrapper function, or using existing infrastructure. Below is an example of a wrapper function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) RMSLE</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>confusion_matrix <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    actual, </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    predicted) {</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">any</span>(<span class="fu">is.na</span>(actual))) {</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">stop</span>(<span class="st">"`actual` contains missing values"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">any</span>(<span class="fu">is.na</span>(predicted))) {</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>            <span class="fu">stop</span>(<span class="st">"`predicted` contains missing values"</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        SLmetrics<span class="sc">::</span><span class="fu">cmatrix</span>(</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>            actual,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>            predicted</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) define values</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>actual <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">rev</span>(actual)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) </span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">try</span>(</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">confusion_matrix</span>(</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    actual,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    predicted</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; Error in confusion_matrix(actual, predicted) : 
+#&gt;   `actual` contains missing values</code></pre>
+</div>
+</div>
+<p>Another option is to use the existing infrastructure. <a href="https://github.com/tidymodels/yardstick">{yardstick}</a> does all kinds of safety checks before executing a function, and you can, via the <code>metric_vec_template()</code> pass a <code>SLmetrics::foo()</code> in the <code>foo_impl()</code>-function. This gives you the safety of <a href="https://github.com/tidymodels/yardstick">{yardstick}</a>, and the efficiency of <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Be aware that using <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> with <a href="https://github.com/tidymodels/yardstick">{yardstick}</a> will introduce some efficiency overhead - especially on large vectors.</p>
+</div>
+</div>
+</section>
+<section id="key-take-aways" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="key-take-aways"><span class="header-section-number">4.5</span> Key take-aways</h2>
+<p><a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> assumes that the end-user follows the typical AI/ML workflow, and has an understanding of <code>R</code> beyond beginner-level. And therefore <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> does not check the validity of the user-input, which may lead to undefined behavior if input is ill-defined.</p>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Undefined behavior refers to program operations that are not prescribed by the language specification, leading to unpredictable results or crashes.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>An example would be appropriate. But my first attempt lead to a <code>decrecated</code>-warning, which is also one of the main reasons I developed this {pkg}, and gave up. See the <a href="https://yardstick.tidymodels.org/articles/custom-metrics.html#custom-metrics-1">{documentation}</a> on how to create custom metrics using <a href="https://github.com/tidymodels/yardstick">{yardstick}</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
@@ -1312,13 +1284,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../ref_classification/fmi.html" class="pagination-link" aria-label="Fowlkes-Mallows index">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Fowlkes-Mallows index</span>
+      <a href="./ref_classification/zerooneloss.html" class="pagination-link" aria-label="zero-one loss">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">zero-one loss</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../ref_classification/jaccard.html" class="pagination-link" aria-label="Jaccard score">
-        <span class="nav-page-text">Jaccard score</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1327,4 +1299,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/ref_classification/fpr.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/ref_classification/fpr.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/garbage.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/garbage.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
