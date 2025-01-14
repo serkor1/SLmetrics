@@ -58,7 +58,10 @@ class YAML:
                 'pdf': {
                     'documentclass': 'scrreprt',
                     'keep-tex': True,
-                    'latex-auto-install': True
+                    'latex-auto-install': True,
+                    'code-block-bg': "#f2f2f2",
+                    'code-block-border-left': "#f2f2f2",
+                    'code-overflow': 'wrap'
                     }
             },
             'highlight-style': "github",
