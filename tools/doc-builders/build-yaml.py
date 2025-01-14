@@ -40,6 +40,7 @@ class YAML:
                         'chapters': [],
                         'number-sections': False
                     },
+                    "garbage.qmd",
                     "references.qmd"
                 ]
             },
