@@ -1,0 +1,189 @@
+---
+format:
+  html:
+    code-overflow: wrap
+execute: 
+  cache: true
+knitr:
+  opts_chunk:
+    comment: "#>"
+    messages: false
+    warning: true
+---
+
+# Garbage in, garbage out {#sec-garbage_in_garbage_out}
+
+This section examines the underlying assumptions in [{SLmetrics}](https://github.com/serkor1/SLmetrics), and how it may affect your pipeline if you decide adopt it.
+
+## Implicit assumptions
+
+All evaluation functions in [{SLmetrics}](https://github.com/serkor1/SLmetrics) assumes that end-user follows the typical AI/ML workflow:
+
+```{mermaid}
+flowchart LR
+    B(Data Cleaning)
+    B --> C[Feature Engineering]
+    C --> D[Training]
+    D --> E{Evaluation}
+```
+
+The implications of this assumption is two-fold:
+
+* There is no handling of **missing data** in input variables
+* There is no **validity check** of inputs
+
+Hence, the implicit assumption is that the end-user has a high degree of control over the training process and an understanding of `R` beyond beginner-level. See, for example, the following code:
+
+```{r}
+# 1) define values
+actual    <- c(-1.2, 1.3, 2.6, 3)
+predicted <- rev(actual) 
+
+# 2) evaluate with RMSLE
+SLmetrics::rmsle(
+    actual,
+    predicted
+)
+```
+
+The `actual`- and `predicted`-vector contains negative values, and is being passed to the root mean squared logarithmic error (`rmsle()`)-function. It returns `NaN` without any warnings. The same action in using base `R` would lead to verbose errors:
+
+```{r}
+mean(log(actual))
+```
+
+## Undefined behavior
+
+::: {.callout-important}
+Do **NOT** run the chunks in this section in an `R`-session where you have important work, as your session *will* crash.
+:::
+
+[{SLmetrics}](https://github.com/serkor1/SLmetrics) uses pointer arithmetics via `C++` which, contrary to usual practice in `R`, performs computations on memory addresses rather than the object itself. If the memory address is ill-defined, which can occur in cases where values lack valid binary representations for the operations being performed, undefined behavior[^1] follows and *will* crash your `R`-session. See this code:
+
+```{r}
+#| eval: false
+# 1) define values
+actual <- factor(c(NA, "A", "B", "A"))
+predicted <- rev(actual)
+
+# 2) pass into
+# cmatrix
+SLmetrics::cmatrix(
+    actual,
+    predicted
+)
+#> address 0x5946ff482178, cause 'memory not mapped'
+#> An irrecoverable exception occurred. R is aborting now ...
+```
+
+This is not something that can prevented with, say, `try()`, as the error is undefined. See this [SO](https://stackoverflow.com/questions/32132574/does-undefined-behavior-really-permit-anything-to-happen)-post for details.
+
+## Edge cases
+
+There are cases, where it can be hard to predict what will happen when passing a given set of actual and predicted classes. Especially if the input is too large, and it becomes inefficient to check these every iteration. In such cases [{SLmetrics}](https://github.com/serkor1/SLmetrics) does help. See for example the following code:
+
+```{r}
+# 1) define values
+actual <- factor(
+    sample(letters[1:3],size = 1e7, replace = TRUE, prob = c(0.5, 0.5, 0)),
+    levels = letters[1:3]
+    )
+predicted <- rev(actual)
+
+# 2) pass into
+# cmatrix
+SLmetrics::fbeta(
+    actual,
+    predicted
+)
+```
+
+One class, `c`, is never predicted, nor is it present in the actual labels - therefore, by construction, the value is `NaN` as there is division by zero. During aggregation to `micro` or `macro` averages these are being handled according to `na.rm`. See below:
+
+```{r}
+# 1) macro average
+SLmetrics::fbeta(
+    actual,
+    predicted,
+    micro = FALSE,
+    na.rm = TRUE
+)
+
+# 2) macro average
+SLmetrics::fbeta(
+    actual,
+    predicted,
+    micro = FALSE,
+    na.rm = FALSE
+)
+```
+
+```{r}
+# 1) define values
+actual    <- c(-1.2, 1.3, 2.6, 3)
+predicted <- rev(actual) 
+
+# 2) evaluate with RMSLE
+try(
+    RMSLE(
+    actual,
+    predicted
+    )
+)
+``` 
+
+In these cases, there is no undefined behaviour or exploding `R` sessions as all of this is handled internally. 
+
+## Staying "safe"
+
+To avoid undefined behavior when passing ill-defined input one option is to write a wrapper function, or using existing infrastructure. Below is an example of a wrapper function:
+
+```{r}
+# 1) RMSLE
+confusion_matrix <- function(
+    actual, 
+    predicted) {
+
+        if (any(is.na(actual))) {
+            stop("`actual` contains missing values")
+        }
+
+        if (any(is.na(predicted))) {
+            stop("`predicted` contains missing values")
+        }
+
+        SLmetrics::cmatrix(
+            actual,
+            predicted
+        )
+
+}
+```
+
+```{r}
+# 1) define values
+actual <- factor(c(NA, "A", "B", "A", "B"))
+predicted <- rev(actual)
+
+# 2) 
+try(
+    confusion_matrix(
+    actual,
+    predicted
+    )
+)
+```
+
+Another option is to use the existing infrastructure. [{yardstick}](https://github.com/tidymodels/yardstick) does all kinds of safety checks before executing a function, and you can, via the `metric_vec_template()` pass a `SLmetrics::foo()` in the `foo_impl()`-function. This gives you the safety of [{yardstick}](https://github.com/tidymodels/yardstick), and the efficiency of [{SLmetrics}](https://github.com/serkor1/SLmetrics).[^2]
+
+::: {.callout-important}
+Be aware that using  [{SLmetrics}](https://github.com/serkor1/SLmetrics) with [{yardstick}](https://github.com/tidymodels/yardstick) will introduce some efficiency overhead - especially on large vectors.
+:::
+
+## Key take-aways
+
+[{SLmetrics}](https://github.com/serkor1/SLmetrics) assumes that the end-user follows the typical AI/ML workflow, and has an understanding of `R` beyond beginner-level. And therefore [{SLmetrics}](https://github.com/serkor1/SLmetrics) does not check the validity of the user-input, which may lead to undefined behavior if input is ill-defined.
+
+
+[^1]: Undefined behavior refers to program operations that are not prescribed by the language specification, leading to unpredictable results or crashes.
+[^2]: An example would be appropriate. But my first attempt lead to a `decrecated`-warning, which is also one of the main reasons I developed this {pkg}, and gave up. See the [{documentation}](https://yardstick.tidymodels.org/articles/custom-metrics.html#custom-metrics-1) on how to create custom metrics using [{yardstick}](https://github.com/tidymodels/yardstick).

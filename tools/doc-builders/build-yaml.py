@@ -25,6 +25,7 @@ class YAML:
                 'sidebar': {
                     'title': "Documentation"
                 },
+                'downloads': ['pdf', 'epub'],
                 'chapters': [
                     'index.qmd',
                     'intro.qmd',
@@ -40,6 +41,7 @@ class YAML:
                         'chapters': [],
                         'number-sections': False
                     },
+                    "garbage.qmd",
                     "references.qmd"
                 ]
             },
@@ -53,7 +55,14 @@ class YAML:
                     "fontsize": "18px",
                     "mainfont": "calibri"
                 },
-                'pdf': {'documentclass': 'scrreprt'}
+                'pdf': {
+                    'documentclass': 'scrreprt',
+                    'keep-tex': True,
+                    'latex-auto-install': True,
+                    'code-block-bg': "#f2f2f2",
+                    'code-block-border-left': "#f2f2f2",
+                    'code-overflow': 'wrap'
+                    }
             },
             'highlight-style': "github",
             "execute": {
