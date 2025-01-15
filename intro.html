@@ -448,18 +448,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ref_classification/setNumberThreads.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">set threads</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ref_classification/setUseOpenMP.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">use OpenMP</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./ref_classification/zerooneloss.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">zero-one loss</span></a>
   </div>
@@ -468,8 +456,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./openmp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">OpenMP</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./garbage.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -563,7 +557,7 @@ Note
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">iterations    =</span> <span class="dv">100</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div id="tbl-rmse-speed" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-warnings="false" data-messages="false">
+<div id="tbl-rmse-speed" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-messages="false" data-warnings="false">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-rmse-speed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1.1: Calculating RMSE on 1e7 vectors
@@ -573,8 +567,8 @@ Table&nbsp;1.1: Calculating RMSE on 1e7 vectors
 <pre><code># A tibble: 2 × 6
   expression       min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 {SLmetrics}   29.1ms   29.5ms      33.7    6.13MB      0  
-2 {MLmetrics}   59.5ms   60.3ms      16.6   76.39MB     81.1</code></pre>
+1 {SLmetrics}     30ms   30.1ms      33.1    6.13MB      0  
+2 {MLmetrics}   59.8ms   60.1ms      16.6   76.39MB     81.2</code></pre>
 </div>
 </div>
 </figure>
@@ -603,8 +597,8 @@ Table&nbsp;1.2: Computing a 3x3 confusion matrix on 1e7 vectors
 <pre><code># A tibble: 2 × 6
   expression       min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 {SLmetrics}   8.55ms    8.6ms    116.      4.12KB     0   
-2 {MLmetrics} 244.62ms  249.4ms      3.71   381.6MB     7.65</code></pre>
+1 {SLmetrics}   8.57ms   8.59ms    114.      4.12KB     0   
+2 {MLmetrics} 244.17ms  250.6ms      3.71   381.6MB     7.65</code></pre>
 </div>
 </div>
 </figure>

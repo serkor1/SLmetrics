@@ -34,7 +34,7 @@
     "href": "intro.html#why-slmetrics",
     "title": "1  Introduction",
     "section": "1.2 Why {SLmetrics}?",
-    "text": "1.2 Why {SLmetrics}?\nAs the name suggests, {SLmetrics} closely resembles {MLmetrics} in it’s simplistic and low-level implementation of machine learning metrics. The resemblance ends there, however.\n{SLmetrics} are developed with three things in mind: speed, efficiency and scalability. And therefore addresses the shortcomings of the status-quo by construction - the {pkg} is built on c++ and {Rcpp} from the ground up. See Table 1.1 where\n\nCode\nset.seed(1903)\nactual &lt;- rnorm(1e7)\npredicted &lt;- actual + rnorm(1e7)\n\nbench::mark(\n    `{SLmetrics}` = SLmetrics::rmse(actual, predicted),\n    `{MLmetrics}` = MLmetrics::RMSE(predicted, actual),\n    iterations    = 100\n)\n\n\n\n\nTable 1.1: Calculating RMSE on 1e7 vectors\n\n\n\n# A tibble: 2 × 6\n  expression       min   median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;\n1 {SLmetrics}   29.1ms   29.5ms      33.7    6.13MB      0  \n2 {MLmetrics}   59.5ms   60.3ms      16.6   76.39MB     81.1\n\n\n\n\nThis shows that well-written R-code is hard to beat speed-wise. {MLmetrics} is roughly 20% faster - but uses 30,000 times more memory. How about constructing a confusion matrix\n\nCode\nset.seed(1903)\nactual &lt;- factor(sample(letters[1:3], size = 1e7, replace = TRUE))\npredicted &lt;- factor(sample(letters[1:3], size = 1e7, replace = TRUE))\n\nbench::mark(\n    `{SLmetrics}` = SLmetrics::cmatrix(actual, predicted),\n    `{MLmetrics}` = MLmetrics::ConfusionMatrix(actual, predicted),\n    check         = FALSE,\n    iterations    = 100\n)\n\n\n\n\nTable 1.2: Computing a 3x3 confusion matrix on 1e7 vectors\n\n\n\n# A tibble: 2 × 6\n  expression       min   median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;\n1 {SLmetrics}   8.55ms    8.6ms    116.      4.12KB     0   \n2 {MLmetrics} 244.62ms  249.4ms      3.71   381.6MB     7.65\n\n\n\n\n{SLmetrics} uses 1/50th of the time {MLmetrics} and the memory usage is equivalent as the previous example but uses significantly less memory than {MLmetrics}.\n\n1.2.1 Summary\n{SLmetrics} is, in the worst-case scenario, on par with low-level R implementations of equivalent metrics and is a multitude more memory-efficient than any of the {pkgs}. A detailed benchmark can be found here.",
+    "text": "1.2 Why {SLmetrics}?\nAs the name suggests, {SLmetrics} closely resembles {MLmetrics} in it’s simplistic and low-level implementation of machine learning metrics. The resemblance ends there, however.\n{SLmetrics} are developed with three things in mind: speed, efficiency and scalability. And therefore addresses the shortcomings of the status-quo by construction - the {pkg} is built on c++ and {Rcpp} from the ground up. See Table 1.1 where\n\nCode\nset.seed(1903)\nactual &lt;- rnorm(1e7)\npredicted &lt;- actual + rnorm(1e7)\n\nbench::mark(\n    `{SLmetrics}` = SLmetrics::rmse(actual, predicted),\n    `{MLmetrics}` = MLmetrics::RMSE(predicted, actual),\n    iterations    = 100\n)\n\n\n\n\nTable 1.1: Calculating RMSE on 1e7 vectors\n\n\n\n# A tibble: 2 × 6\n  expression       min   median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;\n1 {SLmetrics}     30ms   30.1ms      33.1    6.13MB      0  \n2 {MLmetrics}   59.8ms   60.1ms      16.6   76.39MB     81.2\n\n\n\n\nThis shows that well-written R-code is hard to beat speed-wise. {MLmetrics} is roughly 20% faster - but uses 30,000 times more memory. How about constructing a confusion matrix\n\nCode\nset.seed(1903)\nactual &lt;- factor(sample(letters[1:3], size = 1e7, replace = TRUE))\npredicted &lt;- factor(sample(letters[1:3], size = 1e7, replace = TRUE))\n\nbench::mark(\n    `{SLmetrics}` = SLmetrics::cmatrix(actual, predicted),\n    `{MLmetrics}` = MLmetrics::ConfusionMatrix(actual, predicted),\n    check         = FALSE,\n    iterations    = 100\n)\n\n\n\n\nTable 1.2: Computing a 3x3 confusion matrix on 1e7 vectors\n\n\n\n# A tibble: 2 × 6\n  expression       min   median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt;  &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;\n1 {SLmetrics}   8.57ms   8.59ms    114.      4.12KB     0   \n2 {MLmetrics} 244.17ms  250.6ms      3.71   381.6MB     7.65\n\n\n\n\n{SLmetrics} uses 1/50th of the time {MLmetrics} and the memory usage is equivalent as the previous example but uses significantly less memory than {MLmetrics}.\n\n1.2.1 Summary\n{SLmetrics} is, in the worst-case scenario, on par with low-level R implementations of equivalent metrics and is a multitude more memory-efficient than any of the {pkgs}. A detailed benchmark can be found here.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
@@ -94,7 +94,7 @@
     "href": "benchmark.html#sec-bench-mark",
     "title": "3  Benchmarking",
     "section": "3.2 Benchmarking",
-    "text": "3.2 Benchmarking\nTo conduct the benchmark {bench} is used. Before the benchmarks are conducted, a benchmark()-wrapper is created.\nThis wrapper conducts m (Default: 10) benchmarks, with 10 iterations for each benchmarked function passed into benchmark() - to allow for warm-up the first iteration is discarded. The wrapper is defined as follows:\n\nbenchmark &lt;- function(\n  ..., \n  m = 10) {\n  library(magrittr)\n  # 1) create list\n  # for storing values\n  performance &lt;- list()\n  \n  for (i in 1:m) {\n\n     # 1) run the benchmarks\n    results &lt;- bench::mark(\n      ...,\n      iterations = 10,\n      check = FALSE\n    )\n\n    # 2) extract values\n    # and calculate medians\n    performance$time[[i]]  &lt;- setNames(lapply(results$time, mean), results$expression)\n    performance$memory[[i]] &lt;- setNames(lapply(results$memory, function(x) { sum(x$bytes, na.rm = TRUE)}), results$expression)\n    performance$n_gc[[i]] &lt;- setNames(lapply(results$n_gc, sum), results$expression)\n\n  }\n\n  purrr::pmap_dfr(\n  list(performance$time, performance$memory, performance$n_gc), \n  ~{\n    tibble::tibble(\n      expression = names(..1),\n      time = unlist(..1),\n      memory = unlist(..2),\n      n_gc = unlist(..3)\n    )\n  }\n) %&gt;%\n  dplyr::mutate(expression = factor(expression, levels = unique(expression))) %&gt;%\n  dplyr::group_by(expression) %&gt;%\n  dplyr::filter(dplyr::row_number() &gt; 1) %&gt;%\n  dplyr::summarize(\n    execution_time = bench::as_bench_time(median(time)),\n    memory_usage = bench::as_bench_bytes(median(memory)),\n    gc_calls = median(n_gc),\n    .groups = \"drop\"\n  )\n\n}\n\n\n3.2.1 Regression metrics\n\nCode\nbenchmark(\n    `{RMSE}`  = SLmetrics::rmse(num_actual, num_predicted),\n    `{Pinball Loss}` = SLmetrics::pinball(num_actual, num_predicted),\n    `{Huber Loss}` = SLmetrics::huberloss(num_actual, num_predicted)\n)\n\n\n\n\nTable 3.1: Benchmarking selected regression metrics\n\n\n\n#&gt; # A tibble: 3 × 4\n#&gt;   expression     execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 {RMSE}                   30ms           0B        0\n#&gt; 2 {Pinball Loss}           30ms           0B        0\n#&gt; 3 {Huber Loss}           74.8ms           0B        0\n\n\n\n\n\nCode\nbenchmark(\n    `{SLmetrics}` = SLmetrics::rmse(num_actual, num_predicted),\n    `{MLmetrics}` = MLmetrics::RMSE(num_actual, num_predicted),\n    `{yardstick}` = yardstick::rmse_vec(num_actual, num_predicted),\n    `{mlr3measures}` = mlr3measures::rmse(num_actual, num_predicted)\n)\n\n\n\n\nTable 3.2: Benchmarking RMSE across\n\n\n\n#&gt; # A tibble: 4 × 4\n#&gt;   expression     execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 {SLmetrics}            29.8ms           0B        0\n#&gt; 2 {MLmetrics}            60.7ms       76.3MB        1\n#&gt; 3 {yardstick}           165.7ms      419.6MB        9\n#&gt; 4 {mlr3measures}         85.2ms       76.3MB        1\n\n\n\n\n\n\n3.2.2 Classification metrics\n\nCode\nbenchmark(\n    `{Confusion Matrix}`  = SLmetrics::cmatrix(fct_actual, fct_predicted),\n    `{Accuracy}` = SLmetrics::accuracy(fct_actual, fct_predicted),\n    `{F-beta}` = SLmetrics::fbeta(fct_actual, fct_predicted)\n)\n\n\n\n\nTable 3.3: Benchmarking selected classification metrics\n\n\n\n#&gt; # A tibble: 3 × 4\n#&gt;   expression         execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;                    &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 {Confusion Matrix}         8.63ms           0B        0\n#&gt; 2 {Accuracy}                 8.63ms           0B        0\n#&gt; 3 {F-beta}                   8.62ms           0B        0\n\n\n\n\n\nCode\nbenchmark(\n    `{SLmetrics}`    = SLmetrics::cmatrix(fct_actual, fct_predicted),\n    `{MLmetrics}`    = MLmetrics::ConfusionMatrix(fct_predicted, fct_actual),\n    `{yardstick}`    = yardstick::conf_mat(table(fct_actual, fct_predicted))\n)\n\n\n\n\nTable 3.4: Benchmarking a 3x3 confusion matrix across\n\n\n\n#&gt; # A tibble: 3 × 4\n#&gt;   expression  execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 {SLmetrics}         8.61ms           0B        0\n#&gt; 2 {MLmetrics}       246.78ms        381MB        7\n#&gt; 3 {yardstick}       246.36ms        381MB        7",
+    "text": "3.2 Benchmarking\nTo conduct the benchmark {bench} is used. Before the benchmarks are conducted, a benchmark()-wrapper is created.\nThis wrapper conducts m (Default: 10) benchmarks, with 10 iterations for each benchmarked function passed into benchmark() - to allow for warm-up the first iteration is discarded. The wrapper is defined as follows:\n\nbenchmark &lt;- function(\n  ..., \n  m = 10) {\n  library(magrittr)\n  # 1) create list\n  # for storing values\n  performance &lt;- list()\n  \n  for (i in 1:m) {\n\n     # 1) run the benchmarks\n    results &lt;- bench::mark(\n      ...,\n      iterations = 10,\n      check = FALSE\n    )\n\n    # 2) extract values\n    # and calculate medians\n    performance$time[[i]]  &lt;- setNames(lapply(results$time, mean), results$expression)\n    performance$memory[[i]] &lt;- setNames(lapply(results$memory, function(x) { sum(x$bytes, na.rm = TRUE)}), results$expression)\n    performance$n_gc[[i]] &lt;- setNames(lapply(results$n_gc, sum), results$expression)\n\n  }\n\n  purrr::pmap_dfr(\n  list(performance$time, performance$memory, performance$n_gc), \n  ~{\n    tibble::tibble(\n      expression = names(..1),\n      time = unlist(..1),\n      memory = unlist(..2),\n      n_gc = unlist(..3)\n    )\n  }\n) %&gt;%\n  dplyr::mutate(expression = factor(expression, levels = unique(expression))) %&gt;%\n  dplyr::group_by(expression) %&gt;%\n  dplyr::filter(dplyr::row_number() &gt; 1) %&gt;%\n  dplyr::summarize(\n    execution_time = bench::as_bench_time(median(time)),\n    memory_usage = bench::as_bench_bytes(median(memory)),\n    gc_calls = median(n_gc),\n    .groups = \"drop\"\n  )\n\n}\n\n\n3.2.1 Regression metrics\n\nCode\nbenchmark(\n    `{RMSE}`  = SLmetrics::rmse(num_actual, num_predicted),\n    `{Pinball Loss}` = SLmetrics::pinball(num_actual, num_predicted),\n    `{Huber Loss}` = SLmetrics::huberloss(num_actual, num_predicted)\n)\n\n\n\n\nTable 3.1: Benchmarking selected regression metrics\n\n\n\n#&gt; # A tibble: 3 × 4\n#&gt;   expression     execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 {RMSE}                 30.1ms           0B        0\n#&gt; 2 {Pinball Loss}         30.2ms           0B        0\n#&gt; 3 {Huber Loss}           74.9ms           0B        0\n\n\n\n\n\nCode\nbenchmark(\n    `{SLmetrics}` = SLmetrics::rmse(num_actual, num_predicted),\n    `{MLmetrics}` = MLmetrics::RMSE(num_actual, num_predicted),\n    `{yardstick}` = yardstick::rmse_vec(num_actual, num_predicted),\n    `{mlr3measures}` = mlr3measures::rmse(num_actual, num_predicted)\n)\n\n\n\n\nTable 3.2: Benchmarking RMSE across\n\n\n\n#&gt; # A tibble: 4 × 4\n#&gt;   expression     execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 {SLmetrics}            29.8ms           0B        0\n#&gt; 2 {MLmetrics}            60.5ms       76.3MB        1\n#&gt; 3 {yardstick}           165.8ms      419.6MB        9\n#&gt; 4 {mlr3measures}         84.3ms       76.3MB        1\n\n\n\n\n\n\n3.2.2 Classification metrics\n\nCode\nbenchmark(\n    `{Confusion Matrix}`  = SLmetrics::cmatrix(fct_actual, fct_predicted),\n    `{Accuracy}` = SLmetrics::accuracy(fct_actual, fct_predicted),\n    `{F-beta}` = SLmetrics::fbeta(fct_actual, fct_predicted)\n)\n\n\n\n\nTable 3.3: Benchmarking selected classification metrics\n\n\n\n#&gt; # A tibble: 3 × 4\n#&gt;   expression         execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;                    &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 {Confusion Matrix}         8.59ms           0B        0\n#&gt; 2 {Accuracy}                  8.6ms           0B        0\n#&gt; 3 {F-beta}                    8.6ms           0B        0\n\n\n\n\n\nCode\nbenchmark(\n    `{SLmetrics}`    = SLmetrics::cmatrix(fct_actual, fct_predicted),\n    `{MLmetrics}`    = MLmetrics::ConfusionMatrix(fct_predicted, fct_actual),\n    `{yardstick}`    = yardstick::conf_mat(table(fct_actual, fct_predicted))\n)\n\n\n\n\nTable 3.4: Benchmarking a 3x3 confusion matrix across\n\n\n\n#&gt; # A tibble: 3 × 4\n#&gt;   expression  execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 {SLmetrics}         8.59ms           0B        0\n#&gt; 2 {MLmetrics}       247.38ms        381MB        7\n#&gt; 3 {yardstick}       247.44ms        381MB        7",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Benchmarking</span>"
     ]
@@ -536,28 +536,6 @@
     ]
   },
   {
-    "objectID": "ref_classification/setNumberThreads.html",
-    "href": "ref_classification/setNumberThreads.html",
-    "title": "set threads",
-    "section": "",
-    "text": "setNumberThreads\n\n\nR Documentation\n\n\n\n\nDescription\n\nThis function sets the number of threads to be used for parallel computations. If set to -1, all available threads will be utilized.\n\n\n\nUsage\n\nsetNumberThreads(value = -1L)\n\n\n\nArguments\n\n\n\nvalue\n\n\n\nAn &lt;integer&gt; specifying the number of threads to use (Default: -1). Default is -1, which uses all available threads.\n\n\n\n\n\n\nExamples\n\n## Not run: \nsetNumberThreads(4)\n\n## End(Not run)",
-    "crumbs": [
-      "Classification functions",
-      "set threads"
-    ]
-  },
-  {
-    "objectID": "ref_classification/setUseOpenMP.html",
-    "href": "ref_classification/setUseOpenMP.html",
-    "title": "use OpenMP",
-    "section": "",
-    "text": "setUseOpenMP\n\n\nR Documentation\n\n\n\n\nDescription\n\nThis function allows you to enable or disable the use of OpenMP for parallelizing computations.\n\n\n\nUsage\n\nsetUseOpenMP(value = FALSE)\n\n\n\nArguments\n\n\n\nvalue\n\n\n\nA &lt;logical&gt; value of length 1 (Default: FALSE). If length, OpenMP will be used to parallelize computations.\n\n\n\n\n\n\nExamples\n\n## Not run: \nsetUseOpenMP(TRUE)\n\n## End(Not run)",
-    "crumbs": [
-      "Classification functions",
-      "use OpenMP"
-    ]
-  },
-  {
     "objectID": "ref_classification/zerooneloss.html",
     "href": "ref_classification/zerooneloss.html",
     "title": "zero-one loss",
@@ -569,73 +547,93 @@
     ]
   },
   {
+    "objectID": "openmp.html",
+    "href": "openmp.html",
+    "title": "4  OpenMP",
+    "section": "",
+    "text": "4.1 Enabling/Disabling OpenMP\n{SLmetrics} supports parallelization through OpenMP. In this section this functionality is introduced.\nOpenMP is disabled by default, but can be enabled as follows:\nSLmetrics::setUseOpenMP(TRUE)\n\n#&gt; OpenMP usage set to: enabled\nAnd disabled as follows:\nSLmetrics::setUseOpenMP(FALSE)\n\n#&gt; OpenMP usage set to: disabled\nBy default all cores are used. To control the amount of cores, see the following code:\nSLmetrics::setNumberThreads(3)\n\n#&gt; Number of threads set to: 3\nTo use all cores:\nSLmetrics::setNumberThreads(-1)\n\n#&gt; Number of threads set to: All (4 threads)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>OpenMP</span>"
+    ]
+  },
+  {
+    "objectID": "openmp.html#benchmarking-openmp",
+    "href": "openmp.html#benchmarking-openmp",
+    "title": "4  OpenMP",
+    "section": "4.2 Benchmarking OpenMP",
+    "text": "4.2 Benchmarking OpenMP\n\n# 1) set seed for reproducibility\nset.seed(1903)\n\n# 2) create classification\n# problem\nfct_actual &lt;- create_factor()\nfct_predicted &lt;- create_factor()\n\n\n\nCode\nSLmetrics::setUseOpenMP(TRUE)\n\n\n#&gt; OpenMP usage set to: enabled\n\n\nCode\nbenchmark(\n    `With OpenMP` = SLmetrics::cmatrix(fct_actual, fct_predicted)\n)\n\n\n#&gt; # A tibble: 1 × 4\n#&gt;   expression  execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 With OpenMP         3.86ms           0B        0\n\n\n\n\nCode\nSLmetrics::setUseOpenMP(FALSE)\n\n\n#&gt; OpenMP usage set to: disabled\n\n\nCode\nbenchmark(\n    `Wihtout OpenMP` = SLmetrics::cmatrix(fct_actual, fct_predicted)\n)\n\n\n#&gt; # A tibble: 1 × 4\n#&gt;   expression     execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 Wihtout OpenMP         8.59ms           0B        0",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>OpenMP</span>"
+    ]
+  },
+  {
     "objectID": "garbage.html",
     "href": "garbage.html",
-    "title": "4  Garbage in, garbage out",
+    "title": "5  Garbage in, garbage out",
     "section": "",
-    "text": "4.1 Implicit assumptions\nThis section examines the underlying assumptions in {SLmetrics}, and how it may affect your pipeline if you decide adopt it.\nAll evaluation functions in {SLmetrics} assumes that end-user follows the typical AI/ML workflow:\nflowchart LR\n    B(Data Cleaning)\n    B --&gt; C[Feature Engineering]\n    C --&gt; D[Training]\n    D --&gt; E{Evaluation}\nThe implications of this assumption is two-fold:\nHence, the implicit assumption is that the end-user has a high degree of control over the training process and an understanding of R beyond beginner-level. See, for example, the following code:\n# 1) define values\nactual    &lt;- c(-1.2, 1.3, 2.6, 3)\npredicted &lt;- rev(actual) \n\n# 2) evaluate with RMSLE\nSLmetrics::rmsle(\n    actual,\n    predicted\n)\n\n#&gt; [1] NaN\nThe actual- and predicted-vector contains negative values, and is being passed to the root mean squared logarithmic error (rmsle())-function. It returns NaN without any warnings. The same action in using base R would lead to verbose errors:\nmean(log(actual))\n\n#&gt; Warning in log(actual): NaNs produced\n\n\n#&gt; [1] NaN",
+    "text": "5.1 Implicit assumptions\nThis section examines the underlying assumptions in {SLmetrics}, and how it may affect your pipeline if you decide adopt it.\nAll evaluation functions in {SLmetrics} assumes that end-user follows the typical AI/ML workflow:\nflowchart LR\n    B(Data Cleaning)\n    B --&gt; C[Feature Engineering]\n    C --&gt; D[Training]\n    D --&gt; E{Evaluation}\nThe implications of this assumption is two-fold:\nHence, the implicit assumption is that the end-user has a high degree of control over the training process and an understanding of R beyond beginner-level. See, for example, the following code:\n# 1) define values\nactual    &lt;- c(-1.2, 1.3, 2.6, 3)\npredicted &lt;- rev(actual) \n\n# 2) evaluate with RMSLE\nSLmetrics::rmsle(\n    actual,\n    predicted\n)\n\n#&gt; [1] NaN\nThe actual- and predicted-vector contains negative values, and is being passed to the root mean squared logarithmic error (rmsle())-function. It returns NaN without any warnings. The same action in using base R would lead to verbose errors:\nmean(log(actual))\n\n#&gt; Warning in log(actual): NaNs produced\n\n\n#&gt; [1] NaN",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
     ]
   },
   {
     "objectID": "garbage.html#implicit-assumptions",
     "href": "garbage.html#implicit-assumptions",
-    "title": "4  Garbage in, garbage out",
+    "title": "5  Garbage in, garbage out",
     "section": "",
     "text": "There is no handling of missing data in input variables\nThere is no validity check of inputs",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
     ]
   },
   {
     "objectID": "garbage.html#undefined-behavior",
     "href": "garbage.html#undefined-behavior",
-    "title": "4  Garbage in, garbage out",
-    "section": "4.2 Undefined behavior",
-    "text": "4.2 Undefined behavior\n\n\n\n\n\n\nImportant\n\n\n\nDo NOT run the chunks in this section in an R-session where you have important work, as your session will crash.\n\n\n{SLmetrics} uses pointer arithmetics via C++ which, contrary to usual practice in R, performs computations on memory addresses rather than the object itself. If the memory address is ill-defined, which can occur in cases where values lack valid binary representations for the operations being performed, undefined behavior1 follows and will crash your R-session. See this code:\n\n# 1) define values\nactual &lt;- factor(c(NA, \"A\", \"B\", \"A\"))\npredicted &lt;- rev(actual)\n\n# 2) pass into\n# cmatrix\nSLmetrics::cmatrix(\n    actual,\n    predicted\n)\n#&gt; address 0x5946ff482178, cause 'memory not mapped'\n#&gt; An irrecoverable exception occurred. R is aborting now ...\n\nThis is not something that can prevented with, say, try(), as the error is undefined. See this SO-post for details.",
+    "title": "5  Garbage in, garbage out",
+    "section": "5.2 Undefined behavior",
+    "text": "5.2 Undefined behavior\n\n\n\n\n\n\nImportant\n\n\n\nDo NOT run the chunks in this section in an R-session where you have important work, as your session will crash.\n\n\n{SLmetrics} uses pointer arithmetics via C++ which, contrary to usual practice in R, performs computations on memory addresses rather than the object itself. If the memory address is ill-defined, which can occur in cases where values lack valid binary representations for the operations being performed, undefined behavior1 follows and will crash your R-session. See this code:\n\n# 1) define values\nactual &lt;- factor(c(NA, \"A\", \"B\", \"A\"))\npredicted &lt;- rev(actual)\n\n# 2) pass into\n# cmatrix\nSLmetrics::cmatrix(\n    actual,\n    predicted\n)\n#&gt; address 0x5946ff482178, cause 'memory not mapped'\n#&gt; An irrecoverable exception occurred. R is aborting now ...\n\nThis is not something that can prevented with, say, try(), as the error is undefined. See this SO-post for details.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
     ]
   },
   {
     "objectID": "garbage.html#edge-cases",
     "href": "garbage.html#edge-cases",
-    "title": "4  Garbage in, garbage out",
-    "section": "4.3 Edge cases",
-    "text": "4.3 Edge cases\nThere are cases, where it can be hard to predict what will happen when passing a given set of actual and predicted classes. Especially if the input is too large, and it becomes inefficient to check these every iteration. In such cases {SLmetrics} does help. See for example the following code:\n\n# 1) define values\nactual &lt;- factor(\n    sample(letters[1:3],size = 1e7, replace = TRUE, prob = c(0.5, 0.5, 0)),\n    levels = letters[1:3]\n    )\npredicted &lt;- rev(actual)\n\n# 2) pass into\n# cmatrix\nSLmetrics::fbeta(\n    actual,\n    predicted\n)\n\n#&gt;         a         b         c \n#&gt; 0.4997075 0.4999900       NaN\n\n\nOne class, c, is never predicted, nor is it present in the actual labels - therefore, by construction, the value is NaN as there is division by zero. During aggregation to micro or macro averages these are being handled according to na.rm. See below:\n\n# 1) macro average\nSLmetrics::fbeta(\n    actual,\n    predicted,\n    micro = FALSE,\n    na.rm = TRUE\n)\n\n#&gt; [1] 0.4998488\n\n# 2) macro average\nSLmetrics::fbeta(\n    actual,\n    predicted,\n    micro = FALSE,\n    na.rm = FALSE\n)\n\n#&gt; [1] 0.3332325\n\n\n\n# 1) define values\nactual    &lt;- c(-1.2, 1.3, 2.6, 3)\npredicted &lt;- rev(actual) \n\n# 2) evaluate with RMSLE\ntry(\n    RMSLE(\n    actual,\n    predicted\n    )\n)\n\n#&gt; Error in RMSLE(actual, predicted) : could not find function \"RMSLE\"\n\n\nIn these cases, there is no undefined behaviour or exploding R sessions as all of this is handled internally.",
+    "title": "5  Garbage in, garbage out",
+    "section": "5.3 Edge cases",
+    "text": "5.3 Edge cases\nThere are cases, where it can be hard to predict what will happen when passing a given set of actual and predicted classes. Especially if the input is too large, and it becomes inefficient to check these every iteration. In such cases {SLmetrics} does help. See for example the following code:\n\n# 1) define values\nactual &lt;- factor(\n    sample(letters[1:3],size = 1e7, replace = TRUE, prob = c(0.5, 0.5, 0)),\n    levels = letters[1:3]\n    )\npredicted &lt;- rev(actual)\n\n# 2) pass into\n# cmatrix\nSLmetrics::fbeta(\n    actual,\n    predicted\n)\n\n#&gt;         a         b         c \n#&gt; 0.4998276 0.4998612       NaN\n\n\nOne class, c, is never predicted, nor is it present in the actual labels - therefore, by construction, the value is NaN as there is division by zero. During aggregation to micro or macro averages these are being handled according to na.rm. See below:\n\n# 1) macro average\nSLmetrics::fbeta(\n    actual,\n    predicted,\n    micro = FALSE,\n    na.rm = TRUE\n)\n\n#&gt; [1] 0.4998444\n\n# 2) macro average\nSLmetrics::fbeta(\n    actual,\n    predicted,\n    micro = FALSE,\n    na.rm = FALSE\n)\n\n#&gt; [1] 0.3332296\n\n\n\n# 1) define values\nactual    &lt;- c(-1.2, 1.3, 2.6, 3)\npredicted &lt;- rev(actual) \n\n# 2) evaluate with RMSLE\ntry(\n    RMSLE(\n    actual,\n    predicted\n    )\n)\n\n#&gt; Error in RMSLE(actual, predicted) : could not find function \"RMSLE\"\n\n\nIn these cases, there is no undefined behaviour or exploding R sessions as all of this is handled internally.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
     ]
   },
   {
     "objectID": "garbage.html#staying-safe",
     "href": "garbage.html#staying-safe",
-    "title": "4  Garbage in, garbage out",
-    "section": "4.4 Staying “safe”",
-    "text": "4.4 Staying “safe”\nTo avoid undefined behavior when passing ill-defined input one option is to write a wrapper function, or using existing infrastructure. Below is an example of a wrapper function:\n\n# 1) RMSLE\nconfusion_matrix &lt;- function(\n    actual, \n    predicted) {\n\n        if (any(is.na(actual))) {\n            stop(\"`actual` contains missing values\")\n        }\n\n        if (any(is.na(predicted))) {\n            stop(\"`predicted` contains missing values\")\n        }\n\n        SLmetrics::cmatrix(\n            actual,\n            predicted\n        )\n\n}\n\n\n# 1) define values\nactual &lt;- factor(c(NA, \"A\", \"B\", \"A\", \"B\"))\npredicted &lt;- rev(actual)\n\n# 2) \ntry(\n    confusion_matrix(\n    actual,\n    predicted\n    )\n)\n\n#&gt; Error in confusion_matrix(actual, predicted) : \n#&gt;   `actual` contains missing values\n\n\nAnother option is to use the existing infrastructure. {yardstick} does all kinds of safety checks before executing a function, and you can, via the metric_vec_template() pass a SLmetrics::foo() in the foo_impl()-function. This gives you the safety of {yardstick}, and the efficiency of {SLmetrics}.2\n\n\n\n\n\n\nImportant\n\n\n\nBe aware that using {SLmetrics} with {yardstick} will introduce some efficiency overhead - especially on large vectors.",
+    "title": "5  Garbage in, garbage out",
+    "section": "5.4 Staying “safe”",
+    "text": "5.4 Staying “safe”\nTo avoid undefined behavior when passing ill-defined input one option is to write a wrapper function, or using existing infrastructure. Below is an example of a wrapper function:\n\n# 1) RMSLE\nconfusion_matrix &lt;- function(\n    actual, \n    predicted) {\n\n        if (any(is.na(actual))) {\n            stop(\"`actual` contains missing values\")\n        }\n\n        if (any(is.na(predicted))) {\n            stop(\"`predicted` contains missing values\")\n        }\n\n        SLmetrics::cmatrix(\n            actual,\n            predicted\n        )\n\n}\n\n\n# 1) define values\nactual &lt;- factor(c(NA, \"A\", \"B\", \"A\", \"B\"))\npredicted &lt;- rev(actual)\n\n# 2) \ntry(\n    confusion_matrix(\n    actual,\n    predicted\n    )\n)\n\n#&gt; Error in confusion_matrix(actual, predicted) : \n#&gt;   `actual` contains missing values\n\n\nAnother option is to use the existing infrastructure. {yardstick} does all kinds of safety checks before executing a function, and you can, via the metric_vec_template() pass a SLmetrics::foo() in the foo_impl()-function. This gives you the safety of {yardstick}, and the efficiency of {SLmetrics}.2\n\n\n\n\n\n\nImportant\n\n\n\nBe aware that using {SLmetrics} with {yardstick} will introduce some efficiency overhead - especially on large vectors.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
     ]
   },
   {
     "objectID": "garbage.html#key-take-aways",
     "href": "garbage.html#key-take-aways",
-    "title": "4  Garbage in, garbage out",
-    "section": "4.5 Key take-aways",
-    "text": "4.5 Key take-aways\n{SLmetrics} assumes that the end-user follows the typical AI/ML workflow, and has an understanding of R beyond beginner-level. And therefore {SLmetrics} does not check the validity of the user-input, which may lead to undefined behavior if input is ill-defined.",
+    "title": "5  Garbage in, garbage out",
+    "section": "5.5 Key take-aways",
+    "text": "5.5 Key take-aways\n{SLmetrics} assumes that the end-user follows the typical AI/ML workflow, and has an understanding of R beyond beginner-level. And therefore {SLmetrics} does not check the validity of the user-input, which may lead to undefined behavior if input is ill-defined.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
     ]
   },
   {
     "objectID": "garbage.html#footnotes",
     "href": "garbage.html#footnotes",
-    "title": "4  Garbage in, garbage out",
+    "title": "5  Garbage in, garbage out",
     "section": "",
     "text": "Undefined behavior refers to program operations that are not prescribed by the language specification, leading to unpredictable results or crashes.↩︎\nAn example would be appropriate. But my first attempt lead to a decrecated-warning, which is also one of the main reasons I developed this {pkg}, and gave up. See the {documentation} on how to create custom metrics using {yardstick}.↩︎",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
     ]
   },
   {
