@@ -90,7 +90,7 @@ DT_[
 # 4) subset such that only 
 # mapped functions are available
 DT <- DT_[
-  !is.na(title) 
+  !is.na(title) & type != "u"
 ]
 
 # 4.1) stop the script if

@@ -1,0 +1,167 @@
+---
+format:
+  html:
+    code-overflow: wrap
+execute: 
+  cache: true
+knitr:
+  opts_chunk:
+    comment: "#>"
+    messages: true
+    warning: false
+---
+# OpenMP
+
+[{SLmetrics}](https://github.com/serkor1/SLmetrics) supports parallelization through [OpenMP](https://www.openmp.org/). In this section this functionality is introduced.
+
+## Enabling/Disabling OpenMP
+
+OpenMP is disabled by `default`, but can be enabled as follows:
+
+```{r}
+SLmetrics::setUseOpenMP(TRUE)
+```
+
+And disabled as follows:
+
+```{r}
+SLmetrics::setUseOpenMP(FALSE)
+```
+
+By `default` all cores are used. To control the amount of cores, see the following code:
+
+```{r}
+SLmetrics::setNumberThreads(3)
+```
+
+To use all cores:
+
+```{r}
+SLmetrics::setNumberThreads(-1)
+```
+
+## Benchmarking OpenMP
+
+```{r}
+#| include: false
+#| echo: false
+#| code-fold: true
+benchmark <- function(
+  ..., 
+  m = 10) {
+  library(magrittr)
+  # 1) create list
+  # for storing values
+  performance <- list()
+  
+  for (i in 1:m) {
+
+     # 1) run the benchmarks
+    results <- bench::mark(
+      ...,
+      iterations = 10,
+      check = FALSE
+    )
+
+    # 2) extract values
+    # and calculate medians
+    performance$time[[i]]  <- setNames(lapply(results$time, mean), results$expression)
+    performance$memory[[i]] <- setNames(lapply(results$memory, function(x) { sum(x$bytes, na.rm = TRUE)}), results$expression)
+    performance$n_gc[[i]] <- setNames(lapply(results$n_gc, sum), results$expression)
+
+  }
+
+  purrr::pmap_dfr(
+  list(performance$time, performance$memory, performance$n_gc), 
+  ~{
+    tibble::tibble(
+      expression = names(..1),
+      time = unlist(..1),
+      memory = unlist(..2),
+      n_gc = unlist(..3)
+    )
+  }
+) %>%
+  dplyr::mutate(expression = factor(expression, levels = unique(expression))) %>%
+  dplyr::group_by(expression) %>%
+  dplyr::filter(dplyr::row_number() > 1) %>%
+  dplyr::summarize(
+    execution_time = bench::as_bench_time(median(time)),
+    memory_usage = bench::as_bench_bytes(median(memory)),
+    gc_calls = median(n_gc),
+    .groups = "drop"
+  )
+
+}
+```
+
+
+```{r}
+#| include: false
+#| echo: false
+# classification function
+create_factor <- function(
+    k = 3,
+    balanced = TRUE,
+    n = 1e7) {
+
+  probs <- NULL
+
+  if (!balanced) {
+
+    probs <- rbeta(
+      n = k,
+      shape1 = 10,
+      shape2 = 2
+    )
+
+    probs[which.min(probs)] <- 0
+
+    probs <- probs / sum(probs)
+
+  }
+
+  factor(
+    x = sample(
+      1:k,
+      size = n,
+      replace = TRUE,
+      prob = probs
+    ),
+    labels = letters[1:k],
+    levels = 1:k
+  )
+}
+```
+
+```{r}
+# 1) set seed for reproducibility
+set.seed(1903)
+
+# 2) create classification
+# problem
+fct_actual <- create_factor()
+fct_predicted <- create_factor()
+```
+
+
+```{r}
+#| code-fold: true
+#| messages: false
+SLmetrics::setUseOpenMP(TRUE)
+
+benchmark(
+    `With OpenMP` = SLmetrics::cmatrix(fct_actual, fct_predicted)
+)
+```
+
+
+```{r}
+#| code-fold: true
+#| messages: false
+SLmetrics::setUseOpenMP(FALSE)
+
+benchmark(
+    `Wihtout OpenMP` = SLmetrics::cmatrix(fct_actual, fct_predicted)
+)
+```

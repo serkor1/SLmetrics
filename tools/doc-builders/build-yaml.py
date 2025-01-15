@@ -41,6 +41,7 @@ class YAML:
                         'chapters': [],
                         'number-sections': False
                     },
+                    'openmp.qmd',
                     "garbage.qmd",
                     "references.qmd"
                 ]

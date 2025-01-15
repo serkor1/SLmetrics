@@ -55,9 +55,12 @@ build-meta:
 # is built via Github actions.
 preview-docs:
 	@echo "📚 Building Quarto Book"
+	
+	@mkdir docs/ref_regression -p
+	@mkdir docs/ref_classification -p
 
-	@python3 tools/doc-builders/build-yaml.py
 	@Rscript -e "source('tools/doc-builders/build-qmd.R')"
+	@python3 tools/doc-builders/build-yaml.py
 
 	@cd docs/ && quarto preview
 
@@ -162,10 +165,10 @@ clean:
 		git branch | grep -v "main" | grep -v "development" | xargs git branch -D; \
 	fi
 
-	# clean-up meta
-	@rm NEWS.md
-	@rm README.md
+	@rm NEWS.md --f
+	@rm README.md --f
 
-	# clean-up build-files
+	@git clean -d -x -f
+
 	@rm -f src/*.o src/*.so
 	@rm -f $(TARBALL)
