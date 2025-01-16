@@ -1,3 +1,106 @@
+---
+format:
+  html:
+    code-overflow: wrap
+execute: 
+  cache: true
+knitr:
+  opts_chunk:
+    comment: "#>"
+    messages: true
+    warning: false
+---
+
 # Classification functions {.unnumbered}
 
-In this section all classification evaluation metrics are listed.
+In this section all available classification metrics and related documentation is described. Common for all classifcation functions is that they use the method `foo.factor` or `foo.cmatrix`.
+
+## A primer on factors
+
+Consider a classification problem with three classes: `A`, `B`, and `C`. The actual vector of `factor` values is defined as follows:
+
+```{r}
+## set seed
+set.seed(1903)
+
+## actual
+actual <- factor(
+    x = sample(x = 1:3, size = 10, replace = TRUE),
+    levels = c(1, 2, 3),
+    labels = c("A", "B", "C")
+)
+
+## print values
+print(actual)
+```
+
+Here, the values 1, 2, and 3 are mapped to `A`, `B`, and `C`, respectively. Now, suppose your model does not predict any `B`'s. The predicted vector of `factor` values would be defined as follows:
+
+```{r}
+## set seed
+set.seed(1903)
+
+## predicted
+predicted <- factor(
+    x = sample(x = c(1, 3), size = 10, replace = TRUE),
+    levels = c(1, 2, 3),
+    labels = c("A", "B", "C")
+)
+
+## print values
+print(predicted)
+```
+
+In both cases, $k = 3$, determined indirectly by the `levels` argument.
+
+## Examples
+
+In this section a brief introduction to the two methods are given.
+
+### factor method
+
+```{r}
+## factor method
+SLmetrics::accuracy(
+  actual,
+  predicted
+)
+```
+
+### cmatrix method
+
+```{r}
+## 1) generate confusion
+## matrix (cmatrix class)
+confusion_matrix <- SLmetrics::cmatrix(
+  actual,
+  predicted
+)
+
+## 2) check class
+class(confusion_matrix)
+
+## 3) summarise
+summary(confusion_matrix)
+```
+
+
+The `confusion_matrix` can be passed into `accuracy()` as follows:
+
+```{r}
+SLmetrics::accuracy(
+  confusion_matrix
+)
+```
+
+Using the `cmatrix`-method is more efficient if more than one classification metric is going to be calculated, as the metrics are calculated directly from the `cmatrix`-object, instead of looping though all the values in `actual` and `predicted` values for each metrics. See below:
+
+```{r}
+cat(
+  sep = "\n",
+  paste("Accuracy:", SLmetrics::accuracy(
+  confusion_matrix)),
+  paste("Balanced Accuracy:", SLmetrics::baccuracy(
+  confusion_matrix))
+)
+```
