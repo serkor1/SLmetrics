@@ -1,9 +1,9 @@
 ---
-title: "{SLmetrics}: Regression"
-subtitle: "{SLmetrics} x {xgboost} in regression problems"
+title: "{SLmetrics}: Regression tasks"
+subtitle: "Training a {xgboost}-regressor on the Boston Housing dataset and evaluating it with {SLmetrics}"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{{SLmetrics}: Regression}
+  %\VignetteIndexEntry{{SLmetrics}: Regression tasks}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -22,15 +22,15 @@ library(SLmetrics)
 ```
 
 
-In this vignette, we demonstrate how to use [{SLmetrics}](https://github.com/serkor1/SLmetrics) with [{xgboost}](https://github.com/dmlc/xgboost) for regression problems. 
+In this vignette, we demonstrate how to use [{SLmetrics}](https://github.com/serkor1/SLmetrics) with [{xgboost}](https://github.com/dmlc/xgboost) for regression tasks. 
 
 > **Prerequisite:** Familiarity with {xgboost} and the general AI/ML-workflow is assumed.
 
-We will use the [Boston Housing](https://www.archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.names) dataset, made available via [{mlbench}](https://cran.r-project.org/package=mlbench), as an example throughout this vignette.
+We will use the [Boston Housing](https://lib.stat.cmu.edu/datasets/boston) dataset, made available via [{mlbench}](https://cran.r-project.org/package=mlbench), as an example throughout this vignette.
 
 ## Setup
 
-In this section we setup the essential the workflow for using [{SLmetrics}](https://github.com/serkor1/SLmetrics) with [{xgboost}](https://github.com/dmlc/xgboost).
+In this section, we setup the essential the workflow for using [{SLmetrics}](https://github.com/serkor1/SLmetrics) with [{xgboost}](https://github.com/dmlc/xgboost).
 
 ### The data
 
@@ -99,8 +99,8 @@ actual <- test$medv
 # 1) define parameters
 # across the vignette
 parameters <- list(
-    max_depth = 2, 
-    eta = 1
+    max_depth = 10, 
+    eta = 0.1
 )
 ```
 
@@ -117,7 +117,7 @@ where $y_i$ are the actual values, $\upsilon_i$ are the predicted values and $\b
 ```{r}
 # 1) define the custom
 # evaluation metric
-evaluation_metric <- function(
+eval_rrse <- function(
     preds, 
     dtrain) {
 
@@ -141,7 +141,7 @@ evaluation_metric <- function(
 
 ## Training model
 
-We train the the model using the `xgb.train()`-function,
+We train the model using the `xgb.train()`-function,
 
 ```{r}
 # 1) model training
@@ -150,7 +150,7 @@ model <- xgboost::xgb.train(
     data    = dtrain,
     nrounds = 10L,
     verbose = 0,
-    feval   = evaluation_metric,
+    feval   = eval_rrse,
     watchlist = list(
         train = dtrain,
         test  = dtest
@@ -172,7 +172,7 @@ predicted <- predict(
 )
 ```
 
-We summarize the performance using the *relative root mean squared error*, *root mean squared error* and *concordance correlation coefficient*
+We summarize the performance using *relative root mean squared error*, *root mean squared error* and *concordance correlation coefficient*
 
 ```{r}
 # 1) summarize all

@@ -360,12 +360,12 @@ Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
 [^1]: The source code is available
-    [here](https://github.com/serkor1/SLmetrics/blob/development/data-raw/classification_performance.R)
+    [here](https://github.com/serkor1/SLmetrics/blob/d9b6cdbc1fccbdb0d45364b0fc37ebe953df30b9/data-raw/classification_performance.R)
     and
-    [here](https://github.com/serkor1/SLmetrics/blob/development/data-raw/regression_performance.R).
+    [here](https://github.com/serkor1/SLmetrics/blob/d9b6cdbc1fccbdb0d45364b0fc37ebe953df30b9/data-raw/regression_performance.R).
 
 [^2]: The source code is available
-    [here](https://github.com/serkor1/SLmetrics/blob/development/data-raw/memory_performance.R).
+    [here](https://github.com/serkor1/SLmetrics/blob/d9b6cdbc1fccbdb0d45364b0fc37ebe953df30b9/data-raw/memory_performance.R).
 
 [^3]: The source code is available
-    [here](https://github.com/serkor1/SLmetrics/blob/development/data-raw/OpenMP_performance.R).
+    [here](https://github.com/serkor1/SLmetrics/blob/d9b6cdbc1fccbdb0d45364b0fc37ebe953df30b9/data-raw/OpenMP_perfomance.R).

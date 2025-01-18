@@ -11,7 +11,7 @@ Authors@R: c(
       )
   )
 Description:
-  Performance evaluation metrics for supervised machine learning, statistical learning and artificial intelligence applications in R written in C++.
+  Provides performance evaluation metrics for supervised and unsupervised machine learning, statistical learning and artificial intelligence tasks in R. Core computations are implemented in C++ for scalability and efficiency.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

@@ -1,9 +1,9 @@
 ---
-title: "{SLmetrics}: Classification"
-subtitle: "{SLmetrics} x {lightgbm} in classification problems"
+title: "{SLmetrics}: Classification tasks"
+subtitle: "Training a {lightgbm} classifier on the Glass dataset and evaluating it with {SLmetrics}"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{{SLmetrics}: Classification}
+  %\VignetteIndexEntry{{SLmetrics}: Classification tasks}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -22,7 +22,7 @@ library(SLmetrics)
 ```
 
 
-In this vignette, we will demonstrate how to use [{SLmetrics}](https://github.com/serkor1/SLmetrics) with [{lightgbm}](https://github.com/microsoft/LightGBM) for classification problems. 
+In this vignette, we will demonstrate how to use [{SLmetrics}](https://github.com/serkor1/SLmetrics) with [{lightgbm}](https://github.com/microsoft/LightGBM) for classification tasks. 
 
 > **Prerequisite:** Familiarity with [{lightgbm}](https://github.com/microsoft/LightGBM)  and the general AI/ML-workflow is assumed.
 
@@ -30,7 +30,7 @@ We will use the [Glass](https://archive.ics.uci.edu/dataset/42/glass+identificat
 
 ## Setup
 
-In this section we setup the essential the workflow for using [{SLmetrics}](https://github.com/serkor1/SLmetrics) with [{lightgbm}](https://github.com/microsoft/LightGBM).
+In this section, we setup the essential the workflow for using [{SLmetrics}](https://github.com/serkor1/SLmetrics) with [{lightgbm}](https://github.com/microsoft/LightGBM).
 
 ### The data
 
@@ -58,7 +58,7 @@ set.seed(1903)
 
 # 2.2) exttract
 # indices with a simple
-# 80/10 split
+# 80/20 split
 index <- sample(1:nrow(Glass), size = 0.8 * nrow(Glass))
 
 # 1.1) extract training
@@ -99,14 +99,14 @@ test <- data.matrix(
 parameters <- list(
     objective     = "multiclass",
     num_leaves    = 4L,
-    learning_rate = 0.5,
+    learning_rate = 0.1,
     num_class     = 8
 )
 ```
 
 ### Evaluation function: F score
 
-As the custom evaluation function we use the $F_{score}$ with $\beta = 2$ to emphasize that precision is more imporant than recall. The function is defined as,
+As the custom evaluation function we use the $F_{score}$ with $\beta = 2$ to emphasize that recall is more imporant than precision. The function is defined as,
 
 $$
 f_\beta = (1 + \beta^2) \cdot \frac{precision \cdot recall}{(\beta^2 \cdot precision) + recall}
@@ -117,7 +117,7 @@ The `fbeta()`-function returns a vector of scores for each class. We want to max
 ```{r}
 # 1) define the custom
 # evaluation metric
-evaluation_metric <- function(
+eval_fbeta <- function(
     dtrain, 
     preds) {
 
@@ -128,6 +128,8 @@ evaluation_metric <- function(
             actual    = actual,
             predicted = predicted,
             beta      = 2,
+            # Use micro-averaging to account
+            # for class imbalances
             micro     = TRUE
         )
 
@@ -144,14 +146,14 @@ evaluation_metric <- function(
 
 ## Training model
 
-We train the the model using the `lgb.train()`-function,
+We train the model using the `lgb.train()`-function,
 
 ```{r}
 model <- lightgbm::lgb.train(
     params  = parameters,
     data    = dtrain,
     nrounds = 10L,
-    eval    = evaluation_metric,
+    eval    = eval_fbeta,
     verbose = -1
 )
 ```
