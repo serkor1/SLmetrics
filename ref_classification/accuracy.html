@@ -515,7 +515,7 @@ window.Quarto = {
   <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
   <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments">Arguments</a></li>
   <li><a href="#value" id="toc-value" class="nav-link" data-scroll-target="#value">Value</a></li>
-  <li><a href="#calculation" id="toc-calculation" class="nav-link" data-scroll-target="#calculation">Calculation</a></li>
+  <li><a href="#definition" id="toc-definition" class="nav-link" data-scroll-target="#definition">Definition</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/ref_classification/accuracy.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/ref_classification/accuracy.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -555,7 +555,7 @@ R Documentation
 <section id="description" class="level3">
 <h3 class="anchored" data-anchor-id="description">Description</h3>
 <p>
-The <code>accuracy()</code> function computes the <a href="https://en.wikipedia.org/wiki/Precision_and_recall">accuracy</a> between two vectors of predicted and observed <code>factor()</code> values. The <code>weighted.accuracy()</code> function computes the weighted accuracy.
+A generic function for the (normalized) <a href="https://developers.google.com/machine-learning/glossary#accuracy">accuracy</a> in classification tasks. Use <code>weighted.accuracy()</code> for the weighted <a href="https://developers.google.com/machine-learning/glossary#accuracy">accuracy</a>.
 </p>
 </section>
 <section id="usage" class="level3">
@@ -636,17 +636,39 @@ A confusion matrix created <code>cmatrix()</code>
 A <code>&lt;numeric&gt;</code>-vector of length 1
 </p>
 </section>
-<section id="calculation" class="level3">
-<h3 class="anchored" data-anchor-id="calculation">Calculation</h3>
+<section id="definition" class="level3">
+<h3 class="anchored" data-anchor-id="definition">Definition</h3>
 <p>
-The metric is calculated as follows,
+Let <span class="math inline">\(\hat{\alpha} \in [0, 1]\)</span> be the proportion of correctly predicted classes. The <a href="https://developers.google.com/machine-learning/glossary#accuracy">accuracy</a> of the classifier is calculated as,
 </p>
 <p><span class="math display">\[
-  \frac{\#TP + \#TN}{\#TP + \#TN + \#FP + \#FN}
+  \hat{\alpha} = \frac{\#TP + \#TN}{\#TP + \#TN + \#FP + \#FN}
 \]</span></p>
 <p>
-Where <span class="math inline">\(\#TP\)</span>, <span class="math inline">\(\#TN\)</span>, <span class="math inline">\(\#FP\)</span>, and <span class="math inline">\(\#FN\)</span> is the number of true positives, true negatives, false positives, and false negatives, respectively.
+Where:
 </p>
+<ul>
+<li>
+<p>
+<span class="math inline">\(\#TP\)</span> is the number of true positives,
+</p>
+</li>
+<li>
+<p>
+<span class="math inline">\(\#TN\)</span> is the number of true negatives,
+</p>
+</li>
+<li>
+<p>
+<span class="math inline">\(\#FP\)</span> is the number of false positives, and
+</p>
+</li>
+<li>
+<p>
+<span class="math inline">\(\#FN\)</span> is the number of false negatives.
+</p>
+</li>
+</ul>
 </section>
 <section id="examples" class="level3">
 <h3 class="anchored" data-anchor-id="examples">Examples</h3>

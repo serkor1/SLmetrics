@@ -515,7 +515,7 @@ window.Quarto = {
   <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
   <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments">Arguments</a></li>
   <li><a href="#value" id="toc-value" class="nav-link" data-scroll-target="#value">Value</a></li>
-  <li><a href="#calculation" id="toc-calculation" class="nav-link" data-scroll-target="#calculation">Calculation</a></li>
+  <li><a href="#definition" id="toc-definition" class="nav-link" data-scroll-target="#definition">Definition</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/ref_classification/baccuracy.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/ref_classification/baccuracy.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -555,7 +555,7 @@ R Documentation
 <section id="description" class="level3">
 <h3 class="anchored" data-anchor-id="description">Description</h3>
 <p>
-The <code>baccuracy()</code>-function computes the <a href="https://neptune.ai/blog/balanced-accuracy">balanced accuracy</a> between two vectors of predicted and observed <code>factor()</code> values. The <code>weighted.baccuracy()</code> function computes the weighted balanced accuracy.
+A generic function for the (normalized) balanced <a href="https://arxiv.org/abs/2008.05756">accuracy</a>. Use <code>weighted.baccuracy()</code> for the weighted balanced <a href="https://arxiv.org/abs/2008.05756">accuracy</a>.
 </p>
 </section>
 <section id="usage" class="level3">
@@ -656,17 +656,40 @@ A confusion matrix created <code>cmatrix()</code>
 A numeric-vector of length 1
 </p>
 </section>
-<section id="calculation" class="level3">
-<h3 class="anchored" data-anchor-id="calculation">Calculation</h3>
+<section id="definition" class="level3">
+<h3 class="anchored" data-anchor-id="definition">Definition</h3>
 <p>
-The metric is calculated as follows,
+Let <span class="math inline">\(\hat{\alpha} \in [0, 1]\)</span> be the proportion of correctly predicted classes. If <code>adjust == false</code>, the balanced <a href="https://arxiv.org/abs/2008.05756">accuracy</a> of the classifier is calculated as,
 </p>
 <p><span class="math display">\[
-  \frac{\text{sensitivity} + \text{specificty}}{2}
+  \hat{\alpha} = \frac{\text{sensitivity} + \text{specificty}}{2}
 \]</span></p>
 <p>
-See the <code>sensitivity()</code>- and/or <code>specificity()</code>-function for more details.
+otherwise,
 </p>
+<p><span class="math display">\[
+  \hat{\alpha} = \frac{\text{sensitivity} + \text{specificty}}{2} \frac{1}{k}
+\]</span></p>
+<p>
+Where:
+</p>
+<ul>
+<li>
+<p>
+<span class="math inline">\(k\)</span> is the number of classes
+</p>
+</li>
+<li>
+<p>
+<span class="math inline">\(\text{sensitivity}\)</span> is the overall <a href="https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall#recall_or_true_positive_rate">sensitivity</a>, and
+</p>
+</li>
+<li>
+<p>
+<span class="math inline">\(\text{specificty}\)</span> is the overall <a href="https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall#recall_or_true_positive_rate">specificty</a>
+</p>
+</li>
+</ul>
 </section>
 <section id="examples" class="level3">
 <h3 class="anchored" data-anchor-id="examples">Examples</h3>
