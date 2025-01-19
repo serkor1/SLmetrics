@@ -6,7 +6,7 @@
 \alias{ckappa.cmatrix}
 \alias{ckappa}
 \alias{weighted.ckappa}
-\title{Compute Cohen's \eqn{\kappa}-statistic}
+\title{Cohen's \eqn{\kappa}-statistic}
 \usage{
 \method{ckappa}{factor}(actual, predicted, beta = 0, ...)
 

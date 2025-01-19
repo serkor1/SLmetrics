@@ -6,7 +6,7 @@
 \alias{nlr.cmatrix}
 \alias{nlr}
 \alias{weighted.nlr}
-\title{Compute the \eqn{\text{negative}} \eqn{\text{likelihood}} \eqn{\text{ratio}}}
+\title{Negative Likelihood Ratio}
 \usage{
 \method{nlr}{factor}(actual, predicted, ...)
 

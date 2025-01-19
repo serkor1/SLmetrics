@@ -4,17 +4,17 @@
 # objective: Generate Methods
 # script start;
 
-#' @title Compute the \eqn{\text{pinball}} \eqn{\text{loss}}
+#' @inherit huberloss
+#' 
+#' @title Pinball Loss
 #'
 #' @description
 #' The [pinball()]-function computes the [pinball loss](https://en.wikipedia.org/wiki/Quantile_regression) between
 #' the observed and predicted <[numeric]> vectors. The [weighted.pinball()] function computes the weighted Pinball Loss.
 #'
-#' @inherit huberloss
 #' @param alpha A <[numeric]>-value of [length] \eqn{1} (default: \eqn{0.5}). The slope of the pinball loss function.
 #' @param deviance A <[logical]>-value of [length] 1 (default: [FALSE]). If [TRUE] the function returns the \eqn{D^2} loss.
-#'
-#' @example man/examples/scr_PinballLoss.R
+#' 
 #' @section Definition:
 #' 
 #' The metric is calculated as,
@@ -23,8 +23,11 @@
 #' 
 #' where \eqn{y_i} is the actual value, \eqn{\hat{y}_i} is the predicted value and \eqn{\alpha} is the quantile level.
 #'
+#' @example man/examples/scr_PinballLoss.R
+#' 
 #' @family Regression
 #' @family Supervised Learning
+#' 
 #' @export
 pinball <- function(...) {
   UseMethod(

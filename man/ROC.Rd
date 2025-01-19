@@ -6,7 +6,7 @@
 \alias{weighted.ROC.factor}
 \alias{ROC}
 \alias{weighted.ROC}
-\title{Compute the \eqn{\text{reciever}} \eqn{\text{operator}} \eqn{\text{characteristics}}}
+\title{Reciever Operator Characteristics}
 \usage{
 \method{ROC}{factor}(actual, response, thresholds = NULL, ...)
 

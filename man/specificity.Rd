@@ -16,7 +16,7 @@
 \alias{weighted.specificity}
 \alias{weighted.tnr}
 \alias{weighted.selectivity}
-\title{Specificity or \eqn{\text{true}} \eqn{\text{negative}} \eqn{\text{rate}}}
+\title{Specificity}
 \usage{
 \method{specificity}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
@@ -75,6 +75,10 @@ If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \li
 \description{
 The  \code{\link[=specificity]{specificity()}}-function computes the \href{https://en.wikipedia.org/wiki/Sensitivity_and_specificity}{specificity}, also known as the True Negative Rate (TNR) or selectivity, between
 two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.specificity]{weighted.specificity()}} function computes the weighted specificity.
+\subsection{Other names}{
+
+True Negative Rate, Selectivity
+}
 }
 \section{Creating <\link{factor}>}{
 

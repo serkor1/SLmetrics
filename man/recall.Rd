@@ -16,7 +16,7 @@
 \alias{weighted.recall}
 \alias{weighted.sensitivity}
 \alias{weighted.tpr}
-\title{Compute the \eqn{recall}, \eqn{sensitivity} or \eqn{\text{true}} \eqn{\text{positive}} \eqn{\text{rate}}}
+\title{Recall}
 \usage{
 \method{recall}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
@@ -75,6 +75,10 @@ If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \li
 \description{
 The \code{\link[=recall]{recall()}}-function computes the \href{https://en.wikipedia.org/wiki/Sensitivity_and_specificity}{recall}, also known as sensitivity or the True Positive Rate (TPR), between
 two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.recall]{weighted.recall()}} function computes the weighted recall.
+\subsection{Other names}{
+
+Sensitivity, True Positive Rate
+}
 }
 \section{Definition}{
 

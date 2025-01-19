@@ -16,7 +16,7 @@
 \alias{weighted.jaccard}
 \alias{weighted.csi}
 \alias{weighted.tscore}
-\title{Compute the \eqn{\text{Jaccard}} \eqn{\text{index}}}
+\title{Jaccard Index}
 \usage{
 \method{jaccard}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 

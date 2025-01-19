@@ -6,7 +6,7 @@
 \alias{weighted.ccc.numeric}
 \alias{ccc}
 \alias{weighted.ccc}
-\title{Compute the \eqn{\text{concordance}} \eqn{\text{correlation}} \eqn{\text{coefficient}}}
+\title{Concordance Correlation Coefficient}
 \usage{
 \method{ccc}{numeric}(actual, predicted, correction = FALSE, ...)
 

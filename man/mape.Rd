@@ -6,7 +6,7 @@
 \alias{weighted.mape.numeric}
 \alias{mape}
 \alias{weighted.mape}
-\title{Compute the \eqn{\text{mean}} \eqn{\text{absolute}} \eqn{\text{percentage}} \eqn{\text{error}}}
+\title{Mean Absolute Percentage Error}
 \usage{
 \method{mape}{numeric}(actual, predicted, ...)
 

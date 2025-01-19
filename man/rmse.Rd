@@ -5,7 +5,7 @@
 \alias{weighted.rmse.numeric}
 \alias{rmse}
 \alias{weighted.rmse}
-\title{Compute the \eqn{\text{root}} \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{error}}}
+\title{Root Mean Squared Error}
 \usage{
 \method{rmse}{numeric}(actual, predicted, ...)
 

@@ -4,16 +4,16 @@
 # objective: Generate Errors
 # script start;
 
-#' Compute the \eqn{\text{relative}} \eqn{\text{root}} \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{error}}
+#' @inherit huberloss
+#' 
+#' @title Relative Root Mean Squared Error
 #'
+#' @description
 #' The [rrmse()]-function computes the [Relative Root Mean Squared Error](https://en.wikipedia.org/wiki/Root-mean-square_deviation) between
 #' the observed and predicted <[numeric]> vectors. The [weighted.rrmse()] function computes the weighted Relative Root Mean Squared Error.
 #'
-#' @inherit huberloss
 #' @param normalization A <[numeric]>-value of [length] \eqn{1} (default: \eqn{1}). \eqn{0}: [mean]-normalization, \eqn{1}: [range]-normalization, \eqn{2}: [IQR]-normalization.
-#'
-#' @example man/examples/scr_RelativeRootMeanSquaredError.R
-#'
+#' 
 #' @section Definition:
 #'
 #' The metric is calculated as,
@@ -24,8 +24,11 @@
 #'
 #' Where \eqn{\gamma} is the normalization factor.
 #'
+#' @example man/examples/scr_RelativeRootMeanSquaredError.R
+#'
 #' @family Regression
 #' @family Supervised Learning
+#' 
 #' @export
 rrmse <- function(...) {
   UseMethod(

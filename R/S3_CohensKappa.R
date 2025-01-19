@@ -4,7 +4,10 @@
 # objective: Generate Methods
 # script start;
 
-#' Compute Cohen's \eqn{\kappa}-statistic
+#' @inherit specificity
+#' @inheritParams accurracy
+#' 
+#' @title Cohen's \eqn{\kappa}-statistic
 #'
 #' @description
 #' The [kappa()]-function computes [Cohen's \eqn{\kappa}](https://en.wikipedia.org/wiki/Cohen%27s_kappa), a statistic that measures inter-rater agreement for categorical items between
@@ -13,9 +16,7 @@
 #' If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of
 #' \eqn{(y_{+} - y_{i,-})^\beta}. See below for further details.
 #'
-#' @inherit specificity
 #'
-#' @inheritParams accurracy
 #' @param beta A <[numeric]> value of [length] 1 (default: 0). If set to a value different from zero, the off-diagonal confusion matrix will be penalized.
 #'
 #' @example man/examples/scr_CohensKappa.R

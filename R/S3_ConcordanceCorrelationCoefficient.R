@@ -4,14 +4,14 @@
 # objective: Generate Methods
 # script start;
 
-#' Compute the \eqn{\text{concordance}} \eqn{\text{correlation}} \eqn{\text{coefficient}}
+#' @inherit huberloss
+#' 
+#' @title Concordance Correlation Coefficient
 #'
 #' @description
 #' The [ccc()]-function computes the simple and weighted [concordance correlation coefficient](https://en.wikipedia.org/wiki/Concordance_correlation_coefficient) between
 #' the two vectors of predicted and observed <[numeric]> values.  The [weighted.ccc()] function computes the weighted Concordance Correlation Coefficient. 
 #' If `correction` is [TRUE] \eqn{\sigma^2} is adjusted by \eqn{\frac{1-n}{n}} in the intermediate steps.
-#' 
-#' @inherit huberloss
 #' 
 #' @param correction A <[logical]> vector of [length] \eqn{1} (default: [FALSE]). If [TRUE] the variance and covariance
 #' will be adjusted with \eqn{\frac{1-n}{n}}
@@ -31,6 +31,7 @@
 #'
 #' @family Regression
 #' @family Supervised Learning
+#' 
 #' @export
 ccc <- function(...) {
   UseMethod(

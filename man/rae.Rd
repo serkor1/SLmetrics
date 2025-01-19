@@ -5,7 +5,7 @@
 \alias{weighted.rae.numeric}
 \alias{rae}
 \alias{weighted.rae}
-\title{Compute the \eqn{\text{relative}} \eqn{\text{absolute}} \eqn{\text{error}}}
+\title{Relative Absolute Error}
 \usage{
 \method{rae}{numeric}(actual, predicted, ...)
 

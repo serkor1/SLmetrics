@@ -5,7 +5,7 @@
 \alias{weighted.pinball.numeric}
 \alias{pinball}
 \alias{weighted.pinball}
-\title{Compute the \eqn{\text{pinball}} \eqn{\text{loss}}}
+\title{Pinball Loss}
 \usage{
 \method{pinball}{numeric}(actual, predicted, alpha = 0.5, deviance = FALSE, ...)
 

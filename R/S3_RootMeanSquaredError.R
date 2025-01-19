@@ -4,15 +4,14 @@
 # objective: Generate Errors
 # script start;
 
-#' Compute the \eqn{\text{root}} \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{error}}
-#'
-#' The [rmse()]-function computes the [root mean squared error](https://en.wikipedia.org/wiki/Root-mean-square_deviation) between
-#' the observed and predicted <[numeric]> vectors. The [weighted.rmse()] function computes the weighted root mean squared error.
-#'
 #' @inherit huberloss
 #'
-#' @example man/examples/scr_RootMeanSquaredError.R
+#' @title Root Mean Squared Error
 #'
+#' @description 
+#' The [rmse()]-function computes the [root mean squared error](https://en.wikipedia.org/wiki/Root-mean-square_deviation) between
+#' the observed and predicted <[numeric]> vectors. The [weighted.rmse()] function computes the weighted root mean squared error.
+#' 
 #' @section Definition:
 #'
 #' The metric is calculated as,
@@ -23,8 +22,11 @@
 #'
 #' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively.
 #'
+#' @example man/examples/scr_RootMeanSquaredError.R
+#'
 #' @family Regression
 #' @family Supervised Learning
+#' 
 #' @export
 rmse <- function(...) {
   UseMethod(

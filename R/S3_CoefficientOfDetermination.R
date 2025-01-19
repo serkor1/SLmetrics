@@ -4,13 +4,14 @@
 # objective: Generate Methods
 # script start;
 
-#' Compute the \eqn{R^2}
+#' @inherit huberloss
+#' 
+#' @title \eqn{R^2}
 #'
 #' @description
 #' The [rsq()]-function calculates the \eqn{R^2}, the [coefficient of determination](https://en.wikipedia.org/wiki/Coefficient_of_determination), between the ovserved
 #' and predicted <[numeric]> vectors. By default [rsq()] returns the unadjusted \eqn{R^2}. For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.
 #'
-#' @inherit huberloss
 #' @param k A <[numeric]>-vector of [length] 1 (default: 0). If \eqn{k>0}
 #' the function returns the adjusted \eqn{R^2}.
 #'

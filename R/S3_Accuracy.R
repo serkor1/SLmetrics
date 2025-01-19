@@ -9,7 +9,6 @@
 #' @title Accuracy
 #' 
 #' @description
-#' 
 #' A generic function for the (normalized) [accuracy](https://developers.google.com/machine-learning/glossary#accuracy) in classification tasks. 
 #' Use [weighted.accuracy()] for the weighted [accuracy](https://developers.google.com/machine-learning/glossary#accuracy).
 #' 

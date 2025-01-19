@@ -11,7 +11,7 @@
 \alias{ppv}
 \alias{weighted.precision}
 \alias{weighted.ppv}
-\title{Compute the \eqn{\text{precision}} or \eqn{\text{positive}} \eqn{\text{predictive}} \eqn{\text{value}}}
+\title{Precision}
 \usage{
 \method{precision}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
@@ -60,6 +60,10 @@ If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \li
 \description{
 The \code{\link[=precision]{precision()}}-function computes the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{precision}, also known as the positive predictive value (PPV), between
 two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.precision]{weighted.precision()}} function computes the weighted precision.
+\subsection{Other names}{
+
+Positive Predictive Value
+}
 }
 \section{Definition}{
 

@@ -4,7 +4,7 @@
 \alias{fmi.factor}
 \alias{fmi.cmatrix}
 \alias{fmi}
-\title{Compute the \eqn{\text{fowlkes}}-\eqn{\text{fallows}} \eqn{\text{index}}}
+\title{Fowlkes-Mallows Index}
 \usage{
 \method{fmi}{factor}(actual, predicted, ...)
 

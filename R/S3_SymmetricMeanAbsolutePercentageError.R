@@ -4,15 +4,14 @@
 # objective: Generate Methods
 # script start;
 
-#' Compute the \eqn{\text{symmetric}} \eqn{\text{mean}} \eqn{\text{absolute}} \eqn{\text{percentage}} \eqn{\text{error}}
+#' @inherit huberloss
 #'
+#' @title Symmetric Mean Absolutte Percentage Error
+#' 
+#' @descriptio
 #' The [smape()]-function computes the  [symmetric mean absolute percentage error](https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error) between
 #' the observed and predicted <[numeric]> vectors. The [weighted.smape()] function computes the weighted symmetric mean absolute percentage error.
 #' 
-#' @inherit huberloss
-#'
-#' @example man/examples/scr_SymmetricMeanAbsolutePercentageError.R
-#'
 #' @section Definition:
 #'
 #' The metric is calculated as follows,
@@ -23,9 +22,11 @@
 #'
 #' where \eqn{y_i} and \eqn{\upsilon_i} is the `actual` and `predicted` values respectively.
 #' 
+#' @example man/examples/scr_SymmetricMeanAbsolutePercentageError.R
 #'
 #' @family Regression
 #' @family Supervised Learning
+#' 
 #' @export
 smape <- function(...) {
   UseMethod(

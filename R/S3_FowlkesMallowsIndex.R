@@ -4,16 +4,14 @@
 # objective: Generate methods
 # script start;
 
-#' Compute the \eqn{\text{fowlkes}}-\eqn{\text{fallows}} \eqn{\text{index}}
+#' @inherit accuracy
+#' 
+#' @title Fowlkes-Mallows Index
 #'
 #' @description
 #' The [fmi()]-function computes the [Fowlkes-Mallows Index](https://en.wikipedia.org/wiki/Fowlkes%E2%80%93Mallows_index) (FMI), a measure of the similarity between two sets of clusterings, between
 #' two vectors of predicted and observed [factor()] values.
-#'
-#' @example man/examples/scr_FowlkesMallowsIndex.R
-#'
-#' @inherit accuracy
-#'
+#' 
 #' @section Definition:
 #'
 #' The metric is calculated for each class \eqn{k} as follows,
@@ -24,9 +22,11 @@
 #'
 #' Where \eqn{\#TP_k}, \eqn{\#FP_k}, and \eqn{\#FN_k} represent the number of true positives, false positives, and false negatives for each class \eqn{k}, respectively.
 #' 
+#' @example man/examples/scr_FowlkesMallowsIndex.R
 #'
 #' @family Classification
 #' @family Unsupervised Learning
+#' 
 #' @export
 fmi <- function(...) {
   UseMethod(

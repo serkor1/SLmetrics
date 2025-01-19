@@ -5,7 +5,7 @@
 \alias{weighted.mpe.numeric}
 \alias{mpe}
 \alias{weighted.mpe}
-\title{Compute the \eqn{\text{mean}} \eqn{\text{percentage}} \eqn{\text{error}}}
+\title{Mean Percentage Error}
 \usage{
 \method{mpe}{numeric}(actual, predicted, ...)
 

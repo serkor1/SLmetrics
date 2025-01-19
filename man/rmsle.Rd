@@ -6,7 +6,7 @@
 \alias{weighted.rmsle.numeric}
 \alias{rmsle}
 \alias{weighted.rmsle}
-\title{Compute the \eqn{\text{root}} \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{logarithmic}} \eqn{\text{error}}}
+\title{Root Mean Squared Logarithmic Error}
 \usage{
 \method{rmsle}{numeric}(actual, predicted, ...)
 

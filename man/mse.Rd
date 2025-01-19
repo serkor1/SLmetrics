@@ -5,7 +5,7 @@
 \alias{weighted.mse.numeric}
 \alias{mse}
 \alias{weighted.mse}
-\title{Compute the \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{error}}}
+\title{Mean Squared Error}
 \usage{
 \method{mse}{numeric}(actual, predicted, ...)
 

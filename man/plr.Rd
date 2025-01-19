@@ -6,7 +6,7 @@
 \alias{plr.cmatrix}
 \alias{plr}
 \alias{weighted.plr}
-\title{Compute the \eqn{\text{positive}} \eqn{\text{likelihood}} \eqn{\text{ratio}}}
+\title{Positive Likelihood Ratio}
 \usage{
 \method{plr}{factor}(actual, predicted, ...)
 

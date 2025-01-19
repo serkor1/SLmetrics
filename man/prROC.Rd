@@ -5,7 +5,7 @@
 \alias{weighted.prROC.factor}
 \alias{prROC}
 \alias{weighted.prROC}
-\title{Compute the \eqn{\text{reciever}} \eqn{\text{operator}} \eqn{\text{characteristics}}}
+\title{Precision-Recall Curve}
 \usage{
 \method{prROC}{factor}(actual, response, thresholds = NULL, ...)
 

@@ -5,7 +5,9 @@
 # objective:
 # script start;
 
-#' Confusion Matrix
+#' @inherit specificity details
+#' 
+#' @title Confusion Matrix
 #'
 #' @description
 #'
@@ -21,11 +23,6 @@
 #'
 #' @example man/examples/scr_ConfusionMatrix.R
 #' 
-#' @family Classification
-#' @family Supervised Learning
-#'
-#' @inherit specificity details
-#'
 #' @section Dimensions:
 #'
 #' There is no robust defensive measure against misspecififying
@@ -41,7 +38,10 @@
 #' @returns
 #'
 #' A named \eqn{k} x \eqn{k} <[matrix]> of [class] <cmatrix>
-#'
+#' 
+#' @family Classification
+#' @family Supervised Learning
+#' 
 #' @export
 cmatrix <- function(...) {
   UseMethod(

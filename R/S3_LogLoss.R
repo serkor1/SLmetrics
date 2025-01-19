@@ -1,9 +1,17 @@
-#' Compute the Log Loss
+# script: specificity
+# author: Serkan Korkmaz, serkor1@duck.com
+# date: 2025-19-01
+# objective: Generate method
+# script start;
+
+#' @aliases logloss
+#' @inherit accuracy
+#' 
+#' @title Log Loss
 #'
 #' @description
 #' The [logloss()] function computes the **Log Loss** between observed classes (as a <[factor]>) and their predicted probability distributions (a <[numeric]> matrix). The [weighted.logloss()] function is the weighted version, applying observation-specific weights.
-#'
-#' @inherit accuracy
+#' 
 #' @param qk A \eqn{n \times k} <[numeric]>-matrix of predicted probabilities.
 #'   The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 #'   over the \eqn{k} classes). The first column corresponds to the first factor
@@ -27,8 +35,7 @@
 #' @family Classification
 #' @family Supervised Learning
 #'
-#' @aliases logloss
-#'
+
 #' @export
 logloss <- function(...) {
   UseMethod(
@@ -45,3 +52,5 @@ weighted.logloss <- function(...) {
     object  = ..1
   )
 }
+
+# script end;

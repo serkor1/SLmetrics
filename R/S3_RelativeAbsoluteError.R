@@ -4,14 +4,13 @@
 # objective: Generate Methods
 # script start;
 
-#' Compute the \eqn{\text{relative}} \eqn{\text{absolute}} \eqn{\text{error}}
+#' @inherit huberloss
+#'
+#' @title Relative Absolute Error
 #'
 #' @description
 #' The [rae()]-function calculates the normalized [relative absolute error](https://www.statisticshowto.com/relative-absolute-error/) between
 #' the predicted and observed <[numeric]> vectors. The [weighted.rae()] function computes the weigthed relative absolute error.
-#'
-#'
-#' @inherit huberloss
 #'
 #' @section Definition:
 #'
@@ -25,8 +24,10 @@
 #' and \eqn{\bar{y}} is the mean of the `actual` values.
 #' 
 #' @example man/examples/scr_RelativeAbsoluteError.R
+#' 
 #' @family Regression
 #' @family Supervised Learning
+#' 
 #' @export
 rae <- function(...) {
   UseMethod(

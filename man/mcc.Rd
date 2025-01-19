@@ -12,7 +12,7 @@
 \alias{phi}
 \alias{weighted.mcc}
 \alias{weighted.phi}
-\title{Compute the \eqn{\text{Matthews}} \eqn{\text{Correlation}} \eqn{\text{Coefficient}}}
+\title{Matthews Correlation Coefficient}
 \usage{
 \method{mcc}{factor}(actual, predicted, ...)
 

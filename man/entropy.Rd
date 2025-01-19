@@ -7,7 +7,7 @@
 \alias{entropy}
 \alias{relative.entropy}
 \alias{cross.entropy}
-\title{Compute the Entropy}
+\title{Entropy}
 \usage{
 \method{entropy}{matrix}(pk, dim = 0L, base = -1, ...)
 

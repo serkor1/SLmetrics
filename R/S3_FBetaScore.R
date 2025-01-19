@@ -4,17 +4,14 @@
 # objective: Generate methods
 # script start;
 
-
-
-#' Compute the \eqn{F_{\beta}}-score
+#' @inherit specificity
+#' 
+#' @title \eqn{F_{\beta}}-score
 #'
 #' @description
 #' The [fbeta()]-function computes the [\eqn{F_\beta} score](https://en.wikipedia.org/wiki/F1_score), the weighted harmonic mean of [precision()] and [recall()], between
 #' two vectors of predicted and observed [factor()] values. The parameter \eqn{\beta} determines the weight of precision and recall in the combined score. The [weighted.fbeta()] function computes the weighted \eqn{F_\beta} score.
 #'
-#' @example man/examples/scr_FBetaScore.R
-#'
-#' @inherit specificity
 #' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
 #'
 #' @section Definition:
@@ -26,6 +23,8 @@
 #' }
 #'
 #' Where precision is \eqn{\frac{\#TP_k}{\#TP_k + \#FP_k}} and recall (sensitivity) is \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}}, and \eqn{\beta} determines the weight of precision relative to recall.
+#' 
+#' @example man/examples/scr_FBetaScore.R
 #' 
 #' @family Classification
 #' @family Supervised Learning

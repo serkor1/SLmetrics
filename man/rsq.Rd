@@ -6,7 +6,7 @@
 \alias{weighted.rsq.numeric}
 \alias{rsq}
 \alias{weighted.rsq}
-\title{Compute the \eqn{R^2}}
+\title{\eqn{R^2}}
 \usage{
 \method{rsq}{numeric}(actual, predicted, k = 0, ...)
 

@@ -4,15 +4,14 @@
 # objective: Generate Errors
 # script start;
 
-#' Compute the \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{error}}
-#'
-#' The [mse()]-function computes the [mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error) between
-#' the observed and predicted <[numeric]> vectors. The [weighted.mse()] function computes the weighted mean squared error.
-#'
 #' @inherit huberloss
 #'
-#' @example man/examples/scr_MeanSquaredError.R
+#' @title Mean Squared Error
 #'
+#' @description
+#' The [mse()]-function computes the [mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error) between
+#' the observed and predicted <[numeric]> vectors. The [weighted.mse()] function computes the weighted mean squared error.
+#' 
 #' @section Definition:
 #'
 #' The metric is calculated as,
@@ -23,8 +22,11 @@
 #'
 #' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. 
 #' 
+#' @example man/examples/scr_MeanSquaredError.R
+#'
 #' @family Regression
 #' @family Supervised Learning
+#' 
 #' @export
 mse <- function(...) {
   UseMethod(

@@ -5,7 +5,7 @@
 \alias{weighted.logloss.factor}
 \alias{logloss}
 \alias{weighted.logloss}
-\title{Compute the Log Loss}
+\title{Log Loss}
 \usage{
 \method{logloss}{factor}(actual, qk, normalize = TRUE, ...)
 

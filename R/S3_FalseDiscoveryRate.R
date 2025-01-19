@@ -4,7 +4,9 @@
 # objective: Generate Methods
 # script start;
 
-#' Compute the \eqn{\text{false}} \eqn{\text{discovery}} \eqn{\text{rate}}
+#' @inherit specificity
+#' 
+#' @title false discovery rate
 #'
 #' @description
 #' 
@@ -12,9 +14,7 @@
 #' two vectors of predicted and observed [factor()] values. The [weighted.fdr()] function computes the weighted false discovery rate.
 #'
 #' @example man/examples/scr_FalseDiscoveryRate.R
-#'
-#' @inherit specificity
-#'
+
 #' @section Definition:
 #'
 #' The metric is calculated for each class \eqn{k} as follows,

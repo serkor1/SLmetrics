@@ -5,7 +5,7 @@
 \alias{weighted.mae.numeric}
 \alias{mae}
 \alias{weighted.mae}
-\title{Compute the \eqn{\text{mean}} \eqn{\text{absolute}} \eqn{\text{error}}}
+\title{Mean Absolute Error}
 \usage{
 \method{mae}{numeric}(actual, predicted, ...)
 

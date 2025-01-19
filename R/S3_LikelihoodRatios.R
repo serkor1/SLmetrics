@@ -5,15 +5,13 @@
 # methods. Combines Positive, Negative and Diagnostic Odds Ratio
 # script start;
 
-#' Compute the \eqn{\text{negative}} \eqn{\text{likelihood}} \eqn{\text{ratio}}
+#' @inherit specificity
+#' 
+#' @title Negative Likelihood Ratio
 #'
 #' @description
 #' The [nlr()]-function computes the [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing), also known as the likelihood ratio for negative results, between
 #' two vectors of predicted and observed [factor()] values. The [weighted.nlr()] function computes the weighted negative likelihood ratio.
-#'
-#' @example man/examples/scr_NegativeLikelihoodRatio.R
-#'
-#' @inherit specificity
 #'
 #' @section Definition:
 #'
@@ -29,6 +27,8 @@
 #'
 #' The [plr()]-function for the Positive Likehood Ratio (LR+)
 #'
+#' @example man/examples/scr_NegativeLikelihoodRatio.R
+#' 
 #' @family Classification
 #' @family Supervised Learning
 #'
@@ -49,16 +49,13 @@ weighted.nlr <- function(...) {
   )
 }
 
-#' Compute the \eqn{\text{positive}} \eqn{\text{likelihood}} \eqn{\text{ratio}}
+#' @inherit specificity
+#' 
+#' @title Positive Likelihood Ratio
 #'
 #' @description
 #' The [plr()]-function computes the [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing), also known as the likelihood ratio for positive results, between
 #' two vectors of predicted and observed [factor()] values.  The [weighted.plr()] function computes the weighted positive likelihood ratio.
-#
-#'
-#' @example man/examples/scr_PositiveLikelihoodRatio.R
-#'
-#' @inherit specificity
 #'
 #' @section Definition:
 #'
@@ -80,8 +77,11 @@ weighted.nlr <- function(...) {
 #'
 #' The [nlr()]-function for the Negative Likehood Ratio (LR-)
 #'
+#' @example man/examples/scr_PositiveLikelihoodRatio.R
+#' 
 #' @family Classification
 #' @family Supervised Learning
+#' 
 #' @export
 plr <- function(...) {
   UseMethod(
@@ -99,18 +99,16 @@ weighted.plr <- function(...) {
   )
 }
 
-#' Compute the \eqn{\text{diagnostic}} \eqn{\text{odds}} \eqn{\text{ratio}}
+#' @inherit specificity
+#' 
+#' @title Diagnostic Odds Ratio
 #'
 #' @description
 #' The [dor()]-function computes the [Diagnostic Odds Ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) (DOR), a single indicator of test performance, between
 #' two vectors of predicted and observed [factor()] values. The [weighted.dor()] function computes the weighted diagnostic odds ratio.
 #'
 #' When `aggregate = TRUE`, the function returns the micro-average DOR across all classes \eqn{k}. By default, it returns the class-wise DOR.
-#'
-#' @example man/examples/scr_DiagnosticOddsRatio.R
-#'
-#' @inherit specificity
-#'
+#' 
 #' @section Definition:
 #'
 #' The metric is calculated for each class \eqn{k} as follows,
@@ -129,6 +127,8 @@ weighted.plr <- function(...) {
 #'
 #' Where \eqn{\overline{\text{PLR}}} and \eqn{\overline{\text{NLR}}} is the micro-averaged is the positive and negative likelihood ratio, respectively.
 #'
+#' @example man/examples/scr_DiagnosticOddsRatio.R
+#' 
 #' @family Classification
 #' @family Supervised Learning
 #'

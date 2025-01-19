@@ -5,7 +5,7 @@
 \alias{weighted.huberloss.numeric}
 \alias{huberloss}
 \alias{weighted.huberloss}
-\title{Compute the \eqn{\text{huber}} \eqn{\text{loss}}}
+\title{Huber Loss}
 \usage{
 \method{huberloss}{numeric}(actual, predicted, delta = 1, ...)
 

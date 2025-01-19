@@ -6,7 +6,7 @@
 \alias{weighted.smape.numeric}
 \alias{smape}
 \alias{weighted.smape}
-\title{Compute the \eqn{\text{symmetric}} \eqn{\text{mean}} \eqn{\text{absolute}} \eqn{\text{percentage}} \eqn{\text{error}}}
+\title{Symmetric Mean Absolutte Percentage Error}
 \usage{
 \method{smape}{numeric}(actual, predicted, ...)
 
@@ -29,8 +29,8 @@ weighted.smape(...)
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-The \code{\link[=smape]{smape()}}-function computes the  \href{https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error}{symmetric mean absolute percentage error} between
-the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.smape]{weighted.smape()}} function computes the weighted symmetric mean absolute percentage error.
+The \code{\link[=huberloss]{huberloss()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Huber_loss}{huber loss} between
+the predicted and observed <\link{numeric}> vectors. The \code{\link[=weighted.huberloss]{weighted.huberloss()}} function computes the weighted Huber Loss.
 }
 \section{Definition}{
 

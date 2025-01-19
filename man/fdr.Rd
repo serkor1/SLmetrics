@@ -6,7 +6,7 @@
 \alias{fdr.cmatrix}
 \alias{fdr}
 \alias{weighted.fdr}
-\title{Compute the \eqn{\text{false}} \eqn{\text{discovery}} \eqn{\text{rate}}}
+\title{false discovery rate}
 \usage{
 \method{fdr}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 

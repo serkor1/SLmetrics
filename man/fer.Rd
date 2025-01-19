@@ -6,7 +6,7 @@
 \alias{fer.cmatrix}
 \alias{fer}
 \alias{weighted.fer}
-\title{Compute the \eqn{\text{false}} \eqn{\text{omission}} \eqn{\text{rate}}}
+\title{False Omission Rate}
 \usage{
 \method{fer}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 

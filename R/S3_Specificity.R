@@ -4,11 +4,15 @@
 # objective: Generate method
 # script start;
 
-#' Specificity or \eqn{\text{true}} \eqn{\text{negative}} \eqn{\text{rate}}
+#' @aliases specificity tnr selectivity
+#' @title Specificity
 #'
 #' @description
 #' The  [specificity()]-function computes the [specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity), also known as the True Negative Rate (TNR) or selectivity, between
 #' two vectors of predicted and observed [factor()] values. The [weighted.specificity()] function computes the weighted specificity.
+#' 
+#' ## Other names
+#' True Negative Rate, Selectivity
 #'
 #' @param actual A vector of <[factor]>- of [length] \eqn{n}, and \eqn{k} levels.
 #' @param predicted A vector of <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
@@ -60,9 +64,6 @@
 #'
 #' If `micro` is [TRUE] or [FALSE], a <[numeric]>-vector of [length] 1
 #'
-#' @example man/examples/scr_Specificity.R
-#'
-#'
 #' @section Definition:
 #' 
 #' The metric is calculated for each class \eqn{k} as follows,
@@ -73,11 +74,12 @@
 #'
 #' Where \eqn{\#TN_k} and \eqn{\#FP_k} is the number of true negatives and false positives, respectively, for each class \eqn{k}.
 #' 
+#'
+#' @example man/examples/scr_Specificity.R
+#'
 #' @family Classification
 #' @family Supervised Learning
-#'
-#' @aliases specificity tnr selectivity
-#'
+#' 
 #' @export
 specificity <- function(...) {
   UseMethod(

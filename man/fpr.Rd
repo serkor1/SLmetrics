@@ -11,7 +11,7 @@
 \alias{fallout}
 \alias{weighted.fpr}
 \alias{weighted.fallout}
-\title{Compute the \eqn{\text{false}} \eqn{\text{positive}} \eqn{\text{rate}}}
+\title{False Positive Rate}
 \usage{
 \method{fpr}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 

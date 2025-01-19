@@ -4,16 +4,18 @@
 # objective: Generate method
 # script start;
 
-#' Compute the \eqn{recall}, \eqn{sensitivity} or \eqn{\text{true}} \eqn{\text{positive}} \eqn{\text{rate}}
-#'
+#' @aliases sensitivity tpr recall
+#' @inherit specificity
+
+#' @title Recall
+#' 
 #' @description
 #' The [recall()]-function computes the [recall](https://en.wikipedia.org/wiki/Sensitivity_and_specificity), also known as sensitivity or the True Positive Rate (TPR), between
 #' two vectors of predicted and observed [factor()] values. The [weighted.recall()] function computes the weighted recall.
 #' 
-#' @inherit specificity
-#'
-#' @example man/examples/scr_Recall.R
-#'
+#' ## Other names
+#' Sensitivity, True Positive Rate
+#' 
 #' @section Definition:
 #'
 #' The metric is calculated for each class \eqn{k} as follows,
@@ -24,11 +26,11 @@
 #'
 #' Where \eqn{\#TP_k} and \eqn{\#FN_k} is the number of true positives and false negatives, respectively, for each class \eqn{k}.
 #' 
+#' @example man/examples/scr_Recall.R
+#'
 #' @family Classification
 #' @family Supervised Learning
-#'
-#' @aliases sensitivity tpr recall
-#'
+#' 
 #' @export
 recall <- function(...) {
   UseMethod(

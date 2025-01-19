@@ -6,7 +6,7 @@
 \alias{dor.cmatrix}
 \alias{dor}
 \alias{weighted.dor}
-\title{Compute the \eqn{\text{diagnostic}} \eqn{\text{odds}} \eqn{\text{ratio}}}
+\title{Diagnostic Odds Ratio}
 \usage{
 \method{dor}{factor}(actual, predicted, ...)
 

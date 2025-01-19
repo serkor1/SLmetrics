@@ -5,7 +5,7 @@
 \alias{weighted.rrse.numeric}
 \alias{rrse}
 \alias{weighted.rrse}
-\title{Compute the \eqn{\text{root}} \eqn{\text{relative}} \eqn{\text{squared}}  \eqn{\text{error}}}
+\title{Root Relative Squared Error}
 \usage{
 \method{rrse}{numeric}(actual, predicted, ...)
 

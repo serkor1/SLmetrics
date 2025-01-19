@@ -4,16 +4,14 @@
 # objective:
 # script start;
 
-#' Compute the \eqn{\text{negative}} \eqn{\text{predictive}} \eqn{\text{value}}
+#' @inherit specificity
+#'
+#' @title Negative Predictive Value
 #'
 #' @description
 #' The [npv()]-function computes the [negative predictive value](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values), also known as the True Negative Predictive Value, between
 #' two vectors of predicted and observed [factor()] values. The [weighted.npv()] function computes the weighted negative predictive value.
 #' 
-#' @inherit specificity
-#'
-#' @example man/examples/scr_NegativePredictiveValue.R
-#'
 #' @section Definition:
 #'
 #' The metric is calculated for each class \eqn{k} as follows,
@@ -24,6 +22,8 @@
 #'
 #' Where \eqn{\#TN_k} and \eqn{\#FN_k} are the number of true negatives and false negatives, respectively, for each class \eqn{k}.
 #' 
+#' @example man/examples/scr_NegativePredictiveValue.R
+#'
 #' @family Classification
 #' @family Supervised Learning
 #'

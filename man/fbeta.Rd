@@ -6,7 +6,7 @@
 \alias{fbeta.cmatrix}
 \alias{fbeta}
 \alias{weighted.fbeta}
-\title{Compute the \eqn{F_{\beta}}-score}
+\title{\eqn{F_{\beta}}-score}
 \usage{
 \method{fbeta}{factor}(actual, predicted, beta = 1, micro = NULL, na.rm = TRUE, ...)
 

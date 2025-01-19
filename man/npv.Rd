@@ -6,7 +6,7 @@
 \alias{npv.cmatrix}
 \alias{npv}
 \alias{weighted.npv}
-\title{Compute the \eqn{\text{negative}} \eqn{\text{predictive}} \eqn{\text{value}}}
+\title{Negative Predictive Value}
 \usage{
 \method{npv}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 

@@ -4,15 +4,14 @@
 # objective: Generate Methods
 # script start;
 
-#' Compute the \eqn{\text{mean}} \eqn{\text{percentage}} \eqn{\text{error}}
-#'
-#' The [mpe()]-function computes the [mean percentage error](https://en.wikipedia.org/wiki/Mean_percentage_error) between
-#' the observed and predicted <[numeric]> vectors. The [weighted.mpe()] function computes the weighted mean percentage error.
-#'
 #' @inherit huberloss
 #'
-#' @example man/examples/scr_MeanPercentageError.R
+#' @title Mean Percentage Error
 #'
+#' @description
+#' The [mpe()]-function computes the [mean percentage error](https://en.wikipedia.org/wiki/Mean_percentage_error) between
+#' the observed and predicted <[numeric]> vectors. The [weighted.mpe()] function computes the weighted mean percentage error.
+#' 
 #' @section Definition:
 #'
 #' The metric is calculated as,
@@ -23,8 +22,11 @@
 #'
 #' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively.
 #' 
+#' @example man/examples/scr_MeanPercentageError.R
+#'
 #' @family Regression
 #' @family Supervised Learning
+#' 
 #' @export
 mpe <- function(...) {
   UseMethod(

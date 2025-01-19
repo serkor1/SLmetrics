@@ -6,7 +6,7 @@
 \alias{zerooneloss.cmatrix}
 \alias{zerooneloss}
 \alias{weighted.zerooneloss}
-\title{Compute the \eqn{\text{Zero}}-\eqn{\text{One}} \eqn{\text{Loss}}}
+\title{Zero-One Loss}
 \usage{
 \method{zerooneloss}{factor}(actual, predicted, ...)
 

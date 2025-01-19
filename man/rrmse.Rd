@@ -6,7 +6,7 @@
 \alias{weighted.rrmse.numeric}
 \alias{rrmse}
 \alias{weighted.rrmse}
-\title{Compute the \eqn{\text{relative}} \eqn{\text{root}} \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{error}}}
+\title{Relative Root Mean Squared Error}
 \usage{
 \method{rrmse}{numeric}(actual, predicted, normalization = 1L, ...)
 
