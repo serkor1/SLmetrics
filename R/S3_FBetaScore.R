@@ -17,7 +17,7 @@
 #' @inherit specificity
 #' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
 #'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calculated for each class \eqn{k} as follows,
 #'

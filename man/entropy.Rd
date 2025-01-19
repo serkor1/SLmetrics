@@ -49,7 +49,7 @@ A <\link{numeric}> value or vector:
 \description{
 The \code{\link[=entropy]{entropy()}} function calculates the \strong{Entropy} of given probability distributions.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 \strong{Entropy:}

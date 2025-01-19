@@ -63,7 +63,7 @@
 #' @example man/examples/scr_Specificity.R
 #'
 #'
-#' @section Calculation:
+#' @section Definition:
 #' 
 #' The metric is calculated for each class \eqn{k} as follows,
 #'

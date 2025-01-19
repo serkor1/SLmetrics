@@ -61,7 +61,7 @@ If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \li
 The \code{\link[=precision]{precision()}}-function computes the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{precision}, also known as the positive predictive value (PPV), between
 two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.precision]{weighted.precision()}} function computes the weighted precision.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated for each class \eqn{k} as follows,

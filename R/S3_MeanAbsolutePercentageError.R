@@ -14,7 +14,7 @@
 #'
 #' @example man/examples/scr_MeanAbsolutePercentageError.R
 #'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calculated as,
 #'

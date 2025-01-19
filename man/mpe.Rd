@@ -31,7 +31,7 @@ A <\link{numeric}> vector of \link{length} 1.
 The \code{\link[=mpe]{mpe()}}-function computes the \href{https://en.wikipedia.org/wiki/Mean_percentage_error}{mean percentage error} between
 the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.mpe]{weighted.mpe()}} function computes the weighted mean percentage error.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated as,

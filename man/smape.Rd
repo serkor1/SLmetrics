@@ -32,7 +32,7 @@ A <\link{numeric}> vector of \link{length} 1.
 The \code{\link[=smape]{smape()}}-function computes the  \href{https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error}{symmetric mean absolute percentage error} between
 the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.smape]{weighted.smape()}} function computes the weighted symmetric mean absolute percentage error.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated as follows,

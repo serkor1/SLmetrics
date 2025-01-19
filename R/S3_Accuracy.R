@@ -4,38 +4,44 @@
 # objective: Generate methods for accuracy
 # script start;
 
-#' Compute the \eqn{\text{accuracy}}
+#' @inherit specificity
+#' 
+#' @title Accuracy
 #' 
 #' @description
-#'
-#' The [accuracy()] function computes the [accuracy](https://en.wikipedia.org/wiki/Precision_and_recall) between two
-#' vectors of predicted and observed [factor()] values. The [weighted.accuracy()] function computes the weighted accuracy.
+#' 
+#' A generic function for the (normalized) [accuracy](https://developers.google.com/machine-learning/glossary#accuracy) in classification tasks. 
+#' Use [weighted.accuracy()] for the weighted [accuracy](https://developers.google.com/machine-learning/glossary#accuracy).
+#' 
 #'
 #' @param actual A vector of <[factor]>- of [length] \eqn{n}, and \eqn{k} levels
 #' @param predicted A vector of <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels
 #' @param w A <[numeric]>-vector of [length] \eqn{n}. [NULL] by default
 #' @param x A confusion matrix created [cmatrix()]
+#'
+#' @section Definition:
 #' 
-#' @inherit specificity
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated as follows,
+#' Let \eqn{\hat{\alpha} \in [0, 1]} be the proportion of correctly predicted classes. The [accuracy](https://developers.google.com/machine-learning/glossary#accuracy) of the classifier is calculated as,
 #'
 #' \deqn{
-#'   \frac{\#TP + \#TN}{\#TP + \#TN + \#FP + \#FN}
+#'   \hat{\alpha} = \frac{\#TP + \#TN}{\#TP + \#TN + \#FP + \#FN}
 #' }
-#'
-#' Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} is the number of true positives, true negatives, false positives, and false negatives, respectively.
+#' 
+#' Where:
+#' 
+#' - \eqn{\#TP} is the number of true positives,
+#' - \eqn{\#TN} is the number of true negatives,
+#' - \eqn{\#FP} is the number of false positives, and
+#' - \eqn{\#FN} is the number of false negatives.
 #'
 #' @returns
-#'
 #' A <[numeric]>-vector of [length] 1
 #'
 #' @example man/examples/scr_Accuracy.R
 #'
 #' @family Classification
 #' @family Supervised Learning
+#' 
 #' @export
 accuracy <- function(...) {
   UseMethod(

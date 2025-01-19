@@ -46,7 +46,7 @@ If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \li
 The \code{\link[=fdr]{fdr()}}-function computes the \href{https://en.wikipedia.org/wiki/False_discovery_rate}{false discovery rate} (FDR), the proportion of false positives among the predicted positives, between
 two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.fdr]{weighted.fdr()}} function computes the weighted false discovery rate.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated for each class \eqn{k} as follows,

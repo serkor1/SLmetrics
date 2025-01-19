@@ -35,7 +35,7 @@ A <\link{numeric}> vector of \link{length} 1.
 The \code{\link[=rsq]{rsq()}}-function calculates the \eqn{R^2}, the \href{https://en.wikipedia.org/wiki/Coefficient_of_determination}{coefficient of determination}, between the ovserved
 and predicted <\link{numeric}> vectors. By default \code{\link[=rsq]{rsq()}} returns the unadjusted \eqn{R^2}. For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated as follows,

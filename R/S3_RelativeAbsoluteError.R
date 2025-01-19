@@ -13,7 +13,7 @@
 #'
 #' @inherit huberloss
 #'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The Relative Absolute Error (RAE) is calculated as:
 #'

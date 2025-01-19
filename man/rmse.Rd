@@ -31,7 +31,7 @@ A <\link{numeric}> vector of \link{length} 1.
 The \code{\link[=rmse]{rmse()}}-function computes the \href{https://en.wikipedia.org/wiki/Root-mean-square_deviation}{root mean squared error} between
 the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.rmse]{weighted.rmse()}} function computes the weighted root mean squared error.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated as,

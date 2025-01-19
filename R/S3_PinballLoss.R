@@ -15,7 +15,7 @@
 #' @param deviance A <[logical]>-value of [length] 1 (default: [FALSE]). If [TRUE] the function returns the \eqn{D^2} loss.
 #'
 #' @example man/examples/scr_PinballLoss.R
-#' @section Calculation:
+#' @section Definition:
 #' 
 #' The metric is calculated as,
 #' 

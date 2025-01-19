@@ -15,7 +15,7 @@
 #'
 #' @inherit specificity
 #'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calculated for each class \eqn{k} as follows,
 #'
@@ -60,7 +60,7 @@ weighted.nlr <- function(...) {
 #'
 #' @inherit specificity
 #'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calculated for each class \eqn{k} as follows,
 #'
@@ -111,7 +111,7 @@ weighted.plr <- function(...) {
 #'
 #' @inherit specificity
 #'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calculated for each class \eqn{k} as follows,
 #'

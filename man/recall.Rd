@@ -76,7 +76,7 @@ If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \li
 The \code{\link[=recall]{recall()}}-function computes the \href{https://en.wikipedia.org/wiki/Sensitivity_and_specificity}{recall}, also known as sensitivity or the True Positive Rate (TPR), between
 two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.recall]{weighted.recall()}} function computes the weighted recall.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated for each class \eqn{k} as follows,

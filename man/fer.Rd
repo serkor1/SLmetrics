@@ -46,7 +46,7 @@ If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \li
 The \code{\link[=fer]{fer()}}-function computes the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate}{false omission rate} (FOR), the proportion of false negatives among the predicted negatives, between
 two vectors of predicted and observed \code{\link[=factor]{factor()}} values.  The \code{\link[=weighted.fer]{weighted.fer()}} function computes the weighted false omission rate.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated for each class \eqn{k} as follows,

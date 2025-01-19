@@ -13,7 +13,7 @@
 #'
 #' @example man/examples/scr_MeanSquaredError.R
 #'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calculated as,
 #'

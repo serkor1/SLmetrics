@@ -13,7 +13,7 @@
 #'
 #' @example man/examples/scr_MeanAbsoluteError.R
 #'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calulated as follows,
 #'

@@ -12,7 +12,7 @@
 #'
 #' @example man/examples/scr_RootMeanSquaredLogarithmicError.R
 #'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calculated as,
 #'

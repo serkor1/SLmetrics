@@ -31,7 +31,7 @@ A <\link{numeric}> vector of \link{length} 1.
 The \code{\link[=mse]{mse()}}-function computes the \href{https://en.wikipedia.org/wiki/Mean_squared_error}{mean squared error} between
 the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.mse]{weighted.mse()}} function computes the weighted mean squared error.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated as,

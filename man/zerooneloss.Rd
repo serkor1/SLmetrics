@@ -36,7 +36,7 @@ A <\link{numeric}>-vector of \link{length} 1
 The \code{\link[=zerooneloss]{zerooneloss()}}-function computes the \href{https://en.wikipedia.org/wiki/Loss_functions_for_classification}{zero-one Loss}, a classification loss function that calculates the proportion of misclassified instances between
 two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.zerooneloss]{weighted.zerooneloss()}} function computes the weighted zero-one loss.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated as follows,

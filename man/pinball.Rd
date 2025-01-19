@@ -35,7 +35,7 @@ A <\link{numeric}> vector of \link{length} 1.
 The \code{\link[=pinball]{pinball()}}-function computes the \href{https://en.wikipedia.org/wiki/Quantile_regression}{pinball loss} between
 the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.pinball]{weighted.pinball()}} function computes the weighted Pinball Loss.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated as,

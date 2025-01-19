@@ -40,7 +40,7 @@ two vectors of predicted and observed \code{\link[=factor]{factor()}} values. Th
 
 When \code{aggregate = TRUE}, the function returns the micro-average DOR across all classes \eqn{k}. By default, it returns the class-wise DOR.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated for each class \eqn{k} as follows,

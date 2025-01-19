@@ -12,7 +12,7 @@
 #'
 #' @inherit accuracy
 #'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calculated as follows,
 #'

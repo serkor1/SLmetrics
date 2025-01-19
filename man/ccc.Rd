@@ -36,7 +36,7 @@ The \code{\link[=ccc]{ccc()}}-function computes the simple and weighted \href{ht
 the two vectors of predicted and observed <\link{numeric}> values.  The \code{\link[=weighted.ccc]{weighted.ccc()}} function computes the weighted Concordance Correlation Coefficient.
 If \code{correction} is \link{TRUE} \eqn{\sigma^2} is adjusted by \eqn{\frac{1-n}{n}} in the intermediate steps.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated as follows,

@@ -18,7 +18,7 @@
 #'
 #' @example man/examples/scr_ConcordanceCorrelationCoefficient.R
 #'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calculated as follows,
 #'

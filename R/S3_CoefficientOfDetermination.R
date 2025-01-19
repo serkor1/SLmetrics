@@ -14,7 +14,7 @@
 #' @param k A <[numeric]>-vector of [length] 1 (default: 0). If \eqn{k>0}
 #' the function returns the adjusted \eqn{R^2}.
 #'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calculated as follows,
 #'

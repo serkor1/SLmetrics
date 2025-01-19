@@ -20,7 +20,7 @@
 #'
 #' @example man/examples/scr_CohensKappa.R
 #' 
-#' @section Calculation:
+#' @section Definition:
 #' 
 #' \deqn{
 #'   \frac{\rho_p - \rho_e}{1-\rho_e}

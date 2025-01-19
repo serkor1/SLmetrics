@@ -31,7 +31,7 @@ A <\link{numeric}> vector of \link{length} 1.
 \description{
 The \code{\link[=rmsle]{rmsle()}}-function computes the root mean squared logarithmic error between the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.rmsle]{weighted.rmsle()}} function computes the weighted root mean squared logarithmic error.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated as,

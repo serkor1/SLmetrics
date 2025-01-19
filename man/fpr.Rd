@@ -61,7 +61,7 @@ If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \li
 The \code{\link[=fpr]{fpr()}}-function computes the \href{https://en.wikipedia.org/wiki/False_positive_rate}{False Positive Rate} (FPR), also known as the fall-out (\code{\link[=fallout]{fallout()}}), between
 two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.fpr]{weighted.fpr()}} function computes the weighted false positive rate.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated for each class \eqn{k} as follows,

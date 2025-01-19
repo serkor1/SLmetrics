@@ -14,7 +14,7 @@
 #'
 #' @example man/examples/scr_RelativeRootMeanSquaredError.R
 #'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calculated as,
 #'

@@ -31,7 +31,7 @@ A <\link{numeric}> vector of \link{length} 1.
 The \code{\link[=mae]{mae()}}-function computes the \href{https://en.wikipedia.org/wiki/Mean_absolute_error}{mean absolute error} between
 the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.mae]{weighted.mae()}} function computes the weighted mean absolute error.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calulated as follows,

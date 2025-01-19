@@ -13,7 +13,7 @@
 #'
 #' @example man/examples/scr_MeanPercentageError.R
 #'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calculated as,
 #'

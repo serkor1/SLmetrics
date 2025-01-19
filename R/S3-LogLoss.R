@@ -12,7 +12,7 @@
 #'   the mean cross-entropy across all observations is returned; otherwise, the
 #'   sum of cross-entropies is returned.
 #'
-#' @section Calculation:
+#' @section Definition:
 #' 
 #' \deqn{H(p, qk) = -\sum_{i} \sum_{j} y_{ij} \log_2(qk_{ij})}{
 #' H(p, qk) = -\sum_{i} \sum_{j} y_ij log(qk_ij)}

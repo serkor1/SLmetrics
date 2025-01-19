@@ -43,7 +43,7 @@ two vectors of predicted and observed \code{\link[=factor]{factor()}} values. Th
 If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of
 \eqn{(y_{+} - y_{i,-})^\beta}. See below for further details.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 \deqn{

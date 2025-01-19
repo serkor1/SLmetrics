@@ -15,7 +15,7 @@
 #' @param base A <[numeric]> value of [length] 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.
 #' @param ... Arguments passed into other methods
 #'
-#' @section Calculation:
+#' @section Definition:
 #' 
 #' **Entropy:**
 #' \deqn{H(pk) = -\sum_{i} pk_i \log(pk_i)}{H(pk) = -∑ pk_i log(pk_i)}

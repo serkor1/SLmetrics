@@ -37,7 +37,7 @@ A <\link{numeric}>-vector of \link{length} 1
 \description{
 The \code{\link[=logloss]{logloss()}} function computes the \strong{Log Loss} between observed classes (as a <\link{factor}>) and their predicted probability distributions (a <\link{numeric}> matrix). The \code{\link[=weighted.logloss]{weighted.logloss()}} function is the weighted version, applying observation-specific weights.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 \deqn{H(p, qk) = -\sum_{i} \sum_{j} y_{ij} \log_2(qk_{ij})}{

@@ -48,7 +48,7 @@ If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \li
 The \code{\link[=fbeta]{fbeta()}}-function computes the \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_\beta} score}, the weighted harmonic mean of \code{\link[=precision]{precision()}} and \code{\link[=recall]{recall()}}, between
 two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The parameter \eqn{\beta} determines the weight of precision and recall in the combined score. The \code{\link[=weighted.fbeta]{weighted.fbeta()}} function computes the weighted \eqn{F_\beta} score.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated for each class \eqn{k} as follows,

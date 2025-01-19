@@ -12,7 +12,7 @@
 #'
 #' @inherit huberloss
 #'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calculated as,
 #'
