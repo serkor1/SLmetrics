@@ -10,22 +10,23 @@
 #' @title Recall
 #' 
 #' @description
-#' The [recall()]-function computes the [recall](https://en.wikipedia.org/wiki/Sensitivity_and_specificity), also known as sensitivity or the True Positive Rate (TPR), between
-#' two vectors of predicted and observed [factor()] values. The [weighted.recall()] function computes the weighted recall.
+#' A generic funcion for the [Recall](https://en.wikipedia.org/wiki/Sensitivity_and_specificity). Use [weighted.fdr()] for the weighted [Recall](https://en.wikipedia.org/wiki/Sensitivity_and_specificity).
 #' 
 #' ## Other names
 #' Sensitivity, True Positive Rate
 #' 
 #' @section Definition:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
+#' Let \eqn{\hat{\rho} \in [0, 1]} be the proportion of true positives among the actual positives. The recall of the classifier is calculated as,
 #'
 #' \deqn{
-#'   \frac{\#TP_k}{\#TP_k + \#FN_k}
+#'   \hat{\rho} = \frac{\#TP_k}{\#TP_k + \#FN_k}
 #' }
 #'
-#' Where \eqn{\#TP_k} and \eqn{\#FN_k} is the number of true positives and false negatives, respectively, for each class \eqn{k}.
+#' Where:
 #' 
+#' - \eqn{\#TP_k} is the number of true positives, and
+#' - \eqn{\#FN_k} is the number of false negatives.
+#'
 #' @example man/examples/scr_Recall.R
 #'
 #' @family Classification

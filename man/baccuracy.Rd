@@ -42,7 +42,6 @@ Use \code{\link[=weighted.baccuracy]{weighted.baccuracy()}} for the weighted bal
 }
 \section{Definition}{
 
-
 Let \eqn{\hat{\alpha} \in [0, 1]} be the proportion of correctly predicted classes. If \code{adjust == false}, the balanced \href{https://arxiv.org/abs/2008.05756}{accuracy} of the classifier is calculated as,
 
 \deqn{

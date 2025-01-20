@@ -43,19 +43,21 @@ If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of
 If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=fdr]{fdr()}}-function computes the \href{https://en.wikipedia.org/wiki/False_discovery_rate}{false discovery rate} (FDR), the proportion of false positives among the predicted positives, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.fdr]{weighted.fdr()}} function computes the weighted false discovery rate.
+A generic funcion for the \href{https://en.wikipedia.org/wiki/False_discovery_rate}{False Discovery Rate}. Use \code{\link[=weighted.fdr]{weighted.fdr()}} for the weighted \href{https://en.wikipedia.org/wiki/False_discovery_rate}{False Discovery Rate}.
 }
 \section{Definition}{
 
-
-The metric is calculated for each class \eqn{k} as follows,
+Let \eqn{\hat{\alpha} \in [0, 1]} be the proportion of false positives among the preditced positives. The false discovery rate of the classifier is calculated as,
 
 \deqn{
-  \frac{\#FP_k}{\#TP_k+\#FP_k}
+  \hat{\alpha} = \frac{\#FP_k}{\#TP_k+\#FP_k}
 }
 
-Where \eqn{\#TP_k} and \eqn{\#FP_k} is the number of true psotives and false positives, respectively, for each class \eqn{k}.
+Where:
+\itemize{
+\item \eqn{\#TP_k} is the number of true positives, and
+\item \eqn{\#FP_k} is the number of false positives
+}
 }
 
 \section{Creating <\link{factor}>}{

@@ -58,8 +58,7 @@ If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of
 If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=precision]{precision()}}-function computes the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{precision}, also known as the positive predictive value (PPV), between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.precision]{weighted.precision()}} function computes the weighted precision.
+A generic funcion for the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{precision}. Use \code{\link[=weighted.fdr]{weighted.fdr()}} for the weighted \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{precision}.
 \subsection{Other names}{
 
 Positive Predictive Value
@@ -67,14 +66,17 @@ Positive Predictive Value
 }
 \section{Definition}{
 
-
-The metric is calculated for each class \eqn{k} as follows,
+Let \eqn{\hat{\pi} \in [0, 1]} be the proportion of true positives among the predicted positives. The precision of the classifier is calculated as,
 
 \deqn{
-  \frac{\#TP_k}{\#TP_k + \#FP_k}
+  \hat{\pi} = \frac{\#TP_k}{\#TP_k + \#FP_k}
 }
 
-Where \eqn{\#TP_k} and \eqn{\#FP_k} are the number of true positives and false positives, respectively, for each class \eqn{k}.
+Where:
+\itemize{
+\item \eqn{\#TP_k} is the number of true positives, and
+\item \eqn{\#FP_k} is the number of false positives.
+}
 }
 
 \section{Creating <\link{factor}>}{

@@ -32,20 +32,26 @@ will be adjusted with \eqn{\frac{1-n}{n}}}
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-The \code{\link[=ccc]{ccc()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Concordance_correlation_coefficient}{concordance correlation coefficient} between
-the two vectors of predicted and observed <\link{numeric}> values.  The \code{\link[=weighted.ccc]{weighted.ccc()}} function computes the weighted Concordance Correlation Coefficient.
-If \code{correction} is \link{TRUE} \eqn{\sigma^2} is adjusted by \eqn{\frac{1-n}{n}} in the intermediate steps.
+A generic function for the \href{https://en.wikipedia.org/wiki/Concordance_correlation_coefficient}{concordance correlation coefficient}. Use \code{\link[=weighted.ccc]{weighted.ccc()}} for the weighted \href{https://en.wikipedia.org/wiki/Concordance_correlation_coefficient}{concordance correlation coefficient}.
 }
 \section{Definition}{
 
-
-The metric is calculated as follows,
+Let \eqn{\rho_c \in [0,1]} measure the agreement between \eqn{y} and \eqn{\upsilon}. The classifier agreement is calculated as,
 
 \deqn{
-  \rho_c = \frac{2 \rho \sigma_x \sigma_y}{\sigma_x^2 + \sigma_y^2 + (\mu_x - \mu_y)^2}
+  \rho_c = \frac{2 \rho \sigma_{\upsilon} \sigma_y}{\sigma_{\upsilon}^2 + \sigma_y^2 + (\mu_{\upsilon} - \mu_y)^2}
 }
 
-Where \eqn{\rho} is the \eqn{\text{pearson correlation coefficient}}, \eqn{\sigma} is the \eqn{\text{standard deviation}} and \eqn{\mu} is the simple mean of \code{actual} and \code{predicted}.
+Where:
+\itemize{
+\item \eqn{\rho} is the pearson correlation coefficient
+\item \eqn{\sigma_y} is the unbiased standard deviation of \eqn{y}
+\item \eqn{\sigma_{\upsilon}} is the unbiased standard deviation of \eqn{\upsilon}
+\item \eqn{\mu_y} is the mean of \eqn{y}
+\item \eqn{\mu_{\upsilon}} is the mean of \eqn{\upsilon}
+}
+
+If \code{correction == TRUE} each \eqn{\sigma_{i \in [y, \upsilon]}} is adjusted by \eqn{\frac{1-n}{n}}
 }
 
 \examples{

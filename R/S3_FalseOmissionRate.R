@@ -9,18 +9,19 @@
 #' @title False Omission Rate
 #' 
 #' @description
-#' The [fer()]-function computes the [false omission rate](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate) (FOR), the proportion of false negatives among the predicted negatives, between
-#' two vectors of predicted and observed [factor()] values.  The [weighted.fer()] function computes the weighted false omission rate.
+#' A generic function for the [false omission rate](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate). Use [weighted.fdr()] for the weighted [false omission rate](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate).
 #'
 #' @section Definition:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
+#' Let \eqn{\hat{\beta} \in [0, 1]} be the proportion of false negatives among the predicted negatives. The false omission rate of the classifier is calculated as,
 #'
 #' \deqn{
-#'   \frac{\#FN_k}{\#FN_k + \#TN_k}
+#'   \hat{\beta} = \frac{\#FN_k}{\#TN_k + \#FN_k}
 #' }
 #'
-#' Where \eqn{\#FN_k} and \eqn{\#TN_k} are the number of false negatives and true negatives, respectively, for each class \eqn{k}.
+#' Where:
+#' 
+#' - \eqn{\#TN_k} is the number of true negatives, and
+#' - \eqn{\#FN_k} is the number of false negatives.
 #'
 #' @example man/examples/scr_FalseOmissionRate.R
 #' 

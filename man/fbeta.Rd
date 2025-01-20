@@ -45,19 +45,32 @@ If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of
 If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=fbeta]{fbeta()}}-function computes the \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_\beta} score}, the weighted harmonic mean of \code{\link[=precision]{precision()}} and \code{\link[=recall]{recall()}}, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The parameter \eqn{\beta} determines the weight of precision and recall in the combined score. The \code{\link[=weighted.fbeta]{weighted.fbeta()}} function computes the weighted \eqn{F_\beta} score.
+A generic funcion for the \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_{\beta}}}-score. Use \code{\link[=weighted.fbeta]{weighted.fbeta()}} for the weighted \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_{\beta}}}-score.
 }
 \section{Definition}{
 
-
-The metric is calculated for each class \eqn{k} as follows,
+Let \eqn{\hat{F}_{\beta} \in [0, 1]} be the \eqn{F_{\beta}} score, which is a weighted harmonic mean of precision and recall. \eqn{F_{\beta}} score of thte classifier is is calculated as,
 
 \deqn{
-  (1 + \beta^2) \frac{\text{Precision}_k \cdot \text{Recall}_k}{(\beta^2 \cdot \text{Precision}_k) + \text{Recall}_k}
+  \hat{F}_{\beta} = \left(1 + \beta^2\right) \frac{\text{Precision} \times \text{Recall}}
+                                          {\beta^2 \times \text{Precision} + \text{Recall}}
 }
 
-Where precision is \eqn{\frac{\#TP_k}{\#TP_k + \#FP_k}} and recall (sensitivity) is \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}}, and \eqn{\beta} determines the weight of precision relative to recall.
+Substituting \eqn{\text{Precision} = \frac{\#TP_k}{\#TP_k + \#FP_k}} and \eqn{\text{Recall} = \frac{\#TP_k}{\#TP_k + \#FN_k}} yields:
+
+\deqn{
+  \hat{F}_{\beta} = \left(1 + \beta^2\right)
+    \frac{\frac{\#TP_k}{\#TP_k + \#FP_k} \times \frac{\#TP_k}{\#TP_k + \#FN_k}}
+         {\beta^2 \times \frac{\#TP_k}{\#TP_k + \#FP_k} + \frac{\#TP_k}{\#TP_k + \#FN_k}}
+}
+
+Where:
+\itemize{
+\item \eqn{\#TP_k} is the number of true positives,
+\item \eqn{\#FP_k} is the number of false positives,
+\item \eqn{\#FN_k} is the number of false negatives, and
+\item \eqn{\beta} is a non-negative real number that determines the relative importance of precision vs. recall in the score.
+}
 }
 
 \section{Creating <\link{factor}>}{

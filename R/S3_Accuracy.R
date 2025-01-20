@@ -19,7 +19,6 @@
 #' @param x A confusion matrix created [cmatrix()]
 #'
 #' @section Definition:
-#' 
 #' Let \eqn{\hat{\alpha} \in [0, 1]} be the proportion of correctly predicted classes. The [accuracy](https://developers.google.com/machine-learning/glossary#accuracy) of the classifier is calculated as,
 #'
 #' \deqn{

@@ -38,7 +38,6 @@ Use \code{\link[=weighted.accuracy]{weighted.accuracy()}} for the weighted \href
 }
 \section{Definition}{
 
-
 Let \eqn{\hat{\alpha} \in [0, 1]} be the proportion of correctly predicted classes. The \href{https://developers.google.com/machine-learning/glossary#accuracy}{accuracy} of the classifier is calculated as,
 
 \deqn{

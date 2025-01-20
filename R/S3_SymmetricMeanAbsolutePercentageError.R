@@ -8,12 +8,11 @@
 #'
 #' @title Symmetric Mean Absolutte Percentage Error
 #' 
-#' @descriptio
+#' @description
 #' The [smape()]-function computes the  [symmetric mean absolute percentage error](https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error) between
 #' the observed and predicted <[numeric]> vectors. The [weighted.smape()] function computes the weighted symmetric mean absolute percentage error.
 #' 
 #' @section Definition:
-#'
 #' The metric is calculated as follows,
 #'
 #' \deqn{

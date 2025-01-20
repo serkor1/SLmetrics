@@ -8,8 +8,7 @@
 #' @title Specificity
 #'
 #' @description
-#' The  [specificity()]-function computes the [specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity), also known as the True Negative Rate (TNR) or selectivity, between
-#' two vectors of predicted and observed [factor()] values. The [weighted.specificity()] function computes the weighted specificity.
+#' A generic funcion for the [Specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity). Use [weighted.specificity()] for the weighted [Specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity).
 #' 
 #' ## Other names
 #' True Negative Rate, Selectivity
@@ -65,15 +64,16 @@
 #' If `micro` is [TRUE] or [FALSE], a <[numeric]>-vector of [length] 1
 #'
 #' @section Definition:
-#' 
-#' The metric is calculated for each class \eqn{k} as follows,
+#' Let \eqn{\hat{\sigma} \in [0, 1]} be the proportion of true negatives among the actual negatives. The specificity of the classifier is calculated as,
 #'
 #' \deqn{
-#'   \frac{\#TN_k}{\#TN_k+\#FP_k}
+#'   \hat{\sigma} = \frac{\#TN_k}{\#TN_k + \#FP_k}
 #' }
 #'
-#' Where \eqn{\#TN_k} and \eqn{\#FP_k} is the number of true negatives and false positives, respectively, for each class \eqn{k}.
+#' Where:
 #' 
+#' - \eqn{\#TN_k} is the number of true negatives, and
+#' - \eqn{\#FP_k} is the number of false positives.
 #'
 #' @example man/examples/scr_Specificity.R
 #'

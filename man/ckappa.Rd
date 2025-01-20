@@ -23,7 +23,7 @@ weighted.ckappa(...)
 
 \item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{beta}{A <\link{numeric}> value of \link{length} 1 (default: 0). If set to a value different from zero, the off-diagonal confusion matrix will be penalized.}
+\item{beta}{A <\link{numeric}> value of \link{length} 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.}
 
 \item{...}{Arguments passed into other methods}
 
@@ -37,20 +37,34 @@ If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of
 If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=kappa]{kappa()}}-function computes \href{https://en.wikipedia.org/wiki/Cohen\%27s_kappa}{Cohen's \eqn{\kappa}}, a statistic that measures inter-rater agreement for categorical items between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.ckappa]{weighted.ckappa()}} function computes the weighted \eqn{\kappa}-statistic.
-
-If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of
-\eqn{(y_{+} - y_{i,-})^\beta}. See below for further details.
+A generic function for \href{https://en.wikipedia.org/wiki/Cohen\%27s_kappa}{Cohen's \eqn{\kappa}}-statistic. Use \code{\link[=weighted.ckappa]{weighted.ckappa()}} for the weighted \href{https://en.wikipedia.org/wiki/Cohen\%27s_kappa}{\eqn{\kappa}}-statistic.
 }
 \section{Definition}{
 
+Let \eqn{\kappa \in [0, 1]} be the inter-rater (intra-rater) reliability. The inter-rater (intra-rater) reliability is calculated as,
 
 \deqn{
-  \frac{\rho_p - \rho_e}{1-\rho_e}
+  \kappa = \frac{\rho_p - \rho_e}{1-\rho_e}
 }
 
-where \eqn{\rho_p} is the empirical probability of agreement between predicted and actual values, and \eqn{\rho_e} is the expected probability of agreement under random chance.
+Where:
+\itemize{
+\item \eqn{\rho_p} is the empirical probability of agreement between predicted and actual values
+\item \eqn{\rho_e} is the expected probability of agreement under random chance
+}
+
+If \eqn{\beta \neq 0} the off-diagonals in the confusion matrix is benalized before \eqn{\rho} is calculated. More formally,
+
+\deqn{
+ \Chi = X \circ Y^{\beta}
+}
+
+Where:
+\itemize{
+\item \eqn{X} is the confusion matrix
+\item \eqn{Y} is the penalzing matrix and
+\item \eqn{\beta} is the penalizing factor
+}
 }
 
 \section{Creating <\link{factor}>}{

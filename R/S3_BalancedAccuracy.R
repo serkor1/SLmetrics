@@ -9,7 +9,6 @@
 #' @title Balanced Accuracy
 #' 
 #' @description
-#' 
 #' A generic function for the (normalized) balanced [accuracy](https://arxiv.org/abs/2008.05756).
 #' Use [weighted.baccuracy()] for the weighted balanced [accuracy](https://arxiv.org/abs/2008.05756).
 #' 
@@ -17,7 +16,6 @@
 #' @param na.rm A [logical] values (default: [TRUE]).  If [TRUE] calculation of the metric is based on valid classes.
 #' 
 #' @section Definition:
-#' 
 #' Let \eqn{\hat{\alpha} \in [0, 1]} be the proportion of correctly predicted classes. If `adjust == false`, the balanced [accuracy](https://arxiv.org/abs/2008.05756) of the classifier is calculated as,
 #'
 #' \deqn{

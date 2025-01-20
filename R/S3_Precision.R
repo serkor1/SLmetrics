@@ -10,23 +10,23 @@
 #' @title Precision
 #'
 #' @description
-#' The [precision()]-function computes the [precision](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values), also known as the positive predictive value (PPV), between
-#' two vectors of predicted and observed [factor()] values. The [weighted.precision()] function computes the weighted precision.
+#' A generic funcion for the [precision](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values). Use [weighted.fdr()] for the weighted [precision](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values).
 #' 
 #' ## Other names
-#' 
 #' Positive Predictive Value
 #' 
 #' @section Definition:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
+#' Let \eqn{\hat{\pi} \in [0, 1]} be the proportion of true positives among the predicted positives. The precision of the classifier is calculated as,
 #'
 #' \deqn{
-#'   \frac{\#TP_k}{\#TP_k + \#FP_k}
+#'   \hat{\pi} = \frac{\#TP_k}{\#TP_k + \#FP_k}
 #' }
 #'
-#' Where \eqn{\#TP_k} and \eqn{\#FP_k} are the number of true positives and false positives, respectively, for each class \eqn{k}.
+#' Where:
 #' 
+#' - \eqn{\#TP_k} is the number of true positives, and
+#' - \eqn{\#FP_k} is the number of false positives.
+#'
 #' @example man/examples/scr_Precision.R
 #'
 #' @family Classification
