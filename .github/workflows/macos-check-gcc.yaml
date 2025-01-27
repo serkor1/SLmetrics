@@ -12,12 +12,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-name: macOS-gcc
+name: R-CMD-check
 
 permissions: read-all
 
 jobs:
-  R-CMD-check:
+  macOS-gcc:
     runs-on: macos-latest
 
     steps:
