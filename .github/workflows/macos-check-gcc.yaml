@@ -1,0 +1,102 @@
+name: macOS-OpenMP-gcc
+
+on:
+  push:
+    branches: [development, macOS-OpenMP]
+  pull_request:
+    branches: [development, macOS-OpenMP]
+
+permissions: read-all
+
+jobs:
+  R-CMD-check:
+    runs-on: macos-latest
+    name: macOS-OpenMP
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install build tools
+        run: |
+          # Update Homebrew and install required packages
+          brew update
+          brew install gcc libomp pkg-config
+          brew cleanup
+
+      - name: Setup pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 'release'
+          http-user-agent: 'macOS R-CMD-check'
+          use-public-rspm: true
+
+      - name: Configure R build environment
+        run: |
+          mkdir -p ~/.R
+          GCC_PATH=$(brew --prefix gcc)
+          OMP_PATH=$(brew --prefix libomp)
+          SDK_PATH=$(xcrun --show-sdk-path)
+          
+          # Extract GCC version number
+          GCC_VER=$(${GCC_PATH}/bin/gcc-* --version | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+          
+          cat << EOF > ~/.R/Makevars
+          # Compiler settings
+          CC=${GCC_PATH}/bin/gcc-${GCC_VER}
+          CXX=${GCC_PATH}/bin/g++-${GCC_VER}
+          CXX11=${CXX}
+          CXX14=${CXX}
+          CXX17=${CXX}
+          CXX20=${CXX}
+
+          # Fortran compiler
+          FC=${GCC_PATH}/bin/gfortran
+          F77=${FC}
+
+          # Compiler flags
+          CPPFLAGS=-I${OMP_PATH}/include -isysroot ${SDK_PATH} -fopenmp
+          CFLAGS=-O3 -Wall -pedantic
+          CXXFLAGS=-O3 -Wall -pedantic
+
+          # Linker flags
+          LDFLAGS=-L${OMP_PATH}/lib -L${GCC_PATH}/lib -lomp -lgfortran -lm -isysroot ${SDK_PATH}
+
+          # Fortran libraries
+          FLIBS=-L${GCC_PATH}/lib/gcc/${GCC_VER} -lgfortran -lm
+          EOF
+
+      - name: Install R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::rcmdcheck
+            any::reticulate
+          needs: check
+
+      - name: Setup Python for reticulate
+        uses: ./.github/actions/setup-reticulate
+
+      - name: Verify build environment
+        run: |
+          echo "--- Active Makevars Configuration ---"
+          cat ~/.R/Makevars
+          echo "\n--- Compiler Versions ---"
+          ${GCC_PATH}/bin/gcc-${GCC_VER} --version
+          ${GCC_PATH}/bin/g++-${GCC_VER} --version
+          echo "\n--- OpenMP Validation ---"
+          Rscript -e 'cat("OpenMP support:", system.file("include", "omp.h", package = "Rcpp"), "\n")'
+
+      - name: Run R CMD check
+        uses: r-lib/actions/check-r-package@v2
+        with:
+          build-args: '--no-manual --compact-vignettes=gs+qpdf'
+          check-args: '--no-manual --as-cran'
+          upload-snapshots: true
