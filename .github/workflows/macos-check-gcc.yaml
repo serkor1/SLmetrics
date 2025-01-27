@@ -15,6 +15,7 @@ concurrency:
 name: macOS-gcc
 
 permissions: read-all
+
 jobs:
   R-CMD-check:
     runs-on: macos-latest
@@ -88,5 +89,5 @@ jobs:
       - name: Run R CMD check
         uses: r-lib/actions/check-r-package@v2
         with:
-          build_args: 'c("--no-manual", "--compact-vignettes=gs+qpdf", "--as-cran")'
+          build_args: 'c("--no-manual", "--compact-vignettes=gs+qpdf")'
           upload-snapshots: true
