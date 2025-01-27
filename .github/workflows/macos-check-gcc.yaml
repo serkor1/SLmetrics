@@ -64,8 +64,8 @@ jobs:
 
           # Compiler flags
           CPPFLAGS=-I\${OMP_INC} -isysroot ${SDK_PATH} -fopenmp
-          CFLAGS=-O3 -Wall -pedantic
-          CXXFLAGS=-O3 -Wall -pedantic
+          CFLAGS=-O3 -pedantic
+          CXXFLAGS=-O3 -pedantic
 
           # Linker flags
           LDFLAGS=-L\${OMP_LIB} -L${GCC_PATH}/lib -lomp -lgfortran -lm -isysroot ${SDK_PATH}
