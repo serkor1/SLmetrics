@@ -13,6 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 name: macOS-gcc
+
 permissions: read-all
 jobs:
   R-CMD-check:
@@ -87,5 +88,5 @@ jobs:
       - name: Run R CMD check
         uses: r-lib/actions/check-r-package@v2
         with:
-          build_args: '--no-manual --compact-vignettes=gs+qpdf --as-cran'
+          build_args: 'c("--no-manual", "--compact-vignettes=gs+qpdf", "--as-cran")'
           upload-snapshots: true
