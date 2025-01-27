@@ -2,28 +2,17 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-      branches-ignore:
+    branches-ignore:
       - stable
       - main
   pull_request:
     branches: [development]
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-
 name: macOS-OpenMP
-
 permissions: read-all
-
 jobs:
   R-CMD-check:
     runs-on: macos-latest
-    name: macOS-OpenMP
-
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      R_KEEP_PKG_SOURCE: yes
 
     steps:
       - name: Checkout repository
@@ -31,9 +20,7 @@ jobs:
 
       - name: Install build tools
         run: |
-          # Update Homebrew and install required packages
           brew update
-          brew upgrade
           brew install gcc libomp pkg-config
           brew cleanup
 
@@ -50,50 +37,69 @@ jobs:
       - name: Configure R build environment
         run: |
           mkdir -p ~/.R
-          GCC_PATH=$(brew --prefix gcc)
-          OMP_PATH=$(brew --prefix libomp)
+          GCC_PATH=$(brew --prefix gcc)       # Usually /opt/homebrew/opt/gcc
+          OMP_PATH=$(brew --prefix libomp)    # Might be empty or /opt/homebrew/opt/libomp
           SDK_PATH=$(xcrun --show-sdk-path)
           
-          # Get exact GCC version from compiler binary
-          GCC_VER=$(${GCC_PATH}/bin/gcc-* --version | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
-          
+          # If you definitely want the homebrew GCC:
+          GCC_BIN=gcc-14
+          GXX_BIN=g++-14
+
           cat << EOF > ~/.R/Makevars
           # Compiler settings
-          CC=${GCC_PATH}/bin/gcc-$GCC_VER
-          CXX=${GCC_PATH}/bin/g++-$GCC_VER
-          CXX11=${GCC_PATH}/bin/g++-$GCC_VER
-          CXX14=${GCC_PATH}/bin/g++-$GCC_VER
-          CXX17=${GCC_PATH}/bin/g++-$GCC_VER
-          CXX20=${GCC_PATH}/bin/g++-$GCC_VER
+          CC=${GCC_PATH}/bin/${GCC_BIN}
+          CXX=${GCC_PATH}/bin/${GXX_BIN}
+          CXX11=${GCC_PATH}/bin/${GXX_BIN}
+          CXX14=${GCC_PATH}/bin/${GXX_BIN}
+          CXX17=${GCC_PATH}/bin/${GXX_BIN}
+          CXX20=${GCC_PATH}/bin/${GXX_BIN}
 
-          # OpenMP configuration
+          # OpenMP: might or might not be needed for GCC
           OMP_LIB=${OMP_PATH}/lib
           OMP_INC=${OMP_PATH}/include
 
           # Compiler flags
-          CPPFLAGS=-I${OMP_INC} -isysroot ${SDK_PATH} -fopenmp
+          CPPFLAGS=-I\${OMP_INC} -isysroot ${SDK_PATH} -fopenmp
           CFLAGS=-O3 -Wall -pedantic
           CXXFLAGS=-O3 -Wall -pedantic
 
           # Linker flags
-          LDFLAGS=-L${OMP_LIB} -L${GCC_PATH}/lib -lomp -lgfortran -lm -isysroot ${SDK_PATH}
+          LDFLAGS=-L\${OMP_LIB} -L${GCC_PATH}/lib -lomp -lgfortran -lm -isysroot ${SDK_PATH}
 
           # Fortran configuration
           FC=${GCC_PATH}/bin/gfortran
-          F77=${FC}
-          FLIBS=-L${GCC_PATH}/lib/gcc/$GCC_VER -lgfortran -lm
+          F77=${GCC_PATH}/bin/gfortran
+          FLIBS=-L${GCC_PATH}/lib/gcc/14 -lgfortran -lm
           EOF
 
       - name: Install R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: |
+          extra-packages: >
             any::rcmdcheck
             any::reticulate
-          needs: check
 
       - name: Setup Python for reticulate
         uses: ./.github/actions/setup-reticulate
+
+      - name: Verify build environment
+        run: |
+          echo "--- Active Makevars Configuration ---"
+          cat ~/.R/Makevars
+          echo ""
+          echo "--- Compiler Versions ---"
+          $(grep '^CC=' ~/.R/Makevars | cut -d= -f2) --version || true
+          $(grep '^CXX=' ~/.R/Makevars | cut -d= -f2) --version || true
+          echo ""
+          echo "--- OpenMP Validation ---"
+          Rscript -e 'cat("OpenMP support:", system.file("include", "omp.h", package = "Rcpp"), "\n")'
+          echo ""
+          echo "--- Library Check ---"
+          if [ -n "$OMP_PATH" ]; then
+            ls -l "${OMP_PATH}/lib/libomp.dylib"
+          else
+            echo "No separate libomp prefix returned by brew."
+          fi
 
       - name: Run R CMD check
         uses: r-lib/actions/check-r-package@v2
