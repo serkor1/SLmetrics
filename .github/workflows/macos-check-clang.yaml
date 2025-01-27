@@ -17,10 +17,8 @@ name: macOS-clang
 permissions: read-all
 
 jobs:
-  R-CMD-check:
+   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
-
-    name: macOS-clang
 
     strategy:
       fail-fast: false
