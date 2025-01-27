@@ -56,7 +56,7 @@ Where:
 If \eqn{\beta \neq 0} the off-diagonals in the confusion matrix is benalized before \eqn{\rho} is calculated. More formally,
 
 \deqn{
- \Chi = X \circ Y^{\beta}
+ \chi = X \circ Y^{\beta}
 }
 
 Where:
