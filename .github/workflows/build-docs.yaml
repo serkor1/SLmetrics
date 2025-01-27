@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pages: write
+      # pages: write
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
