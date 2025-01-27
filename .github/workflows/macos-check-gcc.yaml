@@ -12,12 +12,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-name: R-CMD-check
+name: macOS-gcc
 
 permissions: read-all
 
 jobs:
-  macOS-gcc:
+  R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
     strategy:
