@@ -18,7 +18,13 @@ permissions: read-all
 
 jobs:
   macOS-gcc:
-    runs-on: macos-latest
+    runs-on: ${{ matrix.config.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: macos-latest,    r: 'release'}
 
     steps:
       - name: Checkout repository
