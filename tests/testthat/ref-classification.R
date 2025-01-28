@@ -173,7 +173,7 @@ ref_dor <- function(
     actual      = actual,
     predicted   = predicted,
     w           = w,
-    micro       = micro,
+    micro       = TRUE,
     na.rm       = na.rm,
     metric_expr = (TP * TN) / (FP * FN)
   )

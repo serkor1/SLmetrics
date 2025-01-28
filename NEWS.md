@@ -1,5 +1,15 @@
 
 
+# Version 0.3-2
+
+## :rocket: Improvements
+
+## :bug: Bug-fixes
+
+- **Diagnostic Odds Ratio:** The `dor()` is now returning a single
+  `<[numeric]>`-value instead of `k` number of identical
+  `<[numeric]>`-values.
+
 # Version 0.3-1
 
 > Version 0.3-1 is considered pre-release of {SLmetrics}. We do not
