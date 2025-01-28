@@ -113,7 +113,7 @@ jobs:
           # is available
           Rcpp::cppFunction(plugins = "openmp",
             code = "
-            bool check_openmp() {
+            bool is_available() {
               #ifdef _OPENMP
                 return true;
               #else
@@ -125,7 +125,9 @@ jobs:
 
           # 2) stop if not
           # available
-          stopifnot(check_openmp())
+          stopifnot(
+            "OpenMP not available!" = is_available()
+          )
 
 
       - name: R CMD check
