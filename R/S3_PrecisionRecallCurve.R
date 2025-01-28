@@ -4,19 +4,13 @@
 # objective: Generate Methods
 # script start;
 
-#' Compute the \eqn{\text{reciever}} \eqn{\text{operator}} \eqn{\text{characteristics}}
+#' @inherit ROC
 #'
+#' @title Precision-Recall Curve
 #'
 #' @description
 #' The [prROC()]-function computes the [precision()] and [recall()] at thresholds provided by the \eqn{response}- or \eqn{thresholds}-vector. The function
 #' constructs a [data.frame()] grouped by \eqn{k}-classes where each class is treated as a binary classification problem.
-#'
-#' @inherit ROC
-#'
-#' @example man/examples/scr_PrecisionRecallCurve.R
-#'
-#' @family Classification
-#' @family Supervised Learning
 #' 
 #' @returns A [data.frame] on the following form,
 #'
@@ -26,6 +20,11 @@
 #' \item{recall}{<[numeric]> The recall}
 #' \item{precision}{<[numeric]> The precision}
 #'
+#' @example man/examples/scr_PrecisionRecallCurve.R
+#'
+#' @family Classification
+#' @family Supervised Learning
+#' 
 #' @export
 prROC <- function(...) {
   UseMethod(

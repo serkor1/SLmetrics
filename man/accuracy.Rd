@@ -6,7 +6,7 @@
 \alias{accuracy.cmatrix}
 \alias{accuracy}
 \alias{weighted.accuracy}
-\title{Compute the \eqn{\text{accuracy}}}
+\title{Accuracy}
 \usage{
 \method{accuracy}{factor}(actual, predicted, ...)
 
@@ -33,19 +33,24 @@ weighted.accuracy(...)
 A <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=accuracy]{accuracy()}} function computes the \href{https://en.wikipedia.org/wiki/Precision_and_recall}{accuracy} between two
-vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.accuracy]{weighted.accuracy()}} function computes the weighted accuracy.
+A generic function for the (normalized) \href{https://developers.google.com/machine-learning/glossary#accuracy}{accuracy} in classification tasks.
+Use \code{\link[=weighted.accuracy]{weighted.accuracy()}} for the weighted \href{https://developers.google.com/machine-learning/glossary#accuracy}{accuracy}.
 }
-\section{Calculation}{
+\section{Definition}{
 
-
-The metric is calculated as follows,
+Let \eqn{\hat{\alpha} \in [0, 1]} be the proportion of correctly predicted classes. The \href{https://developers.google.com/machine-learning/glossary#accuracy}{accuracy} of the classifier is calculated as,
 
 \deqn{
-  \frac{\#TP + \#TN}{\#TP + \#TN + \#FP + \#FN}
+  \hat{\alpha} = \frac{\#TP + \#TN}{\#TP + \#TN + \#FP + \#FN}
 }
 
-Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} is the number of true positives, true negatives, false positives, and false negatives, respectively.
+Where:
+\itemize{
+\item \eqn{\#TP} is the number of true positives,
+\item \eqn{\#TN} is the number of true negatives,
+\item \eqn{\#FP} is the number of false positives, and
+\item \eqn{\#FN} is the number of false negatives.
+}
 }
 
 \section{Creating <\link{factor}>}{

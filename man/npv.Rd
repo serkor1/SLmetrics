@@ -6,7 +6,7 @@
 \alias{npv.cmatrix}
 \alias{npv}
 \alias{weighted.npv}
-\title{Compute the \eqn{\text{negative}} \eqn{\text{predictive}} \eqn{\text{value}}}
+\title{Negative Predictive Value}
 \usage{
 \method{npv}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
@@ -46,7 +46,7 @@ If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \li
 The \code{\link[=npv]{npv()}}-function computes the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{negative predictive value}, also known as the True Negative Predictive Value, between
 two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.npv]{weighted.npv()}} function computes the weighted negative predictive value.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated for each class \eqn{k} as follows,

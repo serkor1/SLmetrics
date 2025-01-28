@@ -16,7 +16,7 @@
 \alias{weighted.recall}
 \alias{weighted.sensitivity}
 \alias{weighted.tpr}
-\title{Compute the \eqn{recall}, \eqn{sensitivity} or \eqn{\text{true}} \eqn{\text{positive}} \eqn{\text{rate}}}
+\title{Recall}
 \usage{
 \method{recall}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
@@ -73,19 +73,25 @@ If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of
 If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=recall]{recall()}}-function computes the \href{https://en.wikipedia.org/wiki/Sensitivity_and_specificity}{recall}, also known as sensitivity or the True Positive Rate (TPR), between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.recall]{weighted.recall()}} function computes the weighted recall.
+A generic funcion for the \href{https://en.wikipedia.org/wiki/Sensitivity_and_specificity}{Recall}. Use \code{\link[=weighted.fdr]{weighted.fdr()}} for the weighted \href{https://en.wikipedia.org/wiki/Sensitivity_and_specificity}{Recall}.
+\subsection{Other names}{
+
+Sensitivity, True Positive Rate
 }
-\section{Calculation}{
+}
+\section{Definition}{
 
-
-The metric is calculated for each class \eqn{k} as follows,
+Let \eqn{\hat{\rho} \in [0, 1]} be the proportion of true positives among the actual positives. The recall of the classifier is calculated as,
 
 \deqn{
-  \frac{\#TP_k}{\#TP_k + \#FN_k}
+  \hat{\rho} = \frac{\#TP_k}{\#TP_k + \#FN_k}
 }
 
-Where \eqn{\#TP_k} and \eqn{\#FN_k} is the number of true positives and false negatives, respectively, for each class \eqn{k}.
+Where:
+\itemize{
+\item \eqn{\#TP_k} is the number of true positives, and
+\item \eqn{\#FN_k} is the number of false negatives.
+}
 }
 
 \section{Creating <\link{factor}>}{

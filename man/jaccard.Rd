@@ -16,7 +16,7 @@
 \alias{weighted.jaccard}
 \alias{weighted.csi}
 \alias{weighted.tscore}
-\title{Compute the \eqn{\text{Jaccard}} \eqn{\text{index}}}
+\title{Jaccard Index}
 \usage{
 \method{jaccard}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
@@ -76,7 +76,7 @@ If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \li
 The \code{\link[=jaccard]{jaccard()}}-function computes the \href{https://en.wikipedia.org/wiki/Jaccard_index}{Jaccard Index}, also known as the Intersection over Union, between
 two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.jaccard]{weighted.jaccard()}} function computes the weighted Jaccard Index.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated for each class \eqn{k} as follows,

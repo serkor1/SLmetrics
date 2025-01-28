@@ -5,7 +5,7 @@
 \alias{weighted.huberloss.numeric}
 \alias{huberloss}
 \alias{weighted.huberloss}
-\title{Compute the \eqn{\text{huber}} \eqn{\text{loss}}}
+\title{Huber Loss}
 \usage{
 \method{huberloss}{numeric}(actual, predicted, delta = 1, ...)
 
@@ -33,7 +33,7 @@ A <\link{numeric}> vector of \link{length} 1.
 The \code{\link[=huberloss]{huberloss()}}-function computes the simple and weighted \href{https://en.wikipedia.org/wiki/Huber_loss}{huber loss} between
 the predicted and observed <\link{numeric}> vectors. The \code{\link[=weighted.huberloss]{weighted.huberloss()}} function computes the weighted Huber Loss.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated as follows,

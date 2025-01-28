@@ -6,7 +6,7 @@
 \alias{fer.cmatrix}
 \alias{fer}
 \alias{weighted.fer}
-\title{Compute the \eqn{\text{false}} \eqn{\text{omission}} \eqn{\text{rate}}}
+\title{False Omission Rate}
 \usage{
 \method{fer}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
@@ -43,19 +43,21 @@ If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of
 If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=fer]{fer()}}-function computes the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate}{false omission rate} (FOR), the proportion of false negatives among the predicted negatives, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values.  The \code{\link[=weighted.fer]{weighted.fer()}} function computes the weighted false omission rate.
+A generic function for the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate}{false omission rate}. Use \code{\link[=weighted.fdr]{weighted.fdr()}} for the weighted \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate}{false omission rate}.
 }
-\section{Calculation}{
+\section{Definition}{
 
-
-The metric is calculated for each class \eqn{k} as follows,
+Let \eqn{\hat{\beta} \in [0, 1]} be the proportion of false negatives among the predicted negatives. The false omission rate of the classifier is calculated as,
 
 \deqn{
-  \frac{\#FN_k}{\#FN_k + \#TN_k}
+  \hat{\beta} = \frac{\#FN_k}{\#TN_k + \#FN_k}
 }
 
-Where \eqn{\#FN_k} and \eqn{\#TN_k} are the number of false negatives and true negatives, respectively, for each class \eqn{k}.
+Where:
+\itemize{
+\item \eqn{\#TN_k} is the number of true negatives, and
+\item \eqn{\#FN_k} is the number of false negatives.
+}
 }
 
 \section{Creating <\link{factor}>}{

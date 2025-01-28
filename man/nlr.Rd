@@ -6,7 +6,7 @@
 \alias{nlr.cmatrix}
 \alias{nlr}
 \alias{weighted.nlr}
-\title{Compute the \eqn{\text{negative}} \eqn{\text{likelihood}} \eqn{\text{ratio}}}
+\title{Negative Likelihood Ratio}
 \usage{
 \method{nlr}{factor}(actual, predicted, ...)
 
@@ -35,19 +35,21 @@ If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of
 If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=nlr]{nlr()}}-function computes the \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{negative likelihood ratio}, also known as the likelihood ratio for negative results, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.nlr]{weighted.nlr()}} function computes the weighted negative likelihood ratio.
+A genereric function for the \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{negative likelihood ratio} in classification tasks. Use \code{\link[=weighted.nlr]{weighted.nlr()}} weighted \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{negative likelihood ratio}.
 }
-\section{Calculation}{
+\section{Definition}{
 
-
-The metric is calculated for each class \eqn{k} as follows,
+Let \eqn{\hat{\alpha} \in [0, \infty]} be the likelihood of a negative outcome. The \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{negative likelihood ratio} of the classifier is calculated as,
 
 \deqn{
-  \frac{1 - \text{Sensitivity}_k}{\text{Specificity}_k}
+  \hat{\alpha} = \frac{1 - \frac{\#TP}{\#TP + \#FN}}{\frac{\#TN}{\#TN + \#FP}}
 }
 
-Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
+Where:
+\itemize{
+\item \eqn{\frac{\#TP}{\#TP + \#FN}} is the sensitivity, or true positive rate
+\item \eqn{\frac{\#TN}{\#TN + \#FP}} is the specificity, or true negative rate
+}
 }
 
 \section{Creating <\link{factor}>}{

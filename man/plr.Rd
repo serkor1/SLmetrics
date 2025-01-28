@@ -6,7 +6,7 @@
 \alias{plr.cmatrix}
 \alias{plr}
 \alias{weighted.plr}
-\title{Compute the \eqn{\text{positive}} \eqn{\text{likelihood}} \eqn{\text{ratio}}}
+\title{Positive Likelihood Ratio}
 \usage{
 \method{plr}{factor}(actual, predicted, ...)
 
@@ -35,24 +35,20 @@ If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of
 If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=plr]{plr()}}-function computes the \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{positive likelihood ratio}, also known as the likelihood ratio for positive results, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values.  The \code{\link[=weighted.plr]{weighted.plr()}} function computes the weighted positive likelihood ratio.
+A genereric function for the \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{positive likelihood ratio} in classification tasks. Use \code{\link[=weighted.plr]{weighted.plr()}} weighted \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{positive likelihood ratio}.
 }
-\section{Calculation}{
+\section{Definition}{
 
-
-The metric is calculated for each class \eqn{k} as follows,
+Let \eqn{\hat{\alpha} \in [0, \infty]} be the likelihood of a positive outcome. The \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{positive likelihood ratio} of the classifier is calculated as,
 
 \deqn{
-  \frac{\text{Sensitivity}_k}{1 - \text{Specificity}_k}
+  \hat{\alpha} = \frac{\frac{\#TP}{\#TP + \#FN}}{1 - \frac{\#TN}{\#TN + \#FP}}
 }
 
-Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
-
-When \code{aggregate = TRUE}, the \code{micro}-average is calculated,
-
-\deqn{
-  \frac{\sum_{k=1}^k \text{Sensitivity}_k}{1 - \sum_{k=1}^k \text{Specificity}_k}
+Where:
+\itemize{
+\item \eqn{\frac{\#TP}{\#TP + \#FN}} is the sensitivity, or true positive rate
+\item \eqn{\frac{\#TN}{\#TN + \#FP}} is the specificity, or true negative rate
 }
 }
 

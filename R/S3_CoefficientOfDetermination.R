@@ -4,25 +4,31 @@
 # objective: Generate Methods
 # script start;
 
-#' Compute the \eqn{R^2}
+#' @inherit huberloss
+#' 
+#' @title \eqn{R^2}
 #'
 #' @description
-#' The [rsq()]-function calculates the \eqn{R^2}, the [coefficient of determination](https://en.wikipedia.org/wiki/Coefficient_of_determination), between the ovserved
-#' and predicted <[numeric]> vectors. By default [rsq()] returns the unadjusted \eqn{R^2}. For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.
+#' A generic function for the [\eqn{R^2}](https://en.wikipedia.org/wiki/Coefficient_of_determination). The unadjusted [\eqn{R^2}](https://en.wikipedia.org/wiki/Coefficient_of_determination) is returned by default.
+#' Use [weighted.rsq()] for the weiighted [\eqn{R^2}](https://en.wikipedia.org/wiki/Coefficient_of_determination).
 #'
-#' @inherit huberloss
-#' @param k A <[numeric]>-vector of [length] 1 (default: 0). If \eqn{k>0}
-#' the function returns the adjusted \eqn{R^2}.
+#' @param k A <[numeric]>-vector of [length] 1 (default: 0). For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.
 #'
-#' @section Calculation:
-#'
-#' The metric is calculated as follows,
+#' @section Definition:
+#' Let \eqn{R^2 \in [-\infty, 1]} be the explained variation. The \eqn{R^2} is calculated as,
 #'
 #' \deqn{
-#'   R^2 = 1 - \frac{\text{SSE}}{\text{SST}} \frac{n-1}{n - (k + 1)}
+#'   R^2 = 1 - \frac{\sum{(y_i - \hat{y}_i)^2}}{\sum{(y_i-\bar{y})^2}} \frac{n-1}{n - (k + 1)}
 #' }
 #'
-#' Where \eqn{\text{SSE}} is the sum of squared errors, \eqn{\text{SST}} is total sum of squared errors, \eqn{n} is the number of observations, and \eqn{k} is the number of non-constant parameters.
+#' Where:
+#' 
+#' - \eqn{n} is the number of observations
+#' - \eqn{k} is the number of features
+#' - \eqn{y} is the actual values
+#' - \eqn{\hat{y}_i} is the predicted values
+#' - \eqn{\sum{(y_i - \hat{y}_i)^2}} is the sum of squared errors and,
+#' - \eqn{\sum{(y_i-\bar{y})^2}} is total sum of squared errors
 #'
 #' @example man/examples/scr_CoefficientOfDetermination.R
 #' 

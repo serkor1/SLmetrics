@@ -11,7 +11,7 @@
 \alias{fallout}
 \alias{weighted.fpr}
 \alias{weighted.fallout}
-\title{Compute the \eqn{\text{false}} \eqn{\text{positive}} \eqn{\text{rate}}}
+\title{False Positive Rate}
 \usage{
 \method{fpr}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
@@ -58,19 +58,25 @@ If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of
 If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=fpr]{fpr()}}-function computes the \href{https://en.wikipedia.org/wiki/False_positive_rate}{False Positive Rate} (FPR), also known as the fall-out (\code{\link[=fallout]{fallout()}}), between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.fpr]{weighted.fpr()}} function computes the weighted false positive rate.
+A generic funcion for the \href{https://en.wikipedia.org/wiki/False_positive_rate}{False Positive Rate}. Use \code{\link[=weighted.fpr]{weighted.fpr()}} for the weighted \href{https://en.wikipedia.org/wiki/False_positive_rate}{False Positive Rate}.
+\subsection{Other names}{
+
+Fallout
 }
-\section{Calculation}{
+}
+\section{Definition}{
 
-
-The metric is calculated for each class \eqn{k} as follows,
+Let \eqn{\hat{\gamma} \in [0, 1]} be the proportion of false positives among the actual negatives. The false positive rate of the classifier is calculated as,
 
 \deqn{
-  \frac{\#FP_k}{\#FP_k + \#TN_k}
+  \hat{\gamma} = \frac{\#FP_k}{\#TN_k + \#FP_k}
 }
 
-Where \eqn{\#FP_k} and \eqn{\#TN_k} represent the number of false positives and true negatives, respectively, for each class \eqn{k}.
+Where:
+\itemize{
+\item \eqn{\#TN_k} is the number of true negatives, and
+\item \eqn{\#FP_k} is the number of false positives.
+}
 }
 
 \section{Creating <\link{factor}>}{

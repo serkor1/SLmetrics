@@ -5,7 +5,7 @@
 \alias{weighted.prROC.factor}
 \alias{prROC}
 \alias{weighted.prROC}
-\title{Compute the \eqn{\text{reciever}} \eqn{\text{operator}} \eqn{\text{characteristics}}}
+\title{Precision-Recall Curve}
 \usage{
 \method{prROC}{factor}(actual, response, thresholds = NULL, ...)
 
@@ -75,16 +75,19 @@ factor(
 In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 }
 
-\section{Calculation}{
+\section{Definition}{
 
-
-The metric is calculated for each class \eqn{k} as follows,
+Let \eqn{\hat{\sigma} \in [0, 1]} be the proportion of true negatives among the actual negatives. The specificity of the classifier is calculated as,
 
 \deqn{
-  \frac{\#TN_k}{\#TN_k+\#FP_k}
+  \hat{\sigma} = \frac{\#TN_k}{\#TN_k + \#FP_k}
 }
 
-Where \eqn{\#TN_k} and \eqn{\#FP_k} is the number of true negatives and false positives, respectively, for each class \eqn{k}.
+Where:
+\itemize{
+\item \eqn{\#TN_k} is the number of true negatives, and
+\item \eqn{\#FP_k} is the number of false positives.
+}
 }
 
 \examples{

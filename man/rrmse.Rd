@@ -6,7 +6,7 @@
 \alias{weighted.rrmse.numeric}
 \alias{rrmse}
 \alias{weighted.rrmse}
-\title{Compute the \eqn{\text{relative}} \eqn{\text{root}} \eqn{\text{mean}} \eqn{\text{squared}} \eqn{\text{error}}}
+\title{Relative Root Mean Squared Error}
 \usage{
 \method{rrmse}{numeric}(actual, predicted, normalization = 1L, ...)
 
@@ -34,7 +34,7 @@ A <\link{numeric}> vector of \link{length} 1.
 The \code{\link[=rrmse]{rrmse()}}-function computes the \href{https://en.wikipedia.org/wiki/Root-mean-square_deviation}{Relative Root Mean Squared Error} between
 the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.rrmse]{weighted.rrmse()}} function computes the weighted Relative Root Mean Squared Error.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated as,

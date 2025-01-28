@@ -4,21 +4,17 @@
 # objective: Generate Methods
 # script start;
 
-#' Compute the \eqn{\text{reciever}} \eqn{\text{operator}} \eqn{\text{characteristics}}
+#' @inherit specificity
 #'
+#' @title Reciever Operator Characteristics
 #'
 #' @description
 #' The [ROC()]-function computes the [tpr()] and [fpr()] at thresholds provided by the \eqn{response}- or \eqn{thresholds}-vector. The function
 #' constructs a [data.frame()] grouped by \eqn{k}-classes where each class is treated as a binary classification problem.
-#'
-#'
-#' @inherit specificity
+#' 
 #' @param response A <[numeric]>-vector of [length] \eqn{n}. The estimated response probabilities.
 #' @param thresholds An optional <[numeric]>-vector of non-zero [length] (default: [NULL]).
 #' @param ... Arguments passed into other methods.
-#'
-#'
-#' @example man/examples/scr_RecieverOperatorCurve.R
 #'
 #' @returns A [data.frame] on the following form,
 #'
@@ -27,6 +23,8 @@
 #' \item{label}{<[character]> The levels of the actual <[factor]>}
 #' \item{fpr}{<[numeric]> The false positive rate}
 #' \item{tpr}{<[numeric]> The true positve rate}
+#'
+#' @example man/examples/scr_RecieverOperatorCurve.R
 #'
 #' @family Classification
 #' @family Supervised Learning

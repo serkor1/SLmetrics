@@ -4,15 +4,16 @@
 # objective: Create Methods
 # script start;
 
-#' Compute the \eqn{\text{Jaccard}} \eqn{\text{index}}
+#' @aliases jaccard csi tscore
+#' @inherit specificity
+#' 
+#' @title Jaccard Index
 #'
 #' @description
 #' The [jaccard()]-function computes the [Jaccard Index](https://en.wikipedia.org/wiki/Jaccard_index), also known as the Intersection over Union, between
 #' two vectors of predicted and observed [factor()] values. The [weighted.jaccard()] function computes the weighted Jaccard Index.
 #'
-#' @inherit specificity
-#'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calculated for each class \eqn{k} as follows,
 #'
@@ -26,8 +27,6 @@
 #'
 #' @family Classification
 #' @family Supervised Learning
-#'
-#' @aliases jaccard csi tscore
 #'
 #' @export
 jaccard <- function(...) {
@@ -81,6 +80,5 @@ weighted.tscore <- function(...) {
     object  = ..1
   )
 }
-
 
 # script end;

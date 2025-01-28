@@ -1,7 +1,7 @@
 on:
   workflow_dispatch:
   push:
-    paths: ['docs/**', '.github/workflows/build-docs.yaml', 'tools/doc-builders/build-yaml.py']
+    paths: ['man/**','docs/**', '.github/workflows/build-docs.yaml', 'tools/doc-builders/build-yaml.py']
     branches-ignore:
       - stable
       - main
@@ -82,6 +82,7 @@ jobs:
       - name: Render docs
         uses: quarto-dev/quarto-actions/render@v2
         with:
+          to: html
           path: docs/
           
       - name: Publish docs

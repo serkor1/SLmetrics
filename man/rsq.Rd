@@ -6,7 +6,7 @@
 \alias{weighted.rsq.numeric}
 \alias{rsq}
 \alias{weighted.rsq}
-\title{Compute the \eqn{R^2}}
+\title{\eqn{R^2}}
 \usage{
 \method{rsq}{numeric}(actual, predicted, k = 0, ...)
 
@@ -21,8 +21,7 @@ weighted.rsq(...)
 
 \item{predicted}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated (continuous) response variable.}
 
-\item{k}{A <\link{numeric}>-vector of \link{length} 1 (default: 0). If \eqn{k>0}
-the function returns the adjusted \eqn{R^2}.}
+\item{k}{A <\link{numeric}>-vector of \link{length} 1 (default: 0). For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.}
 
 \item{...}{Arguments passed into other methods.}
 
@@ -32,19 +31,26 @@ the function returns the adjusted \eqn{R^2}.}
 A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
-The \code{\link[=rsq]{rsq()}}-function calculates the \eqn{R^2}, the \href{https://en.wikipedia.org/wiki/Coefficient_of_determination}{coefficient of determination}, between the ovserved
-and predicted <\link{numeric}> vectors. By default \code{\link[=rsq]{rsq()}} returns the unadjusted \eqn{R^2}. For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.
+A generic function for the \href{https://en.wikipedia.org/wiki/Coefficient_of_determination}{\eqn{R^2}}. The unadjusted \href{https://en.wikipedia.org/wiki/Coefficient_of_determination}{\eqn{R^2}} is returned by default.
+Use \code{\link[=weighted.rsq]{weighted.rsq()}} for the weiighted \href{https://en.wikipedia.org/wiki/Coefficient_of_determination}{\eqn{R^2}}.
 }
-\section{Calculation}{
+\section{Definition}{
 
-
-The metric is calculated as follows,
+Let \eqn{R^2 \in [-\infty, 1]} be the explained variation. The \eqn{R^2} is calculated as,
 
 \deqn{
-  R^2 = 1 - \frac{\text{SSE}}{\text{SST}} \frac{n-1}{n - (k + 1)}
+  R^2 = 1 - \frac{\sum{(y_i - \hat{y}_i)^2}}{\sum{(y_i-\bar{y})^2}} \frac{n-1}{n - (k + 1)}
 }
 
-Where \eqn{\text{SSE}} is the sum of squared errors, \eqn{\text{SST}} is total sum of squared errors, \eqn{n} is the number of observations, and \eqn{k} is the number of non-constant parameters.
+Where:
+\itemize{
+\item \eqn{n} is the number of observations
+\item \eqn{k} is the number of features
+\item \eqn{y} is the actual values
+\item \eqn{\hat{y}_i} is the predicted values
+\item \eqn{\sum{(y_i - \hat{y}_i)^2}} is the sum of squared errors and,
+\item \eqn{\sum{(y_i-\bar{y})^2}} is total sum of squared errors
+}
 }
 
 \examples{

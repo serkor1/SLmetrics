@@ -5,7 +5,7 @@
 \alias{weighted.mpe.numeric}
 \alias{mpe}
 \alias{weighted.mpe}
-\title{Compute the \eqn{\text{mean}} \eqn{\text{percentage}} \eqn{\text{error}}}
+\title{Mean Percentage Error}
 \usage{
 \method{mpe}{numeric}(actual, predicted, ...)
 
@@ -31,7 +31,7 @@ A <\link{numeric}> vector of \link{length} 1.
 The \code{\link[=mpe]{mpe()}}-function computes the \href{https://en.wikipedia.org/wiki/Mean_percentage_error}{mean percentage error} between
 the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.mpe]{weighted.mpe()}} function computes the weighted mean percentage error.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated as,

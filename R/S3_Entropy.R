@@ -1,4 +1,12 @@
-#' Compute the Entropy
+# script: specificity
+# author: Serkan Korkmaz, serkor1@duck.com
+# date: 2025-19-01
+# objective: Generate method
+# script start;
+
+#' @aliases entropy
+#'
+#' @title Entropy
 #'
 #' @description
 #' The [entropy()] function calculates the **Entropy** of given probability distributions. 
@@ -15,7 +23,7 @@
 #' @param base A <[numeric]> value of [length] 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.
 #' @param ... Arguments passed into other methods
 #'
-#' @section Calculation:
+#' @section Definition:
 #' 
 #' **Entropy:**
 #' \deqn{H(pk) = -\sum_{i} pk_i \log(pk_i)}{H(pk) = -∑ pk_i log(pk_i)}
@@ -31,12 +39,10 @@
 #' - A <[numeric]> vector with length equal to the [length] of rows if `dim == 1`.
 #' - A <[numeric]> vector with length equal to the [length] of columns if `dim == 2`.
 #' 
-#' 
 #' @example man/examples/scr_Entropy.R
+#' 
 #' @family Classification
 #' @family Supervised Learning
-#'
-#' @aliases entropy
 #'
 #' @export
 entropy <- function(...) {
@@ -63,3 +69,5 @@ cross.entropy <- function(...) {
     object  = ..1
   )
 }
+
+# script end;

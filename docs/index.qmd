@@ -1,11 +1,13 @@
 # Preface {.unnumbered}
 
-{SLmetrics} started as a personal project to learn C++, and was never *really* meant to be published nor, infact, named {SLmetrics}. But as time went by, and the committed time and commits grew the name stayed, and the goal to publish a functioning data science R package seemed like the natural next step.
+[{SLmetrics}](https://github.com/serkor1/SLmetrics) began as a small personal project to learn C++. Over time, as the scope expanded and the number of commits grew, the name stuck, and releasing a fully functioning data science R package became the natural next step.
 
-The primary goal of {SLmetrics} is to be a *fast*, *memory efficient* and *reliable* low-level successor to {MLmetrics}; and the current benchmarks in @sec-benchmarking suggets that this goal, in fact, have been achieved.
+The primary goal of [{SLmetrics}](https://github.com/serkor1/SLmetrics) is to be a *fast*, *memory efficient* and *reliable* low-level successor to [{MLmetrics}](https://github.com/yanyachen/MLmetrics). Current benchmarks in @sec-benchmarking suggets that this goal has, in fact, been achieved. Implementations in [{SLmetrics}](https://github.com/serkor1/SLmetrics) draws inspirations from well-known libraries such as scikit-learn (@scikit-learn), SciPy (@2020SciPy-NMeth) and PyTorch (@Ansel_PyTorch_2_Faster_2024).
 
-::: {.callout-warning}
-{SLmetrics} and the documentation is currently under development
-:::
+By leveraging C++ under the hood, [{SLmetrics}](https://github.com/serkor1/SLmetrics) aims to minimize overhead and provide a robust suite of metrics. In the future, we plan to expand its coverage to additional metrics and reinforce integration with established R workflows.
 
-Mock @knuth84
+
+
+
+
+

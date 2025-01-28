@@ -4,25 +4,36 @@
 # objective: Generate methods for balanced accuracy
 # script start;
 
-#' Compute the \eqn{\text{balanced}} \eqn{\text{accuracy}}
-#'
-#' The [baccuracy()]-function computes the [balanced accuracy](https://neptune.ai/blog/balanced-accuracy) between two
-#' vectors of predicted and observed [factor()] values. The [weighted.baccuracy()] function computes the weighted balanced accuracy.
-#'
-#'
 #' @inherit accuracy
+#' 
+#' @title Balanced Accuracy
+#' 
+#' @description
+#' A generic function for the (normalized) balanced [accuracy](https://arxiv.org/abs/2008.05756).
+#' Use [weighted.baccuracy()] for the weighted balanced [accuracy](https://arxiv.org/abs/2008.05756).
+#' 
 #' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
 #' @param na.rm A [logical] values (default: [TRUE]).  If [TRUE] calculation of the metric is based on valid classes.
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated as follows,
+#' 
+#' @section Definition:
+#' Let \eqn{\hat{\alpha} \in [0, 1]} be the proportion of correctly predicted classes. If `adjust == false`, the balanced [accuracy](https://arxiv.org/abs/2008.05756) of the classifier is calculated as,
 #'
 #' \deqn{
-#'   \frac{\text{sensitivity} + \text{specificty}}{2}
+#'   \hat{\alpha} = \frac{\text{sensitivity} + \text{specificty}}{2}
 #' }
-#'
-#' See the [sensitivity()]- and/or [specificity()]-function for more details.
+#' 
+#' otherwise,
+#' 
+#' \deqn{
+#'   \hat{\alpha} = \frac{\text{sensitivity} + \text{specificty}}{2} \frac{1}{k}
+#' }
+#' 
+#' Where:
+#' 
+#' - \eqn{k} is the number of classes
+#' - \eqn{\text{sensitivity}} is the overall [sensitivity](https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall#recall_or_true_positive_rate), and
+#' - \eqn{\text{specificty}} is the overall [specificty](https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall#recall_or_true_positive_rate)
+#' 
 #'
 #' @returns
 #'

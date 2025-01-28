@@ -5,7 +5,7 @@
 \alias{weighted.rae.numeric}
 \alias{rae}
 \alias{weighted.rae}
-\title{Compute the \eqn{\text{relative}} \eqn{\text{absolute}} \eqn{\text{error}}}
+\title{Relative Absolute Error}
 \usage{
 \method{rae}{numeric}(actual, predicted, ...)
 
@@ -31,7 +31,7 @@ A <\link{numeric}> vector of \link{length} 1.
 The \code{\link[=rae]{rae()}}-function calculates the normalized \href{https://www.statisticshowto.com/relative-absolute-error/}{relative absolute error} between
 the predicted and observed <\link{numeric}> vectors. The \code{\link[=weighted.rae]{weighted.rae()}} function computes the weigthed relative absolute error.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The Relative Absolute Error (RAE) is calculated as:

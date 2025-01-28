@@ -6,7 +6,7 @@
 \alias{weighted.mape.numeric}
 \alias{mape}
 \alias{weighted.mape}
-\title{Compute the \eqn{\text{mean}} \eqn{\text{absolute}} \eqn{\text{percentage}} \eqn{\text{error}}}
+\title{Mean Absolute Percentage Error}
 \usage{
 \method{mape}{numeric}(actual, predicted, ...)
 
@@ -32,7 +32,7 @@ A <\link{numeric}> vector of \link{length} 1.
 The \code{\link[=mape]{mape()}}-function computes the \href{https://en.wikipedia.org/wiki/Mean_absolute_percentage_error}{mean absolute percentage error} between
 the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.mape]{weighted.mape()}} function computes the weighted mean absolute percentage error.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated as,
