@@ -1,8 +1,8 @@
-# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
-# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+name: R-CMD-check
+
 on:
   push:
-      branches-ignore:
+    branches-ignore:
       - stable
       - main
   pull_request:
@@ -12,24 +12,27 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-name: R-CMD-check
-
 permissions: read-all
 
 jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
-
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
-
     strategy:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest,  r: 'release'}
-          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: 'oldrel-1'}
+          # Windows
+          - {os: windows-latest,  r: 'release',      compiler: 'default'}
+          # Ubuntu
+          - {os: ubuntu-latest,   r: 'devel',        compiler: 'default', http-user-agent: 'release'}
+          - {os: ubuntu-latest,   r: 'release',      compiler: 'default'}
+          - {os: ubuntu-latest,   r: 'oldrel-1',     compiler: 'default'}
+          # macOS Clang
+          - {os: macos-latest,    r: 'release',      compiler: 'clang'}
+          - {os: macos-latest,    r: 'devel',        compiler: 'clang'}
+          # macOS GCC via Homebrew
+          - {os: macos-latest,    r: 'release',      compiler: 'gcc'}
+          - {os: macos-latest,    r: 'devel',        compiler: 'gcc'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -46,8 +49,52 @@ jobs:
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
-          http-user-agent: ${{ matrix.config.http-user-agent }}
+          http-user-agent: ${{ matrix.config.http-user-agent || '' }}
           use-public-rspm: true
+
+      - name: Install build tools (macOS-gcc)
+        if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
+        run: |
+          brew update
+          brew install gcc libomp pkg-config
+          brew cleanup
+
+      - name: Configure Makevars (macOS-gcc)
+        if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
+        run: |
+          mkdir -p ~/.R
+          GCC_PATH=$(brew --prefix gcc)
+          OMP_PATH=$(brew --prefix libomp)
+          SDK_PATH=$(xcrun --show-sdk-path)
+
+          GCC_BIN=gcc-14
+          GXX_BIN=g++-14
+
+          cat << EOF > ~/.R/Makevars
+          # Compiler settings
+          CC=${GCC_PATH}/bin/${GCC_BIN}
+          CXX=${GCC_PATH}/bin/${GXX_BIN}
+          CXX11=${GCC_PATH}/bin/${GXX_BIN}
+          CXX14=${GCC_PATH}/bin/${GXX_BIN}
+          CXX17=${GCC_PATH}/bin/${GXX_BIN}
+          CXX20=${GCC_PATH}/bin/${GXX_BIN}
+
+          OMP_LIB=${OMP_PATH}/lib
+          OMP_INC=${OMP_PATH}/include
+
+          # Compiler flags
+          CPPFLAGS=-I\${OMP_INC} -isysroot ${SDK_PATH} -fopenmp
+          CFLAGS=-O3 -pedantic
+          CXXFLAGS=-O3 -pedantic
+
+          # Linker flags
+          LDFLAGS=-L\${OMP_LIB} -L${GCC_PATH}/lib -lomp -lgfortran -lm -isysroot ${SDK_PATH}
+
+          # Fortran configuration
+          FC=${GCC_PATH}/bin/gfortran
+          F77=${GCC_PATH}/bin/gfortran
+          FLIBS=-L${GCC_PATH}/lib/gcc/14 -lgfortran -lm
+          EOF
 
       - name: Installing {pkgs}
         uses: r-lib/actions/setup-r-dependencies@v2
@@ -61,5 +108,5 @@ jobs:
       - name: R CMD check
         uses: r-lib/actions/check-r-package@v2
         with:
-          upload-snapshots: true
           build_args: 'c("--no-manual", "--compact-vignettes=gs+qpdf")'
+          upload-snapshots: true
