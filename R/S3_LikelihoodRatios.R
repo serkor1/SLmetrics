@@ -10,18 +10,19 @@
 #' @title Negative Likelihood Ratio
 #'
 #' @description
-#' The [nlr()]-function computes the [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing), also known as the likelihood ratio for negative results, between
-#' two vectors of predicted and observed [factor()] values. The [weighted.nlr()] function computes the weighted negative likelihood ratio.
-#'
+#' A genereric function for the [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) in classification tasks. Use [weighted.nlr()] weighted [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing).
+#' 
 #' @section Definition:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
+#' Let \eqn{\hat{\alpha} \in [0, \infty]} be the likelihood of a negative outcome. The [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) of the classifier is calculated as,
 #'
 #' \deqn{
-#'   \frac{1 - \text{Sensitivity}_k}{\text{Specificity}_k}
+#'   \hat{\alpha} = \frac{1 - \frac{\#TP}{\#TP + \#FN}}{\frac{\#TN}{\#TN + \#FP}}
 #' }
 #'
-#' Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
+#' Where:
+#' 
+#' - \eqn{\frac{\#TP}{\#TP + \#FN}} is the sensitivity, or true positive rate
+#' - \eqn{\frac{\#TN}{\#TN + \#FP}} is the specificity, or true negative rate
 #' 
 #' @seealso
 #'
@@ -54,25 +55,20 @@ weighted.nlr <- function(...) {
 #' @title Positive Likelihood Ratio
 #'
 #' @description
-#' The [plr()]-function computes the [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing), also known as the likelihood ratio for positive results, between
-#' two vectors of predicted and observed [factor()] values.  The [weighted.plr()] function computes the weighted positive likelihood ratio.
-#'
+#' A genereric function for the [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) in classification tasks. Use [weighted.plr()] weighted [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing).
+#' 
 #' @section Definition:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
-#'
-#' \deqn{
-#'   \frac{\text{Sensitivity}_k}{1 - \text{Specificity}_k}
-#' }
-#'
-#' Where sensitivity (or true positive rate) is calculated as \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}} and specificity (or true negative rate) is calculated as \eqn{\frac{\#TN_k}{\#TN_k + \#FP_k}}.
-#'
-#' When `aggregate = TRUE`, the `micro`-average is calculated,
+#' Let \eqn{\hat{\alpha} \in [0, \infty]} be the likelihood of a positive outcome. The [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) of the classifier is calculated as,
 #'
 #' \deqn{
-#'   \frac{\sum_{k=1}^k \text{Sensitivity}_k}{1 - \sum_{k=1}^k \text{Specificity}_k}
+#'   \hat{\alpha} = \frac{\frac{\#TP}{\#TP + \#FN}}{1 - \frac{\#TN}{\#TN + \#FP}}
 #' }
 #'
+#' Where:
+#' 
+#' - \eqn{\frac{\#TP}{\#TP + \#FN}} is the sensitivity, or true positive rate
+#' - \eqn{\frac{\#TN}{\#TN + \#FP}} is the specificity, or true negative rate
+#' 
 #' @seealso
 #'
 #' The [nlr()]-function for the Negative Likehood Ratio (LR-)
@@ -104,29 +100,25 @@ weighted.plr <- function(...) {
 #' @title Diagnostic Odds Ratio
 #'
 #' @description
-#' The [dor()]-function computes the [Diagnostic Odds Ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) (DOR), a single indicator of test performance, between
-#' two vectors of predicted and observed [factor()] values. The [weighted.dor()] function computes the weighted diagnostic odds ratio.
-#'
-#' When `aggregate = TRUE`, the function returns the micro-average DOR across all classes \eqn{k}. By default, it returns the class-wise DOR.
+#' A genereric function for the [diagnostic odds ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) in classification tasks. Use [weighted.dor()] weighted [diagnostic odds ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio).
 #' 
 #' @section Definition:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
-#'
-#' \deqn{
-#'   \text{DOR}_k = \frac{\text{PLR}_k}{\text{NLR}_k}
-#' }
-#'
-#' Where \eqn{\text{PLR}_k} and \eqn{\text{NLR}_k} is the positive and negative likelihood ratio for class \eqn{k}, respectively. See [plr()] and [nlr()] for more details.
-#'
-#' When `aggregate = TRUE`, the `micro`-average is calculated as,
+#' Let \eqn{\hat{\alpha} \in [0, \infty]} be the effectiveness of the classifier.  The [diagnostic odds ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) of the classifier is calculated as,
 #'
 #' \deqn{
-#'   \overline{\text{DOR}} = \frac{\overline{\text{PLR}_k}}{\overline{\text{NLR}_k}}
+#'   \hat{\alpha} = \frac{\text{\#TP} \text{\#TN}}{\text{\#FP} \text{\#FN}}
 #' }
 #'
-#' Where \eqn{\overline{\text{PLR}}} and \eqn{\overline{\text{NLR}}} is the micro-averaged is the positive and negative likelihood ratio, respectively.
-#'
+#' Where:
+#' 
+#' - \eqn{\text{\#TP}} is the number of true positives
+#' - \eqn{\text{\#TN}} is the number of true negatives
+#' - \eqn{\text{\#FP}} is the number of false positives
+#' - \eqn{\text{\#FN}} is the number of false negatives
+#' 
+#' @returns
+#' A <[numeric]>-vector of [length] 1
+#' 
 #' @example man/examples/scr_DiagnosticOddsRatio.R
 #' 
 #' @family Classification

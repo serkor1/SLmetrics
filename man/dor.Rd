@@ -30,34 +30,26 @@ weighted.dor(...)
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 }
 \value{
-If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
-
-If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
+A <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The \code{\link[=dor]{dor()}}-function computes the \href{https://en.wikipedia.org/wiki/Diagnostic_odds_ratio}{Diagnostic Odds Ratio} (DOR), a single indicator of test performance, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.dor]{weighted.dor()}} function computes the weighted diagnostic odds ratio.
-
-When \code{aggregate = TRUE}, the function returns the micro-average DOR across all classes \eqn{k}. By default, it returns the class-wise DOR.
+A genereric function for the \href{https://en.wikipedia.org/wiki/Diagnostic_odds_ratio}{diagnostic odds ratio} in classification tasks. Use \code{\link[=weighted.dor]{weighted.dor()}} weighted \href{https://en.wikipedia.org/wiki/Diagnostic_odds_ratio}{diagnostic odds ratio}.
 }
 \section{Definition}{
 
-
-The metric is calculated for each class \eqn{k} as follows,
-
-\deqn{
-  \text{DOR}_k = \frac{\text{PLR}_k}{\text{NLR}_k}
-}
-
-Where \eqn{\text{PLR}_k} and \eqn{\text{NLR}_k} is the positive and negative likelihood ratio for class \eqn{k}, respectively. See \code{\link[=plr]{plr()}} and \code{\link[=nlr]{nlr()}} for more details.
-
-When \code{aggregate = TRUE}, the \code{micro}-average is calculated as,
+Let \eqn{\hat{\alpha} \in [0, \infty]} be the effectiveness of the classifier.  The \href{https://en.wikipedia.org/wiki/Diagnostic_odds_ratio}{diagnostic odds ratio} of the classifier is calculated as,
 
 \deqn{
-  \overline{\text{DOR}} = \frac{\overline{\text{PLR}_k}}{\overline{\text{NLR}_k}}
+  \hat{\alpha} = \frac{\text{\#TP} \text{\#TN}}{\text{\#FP} \text{\#FN}}
 }
 
-Where \eqn{\overline{\text{PLR}}} and \eqn{\overline{\text{NLR}}} is the micro-averaged is the positive and negative likelihood ratio, respectively.
+Where:
+\itemize{
+\item \eqn{\text{\#TP}} is the number of true positives
+\item \eqn{\text{\#TN}} is the number of true negatives
+\item \eqn{\text{\#FP}} is the number of false positives
+\item \eqn{\text{\#FN}} is the number of false negatives
+}
 }
 
 \section{Creating <\link{factor}>}{
