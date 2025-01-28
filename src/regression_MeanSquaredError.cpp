@@ -6,7 +6,7 @@ using namespace Rcpp;
 //' @method mse numeric
 //' @export
 // [[Rcpp::export(mse.numeric)]]
-double mse(const NumericVector& actual, const NumericVector& predicted)
+double mse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted)
 {
     const double* ptr_actual    = actual.begin();
     const double* ptr_predicted = predicted.begin();
@@ -19,9 +19,9 @@ double mse(const NumericVector& actual, const NumericVector& predicted)
 //' @method weighted.mse numeric
 //' @export
 // [[Rcpp::export(weighted.mse.numeric)]]
-double weighted_mse(const NumericVector& actual, 
-                    const NumericVector& predicted, 
-                    const NumericVector& w)
+double weighted_mse(const Rcpp::NumericVector& actual, 
+                    const Rcpp::NumericVector& predicted, 
+                    const Rcpp::NumericVector& w)
 {
     const double* ptr_actual    = actual.begin();
     const double* ptr_predicted = predicted.begin();

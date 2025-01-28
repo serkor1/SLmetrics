@@ -6,7 +6,7 @@ using namespace Rcpp;
 //' @method rmsle numeric
 //' @export
 // [[Rcpp::export(rmsle.numeric)]]
-double rmsle(const NumericVector& actual, const NumericVector& predicted)
+double rmsle(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted)
 {
     const double* ptr_actual    = actual.begin();
     const double* ptr_predicted = predicted.begin();
@@ -19,9 +19,9 @@ double rmsle(const NumericVector& actual, const NumericVector& predicted)
 //' @method weighted.rmsle numeric
 //' @export
 // [[Rcpp::export(weighted.rmsle.numeric)]]
-double weighted_rmsle(const NumericVector& actual, 
-                      const NumericVector& predicted, 
-                      const NumericVector& w)
+double weighted_rmsle(const Rcpp::NumericVector& actual, 
+                      const Rcpp::NumericVector& predicted, 
+                      const Rcpp::NumericVector& w)
 {
     const double* ptr_actual    = actual.begin();
     const double* ptr_predicted = predicted.begin();
