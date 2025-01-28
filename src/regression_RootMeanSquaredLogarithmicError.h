@@ -1,32 +1,57 @@
 #ifndef REGRESSION_ROOTMEANSQUAREDLOGARITHMICERROR_H
 #define REGRESSION_ROOTMEANSQUAREDLOGARITHMICERROR_H
 
-#include "regression_Utils.h"
+#include "utilities_Package.h"
 #include <cmath>
-#include <vector>
+#include <cstddef>
 
-/**
- * Root Mean Squared Logarithmic Error (RMSLE) implementation using RegressionBase.
- */
-class RootMeanSquaredLogarithmicError : public RegressionBase {
+#ifdef _OPENMP
+    #include <omp.h>
+#endif
+
+class RMSLE {
 public:
     // Unweighted RMSLE
-    double compute(const std::vector<double>& actual, const std::vector<double>& predicted) const override {
-        auto errorFunc = [](const double& a, const double& p) {
-            double log_diff = std::log(a + 1) - std::log(p + 1);
-            return log_diff * log_diff;
-        };
-        return std::sqrt(calculate(actual, predicted, errorFunc));
+    static double compute(const double* actual, const double* predicted, std::size_t n)
+    {
+        double sum_log_diff_sq = 0.0;
+
+        #ifdef _OPENMP
+            #pragma omp parallel for reduction(+:sum_log_diff_sq) if(getUseOpenMP())
+        #endif
+        for (std::size_t i = 0; i < n; ++i) {
+            double log_a = std::log(actual[i] + 1.0);
+            double log_p = std::log(predicted[i] + 1.0);
+            double diff  = log_a - log_p;
+            sum_log_diff_sq += diff * diff;
+        }
+
+        double mean_log_diff_sq = sum_log_diff_sq / static_cast<double>(n);
+        return std::sqrt(mean_log_diff_sq);
     }
 
     // Weighted RMSLE
-    double compute(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights) const override {
-        auto errorFunc = [](const double& a, const double& p) {
-            double log_diff = std::log(a + 1) - std::log(p + 1);
-            return log_diff * log_diff;
-        };
-        return std::sqrt(calculate(actual, predicted, weights, errorFunc));
+    static double compute(const double* actual, const double* predicted, 
+                          const double* weights, std::size_t n)
+    {
+        double sum_log_diff_sq = 0.0;
+        double sum_w           = 0.0;
+
+        #ifdef _OPENMP
+            #pragma omp parallel for reduction(+:sum_log_diff_sq, sum_w) if(getUseOpenMP())
+        #endif
+        for (std::size_t i = 0; i < n; ++i) {
+            double w     = weights[i];
+            double log_a = std::log(actual[i] + 1.0);
+            double log_p = std::log(predicted[i] + 1.0);
+            double diff  = log_a - log_p;
+            sum_log_diff_sq += w * diff * diff;
+            sum_w           += w;
+        }
+
+        double mean_log_diff_sq = sum_log_diff_sq / sum_w;
+        return std::sqrt(mean_log_diff_sq);
     }
 };
 
-#endif // REGRESSION_ROOTMEANSQUAREDLOGARITHMICERROR_H
+#endif
