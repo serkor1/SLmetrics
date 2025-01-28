@@ -25,7 +25,6 @@ class YAML:
                 'sidebar': {
                     'title': "Documentation"
                 },
-                'downloads': ['pdf', 'epub'],
                 'chapters': [
                     'index.qmd',
                     'intro.qmd',
