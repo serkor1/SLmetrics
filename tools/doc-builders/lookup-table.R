@@ -57,7 +57,7 @@ DT_[
       name == "rsq", "Coefficient of Determination_c",
       name == "ROC", "Receiver Operator Characteristics_c",
       name == "specificity", "Specificity_c",
-      name == "zerooneloss", "Zero-One loss_c",
+      name == "zerooneloss", "Zero-One Loss_c",
 
       # regression functions
       name == "huberloss", "Huber Loss Function_r",
