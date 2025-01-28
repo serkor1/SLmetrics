@@ -6,18 +6,27 @@ using namespace Rcpp;
 //' @method smape numeric
 //' @export
 // [[Rcpp::export(smape.numeric)]]
-double smape(const std::vector<double>& actual, const std::vector<double>& predicted) 
+double smape(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted)
 {
-    SymmetricMeanAbsolutePercentageError smapeMetric; // Instantiate SMAPE class
-    return smapeMetric.compute(actual, predicted);
+    const double* ptr_actual    = actual.begin();
+    const double* ptr_predicted = predicted.begin();
+    std::size_t n = actual.size();
+
+    return SMAPE::compute(ptr_actual, ptr_predicted, n);
 }
 
 //' @rdname smape
 //' @method weighted.smape numeric
 //' @export
 // [[Rcpp::export(weighted.smape.numeric)]]
-double weighted_smape(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w) 
+double weighted_smape(const Rcpp::NumericVector& actual, 
+                      const Rcpp::NumericVector& predicted, 
+                      const Rcpp::NumericVector& w)
 {
-    SymmetricMeanAbsolutePercentageError smapeMetric; // Instantiate SMAPE class
-    return smapeMetric.compute(actual, predicted, w);
+    const double* ptr_actual    = actual.begin();
+    const double* ptr_predicted = predicted.begin();
+    const double* ptr_w         = w.begin();
+    std::size_t n = actual.size();
+
+    return SMAPE::compute(ptr_actual, ptr_predicted, ptr_w, n);
 }
