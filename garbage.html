@@ -138,7 +138,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <a href="./">Documentation</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/serkor1/SLmetrics/tree/development/docs/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./{SLmetrics}--Machine-Learning-Performance-Evaluation-on-Steroids.epub" title="Download ePub" class="quarto-navigation-tool px-1" aria-label="Download ePub"><i class="bi bi-journal"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -601,7 +600,7 @@ Important
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;         a         b         c 
-#&gt; 0.5000703 0.5001029       NaN</code></pre>
+#&gt; 0.4997068 0.5000143       NaN</code></pre>
 </div>
 </div>
 <p>One class, <code>c</code>, is never predicted, nor is it present in the actual labels - therefore, by construction, the value is <code>NaN</code> as there is division by zero. During aggregation to <code>micro</code> or <code>macro</code> averages these are being handled according to <code>na.rm</code>. See below:</p>
@@ -614,7 +613,7 @@ Important
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 0.5000866</code></pre>
+<pre><code>#&gt; [1] 0.4998606</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) macro average</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">fbeta</span>(</span>
@@ -624,7 +623,7 @@ Important
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">FALSE</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 0.3333911</code></pre>
+<pre><code>#&gt; [1] 0.3332404</code></pre>
 </div>
 </div>
 <div class="cell">

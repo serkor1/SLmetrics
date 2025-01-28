@@ -135,7 +135,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <a href="./">Documentation</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/serkor1/SLmetrics/tree/development/docs/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./{SLmetrics}--Machine-Learning-Performance-Evaluation-on-Steroids.epub" title="Download ePub" class="quarto-navigation-tool px-1" aria-label="Download ePub"><i class="bi bi-journal"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -676,9 +675,9 @@ Table&nbsp;3.1: Benchmarking selected regression metrics
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {RMSE}                 29.7ms           0B        0
-#&gt; 2 {Pinball Loss}         30.2ms           0B        0
-#&gt; 3 {Huber Loss}           75.2ms           0B        0</code></pre>
+#&gt; 1 {RMSE}                 30.5ms           0B        0
+#&gt; 2 {Pinball Loss}         30.7ms           0B        0
+#&gt; 3 {Huber Loss}           75.7ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -702,10 +701,10 @@ Table&nbsp;3.2: Benchmarking RMSE across
 <pre><code>#&gt; # A tibble: 4 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}            29.7ms           0B        0
-#&gt; 2 {MLmetrics}            60.1ms       76.3MB        1
-#&gt; 3 {yardstick}             164ms      419.6MB        9
-#&gt; 4 {mlr3measures}           84ms       76.3MB        1</code></pre>
+#&gt; 1 {SLmetrics}            30.9ms           0B        0
+#&gt; 2 {MLmetrics}            61.7ms       76.3MB        1
+#&gt; 3 {yardstick}           168.5ms      419.6MB        9
+#&gt; 4 {mlr3measures}         86.3ms       76.3MB        1</code></pre>
 </div>
 </div>
 </figure>
@@ -731,9 +730,9 @@ Table&nbsp;3.3: Benchmarking selected classification metrics
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression         execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                    &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {Confusion Matrix}         8.53ms           0B        0
-#&gt; 2 {Accuracy}                 8.53ms           0B        0
-#&gt; 3 {F-beta}                   8.53ms           0B        0</code></pre>
+#&gt; 1 {Confusion Matrix}         8.61ms           0B        0
+#&gt; 2 {Accuracy}                 8.62ms           0B        0
+#&gt; 3 {F-beta}                   8.62ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -756,9 +755,9 @@ Table&nbsp;3.4: Benchmarking a 3x3 confusion matrix across
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression  execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}         8.53ms           0B        0
-#&gt; 2 {MLmetrics}       244.93ms        381MB        7
-#&gt; 3 {yardstick}       244.73ms        381MB        7</code></pre>
+#&gt; 1 {SLmetrics}         8.61ms           0B        0
+#&gt; 2 {MLmetrics}       248.89ms        381MB        7
+#&gt; 3 {yardstick}       248.35ms        381MB        7</code></pre>
 </div>
 </div>
 </figure>
