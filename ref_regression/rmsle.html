@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>root mean squared logarithmic error – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
+<title>Root Mean Squared Logarithmic Error – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -75,8 +75,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f8dc6eab18fde03278982b0b35885446.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-1e4f8efb79bafc196cb3722a01733606.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-5bda692e2fc8d6f043fa05fa4bba1001.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-ac8191c3450311aeea82dee7b78ef96d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-a5ad0c8c17bdc5fd493e5ae0d1dd07c2.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -146,7 +146,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression_functions.html">Regression functions</a></li><li class="breadcrumb-item"><a href="../ref_regression/rmsle.html">root mean squared logarithmic error</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression_functions.html">Regression functions</a></li><li class="breadcrumb-item"><a href="../ref_regression/rmsle.html">Root Mean Squared Logarithmic Error</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -164,26 +164,10 @@ window.Quarto = {
       <a href="../">Documentation</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/serkor1/SLmetrics/tree/development/docs/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../{SLmetrics}--Machine-Learning-Performance-Evaluation-on-Steroids.epub" title="Download ePub" class="quarto-navigation-tool px-1" aria-label="Download ePub"><i class="bi bi-journal"></i></a>
     <div class="dropdown">
-      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
-          <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="../{SLmetrics}--Machine-Learning-Performance-Evaluation-on-Steroids.pdf">
-              <i class="bi bi-file-pdf pe-1"></i>
-            Download PDF
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="../{SLmetrics}--Machine-Learning-Performance-Evaluation-on-Steroids.epub">
-              <i class="bi bi-journal pe-1"></i>
-            Download ePub
-            </a>
-          </li>
-      </ul>
-    </div>
-    <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
-      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
               <i class="bi bi-twitter pe-1"></i>
@@ -251,85 +235,79 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/ccc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">concordance correlation coefficient</span></a>
+ <span class="menu-text">Concordance Correlation Coefficient</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/huberloss.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">huber loss</span></a>
+ <span class="menu-text">Huber Loss Function</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/mae.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">mean absolute error</span></a>
+ <span class="menu-text">Mean Absolute Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/mape.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">mean absolute percentage error</span></a>
+ <span class="menu-text">Mean Absolute Percentage error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/mcc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Matthews correlation coefficient</span></a>
+ <span class="menu-text">Matthews Correlation Coefficient</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/mse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">mean squared error</span></a>
+ <span class="menu-text">Mean Squared Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/pinball.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">pinball loss</span></a>
+ <span class="menu-text">Pinball Loss</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/rae.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">relative absolute error</span></a>
+ <span class="menu-text">Relative Absolute Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/rmse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">root mean squared error</span></a>
+ <span class="menu-text">Root Mean Squared Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/rmsle.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">root mean squared logarithmic error</span></a>
+ <span class="menu-text">Root Mean Squared Logarithmic Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/rrmse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">relative root mean squared error</span></a>
+ <span class="menu-text">Relative Root Mean Squared Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/rrse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">root relative squared error</span></a>
+ <span class="menu-text">Root Relative Squared Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/smape.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">symmetric mean absolute percentage error</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../ref_regression/specificity.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">specificity</span></a>
+ <span class="menu-text">Symmetric Mean Absolute Percentage Error</span></a>
   </div>
 </li>
       </ul>
@@ -346,139 +324,145 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/ROC.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">receiver operator characteristics</span></a>
+ <span class="menu-text">Receiver Operator Characteristics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/accuracy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">accuracy</span></a>
+ <span class="menu-text">Accuracy</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/baccuracy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">balanced accuracy</span></a>
+ <span class="menu-text">Balanced Accuracy</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/ckappa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cohen’s kappa</span></a>
+ <span class="menu-text">Cohen’s Kappa Statistic</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/cmatrix.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">confusion matrix</span></a>
+ <span class="menu-text">Confusion Matrix</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/dor.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">diagnostic odds ratio</span></a>
+ <span class="menu-text">Diagnostic Odds Ratio</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">entropy</span></a>
+ <span class="menu-text">Entropy</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/fbeta.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">F-beta score</span></a>
+ <span class="menu-text">F-beta Score</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/fdr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">false discovery rate</span></a>
+ <span class="menu-text">False Discovery Rate</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/fer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">false omission rate</span></a>
+ <span class="menu-text">False Omission Rate</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/fmi.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Fowlkes-Mallows index</span></a>
+ <span class="menu-text">Fowlkes-Mallows Index</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/fpr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">false positive rate</span></a>
+ <span class="menu-text">False Positive Rate</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/jaccard.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Jaccard score</span></a>
+ <span class="menu-text">Jaccard Score</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/logloss.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">log loss</span></a>
+ <span class="menu-text">Log Loss</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/mpe.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">mean percentage error</span></a>
+ <span class="menu-text">Mean Percentage Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/nlr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">negative likelihood ratio</span></a>
+ <span class="menu-text">Negative Likelihood Ratio</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/npv.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">negative predictive value</span></a>
+ <span class="menu-text">Negative Predictive Value</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/plr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">positive likelihood ratio</span></a>
+ <span class="menu-text">Positive Likelihood Ratio</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/prROC.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Precision-Recall curve</span></a>
+ <span class="menu-text">Precision-Recall Curve</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/precision.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">precision</span></a>
+ <span class="menu-text">Precision</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/recall.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">recall</span></a>
+ <span class="menu-text">Recall</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/rsq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">coefficient of determination</span></a>
+ <span class="menu-text">Coefficient of Determination</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ref_classification/specificity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Specificity</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/zerooneloss.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">zero-one loss</span></a>
+ <span class="menu-text">Zero-One Loss</span></a>
   </div>
 </li>
       </ul>
@@ -523,9 +507,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression_functions.html">Regression functions</a></li><li class="breadcrumb-item"><a href="../ref_regression/rmsle.html">root mean squared logarithmic error</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression_functions.html">Regression functions</a></li><li class="breadcrumb-item"><a href="../ref_regression/rmsle.html">Root Mean Squared Logarithmic Error</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">root mean squared logarithmic error</h1>
+<h1 class="title">Root Mean Squared Logarithmic Error</h1>
 </div>
 
 
@@ -1235,13 +1219,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../ref_regression/rmse.html" class="pagination-link" aria-label="root mean squared error">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">root mean squared error</span>
+      <a href="../ref_regression/rmse.html" class="pagination-link" aria-label="Root Mean Squared Error">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Root Mean Squared Error</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../ref_regression/rrmse.html" class="pagination-link" aria-label="relative root mean squared error">
-        <span class="nav-page-text">relative root mean squared error</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../ref_regression/rrmse.html" class="pagination-link" aria-label="Relative Root Mean Squared Error">
+        <span class="nav-page-text">Relative Root Mean Squared Error</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

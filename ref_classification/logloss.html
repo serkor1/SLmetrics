@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>log loss – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
+<title>Log Loss – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -75,8 +75,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f8dc6eab18fde03278982b0b35885446.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-1e4f8efb79bafc196cb3722a01733606.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-5bda692e2fc8d6f043fa05fa4bba1001.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-ac8191c3450311aeea82dee7b78ef96d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-a5ad0c8c17bdc5fd493e5ae0d1dd07c2.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -146,7 +146,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../classification_functions.html">Classification functions</a></li><li class="breadcrumb-item"><a href="../ref_classification/logloss.html">log loss</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../classification_functions.html">Classification functions</a></li><li class="breadcrumb-item"><a href="../ref_classification/logloss.html">Log Loss</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -164,26 +164,10 @@ window.Quarto = {
       <a href="../">Documentation</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/serkor1/SLmetrics/tree/development/docs/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../{SLmetrics}--Machine-Learning-Performance-Evaluation-on-Steroids.epub" title="Download ePub" class="quarto-navigation-tool px-1" aria-label="Download ePub"><i class="bi bi-journal"></i></a>
     <div class="dropdown">
-      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
-          <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="../{SLmetrics}--Machine-Learning-Performance-Evaluation-on-Steroids.pdf">
-              <i class="bi bi-file-pdf pe-1"></i>
-            Download PDF
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="../{SLmetrics}--Machine-Learning-Performance-Evaluation-on-Steroids.epub">
-              <i class="bi bi-journal pe-1"></i>
-            Download ePub
-            </a>
-          </li>
-      </ul>
-    </div>
-    <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
-      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
               <i class="bi bi-twitter pe-1"></i>
@@ -251,85 +235,79 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/ccc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">concordance correlation coefficient</span></a>
+ <span class="menu-text">Concordance Correlation Coefficient</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/huberloss.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">huber loss</span></a>
+ <span class="menu-text">Huber Loss Function</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/mae.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">mean absolute error</span></a>
+ <span class="menu-text">Mean Absolute Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/mape.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">mean absolute percentage error</span></a>
+ <span class="menu-text">Mean Absolute Percentage error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/mcc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Matthews correlation coefficient</span></a>
+ <span class="menu-text">Matthews Correlation Coefficient</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/mse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">mean squared error</span></a>
+ <span class="menu-text">Mean Squared Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/pinball.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">pinball loss</span></a>
+ <span class="menu-text">Pinball Loss</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/rae.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">relative absolute error</span></a>
+ <span class="menu-text">Relative Absolute Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/rmse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">root mean squared error</span></a>
+ <span class="menu-text">Root Mean Squared Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/rmsle.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">root mean squared logarithmic error</span></a>
+ <span class="menu-text">Root Mean Squared Logarithmic Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/rrmse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">relative root mean squared error</span></a>
+ <span class="menu-text">Relative Root Mean Squared Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/rrse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">root relative squared error</span></a>
+ <span class="menu-text">Root Relative Squared Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_regression/smape.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">symmetric mean absolute percentage error</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../ref_regression/specificity.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">specificity</span></a>
+ <span class="menu-text">Symmetric Mean Absolute Percentage Error</span></a>
   </div>
 </li>
       </ul>
@@ -346,139 +324,145 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/ROC.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">receiver operator characteristics</span></a>
+ <span class="menu-text">Receiver Operator Characteristics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/accuracy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">accuracy</span></a>
+ <span class="menu-text">Accuracy</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/baccuracy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">balanced accuracy</span></a>
+ <span class="menu-text">Balanced Accuracy</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/ckappa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cohen’s kappa</span></a>
+ <span class="menu-text">Cohen’s Kappa Statistic</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/cmatrix.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">confusion matrix</span></a>
+ <span class="menu-text">Confusion Matrix</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/dor.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">diagnostic odds ratio</span></a>
+ <span class="menu-text">Diagnostic Odds Ratio</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">entropy</span></a>
+ <span class="menu-text">Entropy</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/fbeta.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">F-beta score</span></a>
+ <span class="menu-text">F-beta Score</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/fdr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">false discovery rate</span></a>
+ <span class="menu-text">False Discovery Rate</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/fer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">false omission rate</span></a>
+ <span class="menu-text">False Omission Rate</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/fmi.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Fowlkes-Mallows index</span></a>
+ <span class="menu-text">Fowlkes-Mallows Index</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/fpr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">false positive rate</span></a>
+ <span class="menu-text">False Positive Rate</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/jaccard.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Jaccard score</span></a>
+ <span class="menu-text">Jaccard Score</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/logloss.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">log loss</span></a>
+ <span class="menu-text">Log Loss</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/mpe.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">mean percentage error</span></a>
+ <span class="menu-text">Mean Percentage Error</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/nlr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">negative likelihood ratio</span></a>
+ <span class="menu-text">Negative Likelihood Ratio</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/npv.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">negative predictive value</span></a>
+ <span class="menu-text">Negative Predictive Value</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/plr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">positive likelihood ratio</span></a>
+ <span class="menu-text">Positive Likelihood Ratio</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/prROC.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Precision-Recall curve</span></a>
+ <span class="menu-text">Precision-Recall Curve</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/precision.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">precision</span></a>
+ <span class="menu-text">Precision</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/recall.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">recall</span></a>
+ <span class="menu-text">Recall</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/rsq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">coefficient of determination</span></a>
+ <span class="menu-text">Coefficient of Determination</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../ref_classification/specificity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Specificity</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ref_classification/zerooneloss.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">zero-one loss</span></a>
+ <span class="menu-text">Zero-One Loss</span></a>
   </div>
 </li>
       </ul>
@@ -523,9 +507,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../classification_functions.html">Classification functions</a></li><li class="breadcrumb-item"><a href="../ref_classification/logloss.html">log loss</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../classification_functions.html">Classification functions</a></li><li class="breadcrumb-item"><a href="../ref_classification/logloss.html">Log Loss</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">log loss</h1>
+<h1 class="title">Log Loss</h1>
 </div>
 
 
@@ -555,8 +539,8 @@ R Documentation
 <section id="description" class="level3">
 <h3 class="anchored" data-anchor-id="description">Description</h3>
 <p>
-The <code>logloss()</code> function computes the <strong>Log Loss</strong> between observed classes (as a <code>&lt;factor&gt;</code>) and their predicted probability distributions (a <code>&lt;numeric&gt;</code> matrix). The <code>weighted.logloss()</code> function is the weighted version, applying observation-specific weights.
-</p>
+The <code>logloss()</code> function computes the <strong>Log Loss</strong> between observed classes (as a <factor>) and their predicted probability distributions (a <code>&lt;numeric&gt;</code> matrix). The <code>weighted.logloss()</code> function is the weighted version, applying observation-specific weights.
+</factor></p>
 </section>
 <section id="usage" class="level3">
 <h3 class="anchored" data-anchor-id="usage">Usage</h3>
@@ -581,8 +565,8 @@ The <code>logloss()</code> function computes the <strong>Log Loss</strong> betwe
 </td>
 <td>
 <p>
-A vector of <code>&lt;factor&gt;</code>- of length <span class="math inline">\(n\)</span>, and <span class="math inline">\(k\)</span> levels
-</p>
+A vector of <factor>- of length <span class="math inline">\(n\)</span>, and <span class="math inline">\(k\)</span> levels
+</factor></p>
 </td>
 </tr>
 <tr>
@@ -601,8 +585,8 @@ A <span class="math inline">\(n \times k\)</span> <code>&lt;numeric&gt;</code>-m
 </td>
 <td>
 <p>
-A <code>&lt;logical&gt;</code>-value (default: TRUE). If TRUE, the mean cross-entropy across all observations is returned; otherwise, the sum of cross-entropies is returned.
-</p>
+A <logical>-value (default: TRUE). If TRUE, the mean cross-entropy across all observations is returned; otherwise, the sum of cross-entropies is returned.
+</logical></p>
 </td>
 </tr>
 <tr>
@@ -669,50 +653,50 @@ where:
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 3) Generate predicted classes: "Virginica" vs. "Others"</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>(<span class="fu">predict</span>(model, <span class="at">type =</span> <span class="st">"response"</span>) <span class="sc">&gt;</span><span class="st">`</span><span class="at"> 0.5),</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="at">  levels = c(1, 0),</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="at">  labels = c("Virginica", "Others")</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>(<span class="fu">predict</span>(model, <span class="at">type =</span> <span class="st">"response"</span>) <span class="sc">&gt;</span> <span class="fl">0.5</span>),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Virginica"</span>, <span class="st">"Others"</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="at"># 3.1) Generate actual classes</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="at">actual &lt;- factor(</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="at">  x      = iris$species_num,</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="at">  levels = c(1, 0),</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="at">  labels = c("Virginica", "Others")</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 3.1) Generate actual classes</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>actual <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">x      =</span> iris<span class="sc">$</span>species_num,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Virginica"</span>, <span class="st">"Others"</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="at"># For Log Loss, we need predicted probabilities for each class.</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="at"># Since it's a binary model, we create a 2-column matrix:</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="at">#   1st column = P("Virginica")</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="at">#   2nd column = P("Others") = 1 - P("Virginica")</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="at">predicted_probs &lt;- predict(model, type = "response")</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="at">qk_matrix &lt;- cbind(predicted_probs, 1 - predicted_probs)</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co"># For Log Loss, we need predicted probabilities for each class.</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Since it's a binary model, we create a 2-column matrix:</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co">#   1st column = P("Virginica")</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co">#   2nd column = P("Others") = 1 - P("Virginica")</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>predicted_probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>qk_matrix <span class="ot">&lt;-</span> <span class="fu">cbind</span>(predicted_probs, <span class="dv">1</span> <span class="sc">-</span> predicted_probs)</span>
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="at"># 4) Evaluate unweighted Log Loss</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="at">#    'logloss' takes (actual, qk_matrix, normalize=TRUE/FALSE).</span></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="at">#    The factor 'actual' must have the positive class (Virginica) as its first level.</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="at">unweighted_LogLoss &lt;- logloss(</span></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="at">  actual    = actual,           # factor</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="at">  qk        = qk_matrix,        # numeric matrix of probabilities</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="at">  normalize = TRUE              # normalize = TRUE</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 4) Evaluate unweighted Log Loss</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co">#    'logloss' takes (actual, qk_matrix, normalize=TRUE/FALSE).</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co">#    The factor 'actual' must have the positive class (Virginica) as its first level.</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>unweighted_LogLoss <span class="ot">&lt;-</span> <span class="fu">logloss</span>(</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">actual    =</span> actual,           <span class="co"># factor</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">qk        =</span> qk_matrix,        <span class="co"># numeric matrix of probabilities</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">normalize =</span> <span class="cn">TRUE</span>              <span class="co"># normalize = TRUE</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="at"># 5) Evaluate weighted Log Loss</span></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="at">#    We introduce a weight vector, for example:</span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="at">weights &lt;- iris$Petal.Length / mean(iris$Petal.Length)</span></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="at">weighted_LogLoss &lt;- weighted.logloss(</span></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="at">  actual    = actual,</span></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="at">  qk  = qk_matrix,</span></span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="at">  w         = weights,</span></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="at">  normalize = TRUE</span></span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co"># 5) Evaluate weighted Log Loss</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co">#    We introduce a weight vector, for example:</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> iris<span class="sc">$</span>Petal.Length <span class="sc">/</span> <span class="fu">mean</span>(iris<span class="sc">$</span>Petal.Length)</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>weighted_LogLoss <span class="ot">&lt;-</span> <span class="fu">weighted.logloss</span>(</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">actual    =</span> actual,</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>  <span class="at">qk  =</span> qk_matrix,</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>  <span class="at">w         =</span> weights,</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  <span class="at">normalize =</span> <span class="cn">TRUE</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="at"># 6) Print Results</span></span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="at">cat(</span></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="at">  "Unweighted Log Loss:", unweighted_LogLoss,</span></span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="at">  "Weighted Log Loss:", weighted_LogLoss,</span></span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="at">  sep = "</span><span class="sc">\n</span><span class="at">"</span></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="at">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="co"># 6) Print Results</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Unweighted Log Loss:"</span>, unweighted_LogLoss,</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Weighted Log Loss:"</span>, weighted_LogLoss,</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -1282,13 +1266,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../ref_classification/jaccard.html" class="pagination-link" aria-label="Jaccard score">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Jaccard score</span>
+      <a href="../ref_classification/jaccard.html" class="pagination-link" aria-label="Jaccard Score">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Jaccard Score</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../ref_classification/mpe.html" class="pagination-link" aria-label="mean percentage error">
-        <span class="nav-page-text">mean percentage error</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../ref_classification/mpe.html" class="pagination-link" aria-label="Mean Percentage Error">
+        <span class="nav-page-text">Mean Percentage Error</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
