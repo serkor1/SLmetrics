@@ -101,10 +101,7 @@ jobs:
         with:
           extra-packages: any::rcmdcheck reticulate
           needs: check
-
-      - name: Setup Python and {reticulate}
-        uses: ./.github/actions/setup-reticulate
-
+          
       - name: Check OpenMP availability
         if: matrix.config.compiler != 'clang'
         shell: Rscript {0}
@@ -128,6 +125,9 @@ jobs:
           stopifnot(
             "OpenMP not available!" = is_available()
           )
+
+      - name: Setup Python and {reticulate}
+        uses: ./.github/actions/setup-reticulate
 
 
       - name: R CMD check
