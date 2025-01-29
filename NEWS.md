@@ -4,6 +4,11 @@
 
 ## :rocket: Improvements
 
+- **Regression metrics (See PR
+  https://github.com/serkor1/SLmetrics/pull/64):** All regression
+  metrics have had their back-end optimized and are now 2-10 times
+  faster than prior versions.
+
 ## :bug: Bug-fixes
 
 - **Diagnostic Odds Ratio:** The `dor()` is now returning a single
