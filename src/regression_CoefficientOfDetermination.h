@@ -122,6 +122,12 @@ class CoefficientOfDetermination {
 
             return r2_value;
         }
+
+    private:
+        // Prevents the compiler from doing
+        // bad stuff.
+        CoefficientOfDetermination()  = delete;
+        ~CoefficientOfDetermination() = delete;
 };
 
 #endif // REGRESSION_COEFFICIENTOFDETERMINATION_H

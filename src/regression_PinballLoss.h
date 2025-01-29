@@ -226,6 +226,12 @@ public:
 
         return lower_val; 
     }
+
+    private:
+        // Prevents the compiler from doing
+        // bad stuff.
+        PinballLoss()  = delete;
+        ~PinballLoss() = delete;
 };
 
 #endif // REGRESSION_PINBALLLOSS_H

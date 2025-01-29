@@ -90,6 +90,12 @@ public:
 
         return numerator / denominator;
     }
+
+    private:
+        // Prevents the compiler from doing
+        // bad stuff.
+        CCC()  = delete;
+        ~CCC() = delete;
 };
 
 #endif

@@ -285,6 +285,12 @@ class RRMSE {
             
             return vw.back().first;
         }
+
+    private:
+        // Prevents the compiler from doing
+        // bad stuff.
+        RRMSE()  = delete;
+        ~RRMSE() = delete;
 };
 
 #endif
