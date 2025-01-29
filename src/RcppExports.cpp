@@ -1245,28 +1245,28 @@ BEGIN_RCPP
 END_RCPP
 }
 // rsq
-double rsq(const std::vector<double>& actual, const std::vector<double>& predicted, const double k);
+double rsq(const NumericVector& actual, const NumericVector& predicted, double k);
 RcppExport SEXP _SLmetrics_rsq(SEXP actualSEXP, SEXP predictedSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const double >::type k(kSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< double >::type k(kSEXP);
     rcpp_result_gen = Rcpp::wrap(rsq(actual, predicted, k));
     return rcpp_result_gen;
 END_RCPP
 }
 // weighted_rsq
-double weighted_rsq(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w, const double k);
+double weighted_rsq(const NumericVector& actual, const NumericVector& predicted, const NumericVector& w, double k);
 RcppExport SEXP _SLmetrics_weighted_rsq(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type w(wSEXP);
-    Rcpp::traits::input_parameter< const double >::type k(kSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< double >::type k(kSEXP);
     rcpp_result_gen = Rcpp::wrap(weighted_rsq(actual, predicted, w, k));
     return rcpp_result_gen;
 END_RCPP

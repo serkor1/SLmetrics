@@ -1,86 +1,127 @@
 #ifndef REGRESSION_COEFFICIENTOFDETERMINATION_H
 #define REGRESSION_COEFFICIENTOFDETERMINATION_H
 
-#include "regression_Utils.h"
-#include <vector>
+#include "utilities_Package.h"
 #include <cmath>
+#include <cstddef>
 
-/**
- * Coefficient of Determination (R-squared) implementation using RegressionBase.
- */
-class CoefficientOfDetermination : public RegressionBase {
-public:
-    explicit CoefficientOfDetermination(double k = 0.0) : k_(k) {}
+#ifdef _OPENMP
+    #include <omp.h>
+#endif
 
-    // Unweighted R-squared computation
-    double compute(const std::vector<double>& actual, const std::vector<double>& predicted) const override {
-        const std::size_t n = actual.size();
-        const double mean_actual = calculate_mean(actual);
+class CoefficientOfDetermination {
+    public:
+        /**
+        * Compute unweighted R-squared.
+        *
+        * @param actual    Pointer to actual values
+        * @param predicted Pointer to predicted values
+        * @param n         Number of observations
+        * @param k         Number of predictors (default=0 => plain R^2)
+        * 
+        * @return The R^2 or adjusted R^2.
+        */
+        static double compute(const double* actual,
+                            const double* predicted,
+                            std::size_t n,
+                            double k)
+        {
+            // 1) Compute mean of actual
+            double sumA = 0.0;
+            for (std::size_t i = 0; i < n; ++i) {
+                sumA += actual[i];
+            }
+            double meanA = sumA / static_cast<double>(n);
 
-        double SSE = 0.0, SST = 0.0;
-        for (const double* actual_ptr = actual.data(), *predicted_ptr = predicted.data(); actual_ptr < actual.data() + n; ++actual_ptr, ++predicted_ptr) {
-            const double diff_actual_mean = *actual_ptr - mean_actual;
-            const double diff_actual_predicted = *actual_ptr - *predicted_ptr;
+            // 2) Compute SSE and SST
+            double SSE = 0.0;
+            double SST = 0.0;
 
-            SST += diff_actual_mean * diff_actual_mean;
-            SSE += diff_actual_predicted * diff_actual_predicted;
+            #ifdef _OPENMP
+                #pragma omp parallel for reduction(+:SSE, SST) if(getUseOpenMP())
+            #endif
+            for (std::size_t i = 0; i < n; ++i) {
+                double diffAm = (actual[i] - meanA);
+                double diffAp = (actual[i] - predicted[i]);
+
+                SST += diffAm * diffAm;
+                SSE += diffAp * diffAp;
+            }
+
+            // 3) Unadjusted R^2 = 1 - SSE/SST
+            //    Adjusted => multiply (SSE/SST) by factor = ((n - 1) / (n - (k + 1))).
+            //    So final = 1 - (SSE/SST) * factor
+            double factor   = (static_cast<double>(n) - 1.0) / (static_cast<double>(n) - (k + 1.0));
+            double r2_value = 1.0 - ((SSE / SST) * factor);
+
+            return r2_value;
         }
 
-        return 1.0 - (SSE / SST) * ((static_cast<double>(n) - 1.0) / (static_cast<double>(n) - (k_ + 1.0)));
-    }
+        /**
+        * Compute weighted R-squared.
+        *
+        * Weighted definitions:
+        *   Weighted SSE = sum( w_i * (a_i - p_i)^2 )
+        *   Weighted mean of actual = sum( w_i*a_i ) / sum( w_i )
+        *   Weighted SST = sum( w_i * (a_i - wMean)^2 )
+        *
+        * Then apply the same adjustment factor for k.
+        *
+        * @param actual    Pointer to actual values
+        * @param predicted Pointer to predicted values
+        * @param weights   Pointer to weights
+        * @param n         Number of observations
+        * @param k         Number of predictors (default=0 => plain weighted R^2)
+        *
+        * @return The weighted R^2 or adjusted weighted R^2.
+        */
+        static double compute(const double* actual,
+                            const double* predicted,
+                            const double* weights,
+                            std::size_t n,
+                            double k)
+        {
+            // 1) Compute weighted sums, SSE
+            double sumW   = 0.0;
+            double sumWA  = 0.0;
+            double SSE    = 0.0;
 
-    // Optimized Weighted R-squared computation
-    double compute(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights) const override {
-        const std::size_t n = actual.size();
-        double SSE = 0.0, SST = 0.0;
-        double weighted_sum_observed = 0.0, weighted_sum = 0.0;
+            #ifdef _OPENMP
+                #pragma omp parallel for reduction(+:sumW, sumWA, SSE) if(getUseOpenMP())
+            #endif
+            for (std::size_t i = 0; i < n; ++i) {
+                double w   = weights[i];
+                double a   = actual[i];
+                double p   = predicted[i];
 
-        const double* actual_ptr = actual.data();
-        const double* predicted_ptr = predicted.data();
-        const double* weights_ptr = weights.data();
+                sumW   += w;
+                sumWA  += (w * a);
 
-        // First pass: calculate weighted sums and SSE
-        for (std::size_t i = 0; i < n; ++i, ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
-            const double weight = *weights_ptr;
-            const double residual = *actual_ptr - *predicted_ptr;
-            const double observed = *actual_ptr;
+                double resid = a - p;
+                SSE    += w * resid * resid;
+            }
 
-            weighted_sum_observed += weight * observed;
-            weighted_sum += weight;
-            SSE += weight * residual * residual;
+            // Weighted mean of actual
+            double wMean = sumWA / sumW;
+
+            // 2) Weighted SST
+            double SST = 0.0;
+
+            #ifdef _OPENMP
+                #pragma omp parallel for reduction(+:SST) if(getUseOpenMP())
+            #endif
+            for (std::size_t i = 0; i < n; ++i) {
+                double w   = weights[i];
+                double diff = actual[i] - wMean;
+                SST += w * diff * diff;
+            }
+
+            // 3) Weighted R^2 or adjusted R^2
+            double factor   = (static_cast<double>(n) - 1.0) / (static_cast<double>(n) - (k + 1.0));
+            double r2_value = 1.0 - ((SSE / SST) * factor);
+
+            return r2_value;
         }
-
-        // Compute weighted mean of observed values
-        const double weighted_mean_observed = weighted_sum_observed / weighted_sum;
-
-        actual_ptr = actual.data();
-        weights_ptr = weights.data();
-
-        // Second pass: calculate SST
-        for (std::size_t i = 0; i < n; ++i, ++actual_ptr, ++weights_ptr) {
-            const double weight = *weights_ptr;
-            const double diff_observed_mean = *actual_ptr - weighted_mean_observed;
-            SST += weight * diff_observed_mean * diff_observed_mean;
-        }
-
-        // Adjust R-squared for degrees of freedom using n
-        const double adjustment = (static_cast<double>(n) - 1.0) / (static_cast<double>(n) - (k_ + 1.0));
-
-        // Compute adjusted weighted R-squared
-        return 1.0 - (SSE / SST) * adjustment;
-    }
-
-private:
-    double k_; // Number of predictors in the model
-
-    // Helper function to calculate mean
-    static double calculate_mean(const std::vector<double>& values) {
-        double sum = 0.0;
-        for (const double* val_ptr = values.data(); val_ptr < values.data() + values.size(); ++val_ptr) {
-            sum += *val_ptr;
-        }
-        return sum / static_cast<double>(values.size());
-    }
 };
 
 #endif // REGRESSION_COEFFICIENTOFDETERMINATION_H
