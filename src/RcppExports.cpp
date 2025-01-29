@@ -1299,28 +1299,28 @@ BEGIN_RCPP
 END_RCPP
 }
 // huberloss
-double huberloss(const std::vector<double>& actual, const std::vector<double>& predicted, const double& delta);
+double huberloss(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, double delta);
 RcppExport SEXP _SLmetrics_huberloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP deltaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const double& >::type delta(deltaSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< double >::type delta(deltaSEXP);
     rcpp_result_gen = Rcpp::wrap(huberloss(actual, predicted, delta));
     return rcpp_result_gen;
 END_RCPP
 }
 // weighted_huberloss
-double weighted_huberloss(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w, const double& delta);
+double weighted_huberloss(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w, double delta);
 RcppExport SEXP _SLmetrics_weighted_huberloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP deltaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type w(wSEXP);
-    Rcpp::traits::input_parameter< const double& >::type delta(deltaSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< double >::type delta(deltaSEXP);
     rcpp_result_gen = Rcpp::wrap(weighted_huberloss(actual, predicted, w, delta));
     return rcpp_result_gen;
 END_RCPP
@@ -1455,26 +1455,26 @@ BEGIN_RCPP
 END_RCPP
 }
 // rae
-double rae(const std::vector<double>& actual, const std::vector<double>& predicted);
+double rae(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted);
 RcppExport SEXP _SLmetrics_rae(SEXP actualSEXP, SEXP predictedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
     rcpp_result_gen = Rcpp::wrap(rae(actual, predicted));
     return rcpp_result_gen;
 END_RCPP
 }
 // weighted_rae
-double weighted_rae(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w);
+double weighted_rae(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w);
 RcppExport SEXP _SLmetrics_weighted_rae(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
     rcpp_result_gen = Rcpp::wrap(weighted_rae(actual, predicted, w));
     return rcpp_result_gen;
 END_RCPP
