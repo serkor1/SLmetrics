@@ -6,4 +6,9 @@ PKG_CXX_STD = CXX23
 PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS)
 
 # Linker flags
-PKG_LIBS     = $(SHLIB_OPENMP_CXXFLAGS)
+PKG_LIBS = $(SHLIB_OPENMP_CXXFLAGS) $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
+
+# macOS-specific
+ifeq ($(shell uname), Darwin)
+  PKG_LIBS += -framework Accelerate $(FLIBS) -fopenmp
+endif
