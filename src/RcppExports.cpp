@@ -1480,28 +1480,28 @@ BEGIN_RCPP
 END_RCPP
 }
 // RelativeRootMeanSquaredError
-double RelativeRootMeanSquaredError(const std::vector<double>& actual, const std::vector<double>& predicted, const int& normalization);
+double RelativeRootMeanSquaredError(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const int normalization);
 RcppExport SEXP _SLmetrics_RelativeRootMeanSquaredError(SEXP actualSEXP, SEXP predictedSEXP, SEXP normalizationSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const int& >::type normalization(normalizationSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const int >::type normalization(normalizationSEXP);
     rcpp_result_gen = Rcpp::wrap(RelativeRootMeanSquaredError(actual, predicted, normalization));
     return rcpp_result_gen;
 END_RCPP
 }
 // weighted_RelativeRootMeanSquaredError
-double weighted_RelativeRootMeanSquaredError(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double> w, const int& normalization);
+double weighted_RelativeRootMeanSquaredError(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w, const int normalization);
 RcppExport SEXP _SLmetrics_weighted_RelativeRootMeanSquaredError(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP normalizationSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const std::vector<double> >::type w(wSEXP);
-    Rcpp::traits::input_parameter< const int& >::type normalization(normalizationSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const int >::type normalization(normalizationSEXP);
     rcpp_result_gen = Rcpp::wrap(weighted_RelativeRootMeanSquaredError(actual, predicted, w, normalization));
     return rcpp_result_gen;
 END_RCPP
