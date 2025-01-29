@@ -6,20 +6,30 @@ using namespace Rcpp;
 //' @method ccc numeric
 //' @export
 // [[Rcpp::export(ccc.numeric)]]
-double ccc(const std::vector<double>& actual, const std::vector<double>& predicted, bool correction = false) 
+double ccc(const Rcpp::NumericVector& actual,
+           const Rcpp::NumericVector& predicted,
+           bool correction = false)
 {
-    return ConcordanceCorrelationCalculator::computeUnweighted(
-        actual, predicted, correction
-    );
+    const double* ptrA = actual.begin();
+    const double* ptrP = predicted.begin();
+    std::size_t n = actual.size();
+
+    return CCC::compute(ptrA, ptrP, n, correction);
 }
 
 //' @rdname ccc
 //' @method weighted.ccc numeric
 //' @export
 // [[Rcpp::export(weighted.ccc.numeric)]]
-double weighted_ccc(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w, bool correction = false) 
+double weighted_ccc(const Rcpp::NumericVector& actual,
+                    const Rcpp::NumericVector& predicted,
+                    const Rcpp::NumericVector& w,
+                    bool correction = false)
 {
-     return ConcordanceCorrelationCalculator::computeWeighted(
-        actual, predicted, w, correction
-    );
+    const double* ptrA = actual.begin();
+    const double* ptrP = predicted.begin();
+    const double* ptrW = w.begin();
+    std::size_t n = actual.size();
+
+    return CCC::compute(ptrA, ptrP, ptrW, n, correction);
 }
