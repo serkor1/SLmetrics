@@ -49,6 +49,12 @@ class RMSE {
             
             return std::sqrt(mse);
         }
+
+    private:
+        // Prevents the compiler from doing
+        // bad stuff.
+        RMSE()  = delete;
+        ~RMSE() = delete;
 };
 
 #endif
