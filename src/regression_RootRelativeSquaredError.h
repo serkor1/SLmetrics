@@ -1,71 +1,99 @@
-#ifndef REGRESSION_RELATIVEROOTSQUAREDERROR_H
-#define REGRESSION_RELATIVEROOTSQUAREDERROR_H
+#ifndef REGRESSION_ROOTRELATIVESQUAREERROR_H
+#define REGRESSION_ROOTRELATIVESQUAREERROR_H
 
-#include "regression_Utils.h"
+#include "utilities_Package.h"
 #include <cmath>
-#include <vector>
+#include <cstddef>
 
-/**
- * Relative Root Mean Squared Error (RRMSE) implementation using RegressionBase.
- */
-class RelativeRootMeanSquaredError : public RegressionBase {
-public:
-    // Weighted RRMSE
-    double compute(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights) const override {
-        // Calculate weighted mean of actual
-        double mean_actual = calculate_weighted_mean(actual, weights);
+#ifdef _OPENMP
+    #include <omp.h>
+#endif
 
-        // Define numerator and denominator functions
-        auto numeratorFunc = [](double a, double p) {
-            return (a - p) * (a - p);
-        };
-        auto denominatorFunc = [mean_actual](double a, double /*p*/) {
-            return (a - mean_actual) * (a - mean_actual);
-        };
+class RRSE {
+    public:
+        /**
+        * Unweighted RRSE
+        *
+        * @param actual Pointer to actual values
+        * @param predicted Pointer to predicted values
+        * @param n Number of elements
+        *
+        * @return Root Relative Squared Error (unweighted)
+        */
+        static double compute(const double* actual, const double* predicted, std::size_t n)
+        {
+            // 1) Calculate mean of 'actual'
+            double sum_actual = 0.0;
+            for (std::size_t i = 0; i < n; ++i) {
+                sum_actual += actual[i];
+            }
+            double mean_actual = sum_actual / static_cast<double>(n);
 
-        // Calculate numerator and denominator simultaneously
-        auto [numerator, denominator] = sum(actual, predicted, weights, numeratorFunc, denominatorFunc);
+            // 2) Calculate numerator and denominator
+            double numerator   = 0.0;
+            double denominator = 0.0;
 
-        return std::sqrt(numerator / denominator);
-    }
+            #ifdef _OPENMP
+                #pragma omp parallel for reduction(+:numerator, denominator) if(getUseOpenMP())
+            #endif
+            for (std::size_t i = 0; i < n; ++i) {
+                double diff_pred = actual[i] - predicted[i];
+                double diff_mean = actual[i] - mean_actual;
 
-    // Unweighted RRMSE
-    double compute(const std::vector<double>& actual, const std::vector<double>& predicted) const override {
-        // Calculate mean of actual
-        double mean_actual = calculate_mean(actual);
+                numerator   += diff_pred * diff_pred;
+                denominator += diff_mean * diff_mean;
+            }
 
-        // Define numerator and denominator functions
-        auto numeratorFunc = [](double a, double p) {
-            return (a - p) * (a - p);
-        };
-        auto denominatorFunc = [mean_actual](double a, double /*p*/) {
-            return (a - mean_actual) * (a - mean_actual);
-        };
-
-        // Calculate numerator and denominator simultaneously
-        auto [numerator, denominator] = sum(actual, predicted, numeratorFunc, denominatorFunc);
-
-        return std::sqrt(numerator / denominator);
-    }
-
-private:
-    static double calculate_mean(const std::vector<double>& values) {
-        double sum = 0.0;
-        for (const auto& v : values) {
-            sum += v;
+            // No check for zero denominator, as requested
+            return std::sqrt(numerator / denominator);
         }
-        return sum / static_cast<double>(values.size());
-    }
 
-    static double calculate_weighted_mean(const std::vector<double>& values, const std::vector<double>& weights) {
-        double weighted_sum = 0.0;
-        double weight_sum = 0.0;
-        for (std::size_t i = 0; i < values.size(); ++i) {
-            weighted_sum += values[i] * weights[i];
-            weight_sum += weights[i];
+        /**
+        * Weighted RRSE
+        *
+        * @param actual Pointer to actual values
+        * @param predicted Pointer to predicted values
+        * @param weights Pointer to observation weights
+        * @param n Number of elements
+        *
+        * @return Weighted Root Relative Squared Error
+        */
+        static double compute(const double* actual, const double* predicted, const double* weights, std::size_t n)
+        {
+            // 1) Calculate weighted mean of 'actual'
+            double weighted_sum = 0.0;
+            double weight_sum   = 0.0;
+            for (std::size_t i = 0; i < n; ++i) {
+                weighted_sum += weights[i] * actual[i];
+                weight_sum   += weights[i];
+            }
+            double mean_w_actual = weighted_sum / weight_sum;
+
+            // 2) Calculate numerator and denominator
+            double numerator   = 0.0;
+            double denominator = 0.0;
+
+            #ifdef _OPENMP
+                #pragma omp parallel for reduction(+:numerator, denominator) if(getUseOpenMP())
+            #endif
+            for (std::size_t i = 0; i < n; ++i) {
+                double w         = weights[i];
+                double diff_pred = actual[i] - predicted[i];
+                double diff_mean = actual[i] - mean_w_actual;
+
+                numerator   += w * (diff_pred * diff_pred);
+                denominator += w * (diff_mean * diff_mean);
+            }
+
+            // 3) Return RRSE
+            return std::sqrt(numerator / denominator);
         }
-        return weighted_sum / weight_sum;
-    }
+
+    private:
+        // Prevents the compiler from doing
+        // bad stuff.
+        RRSE()  = delete;
+        ~RRSE() = delete;
 };
 
-#endif // REGRESSION_RELATIVEROOTSQUAREDERROR_H
+#endif

@@ -1,32 +1,60 @@
 #ifndef REGRESSION_SYMMETRICMEANABSOLUTEPERCENTAGEERROR_H
 #define REGRESSION_SYMMETRICMEANABSOLUTEPERCENTAGEERROR_H
 
-#include "regression_Utils.h"
+#include "utilities_Package.h"
 #include <cmath>
-#include <vector>
+#include <cstddef>
 
-/**
- * Symmetric Mean Absolute Percentage Error (SMAPE) implementation using RegressionBase.
- */
-class SymmetricMeanAbsolutePercentageError : public RegressionBase {
-public:
-    // Unweighted SMAPE
-    double compute(const std::vector<double>& actual, const std::vector<double>& predicted) const override {
-        auto errorFunc = [](const double& a, const double& p) {
-            double denominator = std::abs(a) + std::abs(p);
-            return denominator != 0.0 ? (std::abs(a - p) / (denominator / 2)) : 0.0;
-        };
-        return calculate(actual, predicted, errorFunc);
-    }
+#ifdef _OPENMP
+    #include <omp.h>
+#endif
 
-    // Weighted SMAPE
-    double compute(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights) const override {
-        auto errorFunc = [](const double& a, const double& p) {
-            double denominator = std::abs(a) + std::abs(p);
-            return denominator != 0.0 ? (std::abs(a - p) / (denominator / 2)) : 0.0;
-        };
-        return calculate(actual, predicted, weights, errorFunc);
-    }
+class SMAPE {
+    public:
+        // Unweighted SMAPE
+        static double compute(const double* actual, const double* predicted, std::size_t n)
+        {
+            double sum_smape = 0.0;
+
+            #ifdef _OPENMP
+                #pragma omp parallel for reduction(+:sum_smape) if(getUseOpenMP())
+            #endif
+            for (std::size_t i = 0; i < n; ++i) {
+                double numerator   = std::fabs(actual[i] - predicted[i]);
+                double denominator = (std::fabs(actual[i]) + std::fabs(predicted[i])) / 2.0;
+                double value       = numerator / denominator;
+                sum_smape += value;
+            }
+
+            return sum_smape / static_cast<double>(n);
+        }
+
+        // Weighted SMAPE
+        static double compute(const double* actual, const double* predicted, const double* weights, std::size_t n)
+        {
+            double sum_smape = 0.0;
+            double sum_w     = 0.0;
+
+            #ifdef _OPENMP
+                #pragma omp parallel for reduction(+:sum_smape, sum_w) if(getUseOpenMP())
+            #endif
+            for (std::size_t i = 0; i < n; ++i) {
+                double numerator   = std::fabs(actual[i] - predicted[i]);
+                double denominator = (std::fabs(actual[i]) + std::fabs(predicted[i])) / 2.0;
+                double w           = weights[i];
+                double value       = numerator / denominator;
+
+                sum_smape += w * value;
+                sum_w     += w;
+            }
+
+            return sum_smape / sum_w;
+        }
+    private:
+            // Prevents the compiler from doing
+            // bad stuff.
+            SMAPE()  = delete;
+            ~SMAPE() = delete;
 };
 
-#endif // REGRESSION_SYMMETRICMEANABSOLUTEPERCENTAGEERROR_H
+#endif

@@ -1,30 +1,57 @@
 #ifndef REGRESSION_MEANABSOLUTEERROR_H
 #define REGRESSION_MEANABSOLUTEERROR_H
 
-#include "regression_Utils.h"
+#include "utilities_Package.h"
 #include <cmath>
-#include <vector>
+#include <cstddef>
 
-/**
- * Mean Absolute Error (MAE) implementation using RegressionBase.
- */
-class MeanAbsoluteError : public RegressionBase {
-public:
-    // Unweighted MAE
-    double compute(const std::vector<double>& actual, const std::vector<double>& predicted) const override {
-        auto errorFunc = [](const double& a, const double& p) {
-            return std::abs(a - p);
-        };
-        return calculate(actual, predicted, errorFunc);
-    }
+#ifdef _OPENMP
+    #include <omp.h>
+#endif
 
-    // Weighted MAE
-    double compute(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights) const override {
-        auto errorFunc = [](const double& a, const double& p) {
-            return std::abs(a - p);
-        };
-        return calculate(actual, predicted, weights, errorFunc);
-    }
+class MAE {
+    public:
+        // Unweighted MAE
+        static double compute(const double* actual, const double* predicted, std::size_t n)
+        {
+            double sum_abs_diff = 0.0;
+
+            #ifdef _OPENMP
+                #pragma omp parallel for reduction(+:sum_abs_diff) if(getUseOpenMP())
+            #endif
+            for (std::size_t i = 0; i < n; ++i) {
+                double diff = actual[i] - predicted[i];
+                sum_abs_diff += std::fabs(diff);
+            }
+
+            return sum_abs_diff / static_cast<double>(n);
+        }
+
+        // Weighted MAE
+        static double compute(const double* actual, const double* predicted, 
+                            const double* weights, std::size_t n)
+        {
+            double sum_abs_diff = 0.0;
+            double sum_w        = 0.0;
+
+            #ifdef _OPENMP
+                #pragma omp parallel for reduction(+:sum_abs_diff, sum_w) if(getUseOpenMP())
+            #endif
+            for (std::size_t i = 0; i < n; ++i) {
+                double w    = weights[i];
+                double diff = actual[i] - predicted[i];
+                sum_abs_diff += w * std::fabs(diff);
+                sum_w        += w;
+            }
+
+            return sum_abs_diff / sum_w;
+        }
+
+    private:
+        // Prevents the compiler from doing
+        // bad stuff.
+        MAE()  = delete;
+        ~MAE() = delete;
 };
 
-#endif // REGRESSION_MEANABSOLUTEERROR_H
+#endif

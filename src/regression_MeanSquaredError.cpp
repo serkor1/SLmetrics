@@ -6,18 +6,33 @@ using namespace Rcpp;
 //' @method mse numeric
 //' @export
 // [[Rcpp::export(mse.numeric)]]
-double mse(const std::vector<double>& actual, const std::vector<double>& predicted) 
+double mse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted)
 {
-    MeanSquaredError mseMetric; // Instantiate MSE class
-    return mseMetric.compute(actual, predicted);
+    // 1) extract pointers to 
+    // to data, and size
+    const double* ptr_actual    = actual.begin();
+    const double* ptr_predicted = predicted.begin();
+    std::size_t n = actual.size();
+
+    // 2) calculate and
+    // return value
+    return MSE::compute(ptr_actual, ptr_predicted, n);
 }
 
 //' @rdname mse
 //' @method weighted.mse numeric
 //' @export
 // [[Rcpp::export(weighted.mse.numeric)]]
-double weighted_mse(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w) 
+double weighted_mse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w)
 {
-    MeanSquaredError mseMetric; // Instantiate MSE class
-    return mseMetric.compute(actual, predicted, w);
+    // 1) extract pointers to 
+    // to data, and size
+    const double* ptr_actual    = actual.begin();
+    const double* ptr_predicted = predicted.begin();
+    const double* ptr_w         = w.begin();
+    std::size_t n = actual.size();
+
+    // 2) calculate and
+    // return value
+    return MSE::compute(ptr_actual, ptr_predicted, ptr_w, n);
 }
