@@ -1,103 +1,231 @@
 #ifndef REGRESSION_PINBALLLOSS_H
 #define REGRESSION_PINBALLLOSS_H
 
-#include "regression_Utils.h"
+#include "utilities_Package.h"
+#include <cstddef>             
+#include <cmath>                
+#include <algorithm>            
+#include <numeric>              
 #include <vector>
-#include <algorithm>
-#include <numeric>
 
-/**
- * Pinball Loss implementation using RegressionBase.
- */
-class PinballLoss : public RegressionBase {
+#ifdef _OPENMP
+    #include <omp.h>
+#endif
+
+class PinballLoss {
 public:
-    explicit PinballLoss(double alpha = 0.5) : alpha_(alpha) {}
+    /**
+     * Unweighted pinball loss:
+     * 
+     * Loss = (1/n) * sum_{i=1..n}  [ (alpha * (a_i - p_i))         if a_i >= p_i
+     *                                ((1 - alpha) * (p_i - a_i))   if a_i <  p_i ]
+     *
+     * @param actual    Pointer to actual data
+     * @param predicted Pointer to predicted data
+     * @param n         Number of elements
+     * @param alpha     Quantile level in [0, 1]
+     */
+    static double compute(const double* actual,
+                          const double* predicted,
+                          std::size_t n,
+                          double alpha)
+    {
+        double sumLoss = 0.0;
 
-    // Unweighted Pinball Loss
-    double compute(const std::vector<double>& actual, const std::vector<double>& predicted) const override {
-        auto errorFunc = [this](double a, double p) {
-            double diff = a - p;
-            return (diff >= 0 ? alpha_ * diff : (1 - alpha_) * (-diff));
-        };
-        return calculate(actual, predicted, errorFunc);
-    }
-
-    // Weighted Pinball Loss
-    double compute(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& weights) const override {
-        auto errorFunc = [this](double a, double p) {
-            double diff = a - p;
-            return (diff >= 0 ? alpha_ * diff : (1 - alpha_) * (-diff));
-        };
-        return calculate(actual, predicted, weights, errorFunc);
-    }
-
-    // Unweighted Quantile Calculation
-    template <typename Iterator>
-    double quantile(Iterator begin, Iterator end) const {
-        std::vector<typename std::iterator_traits<Iterator>::value_type> temp(begin, end); // Create a temporary mutable copy
-        const std::size_t n = temp.size();
-
-        double pos = alpha_ * (n - 1);
-        std::size_t pos_int = static_cast<std::size_t>(pos);
-        double frac = pos - pos_int;
-
-        // Use nth_element on the mutable temporary copy
-        auto nth = temp.begin() + pos_int;
-        std::nth_element(temp.begin(), nth, temp.end());
-        double lower = *nth;
-
-        // Find the upper element only if necessary
-        double upper = lower;
-        if (pos_int + 1 < n) {
-            upper = *std::min_element(nth + 1, temp.end());
+        #ifdef _OPENMP
+            #pragma omp parallel for reduction(+:sumLoss) if(getUseOpenMP())
+        #endif
+        for (std::size_t i = 0; i < n; ++i) {
+            double diff = actual[i] - predicted[i];
+            if (diff >= 0.0) {
+                sumLoss += alpha * diff;
+            } else {
+                sumLoss += (1.0 - alpha) * (-diff);
+            }
         }
 
-        return lower + frac * (upper - lower);
+        return sumLoss / static_cast<double>(n);
     }
 
+    /**
+     * Weighted pinball loss:
+     *
+     * Loss = sum_{i=1..n} [ w_i * L(a_i, p_i) ] / sum_{i=1..n} w_i,
+     * where L(a, p) is the same piecewise function as above.
+     *
+     * @param actual    Pointer to actual data
+     * @param predicted Pointer to predicted data
+     * @param weights   Pointer to weights
+     * @param n         Number of elements
+     * @param alpha     Quantile level in [0, 1]
+     */
+    static double compute(const double* actual,
+                          const double* predicted,
+                          const double* weights,
+                          std::size_t n,
+                          double alpha)
+    {
+        double sumLoss = 0.0;
+        double sumW    = 0.0;
 
-    // Weighted Quantile Calculation
-    std::vector<double> quantile(const std::vector<double>& x, const std::vector<double>& weights) const {
-        const std::size_t n = x.size();
-        std::vector<double> quantiles(n);
+        #ifdef _OPENMP
+            #pragma omp parallel for reduction(+:sumLoss, sumW) if(getUseOpenMP())
+        #endif
+        for (std::size_t i = 0; i < n; ++i) {
+            double w    = weights[i];
+            double diff = actual[i] - predicted[i];
+            double val  = (diff >= 0.0)
+                            ? (alpha * diff)
+                            : ((1.0 - alpha) * -diff);
 
-        // Create a vector of indices for sorting
-        std::vector<std::size_t> sorted_indices(n);
-        std::iota(sorted_indices.begin(), sorted_indices.end(), 0);
-        std::sort(sorted_indices.begin(), sorted_indices.end(),
-                  [&x](std::size_t i1, std::size_t i2) { return x[i1] < x[i2]; });
+            sumLoss += w * val;
+            sumW    += w;
+        }
 
-        // Normalize weights and compute cumulative weights on-the-fly
-        double total_weight = std::accumulate(weights.begin(), weights.end(), 0.0);
-        double cumulative_weight = 0.0;
-        double target_weight = alpha_ * total_weight;
+        return sumLoss / sumW;
+    }
 
-        double lower = 0.0, upper = 0.0;
-        bool lower_set = false;
+    /**
+     * Compute pinball loss for a single constant prediction `c`.
+     * (Unweighted)
+     *
+     * @param actual Pointer to actual data
+     * @param n      Number of elements
+     * @param alpha  Quantile level
+     * @param c      The constant predicted value
+     */
+    static double computeConstantPred(const double* actual,
+                                      std::size_t n,
+                                      double alpha,
+                                      double c)
+    {
+        double sumLoss = 0.0;
 
-        for (const std::size_t& idx : sorted_indices) {
-            cumulative_weight += weights[idx];
-
-            if (!lower_set && cumulative_weight >= target_weight) {
-                lower = x[idx];
-                lower_set = true;
+        #ifdef _OPENMP
+            #pragma omp parallel for reduction(+:sumLoss) if(getUseOpenMP())
+        #endif
+        for (std::size_t i = 0; i < n; ++i) {
+            double diff = actual[i] - c;
+            if (diff >= 0.0) {
+                sumLoss += alpha * diff;
+            } else {
+                sumLoss += (1.0 - alpha) * (-diff);
             }
+        }
 
-            if (cumulative_weight >= target_weight) {
-                upper = x[idx];
+        return sumLoss / static_cast<double>(n);
+    }
+
+    /**
+     * Compute pinball loss for a single constant prediction `c`.
+     * (Weighted)
+     *
+     * @param actual  Pointer to actual data
+     * @param weights Pointer to weights
+     * @param n       Number of elements
+     * @param alpha   Quantile level
+     * @param c       The constant predicted value
+     */
+    static double computeConstantPred(const double* actual,
+                                      const double* weights,
+                                      std::size_t n,
+                                      double alpha,
+                                      double c)
+    {
+        double sumLoss = 0.0;
+        double sumW    = 0.0;
+
+        #ifdef _OPENMP
+            #pragma omp parallel for reduction(+:sumLoss, sumW) if(getUseOpenMP())
+        #endif
+        for (std::size_t i = 0; i < n; ++i) {
+            double w    = weights[i];
+            double diff = actual[i] - c;
+            double val  = (diff >= 0.0)
+                            ? (alpha * diff)
+                            : ((1.0 - alpha) * -diff);
+
+            sumLoss += w * val;
+            sumW    += w;
+        }
+
+        return sumLoss / sumW;
+    }
+
+    static double quantile(const double* x,
+                           std::size_t n,
+                           double alpha)
+    {
+        // Create an index array [0..n-1]
+        std::vector<std::size_t> idx(n);
+        for (std::size_t i = 0; i < n; ++i) {
+            idx[i] = i;
+        }
+
+        // Sort indices by x[idx[i]]
+        std::sort(idx.begin(), idx.end(),
+                  [&](std::size_t a, std::size_t b) {
+                      return x[a] < x[b];
+                  });
+
+        // Position in the sorted array
+        double pos = alpha * (n - 1);
+        std::size_t lower_i = static_cast<std::size_t>(pos);
+        std::size_t upper_i = (lower_i + 1 < n) ? (lower_i + 1) : (n - 1);
+        double frac = pos - static_cast<double>(lower_i);
+
+        double lower_val = x[idx[lower_i]];
+        double upper_val = x[idx[upper_i]];
+
+        return lower_val + frac * (upper_val - lower_val);
+    }
+
+    static double quantile(const double* x,
+                           const double* w,
+                           std::size_t n,
+                           double alpha)
+    {
+        // Create an index array [0..n-1]
+        std::vector<std::size_t> idx(n);
+        for (std::size_t i = 0; i < n; ++i) {
+            idx[i] = i;
+        }
+
+        // Sort indices by the underlying value x[idx]
+        std::sort(idx.begin(), idx.end(),
+                  [&](std::size_t a, std::size_t b) {
+                      return x[a] < x[b];
+                  });
+
+        // Total weight
+        double totalW = 0.0;
+        for (std::size_t i = 0; i < n; ++i) {
+            totalW += w[i];
+        }
+
+        double target = alpha * totalW;
+        double cumW   = 0.0;
+        double lower_val = 0.0, upper_val = 0.0;
+        bool found_lower = false;
+
+        for (std::size_t i = 0; i < n; ++i) {
+            std::size_t ndx  = idx[i];
+            cumW += w[ndx];
+
+            // The moment we cross target, store 'lower_val'
+            if (!found_lower && cumW >= target) {
+                lower_val   = x[ndx];
+                found_lower = true;
+            }
+            // We store 'upper_val' as well
+            if (cumW >= target) {
+                upper_val = x[ndx];
                 break;
             }
         }
 
-        // Interpolate quantile value
-        double quantile_value = lower + (upper - lower) * ((target_weight - cumulative_weight) / total_weight);
-        std::fill(quantiles.begin(), quantiles.end(), quantile_value);
-
-        return quantiles;
+        return lower_val; 
     }
-
-private:
-    double alpha_;
 };
 
 #endif // REGRESSION_PINBALLLOSS_H
