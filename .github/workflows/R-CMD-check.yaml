@@ -91,10 +91,10 @@ jobs:
           echo "LIBRARY_PATH=/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0:${LIBRARY_PATH:-}" >> $GITHUB_ENV
           echo "PATH=/opt/gfortran/bin:${PATH}" >> $GITHUB_ENV
 
-    - name: Verify gfortran Installation
-      run: |
-        /opt/gfortran/bin/gfortran --version
-        ls /opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0 | grep emutls_w
+      - name: Verify gfortran Installation
+        run: |
+          /opt/gfortran/bin/gfortran --version
+          ls /opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0 | grep emutls_w
 
 
       - name: Configure Makevars (macOS-gcc)
