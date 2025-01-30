@@ -8,7 +8,7 @@ using namespace Rcpp;
 //' @method accuracy factor
 //' @export
 // [[Rcpp::export(accuracy.factor)]]
-Rcpp::NumericVector Accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) 
+Rcpp::NumericVector Accuracy(const IntegerVector& actual, const Rcpp::IntegerVector& predicted) 
 {
     AccuracyClass cook;
     return recipe(cook, actual, predicted);
@@ -18,7 +18,7 @@ Rcpp::NumericVector Accuracy(const Rcpp::IntegerVector& actual, const Rcpp::Inte
 //' @method weighted.accuracy factor
 //' @export
 // [[Rcpp::export(weighted.accuracy.factor)]]
-Rcpp::NumericVector weighted_Accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w) 
+Rcpp::NumericVector weighted_Accuracy(const IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w) 
 {
     AccuracyClass cook;
     return recipe(cook, actual, predicted, w);
