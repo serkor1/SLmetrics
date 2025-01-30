@@ -48,14 +48,21 @@ jobs:
       - name: Setup pandoc
         uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Install build tools (macOS)
+      - name: Install and update build tools (macOS)
         if: runner.os == 'macOS'
         run: |
+
+          # Install xcode
+          xcode-select --install
+
           brew update
           brew upgrade
           brew reinstall gcc
+          brew upgrade llvm
           brew install libomp pkg-config
           brew cleanup
+
+          
 
       - name: Configure Makevars (macOS-gcc)
         if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
