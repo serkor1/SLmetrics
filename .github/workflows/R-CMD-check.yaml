@@ -92,6 +92,7 @@ jobs:
           echo "PATH=/opt/gfortran/bin:${PATH}" >> $GITHUB_ENV
 
       - name: Verify gfortran Installation
+        if:  runner.os == 'macOS' && matrix.config.compiler == 'clang' && matrix.config.r == 'devel'
         run: |
           /opt/gfortran/bin/gfortran --version
           ls /opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0 | grep emutls_w
