@@ -57,12 +57,45 @@ jobs:
           brew install libomp pkg-config
           brew cleanup
 
-      - name: Symlink GCC to /opt/gfortran
+      - name: Create /opt/gfortran directories
         if:  runner.os == 'macOS' && matrix.config.compiler == 'clang' && matrix.config.r == 'devel'
         run: |
           sudo mkdir -p /opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0
-          sudo ln -s $(brew --prefix)/lib/gcc/* /opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0
-          sudo ln -s $(brew --prefix)/bin/gfortran /opt/gfortran/bin/gfortran
+          sudo mkdir -p /opt/gfortran/bin
+
+      - name: Symlink GCC Libraries to /opt/gfortran
+        if:  runner.os == 'macOS' && matrix.config.compiler == 'clang' && matrix.config.r == 'devel'
+        run: |
+          # Find the actual GCC version installed by Homebrew
+          GCC_VERSION=$(ls $(brew --prefix)/lib/gcc | grep '^[0-9]\+\.[0-9]\+$' | sort -V | tail -n1)
+          if [ -z "$GCC_VERSION" ]; then
+            echo "GCC version not found in Homebrew lib directory."
+            exit 1
+          fi
+
+          # Symlink the GCC libraries
+          sudo ln -sfn $(brew --prefix)/lib/gcc/$GCC_VERSION /opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0
+
+      - name: Symlink gfortran Binary to /opt/gfortran/bin
+        if:  runner.os == 'macOS' && matrix.config.compiler == 'clang' && matrix.config.r == 'devel'
+        run: |
+          if [ ! -f "$(brew --prefix)/bin/gfortran" ]; then
+            echo "gfortran not found in Homebrew bin directory."
+            exit 1
+          fi
+          sudo ln -sfn $(brew --prefix)/bin/gfortran /opt/gfortran/bin/gfortran
+
+      - name: Set Environment Variables
+        if:  runner.os == 'macOS' && matrix.config.compiler == 'clang' && matrix.config.r == 'devel'
+        run: |
+          echo "LIBRARY_PATH=/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0:${LIBRARY_PATH:-}" >> $GITHUB_ENV
+          echo "PATH=/opt/gfortran/bin:${PATH}" >> $GITHUB_ENV
+
+    - name: Verify gfortran Installation
+      run: |
+        /opt/gfortran/bin/gfortran --version
+        ls /opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0 | grep emutls_w
+
 
       - name: Configure Makevars (macOS-gcc)
         if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
