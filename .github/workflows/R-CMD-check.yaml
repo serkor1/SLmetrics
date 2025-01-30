@@ -57,46 +57,6 @@ jobs:
           brew install libomp pkg-config
           brew cleanup
 
-      - name: Fortran configuration (macOS-clang, devel)
-        if: runner.os == 'macOS' && matrix.config.compiler == 'clang' && matrix.config.r == 'devel'
-        run: |
-          mkdir -p ~/.R
-          SDK_PATH=$(xcrun --show-sdk-path)
-
-          # Define Clang compilers
-          CLANG_BIN=$(xcode-select -p)/Toolchains/XcodeDefault.xctoolchain/usr/bin
-          CLANG_CC=${CLANG_BIN}/clang
-          CLANG_CXX=${CLANG_BIN}/clang++
-
-          # Fortran compiler paths
-          GFORTRAN_PREFIX=$(brew --prefix gfortran)
-          FC=${GFORTRAN_PREFIX}/bin/gfortran
-          F77=${GFORTRAN_PREFIX}/bin/gfortran
-
-          cat << EOF > ~/.R/Makevars
-          # Compiler settings
-          CC=${CLANG_CC}
-          CXX=${CLANG_CXX}
-          CXX11=${CLANG_CXX}
-          CXX14=${CLANG_CXX}
-          CXX17=${CLANG_CXX}
-          CXX20=${CLANG_CXX}
-
-          # Compiler flags
-          CPPFLAGS=-isysroot ${SDK_PATH} -fopenmp
-          CFLAGS=-O3 -pedantic
-          CXXFLAGS=-O3 -pedantic
-
-          # Linker flags
-          LDFLAGS=-L${GFORTRAN_PREFIX}/lib -lgfortran -lm -isysroot ${SDK_PATH}
-
-          # Fortran configuration
-          FC=${FC}
-          F77=${F77}
-          FLIBS=-L${GFORTRAN_PREFIX}/lib -lgfortran -lquadmath
-          EOF
-
-
       - name: Configure Makevars (macOS-gcc)
         if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
         run: |
