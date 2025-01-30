@@ -23,13 +23,16 @@ jobs:
         config:
           # Windows
           - {os: windows-latest,  r: 'release',      compiler: 'default'}
+
           # Ubuntu
           - {os: ubuntu-latest,   r: 'devel',        compiler: 'default', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release',      compiler: 'default'}
           - {os: ubuntu-latest,   r: 'oldrel-1',     compiler: 'default'}
+
           # macOS Clang
           - {os: macos-latest,    r: 'release',      compiler: 'clang'}
           - {os: macos-latest,    r: 'devel',        compiler: 'clang'}
+
           # macOS GCC via Homebrew
           - {os: macos-latest,    r: 'release',      compiler: 'gcc'}
           - {os: macos-latest,    r: 'devel',        compiler: 'gcc'}
@@ -58,6 +61,14 @@ jobs:
           brew update
           brew install gcc libomp pkg-config
           brew cleanup
+
+      - name: Install Fortran on macOS
+        if: runner.os == 'macOS' && matrix.config.compiler == 'clang'
+        run: |
+          brew update
+          brew install gcc
+          brew cleanup
+
 
       - name: Configure Makevars (macOS-gcc)
         if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
