@@ -54,11 +54,15 @@ jobs:
           brew update
           brew upgrade
           brew reinstall gcc
-          brew install llvm
           brew install libomp pkg-config
           brew cleanup
 
-          
+      - name: Symlink GCC to /opt/gfortran
+        if:  runner.os == 'macOS' && matrix.config.compiler == 'clang' && matrix.config.r == 'devel'
+        run: |
+          mkdir -p /opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0
+          ln -s $(brew --prefix)/lib/gcc/* /opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0
+          ln -s $(brew --prefix)/bin/gfortran /opt/gfortran/bin/gfortran
 
       - name: Configure Makevars (macOS-gcc)
         if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
