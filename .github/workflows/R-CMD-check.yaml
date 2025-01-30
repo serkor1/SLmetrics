@@ -56,10 +56,12 @@ jobs:
           use-public-rspm: true
 
       - name: Install build tools (macOS-gcc)
-        if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
+        if: runner.os == 'macOS'
         run: |
           brew update
-          brew install gcc libomp pkg-config
+          brew upgrade
+          brew reinstall gcc
+          brew install libomp pkg-config
           brew cleanup
 
       - name: Configure Makevars (macOS-gcc)
