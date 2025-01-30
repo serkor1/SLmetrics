@@ -62,14 +62,6 @@ jobs:
           brew install gcc libomp pkg-config
           brew cleanup
 
-      - name: Install Fortran on macOS
-        if: runner.os == 'macOS' && matrix.config.compiler == 'clang'
-        run: |
-          brew update
-          brew install gcc
-          brew cleanup
-
-
       - name: Configure Makevars (macOS-gcc)
         if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
         run: |
