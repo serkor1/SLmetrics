@@ -1606,24 +1606,45 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// setUseOpenMP
-void setUseOpenMP(bool value);
-RcppExport SEXP _SLmetrics_setUseOpenMP(SEXP valueSEXP) {
+// enable_openmp
+bool enable_openmp();
+RcppExport SEXP _SLmetrics_enable_openmp() {
 BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< bool >::type value(valueSEXP);
-    setUseOpenMP(value);
-    return R_NilValue;
+    rcpp_result_gen = Rcpp::wrap(enable_openmp());
+    return rcpp_result_gen;
 END_RCPP
 }
-// setNumberThreads
-void setNumberThreads(int value);
-RcppExport SEXP _SLmetrics_setNumberThreads(SEXP valueSEXP) {
+// disable_openmp
+bool disable_openmp();
+RcppExport SEXP _SLmetrics_disable_openmp() {
 BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(disable_openmp());
+    return rcpp_result_gen;
+END_RCPP
+}
+// available_threads
+int available_threads();
+RcppExport SEXP _SLmetrics_available_threads() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(available_threads());
+    return rcpp_result_gen;
+END_RCPP
+}
+// use_threads
+int use_threads(int value);
+RcppExport SEXP _SLmetrics_use_threads(SEXP valueSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< int >::type value(valueSEXP);
-    setNumberThreads(value);
-    return R_NilValue;
+    rcpp_result_gen = Rcpp::wrap(use_threads(value));
+    return rcpp_result_gen;
 END_RCPP
 }
 
@@ -1748,8 +1769,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_weighted_rrse", (DL_FUNC) &_SLmetrics_weighted_rrse, 3},
     {"_SLmetrics_smape", (DL_FUNC) &_SLmetrics_smape, 2},
     {"_SLmetrics_weighted_smape", (DL_FUNC) &_SLmetrics_weighted_smape, 3},
-    {"_SLmetrics_setUseOpenMP", (DL_FUNC) &_SLmetrics_setUseOpenMP, 1},
-    {"_SLmetrics_setNumberThreads", (DL_FUNC) &_SLmetrics_setNumberThreads, 1},
+    {"_SLmetrics_enable_openmp", (DL_FUNC) &_SLmetrics_enable_openmp, 0},
+    {"_SLmetrics_disable_openmp", (DL_FUNC) &_SLmetrics_disable_openmp, 0},
+    {"_SLmetrics_available_threads", (DL_FUNC) &_SLmetrics_available_threads, 0},
+    {"_SLmetrics_use_threads", (DL_FUNC) &_SLmetrics_use_threads, 1},
     {NULL, NULL, 0}
 };
 
