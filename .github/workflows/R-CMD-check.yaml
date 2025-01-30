@@ -54,7 +54,7 @@ jobs:
           brew update
           brew upgrade
           brew reinstall gcc
-          brew upgrade llvm
+          brew install llvm
           brew install libomp pkg-config
           brew cleanup
 
