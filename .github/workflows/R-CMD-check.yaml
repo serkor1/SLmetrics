@@ -51,10 +51,6 @@ jobs:
       - name: Install and update build tools (macOS)
         if: runner.os == 'macOS'
         run: |
-
-          # Install xcode
-          xcode-select --install
-
           brew update
           brew upgrade
           brew reinstall gcc
