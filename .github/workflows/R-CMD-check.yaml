@@ -61,6 +61,13 @@ jobs:
           brew update
           brew install gcc libomp pkg-config
           brew cleanup
+      
+      - name: Install gfortran and set paths (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew tap rmacoslib/rtools
+          brew install rmacoslib/rtools/rtools
+          echo "$(brew --prefix)/opt/gfortran/bin" >> $GITHUB_PATH
 
       - name: Configure Makevars (macOS-gcc)
         if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
@@ -94,9 +101,9 @@ jobs:
           LDFLAGS=-L\${OMP_LIB} -L${GCC_PATH}/lib -lomp -lgfortran -lm -isysroot ${SDK_PATH}
 
           # Fortran configuration
-          FC=${GCC_PATH}/bin/gfortran
-          F77=${GCC_PATH}/bin/gfortran
-          FLIBS=-L${GCC_PATH}/lib/gcc/14 -lgfortran -lm
+          FC=$(brew --prefix gfortran)/bin/gfortran
+          F77=$(brew --prefix gfortran)/bin/gfortran
+          FLIBS=-L$(brew --prefix gfortran)/lib -lgfortran -lquadmath
           EOF
 
       - name: Installing {pkgs}
