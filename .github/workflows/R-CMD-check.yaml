@@ -48,13 +48,6 @@ jobs:
       - name: Setup pandoc
         uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Setup R
-        uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: ${{ matrix.config.r }}
-          http-user-agent: ${{ matrix.config.http-user-agent || '' }}
-          use-public-rspm: true
-
       - name: Install build tools (macOS)
         if: runner.os == 'macOS'
         run: |
@@ -114,6 +107,13 @@ jobs:
           F77=$(brew --prefix gfortran)/bin/gfortran
           FLIBS=-L$(brew --prefix gfortran)/lib -lgfortran -lquadmath
           EOF
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent || '' }}
+          use-public-rspm: true
 
       - name: Installing {pkgs}
         uses: r-lib/actions/setup-r-dependencies@v2
