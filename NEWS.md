@@ -8,6 +8,9 @@
   https://github.com/serkor1/SLmetrics/pull/64):** All regression
   metrics have had their back-end optimized and are now 2-10 times
   faster than prior versions.
+- **LAPACK/BLAS Support
+  (https://github.com/serkor1/SLmetrics/pull/65):** Added LAPACK/BLAS
+  support for efficient matrix-operations.
 
 ## :bug: Bug-fixes
 
