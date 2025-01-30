@@ -61,13 +61,6 @@ jobs:
           brew update
           brew install gcc libomp pkg-config
           brew cleanup
-      
-      - name: Install gfortran and set paths (macOS)
-        if: runner.os == 'macOS'
-        run: |
-          brew tap rmacoslib/rtools
-          brew install rmacoslib/rtools/rtools
-          echo "$(brew --prefix)/opt/gfortran/bin" >> $GITHUB_PATH
 
       - name: Configure Makevars (macOS-gcc)
         if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
