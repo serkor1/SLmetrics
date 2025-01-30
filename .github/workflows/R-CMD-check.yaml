@@ -55,7 +55,7 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent || '' }}
           use-public-rspm: true
 
-      - name: Install build tools (macOS-gcc)
+      - name: Install build tools (macOS)
         if: runner.os == 'macOS'
         run: |
           brew update
@@ -63,6 +63,20 @@ jobs:
           brew reinstall gcc
           brew install libomp pkg-config
           brew cleanup
+
+      - name: Fortran configuration (macOS-clang, devel)
+        if: runner.os == 'macOS' && matrix.config.compiler == 'gcc' && matrix.config.r == 'devel'
+        run: |
+          mkdir -p ~/.R
+          cat << EOF > ~/.R/Makevars
+          # Linker flags
+          LDFLAGS=-L\${OMP_LIB} -L${GCC_PATH}/lib -lomp -lgfortran -lm -isysroot ${SDK_PATH}
+
+          # Fortran configuration
+          FC=$(brew --prefix gfortran)/bin/gfortran
+          F77=$(brew --prefix gfortran)/bin/gfortran
+          FLIBS=-L$(brew --prefix gfortran)/lib -lgfortran -lquadmath
+          EOF
 
       - name: Configure Makevars (macOS-gcc)
         if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
