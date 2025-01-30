@@ -65,7 +65,7 @@ jobs:
           brew cleanup
 
       - name: Fortran configuration (macOS-clang, devel)
-        if: runner.os == 'macOS' && matrix.config.compiler == 'gcc' && matrix.config.r == 'devel'
+        if: runner.os == 'macOS' && matrix.config.compiler == 'clang' && matrix.config.r == 'devel'
         run: |
           mkdir -p ~/.R
           cat << EOF > ~/.R/Makevars
