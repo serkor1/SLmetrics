@@ -303,12 +303,12 @@ and disable OpenMP:
 
 ``` r
 # enable OpenMP
-SLmetrics::setUseOpenMP(TRUE)
-#> OpenMP usage set to: enabled
+SLmetrics::openmp.on()
+#> OpenMP enabled!
 
 # disable OpenMP
-SLmetrics::setUseOpenMP(FALSE)
-#> OpenMP usage set to: disabled
+SLmetrics::openmp.off()
+#> OpenMP disabled!
 ```
 
 To illustrate the impact of OpenMP on performance, consider the
