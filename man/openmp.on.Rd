@@ -6,21 +6,35 @@
 \alias{openmp.threads}
 \title{Use OpenMP}
 \usage{
+## enable OpenMP
 openmp.on()
 
+## disable OpenMP
 openmp.off()
 
+## set number of threads
 openmp.threads(threads)
 }
 \arguments{
-\item{value}{A <\link{logical}> value of \link{length} 1 (Default: \link{TRUE}). If \link{length}, OpenMP will be used to parallelize computations.}
+\item{threads}{A positive <\link{integer}>-value (Default: None]). If \code{threads} is missing, the \code{openmp.threads()} returns the number of available threads. If \link{NULL} all available threads will be used.}
 }
 \description{
 This function allows you to enable or disable the use of OpenMP for parallelizing computations.
 }
 \examples{
 \dontrun{
-setUseOpenMP(TRUE)
+  ## enable OpenMP
+  SLmetrics::openmp.on()
+
+  ## disable OpenMP
+  SLmetrics::openmp.off()
+
+  ## available threads
+  SLmetrics::openmp.threads()
+
+  ## set number of threads
+  SLmetrics::openmp.threads(2)
+
 }
 
 }

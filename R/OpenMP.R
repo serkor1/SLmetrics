@@ -1,14 +1,15 @@
 #' @title Use OpenMP
 #' 
+#' @usage
+#' ## enable OpenMP
+#' openmp.on()
+#' 
 #' @description
 #' This function allows you to enable or disable the use of OpenMP for parallelizing computations.
 #' 
-#' @param value A <[logical]> value of [length] 1 (Default: [TRUE]). If [length], OpenMP will be used to parallelize computations.
+#' @param threads A positive <[integer]>-value (Default: None]). If `threads` is missing, the `openmp.threads()` returns the number of available threads. If [NULL] all available threads will be used.
 #' 
-#' @examples
-#' \dontrun{
-#' setUseOpenMP(TRUE)
-#' }
+#' @example man/examples/scr_OpenMP.R
 #'
 #' @export
 openmp.on <- function() {
@@ -37,6 +38,11 @@ openmp.on <- function() {
 }
 
 #' @rdname openmp.on
+#' 
+#' @usage
+#' ## disable OpenMP
+#' openmp.off()
+#' 
 #' @export
 openmp.off <- function() {
 
@@ -64,6 +70,10 @@ openmp.off <- function() {
 }
 
 #' @rdname openmp.on
+#' @usage
+#' ## set number of threads
+#' openmp.threads(threads)
+#' 
 #' @export
 openmp.threads <- function(threads) {
   available <- .available_threads()
