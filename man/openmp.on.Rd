@@ -16,7 +16,7 @@ openmp.off()
 openmp.threads(threads)
 }
 \arguments{
-\item{threads}{A positive <\link{integer}>-value (Default: None]). If \code{threads} is missing, the \code{openmp.threads()} returns the number of available threads. If \link{NULL} all available threads will be used.}
+\item{threads}{A positive <\link{integer}>-value (Default: None). If \code{threads} is missing, the \code{openmp.threads()} returns the number of available threads. If \link{NULL} all available threads will be used.}
 }
 \description{
 This function allows you to enable or disable the use of OpenMP for parallelizing computations.

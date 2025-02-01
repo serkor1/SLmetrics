@@ -7,7 +7,7 @@
 #' @description
 #' This function allows you to enable or disable the use of OpenMP for parallelizing computations.
 #' 
-#' @param threads A positive <[integer]>-value (Default: None]). If `threads` is missing, the `openmp.threads()` returns the number of available threads. If [NULL] all available threads will be used.
+#' @param threads A positive <[integer]>-value (Default: None). If `threads` is missing, the `openmp.threads()` returns the number of available threads. If [NULL] all available threads will be used.
 #' 
 #' @example man/examples/scr_OpenMP.R
 #'
