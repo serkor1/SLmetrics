@@ -63,7 +63,11 @@ bool disable_openmp()
 
 // [[Rcpp::export(.available_threads)]]
 int available_threads() {
-    return omp_get_num_procs();;
+    #ifdef _OPENMP
+        return omp_get_num_procs();
+    #else
+        return 1;
+    #endif
 }
 
 // [[Rcpp::export(.use_threads)]]
