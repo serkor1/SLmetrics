@@ -19,25 +19,25 @@ knitr:
 OpenMP is disabled by `default`, but can be enabled as follows:
 
 ```{r}
-SLmetrics::setUseOpenMP(TRUE)
+SLmetrics::openmp.on()
 ```
 
 And disabled as follows:
 
 ```{r}
-SLmetrics::setUseOpenMP(FALSE)
+SLmetrics::openmp.off()
 ```
 
 By `default` all cores are used. To control the amount of cores, see the following code:
 
 ```{r}
-SLmetrics::setNumberThreads(3)
+SLmetrics::openmp.threads(3)
 ```
 
 To use all cores:
 
 ```{r}
-SLmetrics::setNumberThreads(-1)
+SLmetrics::openmp.threads(NULL)
 ```
 
 ## Benchmarking OpenMP
@@ -148,7 +148,7 @@ fct_predicted <- create_factor()
 ```{r}
 #| code-fold: true
 #| messages: false
-SLmetrics::setUseOpenMP(TRUE)
+SLmetrics::openmp.on()
 
 benchmark(
     `With OpenMP` = SLmetrics::cmatrix(fct_actual, fct_predicted)
@@ -159,7 +159,7 @@ benchmark(
 ```{r}
 #| code-fold: true
 #| messages: false
-SLmetrics::setUseOpenMP(FALSE)
+SLmetrics::openmp.off()
 
 benchmark(
     `Wihtout OpenMP` = SLmetrics::cmatrix(fct_actual, fct_predicted)
