@@ -30,7 +30,16 @@ Rcpp::NumericVector ShannonsEntropy(const Rcpp::NumericMatrix& pk, const int& di
 // [[Rcpp::export(relative.entropy.matrix)]]
 Rcpp::NumericVector RelativeEntropy(const Rcpp::NumericMatrix& pk, const Rcpp::NumericMatrix& qk, const int& dim = 0, const double& base = -1.0)
 {
-    return RelativeEntropyClass::Entropy(pk, qk, dim, base);
+     // 1) create  pointers
+    // and dimensions
+    const double* pk_ptr = pk.begin();
+    const double* qk_ptr = qk.begin();
+    const int n = pk.nrow();
+    const int k = pk.ncol();
+    
+    // 2) pass pointers
+    // and return values
+    return RelativeEntropyClass::Entropy(pk_ptr, qk_ptr, n, k, dim, base);
 }
 
 //' @rdname entropy
