@@ -13,7 +13,15 @@ using namespace Rcpp;
 // [[Rcpp::export(entropy.matrix)]]
 Rcpp::NumericVector ShannonsEntropy(const Rcpp::NumericMatrix& pk, const int& dim = 0, const double& base = -1.0)
 {
-    return ShannonsEntropyClass::Entropy(pk, dim, base);
+    // 1) create  pointers
+    // and dimensions
+    const double* pk_ptr = pk.begin();
+    const int n = pk.nrow();
+    const int k = pk.ncol();
+    
+    // 2) pass pointers
+    // and return values
+    return ShannonsEntropyClass::Entropy(pk_ptr, n, k, dim, base);
 }
 
 //' @rdname entropy
