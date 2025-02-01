@@ -7,135 +7,135 @@
 #include <algorithm>
 
 class ShannonsEntropyClass {
-public:
+    public:
+        static Rcpp::NumericVector Entropy(const double* __restrict pk,
+                                        const int n,
+                                        const int k, 
+                                        const int axis, 
+                                        const double base = -1.0) {
+            
+            const bool adjust_base = (base != -1.0);
+            const double log_base = adjust_base ? std::log(base) : 1.0;
 
-    /*
-        Shannon's Entropy
-    */
-
-    static Rcpp::NumericVector Entropy(const Rcpp::NumericMatrix& pk, const int& axis, const double& base = -1.0) {
-
-        /*
-            Cases:
-                1 row-wise
-                2 column-wise
-                default: Total
-        */
-        const int n = pk.nrow();
-        const int k = pk.ncol();
-
-        // Precompute log(base) if needed
-        double log_base = 0.0;
-        bool adjust_base = (base != -1.0);
-        if (adjust_base) {
-            log_base = std::log(base);
-            // Handle the case where base <= 0
-            if (log_base == 0.0) {
+            if (adjust_base && (base <= 0 || log_base == 0.0)) {
                 Rcpp::stop("Log base cannot be 1 or non-positive.");
+            }
+
+            switch (axis) {
+                case 1:  return column_entropy(pk, n, k, adjust_base, log_base);
+                case 2:  return row_entropy(pk, n, k, adjust_base, log_base);
+                default: return total_entropy(pk, n, k, adjust_base, log_base);
             }
         }
 
-        switch (axis) {
-            case 1: { // Column-wise
+    private:
+        static Rcpp::NumericVector column_entropy(const double* __restrict pk,
+                                                const int n,
+                                                const int k,
+                                                const bool adjust_base,
+                                                const double log_base) {
+            Rcpp::NumericVector result(k);
 
-                Rcpp::NumericVector output(k);
+            #pragma omp parallel for if(getUseOpenMP()) schedule(static)
+            for (int j = 0; j < k; ++j) {
+                const double* pk_col = pk + j * n;
+                double sum = 0.0;
 
-                #pragma omp parallel for if(getUseOpenMP()) schedule(static)
-                for (int j = 0; j < k; ++j) {
-                    double sum = 0.0;
-
-                    // Compute sum for normalization
+                #pragma omp simd reduction(+:sum)
                     for (int i = 0; i < n; ++i) {
-                        sum += pk(i, j);
+                        sum += pk_col[i];
                     }
 
-                    double inv_sum = 1.0 / sum;
-                    double entropy = 0.0;
+                    if (sum <= 0.0) {
+                        result[j] = R_NaN;
+                        continue;
+                    }
 
+                const double inv_sum = 1.0 / sum;
+                double entropy = 0.0;
+
+                #pragma omp simd reduction(+:entropy)
                     for (int i = 0; i < n; ++i) {
-                        double p = pk(i, j) * inv_sum;
-                        if (p > 0.0) {
-                            entropy -= p * std::log(p);
-                        }
+                        const double p = pk_col[i] * inv_sum;
+                        entropy += (p > 0.0) ? (-p * std::log(p)) : 0.0;
                     }
 
-                    if (adjust_base) {
-                        entropy /= log_base;
-                    }
+                if (adjust_base) entropy /= log_base;
 
-                    output[j] = entropy;
-                }
-
-                return output;
+                result[j] = entropy;
             }
 
-            case 2: { // Row-wise
+            return result;
+        }
 
-                Rcpp::NumericVector output(n);
+        static Rcpp::NumericVector row_entropy(const double* __restrict pk,
+                                            const int n,
+                                            const int k,
+                                            const bool adjust_base,
+                                            const double log_base) {
 
-                #pragma omp parallel for if(getUseOpenMP()) schedule(static)
+            Rcpp::NumericVector result(n);
+
+            #pragma omp parallel for if(getUseOpenMP()) schedule(static)
                 for (int i = 0; i < n; ++i) {
                     double sum = 0.0;
 
-                    // Compute sum for normalization
                     for (int j = 0; j < k; ++j) {
-                        sum += pk(i, j);
+                        sum += pk[i + j * n];
                     }
 
-                    double inv_sum = 1.0 / sum;
+                    if (sum <= 0.0) {
+                        result[i] = R_NaN;
+                        continue;
+                    }
+
+                    const double inv_sum = 1.0 / sum;
                     double entropy = 0.0;
 
                     for (int j = 0; j < k; ++j) {
-                        double p = pk(i, j) * inv_sum;
+                        const double p = pk[i + j * n] * inv_sum;
                         if (p > 0.0) {
                             entropy -= p * std::log(p);
                         }
                     }
 
-                    if (adjust_base) {
-                        entropy /= log_base;
-                    }
-
-                    output[i] = entropy;
+                    if (adjust_base) entropy /= log_base;
+                    result[i] = entropy;
                 }
 
-                return output;
-            }
-
-            default: { // Total (aggregate)
-
-                double total_sum = 0.0;
-                // Compute total sum for normalization
-                #pragma omp parallel for reduction(+:total_sum) if(getUseOpenMP()) schedule(static)
-                for(int i = 0; i < n; ++i) {
-                    for(int j = 0; j < k; ++j) {
-                        total_sum += pk(i, j);
-                    }
-                }
-
-                double inv_total_sum = 1.0 / total_sum;
-                double entropy = 0.0;
-
-                // Compute total entropy
-                #pragma omp parallel for reduction(+:entropy) if(getUseOpenMP()) schedule(static)
-                for(int i = 0; i < n; ++i) {
-                    for(int j = 0; j < k; ++j) {
-                        double p = pk(i, j) * inv_total_sum;
-                        if (p > 0.0) {
-                            entropy -= p * std::log(p);
-                        }
-                    }
-                }
-
-                if (adjust_base) {
-                    entropy /= log_base;
-                }
-
-                return Rcpp::NumericVector::create(entropy);
-            }
-
+            return result;
         }
-    }
+
+        static Rcpp::NumericVector total_entropy(const double* __restrict pk,
+                                                const int n,
+                                                const int k,
+                                                const bool adjust_base,
+                                                const double log_base) {
+            const int total = n * k;
+            double sum = 0.0;
+
+            #pragma omp simd reduction(+:sum)
+                for (int i = 0; i < total; ++i) {
+                    sum += pk[i];
+                }
+
+                if (sum <= 0.0) {
+                    return Rcpp::NumericVector::create(R_NaN);
+                }
+
+            const double inv_sum = 1.0 / sum;
+            double entropy = 0.0;
+
+            #pragma omp parallel for reduction(+:entropy) if(getUseOpenMP()) schedule(static)
+                for (int i = 0; i < total; ++i) {
+                    const double p = pk[i] * inv_sum;
+                    entropy += (p > 0.0) ? (-p * std::log(p)) : 0.0;
+                }
+
+            if (adjust_base) entropy /= log_base;
+
+            return Rcpp::NumericVector::create(entropy);
+        }
 };
 
 #endif // CLASSIFICATION_ENTROPY_H

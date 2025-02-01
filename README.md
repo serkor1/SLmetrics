@@ -319,7 +319,7 @@ over 100 iterations[^3].
 
 | Iterations | Runtime (sec) | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
 |---:|---:|---:|---:|---:|
-| 100 | 2.5 | 0 | 0 | 0 |
+| 100 | 0.86 | 0 | 0 | 0 |
 
 1e6 x 200 matrix without OpenMP
 
@@ -327,7 +327,7 @@ over 100 iterations[^3].
 
 | Iterations | Runtime (sec) | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
 |---:|---:|---:|---:|---:|
-| 100 | 0.64 | 0 | 0 | 0 |
+| 100 | 0.15 | 0 | 0 | 0 |
 
 1e6 x 200 matrix with OpenMP
 
