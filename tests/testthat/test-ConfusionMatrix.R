@@ -11,7 +11,11 @@ testthat::test_that(
 
       # 2.1) enable/disable
       # OpenMP
-      setUseOpenMP(OpenMP)
+      if (OpenMP) {
+        openmp.on()
+      } else {
+        openmp.off()
+      }
 
       for (balanced in c(TRUE, FALSE)) {
 
