@@ -299,10 +299,10 @@ You can control OpenMP usage within [{SLmetrics}](https://serkor1.github.io/SLme
 
 ```{r}
 # enable OpenMP
-SLmetrics::setUseOpenMP(TRUE)
+SLmetrics::openmp.on()
 
 # disable OpenMP
-SLmetrics::setUseOpenMP(FALSE)
+SLmetrics::openmp.off()
 ```
 
 To illustrate the impact of OpenMP on performance, consider the following benchmarks for calculating entropy on a 1,000,000 x 200 matrix over 100 iterations[^3].
