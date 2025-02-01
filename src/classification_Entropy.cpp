@@ -31,5 +31,14 @@ Rcpp::NumericVector RelativeEntropy(const Rcpp::NumericMatrix& pk, const Rcpp::N
 // [[Rcpp::export(cross.entropy.matrix)]]
 Rcpp::NumericVector CrossEntropy(const Rcpp::NumericMatrix& pk, const Rcpp::NumericMatrix& qk, const int& dim = 0, const double& base = -1.0)
 {
-    return CrossEntropyClass::Entropy(pk, qk, dim, base);
+    // 1) create  pointers
+    // and dimensions
+    const double* pk_ptr = pk.begin();
+    const double* qk_ptr = qk.begin();
+    const int n = pk.nrow();
+    const int k = pk.ncol();
+    
+    // 2) pass pointers
+    // and return values
+    return CrossEntropyClass::Entropy(pk_ptr, qk_ptr, n, k, dim, base);
 }
