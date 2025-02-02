@@ -668,16 +668,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="tbl-regression" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3.1: Benchmarking selected regression metrics
+Table&nbsp;3.1: Benchmarks of Root Mean Squared Error (RMSE), Pinball Loss and Huber Loss. Each benchmark is run 10 times with two input vectors of 10 million elements.
 </figcaption>
 <div aria-describedby="tbl-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {RMSE}                 9.57ms           0B        0
+#&gt; 1 {RMSE}                 9.59ms           0B        0
 #&gt; 2 {Pinball Loss}         9.61ms           0B        0
-#&gt; 3 {Huber Loss}          55.87ms           0B        0</code></pre>
+#&gt; 3 {Huber Loss}          52.75ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -694,17 +694,17 @@ Table&nbsp;3.1: Benchmarking selected regression metrics
 <div id="tbl-regression-comparison" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-regression-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3.2: Benchmarking RMSE across
+Table&nbsp;3.2: Benchmarking Root Mean Squared Error (RMSE) across <code>{pkgs}</code>. Each benchmark is run 10 times with two input vectors of 10 million elements.
 </figcaption>
 <div aria-describedby="tbl-regression-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 4 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}            9.57ms           0B        0
-#&gt; 2 {MLmetrics}           61.99ms       76.3MB        1
-#&gt; 3 {yardstick}          169.07ms      419.6MB        9
-#&gt; 4 {mlr3measures}        86.94ms       76.3MB        1</code></pre>
+#&gt; 1 {SLmetrics}            9.59ms           0B        0
+#&gt; 2 {MLmetrics}           60.91ms       76.3MB        1
+#&gt; 3 {yardstick}          166.55ms      419.6MB        9
+#&gt; 4 {mlr3measures}         85.3ms       76.3MB        1</code></pre>
 </div>
 </div>
 </figure>
@@ -723,16 +723,16 @@ Table&nbsp;3.2: Benchmarking RMSE across
 <div id="tbl-classification" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3.3: Benchmarking selected classification metrics
+Table&nbsp;3.3: Benchmarks of the Confusion Matrix, Accuracy, and F-Beta score. Each benchmark is run 10 times with two input vectors of 10 million elements.
 </figcaption>
 <div aria-describedby="tbl-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression         execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                    &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {Confusion Matrix}         8.54ms           0B        0
-#&gt; 2 {Accuracy}                 8.54ms           0B        0
-#&gt; 3 {F-beta}                   8.54ms           0B        0</code></pre>
+#&gt; 1 {Confusion Matrix}         9.26ms           0B        0
+#&gt; 2 {Accuracy}                 9.28ms           0B        0
+#&gt; 3 {F-beta}                   9.46ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -748,16 +748,16 @@ Table&nbsp;3.3: Benchmarking selected classification metrics
 <div id="tbl-classification-comparison" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-classification-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3.4: Benchmarking a 3x3 confusion matrix across
+Table&nbsp;3.4: Benchmarking a 3×3 confusion matrix across <code>{pkgs}</code>. Each benchmark is run 10 times with two input vectors of 10 million elements and three classes.
 </figcaption>
 <div aria-describedby="tbl-classification-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression  execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}         8.53ms           0B        0
-#&gt; 2 {MLmetrics}       256.86ms        381MB        7
-#&gt; 3 {yardstick}       248.84ms        381MB        7</code></pre>
+#&gt; 1 {SLmetrics}         9.08ms           0B        0
+#&gt; 2 {MLmetrics}       247.12ms        381MB        7
+#&gt; 3 {yardstick}       247.06ms        381MB        7</code></pre>
 </div>
 </div>
 </figure>
