@@ -125,9 +125,9 @@ predicted <- rev(actual)
 
 # 2) evaluate with RMSLE
 try(
-    RMSLE(
-    actual,
-    predicted
+    SLmetrics::RMSLE(
+        actual,
+        predicted
     )
 )
 ``` 
