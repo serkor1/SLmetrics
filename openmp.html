@@ -466,7 +466,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#enablingdisabling-openmp" id="toc-enablingdisabling-openmp" class="nav-link active" data-scroll-target="#enablingdisabling-openmp"><span class="header-section-number">4.1</span> Enabling/Disabling OpenMP</a></li>
-  <li><a href="#benchmarking-openmp" id="toc-benchmarking-openmp" class="nav-link" data-scroll-target="#benchmarking-openmp"><span class="header-section-number">4.2</span> Benchmarking OpenMP</a></li>
+  <li><a href="#available-threads" id="toc-available-threads" class="nav-link" data-scroll-target="#available-threads"><span class="header-section-number">4.2</span> Available threads</a></li>
+  <li><a href="#benchmarking-openmp" id="toc-benchmarking-openmp" class="nav-link" data-scroll-target="#benchmarking-openmp"><span class="header-section-number">4.3</span> Benchmarking OpenMP</a></li>
+  <li><a href="#key-take-aways" id="toc-key-take-aways" class="nav-link" data-scroll-target="#key-take-aways"><span class="header-section-number">4.4</span> Key take-aways</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/openmp.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/openmp.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -509,14 +511,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>#&gt; OpenMP disabled!</code></pre>
 </div>
 </div>
-<p>By <code>default</code> all cores are used. To control the amount of cores, see the following code:</p>
+<p>By <code>default</code> all threads are used. To control the amount of threads, see the following code:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">openmp.threads</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>#&gt; Using 3 threads.</code></pre>
 </div>
 </div>
-<p>To use all cores:</p>
+<p>To use all threads:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">openmp.threads</span>(<span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -524,31 +526,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="benchmarking-openmp" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="benchmarking-openmp"><span class="header-section-number">4.2</span> Benchmarking OpenMP</h2>
+<section id="available-threads" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="available-threads"><span class="header-section-number">4.2</span> Available threads</h2>
+<p>The number of available threads are detected automatically, but can also be viewed using <code>SLmetrics::openmp.threads()</code> without passsing any arguments. See below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) set seed for reproducibility</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1903</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) create classification</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># problem</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>fct_actual <span class="ot">&lt;-</span> <span class="fu">create_factor</span>()</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>fct_predicted <span class="ot">&lt;-</span> <span class="fu">create_factor</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">openmp.threads</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 4</code></pre>
 </div>
+</div>
+</section>
+<section id="benchmarking-openmp" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="benchmarking-openmp"><span class="header-section-number">4.3</span> Benchmarking OpenMP</h2>
+<p>To benchmark the performance gain on enabling OpenMP, the same setup as in <a href="benchmark.html" class="quarto-xref"><span>Chapter 3</span></a> is used. Below is the <code>actual</code> and <code>predicted</code> values are generated.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) set seed for reproducibility</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1903</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) create classification</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># problem</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>fct_actual <span class="ot">&lt;-</span> <span class="fu">create_factor</span>()</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>fct_predicted <span class="ot">&lt;-</span> <span class="fu">create_factor</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">openmp.on</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">openmp.on</span>()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">benchmark</span>(</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">With OpenMP</span><span class="st">`</span> <span class="ot">=</span> SLmetrics<span class="sc">::</span><span class="fu">cmatrix</span>(fct_actual, fct_predicted)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; OpenMP enabled!</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">benchmark</span>(</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">With OpenMP</span><span class="st">`</span> <span class="ot">=</span> SLmetrics<span class="sc">::</span><span class="fu">cmatrix</span>(fct_actual, fct_predicted)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div id="tbl-classification-openmp" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-classification-openmp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.1: Benchmark of computing a 3x3 confusion matrix with OpenMP enabled. Each benchmark is run 10 times with two input vectors of 10 million elements.
+</figcaption>
+<div aria-describedby="tbl-classification-openmp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 4
 #&gt;   expression  execution_time memory_usage gc_calls
@@ -556,27 +569,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #&gt; 1 With OpenMP         3.78ms           0B        0</code></pre>
 </div>
 </div>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">openmp.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; OpenMP disabled!</code></pre>
+</figure>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">benchmark</span>(</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Wihtout OpenMP</span><span class="st">`</span> <span class="ot">=</span> SLmetrics<span class="sc">::</span><span class="fu">cmatrix</span>(fct_actual, fct_predicted)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">openmp.off</span>()</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">benchmark</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Wihtout OpenMP</span><span class="st">`</span> <span class="ot">=</span> SLmetrics<span class="sc">::</span><span class="fu">cmatrix</span>(fct_actual, fct_predicted)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div id="tbl-classification" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.2: Benchmark of computing a 3x3 confusion matrix with OpenMP enabled. Each benchmark is run 10 times with two input vectors of 10 million elements.
+</figcaption>
+<div aria-describedby="tbl-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 Wihtout OpenMP         9.15ms           0B        0</code></pre>
+#&gt; 1 Wihtout OpenMP         8.53ms           0B        0</code></pre>
 </div>
 </div>
+</figure>
+</div>
+</section>
+<section id="key-take-aways" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="key-take-aways"><span class="header-section-number">4.4</span> Key take-aways</h2>
+<p>Enabling OpenMP support can decrease computation time significantly - but it should <em>only</em> be used conciously, and with care, to avoid function calls competing for the same threads. This is especially the case if you are running a, say, neural network in parallel.</p>
 
 
 </section>
