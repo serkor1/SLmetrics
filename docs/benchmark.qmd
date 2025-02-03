@@ -178,7 +178,7 @@ benchmark <- function(
 ```{r}
 #| code-fold: true
 #| label: tbl-regression
-#| tbl-cap: Benchmarking selected regression metrics
+#| tbl-cap: Benchmarks of Root Mean Squared Error (RMSE), Pinball Loss and Huber Loss. Each benchmark is run 10 times with two input vectors of 10 million elements.
 benchmark(
     `{RMSE}`  = SLmetrics::rmse(num_actual, num_predicted),
     `{Pinball Loss}` = SLmetrics::pinball(num_actual, num_predicted),
@@ -190,7 +190,7 @@ benchmark(
 ```{r}
 #| code-fold: true
 #| label: tbl-regression-comparison
-#| tbl-cap: Benchmarking RMSE across \{pkgs\}
+#| tbl-cap: Benchmarking Root Mean Squared Error (RMSE) across `{pkgs}`. Each benchmark is run 10 times with two input vectors of 10 million elements.
 benchmark(
     `{SLmetrics}` = SLmetrics::rmse(num_actual, num_predicted),
     `{MLmetrics}` = MLmetrics::RMSE(num_actual, num_predicted),
@@ -205,7 +205,7 @@ benchmark(
 ```{r}
 #| code-fold: true
 #| label: tbl-classification
-#| tbl-cap: Benchmarking selected classification metrics
+#| tbl-cap: Benchmarks of the Confusion Matrix, Accuracy, and F-Beta score. Each benchmark is run 10 times with two input vectors of 10 million elements.
 benchmark(
     `{Confusion Matrix}`  = SLmetrics::cmatrix(fct_actual, fct_predicted),
     `{Accuracy}` = SLmetrics::accuracy(fct_actual, fct_predicted),
@@ -217,7 +217,7 @@ benchmark(
 ```{r}
 #| code-fold: true
 #| label: tbl-classification-comparison
-#| tbl-cap: Benchmarking a 3x3 confusion matrix across \{pkgs\}
+#| tbl-cap: Benchmarking a 3×3 confusion matrix across `{pkgs}`. Each benchmark is run 10 times with two input vectors of 10 million elements and three classes.
 benchmark(
     `{SLmetrics}`    = SLmetrics::cmatrix(fct_actual, fct_predicted),
     `{MLmetrics}`    = MLmetrics::ConfusionMatrix(fct_predicted, fct_actual),

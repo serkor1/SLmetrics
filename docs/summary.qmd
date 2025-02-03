@@ -2,6 +2,42 @@
 
 ## Basic Usage
 
+Computing performance metrics with [{SLmetrics}](https://github.com/serkor1/SLmetrics) is straightforward. At its most basic level, [{SLmetrics}](https://github.com/serkor1/SLmetrics) accepts vectors of `<factor>` or `<numeric>` values as input. Here are two examples demonstrating its basic usage.
+
+### Classification metrics
+
+```{r}
+## 1) actual and predicted
+## classes
+fct_actual <- factor(c("A", "A", "B"))
+fct_predicted <- factor(c("B", "A", "B"))
+
+## 2) confusion matrix
+confusion_matrix <- SLmetrics::cmatrix(
+    actual    = fct_actual, 
+    predicted = fct_predicted
+)
+
+## 3) summarize confusion
+## matrix
+summary(confusion_matrix)
+```
+
+### Regression metrics
+
+```{r}
+## 1) actual and predicted
+## values
+num_actual    <- c(10.2, 12.5, 14.1)
+num_predicted <- c(9.8, 11.5, 14.2)
+
+## 2) RMSE
+SLmetrics::rmse(
+    actual    = num_actual,
+    predicted = num_predicted
+)
+```
+
 ## Installation
 
 ### Stable version
