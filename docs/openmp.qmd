@@ -42,7 +42,7 @@ SLmetrics::openmp.threads(NULL)
 
 ## Available threads
 
-The number of available threads are detected automatically, but can also be viewed using `SLmetrics::openmp.threads()` without passsing any arguments. See below:
+The number of available threads are detected automatically, but can also be viewed using `SLmetrics::openmp.threads()` without passing any arguments. See below:
 
 ```{r}
 SLmetrics::openmp.threads()
@@ -183,4 +183,4 @@ benchmark(
 
 ## Key take-aways
 
-Enabling OpenMP support can decrease computation time significantly - but it should *only* be used conciously, and with care, to avoid function calls competing for the same threads. This is especially the case if you are running a, say, neural network in parallel.
+Enabling OpenMP support can decrease computation time significantly - but it should *only* be used consciously, and with care, to avoid function calls competing for the same threads. This is especially the case if you are running a, say, neural network in parallel.
