@@ -528,7 +528,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="available-threads" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="available-threads"><span class="header-section-number">4.2</span> Available threads</h2>
-<p>The number of available threads are detected automatically, but can also be viewed using <code>SLmetrics::openmp.threads()</code> without passsing any arguments. See below:</p>
+<p>The number of available threads are detected automatically, but can also be viewed using <code>SLmetrics::openmp.threads()</code> without passing any arguments. See below:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">openmp.threads</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -566,7 +566,7 @@ Table&nbsp;4.1: Benchmark of computing a 3x3 confusion matrix with OpenMP enable
 <pre><code>#&gt; # A tibble: 1 × 4
 #&gt;   expression  execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 With OpenMP         3.78ms           0B        0</code></pre>
+#&gt; 1 With OpenMP         3.79ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -589,7 +589,7 @@ Table&nbsp;4.2: Benchmark of computing a 3x3 confusion matrix with OpenMP enable
 <pre><code>#&gt; # A tibble: 1 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 Wihtout OpenMP         8.53ms           0B        0</code></pre>
+#&gt; 1 Wihtout OpenMP         8.56ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -597,7 +597,7 @@ Table&nbsp;4.2: Benchmark of computing a 3x3 confusion matrix with OpenMP enable
 </section>
 <section id="key-take-aways" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="key-take-aways"><span class="header-section-number">4.4</span> Key take-aways</h2>
-<p>Enabling OpenMP support can decrease computation time significantly - but it should <em>only</em> be used conciously, and with care, to avoid function calls competing for the same threads. This is especially the case if you are running a, say, neural network in parallel.</p>
+<p>Enabling OpenMP support can decrease computation time significantly - but it should <em>only</em> be used consciously, and with care, to avoid function calls competing for the same threads. This is especially the case if you are running a, say, neural network in parallel.</p>
 
 
 </section>
