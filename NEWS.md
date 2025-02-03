@@ -1,10 +1,75 @@
 
 
-# Version 0.3-1
-
-> Version 0.3-1 is considered pre-release of {SLmetrics}. We do not
+> Version 0.3-2 is considered pre-release of {SLmetrics}. We do not
 > expect any breaking changes, unless a major bug/issue is reported and
 > its nature forces breaking changes.
+
+# Version 0.3-2
+
+## :rocket: Improvements
+
+- **Regression metrics (See PR
+  https://github.com/serkor1/SLmetrics/pull/64):** All regression
+  metrics have had their back-end optimized and are now 2-10 times
+  faster than prior versions.
+- **LAPACK/BLAS Support
+  (https://github.com/serkor1/SLmetrics/pull/65):** Added LAPACK/BLAS
+  support for efficient matrix-operations.
+- **OpenMP:** Enabling/disabling OpenMP is now handled on the `R`-side
+  and obeys `suppressMessages()`. See below:
+
+``` r
+## suppress OpenMP messages
+suppressMessages(
+  SLmetrics::openmp.off()
+)
+```
+
+## :fire: New features
+
+- **Available threads:** The available number of threads can be
+  retrieved using the `openmp.threads()`. See below:
+
+``` r
+## number of available
+## threads
+SLmetrics::openmp.threads()
+#> [1] 24
+```
+
+## :bug: Bug-fixes
+
+- **Diagnostic Odds Ratio:** The `dor()` is now returning a single
+  `<[numeric]>`-value instead of `k` number of identical
+  `<[numeric]>`-values.
+
+## :warning: Breaking Changes
+
+- **OpenMP Interface:** The interface to enabling/disabling OpenMP
+  support has been reworked and has a more natural flow. The new
+  interface is described below:
+
+``` r
+## enable OpenMP
+SLmetrics::openmp.on()
+#> OpenMP enabled!
+```
+
+``` r
+## disable OpenMP
+SLmetrics::openmp.off()
+#> OpenMP disabled!
+```
+
+To set the number of threads use the `openmp.threads()` as follows:
+
+``` r
+## set number of threads
+SLmetrics::openmp.threads(3)
+#> Using 3 threads.
+```
+
+# Version 0.3-1
 
 ## :rocket: Improvements
 
@@ -27,17 +92,11 @@ pk <- t(replicate(100,rand.sum(1e3)))
 
 # 3) Enable OpenMP
 SLmetrics::setUseOpenMP(TRUE)
-#> OpenMP usage set to: enabled
 system.time(SLmetrics::entropy(pk))
-#>    user  system elapsed 
-#>   0.211   0.001   0.010
 
 # 3) Disable OpenMP
 SLmetrics::setUseOpenMP(FALSE)
-#> OpenMP usage set to: disabled
 system.time(SLmetrics::entropy(pk))
-#>    user  system elapsed 
-#>   0.001   0.000   0.001
 ```
 
 - **Entropy with soft labels
@@ -138,11 +197,11 @@ cat(
   sep = "\n"
 )
 #> Mean Relative Root Mean Squared Error
-#> 40.74819
+#> -44.04587
 #> Range Relative Root Mean Squared Error
-#> 0.1556036
+#> 0.1353589
 #> IQR Relative Root Mean Squared Error
-#> 0.738214
+#> 0.7141406
 ```
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
@@ -219,9 +278,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a 12 10 15
-#> b 10 15  8
-#> c  5 14 11
+#> a  7  9  8
+#> b 13 14  9
+#> c 15 14 11
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -230,9 +289,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 3.846279 5.399945 7.226539
-#> b 4.988230 7.617554 4.784221
-#> c 2.959719 5.045980 4.725642
+#> a 3.839868 4.325252 4.988679
+#> b 7.870727 7.305495 3.519039
+#> c 6.457460 5.404790 4.341409
 ```
 
 ## :bug: Bug-fixes
@@ -267,9 +326,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a 14  9 14
-#> b 12 15 10
-#> c  6  9 11
+#> a 17 12 12
+#> b 13 10  7
+#> c 12  9  8
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -278,9 +337,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 6.197341 4.717194 6.122321
-#> b 6.244226 7.511618 5.114025
-#> c 2.417569 5.487810 5.760531
+#> a 6.147879 6.110632 6.105292
+#> b 5.906721 4.768532 3.620641
+#> c 6.412300 3.722566 2.991023
 ```
 
 Calculating weighted metrics manually or by using
@@ -300,7 +359,7 @@ confusion_matrix <- SLmetrics::cmatrix(
 SLmetrics::accuracy(
     confusion_matrix
 )
-#> [1] 0.4
+#> [1] 0.35
 
 # 3) calculate the weighted
 # accuracy manually
@@ -309,7 +368,7 @@ SLmetrics::weighted.accuracy(
     predicted = predicted,
     w         = weights
 )
-#> [1] 0.3927467
+#> [1] 0.3037514
 ```
 
 Please note, however, that it is not possible to pass `cmatix()`-into
@@ -383,11 +442,11 @@ w         <- runif(n = 1e3)
 
 # 2) unweighted metrics
 SLmetrics::rmse(actual, predicted)
-#> [1] 0.9989386
+#> [1] 0.9891275
 
 # 3) weighted metrics
 SLmetrics::weighted.rmse(actual, predicted, w = w)
-#> [1] 1.013139
+#> [1] 0.9784827
 ```
 
 - The `rrmse()`-function have been removed in favor of the
@@ -473,7 +532,7 @@ plot(
 )
 ```
 
-<img src="meta/NEWS_files/figure-commonmark/unnamed-chunk-12-1.png"
+<img src="meta/NEWS_files/figure-commonmark/unnamed-chunk-17-1.png"
 style="width:100.0%" />
 
 ``` r
@@ -484,7 +543,7 @@ plot(
 )
 ```
 
-<img src="meta/NEWS_files/figure-commonmark/unnamed-chunk-12-2.png"
+<img src="meta/NEWS_files/figure-commonmark/unnamed-chunk-17-2.png"
 style="width:100.0%" />
 
 # Version 0.1-0
@@ -506,7 +565,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-#>  [1] a b a c b a a a c b
+#>  [1] b b b a c c b a a b
 #> Levels: a b c
 
 # 2) predicted classes
@@ -515,7 +574,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-#>  [1] b a c c c c c c a a
+#>  [1] c a b b c c b a c a
 #> Levels: a b c
 ```
 
@@ -532,16 +591,16 @@ summary(
 #> Confusion Matrix (3 x 3) 
 #> ================================================================================
 #>   a b c
-#> a 0 1 4
-#> b 2 0 1
-#> c 1 0 1
+#> a 1 1 1
+#> b 2 2 1
+#> c 0 0 2
 #> ================================================================================
 #> Overall Statistics (micro average)
-#>  - Accuracy:          0.10
-#>  - Balanced Accuracy: 0.17
-#>  - Sensitivity:       0.10
-#>  - Specificity:       0.55
-#>  - Precision:         0.10
+#>  - Accuracy:          0.50
+#>  - Balanced Accuracy: 0.58
+#>  - Sensitivity:       0.50
+#>  - Specificity:       0.75
+#>  - Precision:         0.50
 
 # 2) calculate false positive
 # rate using micro average
@@ -549,7 +608,7 @@ SLmetrics::fpr(
     confusion_matrix
 )
 #>         a         b         c 
-#> 0.6000000 0.1428571 0.6250000
+#> 0.2857143 0.2000000 0.2500000
 ```
 
 ### Supervised regression metrics
@@ -569,5 +628,5 @@ SLmetrics::huberloss(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.4389594
+#> [1] 0.3714747
 ```

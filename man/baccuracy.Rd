@@ -6,7 +6,7 @@
 \alias{baccuracy.cmatrix}
 \alias{baccuracy}
 \alias{weighted.baccuracy}
-\title{Compute the \eqn{\text{balanced}} \eqn{\text{accuracy}}}
+\title{Balanced Accuracy}
 \usage{
 \method{baccuracy}{factor}(actual, predicted, adjust = FALSE, na.rm = TRUE, ...)
 
@@ -37,19 +37,29 @@ weighted.baccuracy(...)
 A \link{numeric}-vector of \link{length} 1
 }
 \description{
-The \code{\link[=baccuracy]{baccuracy()}}-function computes the \href{https://neptune.ai/blog/balanced-accuracy}{balanced accuracy} between two
-vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.baccuracy]{weighted.baccuracy()}} function computes the weighted balanced accuracy.
+A generic function for the (normalized) balanced \href{https://arxiv.org/abs/2008.05756}{accuracy}.
+Use \code{\link[=weighted.baccuracy]{weighted.baccuracy()}} for the weighted balanced \href{https://arxiv.org/abs/2008.05756}{accuracy}.
 }
-\section{Calculation}{
+\section{Definition}{
 
-
-The metric is calculated as follows,
+Let \eqn{\hat{\alpha} \in [0, 1]} be the proportion of correctly predicted classes. If \code{adjust == false}, the balanced \href{https://arxiv.org/abs/2008.05756}{accuracy} of the classifier is calculated as,
 
 \deqn{
-  \frac{\text{sensitivity} + \text{specificty}}{2}
+  \hat{\alpha} = \frac{\text{sensitivity} + \text{specificty}}{2}
 }
 
-See the \code{\link[=sensitivity]{sensitivity()}}- and/or \code{\link[=specificity]{specificity()}}-function for more details.
+otherwise,
+
+\deqn{
+  \hat{\alpha} = \frac{\text{sensitivity} + \text{specificty}}{2} \frac{1}{k}
+}
+
+Where:
+\itemize{
+\item \eqn{k} is the number of classes
+\item \eqn{\text{sensitivity}} is the overall \href{https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall#recall_or_true_positive_rate}{sensitivity}, and
+\item \eqn{\text{specificty}} is the overall \href{https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall#recall_or_true_positive_rate}{specificty}
+}
 }
 
 \section{Creating <\link{factor}>}{

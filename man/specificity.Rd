@@ -16,7 +16,7 @@
 \alias{weighted.specificity}
 \alias{weighted.tnr}
 \alias{weighted.selectivity}
-\title{Specificity or \eqn{\text{true}} \eqn{\text{negative}} \eqn{\text{rate}}}
+\title{Specificity}
 \usage{
 \method{specificity}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
 
@@ -73,8 +73,11 @@ If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of
 If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-The  \code{\link[=specificity]{specificity()}}-function computes the \href{https://en.wikipedia.org/wiki/Sensitivity_and_specificity}{specificity}, also known as the True Negative Rate (TNR) or selectivity, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.specificity]{weighted.specificity()}} function computes the weighted specificity.
+A generic funcion for the \href{https://en.wikipedia.org/wiki/Sensitivity_and_specificity}{Specificity}. Use \code{\link[=weighted.specificity]{weighted.specificity()}} for the weighted \href{https://en.wikipedia.org/wiki/Sensitivity_and_specificity}{Specificity}.
+\subsection{Other names}{
+
+True Negative Rate, Selectivity
+}
 }
 \section{Creating <\link{factor}>}{
 
@@ -112,16 +115,19 @@ factor(
 In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 }
 
-\section{Calculation}{
+\section{Definition}{
 
-
-The metric is calculated for each class \eqn{k} as follows,
+Let \eqn{\hat{\sigma} \in [0, 1]} be the proportion of true negatives among the actual negatives. The specificity of the classifier is calculated as,
 
 \deqn{
-  \frac{\#TN_k}{\#TN_k+\#FP_k}
+  \hat{\sigma} = \frac{\#TN_k}{\#TN_k + \#FP_k}
 }
 
-Where \eqn{\#TN_k} and \eqn{\#FP_k} is the number of true negatives and false positives, respectively, for each class \eqn{k}.
+Where:
+\itemize{
+\item \eqn{\#TN_k} is the number of true negatives, and
+\item \eqn{\#FP_k} is the number of false positives.
+}
 }
 
 \examples{

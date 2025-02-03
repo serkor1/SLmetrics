@@ -1,6 +1,6 @@
 Package: SLmetrics
 Title: Machine Learning Performance Evaluation on Steroids
-Version: 0.3-1
+Version: 0.3-2
 Authors@R: c(
     person(
       given   = "Serkan", 
@@ -11,7 +11,7 @@ Authors@R: c(
       )
   )
 Description:
-  Performance evaluation metrics for supervised machine learning, statistical learning and artificial intelligence applications in R written in C++.
+  Provides performance evaluation metrics for supervised and unsupervised machine learning, statistical learning and artificial intelligence tasks in R. Core computations are implemented in C++ for scalability and efficiency.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -34,5 +34,5 @@ Imports:
     Rcpp
 VignetteBuilder: knitr
 Depends: 
-    R (>= 3.5)
+    R (>= 4.3)
 URL: https://serkor1.github.io/SLmetrics/

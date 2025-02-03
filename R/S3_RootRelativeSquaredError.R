@@ -4,15 +4,15 @@
 # objective: Genereate Methods
 # script start;
 
-#' Compute the \eqn{\text{root}} \eqn{\text{relative}} \eqn{\text{squared}}  \eqn{\text{error}}
+#' @inherit huberloss
+#'
+#' @title Root Relative Squared Error
 #'
 #' @description
 #' The [rrse()]-function calculates the [root relative  squared error](https://en.wikipedia.org/wiki/Root_mean_square_deviation) between
 #' the predicted and observed <[numeric]> vectors. The [weighted.rrse()] function computes the weighed root relative squared errorr.
 #'
-#' @inherit huberloss
-#'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calculated as,
 #'
@@ -24,8 +24,10 @@
 #' and \eqn{\bar{y}} is the mean of the `actual` values.
 #'
 #' @example man/examples/scr_RootRelativeSquaredError.R
+#' 
 #' @family Regression
 #' @family Supervised Learning
+#' 
 #' @export
 rrse <- function(...) {
   UseMethod(

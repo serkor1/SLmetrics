@@ -5,30 +5,33 @@
 # for False Positive Rate
 # script start;
 
-#' Compute the \eqn{\text{false}} \eqn{\text{positive}} \eqn{\text{rate}}
+#' @aliases fpr fallout
+#' @inherit specificity
+#' 
+#' @title False Positive Rate
 #'
 #' @description
-#' The [fpr()]-function computes the [False Positive Rate](https://en.wikipedia.org/wiki/False_positive_rate) (FPR), also known as the fall-out ([fallout()]), between
-#' two vectors of predicted and observed [factor()] values. The [weighted.fpr()] function computes the weighted false positive rate.
-#'
-#' @inherit specificity
-#'
-#' @example man/examples/scr_FalsePositiveRate.R
-#'
-#' @section Calculation:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
+#' A generic funcion for the [False Positive Rate](https://en.wikipedia.org/wiki/False_positive_rate). Use [weighted.fpr()] for the weighted [False Positive Rate](https://en.wikipedia.org/wiki/False_positive_rate).
+#' 
+#' ## Other names
+#' Fallout
+#' 
+#' @section Definition:
+#' Let \eqn{\hat{\gamma} \in [0, 1]} be the proportion of false positives among the actual negatives. The false positive rate of the classifier is calculated as,
 #'
 #' \deqn{
-#'   \frac{\#FP_k}{\#FP_k + \#TN_k}
+#'   \hat{\gamma} = \frac{\#FP_k}{\#TN_k + \#FP_k}
 #' }
 #'
-#' Where \eqn{\#FP_k} and \eqn{\#TN_k} represent the number of false positives and true negatives, respectively, for each class \eqn{k}.
+#' Where:
+#' 
+#' - \eqn{\#TN_k} is the number of true negatives, and
+#' - \eqn{\#FP_k} is the number of false positives.
+#'
+#' @example man/examples/scr_FalsePositiveRate.R
 #' 
 #' @family Classification
 #' @family Supervised Learning
-#'
-#' @aliases fpr fallout
 #'
 #' @export
 fpr <- function(...) {
@@ -64,4 +67,5 @@ weighted.fallout <- function(...) {
     object  = ..1
   )
 }
+
 # script end;

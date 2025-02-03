@@ -4,7 +4,7 @@
 # objective: Generate Methods
 # script start;
 
-#' Compute the \eqn{\text{huber}} \eqn{\text{loss}}
+#' @title Huber Loss
 #'
 #' @description
 #' The [huberloss()]-function computes the simple and weighted [huber loss](https://en.wikipedia.org/wiki/Huber_loss) between
@@ -16,7 +16,7 @@
 #' @param delta A <[numeric]>-vector of [length] \eqn{1} (default: \eqn{1}). The threshold value for switch between functions (see calculation).
 #' @param ... Arguments passed into other methods.
 #'
-#' @section Calculation:
+#' @section Definition:
 #'
 #' The metric is calculated as follows,
 #'
@@ -33,14 +33,13 @@
 #' where \eqn{y} and \eqn{\upsilon} are the `actual` and `predicted` values respectively. If `w` is not [NULL], then all values
 #' are aggregated using the weights.
 #'
+#' @returns A <[numeric]> vector of [length] 1.
 #'
 #' @example man/examples/scr_HuberLoss.R
 #'
-#'
 #' @family Regression
 #' @family Supervised Learning
-#' @returns A <[numeric]> vector of [length] 1.
-#'
+#' 
 #' @export
 huberloss <- function(...) {
   UseMethod(

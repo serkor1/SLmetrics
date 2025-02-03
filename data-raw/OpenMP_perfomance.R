@@ -30,7 +30,7 @@ pk <- t(replicate(200,rand.sum(1e6)))
 # 2.2.2) Test without
 # OpenMP and store
 gc()
-SLmetrics::setUseOpenMP(FALSE)
+SLmetrics::openmp.off()
 
 DT$OpenMP$FALSE_ <- bench::mark(
   SLmetrics::entropy(pk),
@@ -40,7 +40,7 @@ DT$OpenMP$FALSE_ <- bench::mark(
 # 2.2.3) Test with
 # OpenMP and store
 gc()
-SLmetrics::setUseOpenMP(TRUE)
+SLmetrics::openmp.on()
 
 DT$OpenMP$TRUE_ <- bench::mark(
   SLmetrics::entropy(pk),

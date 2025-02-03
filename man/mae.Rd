@@ -5,7 +5,7 @@
 \alias{weighted.mae.numeric}
 \alias{mae}
 \alias{weighted.mae}
-\title{Compute the \eqn{\text{mean}} \eqn{\text{absolute}} \eqn{\text{error}}}
+\title{Mean Absolute Error}
 \usage{
 \method{mae}{numeric}(actual, predicted, ...)
 
@@ -31,7 +31,7 @@ A <\link{numeric}> vector of \link{length} 1.
 The \code{\link[=mae]{mae()}}-function computes the \href{https://en.wikipedia.org/wiki/Mean_absolute_error}{mean absolute error} between
 the observed and predicted <\link{numeric}> vectors. The \code{\link[=weighted.mae]{weighted.mae()}} function computes the weighted mean absolute error.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calulated as follows,

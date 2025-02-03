@@ -60,6 +60,13 @@ class CovarianceCalculator {
             bool center   = true,
             bool unbiased = true
         );
+
+    private:
+        // Prevents the compiler from doing
+        // bad stuff.
+        CovarianceCalculator()  = delete;
+        ~CovarianceCalculator() = delete;
+
 };
 
 inline CovarianceResult<int> CovarianceCalculator::cov_unweighted(

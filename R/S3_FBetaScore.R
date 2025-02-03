@@ -4,28 +4,39 @@
 # objective: Generate methods
 # script start;
 
-
-
-#' Compute the \eqn{F_{\beta}}-score
+#' @inherit specificity
+#' 
+#' @title \eqn{F_{\beta}}-score
 #'
 #' @description
-#' The [fbeta()]-function computes the [\eqn{F_\beta} score](https://en.wikipedia.org/wiki/F1_score), the weighted harmonic mean of [precision()] and [recall()], between
-#' two vectors of predicted and observed [factor()] values. The parameter \eqn{\beta} determines the weight of precision and recall in the combined score. The [weighted.fbeta()] function computes the weighted \eqn{F_\beta} score.
-#'
-#' @example man/examples/scr_FBetaScore.R
-#'
-#' @inherit specificity
+#' A generic funcion for the [\eqn{F_{\beta}}](https://en.wikipedia.org/wiki/F1_score)-score. Use [weighted.fbeta()] for the weighted [\eqn{F_{\beta}}](https://en.wikipedia.org/wiki/F1_score)-score.
+#' 
 #' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
 #'
-#' @section Calculation:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
+#' @section Definition:
+#' Let \eqn{\hat{F}_{\beta} \in [0, 1]} be the \eqn{F_{\beta}} score, which is a weighted harmonic mean of precision and recall. \eqn{F_{\beta}} score of thte classifier is is calculated as,
 #'
 #' \deqn{
-#'   (1 + \beta^2) \frac{\text{Precision}_k \cdot \text{Recall}_k}{(\beta^2 \cdot \text{Precision}_k) + \text{Recall}_k}
+#'   \hat{F}_{\beta} = \left(1 + \beta^2\right) \frac{\text{Precision} \times \text{Recall}}
+#'                                           {\beta^2 \times \text{Precision} + \text{Recall}}
 #' }
 #'
-#' Where precision is \eqn{\frac{\#TP_k}{\#TP_k + \#FP_k}} and recall (sensitivity) is \eqn{\frac{\#TP_k}{\#TP_k + \#FN_k}}, and \eqn{\beta} determines the weight of precision relative to recall.
+#' Substituting \eqn{\text{Precision} = \frac{\#TP_k}{\#TP_k + \#FP_k}} and \eqn{\text{Recall} = \frac{\#TP_k}{\#TP_k + \#FN_k}} yields:
+#'
+#' \deqn{
+#'   \hat{F}_{\beta} = \left(1 + \beta^2\right)
+#'     \frac{\frac{\#TP_k}{\#TP_k + \#FP_k} \times \frac{\#TP_k}{\#TP_k + \#FN_k}}
+#'          {\beta^2 \times \frac{\#TP_k}{\#TP_k + \#FP_k} + \frac{\#TP_k}{\#TP_k + \#FN_k}}
+#' }
+#'
+#' Where:
+#' 
+#' - \eqn{\#TP_k} is the number of true positives,
+#' - \eqn{\#FP_k} is the number of false positives,
+#' - \eqn{\#FN_k} is the number of false negatives, and
+#' - \eqn{\beta} is a non-negative real number that determines the relative importance of precision vs. recall in the score.
+#'
+#' @example man/examples/scr_FBetaScore.R
 #' 
 #' @family Classification
 #' @family Supervised Learning

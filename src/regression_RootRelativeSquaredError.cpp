@@ -6,18 +6,29 @@ using namespace Rcpp;
 //' @method rrse numeric
 //' @export
 // [[Rcpp::export(rrse.numeric)]]
-double rrse(const std::vector<double>& actual, const std::vector<double>& predicted) 
+double rrse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted)
 {
-    RelativeRootMeanSquaredError rrseMetric; // Instantiate RelativeRootMeanSquaredError class
-    return rrseMetric.compute(actual, predicted);
+    // 1) Extract pointers and size
+    const double* ptr_actual    = actual.begin();
+    const double* ptr_predicted = predicted.begin();
+    std::size_t n = actual.size();
+
+    // 2) Compute unweighted RRSE
+    return RRSE::compute(ptr_actual, ptr_predicted, n);
 }
 
 //' @rdname rrse
 //' @method weighted.rrse numeric
 //' @export
 // [[Rcpp::export(weighted.rrse.numeric)]]
-double weighted_rrse(const std::vector<double>& actual, const std::vector<double>& predicted, const std::vector<double>& w) 
+double weighted_rrse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w)
 {
-    RelativeRootMeanSquaredError rrseMetric; // Instantiate RelativeRootMeanSquaredError class
-    return rrseMetric.compute(actual, predicted, w);
+    // 1) Extract pointers and size
+    const double* ptr_actual    = actual.begin();
+    const double* ptr_predicted = predicted.begin();
+    const double* ptr_w         = w.begin();
+    std::size_t n = actual.size();
+
+    // 2) Compute weighted RRSE
+    return RRSE::compute(ptr_actual, ptr_predicted, ptr_w, n);
 }

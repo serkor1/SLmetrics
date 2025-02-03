@@ -26,7 +26,11 @@ testthat::test_that(desc = "Test `relative.entropy()`-function", code ={
       for (base in c(NA,2, 10)) {
 
         # 2.1.1) set OpenMP flags
-        invisible({ setUseOpenMP(lgl) })
+        if (lgl) {
+          openmp.on()
+        } else {
+          openmp.off()
+        }
       
         # 2.1.2) calculate scores
         score <- relative.entropy(pk, qk, dim = axis, base = if (is.na(base)) {-1} else {base})

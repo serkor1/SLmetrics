@@ -12,7 +12,7 @@
 \alias{phi}
 \alias{weighted.mcc}
 \alias{weighted.phi}
-\title{Compute the \eqn{\text{Matthews}} \eqn{\text{Correlation}} \eqn{\text{Coefficient}}}
+\title{Matthews Correlation Coefficient}
 \usage{
 \method{mcc}{factor}(actual, predicted, ...)
 
@@ -52,7 +52,7 @@ A <\link{numeric}>-vector of \link{length} 1
 The \code{\link[=mcc]{mcc()}}-function computes the \href{https://en.wikipedia.org/wiki/Matthews_correlation_coefficient}{Matthews Correlation Coefficient} (MCC), also known as the \eqn{\phi}-coefficient, between
 two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.mcc]{weighted.mcc()}} function computes the weighted Matthews Correlation Coefficient.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated as follows,

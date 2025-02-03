@@ -4,7 +4,7 @@
 \alias{fmi.factor}
 \alias{fmi.cmatrix}
 \alias{fmi}
-\title{Compute the \eqn{\text{fowlkes}}-\eqn{\text{fallows}} \eqn{\text{index}}}
+\title{Fowlkes-Mallows Index}
 \usage{
 \method{fmi}{factor}(actual, predicted, ...)
 
@@ -28,7 +28,7 @@ A <\link{numeric}>-vector of \link{length} 1
 The \code{\link[=fmi]{fmi()}}-function computes the \href{https://en.wikipedia.org/wiki/Fowlkes\%E2\%80\%93Mallows_index}{Fowlkes-Mallows Index} (FMI), a measure of the similarity between two sets of clusterings, between
 two vectors of predicted and observed \code{\link[=factor]{factor()}} values.
 }
-\section{Calculation}{
+\section{Definition}{
 
 
 The metric is calculated for each class \eqn{k} as follows,

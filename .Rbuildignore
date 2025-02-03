@@ -6,9 +6,9 @@
 ^sandbox
 ^\.github$
 ^CODE_OF_CONDUCT\.md$
-^codecov\.yml$
+^codecov\.yaml$
 ^NEWS.Rmd
-^_pkgdown\.yml$
+^_pkgdown\.yaml$
 ^docs$
 ^pkgdown$
 ^cran-comments\.md$
@@ -20,6 +20,7 @@ src/CMakeLists.txt
 src/cmake-build-debug
 src/.idea
 tools/
+meta/
 .venv/
 ^NEWs_files
 \.qmd$

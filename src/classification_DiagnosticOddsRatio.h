@@ -12,16 +12,17 @@ class DiagnosticOddsRatioClass : public classification {
     public:
 
         Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
-            Eigen::ArrayXd output(matrix.rows());
-            Eigen::ArrayXd tp(matrix.rows()), fn(matrix.rows()), tn(matrix.rows()), fp(matrix.rows());
+            Rcpp::NumericVector output {};
+            Eigen::ArrayXd tp { matrix.rows() }, fn { matrix.rows() }, tn { matrix.rows() }, fp { matrix.rows() };
 
             TP(matrix, tp);
             FN(matrix, fn);
             TN(matrix, tn);
             FP(matrix, fp);
 
-            output = (tp * tn) / (fp * fn);
-            return Rcpp::wrap(output);
+            output = (tp.sum() * tn.sum()) / (fp.sum() * fn.sum());
+            
+            return output;
         }
 };
 

@@ -13,7 +13,6 @@ downloads](https://cranlogs.r-pkg.org/badges/last-month/SLmetrics?color=blue)](h
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/serkor1/SLmetrics/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/serkor1/SLmetrics/actions/workflows/R-CMD-check.yaml)
-[![macOS-clang](https://github.com/serkor1/SLmetrics/actions/workflows/macos-check-clang.yaml/badge.svg)](https://github.com/serkor1/SLmetrics/actions/workflows/macos-check-clang.yaml)
 [![codecov](https://codecov.io/gh/serkor1/SLmetrics/branch/development/graph/badge.svg?token=X2osJDSRlN)](https://app.codecov.io/gh/serkor1/SLmetrics)
 [![CodeFactor](https://www.codefactor.io/repository/github/serkor1/slmetrics/badge)](https://www.codefactor.io/repository/github/serkor1/slmetrics)
 <!-- badges: end -->
@@ -304,12 +303,12 @@ and disable OpenMP:
 
 ``` r
 # enable OpenMP
-SLmetrics::setUseOpenMP(TRUE)
-#> OpenMP usage set to: enabled
+SLmetrics::openmp.on()
+#> OpenMP enabled!
 
 # disable OpenMP
-SLmetrics::setUseOpenMP(FALSE)
-#> OpenMP usage set to: disabled
+SLmetrics::openmp.off()
+#> OpenMP disabled!
 ```
 
 To illustrate the impact of OpenMP on performance, consider the
@@ -320,7 +319,7 @@ over 100 iterations[^3].
 
 | Iterations | Runtime (sec) | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
 |---:|---:|---:|---:|---:|
-| 100 | 2.5 | 0 | 0 | 0 |
+| 100 | 0.86 | 0 | 0 | 0 |
 
 1e6 x 200 matrix without OpenMP
 
@@ -328,7 +327,7 @@ over 100 iterations[^3].
 
 | Iterations | Runtime (sec) | Garbage Collections \[gc()\] | gc() pr. second | Memory Allocation (MB) |
 |---:|---:|---:|---:|---:|
-| 100 | 0.64 | 0 | 0 | 0 |
+| 100 | 0.15 | 0 | 0 | 0 |
 
 1e6 x 200 matrix with OpenMP
 
@@ -360,12 +359,12 @@ Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
 [^1]: The source code is available
-    [here](https://github.com/serkor1/SLmetrics/blob/development/data-raw/classification_performance.R)
+    [here](https://github.com/serkor1/SLmetrics/blob/d9b6cdbc1fccbdb0d45364b0fc37ebe953df30b9/data-raw/classification_performance.R)
     and
-    [here](https://github.com/serkor1/SLmetrics/blob/development/data-raw/regression_performance.R).
+    [here](https://github.com/serkor1/SLmetrics/blob/d9b6cdbc1fccbdb0d45364b0fc37ebe953df30b9/data-raw/regression_performance.R).
 
 [^2]: The source code is available
-    [here](https://github.com/serkor1/SLmetrics/blob/development/data-raw/memory_performance.R).
+    [here](https://github.com/serkor1/SLmetrics/blob/d9b6cdbc1fccbdb0d45364b0fc37ebe953df30b9/data-raw/memory_performance.R).
 
 [^3]: The source code is available
-    [here](https://github.com/serkor1/SLmetrics/blob/development/data-raw/OpenMP_performance.R).
+    [here](https://github.com/serkor1/SLmetrics/blob/d9b6cdbc1fccbdb0d45364b0fc37ebe953df30b9/data-raw/OpenMP_perfomance.R).

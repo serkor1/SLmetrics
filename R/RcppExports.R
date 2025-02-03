@@ -843,39 +843,19 @@ weighted.smape.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_smape`, actual, predicted, w)
 }
 
-#' Enable or Disable OpenMP Parallelization
-#'
-#' This function allows you to enable or disable the use of OpenMP for parallelizing computations.
-#'
-#' @param value A <[logical]> value of [length] 1 (Default: [FALSE]). If [length], OpenMP will be used to parallelize computations.
-#'
-#' @family Utils
-#'
-#' @examples
-#' \dontrun{
-#' setUseOpenMP(TRUE)
-#' }
-#'
-#' @export
-setUseOpenMP <- function(value = FALSE) {
-    invisible(.Call(`_SLmetrics_setUseOpenMP`, value))
+.enable_openmp <- function() {
+    .Call(`_SLmetrics_enable_openmp`)
 }
 
-#' Set the Number of Threads for Parallel Computations
-#'
-#' This function sets the number of threads to be used for parallel computations. If set to `-1`, all available threads will be utilized.
-#'
-#' @param value An <[integer]> specifying the number of threads to use (Default: -1). Default is `-1`, which uses all available threads.
-#'
-#' @family Utils
-#'
-#' @examples
-#' \dontrun{
-#' setNumberThreads(4)
-#' }
-#'
-#' @export
-setNumberThreads <- function(value = -1L) {
-    invisible(.Call(`_SLmetrics_setNumberThreads`, value))
+.disable_openmp <- function() {
+    .Call(`_SLmetrics_disable_openmp`)
+}
+
+.available_threads <- function() {
+    .Call(`_SLmetrics_available_threads`)
+}
+
+.use_threads <- function(value = -1L) {
+    .Call(`_SLmetrics_use_threads`, value)
 }
 
