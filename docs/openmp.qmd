@@ -28,19 +28,29 @@ And disabled as follows:
 SLmetrics::openmp.off()
 ```
 
-By `default` all cores are used. To control the amount of cores, see the following code:
+By `default` all threads are used. To control the amount of threads, see the following code:
 
 ```{r}
 SLmetrics::openmp.threads(3)
 ```
 
-To use all cores:
+To use all threads:
 
 ```{r}
 SLmetrics::openmp.threads(NULL)
 ```
 
+## Available threads
+
+The number of available threads are detected automatically, but can also be viewed using `SLmetrics::openmp.threads()` without passsing any arguments. See below:
+
+```{r}
+SLmetrics::openmp.threads()
+```
+
 ## Benchmarking OpenMP
+
+To benchmark the performance gain on enabling OpenMP, the same setup as in @sec-benchmarking is used. Below is the `actual` and `predicted` values are generated.
 
 ```{r}
 #| include: false
@@ -98,6 +108,7 @@ benchmark <- function(
 
 ```{r}
 #| include: false
+#| message: false
 #| echo: false
 # classification function
 create_factor <- function(
@@ -147,7 +158,9 @@ fct_predicted <- create_factor()
 
 ```{r}
 #| code-fold: true
-#| messages: false
+#| message: false
+#| label: tbl-classification-openmp
+#| tbl-cap: Benchmark of computing a 3x3 confusion matrix with OpenMP enabled. Each benchmark is run 10 times with two input vectors of 10 million elements.
 SLmetrics::openmp.on()
 
 benchmark(
@@ -158,10 +171,16 @@ benchmark(
 
 ```{r}
 #| code-fold: true
-#| messages: false
+#| message: false
+#| label: tbl-classification
+#| tbl-cap: Benchmark of computing a 3x3 confusion matrix with OpenMP enabled. Each benchmark is run 10 times with two input vectors of 10 million elements.
 SLmetrics::openmp.off()
 
 benchmark(
     `Wihtout OpenMP` = SLmetrics::cmatrix(fct_actual, fct_predicted)
 )
 ```
+
+## Key take-aways
+
+Enabling OpenMP support can decrease computation time significantly - but it should *only* be used conciously, and with care, to avoid function calls competing for the same threads. This is especially the case if you are running a, say, neural network in parallel.
