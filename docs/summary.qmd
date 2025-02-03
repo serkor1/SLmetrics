@@ -2,7 +2,7 @@
 
 ## Basic Usage
 
-Computing performance metrics with [{SLmetrics}](https://github.com/serkor1/SLmetrics) is straightforward. At its most basic level, [{SLmetrics}](https://github.com/serkor1/SLmetrics) accepts vectors of <[factor]> or <[numeric]> values as input. Here are two examples demonstrating its basic usage.
+Computing performance metrics with [{SLmetrics}](https://github.com/serkor1/SLmetrics) is straightforward. At its most basic level, [{SLmetrics}](https://github.com/serkor1/SLmetrics) accepts vectors of `<factor>` or `<numeric>` values as input. Here are two examples demonstrating its basic usage.
 
 ### Classification metrics
 
