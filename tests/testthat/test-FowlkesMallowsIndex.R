@@ -5,6 +5,8 @@
 testthat::test_that(
   desc = "Test `fmi()`-function", code = {
 
+    testthat::skip_on_cran()
+
     # 0) construct fmi
     # wrapper
     wrapped_fmi <- function(

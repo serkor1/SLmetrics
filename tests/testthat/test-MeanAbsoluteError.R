@@ -5,6 +5,8 @@
 testthat::test_that(
   desc = "Test `mae()`-function", code = {
 
+    testthat::skip_on_cran()
+
     # 0) construct mae-wrapperr
     wrapped_mae <- function(
       actual,

@@ -5,6 +5,8 @@
 testthat::test_that(
   desc = "Test `mse()`-function", code = {
 
+    testthat::skip_on_cran()
+
     # 0) construct mse-wrapperr
     wrapped_mse <- function(
       actual,

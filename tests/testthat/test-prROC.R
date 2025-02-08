@@ -6,8 +6,9 @@
 # script start;
 
 testthat::test_that(
-  desc = "Test that `prROC()`-function works as expected",
-  code = {
+  desc = "Test that `prROC()`-function works as expected", code = {
+
+    testthat::skip_on_cran()
 
     # 0) construct ROC
     # wrapper

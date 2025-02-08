@@ -4,6 +4,8 @@
 
 testthat::test_that(desc = "Test `entropy()`-function", code ={
 
+  testthat::skip_on_cran()
+
   # 0) matrix generator
   # for the tests
   rand.sum <- function(n){
