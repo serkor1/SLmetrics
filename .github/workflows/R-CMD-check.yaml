@@ -99,7 +99,7 @@ jobs:
           EOF
 
       - name: Configure Makecars (macOS-clang)
-        if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
+        if: runner.os == 'macOS' && matrix.config.compiler == 'clang'
         run: |
           mkdir -p ~/.R
           GCC_PATH=$(brew --prefix gcc)
