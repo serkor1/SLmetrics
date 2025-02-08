@@ -105,25 +105,10 @@ jobs:
           GCC_PATH=$(brew --prefix gcc)
           SDK_PATH=$(xcrun --show-sdk-path)
 
-          # For example:
           GCC_BIN=gcc-14
           GXX_BIN=g++-14
 
-          # Check architecture to pick the right FLIBS
-          ARCH=$(uname -m)
-          if [ "$ARCH" = "x86_64" ]; then
-            FLIBS="/opt/gfortran/lib/gcc/x86_64-apple-darwin20.0/14.2.0/libemutls_w.a \
-            /opt/gfortran/lib/gcc/x86_64-apple-darwin20.0/14.2.0/libheapt_w.a \
-            -L/Library/Frameworks/R.framework/Resources/lib -lgfortran.5 -lquadmath.0"
-          else
-            # For Apple Silicon (aarch64)
-            FLIBS="/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0/libemutls_w.a \
-            /opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0/libheapt_w.a \
-            -L/Library/Frameworks/R.framework/Resources/lib -lgfortran.5 -lquadmath.0"
-          fi
-
           cat << EOF > ~/.R/Makevars
-
           # Compiler settings
           CC=${GCC_PATH}/bin/${GCC_BIN}
           CXX=${GCC_PATH}/bin/${GXX_BIN}
@@ -131,7 +116,8 @@ jobs:
           CXX14=${GCC_PATH}/bin/${GXX_BIN}
           CXX17=${GCC_PATH}/bin/${GXX_BIN}
           CXX20=${GCC_PATH}/bin/${GXX_BIN}
-          
+
+          # Compiler flags
           CPPFLAGS=-isysroot ${SDK_PATH}
           CFLAGS=-O3 -pedantic
           CXXFLAGS=-O3 -pedantic
@@ -140,9 +126,9 @@ jobs:
           LDFLAGS=-L${GCC_PATH}/lib -lgfortran -lm -isysroot ${SDK_PATH}
 
           # Fortran configuration
-          FC=${GCC_PATH}/bin/gfortran
-          F77=${GCC_PATH}/bin/gfortran
-          FLIBS=${FLIBS}
+          FC=$(brew --prefix gfortran)/bin/gfortran
+          F77=$(brew --prefix gfortran)/bin/gfortran
+          FLIBS=-L$(brew --prefix gfortran)/lib -lgfortran -lquadmath
           EOF
 
       - name: Setup R
