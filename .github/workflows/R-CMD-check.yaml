@@ -27,14 +27,17 @@ jobs:
           - {os: ubuntu-latest,   r: 'oldrel-1',  compiler: 'default'}
 
           # Windows
+          - {os: windows-latest,  r: 'devel',     compiler: 'default'}
           - {os: windows-latest,  r: 'release',   compiler: 'default'}
           - {os: windows-latest,  r: 'oldrel-1',  compiler: 'default'}
 
           # macOS Clang
+          - {os: macos-latest,    r: 'devel',     compiler: 'clang'}
           - {os: macos-latest,    r: 'release',   compiler: 'clang'}
           - {os: macos-latest,    r: 'oldrel-1',  compiler: 'clang'}
 
           # macOS GCC via Homebrew
+          - {os: macos-latest,    r: 'devel',     compiler: 'gcc'}
           - {os: macos-latest,    r: 'release',   compiler: 'gcc'}
           - {os: macos-latest,    r: 'oldrel-1',  compiler: 'gcc'}
 
@@ -88,6 +91,39 @@ jobs:
 
           # Linker flags
           LDFLAGS=-L\${OMP_LIB} -L${GCC_PATH}/lib -lomp -lgfortran -lm -isysroot ${SDK_PATH}
+
+          # Fortran configuration
+          FC=$(brew --prefix gfortran)/bin/gfortran
+          F77=$(brew --prefix gfortran)/bin/gfortran
+          FLIBS=-L$(brew --prefix gfortran)/lib -lgfortran -lquadmath
+          EOF
+
+      - name: Configure Makevars (macOS-clang)
+        if: runner.os == 'macOS' && matrix.config.compiler == 'clang'
+        run: |
+          mkdir -p ~/.R
+          GCC_PATH=$(brew --prefix gcc)
+          SDK_PATH=$(xcrun --show-sdk-path)
+
+          GCC_BIN=gcc-14
+          GXX_BIN=g++-14
+
+          cat << EOF > ~/.R/Makevars
+          # Compiler settings
+          CC=${GCC_PATH}/bin/${GCC_BIN}
+          CXX=${GCC_PATH}/bin/${GXX_BIN}
+          CXX11=${GCC_PATH}/bin/${GXX_BIN}
+          CXX14=${GCC_PATH}/bin/${GXX_BIN}
+          CXX17=${GCC_PATH}/bin/${GXX_BIN}
+          CXX20=${GCC_PATH}/bin/${GXX_BIN}
+
+          # Compiler flags
+          CPPFLAGS=-isysroot ${SDK_PATH}
+          CFLAGS=-O3 -pedantic
+          CXXFLAGS=-O3 -pedantic
+
+          # Linker flags
+          LDFLAGS=-L${GCC_PATH}/lib -lgfortran -lm -isysroot ${SDK_PATH}
 
           # Fortran configuration
           FC=$(brew --prefix gfortran)/bin/gfortran
