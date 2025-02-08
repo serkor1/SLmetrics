@@ -3,6 +3,8 @@
 # target functions.
 
 testthat::test_that(desc = "Test `entropy()`-function", code = {
+
+  testthat::skip_on_cran()
   
   wrapped_logloss <- function(
     actual, 

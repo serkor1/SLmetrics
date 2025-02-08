@@ -5,6 +5,8 @@
 testthat::test_that(
   desc = "Test `rsq()` function", code = {
 
+    testthat::skip_on_cran()
+
     # 0) construct Coefficient Of Determination
     # wrapper
     wrapped_rsq <- function(

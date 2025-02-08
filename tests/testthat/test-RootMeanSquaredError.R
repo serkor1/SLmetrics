@@ -5,6 +5,8 @@
 testthat::test_that(
   desc = "Test `rmse()`-function", code = {
 
+    testthat::skip_on_cran()
+
     # 0) construct rmse-wrapperr
     wrapped_rmse <- function(
       actual,

@@ -5,6 +5,8 @@
 testthat::test_that(
   desc = "Test `mpe()`-function", code = {
 
+    testthat::skip_on_cran()
+
     # 0) construct mpe-wrapperr
     wrapped_mpe <- function(
       actual,

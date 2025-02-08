@@ -5,6 +5,8 @@
 testthat::test_that(
   desc = "Test that S3 methods returns the same values for classification metrics (balanced)", code = {
 
+    testthat::skip_on_cran()
+
     # 1) generate class
     # values
     actual    <- create_factor(balanced = TRUE)
@@ -115,6 +117,8 @@ testthat::test_that(
 
 testthat::test_that(
   desc = "Test that S3 methods returns the same values for classification metrics (imbalanced)", code = {
+
+    testthat::skip_on_cran()
 
     # 1) generate class
     # values

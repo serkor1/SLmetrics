@@ -5,6 +5,8 @@
 testthat::test_that(
   desc = "Test `zerooneloss()`-function", code = {
 
+    testthat::skip_on_cran()
+
     # 0) construct zerooneloss
     # wrapper
     wrapped_zerooneloss <- function(

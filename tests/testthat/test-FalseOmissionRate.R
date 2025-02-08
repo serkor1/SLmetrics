@@ -5,6 +5,8 @@
 testthat::test_that(
   desc = "Test `fer()`-function", code = {
 
+    testthat::skip_on_cran()
+
     # 0) construct Balanced Accuracy
     # wrapper
     wrapped_fer <- function(
