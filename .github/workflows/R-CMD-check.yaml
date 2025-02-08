@@ -98,7 +98,7 @@ jobs:
           FLIBS=-L$(brew --prefix gfortran)/lib -lgfortran -lquadmath
           EOF
 
-      - name: Configure Makecars (macOS-clang)
+      - name: Configure Makevars (macOS-clang)
         if: runner.os == 'macOS' && matrix.config.compiler == 'clang'
         run: |
           mkdir -p ~/.R
