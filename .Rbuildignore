@@ -28,3 +28,4 @@ README_cache
 README_files
 NEWS_cache
 NEWS_files
+^CRAN-SUBMISSION$

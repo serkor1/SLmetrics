@@ -1,15 +1,15 @@
 
 
-> Version 0.3-2 is considered pre-release of {SLmetrics}. We do not
-> expect any breaking changes, unless a major bug/issue is reported and
-> its nature forces breaking changes.
-
 # Version 0.4-0
 
 ## :rocket: Initial CRAN submission
 
 - **DESCRIPTION:** Added urls to bug-reports, online docs and
   repository.
+
+> Version 0.3-2 is considered pre-release of {SLmetrics}. We do not
+> expect any breaking changes, unless a major bug/issue is reported and
+> its nature forces breaking changes.
 
 # Version 0.3-2
 
