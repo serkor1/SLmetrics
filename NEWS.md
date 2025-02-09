@@ -4,6 +4,13 @@
 > expect any breaking changes, unless a major bug/issue is reported and
 > its nature forces breaking changes.
 
+# Version 0.4-0
+
+## :rocket: Initial CRAN submission
+
+- **DESCRIPTION:** Added urls to bug-reports, online docs and
+  repository.
+
 # Version 0.3-2
 
 ## :rocket: Improvements
@@ -34,7 +41,7 @@ suppressMessages(
 ## number of available
 ## threads
 SLmetrics::openmp.threads()
-#> [1] 24
+#> [1] 16
 ```
 
 ## :bug: Bug-fixes
@@ -197,11 +204,11 @@ cat(
   sep = "\n"
 )
 #> Mean Relative Root Mean Squared Error
-#> -44.04587
+#> 12.29876
 #> Range Relative Root Mean Squared Error
-#> 0.1353589
+#> 0.1515001
 #> IQR Relative Root Mean Squared Error
-#> 0.7141406
+#> 0.7323727
 ```
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
@@ -278,9 +285,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a  7  9  8
-#> b 13 14  9
-#> c 15 14 11
+#> a 16  8 12
+#> b 12 14 11
+#> c  5 10 12
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -288,10 +295,10 @@ SLmetrics::weighted.cmatrix(
     predicted = predicted,
     w         = weights
 )
-#>          a        b        c
-#> a 3.839868 4.325252 4.988679
-#> b 7.870727 7.305495 3.519039
-#> c 6.457460 5.404790 4.341409
+#>           a         b         c
+#> a 10.505155  3.930238  6.119004
+#> b  5.811853  7.720768  6.674565
+#> c  2.366034  4.627827  6.797019
 ```
 
 ## :bug: Bug-fixes
@@ -326,9 +333,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a 17 12 12
-#> b 13 10  7
-#> c 12  9  8
+#> a 10 11 10
+#> b 13 11 11
+#> c 11 12 11
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -337,9 +344,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 6.147879 6.110632 6.105292
-#> b 5.906721 4.768532 3.620641
-#> c 6.412300 3.722566 2.991023
+#> a 4.840266 7.120781 5.213322
+#> b 4.727092 7.376367 6.321460
+#> c 6.330815 5.097803 7.505916
 ```
 
 Calculating weighted metrics manually or by using
@@ -359,7 +366,7 @@ confusion_matrix <- SLmetrics::cmatrix(
 SLmetrics::accuracy(
     confusion_matrix
 )
-#> [1] 0.35
+#> [1] 0.32
 
 # 3) calculate the weighted
 # accuracy manually
@@ -368,7 +375,7 @@ SLmetrics::weighted.accuracy(
     predicted = predicted,
     w         = weights
 )
-#> [1] 0.3037514
+#> [1] 0.3616572
 ```
 
 Please note, however, that it is not possible to pass `cmatix()`-into
@@ -442,11 +449,11 @@ w         <- runif(n = 1e3)
 
 # 2) unweighted metrics
 SLmetrics::rmse(actual, predicted)
-#> [1] 0.9891275
+#> [1] 0.9911456
 
 # 3) weighted metrics
 SLmetrics::weighted.rmse(actual, predicted, w = w)
-#> [1] 0.9784827
+#> [1] 0.9956158
 ```
 
 - The `rrmse()`-function have been removed in favor of the
@@ -565,7 +572,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-#>  [1] b b b a c c b a a b
+#>  [1] a b b a a c c c a a
 #> Levels: a b c
 
 # 2) predicted classes
@@ -574,7 +581,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-#>  [1] c a b b c c b a c a
+#>  [1] b b b c a a b c c c
 #> Levels: a b c
 ```
 
@@ -591,16 +598,16 @@ summary(
 #> Confusion Matrix (3 x 3) 
 #> ================================================================================
 #>   a b c
-#> a 1 1 1
-#> b 2 2 1
-#> c 0 0 2
+#> a 1 1 3
+#> b 0 2 0
+#> c 1 1 1
 #> ================================================================================
 #> Overall Statistics (micro average)
-#>  - Accuracy:          0.50
-#>  - Balanced Accuracy: 0.58
-#>  - Sensitivity:       0.50
-#>  - Specificity:       0.75
-#>  - Precision:         0.50
+#>  - Accuracy:          0.40
+#>  - Balanced Accuracy: 0.51
+#>  - Sensitivity:       0.40
+#>  - Specificity:       0.70
+#>  - Precision:         0.40
 
 # 2) calculate false positive
 # rate using micro average
@@ -608,7 +615,7 @@ SLmetrics::fpr(
     confusion_matrix
 )
 #>         a         b         c 
-#> 0.2857143 0.2000000 0.2500000
+#> 0.2000000 0.2500000 0.4285714
 ```
 
 ### Supervised regression metrics
@@ -628,5 +635,5 @@ SLmetrics::huberloss(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.3714747
+#> [1] 0.5027638
 ```
