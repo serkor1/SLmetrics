@@ -1,3 +1,21 @@
+# Reference fbeta-score
+ref_fbeta <- function(
+  actual,
+  predicted,
+  w = NULL,
+  micro = NULL,
+  na.rm = TRUE,
+  beta = 1) {
+  generalized_metric(
+    actual      = actual,
+    predicted   = predicted,
+    w           = w,
+    micro       = micro,
+    na.rm       = na.rm,
+    metric_expr = ((1 + beta^2) * TP) / (((1 + beta^2) * TP) + (beta^2 * FN) + FP)
+  )
+}
+
 # Reference Precision
 ref_precision <- function(
   actual,
