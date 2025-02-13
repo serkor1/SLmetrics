@@ -66,12 +66,12 @@ testthat::test_that(
 
           # 2.4) test that the values
           # are equal to target value
-          testthat::skip_if(
-            correction  & weighted, 
-            message = paste(
-              "ccc skipped for", info, "(Error is being investigated)"
-            )
-          )
+          # testthat::skip_if(
+          #   correction  & weighted, 
+          #   message = paste(
+          #     "ccc skipped for", info, "(Error is being investigated)"
+          #   )
+          # )
 
           # 2.4.1) calculate py_score
           py_score <- py_ccc(
