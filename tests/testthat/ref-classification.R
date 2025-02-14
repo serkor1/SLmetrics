@@ -6,14 +6,17 @@ ref_fbeta <- function(
   micro = NULL,
   na.rm = TRUE,
   beta = 1) {
+  
   generalized_metric(
     actual      = actual,
     predicted   = predicted,
     w           = w,
     micro       = micro,
     na.rm       = na.rm,
-    metric_expr = ((1 + beta^2) * TP) / (((1 + beta^2) * TP) + (beta^2 * FN) + FP)
+    metric_expr = ((1 + beta^2) * TP) / (((1 + beta^2) * TP) + (beta^2 * FN) + FP),
+    beta        = beta
   )
+
 }
 
 # Reference Precision
