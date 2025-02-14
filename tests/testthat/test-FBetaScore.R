@@ -82,7 +82,7 @@ testthat::test_that(
             actual    = actual,
             predicted = predicted,
             beta      = beta,
-            micro     = micro,
+            micro     = if (is.na(micro)) { NULL } else micro,
             w         = if (weighted) w else NULL
           )
             
