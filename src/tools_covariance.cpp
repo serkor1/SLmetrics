@@ -7,9 +7,9 @@ using namespace Rcpp;
 //' @method cov.wt matrix
 //' @export
 // [[Rcpp::export(cov.wt.matrix)]]
-Rcpp::List covariance_matrix(const Rcpp::NumericMatrix& x) {
+Rcpp::List covariance_matrix(const Rcpp::NumericMatrix& x, bool cor = false) {
 
-    return Covariance::cov<Rcpp::NumericMatrix>(x);
+    return Covariance::cov<Rcpp::NumericMatrix>(x, cor);
 
 }
 
@@ -17,8 +17,8 @@ Rcpp::List covariance_matrix(const Rcpp::NumericMatrix& x) {
 //' @method cov.wt data.frame
 //' @export
 // [[Rcpp::export(cov.wt.data.frame)]]
-Rcpp::List covariance_dataframe(const Rcpp::DataFrame& x) {
+Rcpp::List covariance_dataframe(const Rcpp::DataFrame& x, bool cor = false) {
 
-    return Covariance::cov<Rcpp::DataFrame>(x);
+    return Covariance::cov<Rcpp::DataFrame>(x, cor);
 
 }

@@ -1607,24 +1607,26 @@ BEGIN_RCPP
 END_RCPP
 }
 // covariance_matrix
-Rcpp::List covariance_matrix(const Rcpp::NumericMatrix& x);
-RcppExport SEXP _SLmetrics_covariance_matrix(SEXP xSEXP) {
+Rcpp::List covariance_matrix(const Rcpp::NumericMatrix& x, bool cor);
+RcppExport SEXP _SLmetrics_covariance_matrix(SEXP xSEXP, SEXP corSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(covariance_matrix(x));
+    Rcpp::traits::input_parameter< bool >::type cor(corSEXP);
+    rcpp_result_gen = Rcpp::wrap(covariance_matrix(x, cor));
     return rcpp_result_gen;
 END_RCPP
 }
 // covariance_dataframe
-Rcpp::List covariance_dataframe(const Rcpp::DataFrame& x);
-RcppExport SEXP _SLmetrics_covariance_dataframe(SEXP xSEXP) {
+Rcpp::List covariance_dataframe(const Rcpp::DataFrame& x, bool cor);
+RcppExport SEXP _SLmetrics_covariance_dataframe(SEXP xSEXP, SEXP corSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::DataFrame& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(covariance_dataframe(x));
+    Rcpp::traits::input_parameter< bool >::type cor(corSEXP);
+    rcpp_result_gen = Rcpp::wrap(covariance_dataframe(x, cor));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1791,8 +1793,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_weighted_rrse", (DL_FUNC) &_SLmetrics_weighted_rrse, 3},
     {"_SLmetrics_smape", (DL_FUNC) &_SLmetrics_smape, 2},
     {"_SLmetrics_weighted_smape", (DL_FUNC) &_SLmetrics_weighted_smape, 3},
-    {"_SLmetrics_covariance_matrix", (DL_FUNC) &_SLmetrics_covariance_matrix, 1},
-    {"_SLmetrics_covariance_dataframe", (DL_FUNC) &_SLmetrics_covariance_dataframe, 1},
+    {"_SLmetrics_covariance_matrix", (DL_FUNC) &_SLmetrics_covariance_matrix, 2},
+    {"_SLmetrics_covariance_dataframe", (DL_FUNC) &_SLmetrics_covariance_dataframe, 2},
     {"_SLmetrics_enable_openmp", (DL_FUNC) &_SLmetrics_enable_openmp, 0},
     {"_SLmetrics_disable_openmp", (DL_FUNC) &_SLmetrics_disable_openmp, 0},
     {"_SLmetrics_available_threads", (DL_FUNC) &_SLmetrics_available_threads, 0},

@@ -2,6 +2,7 @@
 #define tools_covariance
 
 #include "utilities_Package.h"
+#include <cmath>
 
 /**
 * @namespace dimensions
@@ -97,7 +98,7 @@ class Covariance {
     public:
         
         template <typename T>
-        static Rcpp::List cov(const T &x) {
+        static Rcpp::List cov(const T &x, bool cor) {
 
             // 1) dimensions and names of the input
             const int n = dimensions::nrows(x);
@@ -111,7 +112,6 @@ class Covariance {
             Rcpp::NumericMatrix covariance_matrix(k, k);
 
             // 4) compute column means
-            // std::vector<double> means(k, 0.0);
             Rcpp::NumericVector means(k, 0.0);
 
             #ifdef _OPENMP
@@ -188,13 +188,47 @@ class Covariance {
             // means
             means.attr("names") = names;
 
+            // 8) return correlation
+            // if desired
+
+            if (cor) {
+                // 8.1) construct correlation matrix
+                Rcpp::NumericMatrix correlation_matrix(k, k);
+
+                // Get pointers to the raw data.
+                double* cov_ptr = covariance_matrix.begin();
+                double* cor_ptr = correlation_matrix.begin();
+
+                for (int j = 0; j < k; ++j) {
+
+                    double sd_j = std::sqrt(cov_ptr[j + j * k]);
+
+                    for (int i = 0; i < k; ++i) {
+                        double sd_i = std::sqrt(cov_ptr[i + i * k]);
+                        cor_ptr[i + j * k] = cov_ptr[i + j * k] / (sd_i * sd_j);
+                    }
+                }
+
+                // 6) set names of the
+                // covariance matrix
+                Rcpp::rownames(correlation_matrix) = names;
+                Rcpp::colnames(correlation_matrix) = names;
+
+                return Rcpp::List::create(
+                    Rcpp::_["cov"]    = covariance_matrix,
+                    Rcpp::_["center"] = means,
+                    Rcpp::_["n.obs"]  = n,
+                    Rcpp::_["cor"]    = correlation_matrix);
+            }
+
             // 8) return as Rcpp::List
             return Rcpp::List::create(
-                Rcpp::_["cov"]    = covariance_matrix,
-                Rcpp::_["center"] = means,
-                Rcpp::_["n.obs"]  = n
-            );
+                    Rcpp::_["cov"]   = covariance_matrix,
+                    Rcpp::_["center"] = means,
+                    Rcpp::_["n.obs"]  = n);
         }
+            
+        
 }; 
 
 #endif

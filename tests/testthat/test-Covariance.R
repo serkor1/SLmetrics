@@ -14,22 +14,27 @@ testthat::test_that(
     predicted <- values$predicted
     w         <- values$weight
 
-    # 2) set equal with
-    # cov.wt
-    testthat::expect_equal(
-      object = SLmetrics:::cov.wt(
-        cbind(
-          actual,
-          predicted
-        )
-      ),
-      expected = stats::cov.wt(
-        cbind(
-          actual,
-          predicted
+    for (cor in c(TRUE, FALSE)) {
+      # 2) set equal with
+      # cov.wt
+      testthat::expect_equal(
+        object = SLmetrics:::cov.wt(
+          cbind(
+            actual,
+            predicted
+          ),
+          cor = cor
+        ),
+        expected = stats::cov.wt(
+          cbind(
+            actual,
+            predicted
+          ),
+          cor = cor
         )
       )
-    )
+    }
+    
 
     
   }
