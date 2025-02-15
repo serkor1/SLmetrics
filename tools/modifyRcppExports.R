@@ -28,7 +28,7 @@ updated_content <- gsub("na_rm)", "na_rm = na.rm)", updated_content)
 foo_update <- as.vector(
   outer(
     "[a-z]*",
-     c("factor", "numeric", "default", "matrix"),
+     c("factor", "numeric", "default", "matrix", "data.frame"),
      paste, 
      sep = "."
   )

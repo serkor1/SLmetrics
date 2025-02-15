@@ -21,6 +21,28 @@ knitr:
 
 * **DESCRIPTION:** Added urls to bug-reports, online docs and repository.
 
+## :fire: New features
+
+### :hammer: Metric tools
+
+A new family of `Tools`-functions are introduced with this update. This addition introduces unexported functions for constructing fast and memory efficient proprietary metrics. These functions are re-written built-in functions from {stats} and family.
+
+* **Covariance Matrix:** A re-written `stats::cov.wt()`, using `Rcpp`. Example usage:
+
+```{r}
+## generate values
+actual    <- c(1.2,  0.3, 0.56, 0.11, 1.01)
+predicted <- c(0.9, 0.22, 0.76, 0.21, 1.1) 
+
+## generate covariance matrix
+SLmetrics:::cov.wt(
+    cbind(
+        actual,
+        predicted
+    )
+)
+```
+
 > Version 0.3-2 is considered pre-release of {SLmetrics}. We do not
 > expect any breaking changes, unless a major bug/issue is reported and its nature
 > forces breaking changes.
