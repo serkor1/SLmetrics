@@ -846,15 +846,15 @@ weighted.smape.numeric <- function(actual, predicted, w, ...) {
 #' @rdname cov.wt
 #' @method cov.wt matrix
 #' @export
-cov.wt.matrix <- function(x, cor = FALSE, ...) {
-    .Call(`_SLmetrics_covariance_matrix`, x, cor)
+cov.wt.matrix <- function(x, wt = NULL, cor = FALSE, center = TRUE, method = "unbiased", ...) {
+    .Call(`_SLmetrics_covariance_matrix`, x, wt, cor, center, method)
 }
 
 #' @rdname cov.wt
 #' @method cov.wt data.frame
 #' @export
-cov.wt.data.frame <- function(x, cor = FALSE, ...) {
-    .Call(`_SLmetrics_covariance_dataframe`, x, cor)
+cov.wt.data.frame <- function(x, wt = NULL, cor = FALSE, center = TRUE, method = "unbiased", ...) {
+    .Call(`_SLmetrics_covariance_dataframe`, x, wt, cor, center, method)
 }
 
 .enable_openmp <- function() {

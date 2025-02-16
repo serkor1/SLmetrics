@@ -10,7 +10,13 @@
 #' @param ... Arguments passed into other methods
 #' 
 #' @family Tools
-cov.wt <- function(x, cor = FALSE, ...) {
+cov.wt <- function(
+  x,
+  wt  = NULL,
+  cor = FALSE,
+  center = TRUE,
+  method = c("unbiased", "ML"),
+  ...) {
   UseMethod(
     generic = "cov.wt",
     object  = x

@@ -14,25 +14,59 @@ testthat::test_that(
     predicted <- values$predicted
     w         <- values$weight
 
+     
+
     for (cor in c(TRUE, FALSE)) {
-      # 2) set equal with
-      # cov.wt
-      testthat::expect_equal(
-        object = SLmetrics:::cov.wt(
-          cbind(
-            actual,
-            predicted
-          ),
-          cor = cor
-        ),
-        expected = stats::cov.wt(
-          cbind(
-            actual,
-            predicted
-          ),
-          cor = cor
-        )
-      )
+      for (weighted in c(TRUE, FALSE)) {
+        for (center in c(TRUE, FALSE)) {
+          for (method in c("unbiased", "ML")) {
+
+
+            # 1) expected value
+            if (weighted) {
+              expected_value <- stats::cov.wt(
+                cbind(
+                  actual,
+                  predicted
+                ),
+                wt = w,
+                cor = cor,
+                center = center,
+                method = method
+              )
+            } else {
+              expected_value <- stats::cov.wt(
+                cbind(
+                  actual,
+                  predicted
+                ),
+                cor = cor,
+                center = center,
+                method = method
+              )
+            }
+
+
+            # 2) set equal with
+            # cov.wt
+            testthat::expect_equal(
+              object = SLmetrics:::cov.wt(
+                cbind(
+                  actual,
+                  predicted
+                ),
+                wt  = if (weighted) w else NULL,
+                cor = cor,
+                center = center,
+                method = method
+              ),
+              expected = expected_value
+            )
+
+
+          }
+        }
+      }
     }
     
 

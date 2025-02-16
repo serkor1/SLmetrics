@@ -87,148 +87,353 @@ namespace pointers {
 
 /**
 * @class Covariance
-* @brief This class returns a Rcpp::List similar to `cov.wt()`
-*
-* TODO: Convert to @struct to use internally, and return it as a Rcpp::List on the R-side
-* TODO: Find a better name for the @class ¯\_(ツ)_/¯
-* TODO: Implement a weighted version
-* TODO: Optimize its parallelization
+* @brief A class with static methods for weighted/unweighted covariance
 */
 class Covariance {
     public:
-        
+
+        // Unweighted Covariance Matrrix
         template <typename T>
-        static Rcpp::List cov(const T &x, bool cor) {
+        static Rcpp::List cov(
+            const T& x,
+            bool cor = false,
+            bool center = true,
+            const std::string& method = "unbiased") {
+                    
+                // 1) Dimensions and pointers
+                const int n = dimensions::nrows(x);
+                const int k = dimensions::ncols(x);
+                Rcpp::CharacterVector names = dimensions::names(x);
+                std::vector<const double*> cols = pointers::col(x);
 
-            // 1) dimensions and names of the input
-            const int n = dimensions::nrows(x);
-            const int k = dimensions::ncols(x);
-            const Rcpp::CharacterVector names = dimensions::names(x);
+                // 2) Prepare output objects
+                Rcpp::NumericMatrix covariance_matrix(k, k);
+                Rcpp::NumericVector means(k, 0.0);
 
-            // 2) get column pointers
-            std::vector<const double*> col_ptrs = pointers::col(x);
-
-            // 3) prepare output
-            Rcpp::NumericMatrix covariance_matrix(k, k);
-
-            // 4) compute column means
-            Rcpp::NumericVector means(k, 0.0);
-
-            #ifdef _OPENMP
-                if (getUseOpenMP()) {
-                    #pragma omp parallel for
-                    for (int j = 0; j < k; j++) {
-                        double sum = 0.0;
-                        const double* col_ptr = col_ptrs[j];
-                        for (int i = 0; i < n; i++) {
-                            sum += col_ptr[i];
-                        }
-                        means[j] = sum / n;
-                    }
-                } else 
-            #endif
-                {
-                    for (int j = 0; j < k; j++) {
-                        double sum = 0.0;
-                        const double* col_ptr = col_ptrs[j];
-                        for (int i = 0; i < n; i++) {
-                            sum += col_ptr[i];
-                        }
-                        means[j] = sum / n;
-                    }
+                // 3) Denominator
+                int denom = 1;
+                bool unbiased = (method == "unbiased");
+                if (unbiased) {
+                    denom = n - 1;
+                } else {
+                    denom = n;
                 }
 
-            // 5) calculate covariances
-            #ifdef _OPENMP
+                if (center) {
+                    // Optionally parallel outside the loop
+                    #ifdef _OPENMP
+                    if (getUseOpenMP()) {
+                        #pragma omp parallel for
+                        for (int j = 0; j < k; j++) {
+                            const double* colj = cols[j];
+                            double sumj = 0.0;
+                            // pointer-based accumulation
+                            const double* p = colj;
+                            const double* pEnd = colj + n;
+                            while (p < pEnd) {
+                                sumj += *p++;
+                            }
+                            means[j] = sumj / n;
+                        }
+                    } else
+                    #endif
+                    {
+                        for (int j = 0; j < k; j++) {
+                            const double* colj = cols[j];
+                            double sumj = 0.0;
+                            const double* p = colj;
+                            const double* pEnd = colj + n;
+                            while (p < pEnd) {
+                                sumj += *p++;
+                            }
+                            means[j] = sumj / n;
+                        }
+                    }
+                    means.attr("names") = names;
+                }
+
+                #ifdef _OPENMP
                 if (getUseOpenMP()) {
                     #pragma omp parallel for
                     for (int i = 0; i < k; i++) {
                         for (int j = i; j < k; j++) {
-                            double sum = 0.0;
-                            const double* xi = col_ptrs[i];
-                            const double* xj = col_ptrs[j];
+                            double sum_ij = 0.0;
+                            const double* xi = cols[i];
+                            const double* xj = cols[j];
                             double mi = means[i];
                             double mj = means[j];
 
-                            for (int row = 0; row < n; row++) {
-                                sum += (xi[row] - mi) * (xj[row] - mj);
+                            const double* px = xi;
+                            const double* py = xj;
+                            const double* px_end = xi + n;
+
+                            if (center) {
+                                while (px < px_end) {
+                                    double diff_i = (*px++) - mi;
+                                    double diff_j = (*py++) - mj;
+                                    sum_ij += diff_i * diff_j;
+                                }
+                            } else {
+                                // no-centering path
+                                while (px < px_end) {
+                                    sum_ij += (*px++) * (*py++);
+                                }
                             }
-                            double cov = sum / (n - 1);
-                            covariance_matrix(i, j) = cov;
-                            covariance_matrix(j, i) = cov;
+
+                            double cov_val = sum_ij / denom;
+                            covariance_matrix(i, j) = cov_val;
+                            covariance_matrix(j, i) = cov_val;
                         }
                     }
                 } else
-            #endif
+                #endif
                 {
                     for (int i = 0; i < k; i++) {
                         for (int j = i; j < k; j++) {
-                            double sum = 0.0;
-                            const double* xi = col_ptrs[i];
-                            const double* xj = col_ptrs[j];
+                            double sum_ij = 0.0;
+                            const double* xi = cols[i];
+                            const double* xj = cols[j];
                             double mi = means[i];
                             double mj = means[j];
 
-                            for (int row = 0; row < n; row++) {
-                                sum += (xi[row] - mi) * (xj[row] - mj);
+                            const double* px = xi;
+                            const double* py = xj;
+                            const double* px_end = xi + n;
+                            if (center) {
+                                while (px < px_end) {
+                                    double diff_i = (*px++) - mi;
+                                    double diff_j = (*py++) - mj;
+                                    sum_ij += diff_i * diff_j;
+                                }
+                            } else {
+                                while (px < px_end) {
+                                    sum_ij += (*px++) * (*py++);
+                                }
                             }
-                            double cov = sum / (n - 1);
-                            covariance_matrix(i, j) = cov;
-                            covariance_matrix(j, i) = cov;
+
+                            double cov_val = sum_ij / denom;
+
+                            covariance_matrix(i, j) = cov_val;
+                            covariance_matrix(j, i) = cov_val;
                         }
                     }
                 }
-            
-            // 6) set names of the
-            // covariance matrix
-            Rcpp::rownames(covariance_matrix) = names;
-            Rcpp::colnames(covariance_matrix) = names;
 
-            // 7) set names of the 
-            // means
-            means.attr("names") = names;
+                // 6) Set row/col names
+                Rcpp::rownames(covariance_matrix) = names;
+                Rcpp::colnames(covariance_matrix) = names;
 
-            // 8) return correlation
-            // if desired
 
-            if (cor) {
-                // 8.1) construct correlation matrix
-                Rcpp::NumericMatrix correlation_matrix(k, k);
+                if (cor) {
 
-                // Get pointers to the raw data.
-                double* cov_ptr = covariance_matrix.begin();
-                double* cor_ptr = correlation_matrix.begin();
+                    Rcpp::NumericMatrix correlation_matrix(k, k);
+                    double* cov_ptr = covariance_matrix.begin();
+                    double* cor_ptr = correlation_matrix.begin();
 
-                for (int j = 0; j < k; ++j) {
+                    for (int j = 0; j < k; j++) {
+                        double sd_j = std::sqrt(cov_ptr[j + (size_t)j * k]);
+                        for (int i = 0; i < k; i++) {
+                            double sd_i = std::sqrt(cov_ptr[i + (size_t)i * k]);
+                            cor_ptr[i + (size_t)j * k] =
+                                cov_ptr[i + (size_t)j * k] / (sd_i * sd_j);
+                        }
+                    }
 
-                    double sd_j = std::sqrt(cov_ptr[j + j * k]);
+                    Rcpp::rownames(correlation_matrix) = names;
+                    Rcpp::colnames(correlation_matrix) = names;
 
-                    for (int i = 0; i < k; ++i) {
-                        double sd_i = std::sqrt(cov_ptr[i + i * k]);
-                        cor_ptr[i + j * k] = cov_ptr[i + j * k] / (sd_i * sd_j);
+                    return Rcpp::List::create(
+                        Rcpp::_["cov"]    = covariance_matrix,
+                        Rcpp::_["center"] = center ? means : Rcpp::NumericVector::create(0.0),
+                        Rcpp::_["n.obs"]  = n,
+                        Rcpp::_["cor"]    = correlation_matrix);
+                }
+
+                // 8) Return
+                return Rcpp::List::create(
+                    Rcpp::_["cov"]    = covariance_matrix,
+                    Rcpp::_["center"] = center ? means : Rcpp::NumericVector::create(0.0),
+                    Rcpp::_["n.obs"]  = n);
+        }
+
+        template <typename T>
+        static Rcpp::List cov(
+            const T& x,
+            Rcpp::NumericVector& wt,
+            bool cor = false,
+            bool center = true,
+            const std::string& method = "unbiased") {
+
+                // 1) Dimensions and pointers
+                const int n = dimensions::nrows(x);
+                const int k = dimensions::ncols(x);
+                Rcpp::CharacterVector names = dimensions::names(x);
+                std::vector<const double*> cols = pointers::col(x);
+
+                // 2) Output objects
+                Rcpp::NumericMatrix covariance_matrix(k, k);
+                Rcpp::NumericVector means(k, 0.0);
+
+                // 3) Sum of raw weights
+                double sum_w = 0.0;
+                {
+                    const double* w_ptr = wt.begin();
+                    const double* w_end = w_ptr + n;
+                    while (w_ptr < w_end) {
+                        sum_w += *w_ptr++;
+                    }
+                }
+                double inv_sum_w = 1.0 / sum_w;
+
+                // 4) Normalize Weights
+                double sum_w_sq = 0.0;
+                {
+                    double* w_ptr = wt.begin();
+                    double* w_end = w_ptr + n;
+
+                    if (center) {
+                        while (w_ptr < w_end) {
+                            double w_value = *w_ptr;
+                            w_value *= inv_sum_w; 
+                            *w_ptr++ = w_value;  
+                            sum_w_sq += (w_value * w_value);
+                        }
+
+                        for (int j = 0; j < k; j++) {
+                            const double* x_col = cols[j];
+                            const double* x_end = x_col + n;
+                            const double* w_col = wt.begin();
+                            double sum_j = 0.0;
+                            while (x_col < x_end) {
+                                sum_j += (*x_col++) * (*w_col++);
+                            }
+                            means[j] = sum_j;
+                        }
+                    } else {
+
+                        while (w_ptr < w_end) {
+                            double w_value = *w_ptr;
+                            w_value *= inv_sum_w;
+                            *w_ptr++ = w_value;
+                            sum_w_sq += (w_value * w_value);
+                        }
                     }
                 }
 
-                // 6) set names of the
-                // covariance matrix
-                Rcpp::rownames(correlation_matrix) = names;
-                Rcpp::colnames(correlation_matrix) = names;
+                // 5) Denominator
+                bool unbiased = (method == "unbiased");
+                double denom = 1.0;
+                if (unbiased) {
+                    denom = 1.0 - sum_w_sq;
+                } else {
+                    denom = 1.0;
+                }
 
+                #ifdef _OPENMP
+                if (getUseOpenMP()) {
+                    #pragma omp parallel for
+                    for (int i = 0; i < k; i++) {
+                        for (int j = i; j < k; j++) {
+                            double sum_ij = 0.0;
+                            double mi = means[i];
+                            double mj = means[j];
+                            const double* xi = cols[i];
+                            const double* xj = cols[j];
+                            const double* xiEnd = xi + n;
+                            const double* w_ptr = wt.begin();
+
+                            if (center) {
+                                while (xi < xiEnd) {
+                                    double w_value = *w_ptr++;
+                                    double diff_i = (*xi++) - mi;
+                                    double diff_j = (*xj++) - mj;
+                                    sum_ij += w_value * diff_i * diff_j;
+                                }
+                            } else {
+                                while (xi < xiEnd) {
+                                    double w_value = *w_ptr++;
+                                    sum_ij += w_value * (*xi++) * (*xj++);
+                                }
+                            }
+
+                            double cov_val = sum_ij / denom;
+                            covariance_matrix(i, j) = cov_val;
+                            covariance_matrix(j, i) = cov_val;
+
+                        }
+                    }
+                } else
+                #endif
+                {
+                    for (int i = 0; i < k; i++) {
+                        for (int j = i; j < k; j++) {
+                            double sum_ij = 0.0;
+                            double mi = means[i];
+                            double mj = means[j];
+                            const double* xi = cols[i];
+                            const double* xj = cols[j];
+                            const double* xiEnd = xi + n;
+                            const double* w_ptr = wt.begin();
+
+                            if (center) {
+                                while (xi < xiEnd) {
+                                    double w_value = *w_ptr++;
+                                    double diff_i = (*xi++) - mi;
+                                    double diff_j = (*xj++) - mj;
+                                    sum_ij += w_value * diff_i * diff_j;
+                                }
+
+                                means.attr("names") = names;
+
+
+                            } else {
+                                while (xi < xiEnd) {
+                                    double w_value = *w_ptr++;
+                                    sum_ij += w_value * (*xi++) * (*xj++);
+                                }
+                            }
+                            double cov_val = sum_ij / denom;
+                            covariance_matrix(i, j) = cov_val;
+                            covariance_matrix(j, i) = cov_val;
+                        }
+                    }
+                }
+
+                Rcpp::rownames(covariance_matrix) = names;
+                Rcpp::colnames(covariance_matrix) = names;
+                
+                if (cor) {
+                    Rcpp::NumericMatrix correlation_matrix(k, k);
+                    double* cov_ptr = covariance_matrix.begin();
+                    double* cor_ptr = correlation_matrix.begin();
+
+                    for (int j = 0; j < k; j++) {
+                        double sd_j = std::sqrt(cov_ptr[j + (size_t)j * k]);
+                        for (int i = 0; i < k; i++) {
+                            double sd_i = std::sqrt(cov_ptr[i + (size_t)i * k]);
+                            cor_ptr[i + (size_t)j * k] =
+                                cov_ptr[i + (size_t)j * k] / (sd_i * sd_j);
+                        }
+                    }
+                    Rcpp::rownames(correlation_matrix) = names;
+                    Rcpp::colnames(correlation_matrix) = names;
+
+                    return Rcpp::List::create(
+                        Rcpp::_["cov"]    = covariance_matrix,
+                        Rcpp::_["center"] = center ? means : Rcpp::NumericVector::create(0.0),
+                        Rcpp::_["n.obs"]  = n,
+                        Rcpp::_["wt"]     = wt,
+                        Rcpp::_["cor"]    = correlation_matrix);
+                }
+
+                // 9) Return final list
                 return Rcpp::List::create(
                     Rcpp::_["cov"]    = covariance_matrix,
-                    Rcpp::_["center"] = means,
+                    Rcpp::_["center"] = center ? means : Rcpp::NumericVector::create(0.0),
                     Rcpp::_["n.obs"]  = n,
-                    Rcpp::_["cor"]    = correlation_matrix);
-            }
-
-            // 8) return as Rcpp::List
-            return Rcpp::List::create(
-                    Rcpp::_["cov"]   = covariance_matrix,
-                    Rcpp::_["center"] = means,
-                    Rcpp::_["n.obs"]  = n);
+                    Rcpp::_["wt"]     = wt);
         }
-            
-        
-}; 
+
+};
 
 #endif
