@@ -15,11 +15,15 @@ knitr:
     out.width: 100%
 ---
 
-# Version 0.4-0
+> Version 0.3-2 is considered pre-release of {SLmetrics}. We do not
+> expect any breaking changes, unless a major bug/issue is reported and its nature
+> forces breaking changes.
 
-## :rocket: Initial CRAN submission
+# Version 0.3-3
 
-* **DESCRIPTION:** Added urls to bug-reports, online docs and repository.
+## :rocket: Improvements
+
+* **S3 signatures:** All S3-methods now have a generic signature, the functions should now be easier to navigate in  argument-wise.
 
 ## :fire: New features
 
@@ -43,9 +47,9 @@ SLmetrics:::cov.wt(
 )
 ```
 
-> Version 0.3-2 is considered pre-release of {SLmetrics}. We do not
-> expect any breaking changes, unless a major bug/issue is reported and its nature
-> forces breaking changes.
+## :warning: Breaking changes
+
+* **Logloss:** The argument `pk` has been replaced by `response`.
 
 # Version 0.3-2
 
@@ -211,7 +215,7 @@ cat(
 # Create factors and response probabilities (qk)
 actual   <- factor(c("Class A", "Class B", "Class A"))
 weights  <- c(0.3,0.9,1) 
-qk <- matrix(cbind(
+response <- matrix(cbind(
     0.2, 0.8,
     0.8, 0.2,
     0.7, 0.3
@@ -221,12 +225,12 @@ cat(
     "Unweighted Log Loss:",
     SLmetrics::logloss(
         actual,
-        qk
+        response
     ),
     "Weighted log Loss:",
     SLmetrics::weighted.logloss(
         actual   = actual,
-        qk       = qk,
+        response       = response,
         w        = weights
     ),
     sep = "\n"
