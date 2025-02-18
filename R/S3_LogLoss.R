@@ -12,7 +12,16 @@
 #' @description
 #' The [logloss()] function computes the **Log Loss** between observed classes (as a <[factor]>) and their predicted probability distributions (a <[numeric]> matrix). The [weighted.logloss()] function is the weighted version, applying observation-specific weights.
 #' 
-#' @param qk A \eqn{n \times k} <[numeric]>-matrix of predicted probabilities.
+#' @usage
+#' ## Generic S3 method
+#' logloss(
+#'  actual,
+#'  response,
+#'  normalize = TRUE,
+#'  ...
+#' )
+#' 
+#' @param response A \eqn{n \times k} <[numeric]>-matrix of predicted probabilities.
 #'   The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 #'   over the \eqn{k} classes). The first column corresponds to the first factor
 #'   level in \code{actual}, the second column to the second factor level, and so on.
@@ -22,12 +31,12 @@
 #'
 #' @section Definition:
 #' 
-#' \deqn{H(p, qk) = -\sum_{i} \sum_{j} y_{ij} \log_2(qk_{ij})}{
-#' H(p, qk) = -\sum_{i} \sum_{j} y_ij log(qk_ij)}
+#' \deqn{H(p, response) = -\sum_{i} \sum_{j} y_{ij} \log_2(response_{ij})}{
+#' H(p, response) = -\sum_{i} \sum_{j} y_ij log(response_ij)}
 #' where:
 #' \itemize{
 #'   \item \eqn{y_{ij}} is the `actual`-values, where \eqn{y_{ij}} = 1 if the `i`-th sample belongs to class `j`, and 0 otherwise.
-#'   \item \eqn{qk_{ij}} is the estimated probability for the `i`-th sample belonging to class `j`.
+#'   \item \eqn{response_{ij}} is the estimated probability for the `i`-th sample belonging to class `j`.
 #' }
 #' 
 #' @example man/examples/scr_LogLoss.R
@@ -37,19 +46,35 @@
 #'
 
 #' @export
-logloss <- function(...) {
+logloss <- function(
+  actual, 
+  response,
+  normalize = TRUE, 
+  ...) {
   UseMethod(
-    generic = "logloss",
-    object  = ..1
+    generic = "logloss"
   )
 }
 
 #' @rdname logloss
+#' @usage
+#' ## Generic S3 method
+#' weighted.logloss(
+#'  actual,
+#'  response,
+#'  w,
+#'  normalize = TRUE,
+#'  ...
+#' )
 #' @export
-weighted.logloss <- function(...) {
+weighted.logloss <- function(
+  actual, 
+  response,
+  w,
+  normalize = TRUE, 
+  ...) {
   UseMethod(
-    generic = "weighted.logloss",
-    object  = ..1
+    generic = "weighted.logloss"
   )
 }
 

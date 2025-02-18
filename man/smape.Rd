@@ -12,9 +12,20 @@
 
 \method{weighted.smape}{numeric}(actual, predicted, w, ...)
 
-smape(...)
+## Generic S3 method
+smape(
+ actual,
+ predicted,
+ ...
+)
 
-weighted.smape(...)
+## Generic S3 method
+weighted.smape(
+ actual,
+ predicted,
+ w,
+ ...
+)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}

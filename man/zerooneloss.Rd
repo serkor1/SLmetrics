@@ -14,9 +14,14 @@
 
 \method{zerooneloss}{cmatrix}(x, ...)
 
+## Generic S3 method
 zerooneloss(...)
 
-weighted.zerooneloss(...)
+## Generic S3 method
+weighted.zerooneloss(
+ ...,
+ w
+)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels}

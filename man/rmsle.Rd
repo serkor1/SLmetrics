@@ -12,9 +12,20 @@
 
 \method{weighted.rmsle}{numeric}(actual, predicted, w, ...)
 
-rmsle(...)
+## Generic S3 method
+rmsle(
+ actual,
+ predicted,
+ ...
+)
 
-weighted.rmsle(...)
+## Generic S3 method
+weighted.rmsle(
+ actual,
+ predicted,
+ w,
+ ...
+)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}

@@ -29,14 +29,14 @@ actual <- factor(
 #   1st column = P("Virginica")
 #   2nd column = P("Others") = 1 - P("Virginica")
 predicted_probs <- predict(model, type = "response")
-qk_matrix <- cbind(predicted_probs, 1 - predicted_probs)
+response_matrix <- cbind(predicted_probs, 1 - predicted_probs)
 
 # 4) Evaluate unweighted Log Loss
-#    'logloss' takes (actual, qk_matrix, normalize=TRUE/FALSE).
+#    'logloss' takes (actual, response_matrix, normalize=TRUE/FALSE).
 #    The factor 'actual' must have the positive class (Virginica) as its first level.
 unweighted_LogLoss <- logloss(
   actual    = actual,           # factor
-  qk        = qk_matrix,        # numeric matrix of probabilities
+  response  = response_matrix,  # numeric matrix of probabilities
   normalize = TRUE              # normalize = TRUE
 )
 
@@ -45,7 +45,7 @@ unweighted_LogLoss <- logloss(
 weights <- iris$Petal.Length / mean(iris$Petal.Length)
 weighted_LogLoss <- weighted.logloss(
   actual    = actual,
-  qk  = qk_matrix,
+  response  = response_matrix,
   w         = weights,
   normalize = TRUE
 )

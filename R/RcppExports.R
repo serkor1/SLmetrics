@@ -305,15 +305,15 @@ tscore.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
 #' @rdname logloss
 #' @method logloss factor
 #' @export
-logloss.factor <- function(actual, qk, normalize = TRUE, ...) {
-    .Call(`_SLmetrics_LogLoss`, actual, qk, normalize)
+logloss.factor <- function(actual, response, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_LogLoss`, actual, response, normalize)
 }
 
 #' @rdname logloss
 #' @method weighted.logloss factor
 #' @export
-weighted.logloss.factor <- function(actual, qk, w, normalize = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_LogLoss`, actual, qk, w, normalize)
+weighted.logloss.factor <- function(actual, response, w, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_LogLoss`, actual, response, w, normalize)
 }
 
 #' @rdname mcc

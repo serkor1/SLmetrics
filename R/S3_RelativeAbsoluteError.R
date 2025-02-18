@@ -12,6 +12,14 @@
 #' The [rae()]-function calculates the normalized [relative absolute error](https://www.statisticshowto.com/relative-absolute-error/) between
 #' the predicted and observed <[numeric]> vectors. The [weighted.rae()] function computes the weigthed relative absolute error.
 #'
+#' @usage
+#' ## Generic S3 method
+#' rae(
+#'  actual,
+#'  predicted,
+#'  ...
+#' )
+#' 
 #' @section Definition:
 #'
 #' The Relative Absolute Error (RAE) is calculated as:
@@ -29,19 +37,32 @@
 #' @family Supervised Learning
 #' 
 #' @export
-rae <- function(...) {
+rae <- function(
+  actual,
+  predicted,
+  ...) {
   UseMethod(
-    generic = "rae",
-    object  = ..1
+    generic = "rae"
   )
 }
 
 #' @rdname rae
+#' @usage
+#' ## Generic S3 method
+#' weighted.rae(
+#'  actual,
+#'  predicted,
+#'  w,
+#'  ...
+#' )
 #' @export
-weighted.rae <- function(...) {
+weighted.rae <- function(
+  actual,
+  predicted,
+  w,
+  ...) {
   UseMethod(
-    generic = "weighted.rae",
-    object  = ..1
+    generic = "weighted.rae"
   )
 }
 

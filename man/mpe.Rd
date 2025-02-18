@@ -11,9 +11,20 @@
 
 \method{weighted.mpe}{numeric}(actual, predicted, w, ...)
 
-mpe(...)
+## Generic S3 method
+mpe(
+ actual,
+ predicted,
+ ...
+)
 
-weighted.mpe(...)
+## Generic S3 method
+weighted.mpe(
+ actual,
+ predicted,
+ w,
+ ...
+)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}

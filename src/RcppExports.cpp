@@ -593,29 +593,29 @@ BEGIN_RCPP
 END_RCPP
 }
 // LogLoss
-double LogLoss(const IntegerVector& actual, const NumericMatrix& qk, const bool normalize);
-RcppExport SEXP _SLmetrics_LogLoss(SEXP actualSEXP, SEXP qkSEXP, SEXP normalizeSEXP) {
+double LogLoss(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, const bool normalize);
+RcppExport SEXP _SLmetrics_LogLoss(SEXP actualSEXP, SEXP responseSEXP, SEXP normalizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const NumericMatrix& >::type qk(qkSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
     Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
-    rcpp_result_gen = Rcpp::wrap(LogLoss(actual, qk, normalize));
+    rcpp_result_gen = Rcpp::wrap(LogLoss(actual, response, normalize));
     return rcpp_result_gen;
 END_RCPP
 }
 // weighted_LogLoss
-double weighted_LogLoss(const IntegerVector& actual, const NumericMatrix& qk, const NumericVector& w, const bool normalize);
-RcppExport SEXP _SLmetrics_weighted_LogLoss(SEXP actualSEXP, SEXP qkSEXP, SEXP wSEXP, SEXP normalizeSEXP) {
+double weighted_LogLoss(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, const Rcpp::NumericVector& w, const bool normalize);
+RcppExport SEXP _SLmetrics_weighted_LogLoss(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP normalizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const NumericMatrix& >::type qk(qkSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
     Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
-    rcpp_result_gen = Rcpp::wrap(weighted_LogLoss(actual, qk, w, normalize));
+    rcpp_result_gen = Rcpp::wrap(weighted_LogLoss(actual, response, w, normalize));
     return rcpp_result_gen;
 END_RCPP
 }

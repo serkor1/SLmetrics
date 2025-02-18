@@ -12,6 +12,15 @@
 #' The [rrmse()]-function computes the [Relative Root Mean Squared Error](https://en.wikipedia.org/wiki/Root-mean-square_deviation) between
 #' the observed and predicted <[numeric]> vectors. The [weighted.rrmse()] function computes the weighted Relative Root Mean Squared Error.
 #'
+#' @usage
+#' ## Generic S3 method
+#' rrmse(
+#'  actual,
+#'  predicted,
+#'  normalization = 1,
+#'  ...
+#' )
+#' 
 #' @param normalization A <[numeric]>-value of [length] \eqn{1} (default: \eqn{1}). \eqn{0}: [mean]-normalization, \eqn{1}: [range]-normalization, \eqn{2}: [IQR]-normalization.
 #' 
 #' @section Definition:
@@ -30,19 +39,35 @@
 #' @family Supervised Learning
 #' 
 #' @export
-rrmse <- function(...) {
+rrmse <- function(
+  actual,
+  predicted,
+  normalization = 1,
+  ...) {
   UseMethod(
-    generic = "rrmse",
-    object  = ..1
+    generic = "rrmse"
   )
 }
 
 #' @rdname rrmse
+#' @usage
+#' ## Generic S3 method
+#' weighted.rrmse(
+#'  actual,
+#'  predicted,
+#'  w,
+#'  normalization = 1,
+#'  ...
+#' )
 #' @export
-weighted.rrmse <- function(...) {
+weighted.rrmse <- function(
+  actual,
+  predicted,
+  w,
+  normalization = 1,
+  ...) {
   UseMethod(
-    generic = "weighted.rrmse",
-    object  = ..1
+    generic = "weighted.rrmse"
   )
 }
 

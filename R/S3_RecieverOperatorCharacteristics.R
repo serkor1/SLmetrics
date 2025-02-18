@@ -12,6 +12,15 @@
 #' The [ROC()]-function computes the [tpr()] and [fpr()] at thresholds provided by the \eqn{response}- or \eqn{thresholds}-vector. The function
 #' constructs a [data.frame()] grouped by \eqn{k}-classes where each class is treated as a binary classification problem.
 #' 
+#' @usage
+#' ## Generic S3 method
+#' ROC(
+#'  actual,
+#'  response,
+#'  thresholds,
+#'  ...
+#' )
+#' 
 #' @param response A <[numeric]>-vector of [length] \eqn{n}. The estimated response probabilities.
 #' @param thresholds An optional <[numeric]>-vector of non-zero [length] (default: [NULL]).
 #' @param ... Arguments passed into other methods.
@@ -30,19 +39,35 @@
 #' @family Supervised Learning
 #'
 #' @export
-ROC <- function(...) {
+ROC <- function(
+  actual,
+  response, 
+  thresholds, 
+  ...) {
   UseMethod(
-    generic = "ROC",
-    object  = ..1
+    generic = "ROC"
   )
 }
 
 #' @rdname ROC
+#' @usage
+#' ## Generic S3 method
+#' weighted.ROC(
+#'  actual,
+#'  response,
+#'  w,
+#'  thresholds,
+#'  ...
+#' )
 #' @export
-weighted.ROC <- function(...) {
+weighted.ROC <- function(
+  actual,
+  response,
+  w,
+  thresholds,
+  ...) {
   UseMethod(
-    generic = "weighted.ROC",
-    object  = ..1
+    generic = "weighted.ROC"
   )
 }
 
