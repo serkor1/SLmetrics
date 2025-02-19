@@ -215,7 +215,7 @@ cat(
 ## New Feature
 
 - **Relative Root Mean Squared Error:** The function normalizes the Root
-  Mean Squared Error by a facttor. There is no official way of
+  Mean Squared Error by a factor. There is no official way of
   normalizing it - and in {SLmetrics} the RMSE can be normalized using
   three options; mean-, range- and IQR-normalization. It can be used as
   follows,
@@ -245,19 +245,11 @@ cat(
   sep = "\n"
 )
 #> Mean Relative Root Mean Squared Error
-<<<<<<< HEAD
-#> 26.96933
+#> 109.6975
 #> Range Relative Root Mean Squared Error
-#> 0.1617514
+#> 0.1471557
 #> IQR Relative Root Mean Squared Error
-#> 0.7531568
-=======
-#> -94.45659
-#> Range Relative Root Mean Squared Error
-#> 0.1501719
-#> IQR Relative Root Mean Squared Error
-#> 0.7209864
->>>>>>> fe48ca2 (:books: S3 generic signatures)
+#> 0.7109749
 ```
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
@@ -334,15 +326,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-<<<<<<< HEAD
-#> a 10 12 15
-#> b  8 15 13
-#> c 13  6  8
-=======
-#> a 10 14 13
-#> b 12 14 10
-#> c  8 13  6
->>>>>>> fe48ca2 (:books: S3 generic signatures)
+#> a 12  8 12
+#> b 14  6 10
+#> c 13 10 15
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -351,15 +337,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-<<<<<<< HEAD
-#> a 4.735165 6.287398 7.574882
-#> b 3.329343 4.414267 9.841976
-#> c 6.626189 3.423222 4.797010
-=======
-#> a 4.679877 6.133155 5.985437
-#> b 6.472189 5.842107 3.648712
-#> c 4.897762 7.601887 2.254480
->>>>>>> fe48ca2 (:books: S3 generic signatures)
+#> a 6.886423 4.701607 4.734864
+#> b 6.416565 4.601738 6.425571
+#> c 4.552494 5.177394 6.399259
 ```
 
 ## :bug: Bug-fixes
@@ -394,15 +374,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-<<<<<<< HEAD
-#> a 16  8 13
-#> b 11 12  9
-#> c 10  9 12
-=======
-#> a 12 14 13
-#> b  9 11 15
-#> c  7  7 12
->>>>>>> fe48ca2 (:books: S3 generic signatures)
+#> a 15 10 11
+#> b  9  9  9
+#> c 11 13 13
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -411,15 +385,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-<<<<<<< HEAD
-#> a 8.658043 5.743163 7.927133
-#> b 6.999983 5.715944 3.365692
-#> c 5.312758 3.756567 7.666310
-=======
-#> a 5.790769 8.844004 6.091018
-#> b 4.259276 5.300745 9.900072
-#> c 2.622235 4.302483 4.919729
->>>>>>> fe48ca2 (:books: S3 generic signatures)
+#> a 7.976209 4.048645 5.330390
+#> b 4.551065 6.233777 3.377614
+#> c 8.119818 6.068613 6.474901
 ```
 
 Calculating weighted metrics manually or by using
@@ -439,11 +407,7 @@ confusion_matrix <- SLmetrics::cmatrix(
 SLmetrics::accuracy(
     confusion_matrix
 )
-<<<<<<< HEAD
-#> [1] 0.4
-=======
-#> [1] 0.35
->>>>>>> fe48ca2 (:books: S3 generic signatures)
+#> [1] 0.37
 
 # 3) calculate the weighted
 # accuracy manually
@@ -452,15 +416,11 @@ SLmetrics::weighted.accuracy(
     predicted = predicted,
     w         = weights
 )
-<<<<<<< HEAD
-#> [1] 0.3996747
-=======
-#> [1] 0.307729
->>>>>>> fe48ca2 (:books: S3 generic signatures)
+#> [1] 0.3964062
 ```
 
-Please note, however, that it is not possible to pass `cmatix()`-into
-`weighted.accurracy()`,
+Please note, however, that it is not possible to pass `cmatrix()`-into
+`weighted.accuracy()`,
 
 - **Unit-testing:** All functions are now being tested for edge-cases in
   balanced and imbalanced classifcation problems, and regression
@@ -518,7 +478,7 @@ try(
 ## Breaking changes
 
 - All regression metrics have had `na.rm`- and `w`-arguments removed.
-  All weighted regression metrics have a seperate function on the
+  All weighted regression metrics have a separate function on the
   `weighted.foo()` to increase consistency across all metrics. See
   example below,
 
@@ -530,19 +490,11 @@ w         <- runif(n = 1e3)
 
 # 2) unweighted metrics
 SLmetrics::rmse(actual, predicted)
-<<<<<<< HEAD
-#> [1] 1.028846
+#> [1] 1.009721
 
 # 3) weighted metrics
 SLmetrics::weighted.rmse(actual, predicted, w = w)
-#> [1] 1.043608
-=======
-#> [1] 1.018202
-
-# 3) weighted metrics
-SLmetrics::weighted.rmse(actual, predicted, w = w)
-#> [1] 1.014659
->>>>>>> fe48ca2 (:books: S3 generic signatures)
+#> [1] 1.010545
 ```
 
 - The `rrmse()`-function have been removed in favor of the
@@ -553,7 +505,7 @@ SLmetrics::weighted.rmse(actual, predicted, w = w)
 
 ## General
 
-- **Backend changes:** All pair-wise metrics arer moved from {Rcpp} to
+- **Backend changes:** All pair-wise metrics are moved from {Rcpp} to
   C++, this have reduced execution time by half. All pair-wise metrics
   are now faster.
 
@@ -661,11 +613,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-<<<<<<< HEAD
-#>  [1] b b b a a a a b b c
-=======
-#>  [1] a c b a c c c b c c
->>>>>>> fe48ca2 (:books: S3 generic signatures)
+#>  [1] c b b c b a c c c a
 #> Levels: a b c
 
 # 2) predicted classes
@@ -674,11 +622,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-<<<<<<< HEAD
-#>  [1] b b a c a c b c a b
-=======
-#>  [1] b a a a c c b a a a
->>>>>>> fe48ca2 (:books: S3 generic signatures)
+#>  [1] a c b b a c b a b c
 #> Levels: a b c
 ```
 
@@ -695,39 +639,24 @@ summary(
 #> Confusion Matrix (3 x 3) 
 #> ================================================================================
 #>   a b c
-<<<<<<< HEAD
-#> a 1 1 2
-#> b 2 2 1
-#> c 0 1 0
+#> a 0 0 2
+#> b 1 1 1
+#> c 2 3 0
 #> ================================================================================
 #> Overall Statistics (micro average)
-#>  - Accuracy:          0.30
-#>  - Balanced Accuracy: 0.22
-=======
-#> a 1 1 0
-#> b 2 0 0
-#> c 3 1 2
-#> ================================================================================
-#> Overall Statistics (micro average)
-#>  - Accuracy:          0.30
-#>  - Balanced Accuracy: 0.28
->>>>>>> fe48ca2 (:books: S3 generic signatures)
-#>  - Sensitivity:       0.30
-#>  - Specificity:       0.65
-#>  - Precision:         0.30
+#>  - Accuracy:          0.10
+#>  - Balanced Accuracy: 0.11
+#>  - Sensitivity:       0.10
+#>  - Specificity:       0.55
+#>  - Precision:         0.10
 
 # 2) calculate false positive
 # rate using micro average
 SLmetrics::fpr(
     confusion_matrix
 )
-<<<<<<< HEAD
 #>         a         b         c 
-#> 0.3333333 0.4000000 0.3333333
-=======
-#>     a     b     c 
-#> 0.625 0.250 0.000
->>>>>>> fe48ca2 (:books: S3 generic signatures)
+#> 0.3750000 0.4285714 0.6000000
 ```
 
 ### Supervised regression metrics
@@ -747,9 +676,5 @@ SLmetrics::huberloss(
     actual    = actual,
     predicted = predicted
 )
-<<<<<<< HEAD
-#> [1] 0.3727989
-=======
-#> [1] 0.4735597
->>>>>>> fe48ca2 (:books: S3 generic signatures)
+#> [1] 0.3811064
 ```
