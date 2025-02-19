@@ -15,11 +15,31 @@
 
 \method{cross.entropy}{matrix}(pk, qk, dim = 0L, base = -1, ...)
 
-entropy(...)
+## Generic S3 method
+entropy(
+ pk,
+ dim  = 0,
+ base = -1,
+ ...
+)
 
-relative.entropy(...)
+## Generic S3 method
+relative.entropy(
+ pk,
+ qk,
+ dim  = 0,
+ base = -1,
+ ...
+)
 
-cross.entropy(...)
+## Generic S3 method
+cross.entropy(
+ pk,
+ qk,
+ dim  = 0,
+ base = -1,
+ ...
+)
 }
 \arguments{
 \item{pk}{A \eqn{n \times k} <\link{numeric}>-matrix of observed probabilities.
@@ -27,7 +47,7 @@ The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 over the \eqn{k} classes). The first column corresponds to the first factor
 level in \code{actual}, the second column to the second factor level, and so on.}
 
-\item{dim}{An <\link{integer}> value of \link{length} 1 (Default: 0). Defines the dimensions of to calculate the entropy. 0: Total entropy, 1: row-wise, 2: column-wise}
+\item{dim}{An <\link{integer}> value of \link{length} 1 (Default: 0). Defines the dimension along which to calculate the entropy (0: total, 1: row-wise, 2: column-wise).}
 
 \item{base}{A <\link{numeric}> value of \link{length} 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.}
 

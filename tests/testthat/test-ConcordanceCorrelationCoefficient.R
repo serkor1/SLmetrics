@@ -13,21 +13,27 @@ testthat::test_that(
       predicted,
       correction,
       w = NULL) {
+      
         if (is.null(w)) {
+          
           ccc(
             actual     = actual,
             predicted  = predicted,
             correction = correction
           )
+
         } else {
+
           weighted.ccc(
             actual     = actual,
             predicted  = predicted,
-            corrrection= correction,
+            correction = correction,
             w          = w
           )
+
         }
-      }
+      
+    }
     
       # 1) generate regression
       # values
@@ -64,17 +70,8 @@ testthat::test_that(
           testthat::expect_true(is.numeric(score), info = info)
           testthat::expect_true(length(score) == 1, info = info)
 
-          # 2.4) test that the values
-          # are equal to target value
-          testthat::skip_if(
-            correction  & weighted, 
-            message = paste(
-              "ccc skipped for", info, "(Error is being investigated)"
-            )
-          )
-
           # 2.4.1) calculate py_score
-          py_score <- py_ccc(
+          py_score <- ref_ccc(
             actual     = actual,
             predicted  = predicted,
             correction = correction,

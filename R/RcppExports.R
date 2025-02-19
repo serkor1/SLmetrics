@@ -305,15 +305,15 @@ tscore.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
 #' @rdname logloss
 #' @method logloss factor
 #' @export
-logloss.factor <- function(actual, qk, normalize = TRUE, ...) {
-    .Call(`_SLmetrics_LogLoss`, actual, qk, normalize)
+logloss.factor <- function(actual, response, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_LogLoss`, actual, response, normalize)
 }
 
 #' @rdname logloss
 #' @method weighted.logloss factor
 #' @export
-weighted.logloss.factor <- function(actual, qk, w, normalize = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_LogLoss`, actual, qk, w, normalize)
+weighted.logloss.factor <- function(actual, response, w, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_LogLoss`, actual, response, w, normalize)
 }
 
 #' @rdname mcc
@@ -841,6 +841,20 @@ smape.numeric <- function(actual, predicted, ...) {
 #' @export
 weighted.smape.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_smape`, actual, predicted, w)
+}
+
+#' @rdname cov.wt
+#' @method cov.wt matrix
+#' @export
+cov.wt.matrix <- function(x, wt = NULL, cor = FALSE, center = TRUE, method = "unbiased", ...) {
+    .Call(`_SLmetrics_covariance_matrix`, x, wt, cor, center, method)
+}
+
+#' @rdname cov.wt
+#' @method cov.wt data.frame
+#' @export
+cov.wt.data.frame <- function(x, wt = NULL, cor = FALSE, center = TRUE, method = "unbiased", ...) {
+    .Call(`_SLmetrics_covariance_dataframe`, x, wt, cor, center, method)
 }
 
 .enable_openmp <- function() {

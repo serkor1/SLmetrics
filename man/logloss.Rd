@@ -7,18 +7,31 @@
 \alias{weighted.logloss}
 \title{Log Loss}
 \usage{
-\method{logloss}{factor}(actual, qk, normalize = TRUE, ...)
+\method{logloss}{factor}(actual, response, normalize = TRUE, ...)
 
-\method{weighted.logloss}{factor}(actual, qk, w, normalize = TRUE, ...)
+\method{weighted.logloss}{factor}(actual, response, w, normalize = TRUE, ...)
 
-logloss(...)
+## Generic S3 method
+logloss(
+ actual,
+ response,
+ normalize = TRUE,
+ ...
+)
 
-weighted.logloss(...)
+## Generic S3 method
+weighted.logloss(
+ actual,
+ response,
+ w,
+ normalize = TRUE,
+ ...
+)
 }
 \arguments{
-\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels}
+\item{actual}{A vector of <\link{factor}> with \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{qk}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
+\item{response}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
 The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 over the \eqn{k} classes). The first column corresponds to the first factor
 level in \code{actual}, the second column to the second factor level, and so on.}
@@ -27,7 +40,8 @@ level in \code{actual}, the second column to the second factor level, and so on.
 the mean cross-entropy across all observations is returned; otherwise, the
 sum of cross-entropies is returned.}
 
-\item{...}{Arguments passed into other methods}
+\item{...}{micro = NULL,
+na.rm = TRUE Arguments passed into other methods}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default}
 }
@@ -40,12 +54,12 @@ The \code{\link[=logloss]{logloss()}} function computes the \strong{Log Loss} be
 \section{Definition}{
 
 
-\deqn{H(p, qk) = -\sum_{i} \sum_{j} y_{ij} \log_2(qk_{ij})}{
-H(p, qk) = -\sum_{i} \sum_{j} y_ij log(qk_ij)}
+\deqn{H(p, response) = -\sum_{i} \sum_{j} y_{ij} \log_2(response_{ij})}{
+H(p, response) = -\sum_{i} \sum_{j} y_ij log(response_ij)}
 where:
 \itemize{
 \item \eqn{y_{ij}} is the \code{actual}-values, where \eqn{y_{ij}} = 1 if the \code{i}-th sample belongs to class \code{j}, and 0 otherwise.
-\item \eqn{qk_{ij}} is the estimated probability for the \code{i}-th sample belonging to class \code{j}.
+\item \eqn{response_{ij}} is the estimated probability for the \code{i}-th sample belonging to class \code{j}.
 }
 }
 
@@ -117,14 +131,14 @@ actual <- factor(
 #   1st column = P("Virginica")
 #   2nd column = P("Others") = 1 - P("Virginica")
 predicted_probs <- predict(model, type = "response")
-qk_matrix <- cbind(predicted_probs, 1 - predicted_probs)
+response_matrix <- cbind(predicted_probs, 1 - predicted_probs)
 
 # 4) Evaluate unweighted Log Loss
-#    'logloss' takes (actual, qk_matrix, normalize=TRUE/FALSE).
+#    'logloss' takes (actual, response_matrix, normalize=TRUE/FALSE).
 #    The factor 'actual' must have the positive class (Virginica) as its first level.
 unweighted_LogLoss <- logloss(
   actual    = actual,           # factor
-  qk        = qk_matrix,        # numeric matrix of probabilities
+  response  = response_matrix,  # numeric matrix of probabilities
   normalize = TRUE              # normalize = TRUE
 )
 
@@ -133,7 +147,7 @@ unweighted_LogLoss <- logloss(
 weights <- iris$Petal.Length / mean(iris$Petal.Length)
 weighted_LogLoss <- weighted.logloss(
   actual    = actual,
-  qk  = qk_matrix,
+  response  = response_matrix,
   w         = weights,
   normalize = TRUE
 )

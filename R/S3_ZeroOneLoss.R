@@ -12,6 +12,10 @@
 #' The [zerooneloss()]-function computes the [zero-one Loss](https://en.wikipedia.org/wiki/Loss_functions_for_classification), a classification loss function that calculates the proportion of misclassified instances between
 #' two vectors of predicted and observed [factor()] values. The [weighted.zerooneloss()] function computes the weighted zero-one loss.
 #' 
+#' @usage
+#' ## Generic S3 method
+#' zerooneloss(...)
+#' 
 #' @section Definition:
 #'
 #' The metric is calculated as follows,
@@ -36,8 +40,16 @@ zerooneloss <- function(...) {
 }
 
 #' @rdname zerooneloss
+#' @usage
+#' ## Generic S3 method
+#' weighted.zerooneloss(
+#'  ...,
+#'  w
+#' )
 #' @export
-weighted.zerooneloss <- function(...) {
+weighted.zerooneloss <- function(
+  ...,
+  w) {
   UseMethod(
     generic = "weighted.zerooneloss",
     object  = ..1

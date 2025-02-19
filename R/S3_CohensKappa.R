@@ -12,6 +12,12 @@
 #' @description
 #' A generic function for [Cohen's \eqn{\kappa}](https://en.wikipedia.org/wiki/Cohen%27s_kappa)-statistic. Use [weighted.ckappa()] for the weighted [\eqn{\kappa}](https://en.wikipedia.org/wiki/Cohen%27s_kappa)-statistic.
 #'
+#' @usage
+#' ckappa(
+#'  ...,
+#'  beta = 0
+#' )
+#' 
 #' @param beta A <[numeric]> value of [length] 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.
 #' 
 #' @section Definition:
@@ -26,7 +32,7 @@
 #' - \eqn{\rho_p} is the empirical probability of agreement between predicted and actual values
 #' - \eqn{\rho_e} is the expected probability of agreement under random chance
 #' 
-#' If \eqn{\beta \neq 0} the off-diagonals in the confusion matrix is benalized before \eqn{\rho} is calculated. More formally,
+#' If \eqn{\beta \neq 0} the off-diagonals in the confusion matrix is penalized before \eqn{\rho} is calculated. More formally,
 #' 
 #' \deqn{
 #'  \chi = X \circ Y^{\beta}
@@ -35,7 +41,7 @@
 #' Where:
 #' 
 #' - \eqn{X} is the confusion matrix
-#' - \eqn{Y} is the penalzing matrix and
+#' - \eqn{Y} is the penalizing matrix and
 #' - \eqn{\beta} is the penalizing factor
 #'
 #' @example man/examples/scr_CohensKappa.R
@@ -44,7 +50,9 @@
 #' @family Supervised Learning
 #' 
 #' @export
-ckappa <- function(...) {
+ckappa <- function(
+  ...,
+  beta = 0) {
   UseMethod(
     generic = "ckappa",
     object  = ..1
@@ -52,8 +60,17 @@ ckappa <- function(...) {
 }
 
 #' @rdname ckappa
+#' @usage
+#' weighted.ckappa(
+#'  ...,
+#'  w,
+#'  beta = 0
+#' )
 #' @export
-weighted.ckappa <- function(...) {
+weighted.ckappa <- function(
+  ...,
+  w,
+  beta = 0) {
   UseMethod(
     generic = "weighted.ckappa",
     object  = ..1

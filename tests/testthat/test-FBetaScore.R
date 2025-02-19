@@ -78,28 +78,28 @@ testthat::test_that(
           # are equal to target value
 
           # 2.4.1) calculate py_score
-          py_score <- py_fbeta(
+          py_score <- ref_fbeta(
             actual    = actual,
             predicted = predicted,
             beta      = beta,
-            average   = if (is.na(micro)) { NULL } else ifelse(micro, "micro", "macro"),
+            micro     = if (is.na(micro)) { NULL } else micro,
             w         = if (weighted) w else NULL
           )
             
-          if (is.na(micro)) {
+          # if (is.na(micro)) {
 
-            # Python returns values
-            # that is less than the number
-            # of classes depending on the calculations
-            # the behaviour isnt acutally understood as of now.
-            score <- score[!is.na(score) & !is.nan(score)]
-            py_score <- py_score[!is.na(score) & !is.nan(score)]
+          #   # Python returns values
+          #   # that is less than the number
+          #   # of classes depending on the calculations
+          #   # the behaviour isnt acutally understood as of now.
+          #   score <- score[!is.na(score) & !is.nan(score)]
+          #   py_score <- py_score[!is.na(score) & !is.nan(score)]
 
-            if (length(score) != length(py_score)) {
-              py_score <- py_score[py_score != 0]  
-            }
+          #   if (length(score) != length(py_score)) {
+          #     py_score <- py_score[py_score != 0]  
+          #   }
 
-          }
+          # }
   
           testthat::skip_if(
              length(score) != length(py_score),message =  "Unpredictable behaviour. Skipping test."

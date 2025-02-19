@@ -15,9 +15,41 @@ knitr:
     out.width: 100%
 ---
 
-> Version 0.3-2 is considered pre-release of {SLmetrics}. We do not
+> Version 0.3-3 is considered pre-release of {SLmetrics}. We do not
 > expect any breaking changes, unless a major bug/issue is reported and its nature
 > forces breaking changes.
+
+# Version 0.3-3
+
+## :rocket: Improvements
+
+* **S3 signatures:** All S3-methods now have a generic signature, the functions should now be easier to navigate in  argument-wise.
+
+## :fire: New features
+
+### :hammer: Metric tools
+
+A new family of `Tools`-functions are introduced with this update. This addition introduces unexported functions for constructing fast and memory efficient proprietary metrics. These functions are rewritten built-in functions from {stats} and family.
+
+* **Covariance Matrix:** A re-written `stats::cov.wt()`, using `Rcpp`. Example usage:
+
+```{r}
+## generate values
+actual    <- c(1.2,  0.3, 0.56, 0.11, 1.01)
+predicted <- c(0.9, 0.22, 0.76, 0.21, 1.1) 
+
+## generate covariance matrix
+SLmetrics:::cov.wt(
+    cbind(
+        actual,
+        predicted
+    )
+)
+```
+
+## :warning: Breaking changes
+
+* **Logloss:** The argument `pk` has been replaced by `response`.
 
 # Version 0.3-2
 
@@ -149,7 +181,7 @@ cat(
 
 ## New Feature
 
-* **Relative Root Mean Squared Error:** The function normalizes the Root Mean Squared Error by a facttor. There is no official way of normalizing it - and in {SLmetrics} the RMSE can be normalized using three options; mean-, range- and IQR-normalization. It can be used as follows,
+* **Relative Root Mean Squared Error:** The function normalizes the Root Mean Squared Error by a factor. There is no official way of normalizing it - and in {SLmetrics} the RMSE can be normalized using three options; mean-, range- and IQR-normalization. It can be used as follows,
 
 ```{r}
 # 1) define values
@@ -183,7 +215,7 @@ cat(
 # Create factors and response probabilities (qk)
 actual   <- factor(c("Class A", "Class B", "Class A"))
 weights  <- c(0.3,0.9,1) 
-qk <- matrix(cbind(
+response <- matrix(cbind(
     0.2, 0.8,
     0.8, 0.2,
     0.7, 0.3
@@ -193,12 +225,12 @@ cat(
     "Unweighted Log Loss:",
     SLmetrics::logloss(
         actual,
-        qk
+        response
     ),
     "Weighted log Loss:",
     SLmetrics::weighted.logloss(
         actual   = actual,
-        qk       = qk,
+        response       = response,
         w        = weights
     ),
     sep = "\n"
@@ -207,11 +239,11 @@ cat(
 
 * **Weighted Receiver Operator Characteristics:** `weighted.ROC()`, the function calculates the weighted True Positive and False Positive Rates for each threshold.
 
-* **Weighted Precision-Recall Curve:** `weighted.prROC()`, the function calculates the weighted Recall and Precsion for each threshold.
+* **Weighted Precision-Recall Curve:** `weighted.prROC()`, the function calculates the weighted Recall and Precision for each threshold.
 
 ## Breaking Changes
 
-* **Weighted Confusion Matix:** The `w`-argument in `cmatrix()` has been removed in favor of the more verbose weighted confusion matrix call `weighted.cmatrix()`-function. See below,
+* **Weighted Confusion Matrix:** The `w`-argument in `cmatrix()` has been removed in favor of the more verbose weighted confusion matrix call `weighted.cmatrix()`-function. See below,
 
 Prior to version `0.3-0` the weighted confusion matrix were a part of the `cmatrix()`-function and were called as follows,
 
@@ -304,9 +336,9 @@ SLmetrics::weighted.accuracy(
 )
 ```
 
-Please note, however, that it is not possible to pass `cmatix()`-into `weighted.accurracy()`,
+Please note, however, that it is not possible to pass `cmatrix()`-into `weighted.accuracy()`,
 
-* **Unit-testing:** All functions are now being tested for edge-cases in balanced and imbalanced classifcation problems, and regression problems, individually. This will enable a more robust development process and prevent avoidable bugs.
+* **Unit-testing:** All functions are now being tested for edge-cases in balanced and imbalanced classification problems, and regression problems, individually. This will enable a more robust development process and prevent avoidable bugs.
 
 ```{r}
 try(
@@ -334,7 +366,7 @@ try(
 
 ## Breaking changes
 
-* All regression metrics have had `na.rm`- and `w`-arguments removed. All  weighted regression metrics have a seperate function on the `weighted.foo()` to increase consistency across all metrics. See example below,
+* All regression metrics have had `na.rm`- and `w`-arguments removed. All  weighted regression metrics have a separate function on the `weighted.foo()` to increase consistency across all metrics. See example below,
 
 ```{r}
 # 1) define regression problem
@@ -355,7 +387,7 @@ SLmetrics::weighted.rmse(actual, predicted, w = w)
 
 ## General
 
-* **Backend changes:** All pair-wise metrics arer moved from {Rcpp} to C++, this have reduced execution time by half. All pair-wise metrics are now faster.
+* **Backend changes:** All pair-wise metrics are moved from {Rcpp} to C++, this have reduced execution time by half. All pair-wise metrics are now faster.
 
 ## Improvements
 

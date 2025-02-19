@@ -11,9 +11,22 @@
 
 \method{weighted.prROC}{factor}(actual, response, w, thresholds = NULL, ...)
 
-prROC(...)
+## Generic S3 method
+prROC(
+ actual,
+ response,
+ thresholds,
+ ...
+)
 
-weighted.prROC(...)
+## Generic S3 method
+weighted.prROC(
+ actual,
+ response,
+ w,
+ thresholds,
+ ...
+)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}

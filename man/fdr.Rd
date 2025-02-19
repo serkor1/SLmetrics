@@ -14,9 +14,20 @@
 
 \method{fdr}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
-fdr(...)
+## Generic S3 method
+fdr(
+ ...,
+ micro = NULL,
+ na.rm = TRUE
+)
 
-weighted.fdr(...)
+## Generic S3 method
+weighted.fdr(
+ ...,
+ w,
+ micro = NULL,
+ na.rm = TRUE
+)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -31,7 +42,8 @@ This argument is only relevant when \code{micro != NULL}.
 When \code{na.rm = TRUE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))}.
 When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))}.}
 
-\item{...}{Arguments passed into other methods}
+\item{...}{micro = NULL,
+na.rm = TRUE Arguments passed into other methods}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 
@@ -43,7 +55,7 @@ If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of
 If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-A generic funcion for the \href{https://en.wikipedia.org/wiki/False_discovery_rate}{False Discovery Rate}. Use \code{\link[=weighted.fdr]{weighted.fdr()}} for the weighted \href{https://en.wikipedia.org/wiki/False_discovery_rate}{False Discovery Rate}.
+A generic function for the \href{https://en.wikipedia.org/wiki/False_discovery_rate}{False Discovery Rate}. Use \code{\link[=weighted.fdr]{weighted.fdr()}} for the weighted \href{https://en.wikipedia.org/wiki/False_discovery_rate}{False Discovery Rate}.
 }
 \section{Definition}{
 

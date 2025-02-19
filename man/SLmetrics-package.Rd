@@ -27,6 +27,8 @@ ensuring robust computation and accurate results.
 Useful links:
 \itemize{
   \item \url{https://serkor1.github.io/SLmetrics/}
+  \item \url{https://github.com/serkor1/SLmetrics}
+  \item Report bugs at \url{https://github.com/serkor1/SLmetrics/issues}
 }
 
 }

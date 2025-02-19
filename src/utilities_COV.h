@@ -33,7 +33,7 @@ class CovarianceCalculator {
         *
         * @return CovarianceResult<int> (n is an integer)
         */
-        static inline CovarianceResult<int> cov_unweighted(
+        static inline CovarianceResult<int> cov(
             const double* x,
             const double* y,
             int n,
@@ -52,7 +52,7 @@ class CovarianceCalculator {
         *
         * @return CovarianceResult<double> (n is total weight wSum)
         */
-        static inline CovarianceResult<double> cov_weighted(
+        static inline CovarianceResult<double> cov(
             const double* x,
             const double* y,
             const double* w,
@@ -69,7 +69,7 @@ class CovarianceCalculator {
 
 };
 
-inline CovarianceResult<int> CovarianceCalculator::cov_unweighted(
+inline CovarianceResult<int> CovarianceCalculator::cov(
     const double* x,
     const double* y,
     int n,
@@ -151,7 +151,7 @@ inline CovarianceResult<int> CovarianceCalculator::cov_unweighted(
 }
 
 
-inline CovarianceResult<double> CovarianceCalculator::cov_weighted(
+inline CovarianceResult<double> CovarianceCalculator::cov(
     const double* x,
     const double* y,
     const double* w,

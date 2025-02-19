@@ -11,6 +11,11 @@
 #' @description
 #' A generic function for the [concordance correlation coefficient](https://en.wikipedia.org/wiki/Concordance_correlation_coefficient). Use [weighted.ccc()] for the weighted [concordance correlation coefficient](https://en.wikipedia.org/wiki/Concordance_correlation_coefficient).
 #' 
+#' @usage
+#' ccc(
+#'  ...,
+#'  correction = FALSE
+#' )
 #' 
 #' @param correction A <[logical]> vector of [length] \eqn{1} (default: [FALSE]). If [TRUE] the variance and covariance
 #' will be adjusted with \eqn{\frac{1-n}{n}}
@@ -37,7 +42,9 @@
 #' @family Supervised Learning
 #' 
 #' @export
-ccc <- function(...) {
+ccc <- function(
+  ...,
+  correction = FALSE) {
   UseMethod(
     generic = "ccc",
     object  = ..1
@@ -45,8 +52,17 @@ ccc <- function(...) {
 }
 
 #' @rdname ccc
+#' @usage
+#' weighted.ccc(
+#'  ...,
+#'  w,
+#'  correction = FALSE
+#' )
 #' @export
-weighted.ccc <- function(...) {
+weighted.ccc <- function(
+  ...,
+  w,
+  correction = FALSE) {
   UseMethod(
     generic = "weighted.ccc",
     object  = ..1

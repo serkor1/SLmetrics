@@ -14,16 +14,22 @@
 
 \method{dor}{cmatrix}(x, ...)
 
+## Generic S3 method
 dor(...)
 
-weighted.dor(...)
+## Generic S3 method
+weighted.dor(
+ ...,
+ w
+)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{...}{Arguments passed into other methods}
+\item{...}{micro = NULL,
+na.rm = TRUE Arguments passed into other methods}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 
@@ -33,7 +39,7 @@ weighted.dor(...)
 A <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-A genereric function for the \href{https://en.wikipedia.org/wiki/Diagnostic_odds_ratio}{diagnostic odds ratio} in classification tasks. Use \code{\link[=weighted.dor]{weighted.dor()}} weighted \href{https://en.wikipedia.org/wiki/Diagnostic_odds_ratio}{diagnostic odds ratio}.
+A generic function for the \href{https://en.wikipedia.org/wiki/Diagnostic_odds_ratio}{diagnostic odds ratio} in classification tasks. Use \code{\link[=weighted.dor]{weighted.dor()}} weighted \href{https://en.wikipedia.org/wiki/Diagnostic_odds_ratio}{diagnostic odds ratio}.
 }
 \section{Definition}{
 

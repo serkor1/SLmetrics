@@ -12,6 +12,14 @@
 #' The [mpe()]-function computes the [mean percentage error](https://en.wikipedia.org/wiki/Mean_percentage_error) between
 #' the observed and predicted <[numeric]> vectors. The [weighted.mpe()] function computes the weighted mean percentage error.
 #' 
+#' @usage
+#' ## Generic S3 method
+#' mpe(
+#'  actual,
+#'  predicted,
+#'  ...
+#' )
+#' 
 #' @section Definition:
 #'
 #' The metric is calculated as,
@@ -28,19 +36,32 @@
 #' @family Supervised Learning
 #' 
 #' @export
-mpe <- function(...) {
+mpe <- function(
+  actual, 
+  predicted,
+  ...) {
   UseMethod(
-    generic = "mpe",
-    object  = ..1
+    generic = "mpe"
   )
 }
 
 #' @rdname mpe
+#' @usage
+#' ## Generic S3 method
+#' weighted.mpe(
+#'  actual,
+#'  predicted,
+#'  w,
+#'  ...
+#' )
 #' @export
-weighted.mpe <- function(...) {
+weighted.mpe <- function(
+  actual, 
+  predicted,
+  w,
+  ...) {
   UseMethod(
-    generic = "weighted.mpe",
-    object  = ..1
+    generic = "weighted.mpe"
   )
 }
 

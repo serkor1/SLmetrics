@@ -11,7 +11,7 @@
 # script start;
 
 # Reference Concordance Correlation Coefficient
-py_ccc <- function(actual, predicted, w = NULL, correction = FALSE) {
+ref_ccc <- function(actual, predicted, w = NULL, correction = FALSE) {
 
   actual    <- as.numeric(actual)
   predicted <- as.numeric(predicted)

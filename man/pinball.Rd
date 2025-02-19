@@ -11,9 +11,24 @@
 
 \method{weighted.pinball}{numeric}(actual, predicted, w, alpha = 0.5, deviance = FALSE, ...)
 
-pinball(...)
+## Generic S3 method
+pinball(
+ actual,
+ predicted,
+ alpha    = 0.5,
+ deviance = FALSE,
+ ...
+)
 
-weighted.pinball(...)
+## Generic S3 method
+weighted.pinball(
+ actual,
+ predicted,
+ w,
+ alpha    = 0.5,
+ deviance = FALSE,
+ ...
+)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}

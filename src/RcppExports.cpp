@@ -593,29 +593,29 @@ BEGIN_RCPP
 END_RCPP
 }
 // LogLoss
-double LogLoss(const IntegerVector& actual, const NumericMatrix& qk, const bool normalize);
-RcppExport SEXP _SLmetrics_LogLoss(SEXP actualSEXP, SEXP qkSEXP, SEXP normalizeSEXP) {
+double LogLoss(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, const bool normalize);
+RcppExport SEXP _SLmetrics_LogLoss(SEXP actualSEXP, SEXP responseSEXP, SEXP normalizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const NumericMatrix& >::type qk(qkSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
     Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
-    rcpp_result_gen = Rcpp::wrap(LogLoss(actual, qk, normalize));
+    rcpp_result_gen = Rcpp::wrap(LogLoss(actual, response, normalize));
     return rcpp_result_gen;
 END_RCPP
 }
 // weighted_LogLoss
-double weighted_LogLoss(const IntegerVector& actual, const NumericMatrix& qk, const NumericVector& w, const bool normalize);
-RcppExport SEXP _SLmetrics_weighted_LogLoss(SEXP actualSEXP, SEXP qkSEXP, SEXP wSEXP, SEXP normalizeSEXP) {
+double weighted_LogLoss(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, const Rcpp::NumericVector& w, const bool normalize);
+RcppExport SEXP _SLmetrics_weighted_LogLoss(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP normalizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const NumericMatrix& >::type qk(qkSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
     Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
-    rcpp_result_gen = Rcpp::wrap(weighted_LogLoss(actual, qk, w, normalize));
+    rcpp_result_gen = Rcpp::wrap(weighted_LogLoss(actual, response, w, normalize));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1606,6 +1606,36 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// covariance_matrix
+Rcpp::List covariance_matrix(const Rcpp::NumericMatrix& x, const Rcpp::Nullable<Rcpp::NumericVector>& wt, bool cor, bool center, const std::string& method);
+RcppExport SEXP _SLmetrics_covariance_matrix(SEXP xSEXP, SEXP wtSEXP, SEXP corSEXP, SEXP centerSEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::Nullable<Rcpp::NumericVector>& >::type wt(wtSEXP);
+    Rcpp::traits::input_parameter< bool >::type cor(corSEXP);
+    Rcpp::traits::input_parameter< bool >::type center(centerSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(covariance_matrix(x, wt, cor, center, method));
+    return rcpp_result_gen;
+END_RCPP
+}
+// covariance_dataframe
+Rcpp::List covariance_dataframe(const Rcpp::DataFrame& x, const Rcpp::Nullable<Rcpp::NumericVector>& wt, bool cor, bool center, const std::string& method);
+RcppExport SEXP _SLmetrics_covariance_dataframe(SEXP xSEXP, SEXP wtSEXP, SEXP corSEXP, SEXP centerSEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::DataFrame& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::Nullable<Rcpp::NumericVector>& >::type wt(wtSEXP);
+    Rcpp::traits::input_parameter< bool >::type cor(corSEXP);
+    Rcpp::traits::input_parameter< bool >::type center(centerSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(covariance_dataframe(x, wt, cor, center, method));
+    return rcpp_result_gen;
+END_RCPP
+}
 // enable_openmp
 bool enable_openmp();
 RcppExport SEXP _SLmetrics_enable_openmp() {
@@ -1769,6 +1799,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_weighted_rrse", (DL_FUNC) &_SLmetrics_weighted_rrse, 3},
     {"_SLmetrics_smape", (DL_FUNC) &_SLmetrics_smape, 2},
     {"_SLmetrics_weighted_smape", (DL_FUNC) &_SLmetrics_weighted_smape, 3},
+    {"_SLmetrics_covariance_matrix", (DL_FUNC) &_SLmetrics_covariance_matrix, 5},
+    {"_SLmetrics_covariance_dataframe", (DL_FUNC) &_SLmetrics_covariance_dataframe, 5},
     {"_SLmetrics_enable_openmp", (DL_FUNC) &_SLmetrics_enable_openmp, 0},
     {"_SLmetrics_disable_openmp", (DL_FUNC) &_SLmetrics_disable_openmp, 0},
     {"_SLmetrics_available_threads", (DL_FUNC) &_SLmetrics_available_threads, 0},

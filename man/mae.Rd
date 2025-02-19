@@ -11,9 +11,20 @@
 
 \method{weighted.mae}{numeric}(actual, predicted, w, ...)
 
-mae(...)
+## Generic S3 method
+mae(
+ actual,
+ predicted,
+ ...
+)
 
-weighted.mae(...)
+## Generic S3 method
+weighted.mae(
+ actual,
+ predicted,
+ w,
+ ...
+)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}

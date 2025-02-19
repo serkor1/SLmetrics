@@ -12,9 +12,18 @@
 
 \method{weighted.rsq}{numeric}(actual, predicted, w, k = 0, ...)
 
-rsq(...)
+## Generic S3 method
+rsq(
+ ...,
+ k = 0
+)
 
-weighted.rsq(...)
+## Generic S3 method
+weighted.rsq(
+ ...,
+ w,
+ k = 0
+)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}
@@ -32,7 +41,7 @@ A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
 A generic function for the \href{https://en.wikipedia.org/wiki/Coefficient_of_determination}{\eqn{R^2}}. The unadjusted \href{https://en.wikipedia.org/wiki/Coefficient_of_determination}{\eqn{R^2}} is returned by default.
-Use \code{\link[=weighted.rsq]{weighted.rsq()}} for the weiighted \href{https://en.wikipedia.org/wiki/Coefficient_of_determination}{\eqn{R^2}}.
+Use \code{\link[=weighted.rsq]{weighted.rsq()}} for the weighted \href{https://en.wikipedia.org/wiki/Coefficient_of_determination}{\eqn{R^2}}.
 }
 \section{Definition}{
 

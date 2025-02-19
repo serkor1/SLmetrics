@@ -36,17 +36,50 @@
 
 \method{selectivity}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
-specificity(...)
+## Generic S3 method
+specificity(
+ ...,
+ micro = NULL,
+ na.rm = TRUE
+)
 
-tnr(...)
+## Generic S3 method
+tnr(
+ ...,
+ micro = NULL,
+ na.rm = TRUE
+)
 
-selectivity(...)
+## Generic S3 method
+selectivity(
+ ...,
+ micro = NULL,
+ na.rm = TRUE
+)
 
-weighted.specificity(...)
+## Generic S3 method
+weighted.specificity(
+ ...,
+ w,
+ micro = NULL,
+ na.rm = TRUE
+)
 
-weighted.tnr(...)
+## Generic S3 method
+weighted.tnr(
+ ...,
+ w,
+ micro = NULL,
+ na.rm = TRUE
+)
 
-weighted.selectivity(...)
+## Generic S3 method
+weighted.selectivity(
+ ...,
+ w,
+ micro = NULL,
+ na.rm = TRUE
+)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -61,7 +94,8 @@ This argument is only relevant when \code{micro != NULL}.
 When \code{na.rm = TRUE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))}.
 When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))}.}
 
-\item{...}{Arguments passed into other methods}
+\item{..., }{micro = NULL,
+na.rm = TRUE Arguments passed into other methods}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 

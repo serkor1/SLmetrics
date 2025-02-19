@@ -10,8 +10,15 @@
 #'
 #' @description
 #' A generic function for the [\eqn{R^2}](https://en.wikipedia.org/wiki/Coefficient_of_determination). The unadjusted [\eqn{R^2}](https://en.wikipedia.org/wiki/Coefficient_of_determination) is returned by default.
-#' Use [weighted.rsq()] for the weiighted [\eqn{R^2}](https://en.wikipedia.org/wiki/Coefficient_of_determination).
+#' Use [weighted.rsq()] for the weighted [\eqn{R^2}](https://en.wikipedia.org/wiki/Coefficient_of_determination).
 #'
+#' @usage
+#' ## Generic S3 method
+#' rsq(
+#'  ...,
+#'  k = 0
+#' )
+#' 
 #' @param k A <[numeric]>-vector of [length] 1 (default: 0). For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.
 #'
 #' @section Definition:
@@ -35,7 +42,9 @@
 #' @family Regression
 #' @family Supervised Learning
 #' @export
-rsq <- function(...) {
+rsq <- function(
+  ..., 
+  k = 0) {
   UseMethod(
     generic = "rsq",
     object  = ..1
@@ -43,8 +52,18 @@ rsq <- function(...) {
 }
 
 #' @rdname rsq
+#' @usage
+#' ## Generic S3 method
+#' weighted.rsq(
+#'  ...,
+#'  w,
+#'  k = 0
+#' )
 #' @export
-weighted.rsq <- function(...) {
+weighted.rsq <- function(
+  ...,
+  w,
+  k = 0) {
   UseMethod(
     generic = "weighted.rsq",
     object  = ..1

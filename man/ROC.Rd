@@ -12,9 +12,22 @@
 
 \method{weighted.ROC}{factor}(actual, response, w, thresholds = NULL, ...)
 
-ROC(...)
+## Generic S3 method
+ROC(
+ actual,
+ response,
+ thresholds,
+ ...
+)
 
-weighted.ROC(...)
+## Generic S3 method
+weighted.ROC(
+ actual,
+ response,
+ w,
+ thresholds,
+ ...
+)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}

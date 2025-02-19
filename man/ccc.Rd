@@ -12,9 +12,16 @@
 
 \method{weighted.ccc}{numeric}(actual, predicted, w, correction = FALSE, ...)
 
-ccc(...)
+ccc(
+ ...,
+ correction = FALSE
+)
 
-weighted.ccc(...)
+weighted.ccc(
+ ...,
+ w,
+ correction = FALSE
+)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}

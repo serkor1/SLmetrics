@@ -1,4 +1,4 @@
-# script: Fowlkes Mallows Index
+# script: Fowlkes-Mallows Index
 # date: 2024-10-07
 # author: Serkan Korkmaz, serkor1@duck.com
 # objective: Generate methods
@@ -11,6 +11,10 @@
 #' @description
 #' The [fmi()]-function computes the [Fowlkes-Mallows Index](https://en.wikipedia.org/wiki/Fowlkes%E2%80%93Mallows_index) (FMI), a measure of the similarity between two sets of clusterings, between
 #' two vectors of predicted and observed [factor()] values.
+#' 
+#' @usage
+#' ## Generic S3 method
+#' fmi(...)
 #' 
 #' @section Definition:
 #'

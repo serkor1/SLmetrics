@@ -10,7 +10,11 @@
 #' @title Negative Likelihood Ratio
 #'
 #' @description
-#' A genereric function for the [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) in classification tasks. Use [weighted.nlr()] weighted [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing).
+#' A generic function for the [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) in classification tasks. Use [weighted.nlr()] weighted [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing).
+#' 
+#' @usage
+#' ## Generic S3 method
+#' nlr(...)
 #' 
 #' @section Definition:
 #' Let \eqn{\hat{\alpha} \in [0, \infty]} be the likelihood of a negative outcome. The [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) of the classifier is calculated as,
@@ -42,8 +46,16 @@ nlr <- function(...) {
 }
 
 #' @rdname nlr
+#' @usage
+#' ## Generic S3 method
+#' weighted.nlr(
+#'  ...,
+#'  w
+#' )
 #' @export
-weighted.nlr <- function(...) {
+weighted.nlr <- function(
+  ..., 
+  w) {
   UseMethod(
     generic = "weighted.nlr",
     object  = ..1
@@ -55,7 +67,11 @@ weighted.nlr <- function(...) {
 #' @title Positive Likelihood Ratio
 #'
 #' @description
-#' A genereric function for the [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) in classification tasks. Use [weighted.plr()] weighted [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing).
+#' A generic function for the [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) in classification tasks. Use [weighted.plr()] weighted [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing).
+#' 
+#' @usage
+#' ## Generic S3 method
+#' plr(...)
 #' 
 #' @section Definition:
 #' Let \eqn{\hat{\alpha} \in [0, \infty]} be the likelihood of a positive outcome. The [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) of the classifier is calculated as,
@@ -87,8 +103,16 @@ plr <- function(...) {
 }
 
 #' @rdname plr
+#' @usage
+#' ## Generic S3 method
+#' weighted.plr(
+#'  ...,
+#'  w
+#' )
 #' @export
-weighted.plr <- function(...) {
+weighted.plr <- function(
+  ...,
+  w) {
   UseMethod(
     generic = "weighted.plr",
     object  = ..1
@@ -100,7 +124,11 @@ weighted.plr <- function(...) {
 #' @title Diagnostic Odds Ratio
 #'
 #' @description
-#' A genereric function for the [diagnostic odds ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) in classification tasks. Use [weighted.dor()] weighted [diagnostic odds ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio).
+#' A generic function for the [diagnostic odds ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) in classification tasks. Use [weighted.dor()] weighted [diagnostic odds ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio).
+#' 
+#' @usage
+#' ## Generic S3 method
+#' dor(...)
 #' 
 #' @section Definition:
 #' Let \eqn{\hat{\alpha} \in [0, \infty]} be the effectiveness of the classifier.  The [diagnostic odds ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) of the classifier is calculated as,
@@ -133,8 +161,16 @@ dor <- function(...) {
 }
 
 #' @rdname dor
+#' @usage
+#' ## Generic S3 method
+#' weighted.dor(
+#'  ...,
+#'  w
+#' )
 #' @export
-weighted.dor <- function(...) {
+weighted.dor <- function(
+  ..., 
+  w) {
   UseMethod(
     generic = "weighted.dor",
     object  = ..1

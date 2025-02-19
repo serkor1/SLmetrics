@@ -12,6 +12,15 @@
 #' The [prROC()]-function computes the [precision()] and [recall()] at thresholds provided by the \eqn{response}- or \eqn{thresholds}-vector. The function
 #' constructs a [data.frame()] grouped by \eqn{k}-classes where each class is treated as a binary classification problem.
 #' 
+#' @usage
+#' ## Generic S3 method
+#' prROC(
+#'  actual,
+#'  response,
+#'  thresholds,
+#'  ...
+#' )
+#' 
 #' @returns A [data.frame] on the following form,
 #'
 #' \item{threshold}{<[numeric]> Thresholds used to determine [recall()] and [precision()]}
@@ -26,19 +35,35 @@
 #' @family Supervised Learning
 #' 
 #' @export
-prROC <- function(...) {
+prROC <- function(
+  actual,
+  response, 
+  thresholds, 
+  ...) {
   UseMethod(
-    generic = "prROC",
-    object  = ..1
+    generic = "prROC"
   )
 }
 
 #' @rdname prROC
+#' @usage
+#' ## Generic S3 method
+#' weighted.prROC(
+#'  actual,
+#'  response,
+#'  w,
+#'  thresholds,
+#'  ...
+#' )
 #' @export
-weighted.prROC <- function(...) {
+weighted.prROC <- function( 
+  actual,
+  response, 
+  w,
+  thresholds, 
+  ...) {
   UseMethod(
-    generic = "weighted.prROC",
-    object  = ..1
+    generic = "weighted.prROC"
   )
 }
 

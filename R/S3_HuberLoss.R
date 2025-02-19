@@ -10,6 +10,15 @@
 #' The [huberloss()]-function computes the simple and weighted [huber loss](https://en.wikipedia.org/wiki/Huber_loss) between
 #' the predicted and observed <[numeric]> vectors. The [weighted.huberloss()] function computes the weighted Huber Loss.
 #'
+#' @usage
+#' ## Generic S3 method
+#' huberloss(
+#'  actual,
+#'  predicted,
+#'  delta = 1,
+#'  ...
+#' )
+#' 
 #' @param actual A <[numeric]>-vector of [length] \eqn{n}. The observed (continuous) response variable.
 #' @param predicted A <[numeric]>-vector of [length] \eqn{n}. The estimated (continuous) response variable.
 #' @param w A <[numeric]>-vector of [length] \eqn{n}. The weight assigned to each observation in the data.
@@ -41,19 +50,35 @@
 #' @family Supervised Learning
 #' 
 #' @export
-huberloss <- function(...) {
+huberloss <- function(
+  actual, 
+  predicted, 
+  delta = 1,
+   ...) {
   UseMethod(
-    generic = "huberloss",
-    object  = ..1
+    generic = "huberloss"
   )
 }
 
 #' @rdname huberloss
+#' @usage
+#' ## Generic S3 method
+#' weighted.huberloss(
+#'  actual,
+#'  predicted,
+#'  w,
+#'  delta = 1,
+#'  ...
+#' )
 #' @export
-weighted.huberloss <- function(...) {
+weighted.huberloss <- function(
+  actual, 
+  predicted, 
+  w, 
+  delta = 1,
+   ...) {
   UseMethod(
-    generic = "weighted.huberloss",
-    object  = ..1
+    generic = "weighted.huberloss"
   )
 }
 

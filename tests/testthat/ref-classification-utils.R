@@ -25,7 +25,8 @@ generalized_metric <- function(
   w = NULL, 
   micro = NULL,
   metric_expr, 
-  na.rm = TRUE) {
+  na.rm = TRUE,
+  ...) {
   
   # 1) Construct confusion matrix
   conf_mat <- confusion_matrix(actual, predicted, w = w)
@@ -37,7 +38,12 @@ generalized_metric <- function(
   FN <- rowSums(conf_mat) - TP
 
   # 3) Evaluate the metric expression
-  output <- eval(substitute(metric_expr))
+  
+  # 3.1) construct values with ellipsis
+  env <- c(list(TP = TP, FP = FP, TN = TN, FN = FN), list(...))
+
+  # 3.2) calculate output
+  output <- eval(substitute(metric_expr), envir = env)
 
   if (is.null(micro)) {
     return(output)
@@ -51,8 +57,9 @@ generalized_metric <- function(
     total_TN <- sum(TN, na.rm = TRUE)
     total_FN <- sum(FN, na.rm = TRUE)
 
-    output <- eval(substitute(metric_expr),
-                   list(TP = total_TP, FP = total_FP, TN = total_TN, FN = total_FN))
+    env <- c(list(TP = total_TP, FP = total_FP, TN = total_TN, FN = total_FN), list(...))
+    output <- eval(substitute(metric_expr), envir = env)
+
   } else {
     # Handle NA values if na.rm is FALSE
     if (!na.rm) {

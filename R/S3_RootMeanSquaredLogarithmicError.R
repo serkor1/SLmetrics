@@ -11,6 +11,14 @@
 #' @description
 #' The [rmsle()]-function computes the root mean squared logarithmic error between the observed and predicted <[numeric]> vectors. The [weighted.rmsle()] function computes the weighted root mean squared logarithmic error.
 #' 
+#' @usage
+#' ## Generic S3 method
+#' rmsle(
+#'  actual,
+#'  predicted,
+#'  ...
+#' )
+#' 
 #' @section Definition:
 #'
 #' The metric is calculated as,
@@ -27,19 +35,32 @@
 #' @family Supervised Learning
 #' 
 #' @export
-rmsle <- function(...) {
+rmsle <- function(
+  actual,
+  predicted,
+  ...) {
   UseMethod(
-    generic = "rmsle",
-    object  = ..1
+    generic = "rmsle"
   )
 }
 
 #' @rdname rmsle
+#' @usage
+#' ## Generic S3 method
+#' weighted.rmsle(
+#'  actual,
+#'  predicted,
+#'  w,
+#'  ...
+#' )
 #' @export
-weighted.rmsle <- function(...) {
+weighted.rmsle <- function(
+  actual, 
+  predicted, 
+  w,
+  ...) {
   UseMethod(
-    generic = "weighted.rmsle",
-    object  = ..1
+    generic = "weighted.rmsle"
   )
 }
 

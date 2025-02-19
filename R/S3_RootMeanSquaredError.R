@@ -12,6 +12,14 @@
 #' The [rmse()]-function computes the [root mean squared error](https://en.wikipedia.org/wiki/Root-mean-square_deviation) between
 #' the observed and predicted <[numeric]> vectors. The [weighted.rmse()] function computes the weighted root mean squared error.
 #' 
+#' @usage
+#' ## Generic S3 method
+#' rmse(
+#'  actual,
+#'  predicted,
+#'  ...
+#' )
+#' 
 #' @section Definition:
 #'
 #' The metric is calculated as,
@@ -28,19 +36,31 @@
 #' @family Supervised Learning
 #' 
 #' @export
-rmse <- function(...) {
+rmse <- function(
+  actual, 
+  predicted,
+  ...) {
   UseMethod(
-    generic = "rmse",
-    object  = ..1
+    generic = "rmse"
   )
 }
 
 #' @rdname rmse
+#' @usage
+#' weighted.rmse(
+#'  actual,
+#'  predicted,
+#'  w,
+#'  ...
+#' )
 #' @export
-weighted.rmse <- function(...) {
+weighted.rmse <- function(
+  actual, 
+  predicted, 
+  w,
+  ...) {
   UseMethod(
-    generic = "weighted.rmse",
-    object  = ..1
+    generic = "weighted.rmse"
   )
 }
 

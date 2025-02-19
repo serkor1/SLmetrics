@@ -11,6 +11,14 @@
 #' @description
 #' A generic function for the [false omission rate](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate). Use [weighted.fdr()] for the weighted [false omission rate](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate).
 #'
+#' @usage 
+#' ## Generic S3 method
+#' fer(
+#'  ...,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
+#' 
 #' @section Definition:
 #' Let \eqn{\hat{\beta} \in [0, 1]} be the proportion of false negatives among the predicted negatives. The false omission rate of the classifier is calculated as,
 #'
@@ -29,7 +37,10 @@
 #' @family Supervised Learning
 #' 
 #' @export
-fer <- function(...) {
+fer <- function(
+  ...,
+  micro = NULL,
+  na.rm = TRUE) {
   UseMethod(
     generic = "fer",
     object  = ..1
@@ -37,8 +48,20 @@ fer <- function(...) {
 }
 
 #' @rdname fer
+#' @usage 
+#' ## Generic S3 method
+#' weighted.fer(
+#'  ...,
+#'  w,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-weighted.fer <- function(...) {
+weighted.fer <- function(
+  ...,
+  w,
+  micro = NULL,
+  na.rm = TRUE) {
   UseMethod(
     generic = "weighted.fer",
     object  = ..1

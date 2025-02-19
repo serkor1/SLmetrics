@@ -14,9 +14,16 @@
 
 \method{ckappa}{cmatrix}(x, beta = 0, ...)
 
-ckappa(...)
+ckappa(
+ ...,
+ beta = 0
+)
 
-weighted.ckappa(...)
+weighted.ckappa(
+ ...,
+ w,
+ beta = 0
+)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -25,7 +32,8 @@ weighted.ckappa(...)
 
 \item{beta}{A <\link{numeric}> value of \link{length} 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.}
 
-\item{...}{Arguments passed into other methods}
+\item{...}{micro = NULL,
+na.rm = TRUE Arguments passed into other methods}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 
@@ -53,7 +61,7 @@ Where:
 \item \eqn{\rho_e} is the expected probability of agreement under random chance
 }
 
-If \eqn{\beta \neq 0} the off-diagonals in the confusion matrix is benalized before \eqn{\rho} is calculated. More formally,
+If \eqn{\beta \neq 0} the off-diagonals in the confusion matrix is penalized before \eqn{\rho} is calculated. More formally,
 
 \deqn{
  \chi = X \circ Y^{\beta}
@@ -62,7 +70,7 @@ If \eqn{\beta \neq 0} the off-diagonals in the confusion matrix is benalized bef
 Where:
 \itemize{
 \item \eqn{X} is the confusion matrix
-\item \eqn{Y} is the penalzing matrix and
+\item \eqn{Y} is the penalizing matrix and
 \item \eqn{\beta} is the penalizing factor
 }
 }
