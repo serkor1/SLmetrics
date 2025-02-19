@@ -172,3 +172,14 @@ clean:
 
 	@rm -f src/*.o src/*.so
 	@rm -f $(TARBALL)
+
+# r-hub:
+# 
+# This command performs most checks available
+# on all R consortium runners.
+r-hub:
+	@echo "▶️ Requesting r-hub tests"
+	@echo "========================="
+
+	@Rscript -e "rhub::rhub_check(platforms = paste(1:28, collapse = ", "))"
+
