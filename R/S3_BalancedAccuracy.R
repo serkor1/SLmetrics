@@ -27,20 +27,20 @@
 #' Let \eqn{\hat{\alpha} \in [0, 1]} be the proportion of correctly predicted classes. If `adjust == false`, the balanced [accuracy](https://arxiv.org/abs/2008.05756) of the classifier is calculated as,
 #'
 #' \deqn{
-#'   \hat{\alpha} = \frac{\text{sensitivity} + \text{specificty}}{2}
+#'   \hat{\alpha} = \frac{\text{sensitivity} + \text{specificity}}{2}
 #' }
 #' 
 #' otherwise,
 #' 
 #' \deqn{
-#'   \hat{\alpha} = \frac{\text{sensitivity} + \text{specificty}}{2} \frac{1}{k}
+#'   \hat{\alpha} = \frac{\text{sensitivity} + \text{specificity}}{2} \frac{1}{k}
 #' }
 #' 
 #' Where:
 #' 
 #' - \eqn{k} is the number of classes
 #' - \eqn{\text{sensitivity}} is the overall [sensitivity](https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall#recall_or_true_positive_rate), and
-#' - \eqn{\text{specificty}} is the overall [specificty](https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall#recall_or_true_positive_rate)
+#' - \eqn{\text{specificity}} is the overall [specificity](https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall#recall_or_true_positive_rate)
 #' 
 #'
 #' @returns

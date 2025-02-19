@@ -10,7 +10,7 @@
 #'
 #' @description
 #' A generic function for the [\eqn{R^2}](https://en.wikipedia.org/wiki/Coefficient_of_determination). The unadjusted [\eqn{R^2}](https://en.wikipedia.org/wiki/Coefficient_of_determination) is returned by default.
-#' Use [weighted.rsq()] for the weiighted [\eqn{R^2}](https://en.wikipedia.org/wiki/Coefficient_of_determination).
+#' Use [weighted.rsq()] for the weighted [\eqn{R^2}](https://en.wikipedia.org/wiki/Coefficient_of_determination).
 #'
 #' @usage
 #' ## Generic S3 method

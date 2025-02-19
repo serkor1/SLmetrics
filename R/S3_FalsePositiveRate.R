@@ -11,7 +11,7 @@
 #' @title False Positive Rate
 #'
 #' @description
-#' A generic funcion for the [False Positive Rate](https://en.wikipedia.org/wiki/False_positive_rate). Use [weighted.fpr()] for the weighted [False Positive Rate](https://en.wikipedia.org/wiki/False_positive_rate).
+#' A generic function for the [False Positive Rate](https://en.wikipedia.org/wiki/False_positive_rate). Use [weighted.fpr()] for the weighted [False Positive Rate](https://en.wikipedia.org/wiki/False_positive_rate).
 #' 
 #' ## Other names
 #' Fallout

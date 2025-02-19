@@ -10,7 +10,7 @@
 #' @title Negative Likelihood Ratio
 #'
 #' @description
-#' A genereric function for the [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) in classification tasks. Use [weighted.nlr()] weighted [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing).
+#' A generic function for the [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) in classification tasks. Use [weighted.nlr()] weighted [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing).
 #' 
 #' @usage
 #' ## Generic S3 method
@@ -67,7 +67,7 @@ weighted.nlr <- function(
 #' @title Positive Likelihood Ratio
 #'
 #' @description
-#' A genereric function for the [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) in classification tasks. Use [weighted.plr()] weighted [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing).
+#' A generic function for the [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) in classification tasks. Use [weighted.plr()] weighted [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing).
 #' 
 #' @usage
 #' ## Generic S3 method
@@ -124,7 +124,7 @@ weighted.plr <- function(
 #' @title Diagnostic Odds Ratio
 #'
 #' @description
-#' A genereric function for the [diagnostic odds ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) in classification tasks. Use [weighted.dor()] weighted [diagnostic odds ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio).
+#' A generic function for the [diagnostic odds ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) in classification tasks. Use [weighted.dor()] weighted [diagnostic odds ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio).
 #' 
 #' @usage
 #' ## Generic S3 method

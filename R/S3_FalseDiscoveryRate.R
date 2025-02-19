@@ -9,7 +9,7 @@
 #' @title false discovery rate
 #'
 #' @description
-#' A generic funcion for the [False Discovery Rate](https://en.wikipedia.org/wiki/False_discovery_rate). Use [weighted.fdr()] for the weighted [False Discovery Rate](https://en.wikipedia.org/wiki/False_discovery_rate).
+#' A generic function for the [False Discovery Rate](https://en.wikipedia.org/wiki/False_discovery_rate). Use [weighted.fdr()] for the weighted [False Discovery Rate](https://en.wikipedia.org/wiki/False_discovery_rate).
 #' 
 #' @usage 
 #' ## Generic S3 method

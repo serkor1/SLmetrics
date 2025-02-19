@@ -1,4 +1,4 @@
-# script: Fowlkes Mallows Index
+# script: Fowlkes-Mallows Index
 # date: 2024-10-07
 # author: Serkan Korkmaz, serkor1@duck.com
 # objective: Generate methods
@@ -35,7 +35,7 @@
 fmi <- function(...) {
   UseMethod(
     generic = "fmi",
-    object  = ..1 
+    object  = ..1
   )
 }
 

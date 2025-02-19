@@ -32,7 +32,7 @@
 #' - \eqn{\rho_p} is the empirical probability of agreement between predicted and actual values
 #' - \eqn{\rho_e} is the expected probability of agreement under random chance
 #' 
-#' If \eqn{\beta \neq 0} the off-diagonals in the confusion matrix is benalized before \eqn{\rho} is calculated. More formally,
+#' If \eqn{\beta \neq 0} the off-diagonals in the confusion matrix is penalized before \eqn{\rho} is calculated. More formally,
 #' 
 #' \deqn{
 #'  \chi = X \circ Y^{\beta}
@@ -41,7 +41,7 @@
 #' Where:
 #' 
 #' - \eqn{X} is the confusion matrix
-#' - \eqn{Y} is the penalzing matrix and
+#' - \eqn{Y} is the penalizing matrix and
 #' - \eqn{\beta} is the penalizing factor
 #'
 #' @example man/examples/scr_CohensKappa.R

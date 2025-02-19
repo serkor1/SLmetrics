@@ -9,7 +9,7 @@
 #' @title \eqn{F_{\beta}}-score
 #'
 #' @description
-#' A generic funcion for the [\eqn{F_{\beta}}](https://en.wikipedia.org/wiki/F1_score)-score. Use [weighted.fbeta()] for the weighted [\eqn{F_{\beta}}](https://en.wikipedia.org/wiki/F1_score)-score.
+#' A generic function for the [\eqn{F_{\beta}}](https://en.wikipedia.org/wiki/F1_score)-score. Use [weighted.fbeta()] for the weighted [\eqn{F_{\beta}}](https://en.wikipedia.org/wiki/F1_score)-score.
 #' 
 #' @usage
 #' ## Generic S3 method
@@ -23,7 +23,7 @@
 #' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
 #'
 #' @section Definition:
-#' Let \eqn{\hat{F}_{\beta} \in [0, 1]} be the \eqn{F_{\beta}} score, which is a weighted harmonic mean of precision and recall. \eqn{F_{\beta}} score of thte classifier is is calculated as,
+#' Let \eqn{\hat{F}_{\beta} \in [0, 1]} be the \eqn{F_{\beta}} score, which is a weighted harmonic mean of precision and recall. \eqn{F_{\beta}} score of the classifier is is calculated as,
 #'
 #' \deqn{
 #'   \hat{F}_{\beta} = \left(1 + \beta^2\right) \frac{\text{Precision} \times \text{Recall}}

@@ -16,8 +16,8 @@
 #' ## Generic S3 method
 #' accuracy(...)
 #' 
-#' @param actual A vector of <[factor]>- of [length] \eqn{n}, and \eqn{k} levels
-#' @param predicted A vector of <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels
+#' @param actual A vector of <[factor]> with [length] \eqn{n}, and \eqn{k} levels
+#' @param predicted A vector of <[factor]> with [length] \eqn{n}, and \eqn{k} levels
 #' @param w A <[numeric]>-vector of [length] \eqn{n}. [NULL] by default
 #' @param x A confusion matrix created [cmatrix()]
 #'

@@ -29,7 +29,7 @@
 #' @param ... Arguments passed into other methods.
 #' 
 #' @section Dimensions:
-#' There is no robust defensive measure against misspecififying
+#' There is no robust defensive measure against mis-specifying
 #' the confusion matrix. If the arguments are correctly specified, the resulting
 #' confusion matrix is on the form:
 #'
