@@ -1,6 +1,6 @@
 
 
-> Version 0.3-2 is considered pre-release of {SLmetrics}. We do not
+> Version 0.3-3 is considered pre-release of {SLmetrics}. We do not
 > expect any breaking changes, unless a major bug/issue is reported and
 > its nature forces breaking changes.
 
@@ -17,7 +17,7 @@
 
 A new family of `Tools`-functions are introduced with this update. This
 addition introduces unexported functions for constructing fast and
-memory efficient proprietary metrics. These functions are re-written
+memory efficient proprietary metrics. These functions are rewritten
 built-in functions from {stats} and family.
 
 - **Covariance Matrix:** A re-written `stats::cov.wt()`, using `Rcpp`.
@@ -245,11 +245,11 @@ cat(
   sep = "\n"
 )
 #> Mean Relative Root Mean Squared Error
-#> 109.6975
+#> 23.57525
 #> Range Relative Root Mean Squared Error
-#> 0.1471557
+#> 0.1413768
 #> IQR Relative Root Mean Squared Error
-#> 0.7109749
+#> 0.6665152
 ```
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
@@ -290,13 +290,13 @@ cat(
   Rates for each threshold.
 
 - **Weighted Precision-Recall Curve:** `weighted.prROC()`, the function
-  calculates the weighted Recall and Precsion for each threshold.
+  calculates the weighted Recall and Precision for each threshold.
 
 ## Breaking Changes
 
-- **Weighted Confusion Matix:** The `w`-argument in `cmatrix()` has been
-  removed in favor of the more verbose weighted confusion matrix call
-  `weighted.cmatrix()`-function. See below,
+- **Weighted Confusion Matrix:** The `w`-argument in `cmatrix()` has
+  been removed in favor of the more verbose weighted confusion matrix
+  call `weighted.cmatrix()`-function. See below,
 
 Prior to version `0.3-0` the weighted confusion matrix were a part of
 the `cmatrix()`-function and were called as follows,
@@ -326,9 +326,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a 12  8 12
-#> b 14  6 10
-#> c 13 10 15
+#> a  7 10 11
+#> b 15  8  8
+#> c  7 23 11
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -336,10 +336,10 @@ SLmetrics::weighted.cmatrix(
     predicted = predicted,
     w         = weights
 )
-#>          a        b        c
-#> a 6.886423 4.701607 4.734864
-#> b 6.416565 4.601738 6.425571
-#> c 4.552494 5.177394 6.399259
+#>           a         b         c
+#> a  3.720489  5.048507  5.829939
+#> b  7.962346  3.438800  2.198618
+#> c  3.473506 10.423952  7.394876
 ```
 
 ## :bug: Bug-fixes
@@ -374,9 +374,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a 15 10 11
-#> b  9  9  9
-#> c 11 13 13
+#> a  5 11  9
+#> b 16 13 10
+#> c 13 13 10
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -385,9 +385,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 7.976209 4.048645 5.330390
-#> b 4.551065 6.233777 3.377614
-#> c 8.119818 6.068613 6.474901
+#> a 3.055945 5.979979 4.421233
+#> b 7.673914 5.250443 4.319918
+#> c 5.864924 7.383163 4.517976
 ```
 
 Calculating weighted metrics manually or by using
@@ -407,7 +407,7 @@ confusion_matrix <- SLmetrics::cmatrix(
 SLmetrics::accuracy(
     confusion_matrix
 )
-#> [1] 0.37
+#> [1] 0.28
 
 # 3) calculate the weighted
 # accuracy manually
@@ -416,14 +416,14 @@ SLmetrics::weighted.accuracy(
     predicted = predicted,
     w         = weights
 )
-#> [1] 0.3964062
+#> [1] 0.2645972
 ```
 
 Please note, however, that it is not possible to pass `cmatrix()`-into
 `weighted.accuracy()`,
 
 - **Unit-testing:** All functions are now being tested for edge-cases in
-  balanced and imbalanced classifcation problems, and regression
+  balanced and imbalanced classification problems, and regression
   problems, individually. This will enable a more robust development
   process and prevent avoidable bugs.
 
@@ -490,11 +490,11 @@ w         <- runif(n = 1e3)
 
 # 2) unweighted metrics
 SLmetrics::rmse(actual, predicted)
-#> [1] 1.009721
+#> [1] 1.012171
 
 # 3) weighted metrics
 SLmetrics::weighted.rmse(actual, predicted, w = w)
-#> [1] 1.010545
+#> [1] 1.016224
 ```
 
 - The `rrmse()`-function have been removed in favor of the
@@ -613,7 +613,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-#>  [1] c b b c b a c c c a
+#>  [1] c b a b c b c b c c
 #> Levels: a b c
 
 # 2) predicted classes
@@ -622,7 +622,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-#>  [1] a c b b a c b a b c
+#>  [1] c c c b b c b a a a
 #> Levels: a b c
 ```
 
@@ -639,16 +639,16 @@ summary(
 #> Confusion Matrix (3 x 3) 
 #> ================================================================================
 #>   a b c
-#> a 0 0 2
-#> b 1 1 1
-#> c 2 3 0
+#> a 0 0 1
+#> b 1 1 2
+#> c 2 2 1
 #> ================================================================================
 #> Overall Statistics (micro average)
-#>  - Accuracy:          0.10
-#>  - Balanced Accuracy: 0.11
-#>  - Sensitivity:       0.10
-#>  - Specificity:       0.55
-#>  - Precision:         0.10
+#>  - Accuracy:          0.20
+#>  - Balanced Accuracy: 0.15
+#>  - Sensitivity:       0.20
+#>  - Specificity:       0.60
+#>  - Precision:         0.20
 
 # 2) calculate false positive
 # rate using micro average
@@ -656,7 +656,7 @@ SLmetrics::fpr(
     confusion_matrix
 )
 #>         a         b         c 
-#> 0.3750000 0.4285714 0.6000000
+#> 0.3333333 0.3333333 0.6000000
 ```
 
 ### Supervised regression metrics
@@ -676,5 +676,5 @@ SLmetrics::huberloss(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.3811064
+#> [1] 0.4261266
 ```

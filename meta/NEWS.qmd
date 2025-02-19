@@ -15,7 +15,7 @@ knitr:
     out.width: 100%
 ---
 
-> Version 0.3-2 is considered pre-release of {SLmetrics}. We do not
+> Version 0.3-3 is considered pre-release of {SLmetrics}. We do not
 > expect any breaking changes, unless a major bug/issue is reported and its nature
 > forces breaking changes.
 
@@ -29,7 +29,7 @@ knitr:
 
 ### :hammer: Metric tools
 
-A new family of `Tools`-functions are introduced with this update. This addition introduces unexported functions for constructing fast and memory efficient proprietary metrics. These functions are re-written built-in functions from {stats} and family.
+A new family of `Tools`-functions are introduced with this update. This addition introduces unexported functions for constructing fast and memory efficient proprietary metrics. These functions are rewritten built-in functions from {stats} and family.
 
 * **Covariance Matrix:** A re-written `stats::cov.wt()`, using `Rcpp`. Example usage:
 
@@ -239,11 +239,11 @@ cat(
 
 * **Weighted Receiver Operator Characteristics:** `weighted.ROC()`, the function calculates the weighted True Positive and False Positive Rates for each threshold.
 
-* **Weighted Precision-Recall Curve:** `weighted.prROC()`, the function calculates the weighted Recall and Precsion for each threshold.
+* **Weighted Precision-Recall Curve:** `weighted.prROC()`, the function calculates the weighted Recall and Precision for each threshold.
 
 ## Breaking Changes
 
-* **Weighted Confusion Matix:** The `w`-argument in `cmatrix()` has been removed in favor of the more verbose weighted confusion matrix call `weighted.cmatrix()`-function. See below,
+* **Weighted Confusion Matrix:** The `w`-argument in `cmatrix()` has been removed in favor of the more verbose weighted confusion matrix call `weighted.cmatrix()`-function. See below,
 
 Prior to version `0.3-0` the weighted confusion matrix were a part of the `cmatrix()`-function and were called as follows,
 
@@ -338,7 +338,7 @@ SLmetrics::weighted.accuracy(
 
 Please note, however, that it is not possible to pass `cmatrix()`-into `weighted.accuracy()`,
 
-* **Unit-testing:** All functions are now being tested for edge-cases in balanced and imbalanced classifcation problems, and regression problems, individually. This will enable a more robust development process and prevent avoidable bugs.
+* **Unit-testing:** All functions are now being tested for edge-cases in balanced and imbalanced classification problems, and regression problems, individually. This will enable a more robust development process and prevent avoidable bugs.
 
 ```{r}
 try(

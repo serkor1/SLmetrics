@@ -63,7 +63,7 @@ A generic function for the \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_
 }
 \section{Definition}{
 
-Let \eqn{\hat{F}_{\beta} \in [0, 1]} be the \eqn{F_{\beta}} score, which is a weighted harmonic mean of precision and recall. \eqn{F_{\beta}} score of the classifier is is calculated as,
+Let \eqn{\hat{F}_{\beta} \in [0, 1]} be the \eqn{F_{\beta}} score, which is a weighted harmonic mean of precision and recall. \eqn{F_{\beta}} score of the classifier is calculated as,
 
 \deqn{
   \hat{F}_{\beta} = \left(1 + \beta^2\right) \frac{\text{Precision} \times \text{Recall}}
