@@ -578,7 +578,7 @@ A generic function for the (normalized) balanced <a href="https://arxiv.org/abs/
 </td>
 <td>
 <p>
-A vector of <factor>- of length <span class="math inline">\(n\)</span>, and <span class="math inline">\(k\)</span> levels
+A vector of <factor> with length <span class="math inline">\(n\)</span>, and <span class="math inline">\(k\)</span> levels
 </factor></p>
 </td>
 </tr>
@@ -588,7 +588,7 @@ A vector of <factor>- of length <span class="math inline">\(n\)</span>, and <spa
 </td>
 <td>
 <p>
-A vector of <factor>-vector of length <span class="math inline">\(n\)</span>, and <span class="math inline">\(k\)</span> levels
+A vector of <factor> with length <span class="math inline">\(n\)</span>, and <span class="math inline">\(k\)</span> levels
 </factor></p>
 </td>
 </tr>
@@ -618,7 +618,7 @@ A logical values (default: TRUE). If TRUE calculation of the metric is based on 
 </td>
 <td>
 <p>
-Arguments passed into other methods
+micro = NULL, na.rm = TRUE Arguments passed into other methods
 </p>
 </td>
 </tr>
@@ -656,13 +656,13 @@ A numeric-vector of length 1
 Let <span class="math inline">\(\hat{\alpha} \in [0, 1]\)</span> be the proportion of correctly predicted classes. If <code>adjust == false</code>, the balanced <a href="https://arxiv.org/abs/2008.05756">accuracy</a> of the classifier is calculated as,
 </p>
 <p><span class="math display">\[
-  \hat{\alpha} = \frac{\text{sensitivity} + \text{specificty}}{2}
+  \hat{\alpha} = \frac{\text{sensitivity} + \text{specificity}}{2}
 \]</span></p>
 <p>
 otherwise,
 </p>
 <p><span class="math display">\[
-  \hat{\alpha} = \frac{\text{sensitivity} + \text{specificty}}{2} \frac{1}{k}
+  \hat{\alpha} = \frac{\text{sensitivity} + \text{specificity}}{2} \frac{1}{k}
 \]</span></p>
 <p>
 Where:
@@ -680,7 +680,7 @@ Where:
 </li>
 <li>
 <p>
-<span class="math inline">\(\text{specificty}\)</span> is the overall <a href="https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall#recall_or_true_positive_rate">specificty</a>
+<span class="math inline">\(\text{specificity}\)</span> is the overall <a href="https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall#recall_or_true_positive_rate">specificity</a>
 </p>
 </li>
 </ul>
