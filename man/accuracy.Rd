@@ -14,9 +14,14 @@
 
 \method{accuracy}{cmatrix}(x, ...)
 
+## Generic S3 method
 accuracy(...)
 
-weighted.accuracy(...)
+## Generic S3 method
+weighted.accuracy(
+...,
+w
+)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels}

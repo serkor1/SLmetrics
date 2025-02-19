@@ -15,6 +15,14 @@
 #' Each row of the [matrix] represents the actual [factor] levels, while each
 #' column represents the predicted [factor] levels.
 #'
+#' @usage
+#' ## Generic S3 method
+#' cmatrix(
+#'  actual,
+#'  predicted,
+#'  ...
+#' )
+#' 
 #' @param actual A <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
 #' @param predicted A <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
 #' @param w A <[numeric]>-vector of [length] \eqn{n} (default: [NULL]) If passed it will return a weighted confusion matrix.
@@ -40,22 +48,34 @@
 #' @family Supervised Learning
 #' 
 #' @export
-cmatrix <- function(...) {
+cmatrix <- function(
+  actual,
+  predicted,
+  ...) {
   UseMethod(
-    generic = "cmatrix",
-    object  = ..1 
+    generic = "cmatrix"
   )
 }
 
 #' @rdname cmatrix
+#' @usage
+#' ## Generic S3 method
+#' weighted.cmatrix(
+#'  actual,
+#'  predicted,
+#'  w,
+#'  ...
+#' )
 #' @export
-weighted.cmatrix <- function(...) {
+weighted.cmatrix <- function(
+  actual,
+  predicted,
+  w,
+  ...) {
   UseMethod(
-    generic = "weighted.cmatrix",
-    object  = ..1 
+    generic = "weighted.cmatrix"
   )
 }
-
 
 #' @export
 print.cmatrix <- function(

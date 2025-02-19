@@ -14,9 +14,14 @@
 
 \method{nlr}{cmatrix}(x, ...)
 
+## Generic S3 method
 nlr(...)
 
-weighted.nlr(...)
+## Generic S3 method
+weighted.nlr(
+ ...,
+ w
+)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}

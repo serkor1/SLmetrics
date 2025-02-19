@@ -11,6 +11,15 @@
 #' @description
 #' A generic funcion for the [\eqn{F_{\beta}}](https://en.wikipedia.org/wiki/F1_score)-score. Use [weighted.fbeta()] for the weighted [\eqn{F_{\beta}}](https://en.wikipedia.org/wiki/F1_score)-score.
 #' 
+#' @usage
+#' ## Generic S3 method
+#' fbeta(
+#'  ...,
+#'  beta  = 1,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
+#' 
 #' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
 #'
 #' @section Definition:
@@ -42,7 +51,11 @@
 #' @family Supervised Learning
 #' 
 #' @export
-fbeta <- function(...) {
+fbeta <- function(
+  ...,
+  beta  = 1,
+  micro = NULL,
+  na.rm = TRUE) {
   UseMethod(
     generic = "fbeta",
     object  = ..1
@@ -50,8 +63,22 @@ fbeta <- function(...) {
 }
 
 #' @rdname fbeta
+#' @usage
+#' ## Generic S3 method
+#' weighted.fbeta(
+#'  ...,
+#'  w,
+#'  beta = 1,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-weighted.fbeta <- function(...) {
+weighted.fbeta <- function(
+  ...,
+  w,
+  beta  = 1,
+  micro = NULL,
+  na.rm = TRUE) {
   UseMethod(
     generic = "weighted.fbeta",
     object  = ..1

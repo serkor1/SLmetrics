@@ -15,11 +15,31 @@
 
 \method{cross.entropy}{matrix}(pk, qk, dim = 0L, base = -1, ...)
 
-entropy(...)
+## Generic S3 method
+entropy(
+ pk,
+ dim  = 0,
+ base = -1,
+ ...
+)
 
-relative.entropy(...)
+## Generic S3 method
+relative.entropy(
+ pk,
+ qk,
+ dim  = 0,
+ base = -1,
+ ...
+)
 
-cross.entropy(...)
+## Generic S3 method
+cross.entropy(
+ pk,
+ qk,
+ dim  = 0,
+ base = -1,
+ ...
+)
 }
 \arguments{
 \item{pk}{A \eqn{n \times k} <\link{numeric}>-matrix of observed probabilities.

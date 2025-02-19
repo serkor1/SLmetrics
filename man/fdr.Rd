@@ -14,9 +14,20 @@
 
 \method{fdr}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
-fdr(...)
+## Generic S3 method
+fdr(
+ ...,
+ micro = NULL,
+ na.rm = TRUE
+)
 
-weighted.fdr(...)
+## Generic S3 method
+weighted.fdr(
+ ...,
+ w,
+ micro = NULL,
+ na.rm = TRUE
+)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}

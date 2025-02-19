@@ -9,7 +9,16 @@
 #' @title Entropy
 #'
 #' @description
-#' The [entropy()] function calculates the **Entropy** of given probability distributions. 
+#' The [entropy()] function calculates the **Entropy** of given probability distributions.
+#' 
+#' @usage
+#' ## Generic S3 method
+#' entropy(
+#'  pk,
+#'  dim  = 0,
+#'  base = -1,
+#'  ...
+#' )
 #' 
 #' @param pk A \eqn{n \times k} <[numeric]>-matrix of observed probabilities.
 #'   The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
@@ -45,28 +54,57 @@
 #' @family Supervised Learning
 #'
 #' @export
-entropy <- function(...) {
+entropy <- function(
+  pk,
+  dim = 0,
+  base = -1,
+  ...) {
   UseMethod(
-    generic = "entropy",
-    object  = ..1
+    generic = "entropy"
   )
 }
 
 #' @rdname entropy
+#' @usage
+#' ## Generic S3 method
+#' relative.entropy(
+#'  pk,
+#'  qk,
+#'  dim  = 0,
+#'  base = -1,
+#'  ...
+#' )
 #' @export
-relative.entropy <- function(...) {
+relative.entropy <- function(
+  pk, 
+  qk,
+  dim = 0,
+  base = -1,
+  ...) {
   UseMethod(
-    generic = "relative.entropy",
-    object  = ..1
+    generic = "relative.entropy"
   )
 }
 
 #' @rdname entropy
+#' @usage
+#' ## Generic S3 method
+#' cross.entropy(
+#'  pk,
+#'  qk,
+#'  dim  = 0,
+#'  base = -1,
+#'  ...
+#' )
 #' @export
-cross.entropy <- function(...) {
+cross.entropy <- function(
+  pk,
+  qk,
+  dim = 0,
+  base = -1,
+  ...) {
   UseMethod(
-    generic = "cross.entropy",
-    object  = ..1
+    generic = "cross.entropy"
   )
 }
 

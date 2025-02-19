@@ -12,6 +12,12 @@
 #' @description
 #' A generic function for [Cohen's \eqn{\kappa}](https://en.wikipedia.org/wiki/Cohen%27s_kappa)-statistic. Use [weighted.ckappa()] for the weighted [\eqn{\kappa}](https://en.wikipedia.org/wiki/Cohen%27s_kappa)-statistic.
 #'
+#' @usage
+#' ckappa(
+#'  ...,
+#'  beta = 0
+#' )
+#' 
 #' @param beta A <[numeric]> value of [length] 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.
 #' 
 #' @section Definition:
@@ -44,7 +50,9 @@
 #' @family Supervised Learning
 #' 
 #' @export
-ckappa <- function(...) {
+ckappa <- function(
+  ...,
+  beta = 0) {
   UseMethod(
     generic = "ckappa",
     object  = ..1
@@ -52,8 +60,17 @@ ckappa <- function(...) {
 }
 
 #' @rdname ckappa
+#' @usage
+#' weighted.ckappa(
+#'  ...,
+#'  w,
+#'  beta = 0
+#' )
 #' @export
-weighted.ckappa <- function(...) {
+weighted.ckappa <- function(
+  ...,
+  w,
+  beta = 0) {
   UseMethod(
     generic = "weighted.ckappa",
     object  = ..1

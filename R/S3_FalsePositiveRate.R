@@ -16,6 +16,14 @@
 #' ## Other names
 #' Fallout
 #' 
+#' @usage 
+#' ## Generic S3 method
+#' fpr(
+#'  ...,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
+#' 
 #' @section Definition:
 #' Let \eqn{\hat{\gamma} \in [0, 1]} be the proportion of false positives among the actual negatives. The false positive rate of the classifier is calculated as,
 #'
@@ -34,7 +42,10 @@
 #' @family Supervised Learning
 #'
 #' @export
-fpr <- function(...) {
+fpr <- function(
+  ..., 
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "fpr",
     object  = ..1
@@ -42,8 +53,18 @@ fpr <- function(...) {
 }
 
 #' @rdname fpr
+#' @usage
+#' ## Generic S3 method
+#' fallout(
+#'  ...,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-fallout <- function(...) {
+fallout <- function(
+  ..., 
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "fallout",
     object  = ..1
@@ -51,8 +72,20 @@ fallout <- function(...) {
 }
 
 #' @rdname fpr
+#' @usage
+#' ## Generic S3 method
+#' weighted.fpr(
+#'  ...,
+#'  w,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-weighted.fpr <- function(...) {
+weighted.fpr <- function(
+  ...,
+  w,
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "weighted.fpr",
     object  = ..1
@@ -60,8 +93,20 @@ weighted.fpr <- function(...) {
 }
 
 #' @rdname fpr
+#' @usage
+#' ## Generic S3 method
+#' weighted.fallout(
+#'  ...,
+#'  w,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-weighted.fallout <- function(...) {
+weighted.fallout <- function(
+  ...,
+  w,
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "weighted.fallout",
     object  = ..1

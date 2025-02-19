@@ -10,6 +10,7 @@
 
 \method{fmi}{cmatrix}(x, ...)
 
+## Generic S3 method
 fmi(...)
 }
 \arguments{

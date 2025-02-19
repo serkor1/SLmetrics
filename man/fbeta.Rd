@@ -14,9 +14,22 @@
 
 \method{fbeta}{cmatrix}(x, beta = 1, micro = NULL, na.rm = TRUE, ...)
 
-fbeta(...)
+## Generic S3 method
+fbeta(
+ ...,
+ beta  = 1,
+ micro = NULL,
+ na.rm = TRUE
+)
 
-weighted.fbeta(...)
+## Generic S3 method
+weighted.fbeta(
+ ...,
+ w,
+ beta = 1,
+ micro = NULL,
+ na.rm = TRUE
+)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}

@@ -14,9 +14,20 @@
 
 \method{baccuracy}{cmatrix}(x, adjust = FALSE, na.rm = TRUE, ...)
 
-baccuracy(...)
+## Generic S3 method
+baccuracy(
+  ...,
+  adjust = FALSE,
+  na.rm  = TRUE
+)
 
-weighted.baccuracy(...)
+## Generic S3 method
+weighted.baccuracy(
+  ...,
+  w,
+  adjust = FALSE,
+  na.rm  = TRUE
+)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels}

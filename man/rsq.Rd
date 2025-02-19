@@ -12,9 +12,18 @@
 
 \method{weighted.rsq}{numeric}(actual, predicted, w, k = 0, ...)
 
-rsq(...)
+## Generic S3 method
+rsq(
+ ...,
+ k = 0
+)
 
-weighted.rsq(...)
+## Generic S3 method
+weighted.rsq(
+ ...,
+ w,
+ k = 0
+)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}

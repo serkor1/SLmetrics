@@ -11,8 +11,11 @@
 #' @description
 #' A generic function for the (normalized) [accuracy](https://developers.google.com/machine-learning/glossary#accuracy) in classification tasks. 
 #' Use [weighted.accuracy()] for the weighted [accuracy](https://developers.google.com/machine-learning/glossary#accuracy).
-#' 
 #'
+#' @usage
+#' ## Generic S3 method
+#' accuracy(...)
+#' 
 #' @param actual A vector of <[factor]>- of [length] \eqn{n}, and \eqn{k} levels
 #' @param predicted A vector of <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels
 #' @param w A <[numeric]>-vector of [length] \eqn{n}. [NULL] by default
@@ -49,8 +52,16 @@ accuracy <- function(...) {
 }
 
 #' @rdname accuracy
+#' @usage
+#' ## Generic S3 method
+#' weighted.accuracy(
+#' ...,
+#' w
+#' )
 #' @export
-weighted.accuracy <- function(...) {
+weighted.accuracy <- function(
+  ...,
+  w) {
   UseMethod(
     generic = "weighted.accuracy",
     object  = ..1

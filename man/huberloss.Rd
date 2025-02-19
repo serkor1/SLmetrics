@@ -11,9 +11,22 @@
 
 \method{weighted.huberloss}{numeric}(actual, predicted, w, delta = 1, ...)
 
-huberloss(...)
+## Generic S3 method
+huberloss(
+ actual,
+ predicted,
+ delta = 1,
+ ...
+)
 
-weighted.huberloss(...)
+## Generic S3 method
+weighted.huberloss(
+ actual,
+ predicted,
+ w,
+ delta = 1,
+ ...
+)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}

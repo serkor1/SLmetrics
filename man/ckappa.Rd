@@ -14,9 +14,16 @@
 
 \method{ckappa}{cmatrix}(x, beta = 0, ...)
 
-ckappa(...)
+ckappa(
+ ...,
+ beta = 0
+)
 
-weighted.ckappa(...)
+weighted.ckappa(
+ ...,
+ w,
+ beta = 0
+)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}

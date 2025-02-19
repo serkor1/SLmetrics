@@ -11,9 +11,20 @@
 
 \method{weighted.cmatrix}{factor}(actual, predicted, w, ...)
 
-cmatrix(...)
+## Generic S3 method
+cmatrix(
+ actual,
+ predicted,
+ ...
+)
 
-weighted.cmatrix(...)
+## Generic S3 method
+weighted.cmatrix(
+ actual,
+ predicted,
+ w,
+ ...
+)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}

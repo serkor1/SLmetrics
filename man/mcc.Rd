@@ -26,13 +26,23 @@
 
 \method{phi}{cmatrix}(x, ...)
 
+## Generic S3 method
 mcc(...)
 
-weighted.mcc(...)
+## Generic S3 method
+weighted.mcc(
+ ...,
+ w
+)
 
+## Generic S3 method
 phi(...)
 
-weighted.phi(...)
+## Generic S3 method
+weighted.phi(
+ ...,
+ w
+)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels}

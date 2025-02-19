@@ -14,9 +14,20 @@
 
 \method{fer}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
-fer(...)
+## Generic S3 method
+fer(
+ ...,
+ micro = NULL,
+ na.rm = TRUE
+)
 
-weighted.fer(...)
+## Generic S3 method
+weighted.fer(
+ ...,
+ w,
+ micro = NULL,
+ na.rm = TRUE
+)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
