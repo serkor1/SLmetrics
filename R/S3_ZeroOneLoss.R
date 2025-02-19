@@ -32,8 +32,7 @@
 #' @family Supervised Learning
 #'
 #' @export
-zerooneloss <- function(
-  ...) {
+zerooneloss <- function(...) {
   UseMethod(
     generic = "zerooneloss",
     object  = ..1

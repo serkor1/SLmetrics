@@ -46,7 +46,8 @@ This argument is only relevant when \code{micro != NULL}.
 When \code{na.rm = TRUE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))}.
 When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))}.}
 
-\item{...}{Arguments passed into other methods}
+\item{...}{micro = NULL,
+na.rm = TRUE Arguments passed into other methods}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 
@@ -58,11 +59,11 @@ If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of
 If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-A generic funcion for the \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_{\beta}}}-score. Use \code{\link[=weighted.fbeta]{weighted.fbeta()}} for the weighted \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_{\beta}}}-score.
+A generic function for the \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_{\beta}}}-score. Use \code{\link[=weighted.fbeta]{weighted.fbeta()}} for the weighted \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_{\beta}}}-score.
 }
 \section{Definition}{
 
-Let \eqn{\hat{F}_{\beta} \in [0, 1]} be the \eqn{F_{\beta}} score, which is a weighted harmonic mean of precision and recall. \eqn{F_{\beta}} score of thte classifier is is calculated as,
+Let \eqn{\hat{F}_{\beta} \in [0, 1]} be the \eqn{F_{\beta}} score, which is a weighted harmonic mean of precision and recall. \eqn{F_{\beta}} score of the classifier is is calculated as,
 
 \deqn{
   \hat{F}_{\beta} = \left(1 + \beta^2\right) \frac{\text{Precision} \times \text{Recall}}

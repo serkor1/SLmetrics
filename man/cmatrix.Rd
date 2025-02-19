@@ -46,7 +46,7 @@ column represents the predicted \link{factor} levels.
 }
 \section{Dimensions}{
 
-There is no robust defensive measure against misspecififying
+There is no robust defensive measure against mis-specifying
 the confusion matrix. If the arguments are correctly specified, the resulting
 confusion matrix is on the form:\tabular{lcr}{
     \tab A (Predicted) \tab B (Predicted) \cr

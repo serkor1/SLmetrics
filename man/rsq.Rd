@@ -41,7 +41,7 @@ A <\link{numeric}> vector of \link{length} 1.
 }
 \description{
 A generic function for the \href{https://en.wikipedia.org/wiki/Coefficient_of_determination}{\eqn{R^2}}. The unadjusted \href{https://en.wikipedia.org/wiki/Coefficient_of_determination}{\eqn{R^2}} is returned by default.
-Use \code{\link[=weighted.rsq]{weighted.rsq()}} for the weiighted \href{https://en.wikipedia.org/wiki/Coefficient_of_determination}{\eqn{R^2}}.
+Use \code{\link[=weighted.rsq]{weighted.rsq()}} for the weighted \href{https://en.wikipedia.org/wiki/Coefficient_of_determination}{\eqn{R^2}}.
 }
 \section{Definition}{
 

@@ -6,7 +6,6 @@
 
 #' @aliases sensitivity tpr recall
 #' @inherit specificity
-
 #' @title Recall
 #' 
 #' @description
@@ -14,6 +13,14 @@
 #' 
 #' ## Other names
 #' Sensitivity, True Positive Rate
+#' 
+#' @usage
+#' ## Generic S3 method
+#' recall(
+#'  ...,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' 
 #' @section Definition:
 #' Let \eqn{\hat{\rho} \in [0, 1]} be the proportion of true positives among the actual positives. The recall of the classifier is calculated as,
@@ -33,7 +40,10 @@
 #' @family Supervised Learning
 #' 
 #' @export
-recall <- function(...) {
+recall <- function(
+  ..., 
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "recall",
     object  = ..1
@@ -41,8 +51,18 @@ recall <- function(...) {
 }
 
 #' @rdname recall
+#' @usage
+#' ## Generic S3 method
+#' sensitivity(
+#'  ...,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-sensitivity <- function(...) {
+sensitivity <- function(
+  ..., 
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "sensitivity",
     object  = ..1
@@ -50,8 +70,18 @@ sensitivity <- function(...) {
 }
 
 #' @rdname recall
+#' @usage
+#' ## Generic S3 method
+#' tpr(
+#'  ...,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-tpr <- function(...) {
+tpr <- function(
+  ..., 
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "tpr",
     object  = ..1
@@ -60,8 +90,20 @@ tpr <- function(...) {
 
 
 #' @rdname recall
+#' @usage
+#' ## Generic S3 method
+#' weighted.recall(
+#'  ...,
+#'  w,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-weighted.recall <- function(...) {
+weighted.recall <- function(
+  ..., 
+  w, 
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "weighted.recall",
     object  = ..1
@@ -69,8 +111,20 @@ weighted.recall <- function(...) {
 }
 
 #' @rdname recall
+#' @usage
+#' ## Generic S3 method
+#' weighted.sensitivity(
+#'  ...,
+#'  w,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-weighted.sensitivity <- function(...) {
+weighted.sensitivity <- function(
+  ..., 
+  w, 
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "weighted.sensitivity",
     object  = ..1
@@ -78,8 +132,20 @@ weighted.sensitivity <- function(...) {
 }
 
 #' @rdname recall
+#' @usage
+#' ## Generic S3 method
+#' weighted.tpr(
+#'  ...,
+#'  w,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-weighted.tpr <- function(...) {
+weighted.tpr <- function(
+  ..., 
+  w, 
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "weighted.tpr",
     object  = ..1

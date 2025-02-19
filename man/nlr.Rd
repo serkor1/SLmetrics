@@ -28,7 +28,8 @@ weighted.nlr(
 
 \item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{...}{Arguments passed into other methods}
+\item{...}{micro = NULL,
+na.rm = TRUE Arguments passed into other methods}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 
@@ -40,7 +41,7 @@ If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of
 If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-A genereric function for the \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{negative likelihood ratio} in classification tasks. Use \code{\link[=weighted.nlr]{weighted.nlr()}} weighted \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{negative likelihood ratio}.
+A generic function for the \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{negative likelihood ratio} in classification tasks. Use \code{\link[=weighted.nlr]{weighted.nlr()}} weighted \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{negative likelihood ratio}.
 }
 \section{Definition}{
 

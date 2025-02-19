@@ -12,6 +12,14 @@
 #' 
 #' ## Other names
 #' True Negative Rate, Selectivity
+#' 
+#' @usage 
+#' ## Generic S3 method
+#' specificity(
+#'  ...,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #'
 #' @param actual A vector of <[factor]>- of [length] \eqn{n}, and \eqn{k} levels.
 #' @param predicted A vector of <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
@@ -23,7 +31,10 @@
 #' This argument is only relevant when `micro != NULL`. 
 #' When `na.rm = TRUE`, the computation corresponds to `sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))`.
 #' When `na.rm = FALSE`, the computation corresponds to `sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))`.
-#' @param ... Arguments passed into other methods
+#' @param 
+#' ..., 
+#' micro = NULL, 
+#' na.rm = TRUE Arguments passed into other methods
 #' 
 #' @section Creating <[factor]>:
 #'
@@ -81,7 +92,10 @@
 #' @family Supervised Learning
 #' 
 #' @export
-specificity <- function(...) {
+specificity <- function(
+  ..., 
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "specificity",
     object  = ..1
@@ -89,8 +103,18 @@ specificity <- function(...) {
 }
 
 #' @rdname specificity
+#' @usage 
+#' ## Generic S3 method
+#' tnr(
+#'  ...,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-tnr <- function(...) {
+tnr <- function(
+  ..., 
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "tnr",
     object  = ..1
@@ -98,8 +122,18 @@ tnr <- function(...) {
 }
 
 #' @rdname specificity
+#' @usage 
+#' ## Generic S3 method
+#' selectivity(
+#'  ...,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-selectivity <- function(...) {
+selectivity <- function(
+  ..., 
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "selectivity",
     object  = ..1
@@ -107,8 +141,20 @@ selectivity <- function(...) {
 }
 
 #' @rdname specificity
+#' @usage 
+#' ## Generic S3 method
+#' weighted.specificity(
+#'  ...,
+#'  w,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-weighted.specificity <- function(...) {
+weighted.specificity <- function(
+  ...,
+  w,
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "weighted.specificity",
     object  = ..1
@@ -116,8 +162,20 @@ weighted.specificity <- function(...) {
 }
 
 #' @rdname specificity
+#' @usage 
+#' ## Generic S3 method
+#' weighted.tnr(
+#'  ...,
+#'  w,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-weighted.tnr <- function(...) {
+weighted.tnr <- function(
+  ...,
+  w,
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "weighted.tnr",
     object  = ..1
@@ -125,8 +183,20 @@ weighted.tnr <- function(...) {
 }
 
 #' @rdname specificity
+#' @usage 
+#' ## Generic S3 method
+#' weighted.selectivity(
+#'  ...,
+#'  w,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-weighted.selectivity <- function(...) {
+weighted.selectivity <- function(
+  ...,
+  w,
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "weighted.selectivity",
     object  = ..1
