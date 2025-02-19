@@ -181,5 +181,5 @@ r-hub:
 	@echo "▶️ Requesting r-hub tests"
 	@echo "========================="
 
-	@Rscript -e "rhub::rhub_check(platforms = paste(1:28, collapse = ", "))"
+	@Rscript -e "rhub::rhub_check(platforms = rhub::rhub_platforms()[['name']])"
 
