@@ -22,6 +22,10 @@ accuracy.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_Accuracy`, x)
 }
 
+auc <- function(y, x, method = 0L) {
+    .Call(`_SLmetrics_auc`, y, x, method)
+}
+
 #' @rdname baccuracy
 #' @method baccuracy factor
 #' @export
@@ -316,20 +320,6 @@ weighted.logloss.factor <- function(actual, response, w, normalize = TRUE, ...) 
     .Call(`_SLmetrics_weighted_LogLoss`, actual, response, w, normalize)
 }
 
-#' @rdname logloss
-#' @method logloss integer
-#' @export
-logloss.integer <- function(actual, response, normalize = TRUE, ...) {
-    .Call(`_SLmetrics_PoissonLogLoss`, actual, response, normalize)
-}
-
-#' @rdname logloss
-#' @method weighted.logloss integer
-#' @export
-weighted.logloss.integer <- function(actual, response, w, normalize = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_PoissonLogLoss`, actual, response, w, normalize)
-}
-
 #' @rdname mcc
 #' @method mcc factor
 #' @export
@@ -559,10 +549,6 @@ tpr.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_TruePositiveRate`, x, micro, na_rm = na.rm)
 }
 
-auc <- function(y, x, method = 0L) {
-    .Call(`_SLmetrics_auc`, y, x, method)
-}
-
 #' @rdname ROC
 #' @method ROC factor
 #' @export
@@ -659,6 +645,20 @@ weighted.zerooneloss.factor <- function(actual, predicted, w, ...) {
 #' @export
 zerooneloss.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_ZeroOneLoss`, x)
+}
+
+#' @rdname logloss
+#' @method logloss integer
+#' @export
+logloss.integer <- function(actual, response, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_PoissonLogLoss`, actual, response, normalize)
+}
+
+#' @rdname logloss
+#' @method weighted.logloss integer
+#' @export
+weighted.logloss.integer <- function(actual, response, w, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_PoissonLogLoss`, actual, response, w, normalize)
 }
 
 #' @rdname rsq

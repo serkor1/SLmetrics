@@ -47,6 +47,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// auc
+double auc(const Rcpp::NumericVector& y, const Rcpp::NumericVector& x, const int& method);
+RcppExport SEXP _SLmetrics_auc(SEXP ySEXP, SEXP xSEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const int& >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(auc(y, x, method));
+    return rcpp_result_gen;
+END_RCPP
+}
 // BalancedAccuracy
 Rcpp::NumericVector BalancedAccuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const bool& adjust, bool na_rm);
 RcppExport SEXP _SLmetrics_BalancedAccuracy(SEXP actualSEXP, SEXP predictedSEXP, SEXP adjustSEXP, SEXP na_rmSEXP) {
@@ -619,33 +632,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// PoissonLogLoss
-double PoissonLogLoss(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, const bool normalize);
-RcppExport SEXP _SLmetrics_PoissonLogLoss(SEXP actualSEXP, SEXP responseSEXP, SEXP normalizeSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
-    Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
-    rcpp_result_gen = Rcpp::wrap(PoissonLogLoss(actual, response, normalize));
-    return rcpp_result_gen;
-END_RCPP
-}
-// weighted_PoissonLogLoss
-double weighted_PoissonLogLoss(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, const Rcpp::NumericVector& w, const bool normalize);
-RcppExport SEXP _SLmetrics_weighted_PoissonLogLoss(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP normalizeSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
-    Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
-    rcpp_result_gen = Rcpp::wrap(weighted_PoissonLogLoss(actual, response, w, normalize));
-    return rcpp_result_gen;
-END_RCPP
-}
 // MatthewsCorrelationCoefficient
 Rcpp::NumericVector MatthewsCorrelationCoefficient(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
 RcppExport SEXP _SLmetrics_MatthewsCorrelationCoefficient(SEXP actualSEXP, SEXP predictedSEXP) {
@@ -1069,19 +1055,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// auc
-double auc(const Rcpp::NumericVector y, const Rcpp::NumericVector x, const int& method);
-RcppExport SEXP _SLmetrics_auc(SEXP ySEXP, SEXP xSEXP, SEXP methodSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector >::type y(ySEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const int& >::type method(methodSEXP);
-    rcpp_result_gen = Rcpp::wrap(auc(y, x, method));
-    return rcpp_result_gen;
-END_RCPP
-}
 // RecieverOperatorCharacteristics
 Rcpp::DataFrame RecieverOperatorCharacteristics(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, Rcpp::Nullable<Rcpp::NumericVector> thresholds);
 RcppExport SEXP _SLmetrics_RecieverOperatorCharacteristics(SEXP actualSEXP, SEXP responseSEXP, SEXP thresholdsSEXP) {
@@ -1268,6 +1241,33 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type x(xSEXP);
     rcpp_result_gen = Rcpp::wrap(cmatrix_ZeroOneLoss(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// PoissonLogLoss
+double PoissonLogLoss(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, const bool normalize);
+RcppExport SEXP _SLmetrics_PoissonLogLoss(SEXP actualSEXP, SEXP responseSEXP, SEXP normalizeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(PoissonLogLoss(actual, response, normalize));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_PoissonLogLoss
+double weighted_PoissonLogLoss(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, const Rcpp::NumericVector& w, const bool normalize);
+RcppExport SEXP _SLmetrics_weighted_PoissonLogLoss(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP normalizeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_PoissonLogLoss(actual, response, w, normalize));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1709,6 +1709,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_Accuracy", (DL_FUNC) &_SLmetrics_Accuracy, 2},
     {"_SLmetrics_weighted_Accuracy", (DL_FUNC) &_SLmetrics_weighted_Accuracy, 3},
     {"_SLmetrics_cmatrix_Accuracy", (DL_FUNC) &_SLmetrics_cmatrix_Accuracy, 1},
+    {"_SLmetrics_auc", (DL_FUNC) &_SLmetrics_auc, 3},
     {"_SLmetrics_BalancedAccuracy", (DL_FUNC) &_SLmetrics_BalancedAccuracy, 4},
     {"_SLmetrics_weighted_BalancedAccuracy", (DL_FUNC) &_SLmetrics_weighted_BalancedAccuracy, 5},
     {"_SLmetrics_cmatrix_BalancedAccuracy", (DL_FUNC) &_SLmetrics_cmatrix_BalancedAccuracy, 3},
@@ -1751,8 +1752,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_cmatrix_ThreatScore", (DL_FUNC) &_SLmetrics_cmatrix_ThreatScore, 3},
     {"_SLmetrics_LogLoss", (DL_FUNC) &_SLmetrics_LogLoss, 3},
     {"_SLmetrics_weighted_LogLoss", (DL_FUNC) &_SLmetrics_weighted_LogLoss, 4},
-    {"_SLmetrics_PoissonLogLoss", (DL_FUNC) &_SLmetrics_PoissonLogLoss, 3},
-    {"_SLmetrics_weighted_PoissonLogLoss", (DL_FUNC) &_SLmetrics_weighted_PoissonLogLoss, 4},
     {"_SLmetrics_MatthewsCorrelationCoefficient", (DL_FUNC) &_SLmetrics_MatthewsCorrelationCoefficient, 2},
     {"_SLmetrics_weigthed_MatthewsCorrelationCoefficient", (DL_FUNC) &_SLmetrics_weigthed_MatthewsCorrelationCoefficient, 3},
     {"_SLmetrics_cmatrix_MatthewsCorrelationCoefficient", (DL_FUNC) &_SLmetrics_cmatrix_MatthewsCorrelationCoefficient, 1},
@@ -1785,7 +1784,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_TruePositiveRate", (DL_FUNC) &_SLmetrics_TruePositiveRate, 4},
     {"_SLmetrics_weighted_TruePositiveRate", (DL_FUNC) &_SLmetrics_weighted_TruePositiveRate, 5},
     {"_SLmetrics_cmatrix_TruePositiveRate", (DL_FUNC) &_SLmetrics_cmatrix_TruePositiveRate, 3},
-    {"_SLmetrics_auc", (DL_FUNC) &_SLmetrics_auc, 3},
     {"_SLmetrics_RecieverOperatorCharacteristics", (DL_FUNC) &_SLmetrics_RecieverOperatorCharacteristics, 3},
     {"_SLmetrics_weighted_RecieverOperatorCharacteristics", (DL_FUNC) &_SLmetrics_weighted_RecieverOperatorCharacteristics, 4},
     {"_SLmetrics_Specificity", (DL_FUNC) &_SLmetrics_Specificity, 4},
@@ -1800,6 +1798,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_ZeroOneLoss", (DL_FUNC) &_SLmetrics_ZeroOneLoss, 2},
     {"_SLmetrics_weighted_ZeroOneLoss", (DL_FUNC) &_SLmetrics_weighted_ZeroOneLoss, 3},
     {"_SLmetrics_cmatrix_ZeroOneLoss", (DL_FUNC) &_SLmetrics_cmatrix_ZeroOneLoss, 1},
+    {"_SLmetrics_PoissonLogLoss", (DL_FUNC) &_SLmetrics_PoissonLogLoss, 3},
+    {"_SLmetrics_weighted_PoissonLogLoss", (DL_FUNC) &_SLmetrics_weighted_PoissonLogLoss, 4},
     {"_SLmetrics_rsq", (DL_FUNC) &_SLmetrics_rsq, 3},
     {"_SLmetrics_weighted_rsq", (DL_FUNC) &_SLmetrics_weighted_rsq, 4},
     {"_SLmetrics_ccc", (DL_FUNC) &_SLmetrics_ccc, 3},
