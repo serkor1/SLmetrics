@@ -619,6 +619,33 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// PoissonLogLoss
+double PoissonLogLoss(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, const bool normalize);
+RcppExport SEXP _SLmetrics_PoissonLogLoss(SEXP actualSEXP, SEXP responseSEXP, SEXP normalizeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(PoissonLogLoss(actual, response, normalize));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_PoissonLogLoss
+double weighted_PoissonLogLoss(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, const Rcpp::NumericVector& w, const bool normalize);
+RcppExport SEXP _SLmetrics_weighted_PoissonLogLoss(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP normalizeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_PoissonLogLoss(actual, response, w, normalize));
+    return rcpp_result_gen;
+END_RCPP
+}
 // MatthewsCorrelationCoefficient
 Rcpp::NumericVector MatthewsCorrelationCoefficient(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
 RcppExport SEXP _SLmetrics_MatthewsCorrelationCoefficient(SEXP actualSEXP, SEXP predictedSEXP) {
@@ -1724,6 +1751,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_cmatrix_ThreatScore", (DL_FUNC) &_SLmetrics_cmatrix_ThreatScore, 3},
     {"_SLmetrics_LogLoss", (DL_FUNC) &_SLmetrics_LogLoss, 3},
     {"_SLmetrics_weighted_LogLoss", (DL_FUNC) &_SLmetrics_weighted_LogLoss, 4},
+    {"_SLmetrics_PoissonLogLoss", (DL_FUNC) &_SLmetrics_PoissonLogLoss, 3},
+    {"_SLmetrics_weighted_PoissonLogLoss", (DL_FUNC) &_SLmetrics_weighted_PoissonLogLoss, 4},
     {"_SLmetrics_MatthewsCorrelationCoefficient", (DL_FUNC) &_SLmetrics_MatthewsCorrelationCoefficient, 2},
     {"_SLmetrics_weigthed_MatthewsCorrelationCoefficient", (DL_FUNC) &_SLmetrics_weigthed_MatthewsCorrelationCoefficient, 3},
     {"_SLmetrics_cmatrix_MatthewsCorrelationCoefficient", (DL_FUNC) &_SLmetrics_cmatrix_MatthewsCorrelationCoefficient, 1},

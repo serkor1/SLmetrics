@@ -328,3 +328,39 @@ ref_prROC <- function(
 
   output
 }
+
+# Reference Poisson LogLoss
+ref_poisson_logloss <- function(
+  actual, 
+  response,
+  w = NULL,
+  normalize = TRUE) {
+  
+  eps <- 1e-15
+  response <- pmax(response, eps)
+  loss_vals <- log(gamma(actual + 1)) + response - actual * log(response)
+  
+  if (is.null(w)) {
+      # Unweighted
+      if (normalize) {
+          # Mean of losses
+          return(mean(loss_vals))
+      } else {
+          # Sum of losses
+          return(sum(loss_vals))
+      }
+  } else {
+      w <- as.numeric(w) 
+      weighted_loss <- w * loss_vals
+      
+      if (normalize) {
+
+          return(sum(weighted_loss) / sum(w))
+        
+      } else {
+
+          return(sum(weighted_loss))
+        
+      }
+  }
+}
