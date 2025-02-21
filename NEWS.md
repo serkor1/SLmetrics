@@ -13,13 +13,13 @@
 
 ## :fire: New features
 
-### :rocke: New metrics
+### :rocket: New metrics
 
 - **Poisson LogLoss:** The logloss for count data has been implemented.
   This metric shares the method of logloss and can be used as follows:
 
 ``` r
-# Create factors and response probabilities (qk)
+# Create factors and response probabilities
 actual   <- as.integer(factor(c("Class A", "Class B", "Class A")))
 weights  <- c(0.3,0.9,1) 
 response <- matrix(cbind(
@@ -291,7 +291,7 @@ cat(
   normalization. The function can be used as follows,
 
 ``` r
-# Create factors and response probabilities (qk)
+# Create factors and response probabilities
 actual   <- factor(c("Class A", "Class B", "Class A"))
 weights  <- c(0.3,0.9,1) 
 response <- matrix(cbind(
