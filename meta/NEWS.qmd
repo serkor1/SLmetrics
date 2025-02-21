@@ -27,6 +27,36 @@ knitr:
 
 ## :fire: New features
 
+### :rocket: New metrics
+
+* **Poisson LogLoss:** The logloss for count data has been implemented. This metric shares the method of logloss and can be used as follows:
+
+```{r}
+# Create factors and response probabilities
+actual   <- as.integer(factor(c("Class A", "Class B", "Class A")))
+weights  <- c(0.3,0.9,1) 
+response <- matrix(cbind(
+    0.2, 0.8,
+    0.8, 0.2,
+    0.7, 0.3
+),nrow = 3, ncol = 2)
+
+cat(
+    "Unweighted Poisson Log Loss:",
+    SLmetrics::logloss(
+        actual,
+        response
+    ),
+    "Weighted Poisson Log Loss:",
+    SLmetrics::weighted.logloss(
+        actual   = actual,
+        response = response,
+        w        = weights
+    ),
+    sep = "\n"
+)
+```
+
 ### :hammer: Metric tools
 
 A new family of `Tools`-functions are introduced with this update. This addition introduces unexported functions for constructing fast and memory efficient proprietary metrics. These functions are rewritten built-in functions from {stats} and family.
@@ -212,7 +242,7 @@ cat(
 * **Log Loss:** Weighted and unweighted Log Loss, with and without normalization. The function can be used as follows,
 
 ```{r}
-# Create factors and response probabilities (qk)
+# Create factors and response probabilities
 actual   <- factor(c("Class A", "Class B", "Class A"))
 weights  <- c(0.3,0.9,1) 
 response <- matrix(cbind(
@@ -230,7 +260,7 @@ cat(
     "Weighted log Loss:",
     SLmetrics::weighted.logloss(
         actual   = actual,
-        response       = response,
+        response = response,
         w        = weights
     ),
     sep = "\n"

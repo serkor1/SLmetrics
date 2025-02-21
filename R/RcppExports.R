@@ -316,6 +316,20 @@ weighted.logloss.factor <- function(actual, response, w, normalize = TRUE, ...) 
     .Call(`_SLmetrics_weighted_LogLoss`, actual, response, w, normalize)
 }
 
+#' @rdname logloss
+#' @method logloss integer
+#' @export
+logloss.integer <- function(actual, response, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_PoissonLogLoss`, actual, response, normalize)
+}
+
+#' @rdname logloss
+#' @method weighted.logloss integer
+#' @export
+weighted.logloss.integer <- function(actual, response, w, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_PoissonLogLoss`, actual, response, w, normalize)
+}
+
 #' @rdname mcc
 #' @method mcc factor
 #' @export

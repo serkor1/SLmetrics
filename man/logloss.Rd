@@ -3,6 +3,8 @@
 \name{logloss.factor}
 \alias{logloss.factor}
 \alias{weighted.logloss.factor}
+\alias{logloss.integer}
+\alias{weighted.logloss.integer}
 \alias{logloss}
 \alias{weighted.logloss}
 \title{Log Loss}
@@ -10,6 +12,10 @@
 \method{logloss}{factor}(actual, response, normalize = TRUE, ...)
 
 \method{weighted.logloss}{factor}(actual, response, w, normalize = TRUE, ...)
+
+\method{logloss}{integer}(actual, response, normalize = TRUE, ...)
+
+\method{weighted.logloss}{integer}(actual, response, w, normalize = TRUE, ...)
 
 ## Generic S3 method
 logloss(
