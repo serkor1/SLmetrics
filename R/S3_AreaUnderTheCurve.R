@@ -14,13 +14,16 @@
 #' auc(
 #'  y,
 #'  x,
-#'  ordered = TRUE
+#'  method = 0,
+#'  ordered = TRUE,
+#'  ...
 #' )
 #' 
 #' @param y A <[numeric]> vector of [length] \eqn{n}.
 #' @param x A <[numeric]> vector of [length] \eqn{n}.
 #' @param method A <[numeric]> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the `trapezoid`-method, if \eqn{1} it is calculated using the `step`-method.
 #' @param ordered A <[logical]> value (default: [TRUE]). If [FALSE] the `x` and `y` pair will be ordered before calculating the area under the curve.
+#' @param ... Arguments passed into other methods.
 #' 
 #' @returns 
 #' A <[numeric]>  vector  of [length] 1

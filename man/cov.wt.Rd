@@ -73,3 +73,4 @@ Other Tools:
 \code{\link{auc.numeric}()}
 }
 \concept{Tools}
+\keyword{internal}
