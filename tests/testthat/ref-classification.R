@@ -1,4 +1,4 @@
-# Reference Confusion Marix
+# Reference Confusion Matrix
 py_cmatrix <- function(
   actual, 
   predicted, 
