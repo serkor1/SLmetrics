@@ -147,6 +147,13 @@ build: document
 check:
 	$(MAKE) build CHECK=true
 
+# test-pkg:
+# 
+# This command runs the unit-tests
+test-pkg: document
+	@R CMD build . > /dev/null 2>&1
+	@Rscript -e "testthat::test_local()"
+
 # clean:
 #
 # This command performs a clean
