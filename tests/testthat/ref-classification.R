@@ -1,3 +1,27 @@
+# Reference Confusion Marix
+py_cmatrix <- function(
+  actual, 
+  predicted, 
+  w = NULL) {
+  
+  if (is.null(w)) {
+    w <- rep(1, length(actual))
+  }
+  
+  cm <- tapply(
+    w, 
+    INDEX = list(actual, predicted),
+    FUN = sum, 
+    default = 0
+  )
+  
+  cm <- as.matrix(cm)
+  
+  cm[is.na(cm)] <- 0
+
+  return(cm)
+}
+
 # Reference fbeta-score
 ref_fbeta <- function(
   actual,
