@@ -40,7 +40,7 @@ auc <- function(
   ordered = TRUE,
   ...) {
   UseMethod(
-    generic = "auc",
+    generic = "auc"
   )
 }
 
