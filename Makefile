@@ -137,7 +137,7 @@ build: document
 	@echo ""
 
 
-	$(MAKE) clean BRANCH=false
+	$(MAKE) clean
 	$(MAKE) build-meta
 	@echo "✅ Build process done!"
 
@@ -157,21 +157,28 @@ check:
 # Use make clean BRANCH=true to delete all branches
 # excecpt main and development.
 clean:
-	@echo "🗑️ Cleaning reposiory"
-	@echo ""
-
-	@if [ "$(BRANCH)" = "true" ]; then \
-		echo "🗑️ Cleaning branches"; \
-		git branch | grep -v "main" | grep -v "development" | xargs git branch -D; \
-	fi
+	@echo "🗑️ Cleaning repository"
+	@echo "======================"
 
 	@rm NEWS.md --f
 	@rm README.md --f
 
-	@git clean -d -x -f
-
 	@rm -f src/*.o src/*.so
 	@rm -f $(TARBALL)
+
+# purge:
+#
+# This command is an aggresive cleaning
+# procedure that deletes all branches except
+# main and development. It also deletes all
+# untracked files.
+purge:
+	@echo "🔥 Purging repository"
+	@echo "====================="
+
+	@git branch | grep -v "main" | grep -v "development" | xargs git branch -D;
+	@git clean -d -x -f
+
 
 # r-hub:
 # 
