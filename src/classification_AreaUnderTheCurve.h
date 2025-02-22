@@ -21,8 +21,8 @@ class AUC  {
         const double* y, 
         const double* x,
         std::size_t   n,
-        bool ordered  = true, 
-        const int& method = 0) {
+        const int& method = 0,
+        const bool& ordered = true) {
 
             // 0) declare variables
             // for the class
@@ -61,8 +61,9 @@ class AUC  {
                 // 2.1) Default: Trapezoid
                 // method
                 default:
-                    if (use_idx) {
+                case 0: {
 
+                    if (use_idx) {
                         #ifdef _OPENMP
                             #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
                         #endif
@@ -71,9 +72,7 @@ class AUC  {
                             double height = 0.5 * (y[idx[i]] + y[idx[i - 1]]);
                             area += width * height;
                         }
-
                     } else {
-
                         #ifdef _OPENMP
                             #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
                         #endif
@@ -82,9 +81,34 @@ class AUC  {
                             double height = 0.5 * (y[i] + y[i - 1]);
                             area += width * height;
                         }
-
                     }
+                }
+                break;
 
+                // 2.1) Method: Step
+                // method (left sttep)
+                case 1: {
+
+                    if (use_idx) {
+                        #ifdef _OPENMP
+                            #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
+                        #endif
+                        for (std::size_t i = 1; i < n; ++i) {
+                            double width  = x[idx[i]] - x[idx[i - 1]];
+                            double height = y[idx[i - 1]];
+                            area += width * height;
+                        }
+                    } else {
+                        #ifdef _OPENMP
+                            #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
+                        #endif
+                        for (std::size_t i = 1; i < n; ++i) {
+                            double width  = x[i] - x[i - 1];
+                            double height = y[i - 1];
+                            area += width * height;
+                        }
+                    }
+                }
                 break;
             }
 

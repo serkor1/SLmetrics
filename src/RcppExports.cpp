@@ -48,15 +48,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // auc
-double auc(const Rcpp::NumericVector& y, const Rcpp::NumericVector& x, const int& method);
-RcppExport SEXP _SLmetrics_auc(SEXP ySEXP, SEXP xSEXP, SEXP methodSEXP) {
+double auc(const Rcpp::NumericVector& y, const Rcpp::NumericVector& x, const int& method, const bool& ordered);
+RcppExport SEXP _SLmetrics_auc(SEXP ySEXP, SEXP xSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type y(ySEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const int& >::type method(methodSEXP);
-    rcpp_result_gen = Rcpp::wrap(auc(y, x, method));
+    Rcpp::traits::input_parameter< const bool& >::type ordered(orderedSEXP);
+    rcpp_result_gen = Rcpp::wrap(auc(y, x, method, ordered));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1709,7 +1710,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_Accuracy", (DL_FUNC) &_SLmetrics_Accuracy, 2},
     {"_SLmetrics_weighted_Accuracy", (DL_FUNC) &_SLmetrics_weighted_Accuracy, 3},
     {"_SLmetrics_cmatrix_Accuracy", (DL_FUNC) &_SLmetrics_cmatrix_Accuracy, 1},
-    {"_SLmetrics_auc", (DL_FUNC) &_SLmetrics_auc, 3},
+    {"_SLmetrics_auc", (DL_FUNC) &_SLmetrics_auc, 4},
     {"_SLmetrics_BalancedAccuracy", (DL_FUNC) &_SLmetrics_BalancedAccuracy, 4},
     {"_SLmetrics_weighted_BalancedAccuracy", (DL_FUNC) &_SLmetrics_weighted_BalancedAccuracy, 5},
     {"_SLmetrics_cmatrix_BalancedAccuracy", (DL_FUNC) &_SLmetrics_cmatrix_BalancedAccuracy, 3},

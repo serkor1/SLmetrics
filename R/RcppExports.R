@@ -22,8 +22,8 @@ accuracy.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_Accuracy`, x)
 }
 
-auc <- function(y, x, method = 0L) {
-    .Call(`_SLmetrics_auc`, y, x, method)
+auc <- function(y, x, method = 0L, ordered = TRUE) {
+    .Call(`_SLmetrics_auc`, y, x, method, ordered)
 }
 
 #' @rdname baccuracy
