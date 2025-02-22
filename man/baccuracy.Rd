@@ -36,7 +36,7 @@ weighted.baccuracy(
 
 \item{adjust}{A \link{logical} value (default: \link{FALSE}). If \link{TRUE} the metric is adjusted for random chance \eqn{\frac{1}{k}}.}
 
-\item{na.rm}{A \link{logical} values (default: \link{TRUE}).  If \link{TRUE} calculation of the metric is based on valid classes.}
+\item{na.rm}{A \link{logical} value (default: \link{TRUE}).  If \link{TRUE} calculation of the metric is based on valid classes.}
 
 \item{...}{micro = NULL,
 na.rm = TRUE Arguments passed into other methods}

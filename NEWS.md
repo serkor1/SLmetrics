@@ -83,6 +83,50 @@ SLmetrics:::cov.wt(
 #> [1] 5
 ```
 
+- **Area under the curve (AUC):** The function calculates the area under
+  the plot for bivariate curves for ordered and unordered `x` and `y`
+  pairs. The function assumes that values are ordered and calculates the
+  AUC directly - to control this behaviour use the `ordered`-argument in
+  the function. Below is an example:
+
+``` r
+## 1) Ordered x and y pair
+x <- seq(0, pi, length.out = 200)
+y <- sin(x)
+
+## 1.1) calculate area
+ordered_auc <- SLmetrics::auc(y = y,  x = x)
+
+## 2) Unordered x and y pair
+x <- sample(seq(0, pi, length.out = 200))
+y <- sin(x)
+
+## 2.1) calculate area
+unordered_auc <- SLmetrics::auc(y = y,  x = x)
+
+## 2.2) caclulate area  with  explicity
+## ordering
+unordered_auc_flag <- SLmetrics::auc(
+  y = y,
+  x = x,
+  ordered = FALSE
+)
+
+## 3) display result
+cat(
+  "AUC (ordered x and y pair)", ordered_auc,
+  "AUC (unordered x and y pair)", unordered_auc,
+  "AUC (unordered x and y pair, with unordered flag)", unordered_auc_flag,
+  sep = "\n"
+)
+#> AUC (ordered x and y pair)
+#> 1.999958
+#> AUC (unordered x and y pair)
+#> 0.3994567
+#> AUC (unordered x and y pair, with unordered flag)
+#> 1.999958
+```
+
 ## :warning: Breaking changes
 
 - **Logloss:** The argument `pk` has been replaced by `response`.
@@ -117,7 +161,7 @@ suppressMessages(
 ## number of available
 ## threads
 SLmetrics::openmp.threads()
-#> [1] 16
+#> [1] 24
 ```
 
 ## :bug: Bug-fixes
@@ -280,11 +324,11 @@ cat(
   sep = "\n"
 )
 #> Mean Relative Root Mean Squared Error
-#> -17.44339
+#> 28.90888
 #> Range Relative Root Mean Squared Error
-#> 0.1587783
+#> 0.150443
 #> IQR Relative Root Mean Squared Error
-#> 0.7457238
+#> 0.7308728
 ```
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
@@ -361,9 +405,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a 13 15 10
-#> b  8  9  8
-#> c 13 10 14
+#> a 10 11  9
+#> b 11  9 19
+#> c  9 13  9
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -371,10 +415,10 @@ SLmetrics::weighted.cmatrix(
     predicted = predicted,
     w         = weights
 )
-#>           a         b         c
-#> a  7.088360 10.005930  4.951268
-#> b  2.623733  3.703594  3.351635
-#> c  7.434612  4.853197  5.963969
+#>          a        b        c
+#> a 4.826330 5.564569 5.803544
+#> b 6.396037 4.611197 8.774465
+#> c 4.207038 5.964003 3.866850
 ```
 
 ## :bug: Bug-fixes
@@ -409,9 +453,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a 10 12 17
-#> b 11  6 10
-#> c 14 12  8
+#> a  6  6 11
+#> b 13 19 10
+#> c 10 17  8
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -420,9 +464,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 4.249908 7.202907 6.460867
-#> b 6.260306 3.136027 5.301467
-#> c 8.898117 5.221795 5.344299
+#> a 2.926273 2.281183 4.820378
+#> b 6.124858 8.624574 5.247718
+#> c 5.149919 8.445586 3.645431
 ```
 
 Calculating weighted metrics manually or by using
@@ -442,7 +486,7 @@ confusion_matrix <- SLmetrics::cmatrix(
 SLmetrics::accuracy(
     confusion_matrix
 )
-#> [1] 0.24
+#> [1] 0.33
 
 # 3) calculate the weighted
 # accuracy manually
@@ -451,7 +495,7 @@ SLmetrics::weighted.accuracy(
     predicted = predicted,
     w         = weights
 )
-#> [1] 0.2444564
+#> [1] 0.321506
 ```
 
 Please note, however, that it is not possible to pass `cmatrix()`-into
@@ -525,11 +569,11 @@ w         <- runif(n = 1e3)
 
 # 2) unweighted metrics
 SLmetrics::rmse(actual, predicted)
-#> [1] 1.044714
+#> [1] 1.004079
 
 # 3) weighted metrics
 SLmetrics::weighted.rmse(actual, predicted, w = w)
-#> [1] 1.0488
+#> [1] 1.009029
 ```
 
 - The `rrmse()`-function have been removed in favor of the
@@ -615,7 +659,7 @@ plot(
 )
 ```
 
-<img src="meta/NEWS_files/figure-commonmark/unnamed-chunk-19-1.png"
+<img src="meta/NEWS_files/figure-commonmark/unnamed-chunk-20-1.png"
 style="width:100.0%" />
 
 ``` r
@@ -626,7 +670,7 @@ plot(
 )
 ```
 
-<img src="meta/NEWS_files/figure-commonmark/unnamed-chunk-19-2.png"
+<img src="meta/NEWS_files/figure-commonmark/unnamed-chunk-20-2.png"
 style="width:100.0%" />
 
 # Version 0.1-0
@@ -648,7 +692,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-#>  [1] c b b c a a b b c b
+#>  [1] b c a b b a c b c b
 #> Levels: a b c
 
 # 2) predicted classes
@@ -657,7 +701,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-#>  [1] a b c c a a b a a b
+#>  [1] c b c c b c a b a a
 #> Levels: a b c
 ```
 
@@ -674,16 +718,16 @@ summary(
 #> Confusion Matrix (3 x 3) 
 #> ================================================================================
 #>   a b c
-#> a 2 0 0
-#> b 1 3 1
-#> c 2 0 1
+#> a 0 0 2
+#> b 1 2 2
+#> c 2 1 0
 #> ================================================================================
 #> Overall Statistics (micro average)
-#>  - Accuracy:          0.60
-#>  - Balanced Accuracy: 0.64
-#>  - Sensitivity:       0.60
-#>  - Specificity:       0.80
-#>  - Precision:         0.60
+#>  - Accuracy:          0.20
+#>  - Balanced Accuracy: 0.13
+#>  - Sensitivity:       0.20
+#>  - Specificity:       0.60
+#>  - Precision:         0.20
 
 # 2) calculate false positive
 # rate using micro average
@@ -691,7 +735,7 @@ SLmetrics::fpr(
     confusion_matrix
 )
 #>         a         b         c 
-#> 0.3750000 0.0000000 0.1428571
+#> 0.3750000 0.2000000 0.5714286
 ```
 
 ### Supervised regression metrics
@@ -711,5 +755,5 @@ SLmetrics::huberloss(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.4520789
+#> [1] 0.4103738
 ```

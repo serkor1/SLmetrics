@@ -3,7 +3,10 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::export]]
+//' @rdname auc
+//' @method auc numeric
+//' @export
+// [[Rcpp::export(auc.numeric)]]
 double auc(
     const Rcpp::NumericVector& y, 
     const Rcpp::NumericVector& x, 

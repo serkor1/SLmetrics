@@ -69,6 +69,7 @@ By default, \code{method = "unbiased"},
  cov.wt(xy, wt = w1, method = "ML", cor = TRUE)
 }
 \seealso{
-\code{\link[stats]{cov}} and \code{\link[stats]{var}}.
+Other Tools: 
+\code{\link{auc.numeric}()}
 }
 \concept{Tools}
