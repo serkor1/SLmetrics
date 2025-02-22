@@ -128,7 +128,6 @@ build: document
 	@if [ "$(CHECK)" = "true" ]; then \
 		echo "🔎 Checking {$(PKGNAME)} ..."; \
 		R CMD check --no-manual --as-cran $(TARBALL); \
-			echo "🗑️ Cleaning branches"; \
 	fi
 
 	@echo "⚒️ Installing {$(PKGNAME)} ..."
