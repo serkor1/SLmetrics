@@ -8,7 +8,7 @@ testthat::test_that(
     # 0) skip on CRAN
     testthat::skip_on_cran()
 
-    for (orderd in c(TRUE, FALSE)) {
+    for (ordered in c(TRUE, FALSE)) {
 
       # 1) generate x and y
       # pair
@@ -24,7 +24,7 @@ testthat::test_that(
       # based on methods
       for (method in c(0, 1)) {
 
-        # 2.1) calculatet value
+        # 2.1) calculate value
         score <- auc(
           y = y,
           x = x, 
@@ -35,8 +35,8 @@ testthat::test_that(
         # 2.2) check that that the
         # value is numeric and of length
         # one
-        testthat::expect_true(is.numeric(score), info = info)
-        testthat::expect_true(length(score) == 1, info = info)
+        testthat::expect_true(is.numeric(score))
+        testthat::expect_true(length(score) == 1)
       
       }
     }

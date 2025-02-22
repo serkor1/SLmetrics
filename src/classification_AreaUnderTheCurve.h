@@ -51,7 +51,6 @@ class AUC  {
                 // 1.3) set use_idx-flag
                 // to true
                 use_idx = true;
-
             }
 
             // 2) calculate area
@@ -62,7 +61,6 @@ class AUC  {
                 // method
                 default:
                 case 0: {
-
                     if (use_idx) {
                         #ifdef _OPENMP
                             #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
@@ -86,9 +84,8 @@ class AUC  {
                 break;
 
                 // 2.1) Method: Step
-                // method (left sttep)
+                // method (left step)
                 case 1: {
-
                     if (use_idx) {
                         #ifdef _OPENMP
                             #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
@@ -111,7 +108,6 @@ class AUC  {
                 }
                 break;
             }
-
             // Return output
             // as double
             return area;

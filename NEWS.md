@@ -104,7 +104,7 @@ y <- sin(x)
 ## 2.1) calculate area
 unordered_auc <- SLmetrics::auc(y = y,  x = x)
 
-## 2.2) caclulate area  with  explicity
+## 2.2) calculate area with explicit
 ## ordering
 unordered_auc_flag <- SLmetrics::auc(
   y = y,
@@ -122,7 +122,7 @@ cat(
 #> AUC (ordered x and y pair)
 #> 1.999958
 #> AUC (unordered x and y pair)
-#> 0.3994567
+#> -5.095635
 #> AUC (unordered x and y pair, with unordered flag)
 #> 1.999958
 ```
@@ -324,11 +324,11 @@ cat(
   sep = "\n"
 )
 #> Mean Relative Root Mean Squared Error
-#> 28.90888
+#> 120.8779
 #> Range Relative Root Mean Squared Error
-#> 0.150443
+#> 0.1505123
 #> IQR Relative Root Mean Squared Error
-#> 0.7308728
+#> 0.7328414
 ```
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
@@ -405,9 +405,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a 10 11  9
-#> b 11  9 19
-#> c  9 13  9
+#> a 11 11  6
+#> b  8 15 11
+#> c 14 15  9
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -416,9 +416,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 4.826330 5.564569 5.803544
-#> b 6.396037 4.611197 8.774465
-#> c 4.207038 5.964003 3.866850
+#> a 5.234101 5.024203 1.680378
+#> b 2.879655 6.840997 3.797202
+#> c 5.713123 8.394445 3.827668
 ```
 
 ## :bug: Bug-fixes
@@ -453,9 +453,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a  6  6 11
-#> b 13 19 10
-#> c 10 17  8
+#> a 16 13 12
+#> b 10 13 10
+#> c  8 12  6
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -464,9 +464,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 2.926273 2.281183 4.820378
-#> b 6.124858 8.624574 5.247718
-#> c 5.149919 8.445586 3.645431
+#> a 7.295045 5.825054 7.192925
+#> b 4.941573 5.297717 3.904903
+#> c 2.693657 7.195525 2.947407
 ```
 
 Calculating weighted metrics manually or by using
@@ -486,7 +486,7 @@ confusion_matrix <- SLmetrics::cmatrix(
 SLmetrics::accuracy(
     confusion_matrix
 )
-#> [1] 0.33
+#> [1] 0.35
 
 # 3) calculate the weighted
 # accuracy manually
@@ -495,7 +495,7 @@ SLmetrics::weighted.accuracy(
     predicted = predicted,
     w         = weights
 )
-#> [1] 0.321506
+#> [1] 0.3285878
 ```
 
 Please note, however, that it is not possible to pass `cmatrix()`-into
@@ -569,11 +569,11 @@ w         <- runif(n = 1e3)
 
 # 2) unweighted metrics
 SLmetrics::rmse(actual, predicted)
-#> [1] 1.004079
+#> [1] 0.9848049
 
 # 3) weighted metrics
 SLmetrics::weighted.rmse(actual, predicted, w = w)
-#> [1] 1.009029
+#> [1] 0.9923557
 ```
 
 - The `rrmse()`-function have been removed in favor of the
@@ -692,7 +692,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-#>  [1] b c a b b a c b c b
+#>  [1] c a c b c a b c b c
 #> Levels: a b c
 
 # 2) predicted classes
@@ -701,7 +701,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-#>  [1] c b c c b c a b a a
+#>  [1] c c a a c b a b b c
 #> Levels: a b c
 ```
 
@@ -718,16 +718,16 @@ summary(
 #> Confusion Matrix (3 x 3) 
 #> ================================================================================
 #>   a b c
-#> a 0 0 2
-#> b 1 2 2
-#> c 2 1 0
+#> a 0 1 1
+#> b 2 1 0
+#> c 1 1 3
 #> ================================================================================
 #> Overall Statistics (micro average)
-#>  - Accuracy:          0.20
-#>  - Balanced Accuracy: 0.13
-#>  - Sensitivity:       0.20
-#>  - Specificity:       0.60
-#>  - Precision:         0.20
+#>  - Accuracy:          0.40
+#>  - Balanced Accuracy: 0.31
+#>  - Sensitivity:       0.40
+#>  - Specificity:       0.70
+#>  - Precision:         0.40
 
 # 2) calculate false positive
 # rate using micro average
@@ -735,7 +735,7 @@ SLmetrics::fpr(
     confusion_matrix
 )
 #>         a         b         c 
-#> 0.3750000 0.2000000 0.5714286
+#> 0.3750000 0.2857143 0.2000000
 ```
 
 ### Supervised regression metrics
@@ -755,5 +755,5 @@ SLmetrics::huberloss(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.4103738
+#> [1] 0.3929039
 ```

@@ -12,7 +12,7 @@ y <- sin(x)
 ## 2.1) calculate area
 unordered_auc <- auc(y = y,  x = x)
 
-## 2.2) caclulate area  with  explicity
+## 2.2) calculate area with explicit
 ## ordering
 unordered_auc_flag <- auc(
   y = y,

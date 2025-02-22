@@ -19,7 +19,7 @@ double auc(
     const double* ptr_x = x.begin();
     const std::size_t n = y.size();
 
-    // 2) Calculatre and return
+    // 2) Calculate and return
     // Area Under the Curve
     return AUC::calculate(ptr_y, ptr_x, n, method, ordered);
 
