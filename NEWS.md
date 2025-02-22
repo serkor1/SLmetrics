@@ -122,7 +122,7 @@ cat(
 #> AUC (ordered x and y pair)
 #> 1.999958
 #> AUC (unordered x and y pair)
-#> -2.697599
+#> -1.114221
 #> AUC (unordered x and y pair, with unordered flag)
 #> 1.999958
 ```
@@ -161,7 +161,7 @@ suppressMessages(
 ## number of available
 ## threads
 SLmetrics::openmp.threads()
-#> [1] 24
+#> [1] 16
 ```
 
 ## :bug: Bug-fixes
@@ -324,11 +324,11 @@ cat(
   sep = "\n"
 )
 #> Mean Relative Root Mean Squared Error
-#> -247.1266
+#> -89.78931
 #> Range Relative Root Mean Squared Error
-#> 0.1641784
+#> 0.1623445
 #> IQR Relative Root Mean Squared Error
-#> 0.758939
+#> 0.7729344
 ```
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
@@ -405,9 +405,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a 13  8 10
-#> b  5 11 10
-#> c 12 18 13
+#> a 13 15  7
+#> b 11 16 16
+#> c  6  8  8
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -416,9 +416,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 6.323951 4.097145 4.975646
-#> b 2.050106 7.150674 4.341237
-#> c 7.982157 8.028384 5.268000
+#> a 6.280253 7.205155 3.531906
+#> b 4.483870 8.124494 5.741647
+#> c 2.837919 3.176726 4.442310
 ```
 
 ## :bug: Bug-fixes
@@ -453,9 +453,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a 11 12  9
-#> b 16  9 12
-#> c 12 15  4
+#> a  9  6 12
+#> b  8 15  8
+#> c 11 17 14
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -464,9 +464,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 5.970199 6.045491 5.063096
-#> b 6.815838 4.944989 6.294699
-#> c 5.429859 7.570366 1.475528
+#> a 5.061806 1.845793 3.969567
+#> b 3.822935 5.613735 3.437433
+#> c 4.133753 8.834237 8.277926
 ```
 
 Calculating weighted metrics manually or by using
@@ -486,7 +486,7 @@ confusion_matrix <- SLmetrics::cmatrix(
 SLmetrics::accuracy(
     confusion_matrix
 )
-#> [1] 0.24
+#> [1] 0.38
 
 # 3) calculate the weighted
 # accuracy manually
@@ -495,7 +495,7 @@ SLmetrics::weighted.accuracy(
     predicted = predicted,
     w         = weights
 )
-#> [1] 0.2497621
+#> [1] 0.4212145
 ```
 
 Please note, however, that it is not possible to pass `cmatrix()`-into
@@ -569,11 +569,11 @@ w         <- runif(n = 1e3)
 
 # 2) unweighted metrics
 SLmetrics::rmse(actual, predicted)
-#> [1] 1.019314
+#> [1] 0.9696957
 
 # 3) weighted metrics
 SLmetrics::weighted.rmse(actual, predicted, w = w)
-#> [1] 1.054119
+#> [1] 0.953351
 ```
 
 - The `rrmse()`-function have been removed in favor of the
@@ -692,7 +692,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-#>  [1] a c a b c c c b a a
+#>  [1] a a a c c c b a c a
 #> Levels: a b c
 
 # 2) predicted classes
@@ -701,7 +701,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-#>  [1] c b a c c c c b a c
+#>  [1] a a a b b c c a b a
 #> Levels: a b c
 ```
 
@@ -718,13 +718,13 @@ summary(
 #> Confusion Matrix (3 x 3) 
 #> ================================================================================
 #>   a b c
-#> a 2 0 2
-#> b 0 1 1
-#> c 0 1 3
+#> a 5 0 0
+#> b 0 0 1
+#> c 0 3 1
 #> ================================================================================
 #> Overall Statistics (micro average)
 #>  - Accuracy:          0.60
-#>  - Balanced Accuracy: 0.58
+#>  - Balanced Accuracy: 0.42
 #>  - Sensitivity:       0.60
 #>  - Specificity:       0.80
 #>  - Precision:         0.60
@@ -734,8 +734,8 @@ summary(
 SLmetrics::fpr(
     confusion_matrix
 )
-#>     a     b     c 
-#> 0.000 0.125 0.500
+#>         a         b         c 
+#> 0.0000000 0.3333333 0.1666667
 ```
 
 ### Supervised regression metrics
@@ -755,5 +755,5 @@ SLmetrics::huberloss(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.4328285
+#> [1] 0.3285397
 ```

@@ -6,6 +6,7 @@ always_allow_html: true
 execute: 
   cache: true
   freeze: auto
+  dir: meta
 knitr:
   opts_chunk: 
     collapse: true
