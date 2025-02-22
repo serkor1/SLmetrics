@@ -2,13 +2,7 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-// [[Rcpp::export]]
-double auc(const Rcpp::NumericVector y, const Rcpp::NumericVector x, const int& method = 0)
-{
 
-  return calcArea(y, x, method);
-
-}
 
 //' @rdname ROC
 //' @method ROC factor

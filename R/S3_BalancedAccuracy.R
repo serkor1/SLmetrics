@@ -21,7 +21,7 @@
 #' )
 #' 
 #' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
-#' @param na.rm A [logical] values (default: [TRUE]).  If [TRUE] calculation of the metric is based on valid classes.
+#' @param na.rm A [logical] value (default: [TRUE]).  If [TRUE] calculation of the metric is based on valid classes.
 #' 
 #' @section Definition:
 #' Let \eqn{\hat{\alpha} \in [0, 1]} be the proportion of correctly predicted classes. If `adjust == false`, the balanced [accuracy](https://arxiv.org/abs/2008.05756) of the classifier is calculated as,

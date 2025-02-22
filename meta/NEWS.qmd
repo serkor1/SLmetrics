@@ -77,6 +77,40 @@ SLmetrics:::cov.wt(
 )
 ```
 
+* **Area under the curve (AUC):** The function calculates the area under the plot for bivariate curves for ordered and unordered `x` and `y` pairs. The function assumes that values are ordered and calculates the AUC directly - to control this behaviour use the `ordered`-argument in the function. Below is an example:
+
+```{r}
+## 1) Ordered x and y pair
+x <- seq(0, pi, length.out = 200)
+y <- sin(x)
+
+## 1.1) calculate area
+ordered_auc <- SLmetrics::auc(y = y,  x = x)
+
+## 2) Unordered x and y pair
+x <- sample(seq(0, pi, length.out = 200))
+y <- sin(x)
+
+## 2.1) calculate area
+unordered_auc <- SLmetrics::auc(y = y,  x = x)
+
+## 2.2) calculate area with explicit
+## ordering
+unordered_auc_flag <- SLmetrics::auc(
+  y = y,
+  x = x,
+  ordered = FALSE
+)
+
+## 3) display result
+cat(
+  "AUC (ordered x and y pair)", ordered_auc,
+  "AUC (unordered x and y pair)", unordered_auc,
+  "AUC (unordered x and y pair, with unordered flag)", unordered_auc_flag,
+  sep = "\n"
+)
+```
+
 ## :warning: Breaking changes
 
 * **Logloss:** The argument `pk` has been replaced by `response`.

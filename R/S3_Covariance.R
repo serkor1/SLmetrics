@@ -10,6 +10,7 @@
 #' @param ... Arguments passed into other methods
 #' 
 #' @family Tools
+#' @keywords internal
 cov.wt <- function(
   x,
   wt  = NULL,
