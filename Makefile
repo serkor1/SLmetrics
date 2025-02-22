@@ -128,7 +128,6 @@ build: document
 	@if [ "$(CHECK)" = "true" ]; then \
 		echo "🔎 Checking {$(PKGNAME)} ..."; \
 		R CMD check --no-manual --as-cran $(TARBALL); \
-			echo "🗑️ Cleaning branches"; \
 	fi
 
 	@echo "⚒️ Installing {$(PKGNAME)} ..."
@@ -137,7 +136,7 @@ build: document
 	@echo ""
 
 
-	$(MAKE) clean BRANCH=false
+	$(MAKE) clean
 	$(MAKE) build-meta
 	@echo "✅ Build process done!"
 
@@ -148,6 +147,13 @@ build: document
 check:
 	$(MAKE) build CHECK=true
 
+# test-pkg:
+# 
+# This command runs the unit-tests
+test-pkg: document
+	@R CMD build . > /dev/null 2>&1
+	@Rscript -e "testthat::test_local()"
+
 # clean:
 #
 # This command performs a clean
@@ -157,21 +163,28 @@ check:
 # Use make clean BRANCH=true to delete all branches
 # excecpt main and development.
 clean:
-	@echo "🗑️ Cleaning reposiory"
-	@echo ""
-
-	@if [ "$(BRANCH)" = "true" ]; then \
-		echo "🗑️ Cleaning branches"; \
-		git branch | grep -v "main" | grep -v "development" | xargs git branch -D; \
-	fi
+	@echo "🗑️ Cleaning repository"
+	@echo "======================"
 
 	@rm NEWS.md --f
 	@rm README.md --f
 
-	@git clean -d -x -f
-
 	@rm -f src/*.o src/*.so
 	@rm -f $(TARBALL)
+
+# purge:
+#
+# This command is an aggresive cleaning
+# procedure that deletes all branches except
+# main and development. It also deletes all
+# untracked files.
+purge:
+	@echo "🔥 Purging repository"
+	@echo "====================="
+
+	@git branch | grep -v "main" | grep -v "development" | xargs git branch -D;
+	@git clean -d -x -f
+
 
 # r-hub:
 # 
