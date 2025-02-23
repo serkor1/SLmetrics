@@ -22,11 +22,28 @@ accuracy.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_Accuracy`, x)
 }
 
-#' @rdname auc
-#' @method auc numeric
+#' @rdname ROC
 #' @export
-auc.numeric <- function(y, x, method = 0L, ordered = TRUE, ...) {
-    .Call(`_SLmetrics_auc`, y, x, method, ordered)
+roc.auc <- function(actual, response, method = 0L, ordered = FALSE) {
+    .Call(`_SLmetrics_roc_auc`, actual, response, method, ordered)
+}
+
+#' @rdname ROC
+#' @export
+weighted.roc.auc <- function(actual, response, w, method = 0L, ordered = FALSE) {
+    .Call(`_SLmetrics_weighted_roc_auc`, actual, response, w, method, ordered)
+}
+
+#' @rdname prROC
+#' @export
+pr.auc <- function(actual, response, method = 0L, ordered = FALSE) {
+    .Call(`_SLmetrics_pr_auc`, actual, response, method, ordered)
+}
+
+#' @rdname prROC
+#' @export
+weighted.pr.auc <- function(actual, response, w, method = 0L, ordered = FALSE) {
+    .Call(`_SLmetrics_weighted_pr_auc`, actual, response, w, method, ordered)
 }
 
 #' @rdname baccuracy
@@ -858,6 +875,13 @@ smape.numeric <- function(actual, predicted, ...) {
 #' @export
 weighted.smape.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_smape`, actual, predicted, w)
+}
+
+#' @rdname auc
+#' @method auc numeric
+#' @export
+auc.numeric <- function(y, x, method = 0L, ordered = TRUE, ...) {
+    .Call(`_SLmetrics_auc`, y, x, method, ordered)
 }
 
 #' @rdname cov.wt

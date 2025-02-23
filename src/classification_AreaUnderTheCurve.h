@@ -1,121 +1,91 @@
-#ifndef CLASSIFICATION_AUC_H
-#define CLASSIFICATION_AUC_H
+#ifndef CLASSIFICATION_auc_h
+#define CLASSIFICATION_auc_h
 
-#include "utilities_Package.h"
-#include <cmath>
-#include <algorithm>
+#include <Rcpp.h>
 #include <vector>
+#include <algorithm>
 #include <numeric>
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
 
-class AUC  {
-    public:
 
-    /**
-    @brief The function assumes that x and y 
-    are ordered. Otherwise it will be incorrect.
-    */
-    static double calculate(
-        const double* y, 
-        const double* x,
-        std::size_t   n,
-        const int& method = 0,
-        const bool& ordered = true) {
+inline double trapeziod_area(
+    double x1,
+    double y1, 
+    double x2, 
+    double y2) {
+        
+        double width  = (x2 - x1);
+        double height = 0.5 * (y2 + y1);
 
-            // 0) declare variables
-            // for the class
-            std::vector<std::size_t> idx;
-            bool use_idx = false;
-            double area = 0.0;
+        return width * height;
+}
 
-            // 1) order the data
-            // and calculate calculate
-            // indices
-            if (!ordered) {
+inline double step_area(
+    double x1,
+    double y1, 
+    double x2, 
+    double y2) {
+        
+        double width  = (x2 - x1);
+        double height = y1;
 
-                // 1.1) resize the
-                // idx-vetor and fill
-                // with 0's
-                idx.resize(n);
-                std::iota(idx.begin(), idx.end(), 0);
+        return width * height;
+}
 
-                // 1.2) sort by x-values
-                // corresponds to idx <- sort(x); y <- y[idx]; x <- x[idx]
-                std::sort(idx.begin(), idx.end(),
-                        [&](std::size_t a, std::size_t b) {
-                            return x[a] < x[b];
-                        });
+static inline 
+std::vector<std::size_t> prepare_index(
+    const Rcpp::NumericVector& response,
+    bool ordered) {
+        
+        std::size_t n = response.size();
+        std::vector<std::size_t> idx(n);
+        std::iota(idx.begin(), idx.end(), 0);
+        if (!ordered) {
+            // descending order
+            const double* ptr_response = response.begin();
+            std::sort(idx.begin(), idx.end(), [&](std::size_t a, std::size_t b) {
+            return ptr_response[a] > ptr_response[b];
+            });
+        }
+        
+        return idx;
+}
 
-                // 1.3) set use_idx-flag
-                // to true
-                use_idx = true;
+static inline 
+double count_positives(
+    const Rcpp::IntegerVector& actual,
+    const std::vector<std::size_t>& idx,
+    int class_label) {
+        
+        double positives = 0.0;
+        const int* ptr_actual = actual.begin();
+        for (std::size_t i = 0; i < idx.size(); i++) {
+            if (ptr_actual[idx[i]] == class_label) {
+            positives += 1.0;
             }
+        }
 
-            // 2) calculate area
-            // under the curve with 
-            // the desired method
-            switch (method) {
-                // 2.1) Default: Trapezoid
-                // method
-                default:
-                case 0: {
-                    if (use_idx) {
-                        #ifdef _OPENMP
-                            #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
-                        #endif
-                        for (std::size_t i = 1; i < n; ++i) {
-                            double width  = x[idx[i]] - x[idx[i - 1]];
-                            double height = 0.5 * (y[idx[i]] + y[idx[i - 1]]);
-                            area += width * height;
-                        }
-                    } else {
-                        #ifdef _OPENMP
-                            #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
-                        #endif
-                        for (std::size_t i = 1; i < n; ++i) {
-                            double width  = x[i] - x[i - 1];
-                            double height = 0.5 * (y[i] + y[i - 1]);
-                            area += width * height;
-                        }
-                    }
-                }
-                break;
+        return positives;
+}
 
-                // 2.1) Method: Step
-                // method (left step)
-                case 1: {
-                    if (use_idx) {
-                        #ifdef _OPENMP
-                            #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
-                        #endif
-                        for (std::size_t i = 1; i < n; ++i) {
-                            double width  = x[idx[i]] - x[idx[i - 1]];
-                            double height = y[idx[i - 1]];
-                            area += width * height;
-                        }
-                    } else {
-                        #ifdef _OPENMP
-                            #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
-                        #endif
-                        for (std::size_t i = 1; i < n; ++i) {
-                            double width  = x[i] - x[i - 1];
-                            double height = y[i - 1];
-                            area += width * height;
-                        }
-                    }
-                }
-                break;
+static inline
+double count_positives(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::NumericVector& w,
+    const std::vector<std::size_t>& idx,
+    int class_label) {
+        
+        double positives = 0.0;
+        const int* ptr_actual   = actual.begin();
+        const double* ptr_weight = w.begin();
+
+        for (std::size_t i = 0; i < idx.size(); i++) {
+            std::size_t id = idx[i];
+            if (ptr_actual[id] == class_label) {
+            positives += ptr_weight[id];
             }
-            // Return output
-            // as double
-            return area;
-    }
+        }
 
-    private:
-        AUC()  = delete;
-        ~AUC() = delete;
-};
+        return positives;
+}
 
 #endif

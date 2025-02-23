@@ -149,7 +149,6 @@ weighted.plr(
 The \code{\link[=nlr]{nlr()}}-function for the Negative Likehood Ratio (LR-)
 
 Other Classification: 
-\code{\link{ROC.factor}()},
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
@@ -166,14 +165,14 @@ Other Classification:
 \code{\link{mcc.factor}()},
 \code{\link{nlr.factor}()},
 \code{\link{npv.factor}()},
-\code{\link{prROC.factor}()},
+\code{\link{pr.auc}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
+\code{\link{roc.auc}()},
 \code{\link{specificity.factor}()},
 \code{\link{zerooneloss.factor}()}
 
 Other Supervised Learning: 
-\code{\link{ROC.factor}()},
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ccc.numeric}()},
@@ -196,12 +195,13 @@ Other Supervised Learning:
 \code{\link{nlr.factor}()},
 \code{\link{npv.factor}()},
 \code{\link{pinball.numeric}()},
-\code{\link{prROC.factor}()},
+\code{\link{pr.auc}()},
 \code{\link{precision.factor}()},
 \code{\link{rae.numeric}()},
 \code{\link{recall.factor}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{roc.auc}()},
 \code{\link{rrmse.numeric}()},
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},

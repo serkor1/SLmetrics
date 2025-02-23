@@ -126,7 +126,6 @@ cat(
 }
 \seealso{
 Other Classification: 
-\code{\link{ROC.factor}()},
 \code{\link{accuracy.factor}()},
 \code{\link{baccuracy.factor}()},
 \code{\link{ckappa.factor}()},
@@ -143,9 +142,10 @@ Other Classification:
 \code{\link{nlr.factor}()},
 \code{\link{npv.factor}()},
 \code{\link{plr.factor}()},
-\code{\link{prROC.factor}()},
+\code{\link{pr.auc}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
+\code{\link{roc.auc}()},
 \code{\link{specificity.factor}()},
 \code{\link{zerooneloss.factor}()}
 }

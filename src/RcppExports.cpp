@@ -47,17 +47,61 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// auc
-double auc(const Rcpp::NumericVector& y, const Rcpp::NumericVector& x, const int& method, const bool& ordered);
-RcppExport SEXP _SLmetrics_auc(SEXP ySEXP, SEXP xSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
+// roc_auc
+Rcpp::NumericVector roc_auc(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, int method, bool ordered);
+RcppExport SEXP _SLmetrics_roc_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type y(ySEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const int& >::type method(methodSEXP);
-    Rcpp::traits::input_parameter< const bool& >::type ordered(orderedSEXP);
-    rcpp_result_gen = Rcpp::wrap(auc(y, x, method, ordered));
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
+    rcpp_result_gen = Rcpp::wrap(roc_auc(actual, response, method, ordered));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_roc_auc
+Rcpp::NumericVector weighted_roc_auc(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, const Rcpp::NumericVector& w, int method, bool ordered);
+RcppExport SEXP _SLmetrics_weighted_roc_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_roc_auc(actual, response, w, method, ordered));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pr_auc
+Rcpp::NumericVector pr_auc(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, int method, bool ordered);
+RcppExport SEXP _SLmetrics_pr_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
+    rcpp_result_gen = Rcpp::wrap(pr_auc(actual, response, method, ordered));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_pr_auc
+Rcpp::NumericVector weighted_pr_auc(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, const Rcpp::NumericVector& w, int method, bool ordered);
+RcppExport SEXP _SLmetrics_weighted_pr_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_pr_auc(actual, response, w, method, ordered));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1634,6 +1678,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// auc
+double auc(const Rcpp::NumericVector& y, const Rcpp::NumericVector& x, const int& method, const bool& ordered);
+RcppExport SEXP _SLmetrics_auc(SEXP ySEXP, SEXP xSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const int& >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type ordered(orderedSEXP);
+    rcpp_result_gen = Rcpp::wrap(auc(y, x, method, ordered));
+    return rcpp_result_gen;
+END_RCPP
+}
 // covariance_matrix
 Rcpp::List covariance_matrix(const Rcpp::NumericMatrix& x, const Rcpp::Nullable<Rcpp::NumericVector>& wt, bool cor, bool center, const std::string& method);
 RcppExport SEXP _SLmetrics_covariance_matrix(SEXP xSEXP, SEXP wtSEXP, SEXP corSEXP, SEXP centerSEXP, SEXP methodSEXP) {
@@ -1710,7 +1768,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_Accuracy", (DL_FUNC) &_SLmetrics_Accuracy, 2},
     {"_SLmetrics_weighted_Accuracy", (DL_FUNC) &_SLmetrics_weighted_Accuracy, 3},
     {"_SLmetrics_cmatrix_Accuracy", (DL_FUNC) &_SLmetrics_cmatrix_Accuracy, 1},
-    {"_SLmetrics_auc", (DL_FUNC) &_SLmetrics_auc, 4},
+    {"_SLmetrics_roc_auc", (DL_FUNC) &_SLmetrics_roc_auc, 4},
+    {"_SLmetrics_weighted_roc_auc", (DL_FUNC) &_SLmetrics_weighted_roc_auc, 5},
+    {"_SLmetrics_pr_auc", (DL_FUNC) &_SLmetrics_pr_auc, 4},
+    {"_SLmetrics_weighted_pr_auc", (DL_FUNC) &_SLmetrics_weighted_pr_auc, 5},
     {"_SLmetrics_BalancedAccuracy", (DL_FUNC) &_SLmetrics_BalancedAccuracy, 4},
     {"_SLmetrics_weighted_BalancedAccuracy", (DL_FUNC) &_SLmetrics_weighted_BalancedAccuracy, 5},
     {"_SLmetrics_cmatrix_BalancedAccuracy", (DL_FUNC) &_SLmetrics_cmatrix_BalancedAccuracy, 3},
@@ -1829,6 +1890,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_weighted_rrse", (DL_FUNC) &_SLmetrics_weighted_rrse, 3},
     {"_SLmetrics_smape", (DL_FUNC) &_SLmetrics_smape, 2},
     {"_SLmetrics_weighted_smape", (DL_FUNC) &_SLmetrics_weighted_smape, 3},
+    {"_SLmetrics_auc", (DL_FUNC) &_SLmetrics_auc, 4},
     {"_SLmetrics_covariance_matrix", (DL_FUNC) &_SLmetrics_covariance_matrix, 5},
     {"_SLmetrics_covariance_dataframe", (DL_FUNC) &_SLmetrics_covariance_dataframe, 5},
     {"_SLmetrics_enable_openmp", (DL_FUNC) &_SLmetrics_enable_openmp, 0},
