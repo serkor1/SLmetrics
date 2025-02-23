@@ -22,27 +22,31 @@ accuracy.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_Accuracy`, x)
 }
 
-#' @rdname ROC
+#' @rdname roc.auc
+#' @method roc.auc numeric
 #' @export
-roc.auc <- function(actual, response, method = 0L, ordered = FALSE) {
+roc.auc.numeric <- function(actual, response, method = 0L, ordered = FALSE, ...) {
     .Call(`_SLmetrics_roc_auc`, actual, response, method, ordered)
 }
 
-#' @rdname ROC
+#' @rdname roc.auc
+#' @method weighted.roc.auc numeric
 #' @export
-weighted.roc.auc <- function(actual, response, w, method = 0L, ordered = FALSE) {
+weighted.roc.auc.numeric <- function(actual, response, w, method = 0L, ordered = FALSE, ...) {
     .Call(`_SLmetrics_weighted_roc_auc`, actual, response, w, method, ordered)
 }
 
-#' @rdname prROC
+#' @rdname pr.auc
+#' @method pr.auc numeric
 #' @export
-pr.auc <- function(actual, response, method = 0L, ordered = FALSE) {
+pr.auc.numeric <- function(actual, response, method = 0L, ordered = FALSE, ...) {
     .Call(`_SLmetrics_pr_auc`, actual, response, method, ordered)
 }
 
-#' @rdname prROC
+#' @rdname pr.auc
+#' @method weighted.pr.auc numeric
 #' @export
-weighted.pr.auc <- function(actual, response, w, method = 0L, ordered = FALSE) {
+weighted.pr.auc.numeric <- function(actual, response, w, method = 0L, ordered = FALSE, ...) {
     .Call(`_SLmetrics_weighted_pr_auc`, actual, response, w, method, ordered)
 }
 

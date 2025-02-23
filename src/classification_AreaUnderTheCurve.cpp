@@ -3,9 +3,10 @@
 
 using namespace Rcpp;
 
-//' @rdname ROC
+//' @rdname roc.auc
+//' @method roc.auc numeric
 //' @export
-// [[Rcpp::export(roc.auc)]]
+// [[Rcpp::export(roc.auc.numeric)]]
 Rcpp::NumericVector roc_auc(
     const Rcpp::IntegerVector& actual,
     const Rcpp::NumericVector& response,
@@ -72,9 +73,10 @@ Rcpp::NumericVector roc_auc(
 
 }
 
-//' @rdname ROC
+//' @rdname roc.auc
+//' @method weighted.roc.auc numeric
 //' @export
-// [[Rcpp::export(weighted.roc.auc)]]
+// [[Rcpp::export(weighted.roc.auc.numeric)]]
 Rcpp::NumericVector weighted_roc_auc(
     const Rcpp::IntegerVector& actual,
     const Rcpp::NumericVector& response,
@@ -150,9 +152,10 @@ Rcpp::NumericVector weighted_roc_auc(
 }
 
 
-//' @rdname prROC
+//' @rdname pr.auc
+//' @method pr.auc numeric
 //' @export
-// [[Rcpp::export(pr.auc)]]
+// [[Rcpp::export(pr.auc.numeric)]]
 Rcpp::NumericVector pr_auc(
     const Rcpp::IntegerVector& actual,
     const Rcpp::NumericVector& response,
@@ -220,9 +223,10 @@ Rcpp::NumericVector pr_auc(
         return output;
 }
 
-//' @rdname prROC
+//' @rdname pr.auc
+//' @method weighted.pr.auc numeric
 //' @export
-// [[Rcpp::export(weighted.pr.auc)]]
+// [[Rcpp::export(weighted.pr.auc.numeric)]]
 Rcpp::NumericVector weighted_pr_auc(
     const Rcpp::IntegerVector& actual,
     const Rcpp::NumericVector& response,
