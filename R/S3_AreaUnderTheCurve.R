@@ -54,7 +54,8 @@ pr.auc <- function(
   ordered = FALSE,
   ...) {
   UseMethod(
-    generic = "pr.auc"
+    generic = "pr.auc",
+    object  = response 
   )
 }
 
@@ -69,7 +70,8 @@ weighted.pr.auc <- function(
   ordered = FALSE,
   ...) {
   UseMethod(
-    generic = "weighted.pr.auc"
+    generic = "weighted.pr.auc",
+    object  = response 
   )
 }
 
@@ -83,7 +85,8 @@ roc.auc <- function(
   ordered = FALSE,
   ...) {
   UseMethod(
-    generic = "roc.auc"
+    generic = "roc.auc",
+    object  = response 
   )
 }
 
@@ -98,7 +101,8 @@ weighted.roc.auc <- function(
   ordered = FALSE,
   ...) {
   UseMethod(
-    generic = "weighted.roc.auc"
+    generic = "weighted.roc.auc",
+    object  = response 
   )
 }
 
