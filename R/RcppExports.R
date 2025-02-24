@@ -30,6 +30,13 @@ roc.auc.numeric <- function(actual, response, method = 0L, ordered = FALSE, ...)
 }
 
 #' @rdname roc.auc
+#' @method roc.auc matrix
+#' @export
+roc.auc.matrix <- function(actual, response, method = 0L, ordered = FALSE, ...) {
+    .Call(`_SLmetrics_roc_auc_matrix`, actual, response, method, ordered)
+}
+
+#' @rdname roc.auc
 #' @method weighted.roc.auc numeric
 #' @export
 weighted.roc.auc.numeric <- function(actual, response, w, method = 0L, ordered = FALSE, ...) {

@@ -61,6 +61,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// roc_auc_matrix
+Rcpp::NumericVector roc_auc_matrix(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, int method, bool ordered);
+RcppExport SEXP _SLmetrics_roc_auc_matrix(SEXP actualSEXP, SEXP responseSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
+    rcpp_result_gen = Rcpp::wrap(roc_auc_matrix(actual, response, method, ordered));
+    return rcpp_result_gen;
+END_RCPP
+}
 // weighted_roc_auc
 Rcpp::NumericVector weighted_roc_auc(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, const Rcpp::NumericVector& w, int method, bool ordered);
 RcppExport SEXP _SLmetrics_weighted_roc_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
@@ -1769,6 +1783,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_weighted_Accuracy", (DL_FUNC) &_SLmetrics_weighted_Accuracy, 3},
     {"_SLmetrics_cmatrix_Accuracy", (DL_FUNC) &_SLmetrics_cmatrix_Accuracy, 1},
     {"_SLmetrics_roc_auc", (DL_FUNC) &_SLmetrics_roc_auc, 4},
+    {"_SLmetrics_roc_auc_matrix", (DL_FUNC) &_SLmetrics_roc_auc_matrix, 4},
     {"_SLmetrics_weighted_roc_auc", (DL_FUNC) &_SLmetrics_weighted_roc_auc, 5},
     {"_SLmetrics_pr_auc", (DL_FUNC) &_SLmetrics_pr_auc, 4},
     {"_SLmetrics_weighted_pr_auc", (DL_FUNC) &_SLmetrics_weighted_pr_auc, 5},

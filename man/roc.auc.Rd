@@ -2,11 +2,14 @@
 % Please edit documentation in R/RcppExports.R, R/S3_AreaUnderTheCurve.R
 \name{roc.auc.numeric}
 \alias{roc.auc.numeric}
+\alias{roc.auc.matrix}
 \alias{weighted.roc.auc.numeric}
 \alias{roc.auc}
 \title{Reciever Operator Characteristics}
 \usage{
 \method{roc.auc}{numeric}(actual, response, method = 0L, ordered = FALSE, ...)
+
+\method{roc.auc}{matrix}(actual, response, method = 0L, ordered = FALSE, ...)
 
 \method{weighted.roc.auc}{numeric}(actual, response, w, method = 0L, ordered = FALSE, ...)
 

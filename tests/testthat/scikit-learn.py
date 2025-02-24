@@ -253,3 +253,12 @@ def py_prROC(actual, response, w=None):
         }
     
     return results
+
+def py_rocAUC(actual, response, w = None):
+  return metrics.roc_auc_score(
+    y_true  = actual,
+    y_score = response,
+    average = None,
+    multi_class = "ovr",
+    sample_weight = w
+  )

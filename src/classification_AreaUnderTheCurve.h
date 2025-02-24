@@ -5,6 +5,7 @@
 #include <vector>
 #include <algorithm>
 #include <numeric>
+#include <memory>
 
 
 inline double trapeziod_area(
@@ -50,6 +51,80 @@ std::vector<std::size_t> prepare_index(
         return idx;
 }
 
+/**
+ * 
+ * @param response_matrix A (n x k)-matrix of probabilities.
+ * @param column An integer corresponding to the k'th column.
+ * @param ordered A bool. If true it is assumed that the matrix columns are sorted.
+ *
+ * @returns
+ * A (n x 1) std::vector with indices pointing to the sorted values.
+ *
+ */
+// static inline 
+// std::vector<std::size_t> prepare_index(
+//     const Rcpp::NumericMatrix& response_matrix,
+//     int column,
+//     bool ordered) {
+
+//         std::size_t n = response_matrix.nrow();
+//         std::vector<std::size_t> idx(n);
+//         std::iota(idx.begin(), idx.end(), 0);
+
+//         // If not ordered, sort in descending order by response_matrix(row, column)
+//         if (!ordered) {
+//             std::sort(idx.begin(), idx.end(), [&](std::size_t a, std::size_t b) {
+//             return response_matrix(a, column) > response_matrix(b, column);
+//             });
+//         }
+        
+//         return idx;
+
+// }
+// static inline 
+// std::unique_ptr<std::size_t[]> prepare_index(
+//     const Rcpp::NumericMatrix& response_matrix,
+//     int column,
+//     bool ordered) {
+
+//     std::size_t n = response_matrix.nrow();
+    
+//     std::unique_ptr<std::size_t[]> idx(new std::size_t[n]);
+    
+//     // 2) Initialize values from 0..(n-1)
+//     std::iota(idx.get(), idx.get() + n, 0);
+    
+//     // 3) If not ordered, sort in descending order by response_matrix(row, column)
+//     if (!ordered) {
+//         std::sort(idx.get(), idx.get() + n, [&](std::size_t a, std::size_t b) {
+//             return response_matrix(a, column) > response_matrix(b, column);
+//         });
+//     }
+    
+//     // 4)
+//     return idx;
+// }
+static inline 
+std::unique_ptr<std::size_t[]> prepare_index(
+    const Rcpp::NumericMatrix& response_matrix,
+    int column,
+    int n,
+    bool ordered) {
+
+        std::unique_ptr<std::size_t[]> idx(new std::size_t[n]);
+        std::iota(idx.get(), idx.get() + n, 0);
+
+        const double* col = &response_matrix(0, column);
+
+        if (!ordered) {
+            std::sort(idx.get(), idx.get() + n, [col](std::size_t a, std::size_t b) {
+                return col[a] > col[b];
+            });
+        }
+        return idx;
+}
+
+
 static inline 
 double count_positives(
     const Rcpp::IntegerVector& actual,
@@ -66,6 +141,24 @@ double count_positives(
 
         return positives;
 }
+
+static inline 
+double count_positives(
+    const int* ptr_actual,
+    const std::size_t* idx,
+    int n,
+    int class_label) {
+
+        double positives = 0.0;
+        //const int* ptr_actual = actual.begin();
+
+        for (std::size_t i = 0; i < n; i++) {
+            positives += (ptr_actual[idx[i]] == class_label);
+        }
+
+        return positives;
+}
+
 
 static inline
 double count_positives(
