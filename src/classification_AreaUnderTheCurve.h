@@ -1,121 +1,184 @@
-#ifndef CLASSIFICATION_AUC_H
-#define CLASSIFICATION_AUC_H
+#ifndef CLASSIFICATION_auc_h
+#define CLASSIFICATION_auc_h
 
-#include "utilities_Package.h"
-#include <cmath>
-#include <algorithm>
+#include <Rcpp.h>
 #include <vector>
+#include <algorithm>
 #include <numeric>
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
+#include <memory>
 
-class AUC  {
-    public:
 
-    /**
-    @brief The function assumes that x and y 
-    are ordered. Otherwise it will be incorrect.
-    */
-    static double calculate(
-        const double* y, 
-        const double* x,
-        std::size_t   n,
-        const int& method = 0,
-        const bool& ordered = true) {
+inline double trapeziod_area(
+    double x1,
+    double y1, 
+    double x2, 
+    double y2) {
+        
+        double width  = (x2 - x1);
+        double height = 0.5 * (y2 + y1);
 
-            // 0) declare variables
-            // for the class
-            std::vector<std::size_t> idx;
-            bool use_idx = false;
-            double area = 0.0;
+        return width * height;
+}
 
-            // 1) order the data
-            // and calculate calculate
-            // indices
-            if (!ordered) {
+inline double step_area(
+    double x1,
+    double y1, 
+    double x2, 
+    double y2) {
+        
+        double width  = (x2 - x1);
+        double height = y1;
 
-                // 1.1) resize the
-                // idx-vetor and fill
-                // with 0's
-                idx.resize(n);
-                std::iota(idx.begin(), idx.end(), 0);
+        return width * height;
+}
 
-                // 1.2) sort by x-values
-                // corresponds to idx <- sort(x); y <- y[idx]; x <- x[idx]
-                std::sort(idx.begin(), idx.end(),
-                        [&](std::size_t a, std::size_t b) {
-                            return x[a] < x[b];
-                        });
+static inline 
+std::vector<std::size_t> prepare_index(
+    const Rcpp::NumericVector& response,
+    bool ordered) {
+        
+        std::size_t n = response.size();
+        std::vector<std::size_t> idx(n);
+        std::iota(idx.begin(), idx.end(), 0);
+        if (!ordered) {
+            // descending order
+            const double* ptr_response = response.begin();
+            std::sort(idx.begin(), idx.end(), [&](std::size_t a, std::size_t b) {
+            return ptr_response[a] > ptr_response[b];
+            });
+        }
+        
+        return idx;
+}
 
-                // 1.3) set use_idx-flag
-                // to true
-                use_idx = true;
+/**
+ * 
+ * @param response_matrix A (n x k)-matrix of probabilities.
+ * @param column An integer corresponding to the k'th column.
+ * @param ordered A bool. If true it is assumed that the matrix columns are sorted.
+ *
+ * @returns
+ * A (n x 1) std::vector with indices pointing to the sorted values.
+ *
+ */
+// static inline 
+// std::vector<std::size_t> prepare_index(
+//     const Rcpp::NumericMatrix& response_matrix,
+//     int column,
+//     bool ordered) {
+
+//         std::size_t n = response_matrix.nrow();
+//         std::vector<std::size_t> idx(n);
+//         std::iota(idx.begin(), idx.end(), 0);
+
+//         // If not ordered, sort in descending order by response_matrix(row, column)
+//         if (!ordered) {
+//             std::sort(idx.begin(), idx.end(), [&](std::size_t a, std::size_t b) {
+//             return response_matrix(a, column) > response_matrix(b, column);
+//             });
+//         }
+        
+//         return idx;
+
+// }
+// static inline 
+// std::unique_ptr<std::size_t[]> prepare_index(
+//     const Rcpp::NumericMatrix& response_matrix,
+//     int column,
+//     bool ordered) {
+
+//     std::size_t n = response_matrix.nrow();
+    
+//     std::unique_ptr<std::size_t[]> idx(new std::size_t[n]);
+    
+//     // 2) Initialize values from 0..(n-1)
+//     std::iota(idx.get(), idx.get() + n, 0);
+    
+//     // 3) If not ordered, sort in descending order by response_matrix(row, column)
+//     if (!ordered) {
+//         std::sort(idx.get(), idx.get() + n, [&](std::size_t a, std::size_t b) {
+//             return response_matrix(a, column) > response_matrix(b, column);
+//         });
+//     }
+    
+//     // 4)
+//     return idx;
+// }
+static inline 
+std::unique_ptr<std::size_t[]> prepare_index(
+    const Rcpp::NumericMatrix& response_matrix,
+    int column,
+    int n,
+    bool ordered) {
+
+        std::unique_ptr<std::size_t[]> idx(new std::size_t[n]);
+        std::iota(idx.get(), idx.get() + n, 0);
+
+        const double* col = &response_matrix(0, column);
+
+        if (!ordered) {
+            std::sort(idx.get(), idx.get() + n, [col](std::size_t a, std::size_t b) {
+                return col[a] > col[b];
+            });
+        }
+        return idx;
+}
+
+
+static inline 
+double count_positives(
+    const Rcpp::IntegerVector& actual,
+    const std::vector<std::size_t>& idx,
+    int class_label) {
+        
+        double positives = 0.0;
+        const int* ptr_actual = actual.begin();
+        for (std::size_t i = 0; i < idx.size(); i++) {
+            if (ptr_actual[idx[i]] == class_label) {
+            positives += 1.0;
             }
+        }
 
-            // 2) calculate area
-            // under the curve with 
-            // the desired method
-            switch (method) {
-                // 2.1) Default: Trapezoid
-                // method
-                default:
-                case 0: {
-                    if (use_idx) {
-                        #ifdef _OPENMP
-                            #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
-                        #endif
-                        for (std::size_t i = 1; i < n; ++i) {
-                            double width  = x[idx[i]] - x[idx[i - 1]];
-                            double height = 0.5 * (y[idx[i]] + y[idx[i - 1]]);
-                            area += width * height;
-                        }
-                    } else {
-                        #ifdef _OPENMP
-                            #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
-                        #endif
-                        for (std::size_t i = 1; i < n; ++i) {
-                            double width  = x[i] - x[i - 1];
-                            double height = 0.5 * (y[i] + y[i - 1]);
-                            area += width * height;
-                        }
-                    }
-                }
-                break;
+        return positives;
+}
 
-                // 2.1) Method: Step
-                // method (left step)
-                case 1: {
-                    if (use_idx) {
-                        #ifdef _OPENMP
-                            #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
-                        #endif
-                        for (std::size_t i = 1; i < n; ++i) {
-                            double width  = x[idx[i]] - x[idx[i - 1]];
-                            double height = y[idx[i - 1]];
-                            area += width * height;
-                        }
-                    } else {
-                        #ifdef _OPENMP
-                            #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
-                        #endif
-                        for (std::size_t i = 1; i < n; ++i) {
-                            double width  = x[i] - x[i - 1];
-                            double height = y[i - 1];
-                            area += width * height;
-                        }
-                    }
-                }
-                break;
+static inline 
+double count_positives(
+    const int* ptr_actual,
+    const std::size_t* idx,
+    int n,
+    int class_label) {
+
+        double positives = 0.0;
+        //const int* ptr_actual = actual.begin();
+
+        for (std::size_t i = 0; i < n; i++) {
+            positives += (ptr_actual[idx[i]] == class_label);
+        }
+
+        return positives;
+}
+
+
+static inline
+double count_positives(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::NumericVector& w,
+    const std::vector<std::size_t>& idx,
+    int class_label) {
+        
+        double positives = 0.0;
+        const int* ptr_actual   = actual.begin();
+        const double* ptr_weight = w.begin();
+
+        for (std::size_t i = 0; i < idx.size(); i++) {
+            std::size_t id = idx[i];
+            if (ptr_actual[id] == class_label) {
+            positives += ptr_weight[id];
             }
-            // Return output
-            // as double
-            return area;
-    }
+        }
 
-    private:
-        AUC()  = delete;
-        ~AUC() = delete;
-};
+        return positives;
+}
 
 #endif

@@ -44,4 +44,66 @@ auc <- function(
   )
 }
 
+#' @inherit ROC
+#' @inherit auc
+#' @export
+pr.auc <- function(
+  actual,
+  response,
+  method  = 0,
+  ordered = FALSE,
+  ...) {
+  UseMethod(
+    generic = "pr.auc",
+    object  = response 
+  )
+}
+
+#' @inherit ROC
+#' @inherit auc
+#' @export
+weighted.pr.auc <- function(
+  actual,
+  response,
+  w,
+  method  = 0,
+  ordered = FALSE,
+  ...) {
+  UseMethod(
+    generic = "weighted.pr.auc",
+    object  = response 
+  )
+}
+
+#' @inherit ROC
+#' @inherit auc
+#' @export
+roc.auc <- function(
+  actual,
+  response,
+  method  = 0,
+  ordered = FALSE,
+  ...) {
+  UseMethod(
+    generic = "roc.auc",
+    object  = response 
+  )
+}
+
+#' @inherit ROC
+#' @inherit auc
+#' @export
+weighted.roc.auc <- function(
+  actual,
+  response,
+  w,
+  method  = 0,
+  ordered = FALSE,
+  ...) {
+  UseMethod(
+    generic = "weighted.roc.auc",
+    object  = response 
+  )
+}
+
 # script end;
