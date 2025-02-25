@@ -8,9 +8,9 @@
 \alias{weighted.ROC}
 \title{Reciever Operator Characteristics}
 \usage{
-\method{ROC}{factor}(actual, response, thresholds = NULL, ...)
+\method{ROC}{factor}(actual, response, ordered = FALSE, thresholds = NULL, ...)
 
-\method{weighted.ROC}{factor}(actual, response, w, thresholds = NULL, ...)
+\method{weighted.ROC}{factor}(actual, response, w, ordered = FALSE, thresholds = NULL, ...)
 
 ## Generic S3 method
 ROC(
