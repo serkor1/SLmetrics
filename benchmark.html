@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.41">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,8 +71,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ba1dc69c819719ff92c66bffe944bb46.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-45c9daaf6acd34b0420988892e8b8644.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-de84f8d6bb715db06a919283c2d1e787.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-9a023c9ade86a60361e96e3e3f11bc54.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-8b3bc0799969dde090ec63a4a523a327.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
@@ -675,9 +675,9 @@ Table&nbsp;3.1: Benchmarks of Root Mean Squared Error (RMSE), Pinball Loss and H
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {RMSE}                 9.62ms           0B        0
-#&gt; 2 {Pinball Loss}         9.72ms           0B        0
-#&gt; 3 {Huber Loss}          55.64ms           0B        0</code></pre>
+#&gt; 1 {RMSE}                 9.76ms           0B        0
+#&gt; 2 {Pinball Loss}        10.03ms           0B        0
+#&gt; 3 {Huber Loss}          55.71ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -701,10 +701,10 @@ Table&nbsp;3.2: Benchmarking Root Mean Squared Error (RMSE) across <code>{pkgs}<
 <pre><code>#&gt; # A tibble: 4 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}            9.64ms           0B        0
-#&gt; 2 {MLmetrics}           64.78ms       76.3MB        1
-#&gt; 3 {yardstick}          182.75ms      419.6MB        9
-#&gt; 4 {mlr3measures}        91.28ms       76.3MB        1</code></pre>
+#&gt; 1 {SLmetrics}            9.69ms           0B        0
+#&gt; 2 {MLmetrics}           64.08ms       76.3MB        1
+#&gt; 3 {yardstick}          180.51ms      419.6MB        9
+#&gt; 4 {mlr3measures}        88.31ms       76.3MB        1</code></pre>
 </div>
 </div>
 </figure>
@@ -730,9 +730,9 @@ Table&nbsp;3.3: Benchmarks of the Confusion Matrix, Accuracy, and F-Beta score. 
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression         execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                    &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {Confusion Matrix}         8.53ms           0B        0
-#&gt; 2 {Accuracy}                 8.53ms           0B        0
-#&gt; 3 {F-beta}                   8.54ms           0B        0</code></pre>
+#&gt; 1 {Confusion Matrix}         8.55ms           0B        0
+#&gt; 2 {Accuracy}                 8.54ms           0B        0
+#&gt; 3 {F-beta}                   8.55ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -755,9 +755,9 @@ Table&nbsp;3.4: Benchmarking a 3×3 confusion matrix across <code>{pkgs}</code>.
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression  execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}         8.53ms           0B        0
-#&gt; 2 {MLmetrics}       255.86ms        381MB        7
-#&gt; 3 {yardstick}       256.77ms        381MB        7</code></pre>
+#&gt; 1 {SLmetrics}         8.57ms           0B        0
+#&gt; 2 {MLmetrics}       254.05ms        381MB        7
+#&gt; 3 {yardstick}       251.17ms        381MB        7</code></pre>
 </div>
 </div>
 </figure>
