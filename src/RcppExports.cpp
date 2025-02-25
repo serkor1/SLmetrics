@@ -47,78 +47,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// roc_auc
-Rcpp::NumericVector roc_auc(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, int method, bool ordered);
-RcppExport SEXP _SLmetrics_roc_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
-    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
-    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
-    rcpp_result_gen = Rcpp::wrap(roc_auc(actual, response, method, ordered));
-    return rcpp_result_gen;
-END_RCPP
-}
-// roc_auc_matrix
-Rcpp::NumericVector roc_auc_matrix(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, int method, bool ordered);
-RcppExport SEXP _SLmetrics_roc_auc_matrix(SEXP actualSEXP, SEXP responseSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
-    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
-    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
-    rcpp_result_gen = Rcpp::wrap(roc_auc_matrix(actual, response, method, ordered));
-    return rcpp_result_gen;
-END_RCPP
-}
-// weighted_roc_auc
-Rcpp::NumericVector weighted_roc_auc(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, const Rcpp::NumericVector& w, int method, bool ordered);
-RcppExport SEXP _SLmetrics_weighted_roc_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
-    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
-    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
-    rcpp_result_gen = Rcpp::wrap(weighted_roc_auc(actual, response, w, method, ordered));
-    return rcpp_result_gen;
-END_RCPP
-}
-// pr_auc
-Rcpp::NumericVector pr_auc(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, int method, bool ordered);
-RcppExport SEXP _SLmetrics_pr_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
-    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
-    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
-    rcpp_result_gen = Rcpp::wrap(pr_auc(actual, response, method, ordered));
-    return rcpp_result_gen;
-END_RCPP
-}
-// weighted_pr_auc
-Rcpp::NumericVector weighted_pr_auc(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, const Rcpp::NumericVector& w, int method, bool ordered);
-RcppExport SEXP _SLmetrics_weighted_pr_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
-    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
-    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
-    rcpp_result_gen = Rcpp::wrap(weighted_pr_auc(actual, response, w, method, ordered));
-    return rcpp_result_gen;
-END_RCPP
-}
 // BalancedAccuracy
 Rcpp::NumericVector BalancedAccuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const bool& adjust, bool na_rm);
 RcppExport SEXP _SLmetrics_BalancedAccuracy(SEXP actualSEXP, SEXP predictedSEXP, SEXP adjustSEXP, SEXP na_rmSEXP) {
@@ -988,6 +916,49 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// pr_auc
+Rcpp::NumericVector pr_auc(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, int method, bool ordered);
+RcppExport SEXP _SLmetrics_pr_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
+    rcpp_result_gen = Rcpp::wrap(pr_auc(actual, response, method, ordered));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_pr_auc
+Rcpp::NumericVector weighted_pr_auc(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, const Rcpp::NumericVector& w, int method, bool ordered);
+RcppExport SEXP _SLmetrics_weighted_pr_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_pr_auc(actual, response, w, method, ordered));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pr_auc_matrix
+Rcpp::NumericVector pr_auc_matrix(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, int method, bool ordered);
+RcppExport SEXP _SLmetrics_pr_auc_matrix(SEXP actualSEXP, SEXP responseSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
+    rcpp_result_gen = Rcpp::wrap(pr_auc_matrix(actual, response, method, ordered));
+    return rcpp_result_gen;
+END_RCPP
+}
 // Recall
 Rcpp::NumericVector Recall(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro, bool na_rm);
 RcppExport SEXP _SLmetrics_Recall(SEXP actualSEXP, SEXP predictedSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
@@ -1138,6 +1109,77 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type thresholds(thresholdsSEXP);
     rcpp_result_gen = Rcpp::wrap(weighted_RecieverOperatorCharacteristics(actual, response, w, thresholds));
+    return rcpp_result_gen;
+END_RCPP
+}
+// roc_auc
+Rcpp::NumericVector roc_auc(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, int method, bool ordered);
+RcppExport SEXP _SLmetrics_roc_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
+    rcpp_result_gen = Rcpp::wrap(roc_auc(actual, response, method, ordered));
+    return rcpp_result_gen;
+END_RCPP
+}
+// roc_auc_matrix
+Rcpp::NumericVector roc_auc_matrix(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, int method, bool ordered);
+RcppExport SEXP _SLmetrics_roc_auc_matrix(SEXP actualSEXP, SEXP responseSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
+    rcpp_result_gen = Rcpp::wrap(roc_auc_matrix(actual, response, method, ordered));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_roc_auc
+Rcpp::NumericVector weighted_roc_auc(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, const Rcpp::NumericVector& w, int method, bool ordered);
+RcppExport SEXP _SLmetrics_weighted_roc_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_roc_auc(actual, response, w, method, ordered));
+    return rcpp_result_gen;
+END_RCPP
+}
+// roc_auc_macro
+double roc_auc_macro(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, int method, bool ordered);
+RcppExport SEXP _SLmetrics_roc_auc_macro(SEXP actualSEXP, SEXP responseSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
+    rcpp_result_gen = Rcpp::wrap(roc_auc_macro(actual, response, method, ordered));
+    return rcpp_result_gen;
+END_RCPP
+}
+// roc_auc_micro
+double roc_auc_micro(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, int method, bool ordered);
+RcppExport SEXP _SLmetrics_roc_auc_micro(SEXP actualSEXP, SEXP responseSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< bool >::type ordered(orderedSEXP);
+    rcpp_result_gen = Rcpp::wrap(roc_auc_micro(actual, response, method, ordered));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1782,11 +1824,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_Accuracy", (DL_FUNC) &_SLmetrics_Accuracy, 2},
     {"_SLmetrics_weighted_Accuracy", (DL_FUNC) &_SLmetrics_weighted_Accuracy, 3},
     {"_SLmetrics_cmatrix_Accuracy", (DL_FUNC) &_SLmetrics_cmatrix_Accuracy, 1},
-    {"_SLmetrics_roc_auc", (DL_FUNC) &_SLmetrics_roc_auc, 4},
-    {"_SLmetrics_roc_auc_matrix", (DL_FUNC) &_SLmetrics_roc_auc_matrix, 4},
-    {"_SLmetrics_weighted_roc_auc", (DL_FUNC) &_SLmetrics_weighted_roc_auc, 5},
-    {"_SLmetrics_pr_auc", (DL_FUNC) &_SLmetrics_pr_auc, 4},
-    {"_SLmetrics_weighted_pr_auc", (DL_FUNC) &_SLmetrics_weighted_pr_auc, 5},
     {"_SLmetrics_BalancedAccuracy", (DL_FUNC) &_SLmetrics_BalancedAccuracy, 4},
     {"_SLmetrics_weighted_BalancedAccuracy", (DL_FUNC) &_SLmetrics_weighted_BalancedAccuracy, 5},
     {"_SLmetrics_cmatrix_BalancedAccuracy", (DL_FUNC) &_SLmetrics_cmatrix_BalancedAccuracy, 3},
@@ -1852,6 +1889,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_cmatrix_PositivePredictiveValue", (DL_FUNC) &_SLmetrics_cmatrix_PositivePredictiveValue, 3},
     {"_SLmetrics_PrecisionRecallCurve", (DL_FUNC) &_SLmetrics_PrecisionRecallCurve, 3},
     {"_SLmetrics_weighted_PrecisionRecallCurve", (DL_FUNC) &_SLmetrics_weighted_PrecisionRecallCurve, 4},
+    {"_SLmetrics_pr_auc", (DL_FUNC) &_SLmetrics_pr_auc, 4},
+    {"_SLmetrics_weighted_pr_auc", (DL_FUNC) &_SLmetrics_weighted_pr_auc, 5},
+    {"_SLmetrics_pr_auc_matrix", (DL_FUNC) &_SLmetrics_pr_auc_matrix, 4},
     {"_SLmetrics_Recall", (DL_FUNC) &_SLmetrics_Recall, 4},
     {"_SLmetrics_weighted_Recall", (DL_FUNC) &_SLmetrics_weighted_Recall, 5},
     {"_SLmetrics_cmatrix_Recall", (DL_FUNC) &_SLmetrics_cmatrix_Recall, 3},
@@ -1863,6 +1903,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_cmatrix_TruePositiveRate", (DL_FUNC) &_SLmetrics_cmatrix_TruePositiveRate, 3},
     {"_SLmetrics_RecieverOperatorCharacteristics", (DL_FUNC) &_SLmetrics_RecieverOperatorCharacteristics, 3},
     {"_SLmetrics_weighted_RecieverOperatorCharacteristics", (DL_FUNC) &_SLmetrics_weighted_RecieverOperatorCharacteristics, 4},
+    {"_SLmetrics_roc_auc", (DL_FUNC) &_SLmetrics_roc_auc, 4},
+    {"_SLmetrics_roc_auc_matrix", (DL_FUNC) &_SLmetrics_roc_auc_matrix, 4},
+    {"_SLmetrics_weighted_roc_auc", (DL_FUNC) &_SLmetrics_weighted_roc_auc, 5},
+    {"_SLmetrics_roc_auc_macro", (DL_FUNC) &_SLmetrics_roc_auc_macro, 4},
+    {"_SLmetrics_roc_auc_micro", (DL_FUNC) &_SLmetrics_roc_auc_micro, 4},
     {"_SLmetrics_Specificity", (DL_FUNC) &_SLmetrics_Specificity, 4},
     {"_SLmetrics_weighted_Specificity", (DL_FUNC) &_SLmetrics_weighted_Specificity, 5},
     {"_SLmetrics_cmatrix_Specificity", (DL_FUNC) &_SLmetrics_cmatrix_Specificity, 3},

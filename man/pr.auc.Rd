@@ -3,12 +3,15 @@
 \name{pr.auc.numeric}
 \alias{pr.auc.numeric}
 \alias{weighted.pr.auc.numeric}
+\alias{pr.auc.matrix}
 \alias{pr.auc}
 \title{Reciever Operator Characteristics}
 \usage{
 \method{pr.auc}{numeric}(actual, response, method = 0L, ordered = FALSE, ...)
 
 \method{weighted.pr.auc}{numeric}(actual, response, w, method = 0L, ordered = FALSE, ...)
+
+\method{pr.auc}{matrix}(actual, response, method = 0L, ordered = FALSE, ...)
 
 pr.auc(actual, response, method = 0, ordered = FALSE, ...)
 }

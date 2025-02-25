@@ -22,41 +22,6 @@ accuracy.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_Accuracy`, x)
 }
 
-#' @rdname roc.auc
-#' @method roc.auc numeric
-#' @export
-roc.auc.numeric <- function(actual, response, method = 0L, ordered = FALSE, ...) {
-    .Call(`_SLmetrics_roc_auc`, actual, response, method, ordered)
-}
-
-#' @rdname roc.auc
-#' @method roc.auc matrix
-#' @export
-roc.auc.matrix <- function(actual, response, method = 0L, ordered = FALSE, ...) {
-    .Call(`_SLmetrics_roc_auc_matrix`, actual, response, method, ordered)
-}
-
-#' @rdname roc.auc
-#' @method weighted.roc.auc numeric
-#' @export
-weighted.roc.auc.numeric <- function(actual, response, w, method = 0L, ordered = FALSE, ...) {
-    .Call(`_SLmetrics_weighted_roc_auc`, actual, response, w, method, ordered)
-}
-
-#' @rdname pr.auc
-#' @method pr.auc numeric
-#' @export
-pr.auc.numeric <- function(actual, response, method = 0L, ordered = FALSE, ...) {
-    .Call(`_SLmetrics_pr_auc`, actual, response, method, ordered)
-}
-
-#' @rdname pr.auc
-#' @method weighted.pr.auc numeric
-#' @export
-weighted.pr.auc.numeric <- function(actual, response, w, method = 0L, ordered = FALSE, ...) {
-    .Call(`_SLmetrics_weighted_pr_auc`, actual, response, w, method, ordered)
-}
-
 #' @rdname baccuracy
 #' @method baccuracy factor
 #' @export
@@ -512,6 +477,27 @@ weighted.prROC.factor <- function(actual, response, w, thresholds = NULL, ...) {
     .Call(`_SLmetrics_weighted_PrecisionRecallCurve`, actual, response, w, thresholds)
 }
 
+#' @rdname pr.auc
+#' @method pr.auc numeric
+#' @export
+pr.auc.numeric <- function(actual, response, method = 0L, ordered = FALSE, ...) {
+    .Call(`_SLmetrics_pr_auc`, actual, response, method, ordered)
+}
+
+#' @rdname pr.auc
+#' @method weighted.pr.auc numeric
+#' @export
+weighted.pr.auc.numeric <- function(actual, response, w, method = 0L, ordered = FALSE, ...) {
+    .Call(`_SLmetrics_weighted_pr_auc`, actual, response, w, method, ordered)
+}
+
+#' @rdname pr.auc
+#' @method pr.auc matrix
+#' @export
+pr.auc.matrix <- function(actual, response, method = 0L, ordered = FALSE, ...) {
+    .Call(`_SLmetrics_pr_auc_matrix`, actual, response, method, ordered)
+}
+
 #' @rdname recall
 #' @method recall factor
 #' @export
@@ -592,6 +578,35 @@ ROC.factor <- function(actual, response, thresholds = NULL, ...) {
 #' @export
 weighted.ROC.factor <- function(actual, response, w, thresholds = NULL, ...) {
     .Call(`_SLmetrics_weighted_RecieverOperatorCharacteristics`, actual, response, w, thresholds)
+}
+
+#' @rdname roc.auc
+#' @method roc.auc numeric
+#' @export
+roc.auc.numeric <- function(actual, response, method = 0L, ordered = FALSE, ...) {
+    .Call(`_SLmetrics_roc_auc`, actual, response, method, ordered)
+}
+
+#' @rdname roc.auc
+#' @method roc.auc matrix
+#' @export
+roc.auc.matrix <- function(actual, response, method = 0L, ordered = FALSE, ...) {
+    .Call(`_SLmetrics_roc_auc_matrix`, actual, response, method, ordered)
+}
+
+#' @rdname roc.auc
+#' @method weighted.roc.auc numeric
+#' @export
+weighted.roc.auc.numeric <- function(actual, response, w, method = 0L, ordered = FALSE, ...) {
+    .Call(`_SLmetrics_weighted_roc_auc`, actual, response, w, method, ordered)
+}
+
+roc_auc_macro <- function(actual, response, method = 0L, ordered = FALSE) {
+    .Call(`_SLmetrics_roc_auc_macro`, actual, response, method, ordered)
+}
+
+roc_auc_micro <- function(actual, response, method = 0L, ordered = FALSE) {
+    .Call(`_SLmetrics_roc_auc_micro`, actual, response, method, ordered)
 }
 
 #' @rdname specificity
