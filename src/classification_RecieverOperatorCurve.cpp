@@ -11,14 +11,14 @@ using namespace Rcpp;
 Rcpp::DataFrame roc_curve_unweighted(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
-    Rcpp::Nullable<Rcpp::NumericMatrix> thresholds = R_NilValue,
+    Rcpp::Nullable<Rcpp::NumericVector> thresholds = R_NilValue,
     bool presorted = false) {
-    
-        if (thresholds.isNotNull()) {
-            return ROC::roc_curve(actual, Rcpp::as<Rcpp::NumericMatrix>(thresholds), presorted, nullptr);
-        }
-        
-        return ROC::roc_curve(actual, response, presorted, nullptr);
+
+    if (thresholds.isNotNull()) {
+        Rcpp::NumericVector thr = Rcpp::as<Rcpp::NumericVector>(thresholds);
+        return ROC::roc_curve(actual, response, presorted, nullptr, &thr);
+    }
+    return ROC::roc_curve(actual, response, presorted, nullptr, nullptr);
 }
 
 //' @rdname ROC
@@ -29,15 +29,16 @@ Rcpp::DataFrame roc_curve_weighted(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
     const Rcpp::NumericVector w,
-    Rcpp::Nullable<Rcpp::NumericMatrix> thresholds = R_NilValue,
+    Rcpp::Nullable<Rcpp::NumericVector> thresholds = R_NilValue,
     bool presorted = false) {
-    
-        if (thresholds.isNotNull()) {
-            return ROC::roc_curve(actual, Rcpp::as<Rcpp::NumericMatrix>(thresholds), presorted, &w);
-        }
-        
-        return ROC::roc_curve(actual, response, presorted, &w);
+
+    if (thresholds.isNotNull()) {
+        Rcpp::NumericVector thr = Rcpp::as<Rcpp::NumericVector>(thresholds);
+        return ROC::roc_curve(actual, response, presorted, &w, &thr);
+    }
+    return ROC::roc_curve(actual, response, presorted, &w, nullptr);
 }
+
 
 //' @rdname roc.auc
 //' @method roc.auc matrix

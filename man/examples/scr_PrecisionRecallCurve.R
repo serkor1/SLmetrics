@@ -55,12 +55,10 @@ summary(roc)
 roc <- prROC(
   actual     = actual,
   response   = response,
-  thresholds = matrix(
-    data = cbind(
-      seq(0, 1, length.out = 10),
-      1 - seq(0, 1, length.out = 10)
-    ),
-    nrow = 10
+  thresholds = seq(
+    1,
+    0,
+    length.out = 20
   )
 )
 

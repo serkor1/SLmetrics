@@ -152,75 +152,117 @@ class ROC {
         const Rcpp::IntegerVector& actual,
         const Rcpp::NumericMatrix& response,
         bool ordered = false,
-        const Rcpp::NumericVector* weights = nullptr) {
-        
-        int n = response.nrow();
-        Rcpp::CharacterVector levels = actual.attr("levels");
-        int num_classes = levels.size();
-        int total_points = (n + 1) * num_classes;
-        
-        Rcpp::NumericVector thresholds_all(total_points);
-        Rcpp::NumericVector tpr_all(total_points);
-        Rcpp::NumericVector fpr_all(total_points);
-        Rcpp::CharacterVector labels_all(total_points);
-        Rcpp::IntegerVector levels_all(total_points);
-        
-        int idx = 0;
-        const int* ptr_actual = actual.begin();
-        const double* ptr_weights = (weights != nullptr) ? weights->begin() : nullptr;
+        const Rcpp::NumericVector* weights = nullptr,
+        const Rcpp::NumericVector* thresholds = nullptr) {
 
-        double total_weight = (ptr_weights != nullptr)
-                              ? std::accumulate(ptr_weights, ptr_weights + n, 0.0)
-                              : static_cast<double>(n);
-        
-        for (int c = 0; c < num_classes; ++c) {
-            int class_label = c + 1;
+            int n = response.nrow();
+            Rcpp::CharacterVector levels = actual.attr("levels");
+            int num_classes = levels.size();
+            int points_per_class = (thresholds != nullptr) ? thresholds->size() + 2: (n + 1);
+            int total_points = points_per_class * num_classes;
 
-            std::unique_ptr<std::size_t[]> idx_ptr = prepare_index(response, c, n, ordered);
+            Rcpp::NumericVector thresholds_all(total_points);
+            Rcpp::NumericVector tpr_all(total_points);
+            Rcpp::NumericVector fpr_all(total_points);
+            Rcpp::CharacterVector labels_all(total_points);
+            Rcpp::IntegerVector levels_all(total_points);
 
-            double positives = count_positives(ptr_actual, ptr_weights, idx_ptr.get(), n, class_label);
-            double negatives = (ptr_weights != nullptr) ? (total_weight - positives) : (n - positives);
-            
-            double tp = 0.0, fp = 0.0;
-            for (int i = 0; i <= n; ++i) {
-                if (i == 0) {
+            int idx = 0;
+            const int* ptr_actual = actual.begin();
+            const double* ptr_weights = (weights != nullptr) ? weights->begin() : nullptr;
+
+            double total_weight = (ptr_weights != nullptr)
+                                ? std::accumulate(ptr_weights, ptr_weights + n, 0.0)
+                                : static_cast<double>(n);
+
+            const double* ptr_thresholds = (thresholds != nullptr) ? thresholds->begin() : nullptr;
+
+            for (int c = 0; c < num_classes; ++c) {
+                int class_label = c + 1;
+                std::unique_ptr<std::size_t[]> idx_ptr = prepare_index(response, c, n, ordered);
+
+                double positives = count_positives(ptr_actual, ptr_weights, idx_ptr.get(), n, class_label);
+                double negatives = (ptr_weights != nullptr) ? (total_weight - positives) : (n - positives);
+
+                double tp = 0.0, fp = 0.0;
+                if (thresholds != nullptr) {
+
                     thresholds_all[idx] = R_PosInf;
+                    tpr_all[idx] = 0.0;
+                    fpr_all[idx] = 0.0;
+                    labels_all[idx] = levels[c];
+                    levels_all[idx] = class_label;
+                    ++idx;
+
+                    int j = 0; 
+                    for (int k = 0; k < thresholds->size(); ++k) {
+                        double thr = ptr_thresholds[k]; // current threshold value
+                        while (j < n && response(idx_ptr.get()[j], c) >= thr) {
+                            int row = idx_ptr.get()[j];
+                            double w = (ptr_weights != nullptr) ? ptr_weights[row] : 1.0;
+                            if (ptr_actual[row] == class_label)
+                                tp += w;
+                            else
+                                fp += w;
+                            ++j;
+                        }
+                        thresholds_all[idx] = thr;
+                        tpr_all[idx] = (positives > 0) ? (tp / positives) : 0.0;
+                        fpr_all[idx] = (negatives > 0) ? (fp / negatives) : 0.0;
+                        labels_all[idx] = levels[c];
+                        levels_all[idx] = class_label;
+                        ++idx;
+                    }
+
+                    thresholds_all[idx] = R_NegInf;
+                    tpr_all[idx] = 1.0;
+                    fpr_all[idx] = 1.0;
+                    labels_all[idx] = levels[c];
+                    levels_all[idx] = class_label;
+                    ++idx;
+
                 } else {
-                    int row = idx_ptr.get()[i - 1];
-                    thresholds_all[idx] = response(row, c);
+                    for (int i = 0; i <= n; ++i) {
+                        if (i == 0) {
+                            thresholds_all[idx] = R_PosInf;
+                        } else {
+                            int row = idx_ptr.get()[i - 1];
+                            thresholds_all[idx] = response(row, c);
+                        }
+                        
+                        if (i > 0) {
+                            int row = idx_ptr.get()[i - 1];
+                            double w = (ptr_weights != nullptr) ? ptr_weights[row] : 1.0;
+                            if (ptr_actual[row] == class_label)
+                                tp += w;
+                            else
+                                fp += w;
+                        }
+                        double cur_tpr = (positives > 0) ? (tp / positives) : 0.0;
+                        double cur_fpr = (negatives > 0) ? (fp / negatives) : 0.0;
+                        
+                        tpr_all[idx] = cur_tpr;
+                        fpr_all[idx] = cur_fpr;
+                        labels_all[idx] = levels[c];
+                        levels_all[idx] = class_label;
+                        ++idx;
+                    }
                 }
-                
-                if (i > 0) {
-                    int row = idx_ptr.get()[i - 1];
-                    double w = (ptr_weights != nullptr) ? ptr_weights[row] : 1.0;
-                    if (ptr_actual[row] == class_label)
-                        tp += w;
-                    else
-                        fp += w;
-                }
-                double cur_tpr = (positives > 0) ? (tp / positives) : 0.0;
-                double cur_fpr = (negatives > 0) ? (fp / negatives) : 0.0;
-                
-                tpr_all[idx] = cur_tpr;
-                fpr_all[idx] = cur_fpr;
-                labels_all[idx] = levels[c];
-                levels_all[idx] = class_label;
-                ++idx;
             }
+            
+            Rcpp::DataFrame output = Rcpp::DataFrame::create(
+                Rcpp::Named("threshold") = thresholds_all,
+                Rcpp::Named("level")     = levels_all,
+                Rcpp::Named("label")     = labels_all,
+                Rcpp::Named("fpr")       = fpr_all,
+                Rcpp::Named("tpr")       = tpr_all
+            );
+
+            output.attr("class") = Rcpp::CharacterVector::create("ROC", "data.frame");
+            
+            return output;
         }
-        
-        Rcpp::DataFrame output = Rcpp::DataFrame::create(
-            Rcpp::Named("threshold") = thresholds_all,
-            Rcpp::Named("level") = levels_all,
-            Rcpp::Named("label") = labels_all,
-            Rcpp::Named("fpr") = fpr_all,
-            Rcpp::Named("tpr") = tpr_all
-        );
-        // Add "ROC" class attribute to the DataFrame.
-        output.attr("class") = Rcpp::CharacterVector::create("ROC", "data.frame");
-        
-        return output;
-    }
+
 
     private:
         // Structure holding a score, its binary label, and its weight.

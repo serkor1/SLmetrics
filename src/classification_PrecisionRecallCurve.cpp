@@ -13,14 +13,13 @@ Rcpp::DataFrame precision_recall_curve(
     const Rcpp::NumericMatrix& response,
     Rcpp::Nullable<Rcpp::NumericMatrix> thresholds = R_NilValue,
     bool presorted = false) {
-    
-    if (thresholds.isNotNull()) {
-
-        return prROC::pr_curve(actual, Rcpp::as<Rcpp::NumericMatrix>(thresholds), presorted, nullptr);
         
+        if (thresholds.isNotNull()) {
+            Rcpp::NumericVector thr = Rcpp::as<Rcpp::NumericVector>(thresholds);
+            return prROC::pr_curve(actual, response, presorted, nullptr, &thr);
         }
-        
-        return prROC::pr_curve(actual, response, presorted, nullptr);
+
+        return prROC::pr_curve(actual, response, presorted, nullptr, nullptr);
 }
 
 //' @rdname prROC
@@ -33,12 +32,13 @@ Rcpp::DataFrame weighted_precision_recall_curve(
     const Rcpp::NumericVector& w, 
     Rcpp::Nullable<Rcpp::NumericVector> thresholds = R_NilValue,
     bool presorted = false) {
-        
+
         if (thresholds.isNotNull()) {
-            return prROC::pr_curve(actual, Rcpp::as<Rcpp::NumericMatrix>(thresholds), presorted, &w);
+            Rcpp::NumericVector thr = Rcpp::as<Rcpp::NumericVector>(thresholds);
+            return  prROC::pr_curve(actual, response, presorted, &w, &thr);
         }
         
-        return prROC::pr_curve(actual, response, presorted, &w);
+        return  prROC::pr_curve(actual, response, presorted, &w, nullptr);
 }
 
 

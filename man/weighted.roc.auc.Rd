@@ -161,7 +161,7 @@ model <- glm(
 
 # 3) generate predicted
 # classes
-response <-predict(model, type = "response")
+response <- predict(model, type = "response")
 
 # 3.1) generate actual
 # classes
@@ -199,12 +199,10 @@ summary(roc)
 roc <- ROC(
   actual     = actual,
   response   = response,
-  thresholds = matrix(
-    data = cbind(
-      seq(0, 1, length.out = 10),
-      1 - seq(0, 1, length.out = 10)
-    ),
-    nrow = 10
+  thresholds = seq(
+    1,
+    0,
+    length.out = 20
   )
 )
 

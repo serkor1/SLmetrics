@@ -1076,21 +1076,21 @@ BEGIN_RCPP
 END_RCPP
 }
 // roc_curve_unweighted
-Rcpp::DataFrame roc_curve_unweighted(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, Rcpp::Nullable<Rcpp::NumericMatrix> thresholds, bool presorted);
+Rcpp::DataFrame roc_curve_unweighted(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, Rcpp::Nullable<Rcpp::NumericVector> thresholds, bool presorted);
 RcppExport SEXP _SLmetrics_roc_curve_unweighted(SEXP actualSEXP, SEXP responseSEXP, SEXP thresholdsSEXP, SEXP presortedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix >::type response(responseSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericMatrix> >::type thresholds(thresholdsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type thresholds(thresholdsSEXP);
     Rcpp::traits::input_parameter< bool >::type presorted(presortedSEXP);
     rcpp_result_gen = Rcpp::wrap(roc_curve_unweighted(actual, response, thresholds, presorted));
     return rcpp_result_gen;
 END_RCPP
 }
 // roc_curve_weighted
-Rcpp::DataFrame roc_curve_weighted(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, const Rcpp::NumericVector w, Rcpp::Nullable<Rcpp::NumericMatrix> thresholds, bool presorted);
+Rcpp::DataFrame roc_curve_weighted(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, const Rcpp::NumericVector w, Rcpp::Nullable<Rcpp::NumericVector> thresholds, bool presorted);
 RcppExport SEXP _SLmetrics_roc_curve_weighted(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP thresholdsSEXP, SEXP presortedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1098,7 +1098,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix >::type response(responseSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector >::type w(wSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericMatrix> >::type thresholds(thresholdsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type thresholds(thresholdsSEXP);
     Rcpp::traits::input_parameter< bool >::type presorted(presortedSEXP);
     rcpp_result_gen = Rcpp::wrap(roc_curve_weighted(actual, response, w, thresholds, presorted));
     return rcpp_result_gen;
