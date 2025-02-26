@@ -6,14 +6,14 @@
 \alias{roc.auc}
 \title{Reciever Operator Characteristics}
 \usage{
-\method{roc.auc}{matrix}(actual, response, method = 0L, ordered = FALSE, micro = NULL, ...)
+\method{roc.auc}{matrix}(actual, response, method = 0L, presorted = FALSE, micro = NULL, ...)
 
 \method{weighted.roc.auc}{matrix}(
   actual,
   response,
   w,
   method = 0L,
-  ordered = FALSE,
+  presorted = FALSE,
   micro = NULL,
   ...
 )
@@ -27,11 +27,11 @@ roc.auc(actual, response, method = 0, ordered = FALSE, ...)
 
 \item{method}{A <\link{numeric}> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the \code{trapezoid}-method, if \eqn{1} it is calculated using the \code{step}-method.}
 
-\item{ordered}{A <\link{logical}> value (default: \link{TRUE}). If \link{FALSE} the \code{x} and \code{y} pair will be ordered before calculating the area under the curve.}
-
 \item{...}{Arguments passed into other methods.}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
+
+\item{ordered}{A <\link{logical}> value (default: \link{TRUE}). If \link{FALSE} the \code{x} and \code{y} pair will be ordered before calculating the area under the curve.}
 }
 \value{
 A \link{data.frame} on the following form,

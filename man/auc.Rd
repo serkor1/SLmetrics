@@ -5,7 +5,7 @@
 \alias{auc}
 \title{AUC}
 \usage{
-\method{auc}{numeric}(y, x, method = 0L, ordered = TRUE, ...)
+\method{auc}{numeric}(y, x, method = 0L, presorted = TRUE, ...)
 
 ## Generic S3 method
 auc(
@@ -23,9 +23,9 @@ auc(
 
 \item{method}{A <\link{numeric}> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the \code{trapezoid}-method, if \eqn{1} it is calculated using the \code{step}-method.}
 
-\item{ordered}{A <\link{logical}> value (default: \link{TRUE}). If \link{FALSE} the \code{x} and \code{y} pair will be ordered before calculating the area under the curve.}
-
 \item{...}{Arguments passed into other methods.}
+
+\item{ordered}{A <\link{logical}> value (default: \link{TRUE}). If \link{FALSE} the \code{x} and \code{y} pair will be ordered before calculating the area under the curve.}
 }
 \value{
 A <\link{numeric}>  vector  of \link{length} 1
