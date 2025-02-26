@@ -64,7 +64,10 @@ testthat::test_that(
         # from {slmetrics}
         score <- wrapped_ROC(
           actual     = actual,
-          response   = response,
+          response   = matrix(
+            rep(response, 5),
+            ncol = 5
+          ),
           w          = if (weighted) w else NULL,
           micro      = if (is.na(micro)) { NULL } else micro
         )

@@ -13,7 +13,7 @@ testthat::test_that(
       actual, 
       response, 
       w = NULL,
-      ordered = FALSE,
+      presorted = FALSE,
       method = 0) {
       
       if (is.null(w)) {
@@ -21,7 +21,7 @@ testthat::test_that(
         roc.auc(
           actual   = actual,
           response = response,
-          ordered  = ordered,
+          presorted  = presorted,
           method   = method
         )
 
@@ -32,7 +32,7 @@ testthat::test_that(
           response = response,
           w        = w,
           method   = method,
-          ordered  = ordered
+          presorted  = presorted
         )
 
       }
@@ -41,15 +41,15 @@ testthat::test_that(
 
     for (weighted in c(TRUE, FALSE)) {
 
-      for (ordered in c(TRUE, FALSE)) {
+      for (presorted in c(TRUE, FALSE)) {
 
         # 1) actual values
         # and response variables
-        actual   <- create_factor()
+        actual   <- create_factor(k = 2)
         response <- runif(length(actual))
         w        <- runif(length(actual))
   
-        if (ordered) {
+        if (presorted) {
           # 1.1) create order
           # by response
           idx      <- order(response, decreasing = TRUE)
@@ -58,6 +58,14 @@ testthat::test_that(
           w        <- w[idx]
   
         }
+
+        response <- matrix(
+          data = cbind(
+            response,
+            response
+          ),
+          nrow = length(actual)
+        )
   
         # 1.2) calculate ROC object
         # and store
@@ -86,7 +94,7 @@ testthat::test_that(
   
           label <- paste(
             "Method   =", method,
-            "Ordered  =", ordered,
+            "presorted  =", presorted,
             "Weighted =", weighted
           )
   
@@ -123,7 +131,7 @@ testthat::test_that(
                 actual   = actual,
                 response = response,
                 method   = method,
-                ordered  = ordered,
+                presorted  = presorted,
                 w        = if (weighted) w else NULL
               )
             ),
@@ -151,7 +159,7 @@ testthat::test_that(
       actual, 
       response, 
       w = NULL,
-      ordered = FALSE,
+      presorted = FALSE,
       method = 0) {
       
       if (is.null(w)) {
@@ -159,7 +167,7 @@ testthat::test_that(
         pr.auc(
           actual   = actual,
           response = response,
-          ordered  = ordered,
+          presorted  = presorted,
           method   = method
         )
 
@@ -170,7 +178,7 @@ testthat::test_that(
           response = response,
           w        = w,
           method   = method,
-          ordered  = ordered
+          presorted  = presorted
         )
 
       }
@@ -179,7 +187,7 @@ testthat::test_that(
 
     for (weighted in c(TRUE, FALSE)) {
 
-      for (ordered in c(TRUE, FALSE)) {
+      for (presorted in c(TRUE, FALSE)) {
 
         # 1) actual values
         # and response variables
@@ -187,7 +195,7 @@ testthat::test_that(
         response <- runif(length(actual))
         w        <- runif(length(actual))
   
-        if (ordered) {
+        if (presorted) {
           # 1.1) create order
           # by response
           idx      <- order(response,decreasing = TRUE)
@@ -196,6 +204,14 @@ testthat::test_that(
           w        <- w[idx]
   
         }
+
+        response <- matrix(
+          data = cbind(
+            response,
+            response
+          ),
+          nrow = length(actual)
+        )
   
         # 1.2) calculate precision-recall
         # object
@@ -223,7 +239,7 @@ testthat::test_that(
   
           label <- paste(
             "Method  = ", method,
-            "Ordered = ", ordered,
+            "presorted = ", presorted,
             "Weighted=", weighted
           )
   
@@ -260,7 +276,7 @@ testthat::test_that(
                 actual   = actual,
                 response = response,
                 method   = method,
-                ordered  = ordered,
+                presorted  = presorted,
                 w        = if (weighted) w else NULL
               )
             ),
