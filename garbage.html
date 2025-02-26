@@ -600,7 +600,7 @@ Important
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;         a         b         c 
-#&gt; 0.4997077 0.5000650       NaN</code></pre>
+#&gt; 0.5002186 0.4994672       NaN</code></pre>
 </div>
 </div>
 <p>One class, <code>c</code>, is never predicted, nor is it present in the actual labels - therefore, by construction, the value is <code>NaN</code> as there is division by zero. During aggregation to <code>micro</code> or <code>macro</code> averages these are being handled according to <code>na.rm</code>. See below:</p>
@@ -613,7 +613,7 @@ Important
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 0.4998863</code></pre>
+<pre><code>#&gt; [1] 0.4998429</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) macro average</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">fbeta</span>(</span>
@@ -623,7 +623,7 @@ Important
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">FALSE</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 0.3332576</code></pre>
+<pre><code>#&gt; [1] 0.3332286</code></pre>
 </div>
 </div>
 <div class="cell">
