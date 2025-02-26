@@ -466,15 +466,29 @@ ppv.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
 #' @rdname prROC
 #' @method prROC factor
 #' @export
-prROC.factor <- function(actual, response, thresholds = NULL, ...) {
-    .Call(`_SLmetrics_PrecisionRecallCurve`, actual, response, thresholds)
+prROC.factor <- function(actual, response, thresholds = NULL, presorted = FALSE, ...) {
+    .Call(`_SLmetrics_precision_recall_curve`, actual, response, thresholds, presorted)
 }
 
 #' @rdname prROC
 #' @method weighted.prROC factor
 #' @export
-weighted.prROC.factor <- function(actual, response, w, thresholds = NULL, ...) {
-    .Call(`_SLmetrics_weighted_PrecisionRecallCurve`, actual, response, w, thresholds)
+weighted.prROC.factor <- function(actual, response, w, thresholds = NULL, presorted = FALSE, ...) {
+    .Call(`_SLmetrics_weighted_precision_recall_curve`, actual, response, w, thresholds, presorted)
+}
+
+#' @rdname pr.auc
+#' @method pr.auc matrix
+#' @export
+pr.auc.matrix <- function(actual, response, method = 0L, presorted = FALSE, micro = NULL, ...) {
+    .Call(`_SLmetrics_precision_recall_auc`, actual, response, method, presorted, micro)
+}
+
+#' @rdname pr.auc
+#' @method weighted.pr.auc matrix
+#' @export
+weighted.pr.auc.matrix <- function(actual, response, w, method = 0L, presorted = FALSE, micro = NULL, ...) {
+    .Call(`_SLmetrics_precision_recall_auc_weighted`, actual, response, w, method, presorted, micro)
 }
 
 #' @rdname recall
@@ -548,29 +562,29 @@ tpr.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
 #' @rdname ROC
 #' @method ROC factor
 #' @export
-ROC.factor <- function(actual, response, ordered = FALSE, thresholds = NULL, ...) {
-    .Call(`_SLmetrics_roc_curve_unweighted`, actual, response, ordered, thresholds)
+ROC.factor <- function(actual, response, presorted = FALSE, thresholds = NULL, ...) {
+    .Call(`_SLmetrics_roc_curve_unweighted`, actual, response, presorted, thresholds)
 }
 
 #' @rdname ROC
 #' @method weighted.ROC factor
 #' @export
-weighted.ROC.factor <- function(actual, response, w, ordered = FALSE, thresholds = NULL, ...) {
-    .Call(`_SLmetrics_roc_curve_weighted`, actual, response, w, ordered, thresholds)
+weighted.ROC.factor <- function(actual, response, w, presorted = FALSE, thresholds = NULL, ...) {
+    .Call(`_SLmetrics_roc_curve_weighted`, actual, response, w, presorted, thresholds)
 }
 
 #' @rdname roc.auc
 #' @method roc.auc matrix
 #' @export
-roc.auc.matrix <- function(actual, response, method = 0L, ordered = FALSE, micro = NULL, ...) {
-    .Call(`_SLmetrics_roc_auc`, actual, response, method, ordered, micro)
+roc.auc.matrix <- function(actual, response, method = 0L, presorted = FALSE, micro = NULL, ...) {
+    .Call(`_SLmetrics_roc_auc`, actual, response, method, presorted, micro)
 }
 
 #' @rdname roc.auc
 #' @method weighted.roc.auc matrix
 #' @export
-weighted.roc.auc.matrix <- function(actual, response, w, method = 0L, ordered = FALSE, micro = NULL, ...) {
-    .Call(`_SLmetrics_roc_auc_weighted`, actual, response, w, method, ordered, micro)
+weighted.roc.auc.matrix <- function(actual, response, w, method = 0L, presorted = FALSE, micro = NULL, ...) {
+    .Call(`_SLmetrics_roc_auc_weighted`, actual, response, w, method, presorted, micro)
 }
 
 #' @rdname specificity
@@ -870,8 +884,8 @@ weighted.smape.numeric <- function(actual, predicted, w, ...) {
 #' @rdname auc
 #' @method auc numeric
 #' @export
-auc.numeric <- function(y, x, method = 0L, ordered = TRUE, ...) {
-    .Call(`_SLmetrics_auc`, y, x, method, ordered)
+auc.numeric <- function(y, x, method = 0L, presorted = TRUE, ...) {
+    .Call(`_SLmetrics_auc`, y, x, method, presorted)
 }
 
 #' @rdname cov.wt

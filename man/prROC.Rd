@@ -7,9 +7,9 @@
 \alias{weighted.prROC}
 \title{Precision-Recall Curve}
 \usage{
-\method{prROC}{factor}(actual, response, thresholds = NULL, ...)
+\method{prROC}{factor}(actual, response, thresholds = NULL, presorted = FALSE, ...)
 
-\method{weighted.prROC}{factor}(actual, response, w, thresholds = NULL, ...)
+\method{weighted.prROC}{factor}(actual, response, w, thresholds = NULL, presorted = FALSE, ...)
 
 ## Generic S3 method
 prROC(
