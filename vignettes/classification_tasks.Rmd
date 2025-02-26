@@ -211,7 +211,7 @@ response <- predict(
 
 The `response` can be passed into the `ROC()`-function,
 
-```{r, eval = FALSE}
+```{r}
 # 1) calculate the reciever
 # operator characteristics
 roc <- ROC(
@@ -226,7 +226,7 @@ print(roc)
 
 The `ROC()`-function returns a `data.frame`-object, with `r nrow(roc)` rows corresponding to the `length` of `response` multiplied with number of classes in the data. The `roc`-object can be plotted as follows,
 
-```{r, eval = FALSE}
+```{r}
 # 1) plot roc
 # object
 plot(roc)
@@ -235,7 +235,7 @@ plot(roc)
 
 The `ROC()`-function accepts a custom `threshold`-argument, which can be passed as follows,
 
-```{r custom thresholds, eval = FALSE}
+```{r custom thresholds}
 # 1) create custom
 # thresholds
 thresholds <- seq(
