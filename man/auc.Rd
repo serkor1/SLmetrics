@@ -12,7 +12,7 @@ auc(
  y,
  x,
  method = 0,
- ordered = TRUE,
+ presorted = TRUE,
  ...
 )
 }
@@ -23,9 +23,9 @@ auc(
 
 \item{method}{A <\link{numeric}> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the \code{trapezoid}-method, if \eqn{1} it is calculated using the \code{step}-method.}
 
-\item{...}{Arguments passed into other methods.}
+\item{presorted}{A <\link{logical}>-value \link{length} 1 (default: \link{FALSE}). If \link{TRUE} the input will not be sorted by threshold.}
 
-\item{ordered}{A <\link{logical}> value (default: \link{TRUE}). If \link{FALSE} the \code{x} and \code{y} pair will be ordered before calculating the area under the curve.}
+\item{...}{Arguments passed into other methods.}
 }
 \value{
 A <\link{numeric}>  vector  of \link{length} 1
@@ -53,7 +53,7 @@ unordered_auc <- auc(y = y,  x = x)
 unordered_auc_flag <- auc(
   y = y,
   x = x,
-  ordered = FALSE
+  preordered = FALSE
 )
 
 ## 3) display result

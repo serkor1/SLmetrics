@@ -49,9 +49,9 @@ Rcpp::DataFrame weighted_precision_recall_curve(
 Rcpp::NumericVector precision_recall_auc(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
+    Rcpp::Nullable<bool> micro = R_NilValue,
     int method = 0,
-    bool presorted = false,
-    Rcpp::Nullable<bool> micro = R_NilValue) {
+    bool presorted = false) {
 
         if (micro.isNull()) {
             return prROC::class_wise(actual, response, method, presorted);
@@ -75,9 +75,9 @@ Rcpp::NumericVector precision_recall_auc_weighted(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
     const Rcpp::NumericVector w,
+    Rcpp::Nullable<bool> micro = R_NilValue,
     int method = 0,
-    bool presorted = false,
-    Rcpp::Nullable<bool> micro = R_NilValue) {
+    bool presorted = false) {
 
         if (micro.isNull()) {
             return prROC::class_wise(actual, response, method, presorted, &w);

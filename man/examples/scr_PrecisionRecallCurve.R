@@ -27,15 +27,22 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
+# 4) generate precision-recall
+# data
 
+# 4.1) calculate residual
+# probability and store as matrix
+response <- matrix(
+  data = cbind(response, 1-response),
+  nrow = length(actual)
+)
 
-# 4) generate reciever
-# operator characteristics
+# 4.2) generate precision-recall
+# data
 roc <- prROC(
   actual   = actual,
   response = response
 )
-
 
 # 5) plot by species
 plot(roc)
@@ -48,9 +55,14 @@ summary(roc)
 roc <- prROC(
   actual     = actual,
   response   = response,
-  thresholds = seq(0, 1, length.out = 4)
+  thresholds = matrix(
+    data = cbind(
+      seq(0, 1, length.out = 10),
+      1 - seq(0, 1, length.out = 10)
+    ),
+    nrow = 10
+  )
 )
-
 
 # 5) plot by species
 plot(roc)

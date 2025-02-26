@@ -11,8 +11,8 @@ using namespace Rcpp;
 Rcpp::DataFrame roc_curve_unweighted(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
-    bool presorted = false,
-    Rcpp::Nullable<Rcpp::NumericMatrix> thresholds = R_NilValue) {
+    Rcpp::Nullable<Rcpp::NumericMatrix> thresholds = R_NilValue,
+    bool presorted = false) {
     
         if (thresholds.isNotNull()) {
             return ROC::roc_curve(actual, Rcpp::as<Rcpp::NumericMatrix>(thresholds), presorted, nullptr);
@@ -29,8 +29,8 @@ Rcpp::DataFrame roc_curve_weighted(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
     const Rcpp::NumericVector w,
-    bool presorted = false,
-    Rcpp::Nullable<Rcpp::NumericMatrix> thresholds = R_NilValue) {
+    Rcpp::Nullable<Rcpp::NumericMatrix> thresholds = R_NilValue,
+    bool presorted = false) {
     
         if (thresholds.isNotNull()) {
             return ROC::roc_curve(actual, Rcpp::as<Rcpp::NumericMatrix>(thresholds), presorted, &w);
@@ -46,9 +46,9 @@ Rcpp::DataFrame roc_curve_weighted(
 Rcpp::NumericVector roc_auc(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
+    Rcpp::Nullable<bool> micro = R_NilValue,
     int method = 0,
-    bool presorted = false,
-    Rcpp::Nullable<bool> micro = R_NilValue) {
+    bool presorted = false) {
 
         if (micro.isNull()) {
             return ROC::class_wise(actual, response, method, presorted);
@@ -72,9 +72,9 @@ Rcpp::NumericVector roc_auc_weighted(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
     const Rcpp::NumericVector w,
+    Rcpp::Nullable<bool> micro = R_NilValue,
     int method = 0,
-    bool presorted = false,
-    Rcpp::Nullable<bool> micro = R_NilValue) {
+    bool presorted = false) {
 
         if (micro.isNull()) {
             return ROC::class_wise(actual, response, method, presorted, &w);

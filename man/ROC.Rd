@@ -8,15 +8,16 @@
 \alias{weighted.ROC}
 \title{Reciever Operator Characteristics}
 \usage{
-\method{ROC}{factor}(actual, response, presorted = FALSE, thresholds = NULL, ...)
+\method{ROC}{factor}(actual, response, thresholds = NULL, presorted = FALSE, ...)
 
-\method{weighted.ROC}{factor}(actual, response, w, presorted = FALSE, thresholds = NULL, ...)
+\method{weighted.ROC}{factor}(actual, response, w, thresholds = NULL, presorted = FALSE, ...)
 
 ## Generic S3 method
 ROC(
  actual,
  response,
- thresholds,
+ thresholds = NULL,
+ presorted  = FALSE,
  ...
 )
 
@@ -25,7 +26,8 @@ weighted.ROC(
  actual,
  response,
  w,
- thresholds,
+ thresholds = NULL,
+ presorted  = FALSE,
  ...
 )
 }
@@ -34,7 +36,9 @@ weighted.ROC(
 
 \item{response}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated response probabilities.}
 
-\item{thresholds}{An optional <\link{numeric}>-vector of non-zero \link{length} (default: \link{NULL}).}
+\item{thresholds}{An optional <\link{numeric}> \eqn{n \times k} matrix (default: \link{NULL}).}
+
+\item{presorted}{A <\link{logical}>-value \link{length} 1 (default: \link{FALSE}). If \link{TRUE} the input will not be sorted by threshold.}
 
 \item{...}{Arguments passed into other methods.}
 
@@ -136,6 +140,16 @@ actual <- factor(
 
 # 4) generate reciever
 # operator characteristics
+
+# 4.1) calculate residual
+# probability and store as matrix
+response <- matrix(
+  data = cbind(response, 1-response),
+  nrow = length(actual)
+)
+
+# 4.2) construct 
+# data.frame
 roc <- ROC(
   actual   = actual,
   response = response
@@ -152,12 +166,18 @@ summary(roc)
 roc <- ROC(
   actual     = actual,
   response   = response,
-  thresholds = seq(0, 1, length.out = 4)
+  thresholds = matrix(
+    data = cbind(
+      seq(0, 1, length.out = 10),
+      1 - seq(0, 1, length.out = 10)
+    ),
+    nrow = 10
+  )
 )
-
 
 # 5) plot by species
 plot(roc)
+
 }
 \seealso{
 Other Classification: 

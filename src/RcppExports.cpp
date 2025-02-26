@@ -919,33 +919,33 @@ BEGIN_RCPP
 END_RCPP
 }
 // precision_recall_auc
-Rcpp::NumericVector precision_recall_auc(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, int method, bool presorted, Rcpp::Nullable<bool> micro);
-RcppExport SEXP _SLmetrics_precision_recall_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP methodSEXP, SEXP presortedSEXP, SEXP microSEXP) {
+Rcpp::NumericVector precision_recall_auc(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, Rcpp::Nullable<bool> micro, int method, bool presorted);
+RcppExport SEXP _SLmetrics_precision_recall_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP microSEXP, SEXP methodSEXP, SEXP presortedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< int >::type method(methodSEXP);
     Rcpp::traits::input_parameter< bool >::type presorted(presortedSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
-    rcpp_result_gen = Rcpp::wrap(precision_recall_auc(actual, response, method, presorted, micro));
+    rcpp_result_gen = Rcpp::wrap(precision_recall_auc(actual, response, micro, method, presorted));
     return rcpp_result_gen;
 END_RCPP
 }
 // precision_recall_auc_weighted
-Rcpp::NumericVector precision_recall_auc_weighted(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, const Rcpp::NumericVector w, int method, bool presorted, Rcpp::Nullable<bool> micro);
-RcppExport SEXP _SLmetrics_precision_recall_auc_weighted(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP methodSEXP, SEXP presortedSEXP, SEXP microSEXP) {
+Rcpp::NumericVector precision_recall_auc_weighted(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, const Rcpp::NumericVector w, Rcpp::Nullable<bool> micro, int method, bool presorted);
+RcppExport SEXP _SLmetrics_precision_recall_auc_weighted(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP microSEXP, SEXP methodSEXP, SEXP presortedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix >::type response(responseSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector >::type w(wSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< int >::type method(methodSEXP);
     Rcpp::traits::input_parameter< bool >::type presorted(presortedSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
-    rcpp_result_gen = Rcpp::wrap(precision_recall_auc_weighted(actual, response, w, method, presorted, micro));
+    rcpp_result_gen = Rcpp::wrap(precision_recall_auc_weighted(actual, response, w, micro, method, presorted));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1076,62 +1076,62 @@ BEGIN_RCPP
 END_RCPP
 }
 // roc_curve_unweighted
-Rcpp::DataFrame roc_curve_unweighted(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, bool presorted, Rcpp::Nullable<Rcpp::NumericMatrix> thresholds);
-RcppExport SEXP _SLmetrics_roc_curve_unweighted(SEXP actualSEXP, SEXP responseSEXP, SEXP presortedSEXP, SEXP thresholdsSEXP) {
+Rcpp::DataFrame roc_curve_unweighted(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, Rcpp::Nullable<Rcpp::NumericMatrix> thresholds, bool presorted);
+RcppExport SEXP _SLmetrics_roc_curve_unweighted(SEXP actualSEXP, SEXP responseSEXP, SEXP thresholdsSEXP, SEXP presortedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix >::type response(responseSEXP);
-    Rcpp::traits::input_parameter< bool >::type presorted(presortedSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericMatrix> >::type thresholds(thresholdsSEXP);
-    rcpp_result_gen = Rcpp::wrap(roc_curve_unweighted(actual, response, presorted, thresholds));
+    Rcpp::traits::input_parameter< bool >::type presorted(presortedSEXP);
+    rcpp_result_gen = Rcpp::wrap(roc_curve_unweighted(actual, response, thresholds, presorted));
     return rcpp_result_gen;
 END_RCPP
 }
 // roc_curve_weighted
-Rcpp::DataFrame roc_curve_weighted(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, const Rcpp::NumericVector w, bool presorted, Rcpp::Nullable<Rcpp::NumericMatrix> thresholds);
-RcppExport SEXP _SLmetrics_roc_curve_weighted(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP presortedSEXP, SEXP thresholdsSEXP) {
+Rcpp::DataFrame roc_curve_weighted(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, const Rcpp::NumericVector w, Rcpp::Nullable<Rcpp::NumericMatrix> thresholds, bool presorted);
+RcppExport SEXP _SLmetrics_roc_curve_weighted(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP thresholdsSEXP, SEXP presortedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix >::type response(responseSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector >::type w(wSEXP);
-    Rcpp::traits::input_parameter< bool >::type presorted(presortedSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericMatrix> >::type thresholds(thresholdsSEXP);
-    rcpp_result_gen = Rcpp::wrap(roc_curve_weighted(actual, response, w, presorted, thresholds));
+    Rcpp::traits::input_parameter< bool >::type presorted(presortedSEXP);
+    rcpp_result_gen = Rcpp::wrap(roc_curve_weighted(actual, response, w, thresholds, presorted));
     return rcpp_result_gen;
 END_RCPP
 }
 // roc_auc
-Rcpp::NumericVector roc_auc(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, int method, bool presorted, Rcpp::Nullable<bool> micro);
-RcppExport SEXP _SLmetrics_roc_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP methodSEXP, SEXP presortedSEXP, SEXP microSEXP) {
+Rcpp::NumericVector roc_auc(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, Rcpp::Nullable<bool> micro, int method, bool presorted);
+RcppExport SEXP _SLmetrics_roc_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP microSEXP, SEXP methodSEXP, SEXP presortedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< int >::type method(methodSEXP);
     Rcpp::traits::input_parameter< bool >::type presorted(presortedSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
-    rcpp_result_gen = Rcpp::wrap(roc_auc(actual, response, method, presorted, micro));
+    rcpp_result_gen = Rcpp::wrap(roc_auc(actual, response, micro, method, presorted));
     return rcpp_result_gen;
 END_RCPP
 }
 // roc_auc_weighted
-Rcpp::NumericVector roc_auc_weighted(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, const Rcpp::NumericVector w, int method, bool presorted, Rcpp::Nullable<bool> micro);
-RcppExport SEXP _SLmetrics_roc_auc_weighted(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP methodSEXP, SEXP presortedSEXP, SEXP microSEXP) {
+Rcpp::NumericVector roc_auc_weighted(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, const Rcpp::NumericVector w, Rcpp::Nullable<bool> micro, int method, bool presorted);
+RcppExport SEXP _SLmetrics_roc_auc_weighted(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP microSEXP, SEXP methodSEXP, SEXP presortedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix >::type response(responseSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector >::type w(wSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
     Rcpp::traits::input_parameter< int >::type method(methodSEXP);
     Rcpp::traits::input_parameter< bool >::type presorted(presortedSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
-    rcpp_result_gen = Rcpp::wrap(roc_auc_weighted(actual, response, w, method, presorted, micro));
+    rcpp_result_gen = Rcpp::wrap(roc_auc_weighted(actual, response, w, micro, method, presorted));
     return rcpp_result_gen;
 END_RCPP
 }
