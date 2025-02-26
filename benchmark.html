@@ -675,9 +675,9 @@ Table&nbsp;3.1: Benchmarks of Root Mean Squared Error (RMSE), Pinball Loss and H
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {RMSE}                 9.61ms           0B        0
-#&gt; 2 {Pinball Loss}         9.64ms           0B        0
-#&gt; 3 {Huber Loss}          52.76ms           0B        0</code></pre>
+#&gt; 1 {RMSE}                 9.55ms           0B        0
+#&gt; 2 {Pinball Loss}         9.58ms           0B        0
+#&gt; 3 {Huber Loss}          55.68ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -701,10 +701,10 @@ Table&nbsp;3.2: Benchmarking Root Mean Squared Error (RMSE) across <code>{pkgs}<
 <pre><code>#&gt; # A tibble: 4 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}            9.61ms           0B        0
-#&gt; 2 {MLmetrics}           60.61ms       76.3MB        1
-#&gt; 3 {yardstick}          164.37ms      419.6MB        9
-#&gt; 4 {mlr3measures}        84.73ms       76.3MB        1</code></pre>
+#&gt; 1 {SLmetrics}            9.56ms           0B        0
+#&gt; 2 {MLmetrics}           60.04ms       76.3MB        1
+#&gt; 3 {yardstick}          166.16ms      419.6MB        9
+#&gt; 4 {mlr3measures}        83.58ms       76.3MB        1</code></pre>
 </div>
 </div>
 </figure>
@@ -730,9 +730,9 @@ Table&nbsp;3.3: Benchmarks of the Confusion Matrix, Accuracy, and F-Beta score. 
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression         execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                    &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {Confusion Matrix}         8.56ms           0B        0
-#&gt; 2 {Accuracy}                 8.56ms           0B        0
-#&gt; 3 {F-beta}                   8.57ms           0B        0</code></pre>
+#&gt; 1 {Confusion Matrix}          8.5ms           0B        0
+#&gt; 2 {Accuracy}                 8.49ms           0B        0
+#&gt; 3 {F-beta}                   8.51ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -755,9 +755,9 @@ Table&nbsp;3.4: Benchmarking a 3×3 confusion matrix across <code>{pkgs}</code>.
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression  execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}         8.55ms           0B        0
-#&gt; 2 {MLmetrics}       244.87ms        381MB        7
-#&gt; 3 {yardstick}       245.03ms        381MB        7</code></pre>
+#&gt; 1 {SLmetrics}          8.5ms           0B        0
+#&gt; 2 {MLmetrics}        246.2ms        381MB        7
+#&gt; 3 {yardstick}        246.5ms        381MB        7</code></pre>
 </div>
 </div>
 </figure>

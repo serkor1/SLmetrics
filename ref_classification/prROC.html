@@ -544,10 +544,10 @@ The <code>prROC()</code>-function computes the <code>precision()</code> and <cod
 <h3 class="anchored" data-anchor-id="usage">Usage</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'factor'</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prROC</span>(actual, response, <span class="at">thresholds =</span> <span class="cn">NULL</span>, ...)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prROC</span>(actual, response, <span class="at">thresholds =</span> <span class="cn">NULL</span>, <span class="at">presorted =</span> <span class="cn">FALSE</span>, ...)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 method for class 'factor'</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.prROC</span>(actual, response, w, <span class="at">thresholds =</span> <span class="cn">NULL</span>, ...)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.prROC</span>(actual, response, w, <span class="at">thresholds =</span> <span class="cn">NULL</span>, <span class="at">presorted =</span> <span class="cn">FALSE</span>, ...)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Generic S3 method</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">prROC</span>(</span>
