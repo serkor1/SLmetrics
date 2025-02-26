@@ -227,7 +227,7 @@ public:
             Rcpp::Named("recall")    = recall_all,
             Rcpp::Named("precision") = precision_all
         );
-        output.attr("class") = Rcpp::CharacterVector::create("PrecisionRecall", "data.frame");
+        output.attr("class") = Rcpp::CharacterVector::create("prROC", "data.frame");
         return output;
     }
 
