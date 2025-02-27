@@ -43,7 +43,7 @@ testthat::test_that(
     # 1) generate class
     # values
     actual     <- create_factor(n = 100, k = 5)
-    response   <- runif(n = length(actual))
+    response   <- create_response(actual, as_matrix = TRUE)
     w          <- runif(n = length(actual))
     thresholds <- seq(0.1, 0.9, by = 0.1)
 
@@ -64,10 +64,7 @@ testthat::test_that(
         # from {slmetrics}
         score <- wrapped_ROC(
           actual     = actual,
-          response   = matrix(
-            rep(response, 5),
-            ncol = 5
-          ),
+          response   = response,
           w          = if (weighted) w else NULL,
           micro      = if (is.na(micro)) { NULL } else micro
         )
