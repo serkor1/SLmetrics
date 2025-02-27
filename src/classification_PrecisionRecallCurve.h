@@ -15,8 +15,8 @@
 
 class prROC {
     public:
-        // Integration method enumeration
-        enum IntegrationMethod { TRAPEZOIDAL = 0, STEP };
+        // integration method
+        enum integration_method { TRAPEZOIDAL = 0, STEP };
 
         /**
         * Compute class-wise average precision (AP) for each class.
@@ -39,8 +39,8 @@ class prROC {
                 // 0) variable declarations
                 // common (fixed) parameters:
                 Rcpp::CharacterVector levels = actual.attr("levels");
-                const std::size_t n = actual.size();
-                const std::size_t n_classes = levels.size();
+                const std::size_t n { actual.size() };
+                const std::size_t n_classes { levels.size() };
 
                 // integration method
                 double (*update_area)(double, double, double, double) =
@@ -51,8 +51,8 @@ class prROC {
 
                 // pointers to weights (if passed)
                 // and actual values
-                const int* ptr_actual = actual.begin();
-                const double* ptr_weights = (weights != nullptr) ? weights->begin() : nullptr;
+                const int* ptr_actual { actual.begin() };
+                const double* ptr_weights { (weights != nullptr) ? weights->begin() : nullptr };
                 
                 // 1) calculate average precision
                 // (area under the curve) for each
@@ -67,20 +67,20 @@ class prROC {
                     //
                     // NOTE: This is a smart pointer - so it deletes
                     // itself to avoid memory leaks
-                    std::unique_ptr<std::size_t[]> ptr_idx = prepare_index(response, c, n, presorted);
+                    std::unique_ptr<std::size_t[]> ptr_idx{ prepare_index(response, c, n, presorted) };
 
                     // 1.2) define class label
                     // and add one - C++ is 0 indexed, factors are 
                     // are 1 indexed
-                    std::size_t class_label = c + 1;
+                    std::size_t class_label { c + 1 };
 
                     // 1.3) count number
                     // of positives
-                    double positives = count_positives(ptr_actual, ptr_weights, ptr_idx.get(), n, class_label);
+                    double positives { count_positives(ptr_actual, ptr_weights, ptr_idx.get(), n, class_label) };
 
                     // 1.4) declare average precision
                     // initialized to 0.0 for each class.
-                    double average_precision = 0.0;
+                    double average_precision{ 0.0 };
 
                     // 1.5) calculate
                     // average precision
@@ -95,9 +95,10 @@ class prROC {
                         //
                         // NOTE: recall starts at 0.0, and precision
                         // starts at 1.0 by convention
-                        double true_positive = 0.0, false_positive = 0.0;
-                        double previous_recall = 0.0;
-                        double previous_precision = 1.0;
+                        double true_positive { 0.0 };
+                        double false_positive { 0.0 };
+                        double previous_recall { 0.0 };
+                        double previous_precision { 1.0 };
 
                         // 1.5.2) calculate the
                         // values for each container
@@ -106,7 +107,7 @@ class prROC {
                             // 1.5.2.1) extract the
                             // index pointer, and store
                             // as idx
-                            std::size_t idx = ptr_idx[i];
+                            std::size_t idx { ptr_idx[i] };
 
                             // 1.5.2.2) calculate the
                             // incrementing value
@@ -115,7 +116,7 @@ class prROC {
                             // then each true_positive or false_positive gets incremented by
                             // w_i, ie. the weight at index i. Otherwise it just gets incremented
                             // by 1.0
-                            double w = (ptr_weights != nullptr) ? ptr_weights[idx] : 1.0;
+                            double w{(ptr_weights != nullptr) ? ptr_weights[idx] : 1.0};
                             if (ptr_actual[idx] == class_label) {
                                 true_positive += w;
                             } else {
@@ -127,8 +128,8 @@ class prROC {
                             // 
                             // NOTE: There is already a guard
                             // against 0 positives
-                            double recall = true_positive / positives;
-                            double precision = (true_positive + false_positive > 0) ? (true_positive / (true_positive + false_positive)) : 1.0;
+                            double recall { true_positive / positives };
+                            double precision { (true_positive + false_positive > 0) ? (true_positive / (true_positive + false_positive)) : 1.0 };
                             
                             // 1.5.2.4) add to average_precision
                             // container and store the recall and
@@ -150,7 +151,6 @@ class prROC {
 
                 // 3) return the output
                 return output;
-
             // end of function
             }
 
@@ -174,8 +174,8 @@ class prROC {
 
                     // 0) variable declarations
                     // common (fixed) parameters:
-                    const std::size_t n = actual.size();
-                    const std::size_t n_classes = response.ncol();
+                    const std::size_t n { actual.size() };
+                    const std::size_t n_classes { response.ncol() };
 
                     // integration method
                     double (*update_area)(double, double, double, double) =
@@ -186,17 +186,17 @@ class prROC {
 
                     // pointers to weights (if passed)
                     // and actual-values
-                    const int* ptr_actual = actual.begin();
-                    const double* ptr_response = response.begin();
-                    const double* ptr_weights = (weights != nullptr) ? weights->begin() : nullptr;
+                    const int* ptr_actual { actual.begin() };
+                    const double* ptr_response { response.begin() };
+                    const double* ptr_weights { (weights != nullptr) ? weights->begin() : nullptr };
 
                     // container for aggregating
                     // true and false positives
-                    std::vector<score_container> container(n * n_classes);
+                    std::vector<threshold_container> container(n * n_classes);
 
                     // variable for aggregating
                     // positives
-                    double positives = 0.0;
+                    double positives { 0.0 };
                     
                     // 1) flatten response matrix
                     // by aggregating values for each
@@ -208,13 +208,13 @@ class prROC {
 
                         // 1.1) extract actual
                         // value (unsorted)
-                        std::size_t actual_i = ptr_actual[i];
+                        std::size_t actual_i { ptr_actual[i] };
 
                         // 1.2) calculate weight
                         // NOTE: if weighted the ith index
                         // of the weights are used. 1.0 otherwise
                         // (regular counting)
-                        double w = (ptr_weights != nullptr) ? ptr_weights[i] : 1.0;
+                        double w { (ptr_weights != nullptr) ? ptr_weights[i] : 1.0 };
 
                         // 1.3) loop through all
                         // all classes and populate
@@ -223,7 +223,7 @@ class prROC {
 
                             // 1.3.1) calculate container
                             // index
-                            std::size_t idx = i * n_classes + c;
+                            std::size_t idx { i * n_classes + c };
 
                             // 1.3.2) store values in the
                             // container by idx
@@ -238,7 +238,7 @@ class prROC {
                     std::sort(
                         container.begin(),
                         container.end(), 
-                        [](const score_container &a, const score_container &b) { return a.score > b.score;}
+                        [](const threshold_container &a, const threshold_container &b) { return a.score > b.score;}
                     );
 
                     // 2) calculate positives
@@ -288,8 +288,8 @@ class prROC {
                     Rcpp::NumericVector classwise_average_precision = class_wise(actual, response, method, presorted, weights);
 
                     // sum and indices count variables
-                    double sum = 0.0;
-                    int count = 0;
+                    double sum { 0.0 };
+                    int count { 0 };
 
                     // pointer to the class-wise
                     // average precision
@@ -333,21 +333,22 @@ class prROC {
                 bool presorted = false,
                 const Rcpp::NumericVector* weights = nullptr,
                 const Rcpp::NumericVector* thresholds = nullptr) {
+                    // start of function
 
                     // 0) variable declarations
                     // common (fixed) parameters:
                     Rcpp::CharacterVector levels = actual.attr("levels");
-                    const std::size_t n = response.nrow();
-                    const std::size_t n_classes = response.ncol();
+                    const std::size_t n { response.nrow() };
+                    const std::size_t n_classes { response.ncol() };
 
                     // derived parameters
-                    const std::size_t data_points_per_class = (thresholds != nullptr) ? thresholds->size() + 2 : (n + 1);
-                    const std::size_t total_data_points = data_points_per_class * n_classes;
+                    const std::size_t data_points_per_class { (thresholds != nullptr) ? thresholds->size() + 2 : (n + 1) };
+                    const std::size_t total_data_points { data_points_per_class * n_classes };
 
                     // pointers to weights (if passed)
                     // and actual values
-                    const int* ptr_actual = actual.begin();
-                    const double* ptr_weights = (weights != nullptr) ? weights->begin() : nullptr;
+                    const int* ptr_actual { actual.begin() };
+                    const double* ptr_weights { (weights != nullptr) ? weights->begin() : nullptr };
 
                     // containers for all
                     // values
@@ -359,7 +360,7 @@ class prROC {
                     
                     // 1) construct the class-wise
                     // precision and recalls
-                    std::size_t idx = 0;
+                    std::size_t idx { 0 };
                     for (std::size_t c = 0; c < n_classes; ++c) {
 
                         // 1.1) create smart pointer
@@ -367,22 +368,22 @@ class prROC {
                         //
                         // NOTE: This is a smart pointer - so it deletes
                         // itself to avoid memory leaks
-                        std::unique_ptr<std::size_t[]> ptr_idx = prepare_index(response, c, n, presorted);
+                        std::unique_ptr<std::size_t[]> ptr_idx{ prepare_index(response, c, n, presorted) };
 
                         // 1.2) define class label
                         // and add one - C++ is 0 indexed, factors are 
                         // are 1 indexed
-                        std::size_t class_label = c + 1;
+                        std::size_t class_label { c + 1 };
 
                         // 1.3) count number
                         // of positives
-                        double positives = count_positives(ptr_actual, ptr_weights, ptr_idx.get(), n, class_label);
+                        double positives { count_positives(ptr_actual, ptr_weights, ptr_idx.get(), n, class_label) };
 
                         // 1.4) declare and initialize
                         // auxillary values used for the 
                         // calculations
-                        double true_positive = 0.0;
-                        double false_positive = 0.0;
+                        double true_positive { 0.0 };
+                        double false_positive { 0.0 };
 
                         // 1.5) calculate values
                         // conditional on wether
@@ -410,13 +411,13 @@ class prROC {
                             // 1.5.2) loop through
                             // the thresholds and populate
                             // the vectors
-                            std::size_t j = 0;
-                            const double* ptr_thresholds = thresholds->begin();
+                            std::size_t j { 0 };
+                            const double* ptr_thresholds { thresholds->begin() };
                             for (std::size_t k = 0; k < thresholds->size(); ++k) {
 
                                 // 1.5.2.1) extract the
                                 // ith threshold
-                                double threshold_i = ptr_thresholds[k];
+                                double threshold_i { ptr_thresholds[k] };
 
                                 // 1.5.2.2) aggregate
                                 // all values up the the
@@ -424,12 +425,12 @@ class prROC {
                                 while (j < n && response(ptr_idx.get()[j], c) >= threshold_i) {
                                     // 1.5.2.2.1) extract
                                     // the row index
-                                    std::size_t row_idx = ptr_idx.get()[j];
+                                    std::size_t row_idx { ptr_idx.get()[j] };
 
                                     // 1.5.2.2.2) calculate
                                     // the weight of the ith row index
                                     // conditional on weights
-                                    double w = (ptr_weights != nullptr) ? ptr_weights[row_idx] : 1.0;
+                                    double w { (ptr_weights != nullptr) ? ptr_weights[row_idx] : 1.0 };
                                     if (ptr_actual[row_idx] == class_label)
                                         true_positive += w;
                                     else
@@ -479,7 +480,7 @@ class prROC {
 
                                     // 1.5.1.1.1) extract
                                     // row index
-                                    std::size_t row_idx = ptr_idx.get()[i - 1];
+                                    std::size_t row_idx { ptr_idx.get()[i - 1] };
 
                                     // 1.5.1.1.2) store corresponding
                                     // response value in the thresholds
@@ -489,7 +490,7 @@ class prROC {
                                     // 1.5.1.1.2) determine
                                     // the weight value (conditionally)
                                     // and increment accordingly
-                                    double w = (ptr_weights != nullptr) ? ptr_weights[row_idx] : 1.0;
+                                    double w { (ptr_weights != nullptr) ? ptr_weights[row_idx] : 1.0 };
                                     if (ptr_actual[row_idx] == class_label)
                                         true_positive += w;
                                     else
@@ -498,8 +499,8 @@ class prROC {
 
                                 // 1.5.1.2) calculate
                                 // precision and recall
-                                double precision = (true_positive + false_positive > 0) ? (true_positive / (true_positive + false_positive)) : 1.0;
-                                double recall = (positives > 0) ? (true_positive / positives) : 0.0;
+                                double precision { (true_positive + false_positive > 0) ? (true_positive / (true_positive + false_positive)) : 1.0 };
+                                double recall { (positives > 0) ? (true_positive / positives) : 0.0 };
                                 
                                 // 1.5.1.3) populate
                                 // vectors
@@ -535,11 +536,12 @@ class prROC {
                     // 2.2) return the 
                     // DataFrame
                     return output;
+
+            // end of function
             }
 
 
     private:
-        
         /**
         * @brief Container for storing score information used in precision-recall computations.
         *
@@ -554,7 +556,7 @@ class prROC {
         * @param weight
         *  The weight associated with the observation. Defaults to 1.0 if not specified.
         */
-        struct score_container {
+        struct threshold_container {
             double score;  /**< The predicted score for the observation. */
             int label;     /**< The binary label for the observation: 1 for positive, 0 for negative. */
             double weight; /**< The weight associated with the observation. */
@@ -569,7 +571,7 @@ class prROC {
         * the recall and precision are updated, and the incremental area (using the provided integration function)
         * is added to the overall average precision.
         *
-        * @param container A vector of score_container structures, each holding a thresholds, a binary label (1 for positive, 0 for negative),
+        * @param container A vector of threshold_container structures, each holding a thresholds, a binary label (1 for positive, 0 for negative),
         *                  and a corresponding weight. The container is expected to be sorted in descending order based on the thresholds.
         * @param positives The total weight of positive instances (true positives) used for normalizing the recall.
         * @param update_area A pointer to a function that calculates the area between two points on the precision-recall curve.
@@ -579,23 +581,23 @@ class prROC {
         * @return The computed average precision as a double.
         */
         static double compute_average_precision(
-            const std::vector<score_container>& container,
+            const std::vector<threshold_container>& container,
             double positives,
             double (*update_area)(double, double, double, double)) {
 
                 // 0) declare variables
                 // output variable
-                double output = 0.0;
+                double output { 0.0 };
 
                 // true and false positive
                 // variables
-                double true_positive = 0.0;
-                double false_positive = 0.0;
+                double true_positive { 0.0 };
+                double false_positive { 0.0 };
 
                 // arbitrary precision and recall
                 // values
-                double previous_recall = 0.0;
-                double previous_precision = 1.0;
+                double previous_recall { 0.0 };
+                double previous_precision { 0.0 };
                 
                 // 1) compute average
                 // precision
@@ -612,8 +614,8 @@ class prROC {
 
                     // 1.2) calculate precision
                     // and recall
-                    double recall = true_positive / positives;
-                    double precision = (true_positive + false_positive > 0) ? (true_positive / (true_positive + false_positive)) : 1.0;
+                    double recall { true_positive / positives };
+                    double precision { (true_positive + false_positive > 0) ? (true_positive / (true_positive + false_positive)) : 1.0 };
 
                     // 1.3) add to the total
                     // area
@@ -651,8 +653,8 @@ class prROC {
             double x2, 
             double y2) {
 
-                double width = (x2 - x1);
-                double height = 0.5 * (y1 + y2);
+                double width { (x2 - x1) };
+                double height { 0.5 * (y1 + y2) };
 
                 return width * height;
         }
@@ -677,10 +679,9 @@ class prROC {
             double x2, 
             double y2) {
 
-                double width = (x2 - x1);
+                double width { (x2 - x1) };
 
                 return width * y2;
-
         }
         
         /**
@@ -715,7 +716,7 @@ class prROC {
                 // 2) sort idx by the j'th
                 // column in the response matrix
                 // if not presorted
-                const double* matrix_vector = &response_matrix(0, column);
+                const double* matrix_vector { &response_matrix(0, column) };
                 if (!presorted) {
                     std::sort(idx.get(), idx.get() + n, [matrix_vector](std::size_t a, std::size_t b) {
                         return matrix_vector[a] > matrix_vector[b];
@@ -751,7 +752,7 @@ class prROC {
             std::size_t class_label) {
 
                 // 0) declare values
-                double positives = 0.0;
+                double positives { 0.0 };
                 
                 // 1) count number of positives
                 for (std::size_t i = 0; i < n; i++) {
@@ -763,6 +764,9 @@ class prROC {
                 return positives;
         }
 
+        // delete class
+        // to avoid mischiefs 
+        // from compiler
         prROC()  = delete;
         ~prROC() = delete;
 };
