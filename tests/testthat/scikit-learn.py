@@ -181,7 +181,7 @@ def py_d2pinball(actual, predicted, w = None, alpha = 0.5):
     )
 
 def py_ROC(actual, response, w=None):
-  
+
     actual = np.asarray(actual)
     response = np.asarray(response)
     unique_labels = np.unique(actual)
@@ -258,5 +258,13 @@ def py_rocAUC(actual, response, w = None, micro = None):
     y_score = response,
     average = micro,
     multi_class = "ovr",
+    sample_weight = w
+  )
+
+def py_prAUC(actual, response, w = None, micro = None):
+  return metrics.average_precision_score(
+    y_true  = actual,
+    y_score = response,
+    average = micro,
     sample_weight = w
   )

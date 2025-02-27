@@ -278,29 +278,29 @@ private:
         double weight;
     };
 
-    // Compute average precision (AP) from a sorted vector of ScoreLabel entries.
-    static double compute_ap(
-        const std::vector<ScoreLabel>& data,
-        double positives,
-        double (*updateArea)(double, double, double, double)) {
-        
-        double ap = 0.0;
-        double tp = 0.0, fp = 0.0;
-        double prev_recall = 0.0;
-        double prev_precision = 1.0;
-        for (std::size_t i = 0; i < data.size(); i++) {
-            if (data[i].label == 1)
-                tp += data[i].weight;
-            else
-                fp += data[i].weight;
-            double recall = tp / positives;
-            double precision = (tp + fp > 0) ? (tp / (tp + fp)) : 1.0;
-            ap += updateArea(prev_recall, prev_precision, recall, precision);
-            prev_recall = recall;
-            prev_precision = precision;
+        static double compute_ap(
+            const std::vector<ScoreLabel>& data,
+            double positives,
+            double (*updateArea)(double, double, double, double)) {
+            
+            double ap = 0.0;
+            double tp = 0.0, fp = 0.0;
+            double prev_recall = 0.0;
+            double prev_precision = 1.0;
+            for (std::size_t i = 0; i < data.size(); i++) {
+                if (data[i].label == 1)
+                    tp += data[i].weight;
+                else
+                    fp += data[i].weight;
+                double recall = tp / positives;
+                double precision = (tp + fp > 0) ? (tp / (tp + fp)) : 1.0;
+                ap += updateArea(prev_recall, prev_precision, recall, precision);
+                prev_recall = recall;
+                prev_precision = precision;
+            }
+            return ap;
         }
-        return ap;
-    }
+
 
     // Integration functions.
     static inline double trapezoid_area(double x1, double y1, double x2, double y2) {
@@ -311,7 +311,7 @@ private:
     
     static inline double step_area(double x1, double y1, double x2, double y2) {
         double width = (x2 - x1);
-        return width * y1;
+        return width * y2;
     }
     
     // Prepare a sorted index array for the given response column.

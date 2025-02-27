@@ -14,113 +14,67 @@ testthat::test_that(
       response, 
       w = NULL,
       presorted = FALSE,
+      micro,
       method = 0) {
       
       if (is.null(w)) {
 
         roc.auc(
-          actual   = actual,
-          response = response,
-          presorted  = presorted,
-          method   = method
+          actual    = actual,
+          response  = response,
+          micro     = micro,
+          presorted = presorted
         )
 
       } else {
 
         weighted.roc.auc(
-          actual   = actual,
-          response = response,
-          w        = w,
-          method   = method,
-          presorted  = presorted
+          actual    = actual,
+          response  = response,
+          w         = w,
+          presorted = presorted,
+          micro     = micro
         )
 
       }
 
     }
 
-    for (weighted in c(TRUE, FALSE)) {
 
-      for (presorted in c(TRUE, FALSE)) {
+    for (micro in c(NA, TRUE, FALSE)) {
 
-        # 1) actual values
-        # and response variables
-        actual   <- create_factor(k = 2)
-        response <- runif(length(actual))
-        w        <- runif(length(actual))
+      for (weighted in c(TRUE, FALSE)) {
+
+        for (presorted in c(TRUE, FALSE)) {
   
-        if (presorted) {
-          # 1.1) create order
-          # by response
-          idx      <- order(response, decreasing = TRUE)
-          actual   <- actual[idx]
-          response <- response[idx]
-          w        <- w[idx]
-  
-        }
-
-        response <- matrix(
-          data = cbind(
-            response,
-            response
-          ),
-          nrow = length(actual)
-        )
-  
-        # 1.2) calculate ROC object
-        # and store
-        if (weighted) {
-
-          object <- weighted.ROC(
-            actual   = actual,
-            response = response,
-            w        = w
+          # 1) actual values
+          # and response variables
+          actual   <- create_factor()
+          response <- create_response(
+            actual = actual
           )
-
-        } else {
-
-          object <- ROC(
-            actual   = actual,
-            response = response
-          )
-
-
-        }
-        
-  
-        # 2) calculate AUC
-        # based on methods
-        for (method in c(0, 1)) {
-  
+          w        <- runif(length(actual))
+    
+          # 2) calculate AUC
+          # based on methods
+          
           label <- paste(
-            "Method   =", method,
-            "presorted  =", presorted,
-            "Weighted =", weighted
-          )
-  
-          # 1.1) extract list
-          # of labels
-          x_list <- split(
-            x = object,
-            f = object$label
+            "presorted =", presorted,
+            "Weighted  =", weighted
           )
   
           # 1.2) calculate AUC
           # for each label
-          reference <- vapply(
-            x_list, 
-            function(x) {
-              auc(
-                y = x$tpr,
-                x = x$fpr,
-                method = method
-              )
-            }, 
-            FUN.VALUE = numeric(1),
-            USE.NAMES = TRUE
+          reference <- py_rocAUC(
+            actual   = actual,
+            response = response,
+            w        = if (weighted) w else NULL,
+            micro    = if (is.na(micro)) NULL else ifelse(
+              test = micro,
+              yes  = "micro",
+              no   = "macro"
+            )
           )
-  
-          names(reference) <- names(x_list)
   
           # 2.2) check for
           # equality
@@ -128,21 +82,22 @@ testthat::test_that(
             object = set_equal(
               reference,
               roc_auc(
-                actual   = actual,
-                response = response,
-                method   = method,
-                presorted  = presorted,
-                w        = if (weighted) w else NULL
+                actual    = actual,
+                response  = response,
+                presorted = FALSE,
+                micro     = if (is.na(micro)) NULL else micro,
+                w         = if (weighted) w else NULL
               )
             ),
             info = label
           )
-          
-        
         }
+        
       }
-      
+
     }
+
+
 
     
   }
@@ -159,16 +114,17 @@ testthat::test_that(
       actual, 
       response, 
       w = NULL,
-      presorted = FALSE,
-      method = 0) {
+      micro = NULL,
+      presorted = FALSE) {
       
       if (is.null(w)) {
 
         pr.auc(
-          actual   = actual,
-          response = response,
-          presorted  = presorted,
-          method   = method
+          actual    = actual,
+          response  = response,
+          presorted = presorted,
+          micro     = micro,
+          method    = 1
         )
 
       } else {
@@ -177,95 +133,48 @@ testthat::test_that(
           actual   = actual,
           response = response,
           w        = w,
-          method   = method,
-          presorted  = presorted
+          method   = 1,
+          presorted  = presorted,
+          micro     = micro
         )
 
       }
 
     }
+    for (micro in c(NA, TRUE, FALSE)) {
 
-    for (weighted in c(TRUE, FALSE)) {
+      for (weighted in c(TRUE, FALSE)) {
 
-      for (presorted in c(TRUE, FALSE)) {
-
-        # 1) actual values
-        # and response variables
-        actual   <- create_factor(k = 2)
-        response <- runif(length(actual))
-        w        <- runif(length(actual))
+        for (presorted in c(TRUE, FALSE)) {
   
-        if (presorted) {
-          # 1.1) create order
-          # by response
-          idx      <- order(response,decreasing = TRUE)
-          actual   <- actual[idx]
-          response <- response[idx]
-          w        <- w[idx]
-  
-        }
-
-        response <- matrix(
-          data = cbind(
-            response,
-            response
-          ),
-          nrow = length(actual)
-        )
-  
-        # 1.2) calculate precision-recall
-        # object
-        if (weighted) {
-
-          object <- weighted.prROC(
-            actual   = actual,
-            response = response,
-            w        = w
+          # 1) actual values
+          # and response variables
+          actual   <- create_factor()
+          response <- create_response(
+            actual = actual
           )
-
-        } else {
-
-          object <- prROC(
-            actual   = actual,
-            response = response
-          )
-
-        }
-        
-  
-        # 2) calculate AUC
-        # based on methods
-        for (method in c(0, 1)) {
-  
+          w        <- runif(length(actual))
+    
+          # 2) calculate AUC
+          # based on methods
+          
           label <- paste(
-            "Method  = ", method,
-            "presorted = ", presorted,
-            "Weighted=", weighted
-          )
-  
-          # 1.1) extract list
-          # of labels
-          x_list <- split(
-            x = object,
-            f = object$label
+            "presorted =", presorted,
+            "Weighted  =", weighted
           )
   
           # 1.2) calculate AUC
           # for each label
-          reference <- vapply(
-            x_list, 
-            function(x) {
-              auc(
-                y = x$precision,
-                x = x$recall,
-                method = method
-              )
-            }, 
-            FUN.VALUE = numeric(1),
-            USE.NAMES = TRUE
+          reference <- py_prAUC(
+            actual   = actual,
+            response = response,
+            w        = if (weighted) w else NULL,
+            micro    = if (is.na(micro)) NULL else ifelse(
+              test = micro,
+              yes  = "micro",
+              no   = "macro"
+            )
           )
-  
-          names(reference) <- names(x_list)
   
           # 2.2) check for
           # equality
@@ -273,18 +182,17 @@ testthat::test_that(
             object = set_equal(
               reference,
               pr_auc(
-                actual   = actual,
-                response = response,
-                method   = method,
-                presorted  = presorted,
-                w        = if (weighted) w else NULL
+                actual    = actual,
+                response  = response,
+                presorted = FALSE,
+                micro     = if (is.na(micro)) NULL else micro,
+                w         = if (weighted) w else NULL
               )
             ),
             info = label
           )
-          
-        
         }
+        
       }
 
     }
