@@ -39,8 +39,8 @@ class prROC {
                 // 0) variable declarations
                 // common (fixed) parameters:
                 Rcpp::CharacterVector levels = actual.attr("levels");
-                const std::size_t n { actual.size() };
-                const std::size_t n_classes { levels.size() };
+                const R_xlen_t n { actual.size() };
+                const R_xlen_t n_classes { levels.size() };
 
                 // integration method
                 double (*update_area)(double, double, double, double) =
@@ -174,8 +174,8 @@ class prROC {
 
                     // 0) variable declarations
                     // common (fixed) parameters:
-                    const std::size_t n { actual.size() };
-                    const std::size_t n_classes { response.ncol() };
+                    const R_xlen_t n { actual.size() };
+                    const R_xlen_t n_classes { response.ncol() };
 
                     // integration method
                     double (*update_area)(double, double, double, double) =
@@ -208,7 +208,7 @@ class prROC {
 
                         // 1.1) extract actual
                         // value (unsorted)
-                        std::size_t actual_i { ptr_actual[i] };
+                        R_xlen_t actual_i { ptr_actual[i] };
 
                         // 1.2) calculate weight
                         // NOTE: if weighted the ith index
@@ -289,7 +289,7 @@ class prROC {
 
                     // sum and indices count variables
                     double sum { 0.0 };
-                    int count { 0 };
+                    std::size_t count { 0 };
 
                     // pointer to the class-wise
                     // average precision
@@ -338,12 +338,12 @@ class prROC {
                     // 0) variable declarations
                     // common (fixed) parameters:
                     Rcpp::CharacterVector levels = actual.attr("levels");
-                    const std::size_t n { response.nrow() };
-                    const std::size_t n_classes { response.ncol() };
+                    const R_xlen_t n { response.nrow() };
+                    const R_xlen_t n_classes { response.ncol() };
 
                     // derived parameters
-                    const std::size_t data_points_per_class { (thresholds != nullptr) ? thresholds->size() + 2 : (n + 1) };
-                    const std::size_t total_data_points { data_points_per_class * n_classes };
+                    const R_xlen_t data_points_per_class { (thresholds != nullptr) ? thresholds->size() + 2 : (n + 1) };
+                    const R_xlen_t total_data_points { data_points_per_class * n_classes };
 
                     // pointers to weights (if passed)
                     // and actual values
