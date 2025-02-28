@@ -67,7 +67,7 @@ index <- sample(1:nrow(Glass), size = 0.8 * nrow(Glass))
 train <- Glass[index,]
 dtrain <- lightgbm::lgb.Dataset(
     data  = data.matrix(train[,features]),
-    label = train$Type
+    label = as.numeric(train$Type) - 1
 )
 # 1.2) extract test
 # data
@@ -100,7 +100,7 @@ parameters <- list(
     objective     = "multiclass",
     num_leaves    = 4L,
     learning_rate = 0.1,
-    num_class     = 8
+    num_class     = length(unique(Glass$Type))
 )
 ```
 
