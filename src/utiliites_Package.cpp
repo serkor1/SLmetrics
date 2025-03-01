@@ -115,21 +115,39 @@ Rcpp::NumericMatrix sort_matrix(
     // 1) extract pointer
     // to matrix and loop
     double* data = x.begin();
-    if (decreasing) {
-      for (int col = 0; col < n_cols; ++col) {
-          double* col_begin = data + col * n_rows;
-          double* col_end   = col_begin + n_rows;
+    #ifdef _WIN32
+        if (decreasing) {
+            for (int col = 0; col < n_cols; ++col) {
+                double* col_begin = data + col * n_rows;
+                double* col_end   = col_begin + n_rows;
 
-          std::sort(std::execution::par_unseq, col_begin, col_end, std::greater<>());
-      }
-    } else {
-        for (int col = 0; col < n_cols; ++col) {
-            double* col_begin = data + col * n_rows;
-            double* col_end   = col_begin + n_rows;
+                std::sort(col_begin, col_end, std::greater<>());
+            }
+        } else {
+            for (int col = 0; col < n_cols; ++col) {
+                double* col_begin = data + col * n_rows;
+                double* col_end   = col_begin + n_rows;
 
-            std::sort(std::execution::par_unseq, col_begin, col_end);
+                std::sort(col_begin, col_end);
+            }
         }
-    }
+    #else
+        if (decreasing) {
+            for (int col = 0; col < n_cols; ++col) {
+                double* col_begin = data + col * n_rows;
+                double* col_end   = col_begin + n_rows;
+
+                std::sort(std::execution::par_unseq, col_begin, col_end, std::greater<>());
+            }
+        } else {
+            for (int col = 0; col < n_cols; ++col) {
+                double* col_begin = data + col * n_rows;
+                double* col_end   = col_begin + n_rows;
+
+                std::sort(std::execution::par_unseq, col_begin, col_end);
+            }
+        }
+    #endif
 
     return x;
 }
