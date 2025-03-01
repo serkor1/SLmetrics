@@ -2,6 +2,9 @@
 // [[Rcpp::plugins(openmp)]]
 #include "utilities_Package.h"
 #include <Rcpp.h>
+#include <algorithm>
+#include <execution>
+#include <functional>
 
 #ifdef _OPENMP
     #include <omp.h>
@@ -90,4 +93,43 @@ int use_threads(int value = -1) {
     #else
         return 0;
     #endif
+}
+
+/**
+ * @brief This function assumes that the matrix columns
+ * are independent, and sorts each column independently of
+ * of eachother
+ */
+//' @export
+// [[Rcpp::export(sort.matrix)]]
+Rcpp::NumericMatrix sort_matrix(
+  Rcpp::NumericMatrix x, 
+  bool decreasing = false) {
+
+    // 0) extract matrix
+    // dimensions for the
+    // sorting    
+    const int n_rows = x.nrow();
+    const int n_cols = x.ncol();
+    
+    // 1) extract pointer
+    // to matrix and loop
+    double* data = x.begin();
+    if (decreasing) {
+      for (int col = 0; col < n_cols; ++col) {
+          double* col_begin = data + col * n_rows;
+          double* col_end   = col_begin + n_rows;
+
+          std::sort(std::execution::par_unseq, col_begin, col_end, std::greater<>());
+      }
+    } else {
+        for (int col = 0; col < n_cols; ++col) {
+            double* col_begin = data + col * n_rows;
+            double* col_end   = col_begin + n_rows;
+
+            std::sort(std::execution::par_unseq, col_begin, col_end);
+        }
+    }
+
+    return x;
 }

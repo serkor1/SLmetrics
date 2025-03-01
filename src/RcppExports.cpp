@@ -1771,6 +1771,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// sort_matrix
+Rcpp::NumericMatrix sort_matrix(Rcpp::NumericMatrix x, bool decreasing);
+RcppExport SEXP _SLmetrics_sort_matrix(SEXP xSEXP, SEXP decreasingSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< bool >::type decreasing(decreasingSEXP);
+    rcpp_result_gen = Rcpp::wrap(sort_matrix(x, decreasing));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_Accuracy", (DL_FUNC) &_SLmetrics_Accuracy, 2},
@@ -1905,6 +1917,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_disable_openmp", (DL_FUNC) &_SLmetrics_disable_openmp, 0},
     {"_SLmetrics_available_threads", (DL_FUNC) &_SLmetrics_available_threads, 0},
     {"_SLmetrics_use_threads", (DL_FUNC) &_SLmetrics_use_threads, 1},
+    {"_SLmetrics_sort_matrix", (DL_FUNC) &_SLmetrics_sort_matrix, 2},
     {NULL, NULL, 0}
 };
 
