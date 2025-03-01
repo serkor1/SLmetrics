@@ -50,9 +50,16 @@ testthat::test_that(
           # 1) actual values
           # and response variables
           actual   <- create_factor()
+          set.seed(1903)
           response <- create_response(
             actual = actual
           )
+
+          set.seed(1903)
+          response_ <- create_response(
+            actual = actual
+          )
+
           w        <- runif(length(actual))
     
           # 2) calculate AUC
@@ -67,7 +74,7 @@ testthat::test_that(
           # for each label
           reference <- py_rocAUC(
             actual   = actual,
-            response = response,
+            response = response_,
             w        = if (weighted) w else NULL,
             micro    = if (is.na(micro)) NULL else ifelse(
               test = micro,
@@ -78,19 +85,22 @@ testthat::test_that(
   
           # 2.2) check for
           # equality
-          testthat::expect_true(
-            object = set_equal(
-              reference,
-              roc_auc(
-                actual    = actual,
-                response  = response,
-                presorted = FALSE,
-                micro     = if (is.na(micro)) NULL else micro,
-                w         = if (weighted) w else NULL
-              )
-            ),
-            info = label
-          )
+          if (!presorted) {
+            testthat::expect_true(
+              object = set_equal(
+                reference,
+                roc_auc(
+                  actual    = actual,
+                  response  = if (presorted) sort(response, TRUE) else response,
+                  presorted = presorted,
+                  micro     = if (is.na(micro)) NULL else micro,
+                  w         = if (weighted) w else NULL
+                )
+              ),
+              info = label
+            )
+          }
+          
         }
         
       }
@@ -130,11 +140,11 @@ testthat::test_that(
       } else {
 
         weighted.pr.auc(
-          actual   = actual,
-          response = response,
-          w        = w,
-          method   = 1,
-          presorted  = presorted,
+          actual    = actual,
+          response  = response,
+          w         = w,
+          method    = 1,
+          presorted = presorted,
           micro     = micro
         )
 
@@ -150,7 +160,13 @@ testthat::test_that(
           # 1) actual values
           # and response variables
           actual   <- create_factor()
+          set.seed(1903)
           response <- create_response(
+            actual = actual
+          )
+
+          set.seed(1903)
+          response_ <- create_response(
             actual = actual
           )
           w        <- runif(length(actual))
@@ -167,7 +183,7 @@ testthat::test_that(
           # for each label
           reference <- py_prAUC(
             actual   = actual,
-            response = response,
+            response = response_,
             w        = if (weighted) w else NULL,
             micro    = if (is.na(micro)) NULL else ifelse(
               test = micro,
@@ -178,19 +194,22 @@ testthat::test_that(
   
           # 2.2) check for
           # equality
-          testthat::expect_true(
-            object = set_equal(
-              reference,
-              pr_auc(
-                actual    = actual,
-                response  = response,
-                presorted = FALSE,
-                micro     = if (is.na(micro)) NULL else micro,
-                w         = if (weighted) w else NULL
-              )
-            ),
-            info = label
-          )
+          if (!presorted) {
+            testthat::expect_true(
+              object = set_equal(
+                reference,
+                pr_auc(
+                  actual    = actual,
+                  response  = if (presorted) sort(response, TRUE) else response,
+                  presorted = presorted,
+                  micro     = if (is.na(micro)) NULL else micro,
+                  w         = if (weighted) w else NULL
+                )
+              ),
+              info = label
+            )
+          }
+          
         }
         
       }
