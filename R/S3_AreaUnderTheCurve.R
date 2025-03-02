@@ -53,7 +53,6 @@ pr.auc <- function(
   response,
   micro = NULL,
   method  = 0,
-  presorted = FALSE,
   ...) {
   UseMethod(
     generic = "pr.auc",
@@ -71,7 +70,6 @@ weighted.pr.auc <- function(
   w,
   micro = NULL,
   method  = 0,
-  presorted = FALSE,
   ...) {
   UseMethod(
     generic = "weighted.pr.auc",
@@ -88,7 +86,6 @@ roc.auc <- function(
   response,
   micro = NULL,
   method  = 0,
-  presorted = FALSE,
   ...) {
   UseMethod(
     generic = "roc.auc",
@@ -106,7 +103,6 @@ weighted.roc.auc <- function(
   w,
   micro = NULL,
   method  = 0,
-  presorted = FALSE,
   ...) {
   UseMethod(
     generic = "weighted.roc.auc",

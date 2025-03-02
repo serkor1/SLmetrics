@@ -48,19 +48,18 @@ Rcpp::NumericVector roc_auc(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
     Rcpp::Nullable<bool> micro = R_NilValue,
-    int method = 0,
-    bool presorted = false) {
+    int method = 0) {
 
         if (micro.isNull()) {
-            return ROC::class_wise(actual, response, method, presorted);
+            return ROC::class_wise(actual, response, method, false);
         }
         
         bool use_micro = Rcpp::as<bool>(micro);
         if (use_micro) {
-            double auc = ROC::micro_average(actual, response, method, presorted);
+            double auc = ROC::micro_average(actual, response, method, false);
             return Rcpp::NumericVector::create(auc);
         } else {
-            double auc = ROC::macro_average(actual, response, method, presorted);
+            double auc = ROC::macro_average(actual, response, method, false);
             return Rcpp::NumericVector::create(auc);
         }
 }
@@ -74,19 +73,18 @@ Rcpp::NumericVector roc_auc_weighted(
     const Rcpp::NumericMatrix response,
     const Rcpp::NumericVector w,
     Rcpp::Nullable<bool> micro = R_NilValue,
-    int method = 0,
-    bool presorted = false) {
+    int method = 0) {
 
         if (micro.isNull()) {
-            return ROC::class_wise(actual, response, method, presorted, &w);
+            return ROC::class_wise(actual, response, method, false, &w);
         }
 
         bool use_micro = Rcpp::as<bool>(micro);
         if (use_micro) {
-            double auc = ROC::micro_average(actual, response, method, presorted, &w);
+            double auc = ROC::micro_average(actual, response, method, false, &w);
             return Rcpp::NumericVector::create(auc);
         } else {
-            double auc = ROC::macro_average(actual, response, method, presorted, &w);
+            double auc = ROC::macro_average(actual, response, method, false, &w);
             return Rcpp::NumericVector::create(auc);
         }
 }

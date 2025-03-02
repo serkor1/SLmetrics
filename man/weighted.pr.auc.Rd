@@ -4,15 +4,7 @@
 \alias{weighted.pr.auc}
 \title{Reciever Operator Characteristics}
 \usage{
-weighted.pr.auc(
-  actual,
-  response,
-  w,
-  micro = NULL,
-  method = 0,
-  presorted = FALSE,
-  ...
-)
+weighted.pr.auc(actual, response, w, micro = NULL, method = 0, ...)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -25,8 +17,6 @@ weighted.pr.auc(
 micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
 
 \item{method}{A <\link{numeric}> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the \code{trapezoid}-method, if \eqn{1} it is calculated using the \code{step}-method.}
-
-\item{presorted}{A <\link{logical}>-value \link{length} 1 (default: \link{FALSE}). If \link{TRUE} the input will not be sorted by threshold.}
 
 \item{...}{Arguments passed into other methods.}
 }

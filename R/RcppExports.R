@@ -480,15 +480,15 @@ weighted.prROC.factor <- function(actual, response, w, thresholds = NULL, presor
 #' @rdname pr.auc
 #' @method pr.auc matrix
 #' @export
-pr.auc.matrix <- function(actual, response, micro = NULL, method = 0L, presorted = FALSE, ...) {
-    .Call(`_SLmetrics_precision_recall_auc`, actual, response, micro, method, presorted)
+pr.auc.matrix <- function(actual, response, micro = NULL, method = 0L, ...) {
+    .Call(`_SLmetrics_precision_recall_auc`, actual, response, micro, method)
 }
 
 #' @rdname pr.auc
 #' @method weighted.pr.auc matrix
 #' @export
-weighted.pr.auc.matrix <- function(actual, response, w, micro = NULL, method = 0L, presorted = FALSE, ...) {
-    .Call(`_SLmetrics_precision_recall_auc_weighted`, actual, response, w, micro, method, presorted)
+weighted.pr.auc.matrix <- function(actual, response, w, micro = NULL, method = 0L, ...) {
+    .Call(`_SLmetrics_precision_recall_auc_weighted`, actual, response, w, micro, method)
 }
 
 #' @rdname recall
@@ -576,15 +576,15 @@ weighted.ROC.factor <- function(actual, response, w, thresholds = NULL, presorte
 #' @rdname roc.auc
 #' @method roc.auc matrix
 #' @export
-roc.auc.matrix <- function(actual, response, micro = NULL, method = 0L, presorted = FALSE, ...) {
-    .Call(`_SLmetrics_roc_auc`, actual, response, micro, method, presorted)
+roc.auc.matrix <- function(actual, response, micro = NULL, method = 0L, ...) {
+    .Call(`_SLmetrics_roc_auc`, actual, response, micro, method)
 }
 
 #' @rdname roc.auc
 #' @method weighted.roc.auc matrix
 #' @export
-weighted.roc.auc.matrix <- function(actual, response, w, micro = NULL, method = 0L, presorted = FALSE, ...) {
-    .Call(`_SLmetrics_roc_auc_weighted`, actual, response, w, micro, method, presorted)
+weighted.roc.auc.matrix <- function(actual, response, w, micro = NULL, method = 0L, ...) {
+    .Call(`_SLmetrics_roc_auc_weighted`, actual, response, w, micro, method)
 }
 
 #' @rdname specificity

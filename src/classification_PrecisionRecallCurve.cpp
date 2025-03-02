@@ -50,19 +50,18 @@ Rcpp::NumericVector precision_recall_auc(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
     Rcpp::Nullable<bool> micro = R_NilValue,
-    int method = 0,
-    bool presorted = false) {
+    int method = 0) {
 
         if (micro.isNull()) {
-            return prROC::class_wise(actual, response, method, presorted);
+            return prROC::class_wise(actual, response, method, false);
         }
         
         bool use_micro = Rcpp::as<bool>(micro);
         if (use_micro) {
-            double auc = prROC::micro_average(actual, response, method, presorted);
+            double auc = prROC::micro_average(actual, response, method, false);
             return Rcpp::NumericVector::create(auc);
         } else {
-            double auc = prROC::macro_average(actual, response, method, presorted);
+            double auc = prROC::macro_average(actual, response, method, false);
             return Rcpp::NumericVector::create(auc);
         }
 }
@@ -76,19 +75,18 @@ Rcpp::NumericVector precision_recall_auc_weighted(
     const Rcpp::NumericMatrix response,
     const Rcpp::NumericVector w,
     Rcpp::Nullable<bool> micro = R_NilValue,
-    int method = 0,
-    bool presorted = false) {
+    int method = 0) {
 
         if (micro.isNull()) {
-            return prROC::class_wise(actual, response, method, presorted, &w);
+            return prROC::class_wise(actual, response, method, false, &w);
         }
 
         bool use_micro = Rcpp::as<bool>(micro);
         if (use_micro) {
-            double auc = prROC::micro_average(actual, response, method, presorted, &w);
+            double auc = prROC::micro_average(actual, response, method, false, &w);
             return Rcpp::NumericVector::create(auc);
         } else {
-            double auc = prROC::macro_average(actual, response, method, presorted, &w);
+            double auc = prROC::macro_average(actual, response, method, false, &w);
             return Rcpp::NumericVector::create(auc);
         }
 }
