@@ -1,4 +1,4 @@
-#include "classification_AreaUnderTheCurve.h"
+#include "tools_AreaUnderTheCurve.h"
 #include <Rcpp.h>
 
 using namespace Rcpp;
@@ -11,7 +11,7 @@ double auc(
     const Rcpp::NumericVector& y, 
     const Rcpp::NumericVector& x, 
     const int& method = 0,
-    const bool& ordered = true) {
+    const bool& presorted = true) {
 
     // 1) Extract pointers and
     // lengths
@@ -21,6 +21,6 @@ double auc(
 
     // 2) Calculate and return
     // Area Under the Curve
-    return AUC::calculate(ptr_y, ptr_x, n, method, ordered);
+    return AUC::calculate(ptr_y, ptr_x, n, method, presorted);
 
 }

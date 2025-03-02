@@ -17,7 +17,8 @@
 #' prROC(
 #'  actual,
 #'  response,
-#'  thresholds,
+#'  thresholds = NULL,
+#'  presorted  = FALSE,
 #'  ...
 #' )
 #' 
@@ -38,7 +39,8 @@
 prROC <- function(
   actual,
   response, 
-  thresholds, 
+  thresholds = NULL,
+  presorted = FALSE,
   ...) {
   UseMethod(
     generic = "prROC"
@@ -52,7 +54,8 @@ prROC <- function(
 #'  actual,
 #'  response,
 #'  w,
-#'  thresholds,
+#'  thresholds = NULL,
+#'  presorted  = FALSE,
 #'  ...
 #' )
 #' @export
@@ -60,7 +63,8 @@ weighted.prROC <- function(
   actual,
   response, 
   w,
-  thresholds, 
+  thresholds = NULL,
+  presorted = FALSE, 
   ...) {
   UseMethod(
     generic = "weighted.prROC"

@@ -125,6 +125,44 @@ create_regression <- function(
   )
 }
 
+create_response <- function(
+  actual,
+  as_matrix = TRUE) {
+
+  # 0) construct raw probability
+  # value function
+  rand_sum <- function(n){
+    x <- sort(runif(n-1))
+    c(x,1) - c(0,x)
+  }
+
+  # 1) construct response
+  # values
+  if (as_matrix) {
+
+    response_values <- t(
+      replicate(
+        n = length(actual),
+        rand_sum(
+          length(
+            levels(actual)
+          )
+        )
+      )
+    )
+
+  } else {
+    
+    response_values <- as.numeric(rand_sum(
+      length(actual)
+    ))
+
+  }
+
+  return(response_values)  
+
+}
+
 # 7) testthat helper functions
 set_equal <- function(...) {
   UseMethod("set_equal", object = ..1)

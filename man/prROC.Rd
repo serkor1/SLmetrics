@@ -7,15 +7,16 @@
 \alias{weighted.prROC}
 \title{Precision-Recall Curve}
 \usage{
-\method{prROC}{factor}(actual, response, thresholds = NULL, ...)
+\method{prROC}{factor}(actual, response, thresholds = NULL, presorted = FALSE, ...)
 
-\method{weighted.prROC}{factor}(actual, response, w, thresholds = NULL, ...)
+\method{weighted.prROC}{factor}(actual, response, w, thresholds = NULL, presorted = FALSE, ...)
 
 ## Generic S3 method
 prROC(
  actual,
  response,
- thresholds,
+ thresholds = NULL,
+ presorted  = FALSE,
  ...
 )
 
@@ -24,7 +25,8 @@ weighted.prROC(
  actual,
  response,
  w,
- thresholds,
+ thresholds = NULL,
+ presorted  = FALSE,
  ...
 )
 }
@@ -33,7 +35,9 @@ weighted.prROC(
 
 \item{response}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The estimated response probabilities.}
 
-\item{thresholds}{An optional <\link{numeric}>-vector of non-zero \link{length} (default: \link{NULL}).}
+\item{thresholds}{An optional <\link{numeric}> \eqn{n \times k} matrix (default: \link{NULL}).}
+
+\item{presorted}{A <\link{logical}>-value \link{length} 1 (default: \link{FALSE}). If \link{TRUE} the input will not be sorted by threshold.}
 
 \item{...}{Arguments passed into other methods.}
 
@@ -133,15 +137,22 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
+# 4) generate precision-recall
+# data
 
+# 4.1) calculate residual
+# probability and store as matrix
+response <- matrix(
+  data = cbind(response, 1-response),
+  nrow = length(actual)
+)
 
-# 4) generate reciever
-# operator characteristics
+# 4.2) generate precision-recall
+# data
 roc <- prROC(
   actual   = actual,
   response = response
 )
-
 
 # 5) plot by species
 plot(roc)
@@ -154,9 +165,12 @@ summary(roc)
 roc <- prROC(
   actual     = actual,
   response   = response,
-  thresholds = seq(0, 1, length.out = 4)
+  thresholds = seq(
+    1,
+    0,
+    length.out = 20
+  )
 )
-
 
 # 5) plot by species
 plot(roc)
