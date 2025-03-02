@@ -923,7 +923,6 @@ sort.matrix <- function(x, decreasing = FALSE, ...) {
     .Call(`_SLmetrics_sort_matrix`, x, decreasing)
 }
 
-#' @export
 order.matrix <- function(x, decreasing = FALSE, ...) {
     .Call(`_SLmetrics_order_matrix`, x, decreasing)
 }
