@@ -90,7 +90,7 @@ class prROC {
                     } else {
 
                         // 1.5.1) declare and initialize
-                        // auxillary values used for the 
+                        // auxiliary values used for the 
                         // calculations
                         //
                         // NOTE: recall starts at 0.0, and precision
@@ -380,7 +380,7 @@ class prROC {
                         double positives { count_positives(ptr_actual, ptr_weights, ptr_idx.get(), n, class_label) };
 
                         // 1.4) declare and initialize
-                        // auxillary values used for the 
+                        // auxiliary values used for the 
                         // calculations
                         double true_positive { 0.0 };
                         double false_positive { 0.0 };

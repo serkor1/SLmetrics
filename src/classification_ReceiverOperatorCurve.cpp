@@ -1,4 +1,4 @@
-#include "classification_RecieverOperatorCurve.h"
+#include "classification_ReceiverOperatorCurve.h"
 
 #include <Rcpp.h>
 

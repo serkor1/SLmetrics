@@ -1,4 +1,4 @@
-# script: Reciever Operator Characteristics
+# script: Receiver Operator Characteristics
 # date: 2024-10-25
 # author: Serkan Korkmaz, serkor1@duck.com
 # objective: Generate Methods
@@ -6,7 +6,7 @@
 
 #' @inherit specificity
 #'
-#' @title Reciever Operator Characteristics
+#' @title Receiver Operator Characteristics
 #'
 #' @description
 #' The [ROC()]-function computes the [tpr()] and [fpr()] at thresholds provided by the \eqn{response}- or \eqn{thresholds}-vector. The function

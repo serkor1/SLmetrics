@@ -17,7 +17,7 @@ unordered_auc <- auc(y = y,  x = x)
 unordered_auc_flag <- auc(
   y = y,
   x = x,
-  preordered = FALSE
+  presorted = FALSE
 )
 
 ## 3) display result
