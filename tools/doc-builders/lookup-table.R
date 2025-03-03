@@ -58,8 +58,6 @@ DT_[
       name == "ROC", "Receiver Operator Characteristics_c",
       name == "specificity", "Specificity_c",
       name == "zerooneloss", "Zero-One Loss_c",
-      name == "pr.auc", "Area under the Precision-Recall Curve_c",
-      name == "roc.auc", "Area under the Receiver Operator Characteristics Curve_c",
 
       # regression functions
       name == "huberloss", "Huber Loss Function_r",

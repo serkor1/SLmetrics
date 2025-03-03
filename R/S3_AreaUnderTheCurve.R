@@ -44,6 +44,7 @@ auc <- function(
   )
 }
 
+#' @rdname prROC
 #' @inherit ROC
 #' @inherit auc
 #' @inherit specificity
@@ -60,6 +61,7 @@ pr.auc <- function(
   )
 }
 
+#' @rdname prROC
 #' @inherit ROC
 #' @inherit auc
 #' @inherit specificity
@@ -77,6 +79,7 @@ weighted.pr.auc <- function(
   )
 }
 
+#' @rdname ROC
 #' @inherit ROC
 #' @inherit auc
 #' @inherit specificity
@@ -93,6 +96,7 @@ roc.auc <- function(
   )
 }
 
+#' @rdname ROC
 #' @inherit ROC
 #' @inherit auc
 #' @inherit specificity
