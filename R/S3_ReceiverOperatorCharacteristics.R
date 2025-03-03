@@ -1,4 +1,4 @@
-# script: Reciever Operator Characteristics
+# script: Receiver Operator Characteristics
 # date: 2024-10-25
 # author: Serkan Korkmaz, serkor1@duck.com
 # objective: Generate Methods
@@ -6,7 +6,7 @@
 
 #' @inherit specificity
 #'
-#' @title Reciever Operator Characteristics
+#' @title Receiver Operator Characteristics
 #'
 #' @description
 #' The [ROC()]-function computes the [tpr()] and [fpr()] at thresholds provided by the \eqn{response}- or \eqn{thresholds}-vector. The function
@@ -17,12 +17,14 @@
 #' ROC(
 #'  actual,
 #'  response,
-#'  thresholds,
+#'  thresholds = NULL,
+#'  presorted  = FALSE,
 #'  ...
 #' )
 #' 
 #' @param response A <[numeric]>-vector of [length] \eqn{n}. The estimated response probabilities.
-#' @param thresholds An optional <[numeric]>-vector of non-zero [length] (default: [NULL]).
+#' @param thresholds An optional <[numeric]> \eqn{n \times k} matrix (default: [NULL]).
+#' @param presorted A <[logical]>-value [length] 1 (default: [FALSE]). If [TRUE] the input will not be sorted by threshold.
 #' @param ... Arguments passed into other methods.
 #'
 #' @returns A [data.frame] on the following form,
@@ -42,7 +44,8 @@
 ROC <- function(
   actual,
   response, 
-  thresholds, 
+  thresholds = NULL,
+  presorted  = FALSE,
   ...) {
   UseMethod(
     generic = "ROC"
@@ -56,7 +59,8 @@ ROC <- function(
 #'  actual,
 #'  response,
 #'  w,
-#'  thresholds,
+#'  thresholds = NULL,
+#'  presorted  = FALSE,
 #'  ...
 #' )
 #' @export
@@ -64,7 +68,8 @@ weighted.ROC <- function(
   actual,
   response,
   w,
-  thresholds,
+  thresholds = NULL,
+  presorted  = FALSE,
   ...) {
   UseMethod(
     generic = "weighted.ROC"

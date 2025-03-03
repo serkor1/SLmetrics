@@ -47,20 +47,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// auc
-double auc(const Rcpp::NumericVector& y, const Rcpp::NumericVector& x, const int& method, const bool& ordered);
-RcppExport SEXP _SLmetrics_auc(SEXP ySEXP, SEXP xSEXP, SEXP methodSEXP, SEXP orderedSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type y(ySEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const int& >::type method(methodSEXP);
-    Rcpp::traits::input_parameter< const bool& >::type ordered(orderedSEXP);
-    rcpp_result_gen = Rcpp::wrap(auc(y, x, method, ordered));
-    return rcpp_result_gen;
-END_RCPP
-}
 // BalancedAccuracy
 Rcpp::NumericVector BalancedAccuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const bool& adjust, bool na_rm);
 RcppExport SEXP _SLmetrics_BalancedAccuracy(SEXP actualSEXP, SEXP predictedSEXP, SEXP adjustSEXP, SEXP na_rmSEXP) {
@@ -903,30 +889,61 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// PrecisionRecallCurve
-Rcpp::DataFrame PrecisionRecallCurve(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, Rcpp::Nullable<Rcpp::NumericVector> thresholds);
-RcppExport SEXP _SLmetrics_PrecisionRecallCurve(SEXP actualSEXP, SEXP responseSEXP, SEXP thresholdsSEXP) {
+// precision_recall_curve
+Rcpp::DataFrame precision_recall_curve(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, Rcpp::Nullable<Rcpp::NumericMatrix> thresholds, bool presorted);
+RcppExport SEXP _SLmetrics_precision_recall_curve(SEXP actualSEXP, SEXP responseSEXP, SEXP thresholdsSEXP, SEXP presortedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type thresholds(thresholdsSEXP);
-    rcpp_result_gen = Rcpp::wrap(PrecisionRecallCurve(actual, response, thresholds));
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericMatrix> >::type thresholds(thresholdsSEXP);
+    Rcpp::traits::input_parameter< bool >::type presorted(presortedSEXP);
+    rcpp_result_gen = Rcpp::wrap(precision_recall_curve(actual, response, thresholds, presorted));
     return rcpp_result_gen;
 END_RCPP
 }
-// weighted_PrecisionRecallCurve
-Rcpp::DataFrame weighted_PrecisionRecallCurve(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, const Rcpp::NumericVector& w, Rcpp::Nullable<Rcpp::NumericVector> thresholds);
-RcppExport SEXP _SLmetrics_weighted_PrecisionRecallCurve(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP thresholdsSEXP) {
+// weighted_precision_recall_curve
+Rcpp::DataFrame weighted_precision_recall_curve(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, const Rcpp::NumericVector& w, Rcpp::Nullable<Rcpp::NumericVector> thresholds, bool presorted);
+RcppExport SEXP _SLmetrics_weighted_precision_recall_curve(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP thresholdsSEXP, SEXP presortedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type thresholds(thresholdsSEXP);
-    rcpp_result_gen = Rcpp::wrap(weighted_PrecisionRecallCurve(actual, response, w, thresholds));
+    Rcpp::traits::input_parameter< bool >::type presorted(presortedSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_precision_recall_curve(actual, response, w, thresholds, presorted));
+    return rcpp_result_gen;
+END_RCPP
+}
+// precision_recall_auc
+Rcpp::NumericVector precision_recall_auc(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, Rcpp::Nullable<bool> micro, int method);
+RcppExport SEXP _SLmetrics_precision_recall_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP microSEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(precision_recall_auc(actual, response, micro, method));
+    return rcpp_result_gen;
+END_RCPP
+}
+// precision_recall_auc_weighted
+Rcpp::NumericVector precision_recall_auc_weighted(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, const Rcpp::NumericVector w, Rcpp::Nullable<bool> micro, int method);
+RcppExport SEXP _SLmetrics_precision_recall_auc_weighted(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP microSEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector >::type w(wSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(precision_recall_auc_weighted(actual, response, w, micro, method));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1056,30 +1073,61 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// RecieverOperatorCharacteristics
-Rcpp::DataFrame RecieverOperatorCharacteristics(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, Rcpp::Nullable<Rcpp::NumericVector> thresholds);
-RcppExport SEXP _SLmetrics_RecieverOperatorCharacteristics(SEXP actualSEXP, SEXP responseSEXP, SEXP thresholdsSEXP) {
+// roc_curve_unweighted
+Rcpp::DataFrame roc_curve_unweighted(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, Rcpp::Nullable<Rcpp::NumericVector> thresholds, bool presorted);
+RcppExport SEXP _SLmetrics_roc_curve_unweighted(SEXP actualSEXP, SEXP responseSEXP, SEXP thresholdsSEXP, SEXP presortedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix >::type response(responseSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type thresholds(thresholdsSEXP);
-    rcpp_result_gen = Rcpp::wrap(RecieverOperatorCharacteristics(actual, response, thresholds));
+    Rcpp::traits::input_parameter< bool >::type presorted(presortedSEXP);
+    rcpp_result_gen = Rcpp::wrap(roc_curve_unweighted(actual, response, thresholds, presorted));
     return rcpp_result_gen;
 END_RCPP
 }
-// weighted_RecieverOperatorCharacteristics
-Rcpp::DataFrame weighted_RecieverOperatorCharacteristics(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, const Rcpp::NumericVector& w, Rcpp::Nullable<Rcpp::NumericVector> thresholds);
-RcppExport SEXP _SLmetrics_weighted_RecieverOperatorCharacteristics(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP thresholdsSEXP) {
+// roc_curve_weighted
+Rcpp::DataFrame roc_curve_weighted(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, const Rcpp::NumericVector w, Rcpp::Nullable<Rcpp::NumericVector> thresholds, bool presorted);
+RcppExport SEXP _SLmetrics_roc_curve_weighted(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP thresholdsSEXP, SEXP presortedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector >::type w(wSEXP);
     Rcpp::traits::input_parameter< Rcpp::Nullable<Rcpp::NumericVector> >::type thresholds(thresholdsSEXP);
-    rcpp_result_gen = Rcpp::wrap(weighted_RecieverOperatorCharacteristics(actual, response, w, thresholds));
+    Rcpp::traits::input_parameter< bool >::type presorted(presortedSEXP);
+    rcpp_result_gen = Rcpp::wrap(roc_curve_weighted(actual, response, w, thresholds, presorted));
+    return rcpp_result_gen;
+END_RCPP
+}
+// roc_auc
+Rcpp::NumericVector roc_auc(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, Rcpp::Nullable<bool> micro, int method);
+RcppExport SEXP _SLmetrics_roc_auc(SEXP actualSEXP, SEXP responseSEXP, SEXP microSEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(roc_auc(actual, response, micro, method));
+    return rcpp_result_gen;
+END_RCPP
+}
+// roc_auc_weighted
+Rcpp::NumericVector roc_auc_weighted(const Rcpp::IntegerVector actual, const Rcpp::NumericMatrix response, const Rcpp::NumericVector w, Rcpp::Nullable<bool> micro, int method);
+RcppExport SEXP _SLmetrics_roc_auc_weighted(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP microSEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector >::type w(wSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
+    Rcpp::traits::input_parameter< int >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(roc_auc_weighted(actual, response, w, micro, method));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1634,6 +1682,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// auc
+double auc(const Rcpp::NumericVector& y, const Rcpp::NumericVector& x, const int& method, const bool& presorted);
+RcppExport SEXP _SLmetrics_auc(SEXP ySEXP, SEXP xSEXP, SEXP methodSEXP, SEXP presortedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const int& >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type presorted(presortedSEXP);
+    rcpp_result_gen = Rcpp::wrap(auc(y, x, method, presorted));
+    return rcpp_result_gen;
+END_RCPP
+}
 // covariance_matrix
 Rcpp::List covariance_matrix(const Rcpp::NumericMatrix& x, const Rcpp::Nullable<Rcpp::NumericVector>& wt, bool cor, bool center, const std::string& method);
 RcppExport SEXP _SLmetrics_covariance_matrix(SEXP xSEXP, SEXP wtSEXP, SEXP corSEXP, SEXP centerSEXP, SEXP methodSEXP) {
@@ -1705,12 +1767,35 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// sort_matrix
+Rcpp::NumericMatrix sort_matrix(Rcpp::NumericMatrix x, bool decreasing);
+RcppExport SEXP _SLmetrics_sort_matrix(SEXP xSEXP, SEXP decreasingSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< bool >::type decreasing(decreasingSEXP);
+    rcpp_result_gen = Rcpp::wrap(sort_matrix(x, decreasing));
+    return rcpp_result_gen;
+END_RCPP
+}
+// order_matrix
+Rcpp::IntegerMatrix order_matrix(Rcpp::NumericMatrix x, bool decreasing);
+RcppExport SEXP _SLmetrics_order_matrix(SEXP xSEXP, SEXP decreasingSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< bool >::type decreasing(decreasingSEXP);
+    rcpp_result_gen = Rcpp::wrap(order_matrix(x, decreasing));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_Accuracy", (DL_FUNC) &_SLmetrics_Accuracy, 2},
     {"_SLmetrics_weighted_Accuracy", (DL_FUNC) &_SLmetrics_weighted_Accuracy, 3},
     {"_SLmetrics_cmatrix_Accuracy", (DL_FUNC) &_SLmetrics_cmatrix_Accuracy, 1},
-    {"_SLmetrics_auc", (DL_FUNC) &_SLmetrics_auc, 4},
     {"_SLmetrics_BalancedAccuracy", (DL_FUNC) &_SLmetrics_BalancedAccuracy, 4},
     {"_SLmetrics_weighted_BalancedAccuracy", (DL_FUNC) &_SLmetrics_weighted_BalancedAccuracy, 5},
     {"_SLmetrics_cmatrix_BalancedAccuracy", (DL_FUNC) &_SLmetrics_cmatrix_BalancedAccuracy, 3},
@@ -1774,8 +1859,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_PositivePredictiveValue", (DL_FUNC) &_SLmetrics_PositivePredictiveValue, 4},
     {"_SLmetrics_weighted_PositivePredictiveValue", (DL_FUNC) &_SLmetrics_weighted_PositivePredictiveValue, 5},
     {"_SLmetrics_cmatrix_PositivePredictiveValue", (DL_FUNC) &_SLmetrics_cmatrix_PositivePredictiveValue, 3},
-    {"_SLmetrics_PrecisionRecallCurve", (DL_FUNC) &_SLmetrics_PrecisionRecallCurve, 3},
-    {"_SLmetrics_weighted_PrecisionRecallCurve", (DL_FUNC) &_SLmetrics_weighted_PrecisionRecallCurve, 4},
+    {"_SLmetrics_precision_recall_curve", (DL_FUNC) &_SLmetrics_precision_recall_curve, 4},
+    {"_SLmetrics_weighted_precision_recall_curve", (DL_FUNC) &_SLmetrics_weighted_precision_recall_curve, 5},
+    {"_SLmetrics_precision_recall_auc", (DL_FUNC) &_SLmetrics_precision_recall_auc, 4},
+    {"_SLmetrics_precision_recall_auc_weighted", (DL_FUNC) &_SLmetrics_precision_recall_auc_weighted, 5},
     {"_SLmetrics_Recall", (DL_FUNC) &_SLmetrics_Recall, 4},
     {"_SLmetrics_weighted_Recall", (DL_FUNC) &_SLmetrics_weighted_Recall, 5},
     {"_SLmetrics_cmatrix_Recall", (DL_FUNC) &_SLmetrics_cmatrix_Recall, 3},
@@ -1785,8 +1872,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_TruePositiveRate", (DL_FUNC) &_SLmetrics_TruePositiveRate, 4},
     {"_SLmetrics_weighted_TruePositiveRate", (DL_FUNC) &_SLmetrics_weighted_TruePositiveRate, 5},
     {"_SLmetrics_cmatrix_TruePositiveRate", (DL_FUNC) &_SLmetrics_cmatrix_TruePositiveRate, 3},
-    {"_SLmetrics_RecieverOperatorCharacteristics", (DL_FUNC) &_SLmetrics_RecieverOperatorCharacteristics, 3},
-    {"_SLmetrics_weighted_RecieverOperatorCharacteristics", (DL_FUNC) &_SLmetrics_weighted_RecieverOperatorCharacteristics, 4},
+    {"_SLmetrics_roc_curve_unweighted", (DL_FUNC) &_SLmetrics_roc_curve_unweighted, 4},
+    {"_SLmetrics_roc_curve_weighted", (DL_FUNC) &_SLmetrics_roc_curve_weighted, 5},
+    {"_SLmetrics_roc_auc", (DL_FUNC) &_SLmetrics_roc_auc, 4},
+    {"_SLmetrics_roc_auc_weighted", (DL_FUNC) &_SLmetrics_roc_auc_weighted, 5},
     {"_SLmetrics_Specificity", (DL_FUNC) &_SLmetrics_Specificity, 4},
     {"_SLmetrics_weighted_Specificity", (DL_FUNC) &_SLmetrics_weighted_Specificity, 5},
     {"_SLmetrics_cmatrix_Specificity", (DL_FUNC) &_SLmetrics_cmatrix_Specificity, 3},
@@ -1829,12 +1918,15 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_weighted_rrse", (DL_FUNC) &_SLmetrics_weighted_rrse, 3},
     {"_SLmetrics_smape", (DL_FUNC) &_SLmetrics_smape, 2},
     {"_SLmetrics_weighted_smape", (DL_FUNC) &_SLmetrics_weighted_smape, 3},
+    {"_SLmetrics_auc", (DL_FUNC) &_SLmetrics_auc, 4},
     {"_SLmetrics_covariance_matrix", (DL_FUNC) &_SLmetrics_covariance_matrix, 5},
     {"_SLmetrics_covariance_dataframe", (DL_FUNC) &_SLmetrics_covariance_dataframe, 5},
     {"_SLmetrics_enable_openmp", (DL_FUNC) &_SLmetrics_enable_openmp, 0},
     {"_SLmetrics_disable_openmp", (DL_FUNC) &_SLmetrics_disable_openmp, 0},
     {"_SLmetrics_available_threads", (DL_FUNC) &_SLmetrics_available_threads, 0},
     {"_SLmetrics_use_threads", (DL_FUNC) &_SLmetrics_use_threads, 1},
+    {"_SLmetrics_sort_matrix", (DL_FUNC) &_SLmetrics_sort_matrix, 2},
+    {"_SLmetrics_order_matrix", (DL_FUNC) &_SLmetrics_order_matrix, 2},
     {NULL, NULL, 0}
 };
 

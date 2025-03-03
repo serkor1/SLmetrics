@@ -15,14 +15,14 @@
 #'  y,
 #'  x,
 #'  method = 0,
-#'  ordered = TRUE,
+#'  presorted = TRUE,
 #'  ...
 #' )
 #' 
 #' @param y A <[numeric]> vector of [length] \eqn{n}.
 #' @param x A <[numeric]> vector of [length] \eqn{n}.
 #' @param method A <[numeric]> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the `trapezoid`-method, if \eqn{1} it is calculated using the `step`-method.
-#' @param ordered A <[logical]> value (default: [TRUE]). If [FALSE] the `x` and `y` pair will be ordered before calculating the area under the curve.
+#' @param presorted A <[logical]>-value [length] 1 (default: [FALSE]). If [TRUE] the input will not be sorted by threshold.
 #' @param ... Arguments passed into other methods.
 #' 
 #' @returns 
@@ -37,10 +37,80 @@ auc <- function(
   y,
   x,
   method  = 0,
-  ordered = TRUE,
+  presorted = TRUE,
   ...) {
   UseMethod(
     generic = "auc"
+  )
+}
+
+#' @rdname prROC
+#' @inherit ROC
+#' @inherit auc
+#' @inherit specificity
+#' @export
+pr.auc <- function(
+  actual,
+  response,
+  micro = NULL,
+  method  = 0,
+  ...) {
+  UseMethod(
+    generic = "pr.auc",
+    object  = response 
+  )
+}
+
+#' @rdname prROC
+#' @inherit ROC
+#' @inherit auc
+#' @inherit specificity
+#' @export
+weighted.pr.auc <- function(
+  actual,
+  response,
+  w,
+  micro = NULL,
+  method  = 0,
+  ...) {
+  UseMethod(
+    generic = "weighted.pr.auc",
+    object  = response 
+  )
+}
+
+#' @rdname ROC
+#' @inherit ROC
+#' @inherit auc
+#' @inherit specificity
+#' @export
+roc.auc <- function(
+  actual,
+  response,
+  micro = NULL,
+  method  = 0,
+  ...) {
+  UseMethod(
+    generic = "roc.auc",
+    object  = response 
+  )
+}
+
+#' @rdname ROC
+#' @inherit ROC
+#' @inherit auc
+#' @inherit specificity
+#' @export
+weighted.roc.auc <- function(
+  actual,
+  response,
+  w,
+  micro = NULL,
+  method  = 0,
+  ...) {
+  UseMethod(
+    generic = "weighted.roc.auc",
+    object  = response 
   )
 }
 

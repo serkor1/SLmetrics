@@ -15,14 +15,14 @@ class AUC  {
 
     /**
     @brief The function assumes that x and y 
-    are ordered. Otherwise it will be incorrect.
+    are presorted. Otherwise it will be incorrect.
     */
     static double calculate(
         const double* y, 
         const double* x,
         std::size_t   n,
         const int& method = 0,
-        const bool& ordered = true) {
+        const bool& presorted = true) {
 
             // 0) declare variables
             // for the class
@@ -33,7 +33,7 @@ class AUC  {
             // 1) order the data
             // and calculate calculate
             // indices
-            if (!ordered) {
+            if (!presorted) {
 
                 // 1.1) resize the
                 // idx-vetor and fill
