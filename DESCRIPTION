@@ -37,3 +37,4 @@ Depends:
     R (>= 4.3)
 URL: https://serkor1.github.io/SLmetrics/, https://github.com/serkor1/SLmetrics
 BugReports: https://github.com/serkor1/SLmetrics/issues
+LazyData: true
