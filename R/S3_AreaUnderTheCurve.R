@@ -44,10 +44,22 @@ auc <- function(
   )
 }
 
-#' @rdname prROC
+#' @inherit specificity
 #' @inherit ROC
 #' @inherit auc
-#' @inherit specificity
+#' 
+#' @usage
+#' ## Generic S3 method
+#' pr.auc(
+#'  actual,
+#'  response,
+#'  micro  = NULL,
+#'  method = 0,
+#'  ...
+#' )
+#' 
+#' @example man/examples/scr_PrecisionRecallAUC.R
+#' 
 #' @export
 pr.auc <- function(
   actual,
@@ -61,10 +73,26 @@ pr.auc <- function(
   )
 }
 
-#' @rdname prROC
+#' @rdname pr.auc
 #' @inherit ROC
 #' @inherit auc
 #' @inherit specificity
+#' 
+#' @description
+#' A generic function for the area under the Precision-Recall Curve in classification tasks. Use [weighted.pr.auc()] for the weighted area under the Precision-Recall Curve.
+#' 
+#' 
+#' @usage
+#' ## Generic S3 method
+#' weighted.pr.auc(
+#'  actual,
+#'  response,
+#'  w,
+#'  micro  = NULL,
+#'  method = 0,
+#'  ...
+#' )
+#' 
 #' @export
 weighted.pr.auc <- function(
   actual,
@@ -79,10 +107,26 @@ weighted.pr.auc <- function(
   )
 }
 
-#' @rdname ROC
+#' @inherit specificity
 #' @inherit ROC
 #' @inherit auc
-#' @inherit specificity
+#' 
+#' @description
+#' A generic function for the area under the Receiver Operator Characteristics Curve in classification tasks. Use [weighted.roc.auc()] for the weighted area under the Receiver Operator Characteristics Curve.
+#' 
+#' @usage
+#' ## Generic S3 method
+#' roc.auc(
+#'  actual,
+#'  response,
+#'  micro  = NULL,
+#'  method = 0,
+#'  ...
+#' )
+#'
+#' @example man/examples/scr_ReceiverOperatorCurveAUC.R
+#' 
+#' 
 #' @export
 roc.auc <- function(
   actual,
@@ -96,10 +140,20 @@ roc.auc <- function(
   )
 }
 
-#' @rdname ROC
+#' @rdname roc.auc
 #' @inherit ROC
 #' @inherit auc
 #' @inherit specificity
+#' @usage
+#' ## Generic S3 method
+#' weighted.roc.auc(
+#'  actual,
+#'  response,
+#'  w,
+#'  micro  = NULL,
+#'  method = 0,
+#'  ...
+#' )
 #' @export
 weighted.roc.auc <- function(
   actual,
