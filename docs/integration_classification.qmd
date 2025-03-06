@@ -1,0 +1,213 @@
+---
+format:
+  html:
+    code-overflow: wrap
+execute: 
+  cache: true
+knitr:
+  opts_chunk:
+    comment: "#>"
+    messages: true
+    warning: false
+---
+
+```{r}
+#| echo: false
+#| include: false
+library(SLmetrics)
+```
+
+# Training a {lightgbm} classifier and evaluating it with {SLmetrics}
+
+## The setup
+
+In this section, we setup the essential the workflow for using [{SLmetrics}](https://github.com/serkor1/SLmetrics) with [{lightgbm}](https://github.com/microsoft/LightGBM).
+
+### The data
+
+```{r data}
+# 1) load data
+# from {mlbench}
+data("wine_quality", package = "SLmetrics")
+```
+
+
+```{r}
+#| code-fold: true
+#| code-summary: "Data preparation"
+
+# 1.1) define the features
+# and outcomes
+outcome  <- c("class")
+features <- setdiff(x = colnames(wine_quality), y = c(outcome, "quality"))
+
+# 2) split data in training
+# and test
+
+# 2.1) set seed for 
+# for reproducibility
+set.seed(1903)
+
+# 2.2) exttract
+# indices with a simple
+# 80/20 split
+index <- sample(1:nrow(wine_quality), size = 0.95 * nrow(wine_quality))
+
+# 1.1) extract training
+# data and construct
+# as lgb.Dataset
+train <- wine_quality[index,]
+dtrain <- lightgbm::lgb.Dataset(
+    data  = data.matrix(train[,features]),
+    label = as.numeric(train$class) - 1
+)
+# 1.2) extract test
+# data
+test <- wine_quality[-index,]
+
+
+# 1.2.1) extract actual
+# values and constuct
+# as.factor for {SLmetrics}
+# methods
+actual <- as.factor(
+    test$class
+)
+
+# 1.2.2) construct as data.matrix
+# for predict method
+test <- data.matrix(
+    test[,features]
+)
+```
+
+## Training the GBM
+
+### Parameters and custom evaluation function
+
+```{r}
+# 1) define parameters
+parameters <- list(
+    objective     = "multiclass",
+    num_class     = length(levels(wine_quality$class))
+)
+```
+
+```{r}
+# 1) define the custom
+# evaluation metric
+eval_fbeta <- function(
+    dtrain, 
+    preds) {
+
+        # 1) extract values
+        actual    <- as.factor(dtrain)
+        predicted <- lightgbm::get_field(preds, "label")
+        value     <- fbeta(
+            actual    = actual,
+            predicted = predicted,
+            beta      = 2,
+            # Use micro-averaging to account
+            # for class imbalances
+            micro     = TRUE
+        )
+
+        # 2) construnct output
+        # list
+        list(
+            name          = "fbeta",
+            value         = value,
+            higher_better = TRUE 
+        )
+    
+}
+```
+
+### Training the GBM
+
+```{r}
+model <- lightgbm::lgb.train(
+    params  = parameters,
+    data    = dtrain,
+    nrounds = 100L,
+    eval    = eval_fbeta,
+    verbose = -1
+)
+```
+
+## Evaluation
+
+```{r forecasts}
+# 1) prediction
+# from the model
+predicted <- as.factor(
+    predict(
+        model,
+        newdata = test,
+        type    = "class"
+    )
+)
+```
+
+```{r cmatrix}
+# 1) construct confusion
+# matrix
+confusion_matrix <- cmatrix(
+    actual = actual,
+    predicted = predicted
+)
+
+# 2) visualize
+plot(
+    confusion_matrix
+)
+
+# 3) summarize
+summary(
+    confusion_matrix
+)
+```
+
+
+## Receiver Operator Curves
+
+
+```{r response}
+# 1) prediction
+# from the model
+response <- predict(
+        model,
+        newdata = test
+    )
+```
+
+The `response` can be passed into the `ROC()`-function,
+
+```{r}
+# 1) calculate the reciever
+# operator characteristics
+roc <- ROC(
+    actual   = actual,
+    response = response
+)
+
+# 2) print the roc
+# object
+print(roc)
+```
+
+The `ROC()`-function returns a `data.frame`-object, with `r nrow(roc)` rows corresponding to the `length` of `response` multiplied with number of classes in the data. The `roc`-object can be plotted as follows,
+
+```{r}
+# 1) plot roc
+# object
+plot(roc)
+```
+
+
+```{r}
+roc.auc(
+    actual, 
+    response
+)
+```
