@@ -437,16 +437,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./integration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Integrating</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./integration_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Training a {lightgbm} classifier and evaluating it with</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./openmp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">OpenMP</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">OpenMP</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./garbage.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -675,9 +692,9 @@ Table&nbsp;3.1: Benchmarks of Root Mean Squared Error (RMSE), Pinball Loss and H
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {RMSE}                  9.6ms           0B        0
-#&gt; 2 {Pinball Loss}         9.66ms           0B        0
-#&gt; 3 {Huber Loss}          55.94ms           0B        0</code></pre>
+#&gt; 1 {RMSE}                 9.58ms           0B        0
+#&gt; 2 {Pinball Loss}         9.62ms           0B        0
+#&gt; 3 {Huber Loss}          55.91ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -701,10 +718,10 @@ Table&nbsp;3.2: Benchmarking Root Mean Squared Error (RMSE) across <code>{pkgs}<
 <pre><code>#&gt; # A tibble: 4 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}             9.6ms           0B        0
-#&gt; 2 {MLmetrics}            60.1ms       76.3MB        1
-#&gt; 3 {yardstick}           164.1ms      419.6MB        9
-#&gt; 4 {mlr3measures}         83.7ms       76.3MB        1</code></pre>
+#&gt; 1 {SLmetrics}            9.58ms           0B        0
+#&gt; 2 {MLmetrics}           61.38ms       76.3MB        1
+#&gt; 3 {yardstick}          168.23ms      419.6MB        9
+#&gt; 4 {mlr3measures}         85.7ms       76.3MB        1</code></pre>
 </div>
 </div>
 </figure>
@@ -730,9 +747,9 @@ Table&nbsp;3.3: Benchmarks of the Confusion Matrix, Accuracy, and F-Beta score. 
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression         execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                    &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {Confusion Matrix}         8.53ms           0B        0
-#&gt; 2 {Accuracy}                 8.55ms           0B        0
-#&gt; 3 {F-beta}                   8.53ms           0B        0</code></pre>
+#&gt; 1 {Confusion Matrix}         8.55ms           0B        0
+#&gt; 2 {Accuracy}                 8.54ms           0B        0
+#&gt; 3 {F-beta}                   8.55ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -756,8 +773,8 @@ Table&nbsp;3.4: Benchmarking a 3×3 confusion matrix across <code>{pkgs}</code>.
 #&gt;   expression  execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
 #&gt; 1 {SLmetrics}         8.54ms           0B        0
-#&gt; 2 {MLmetrics}       245.29ms        381MB        7
-#&gt; 3 {yardstick}       244.98ms        381MB        7</code></pre>
+#&gt; 2 {MLmetrics}       247.33ms        381MB        7
+#&gt; 3 {yardstick}       247.72ms        381MB        7</code></pre>
 </div>
 </div>
 </figure>
