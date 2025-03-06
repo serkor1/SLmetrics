@@ -401,6 +401,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./ref_classification/pr.auc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Area under the Precision-Recall Curve</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./ref_classification/prROC.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Precision-Recall Curve</span></a>
   </div>
@@ -415,6 +421,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./ref_classification/recall.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Recall</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ref_classification/roc.auc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Area under the Receiver Operator Characteristics Curve</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -692,9 +704,9 @@ Table&nbsp;3.1: Benchmarks of Root Mean Squared Error (RMSE), Pinball Loss and H
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {RMSE}                 9.58ms           0B        0
-#&gt; 2 {Pinball Loss}         9.62ms           0B        0
-#&gt; 3 {Huber Loss}          55.91ms           0B        0</code></pre>
+#&gt; 1 {RMSE}                 9.59ms           0B        0
+#&gt; 2 {Pinball Loss}         9.63ms           0B        0
+#&gt; 3 {Huber Loss}          56.06ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -718,10 +730,10 @@ Table&nbsp;3.2: Benchmarking Root Mean Squared Error (RMSE) across <code>{pkgs}<
 <pre><code>#&gt; # A tibble: 4 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {SLmetrics}            9.58ms           0B        0
-#&gt; 2 {MLmetrics}           61.38ms       76.3MB        1
-#&gt; 3 {yardstick}          168.23ms      419.6MB        9
-#&gt; 4 {mlr3measures}         85.7ms       76.3MB        1</code></pre>
+#&gt; 1 {SLmetrics}            9.59ms           0B        0
+#&gt; 2 {MLmetrics}           62.23ms       76.3MB        1
+#&gt; 3 {yardstick}          171.42ms      419.6MB        9
+#&gt; 4 {mlr3measures}        86.78ms       76.3MB        1</code></pre>
 </div>
 </div>
 </figure>
@@ -747,7 +759,7 @@ Table&nbsp;3.3: Benchmarks of the Confusion Matrix, Accuracy, and F-Beta score. 
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   expression         execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                    &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 {Confusion Matrix}         8.55ms           0B        0
+#&gt; 1 {Confusion Matrix}         8.54ms           0B        0
 #&gt; 2 {Accuracy}                 8.54ms           0B        0
 #&gt; 3 {F-beta}                   8.55ms           0B        0</code></pre>
 </div>
@@ -773,8 +785,8 @@ Table&nbsp;3.4: Benchmarking a 3×3 confusion matrix across <code>{pkgs}</code>.
 #&gt;   expression  execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
 #&gt; 1 {SLmetrics}         8.54ms           0B        0
-#&gt; 2 {MLmetrics}       247.33ms        381MB        7
-#&gt; 3 {yardstick}       247.72ms        381MB        7</code></pre>
+#&gt; 2 {MLmetrics}       247.25ms        381MB        7
+#&gt; 3 {yardstick}       246.12ms        381MB        7</code></pre>
 </div>
 </div>
 </figure>
