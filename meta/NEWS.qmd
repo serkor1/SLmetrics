@@ -81,6 +81,9 @@ SLmetrics:::cov.wt(
 * **Area under the curve (AUC):** The function calculates the area under the plot for bivariate curves for ordered and unordered `x` and `y` pairs. The function assumes that values are ordered and calculates the AUC directly - to control this behaviour use the `ordered`-argument in the function. Below is an example:
 
 ```{r}
+## 0) seed
+set.seed(1903)
+
 ## 1) Ordered x and y pair
 x <- seq(0, pi, length.out = 200)
 y <- sin(x)
@@ -485,6 +488,8 @@ SLmetrics::accuracy(
 * The `plot.prROC()`- and `plot.ROC()`-functions now adds a line to the plot when `panels = FALSE`. See Issue https://github.com/serkor1/SLmetrics/issues/9.
 
 ```{r}
+#| eval: false
+
 # 1) define actual
 # classes
 actual <- factor(
