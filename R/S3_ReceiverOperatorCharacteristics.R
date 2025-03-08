@@ -35,7 +35,7 @@
 #' \item{fpr}{<[numeric]> The false positive rate}
 #' \item{tpr}{<[numeric]> The true positve rate}
 #'
-#' @example man/examples/scr_RecieverOperatorCurve.R
+#' @example man/examples/scr_ReceiverOperatorCurve.R
 #'
 #' @family Classification
 #' @family Supervised Learning

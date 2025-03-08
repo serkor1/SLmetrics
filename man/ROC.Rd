@@ -128,13 +128,7 @@ model <- glm(
 
 # 3) generate predicted
 # classes
-predicted <- factor(
-  as.numeric(
-    predict(model, type = "response") > 0.5
-  ),
-  levels = c(1,0),
-  labels = c("Virginica", "Others")
-)
+response <- predict(model, type = "response")
 
 # 3.1) generate actual
 # classes
@@ -144,38 +138,43 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) evaluate class-wise performance
-# using Specificity
+# 4) generate reciever
+# operator characteristics
 
-# 4.1) unweighted Specificity
-specificity(
-  actual    = actual,
-  predicted = predicted
+# 4.1) calculate residual
+# probability and store as matrix
+response <- matrix(
+  data = cbind(response, 1-response),
+  nrow = length(actual)
 )
 
-# 4.2) weighted Specificity
-weighted.specificity(
-  actual    = actual,
-  predicted = predicted,
-  w         = iris$Petal.Length/mean(iris$Petal.Length)
+# 4.2) construct 
+# data.frame
+roc <- ROC(
+  actual   = actual,
+  response = response
 )
 
-# 5) evaluate overall performance
-# using micro-averaged Specificity
-cat(
-  "Micro-averaged Specificity", specificity(
-    actual    = actual,
-    predicted = predicted,
-    micro     = TRUE
-  ),
-  "Micro-averaged Specificity (weighted)", weighted.specificity(
-    actual    = actual,
-    predicted = predicted,
-    w         = iris$Petal.Length/mean(iris$Petal.Length),
-    micro     = TRUE
-  ),
-  sep = "\n"
+# 5) plot by species
+plot(roc)
+
+# 5.1) summarise
+summary(roc)
+
+# 6) provide custom
+# threholds
+roc <- ROC(
+  actual     = actual,
+  response   = response,
+  thresholds = seq(
+    1,
+    0,
+    length.out = 20
+  )
 )
+
+# 5) plot by species
+plot(roc)
 
 }
 \seealso{
