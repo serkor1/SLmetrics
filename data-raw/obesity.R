@@ -104,10 +104,16 @@ data.table::setcolorder(DT, new_order)
 data.table::setcolorder(DT, c("class", "weight"), after = ncol(DT))
 
 # 8) convert to data.frame
-obesity <- as.data.frame(
-  DT
+obesity <- list(
+  features =   as.data.frame(
+    DT[,-c("class", "weight")]
+  ),
+  target = list(
+    regression = DT$weight,
+    class      = DT$class
+  )
 )
-
+  
 # 8.1) store data
 usethis::use_data(
   obesity,

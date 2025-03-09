@@ -1,40 +1,50 @@
-#' @title Wine Quality Dataset
+#' Wine Quality Dataset
 #'
-#' @description
-#' This dataset contains various chemical properties of white wines, along with their quality ratings and classifications.
-#' 
-#' @usage
-#' #' data(wine_quality, package = "SLmetrics")
+#' This dataset contains measurements of various chemical properties of white wines
+#' along with their quality ratings and a quality classification. The dataset was
+#' obtained from the UCI Machine Learning Repository.
 #'
-#' @format A [data.frame] with 4898 rows and 13 variables:
+#' The data is provided as a list with two components:
+#'
 #' \describe{
-#'   \item{fixed_acidity}{[numeric] Fixed acidity of the wine.}
-#'   \item{volatile_acidity}{[numeric] Volatile acidity of the wine.}
-#'   \item{citric_acid}{[numeric] Citric acid content.}
-#'   \item{residual_sugar}{[numeric] Residual sugar content.}
-#'   \item{chlorides}{[numeric] Chloride content.}
-#'   \item{free_sulfur_dioxide}{[numeric] Free sulfur dioxide content.}
-#'   \item{total_sulfur_dioxide}{[numeric] Total sulfur dioxide content.}
-#'   \item{density}{[numeric] Density of the wine.}
-#'   \item{pH}{[numeric] pH level of the wine.}
-#'   \item{sulphates}{[numeric] Sulfate content.}
-#'   \item{alcohol}{[numeric] Alcohol percentage.}
-#'   \item{quality}{Integer. Quality rating of the wine (0-10).}
-#'   \item{class}{Factor w/ 3 levels "High Quality", "Medium Quality", "Low Quality". Wine quality classification based on the quality rating: \code{High Quality} (quality >= 7), \code{Low Quality} (quality <= 4), and \code{Medium Quality} otherwise.}
-#' }
-#' 
-#' @details
-#' 
-#' The dataset was processed as follows:
-#' 
-#' \enumerate{
-#'   \item Classified wine quality into three categories based on the quality rating:
-#'     \itemize{
-#'       \item \code{High Quality}: quality >= 7
-#'       \item \code{Low Quality}: quality <= 4
-#'       \item \code{Medium Quality}: otherwise
+#'   \item{features}{A data frame containing the chemical properties of the wines.
+#'     The variables include:
+#'     \describe{
+#'       \item{fixed_acidity}{Fixed acidity (g/L).}
+#'       \item{volatile_acidity}{Volatile acidity (g/L), mainly due to acetic acid.}
+#'       \item{citric_acid}{Citric acid (g/L).}
+#'       \item{residual_sugar}{Residual sugar (g/L).}
+#'       \item{chlorides}{Chloride concentration (g/L).}
+#'       \item{free_sulfur_dioxide}{Free sulfur dioxide (mg/L).}
+#'       \item{total_sulfur_dioxide}{Total sulfur dioxide (mg/L).}
+#'       \item{density}{Density of the wine (g/cm\eqn{^3}).}
+#'       \item{pH}{pH value of the wine.}
+#'       \item{sulphates}{Sulphates (g/L).}
+#'       \item{alcohol}{Alcohol content (% by volume).}
 #'     }
+#'   }
+#'   \item{target}{A list containing two elements:
+#'     \describe{
+#'       \item{regression}{A numeric vector representing the wine quality scores (used as the regression target).}
+#'       \item{class}{A factor with levels \code{"High Quality"}, \code{"Medium Quality"}, and \code{"Low Quality"},
+#'         where classification is determined as follows:
+#'         \describe{
+#'           \item{High Quality}{quality \eqn{\geq} 7.}
+#'           \item{Low Quality}{quality \eqn{\leq} 4.}
+#'           \item{Medium Quality}{for all other quality scores.}
+#'         }
+#'       }
+#'     }
+#'   }
 #' }
-#' 
-#' @references \url{https://archive.ics.uci.edu/ml/datasets/Wine+Quality}
+#'
+#' @docType data
+#' @usage data(wine_quality)
+#' @format A list with two components:
+#' \describe{
+#'   \item{features}{A data frame with 11 chemical property variables.}
+#'   \item{target}{A list with two elements: \code{regression} (wine quality scores) and \code{class} (quality classification).}
+#' }
+#' @source \url{https://archive.ics.uci.edu/dataset/186/wine+quality}
+#' @keywords datasets
 "wine_quality"

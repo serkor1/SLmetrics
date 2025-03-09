@@ -1,24 +1,38 @@
-#' @title Banknote Authentication Dataset
+#' Banknote Authentication Dataset
 #'
-#' @description 
-#' This dataset contains features extracted from images of genuine and forged banknotes, used to evaluate the performance of various classification algorithms in distinguishing between authentic and counterfeit currency.
-#' 
-#' @usage
-#' data(banknote, package = "SLmetrics")
+#' This dataset contains features extracted from the wavelet transform of banknote
+#' images, which are used to classify banknotes as authentic or inauthentic. The data
+#' originates from the UCI Machine Learning Repository.
 #'
-#' @format A [data.frame] with 1,372 rows and 5 variables:
+#' The data is provided as a list with two components:
+#'
 #' \describe{
-#'   \item{variance}{[numeric] Variance of the Wavelet Transformed image.}
-#'   \item{skewness}{[numeric] Skewness of the Wavelet Transformed image.}
-#'   \item{curtosis}{[numeric] Curtosis (kurtosis) of the Wavelet Transformed image.}
-#'   \item{entropy}{[numeric] Entropy of the image.}
-#'   \item{class}{[factor] Authenticity of the banknote: \code{"authentic"} or \code{"inauthentic"}.}
+#'   \item{features}{A data frame containing the following variables:
+#'     \describe{
+#'       \item{variance}{Variance of the wavelet transformed image.}
+#'       \item{skewness}{Skewness of the wavelet transformed image.}
+#'       \item{curtosis}{Curtosis of the wavelet transformed image.}
+#'       \item{entropy}{Entropy of the image.}
+#'     }
+#'   }
+#'   \item{target}{A factor indicating the authenticity of the banknote. The factor has
+#'     two levels:
+#'     \describe{
+#'       \item{inauthentic}{Indicates the banknote is not genuine.}
+#'       \item{authentic}{Indicates the banknote is genuine.}
+#'     }
+#'   }
 #' }
 #'
-#' @details
-#' Data were extracted from images taken from genuine and forged banknote-like specimens. For digitization, an industrial camera typically used for print inspection was utilized, capturing images with a resolution of about 400x400 pixels at 660 dpi. Wavelet Transform tools were employed to extract the features: variance, skewness, curtosis, and entropy. The \code{class} variable indicates the authenticity of the banknote, with \code{"authentic"} representing genuine banknotes and \code{"inauthentic"} representing forgeries.
-#'
-#' @source
-#' Lohweg, V. (2012). Banknote Authentication Dataset. UCI Machine Learning Repository. \doi{10.24432/C55P57}
+#' @docType data
+#' @usage data(banknote)
+#' @format A list with two components:
+#' \describe{
+#'   \item{features}{A data frame with 4 variables: \code{variance}, \code{skewness},
+#'   \code{curtosis}, and \code{entropy}.}
+#'   \item{target}{A factor with levels \code{"inauthentic"} and \code{"authentic"}
+#'   representing the banknote's authenticity.}
+#' }
+#' @source \url{https://archive.ics.uci.edu/dataset/267/banknote+authentication}
+#' @keywords datasets
 "banknote"
-

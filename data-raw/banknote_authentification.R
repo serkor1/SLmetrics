@@ -23,8 +23,9 @@ banknote[
 ]
 
 # 3) convert to data.frame
-banknote <- as.data.frame(
-  banknote
+banknote <- list(
+  features = as.data.frame(banknote[,-c("class")]),
+  target   = banknote$class
 )
 
 # 3.1) store data
