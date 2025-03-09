@@ -11,6 +11,49 @@
 - **S3 signatures:** All S3-methods now have a generic signature, the
   functions should now be easier to navigate in argument-wise.
 
+- **Exported Data:** Three new datasets have been introduced to the
+  package; the [Wine
+  Quality](https://archive.ics.uci.edu/dataset/186/wine+quality)-,
+  [Obesity](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)-
+  and [Banknote
+  Authentication](https://archive.ics.uci.edu/dataset/267/banknote+authentication)
+  datasets. Each dataset is comes in named `list` where features and
+  targets are stored seperately. Below is an example from the Obesity
+  dataset:
+
+``` r
+# 1) summarise list
+summary(SLmetrics::obesity)
+#>          Length Class      Mode
+#> features 15     data.frame list
+#> target    2     -none-     list
+
+# 2) head the features
+head(SLmetrics::obesity$features)
+#>        caec       calc                mtrans family_history_with_overweight
+#> 1 sometimes         no public_transportation                              1
+#> 2 sometimes  sometimes public_transportation                              1
+#> 3 sometimes frequently public_transportation                              1
+#> 4 sometimes frequently               walking                              0
+#> 5 sometimes  sometimes public_transportation                              0
+#> 6 sometimes  sometimes            automobile                              0
+#>   favc smoke scc male age height fcvc ncp ch2o faf tue
+#> 1    0     0   0    0  21   1.62    2   3    2   0   1
+#> 2    0     1   1    0  21   1.52    3   3    3   3   0
+#> 3    0     0   0    1  23   1.80    2   3    2   2   1
+#> 4    0     0   0    1  27   1.80    3   3    2   2   0
+#> 5    0     0   0    1  22   1.78    2   1    2   0   0
+#> 6    1     0   0    1  29   1.62    2   3    2   0   0
+
+# 3) head the targets
+head(SLmetrics::obesity$target$class)
+#> [1] Normal_Weight       Normal_Weight       Normal_Weight      
+#> [4] Overweight_Level_I  Overweight_Level_II Normal_Weight      
+#> 7 Levels: Insufficient_Weight Normal_Weight Obesity_Type_I ... Overweight_Level_II
+head(SLmetrics::obesity$target$regression)
+#> [1] 64.0 56.0 77.0 87.0 89.8 53.0
+```
+
 ## :fire: New features
 
 ### :rocket: New metrics
@@ -46,6 +89,31 @@ cat(
 #> 1.590672
 #> Weighted Poisson Log Loss:
 #> 1.505212
+```
+
+- **Area under the Curve:** A new set of functions have been introduced
+  which calculates the weighted and unweighted area under the
+  Precision-Recall and Receiver Operator Characteristics curve. See
+  below:
+
+``` r
+# Create factors and response probabilities
+actual   <- factor(c("Class A", "Class B", "Class A"))
+weights  <- c(0.3,0.9,1) 
+response <- matrix(cbind(
+    0.2, 0.8,
+    0.8, 0.2,
+    0.7, 0.3
+),nrow = 3, ncol = 2)
+
+# calculate area under the 
+# precision-recall curve
+SLmetrics::pr.auc(
+    actual = actual,
+    response = response
+)
+#>   Class A   Class B 
+#> 0.4166667 1.0000000
 ```
 
 ### :hammer: Metric tools
@@ -90,6 +158,9 @@ SLmetrics:::cov.wt(
   the function. Below is an example:
 
 ``` r
+## 0) seed
+set.seed(1903)
+
 ## 1) Ordered x and y pair
 x <- seq(0, pi, length.out = 200)
 y <- sin(x)
@@ -122,9 +193,9 @@ cat(
 #> AUC (ordered x and y pair)
 #> 1.999958
 #> AUC (unordered x and y pair)
-#> -0.4420569
+#> -1.720771
 #> AUC (unordered x and y pair, with unordered flag)
-#> -0.4420569
+#> -1.720771
 ```
 
 ## :warning: Breaking changes
@@ -324,11 +395,11 @@ cat(
   sep = "\n"
 )
 #> Mean Relative Root Mean Squared Error
-#> -92.86792
+#> -51.95306
 #> Range Relative Root Mean Squared Error
-#> 0.1635566
+#> 0.1583716
 #> IQR Relative Root Mean Squared Error
-#> 0.6933869
+#> 0.7219403
 ```
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
@@ -405,9 +476,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a  6  9 10
-#> b 13 10 12
-#> c  7 11 22
+#> a 12 17  8
+#> b 10 17  8
+#> c  9  8 11
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -415,10 +486,10 @@ SLmetrics::weighted.cmatrix(
     predicted = predicted,
     w         = weights
 )
-#>           a         b         c
-#> a  5.292123  6.309234  4.914659
-#> b  6.372260  3.638810  5.926098
-#> c  2.741325  6.527348 11.374872
+#>          a        b        c
+#> a 4.094910 7.916949 5.081804
+#> b 3.464922 8.374505 4.609367
+#> c 4.766526 4.713944 3.301916
 ```
 
 ## :bug: Bug-fixes
@@ -453,9 +524,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a 14  9 12
-#> b 15  9 13
-#> c 15  8  5
+#> a 12  4 10
+#> b  9 11 14
+#> c 13 11 16
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -464,9 +535,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 7.746325 5.555203 5.972998
-#> b 6.202406 4.193124 5.485641
-#> c 5.394955 4.147010 2.997831
+#> a 6.398180 3.300309 7.014582
+#> b 4.630983 3.072605 8.605201
+#> c 5.105148 6.173261 8.634757
 ```
 
 Calculating weighted metrics manually or by using
@@ -486,7 +557,7 @@ confusion_matrix <- SLmetrics::cmatrix(
 SLmetrics::accuracy(
     confusion_matrix
 )
-#> [1] 0.28
+#> [1] 0.39
 
 # 3) calculate the weighted
 # accuracy manually
@@ -495,7 +566,7 @@ SLmetrics::weighted.accuracy(
     predicted = predicted,
     w         = weights
 )
-#> [1] 0.3131801
+#> [1] 0.3420333
 ```
 
 Please note, however, that it is not possible to pass `cmatrix()`-into
@@ -569,11 +640,11 @@ w         <- runif(n = 1e3)
 
 # 2) unweighted metrics
 SLmetrics::rmse(actual, predicted)
-#> [1] 0.9883387
+#> [1] 1.006614
 
 # 3) weighted metrics
 SLmetrics::weighted.rmse(actual, predicted, w = w)
-#> [1] 0.997612
+#> [1] 1.010894
 ```
 
 - The `rrmse()`-function have been removed in favor of the
@@ -683,7 +754,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-#>  [1] b a b c b b b b c c
+#>  [1] b b c c b b a a c a
 #> Levels: a b c
 
 # 2) predicted classes
@@ -692,7 +763,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-#>  [1] b b b c c a b b c c
+#>  [1] a b c a c a c a b c
 #> Levels: a b c
 ```
 
@@ -709,16 +780,16 @@ summary(
 #> Confusion Matrix (3 x 3) 
 #> ================================================================================
 #>   a b c
-#> a 0 1 0
-#> b 1 4 1
-#> c 0 0 3
+#> a 1 0 2
+#> b 2 1 1
+#> c 1 1 1
 #> ================================================================================
 #> Overall Statistics (micro average)
-#>  - Accuracy:          0.70
-#>  - Balanced Accuracy: 0.56
-#>  - Sensitivity:       0.70
-#>  - Specificity:       0.85
-#>  - Precision:         0.70
+#>  - Accuracy:          0.30
+#>  - Balanced Accuracy: 0.31
+#>  - Sensitivity:       0.30
+#>  - Specificity:       0.65
+#>  - Precision:         0.30
 
 # 2) calculate false positive
 # rate using micro average
@@ -726,7 +797,7 @@ SLmetrics::fpr(
     confusion_matrix
 )
 #>         a         b         c 
-#> 0.1111111 0.2500000 0.1428571
+#> 0.4285714 0.1666667 0.4285714
 ```
 
 ### Supervised regression metrics
@@ -746,5 +817,5 @@ SLmetrics::huberloss(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.4993386
+#> [1] 0.4089189
 ```
