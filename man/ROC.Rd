@@ -34,9 +34,9 @@ weighted.ROC(
 \arguments{
 \item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{response}{A <\link{numeric}> \eqn{n \times k} \link{matrix}. The estimated response probabilities for each class \eqn{k}.}
+\item{response}{A \eqn{n \times k} <\link{numeric}>-\link{matrix}. The estimated response probabilities for each class \eqn{k}.}
 
-\item{thresholds}{An optional <\link{numeric}> \eqn{n \times k} vector (default: \link{NULL}).}
+\item{thresholds}{An optional <\link{numeric}> vector of \link{length} \eqn{n} (default: \link{NULL}).}
 
 \item{presorted}{A <\link{logical}>-value \link{length} 1 (default: \link{FALSE}). If \link{TRUE} the input will not be sorted by threshold.}
 
@@ -196,9 +196,11 @@ Other Classification:
 \code{\link{nlr.factor}()},
 \code{\link{npv.factor}()},
 \code{\link{plr.factor}()},
+\code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
+\code{\link{roc.auc.matrix}()},
 \code{\link{specificity.factor}()},
 \code{\link{zerooneloss.factor}()}
 
@@ -226,12 +228,14 @@ Other Supervised Learning:
 \code{\link{npv.factor}()},
 \code{\link{pinball.numeric}()},
 \code{\link{plr.factor}()},
+\code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{rae.numeric}()},
 \code{\link{recall.factor}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{roc.auc.matrix}()},
 \code{\link{rrmse.numeric}()},
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},

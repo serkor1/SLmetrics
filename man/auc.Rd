@@ -33,6 +33,32 @@ A <\link{numeric}>  vector  of \link{length} 1
 \description{
 The \code{\link[=auc]{auc()}}-function calculates the area under the curve.
 }
+\section{Definition}{
+
+
+\strong{Trapezoidal rule}
+
+The \strong{trapezoidal rule} approximates the integral of a function \eqn{f(x)} between
+\eqn{x = a} and \eqn{x = b} using trapezoids formed between consecutive points. If
+we have points \eqn{x_0, x_1, \ldots, x_n} (with \eqn{a = x_0 < x_1 < \cdots < x_n = b})
+and corresponding function values \eqn{f(x_0), f(x_1), \ldots, f(x_n)}, the area under
+the curve \eqn{A_T} is approximated by:
+
+\deqn{
+  A_T \approx \sum_{k=1}^{n} \frac{f(x_{k-1}) + f(x_k)}{2} \bigl[x_k - x_{k-1}\bigr].
+}
+
+\strong{Step-function method}
+
+The \strong{step-function (rectangular) method} uses the value of the function at one
+endpoint of each subinterval to form rectangles. With the same partition
+\eqn{x_0, x_1, \ldots, x_n}, the rectangular approximation \eqn{A_S} can be written as:
+
+\deqn{
+  A_S \approx \sum_{k=1}^{n} f(x_{k-1}) \bigl[x_k - x_{k-1}\bigr].
+}
+}
+
 \examples{
 ## 1) Ordered x and y pair
 x <- seq(0, pi, length.out = 200)

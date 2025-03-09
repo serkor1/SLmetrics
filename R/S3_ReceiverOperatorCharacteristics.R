@@ -22,8 +22,8 @@
 #'  ...
 #' )
 #' 
-#' @param response A <[numeric]> \eqn{n \times k} [matrix]. The estimated response probabilities for each class \eqn{k}.
-#' @param thresholds An optional <[numeric]> \eqn{n \times k} vector (default: [NULL]).
+#' @param response A \eqn{n \times k} <[numeric]>-[matrix]. The estimated response probabilities for each class \eqn{k}.
+#' @param thresholds An optional <[numeric]> vector of [length] \eqn{n} (default: [NULL]).
 #' @param presorted A <[logical]>-value [length] 1 (default: [FALSE]). If [TRUE] the input will not be sorted by threshold.
 #' @param ... Arguments passed into other methods.
 #'
