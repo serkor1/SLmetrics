@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; Garbage in, garbage out – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
+<title>5&nbsp; Garbage in, garbage out – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -120,7 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./garbage.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./garbage.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -464,13 +464,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./integration_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Using {lightgbm} and {SLmetrics} in classification tasks</span></span></a>
+ <span class="menu-text">Using {lightgbm} and {SLmetrics} in classification tasks</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./integration_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Using {xgboost} and {SLmetrics} in regression tasks</span></span></a>
+ <span class="menu-text">Using {xgboost} and {SLmetrics} in regression tasks</span></a>
   </div>
 </li>
       </ul>
@@ -478,13 +478,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./openmp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">OpenMP</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">OpenMP</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./garbage.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -503,11 +503,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#implicit-assumptions" id="toc-implicit-assumptions" class="nav-link active" data-scroll-target="#implicit-assumptions"><span class="header-section-number">7.1</span> Implicit assumptions</a></li>
-  <li><a href="#undefined-behavior" id="toc-undefined-behavior" class="nav-link" data-scroll-target="#undefined-behavior"><span class="header-section-number">7.2</span> Undefined behavior</a></li>
-  <li><a href="#edge-cases" id="toc-edge-cases" class="nav-link" data-scroll-target="#edge-cases"><span class="header-section-number">7.3</span> Edge cases</a></li>
-  <li><a href="#staying-safe" id="toc-staying-safe" class="nav-link" data-scroll-target="#staying-safe"><span class="header-section-number">7.4</span> Staying “safe”</a></li>
-  <li><a href="#key-take-aways" id="toc-key-take-aways" class="nav-link" data-scroll-target="#key-take-aways"><span class="header-section-number">7.5</span> Key take-aways</a></li>
+  <li><a href="#implicit-assumptions" id="toc-implicit-assumptions" class="nav-link active" data-scroll-target="#implicit-assumptions"><span class="header-section-number">5.1</span> Implicit assumptions</a></li>
+  <li><a href="#undefined-behavior" id="toc-undefined-behavior" class="nav-link" data-scroll-target="#undefined-behavior"><span class="header-section-number">5.2</span> Undefined behavior</a></li>
+  <li><a href="#edge-cases" id="toc-edge-cases" class="nav-link" data-scroll-target="#edge-cases"><span class="header-section-number">5.3</span> Edge cases</a></li>
+  <li><a href="#staying-safe" id="toc-staying-safe" class="nav-link" data-scroll-target="#staying-safe"><span class="header-section-number">5.4</span> Staying “safe”</a></li>
+  <li><a href="#key-take-aways" id="toc-key-take-aways" class="nav-link" data-scroll-target="#key-take-aways"><span class="header-section-number">5.5</span> Key take-aways</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/garbage.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/garbage.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -516,7 +516,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-garbage_in_garbage_out" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></span></h1>
+<h1 class="title"><span id="sec-garbage_in_garbage_out" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></span></h1>
 </div>
 
 
@@ -534,8 +534,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>This section examines the underlying assumptions in <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a>, and how it may affect your pipeline if you decide adopt it.</p>
-<section id="implicit-assumptions" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="implicit-assumptions"><span class="header-section-number">7.1</span> Implicit assumptions</h2>
+<section id="implicit-assumptions" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="implicit-assumptions"><span class="header-section-number">5.1</span> Implicit assumptions</h2>
 <p>All evaluation functions in <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> assumes that end-user follows the typical AI/ML workflow:</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
@@ -584,8 +584,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="undefined-behavior" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="undefined-behavior"><span class="header-section-number">7.2</span> Undefined behavior</h2>
+<section id="undefined-behavior" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="undefined-behavior"><span class="header-section-number">5.2</span> Undefined behavior</h2>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -616,8 +616,8 @@ Important
 </div>
 <p>This is not something that can prevented with, say, <code>try()</code>, as the error is undefined. See this <a href="https://stackoverflow.com/questions/32132574/does-undefined-behavior-really-permit-anything-to-happen">SO</a>-post for details.</p>
 </section>
-<section id="edge-cases" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="edge-cases"><span class="header-section-number">7.3</span> Edge cases</h2>
+<section id="edge-cases" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="edge-cases"><span class="header-section-number">5.3</span> Edge cases</h2>
 <p>There are cases, where it can be hard to predict what will happen when passing a given set of actual and predicted classes. Especially if the input is too large, and it becomes inefficient to check these every iteration. In such cases <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> does help. See for example the following code:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) define values</span></span>
@@ -635,7 +635,7 @@ Important
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;         a         b         c 
-#&gt; 0.4997446 0.4998578       NaN</code></pre>
+#&gt; 0.5003941 0.5000930       NaN</code></pre>
 </div>
 </div>
 <p>One class, <code>c</code>, is never predicted, nor is it present in the actual labels - therefore, by construction, the value is <code>NaN</code> as there is division by zero. During aggregation to <code>micro</code> or <code>macro</code> averages these are being handled according to <code>na.rm</code>. See below:</p>
@@ -648,7 +648,7 @@ Important
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 0.4998012</code></pre>
+<pre><code>#&gt; [1] 0.5002436</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) macro average</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">fbeta</span>(</span>
@@ -658,7 +658,7 @@ Important
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">FALSE</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 0.3332008</code></pre>
+<pre><code>#&gt; [1] 0.3334957</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -679,8 +679,8 @@ Important
 </div>
 <p>In these cases, there is no undefined behaviour or exploding <code>R</code> sessions as all of this is handled internally.</p>
 </section>
-<section id="staying-safe" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="staying-safe"><span class="header-section-number">7.4</span> Staying “safe”</h2>
+<section id="staying-safe" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="staying-safe"><span class="header-section-number">5.4</span> Staying “safe”</h2>
 <p>To avoid undefined behavior when passing ill-defined input one option is to write a wrapper function, or using existing infrastructure. Below is an example of a wrapper function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) RMSLE</span></span>
@@ -735,8 +735,8 @@ Important
 </div>
 </div>
 </section>
-<section id="key-take-aways" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="key-take-aways"><span class="header-section-number">7.5</span> Key take-aways</h2>
+<section id="key-take-aways" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="key-take-aways"><span class="header-section-number">5.5</span> Key take-aways</h2>
 <p><a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> assumes that the end-user follows the typical AI/ML workflow, and has an understanding of <code>R</code> beyond beginner-level. And therefore <a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> does not check the validity of the user-input, which may lead to undefined behavior if input is ill-defined.</p>
 
 
@@ -1314,7 +1314,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./openmp.html" class="pagination-link" aria-label="OpenMP">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">OpenMP</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">OpenMP</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

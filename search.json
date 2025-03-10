@@ -94,7 +94,7 @@
     "href": "benchmark.html#sec-bench-mark",
     "title": "3  Benchmarking",
     "section": "3.2 Benchmarking",
-    "text": "3.2 Benchmarking\nTo conduct the benchmark {bench} is used. Before the benchmarks are conducted, a benchmark()-wrapper is created.\nThis wrapper conducts m (Default: 10) benchmarks, with 10 iterations for each benchmarked function passed into benchmark() - to allow for warm-up the first iteration is discarded. The wrapper is defined as follows:\n\nbenchmark &lt;- function(\n  ..., \n  m = 10) {\n  library(magrittr)\n  # 1) create list\n  # for storing values\n  performance &lt;- list()\n  \n  for (i in 1:m) {\n\n     # 1) run the benchmarks\n    results &lt;- bench::mark(\n      ...,\n      iterations = 10,\n      check = FALSE\n    )\n\n    # 2) extract values\n    # and calculate medians\n    performance$time[[i]]  &lt;- setNames(lapply(results$time, mean), results$expression)\n    performance$memory[[i]] &lt;- setNames(lapply(results$memory, function(x) { sum(x$bytes, na.rm = TRUE)}), results$expression)\n    performance$n_gc[[i]] &lt;- setNames(lapply(results$n_gc, sum), results$expression)\n\n  }\n\n  purrr::pmap_dfr(\n  list(performance$time, performance$memory, performance$n_gc), \n  ~{\n    tibble::tibble(\n      expression = names(..1),\n      time = unlist(..1),\n      memory = unlist(..2),\n      n_gc = unlist(..3)\n    )\n  }\n) %&gt;%\n  dplyr::mutate(expression = factor(expression, levels = unique(expression))) %&gt;%\n  dplyr::group_by(expression) %&gt;%\n  dplyr::filter(dplyr::row_number() &gt; 1) %&gt;%\n  dplyr::summarize(\n    execution_time = bench::as_bench_time(median(time)),\n    memory_usage = bench::as_bench_bytes(median(memory)),\n    gc_calls = median(n_gc),\n    .groups = \"drop\"\n  )\n\n}\n\n\n3.2.1 Regression metrics\n\nCode\nbenchmark(\n    `{RMSE}`  = SLmetrics::rmse(num_actual, num_predicted),\n    `{Pinball Loss}` = SLmetrics::pinball(num_actual, num_predicted),\n    `{Huber Loss}` = SLmetrics::huberloss(num_actual, num_predicted)\n)\n\n\n\n\nTable 3.1: Benchmarks of Root Mean Squared Error (RMSE), Pinball Loss and Huber Loss. Each benchmark is run 10 times with two input vectors of 10 million elements.\n\n\n\n#&gt; # A tibble: 3 × 4\n#&gt;   expression     execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 {RMSE}                 9.61ms           0B        0\n#&gt; 2 {Pinball Loss}         9.65ms           0B        0\n#&gt; 3 {Huber Loss}           55.9ms           0B        0\n\n\n\n\n\nCode\nbenchmark(\n    `{SLmetrics}` = SLmetrics::rmse(num_actual, num_predicted),\n    `{MLmetrics}` = MLmetrics::RMSE(num_actual, num_predicted),\n    `{yardstick}` = yardstick::rmse_vec(num_actual, num_predicted),\n    `{mlr3measures}` = mlr3measures::rmse(num_actual, num_predicted)\n)\n\n\n\n\nTable 3.2: Benchmarking Root Mean Squared Error (RMSE) across {pkgs}. Each benchmark is run 10 times with two input vectors of 10 million elements.\n\n\n\n#&gt; # A tibble: 4 × 4\n#&gt;   expression     execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 {SLmetrics}            9.62ms           0B        0\n#&gt; 2 {MLmetrics}            61.5ms       76.3MB        1\n#&gt; 3 {yardstick}           168.4ms      419.6MB        9\n#&gt; 4 {mlr3measures}        85.82ms       76.3MB        1\n\n\n\n\n\n\n3.2.2 Classification metrics\n\nCode\nbenchmark(\n    `{Confusion Matrix}`  = SLmetrics::cmatrix(fct_actual, fct_predicted),\n    `{Accuracy}` = SLmetrics::accuracy(fct_actual, fct_predicted),\n    `{F-beta}` = SLmetrics::fbeta(fct_actual, fct_predicted)\n)\n\n\n\n\nTable 3.3: Benchmarks of the Confusion Matrix, Accuracy, and F-Beta score. Each benchmark is run 10 times with two input vectors of 10 million elements.\n\n\n\n#&gt; # A tibble: 3 × 4\n#&gt;   expression         execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;                    &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 {Confusion Matrix}         8.53ms           0B        0\n#&gt; 2 {Accuracy}                 8.54ms           0B        0\n#&gt; 3 {F-beta}                   8.54ms           0B        0\n\n\n\n\n\nCode\nbenchmark(\n    `{SLmetrics}`    = SLmetrics::cmatrix(fct_actual, fct_predicted),\n    `{MLmetrics}`    = MLmetrics::ConfusionMatrix(fct_predicted, fct_actual),\n    `{yardstick}`    = yardstick::conf_mat(table(fct_actual, fct_predicted))\n)\n\n\n\n\nTable 3.4: Benchmarking a 3×3 confusion matrix across {pkgs}. Each benchmark is run 10 times with two input vectors of 10 million elements and three classes.\n\n\n\n#&gt; # A tibble: 3 × 4\n#&gt;   expression  execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 {SLmetrics}         8.54ms           0B        0\n#&gt; 2 {MLmetrics}          248ms        381MB        7\n#&gt; 3 {yardstick}       247.99ms        381MB        7",
+    "text": "3.2 Benchmarking\nTo conduct the benchmark {bench} is used. Before the benchmarks are conducted, a benchmark()-wrapper is created.\nThis wrapper conducts m (Default: 10) benchmarks, with 10 iterations for each benchmarked function passed into benchmark() - to allow for warm-up the first iteration is discarded. The wrapper is defined as follows:\n\nbenchmark &lt;- function(\n  ..., \n  m = 10) {\n  library(magrittr)\n  # 1) create list\n  # for storing values\n  performance &lt;- list()\n  \n  for (i in 1:m) {\n\n     # 1) run the benchmarks\n    results &lt;- bench::mark(\n      ...,\n      iterations = 10,\n      check = FALSE\n    )\n\n    # 2) extract values\n    # and calculate medians\n    performance$time[[i]]  &lt;- setNames(lapply(results$time, mean), results$expression)\n    performance$memory[[i]] &lt;- setNames(lapply(results$memory, function(x) { sum(x$bytes, na.rm = TRUE)}), results$expression)\n    performance$n_gc[[i]] &lt;- setNames(lapply(results$n_gc, sum), results$expression)\n\n  }\n\n  purrr::pmap_dfr(\n  list(performance$time, performance$memory, performance$n_gc), \n  ~{\n    tibble::tibble(\n      expression = names(..1),\n      time = unlist(..1),\n      memory = unlist(..2),\n      n_gc = unlist(..3)\n    )\n  }\n) %&gt;%\n  dplyr::mutate(expression = factor(expression, levels = unique(expression))) %&gt;%\n  dplyr::group_by(expression) %&gt;%\n  dplyr::filter(dplyr::row_number() &gt; 1) %&gt;%\n  dplyr::summarize(\n    execution_time = bench::as_bench_time(median(time)),\n    memory_usage = bench::as_bench_bytes(median(memory)),\n    gc_calls = median(n_gc),\n    .groups = \"drop\"\n  )\n\n}\n\n\n3.2.1 Regression metrics\n\nCode\nbenchmark(\n    `{RMSE}`  = SLmetrics::rmse(num_actual, num_predicted),\n    `{Pinball Loss}` = SLmetrics::pinball(num_actual, num_predicted),\n    `{Huber Loss}` = SLmetrics::huberloss(num_actual, num_predicted)\n)\n\n\n\n\nTable 3.1: Benchmarks of Root Mean Squared Error (RMSE), Pinball Loss and Huber Loss. Each benchmark is run 10 times with two input vectors of 10 million elements.\n\n\n\n#&gt; # A tibble: 3 × 4\n#&gt;   expression     execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 {RMSE}                 9.59ms           0B        0\n#&gt; 2 {Pinball Loss}         9.63ms           0B        0\n#&gt; 3 {Huber Loss}          55.89ms           0B        0\n\n\n\n\n\nCode\nbenchmark(\n    `{SLmetrics}` = SLmetrics::rmse(num_actual, num_predicted),\n    `{MLmetrics}` = MLmetrics::RMSE(num_actual, num_predicted),\n    `{yardstick}` = yardstick::rmse_vec(num_actual, num_predicted),\n    `{mlr3measures}` = mlr3measures::rmse(num_actual, num_predicted)\n)\n\n\n\n\nTable 3.2: Benchmarking Root Mean Squared Error (RMSE) across {pkgs}. Each benchmark is run 10 times with two input vectors of 10 million elements.\n\n\n\n#&gt; # A tibble: 4 × 4\n#&gt;   expression     execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 {SLmetrics}            9.61ms           0B        0\n#&gt; 2 {MLmetrics}           63.13ms       76.3MB        1\n#&gt; 3 {yardstick}          170.98ms      419.6MB        9\n#&gt; 4 {mlr3measures}        88.52ms       76.3MB        1\n\n\n\n\n\n\n3.2.2 Classification metrics\n\nCode\nbenchmark(\n    `{Confusion Matrix}`  = SLmetrics::cmatrix(fct_actual, fct_predicted),\n    `{Accuracy}` = SLmetrics::accuracy(fct_actual, fct_predicted),\n    `{F-beta}` = SLmetrics::fbeta(fct_actual, fct_predicted)\n)\n\n\n\n\nTable 3.3: Benchmarks of the Confusion Matrix, Accuracy, and F-Beta score. Each benchmark is run 10 times with two input vectors of 10 million elements.\n\n\n\n#&gt; # A tibble: 3 × 4\n#&gt;   expression         execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;                    &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 {Confusion Matrix}         8.54ms           0B        0\n#&gt; 2 {Accuracy}                 8.54ms           0B        0\n#&gt; 3 {F-beta}                   8.55ms           0B        0\n\n\n\n\n\nCode\nbenchmark(\n    `{SLmetrics}`    = SLmetrics::cmatrix(fct_actual, fct_predicted),\n    `{MLmetrics}`    = MLmetrics::ConfusionMatrix(fct_predicted, fct_actual),\n    `{yardstick}`    = yardstick::conf_mat(table(fct_actual, fct_predicted))\n)\n\n\n\n\nTable 3.4: Benchmarking a 3×3 confusion matrix across {pkgs}. Each benchmark is run 10 times with two input vectors of 10 million elements and three classes.\n\n\n\n#&gt; # A tibble: 3 × 4\n#&gt;   expression  execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 {SLmetrics}         8.55ms           0B        0\n#&gt; 2 {MLmetrics}       249.32ms        381MB        7\n#&gt; 3 {yardstick}       249.22ms        381MB        7",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Benchmarking</span>"
     ]
@@ -583,7 +583,7 @@
     "href": "integration.html",
     "title": "Integrating {SLmetrics} with other pkgs",
     "section": "",
-    "text": "In this part",
+    "text": "In this section a few examples on how to integrate {SLmetrics} into other R packages is given.",
     "crumbs": [
       "Integrating {SLmetrics} with other pkgs"
     ]
@@ -591,210 +591,210 @@
   {
     "objectID": "integration_classification.html",
     "href": "integration_classification.html",
-    "title": "4  Using {lightgbm} and {SLmetrics} in classification tasks",
+    "title": "Using {lightgbm} and {SLmetrics} in classification tasks",
     "section": "",
-    "text": "4.1 Training the GBM\nIn this section a gradient boosting machine (GBM) is trained on the wine quality-dataset, and evaluated using {SLmetrics}. The gbm trained here is a light gradient boosting machine from {lightgbm}.1\nThe GBM will be trained with default parameters, except for the objective, num_class and eval.\n# 1) define parameters\ntraining_parameters &lt;- list(\n    objective     = \"multiclass\",\n    num_class     = length(unique(outcome))\n)",
+    "text": "Training the GBM\nIn this section a gradient boosting machine (GBM) is trained on the wine quality-dataset, and evaluated using {SLmetrics}. The gbm trained here is a light gradient boosting machine from {lightgbm}.1\nThe GBM will be trained with default parameters, except for the objective, num_class and eval.\n# 1) define parameters\ntraining_parameters &lt;- list(\n    objective     = \"multiclass\",\n    num_class     = length(unique(outcome))\n)",
     "crumbs": [
       "Integrating {SLmetrics} with other pkgs",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Using {lightgbm} and {SLmetrics} in classification tasks</span>"
+      "Using {lightgbm} and {SLmetrics} in classification tasks"
     ]
   },
   {
     "objectID": "integration_classification.html#training-the-gbm",
     "href": "integration_classification.html#training-the-gbm",
-    "title": "4  Using {lightgbm} and {SLmetrics} in classification tasks",
+    "title": "Using {lightgbm} and {SLmetrics} in classification tasks",
     "section": "",
-    "text": "4.1.1 Evaluation function\n\n# 1) define the custom\n# evaluation metric\neval_fbeta &lt;- function(\n    dtrain, \n    preds) {\n\n        # 1) extract values\n        actual    &lt;- as.factor(dtrain)\n        predicted &lt;- lightgbm::get_field(preds, \"label\")\n        value     &lt;- fbeta(\n            actual    = actual,\n            predicted = predicted,\n            beta      = 2,\n            # Use micro-averaging to account\n            # for class imbalances\n            micro     = TRUE\n        )\n\n        # 2) construnct output\n        # list\n        list(\n            name          = \"fbeta\",\n            value         = value,\n            higher_better = TRUE \n        )\n    \n}\n\n\n\n4.1.2 Training the GBM\n\nmodel &lt;- lightgbm::lgb.train(\n    params  = training_parameters,\n    data    = dtrain,\n    nrounds = 100L,\n    eval    = eval_fbeta,\n    verbose = -1\n)",
+    "text": "Evaluation function\n\n# 1) define the custom\n# evaluation metric\neval_fbeta &lt;- function(\n    dtrain, \n    preds) {\n\n        # 1) extract values\n        actual    &lt;- as.factor(dtrain)\n        predicted &lt;- lightgbm::get_field(preds, \"label\")\n        value     &lt;- fbeta(\n            actual    = actual,\n            predicted = predicted,\n            beta      = 2,\n            # Use micro-averaging to account\n            # for class imbalances\n            micro     = TRUE\n        )\n\n        # 2) construnct output\n        # list\n        list(\n            name          = \"fbeta\",\n            value         = value,\n            higher_better = TRUE \n        )\n    \n}\n\n\n\nTraining the GBM\n\nmodel &lt;- lightgbm::lgb.train(\n    params  = training_parameters,\n    data    = dtrain,\n    nrounds = 100L,\n    eval    = eval_fbeta,\n    verbose = -1\n)",
     "crumbs": [
       "Integrating {SLmetrics} with other pkgs",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Using {lightgbm} and {SLmetrics} in classification tasks</span>"
+      "Using {lightgbm} and {SLmetrics} in classification tasks"
     ]
   },
   {
     "objectID": "integration_classification.html#evaluation",
     "href": "integration_classification.html#evaluation",
-    "title": "4  Using {lightgbm} and {SLmetrics} in classification tasks",
-    "section": "4.2 Evaluation",
-    "text": "4.2 Evaluation\nThe predicted classes can be extracted using predict() - these values will be converted to factor values\n\n# 1) prediction\n# from the model\npredicted &lt;- as.factor(\n    predict(\n        model,\n        newdata = test,\n        type    = \"class\"\n    )\n)\n\n\n\nSafe conversion\npredicted &lt;- factor(\n     predict(\n         model,\n         newdata = test,\n         type    = \"class\"\n     ),\n     labels = levels(outcome),\n     levels = seq_along(levels(outcome)) - 1 \n)\n\n\n\n# 1) construct confusion\n# matrix\nconfusion_matrix &lt;- cmatrix(\n    actual = actual,\n    predicted = predicted\n)\n\n# 2) visualize\nplot(\n    confusion_matrix\n)\n\n\n\n\n\n\n\n# 3) summarize\nsummary(\n    confusion_matrix\n)\n\n#&gt; Confusion Matrix (3 x 3) \n#&gt; ================================================================================\n#&gt;                High Quality Medium Quality Low Quality\n#&gt; High Quality             35             28           0\n#&gt; Medium Quality            7            165           2\n#&gt; Low Quality               0              7           1\n#&gt; ================================================================================\n#&gt; Overall Statistics (micro average)\n#&gt;  - Accuracy:          0.82\n#&gt;  - Balanced Accuracy: 0.54\n#&gt;  - Sensitivity:       0.82\n#&gt;  - Specificity:       0.91\n#&gt;  - Precision:         0.82",
+    "title": "Using {lightgbm} and {SLmetrics} in classification tasks",
+    "section": "Evaluation",
+    "text": "Evaluation\nThe predicted classes can be extracted using predict() - these values will be converted to factor values\n\n# 1) prediction\n# from the model\npredicted &lt;- as.factor(\n    predict(\n        model,\n        newdata = test,\n        type    = \"class\"\n    )\n)\n\n\n\nSafe conversion\npredicted &lt;- factor(\n     predict(\n         model,\n         newdata = test,\n         type    = \"class\"\n     ),\n     labels = levels(outcome),\n     levels = seq_along(levels(outcome)) - 1 \n)\n\n\n\n# 1) construct confusion\n# matrix\nconfusion_matrix &lt;- cmatrix(\n    actual = actual,\n    predicted = predicted\n)\n\n# 2) visualize\nplot(\n    confusion_matrix\n)\n\n\n\n\n\n\n\n# 3) summarize\nsummary(\n    confusion_matrix\n)\n\n#&gt; Confusion Matrix (3 x 3) \n#&gt; ================================================================================\n#&gt;                High Quality Medium Quality Low Quality\n#&gt; High Quality             35             28           0\n#&gt; Medium Quality            7            165           2\n#&gt; Low Quality               0              7           1\n#&gt; ================================================================================\n#&gt; Overall Statistics (micro average)\n#&gt;  - Accuracy:          0.82\n#&gt;  - Balanced Accuracy: 0.54\n#&gt;  - Sensitivity:       0.82\n#&gt;  - Specificity:       0.91\n#&gt;  - Precision:         0.82",
     "crumbs": [
       "Integrating {SLmetrics} with other pkgs",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Using {lightgbm} and {SLmetrics} in classification tasks</span>"
+      "Using {lightgbm} and {SLmetrics} in classification tasks"
     ]
   },
   {
     "objectID": "integration_classification.html#receiver-operator-characteristics",
     "href": "integration_classification.html#receiver-operator-characteristics",
-    "title": "4  Using {lightgbm} and {SLmetrics} in classification tasks",
-    "section": "4.3 Receiver Operator Characteristics",
-    "text": "4.3 Receiver Operator Characteristics\n\n# 1) prediction\n# from the model\nresponse &lt;- predict(\n        model,\n        newdata = test\n    )\n\nThe response can be passed into the ROC()-function,\n\n# 1) calculate the reciever\n# operator characteristics\nroc &lt;- ROC(\n    actual   = actual,\n    response = response\n)\n\n# 2) print the roc\n# object\nprint(roc)\n\n#&gt;    threshold level        label    tpr fpr\n#&gt; 1        Inf     1 High Quality 0.0000   0\n#&gt; 2      0.973     1 High Quality 0.0159   0\n#&gt; 3      0.973     1 High Quality 0.0317   0\n#&gt; 4      0.965     1 High Quality 0.0476   0\n#&gt; 5      0.957     1 High Quality 0.0635   0\n#&gt; 6      0.949     1 High Quality 0.0794   0\n#&gt; 7      0.931     1 High Quality 0.0952   0\n#&gt; 8      0.926     1 High Quality 0.1111   0\n#&gt; 9      0.896     1 High Quality 0.1270   0\n#&gt; 10     0.896     1 High Quality 0.1429   0\n#&gt;  [ reached 'max' / getOption(\"max.print\") -- omitted 728 rows ]\n\n\nThe ROC()-function returns a data.frame-object, with 738 rows corresponding to the length of response multiplied with number of classes in the data. The roc-object can be plotted as follows,\n\n# 1) plot roc\n# object\nplot(roc)\n\n\n\n\n\n\n\n\n\nroc.auc(\n    actual, \n    response\n)\n\n#&gt;   High Quality Medium Quality    Low Quality \n#&gt;      0.9200244      0.8888619      0.8349156",
+    "title": "Using {lightgbm} and {SLmetrics} in classification tasks",
+    "section": "Receiver Operator Characteristics",
+    "text": "Receiver Operator Characteristics\n\n# 1) prediction\n# from the model\nresponse &lt;- predict(\n        model,\n        newdata = test\n    )\n\nThe response can be passed into the ROC()-function,\n\n# 1) calculate the reciever\n# operator characteristics\nroc &lt;- ROC(\n    actual   = actual,\n    response = response\n)\n\n# 2) print the roc\n# object\nprint(roc)\n\n#&gt;    threshold level        label    tpr fpr\n#&gt; 1        Inf     1 High Quality 0.0000   0\n#&gt; 2      0.973     1 High Quality 0.0159   0\n#&gt; 3      0.973     1 High Quality 0.0317   0\n#&gt; 4      0.965     1 High Quality 0.0476   0\n#&gt; 5      0.957     1 High Quality 0.0635   0\n#&gt; 6      0.949     1 High Quality 0.0794   0\n#&gt; 7      0.931     1 High Quality 0.0952   0\n#&gt; 8      0.926     1 High Quality 0.1111   0\n#&gt; 9      0.896     1 High Quality 0.1270   0\n#&gt; 10     0.896     1 High Quality 0.1429   0\n#&gt;  [ reached 'max' / getOption(\"max.print\") -- omitted 728 rows ]\n\n\nThe ROC()-function returns a data.frame-object, with 738 rows corresponding to the length of response multiplied with number of classes in the data. The roc-object can be plotted as follows,\n\n# 1) plot roc\n# object\nplot(roc)\n\n\n\n\n\n\n\n\n\nroc.auc(\n    actual, \n    response\n)\n\n#&gt;   High Quality Medium Quality    Low Quality \n#&gt;      0.9200244      0.8888619      0.8349156",
     "crumbs": [
       "Integrating {SLmetrics} with other pkgs",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Using {lightgbm} and {SLmetrics} in classification tasks</span>"
+      "Using {lightgbm} and {SLmetrics} in classification tasks"
     ]
   },
   {
     "objectID": "integration_classification.html#footnotes",
     "href": "integration_classification.html#footnotes",
-    "title": "4  Using {lightgbm} and {SLmetrics} in classification tasks",
+    "title": "Using {lightgbm} and {SLmetrics} in classification tasks",
     "section": "",
     "text": "The wine quality dataset comes (almost) ready for analysis. See the repo for more details on the data-manipulation steps taken.↩︎",
     "crumbs": [
       "Integrating {SLmetrics} with other pkgs",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Using {lightgbm} and {SLmetrics} in classification tasks</span>"
+      "Using {lightgbm} and {SLmetrics} in classification tasks"
     ]
   },
   {
     "objectID": "integration_regression.html",
     "href": "integration_regression.html",
-    "title": "5  Using {xgboost} and {SLmetrics} in regression tasks",
+    "title": "Using {xgboost} and {SLmetrics} in regression tasks",
     "section": "",
-    "text": "5.1 Training the GBM\nIn this section a gradient boosting machine (GBM) is trained on the obesity-dataset, and evaluated using {SLmetrics}. The gbm trained here is a light gradient boosting machine from {xgboost}.1",
+    "text": "Training the GBM\nIn this section a gradient boosting machine (GBM) is trained on the obesity-dataset, and evaluated using {SLmetrics}. The gbm trained here is a light gradient boosting machine from {xgboost}.1",
     "crumbs": [
       "Integrating {SLmetrics} with other pkgs",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Using {xgboost} and {SLmetrics} in regression tasks</span>"
+      "Using {xgboost} and {SLmetrics} in regression tasks"
     ]
   },
   {
     "objectID": "integration_regression.html#training-the-gbm",
     "href": "integration_regression.html#training-the-gbm",
-    "title": "5  Using {xgboost} and {SLmetrics} in regression tasks",
+    "title": "Using {xgboost} and {SLmetrics} in regression tasks",
     "section": "",
-    "text": "5.1.1 Evaluation function\n\n# 1) define the custom\n# evaluation metric\neval_rrse &lt;- function(\n    preds, \n    dtrain) {\n\n        # 1) extract values\n        actual    &lt;- xgboost::getinfo(dtrain, \"label\")\n        predicted &lt;- preds\n        value     &lt;- rrse(\n            actual    = actual,\n            predicted = predicted\n        )\n\n        # 2) construnct output\n        # list\n        list(\n            metric = \"RRMSE\",\n            value  = value\n        )\n    \n}\n\n\n\n5.1.2 Training the GBM\nWe train the model using the xgb.train()-function,\n\n# 1) model training\nmodel &lt;- xgboost::xgb.train(\n    data    = dtrain,\n    nrounds = 10L,\n    verbose = 0,\n    feval   = eval_rrse,\n    watchlist = list(\n        train = dtrain,\n        test  = dtest\n    ),\n    maximize = FALSE\n)",
+    "text": "Evaluation function\n\n# 1) define the custom\n# evaluation metric\neval_rrse &lt;- function(\n    preds, \n    dtrain) {\n\n        # 1) extract values\n        actual    &lt;- xgboost::getinfo(dtrain, \"label\")\n        predicted &lt;- preds\n        value     &lt;- rrse(\n            actual    = actual,\n            predicted = predicted\n        )\n\n        # 2) construnct output\n        # list\n        list(\n            metric = \"RRMSE\",\n            value  = value\n        )\n    \n}\n\n\n\nTraining the GBM\nWe train the model using the xgb.train()-function,\n\n# 1) model training\nmodel &lt;- xgboost::xgb.train(\n    data    = dtrain,\n    nrounds = 10L,\n    verbose = 0,\n    feval   = eval_rrse,\n    watchlist = list(\n        train = dtrain,\n        test  = dtest\n    ),\n    maximize = FALSE\n)",
     "crumbs": [
       "Integrating {SLmetrics} with other pkgs",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Using {xgboost} and {SLmetrics} in regression tasks</span>"
+      "Using {xgboost} and {SLmetrics} in regression tasks"
     ]
   },
   {
     "objectID": "integration_regression.html#performance-evaluation",
     "href": "integration_regression.html#performance-evaluation",
-    "title": "5  Using {xgboost} and {SLmetrics} in regression tasks",
-    "section": "5.2 Performance Evaluation",
-    "text": "5.2 Performance Evaluation\nWe extract the predicted values using the predict()-function,\n\n# 1) out of sample\n# prediction\npredicted &lt;- predict(\n    model,\n    newdata = dtest\n)\n\nWe summarize the performance using relative root mean squared error, root mean squared error and concordance correlation coefficient\n\n# 1) summarize all\n# performance measures \n# in data.frame\ndata.frame(\n    RRMSE  = rrse(actual, predicted), \n    RMSE   = rmse(actual, predicted),\n    CCC    = ccc(actual, predicted)\n)\n\n#&gt;       RRMSE     RMSE       CCC\n#&gt; 1 0.4115731 10.76499 0.9062945",
+    "title": "Using {xgboost} and {SLmetrics} in regression tasks",
+    "section": "Performance Evaluation",
+    "text": "Performance Evaluation\nWe extract the predicted values using the predict()-function,\n\n# 1) out of sample\n# prediction\npredicted &lt;- predict(\n    model,\n    newdata = dtest\n)\n\nWe summarize the performance using relative root mean squared error, root mean squared error and concordance correlation coefficient\n\n# 1) summarize all\n# performance measures \n# in data.frame\ndata.frame(\n    RRMSE  = rrse(actual, predicted), \n    RMSE   = rmse(actual, predicted),\n    CCC    = ccc(actual, predicted)\n)\n\n#&gt;       RRMSE     RMSE       CCC\n#&gt; 1 0.4115731 10.76499 0.9062945",
     "crumbs": [
       "Integrating {SLmetrics} with other pkgs",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Using {xgboost} and {SLmetrics} in regression tasks</span>"
+      "Using {xgboost} and {SLmetrics} in regression tasks"
     ]
   },
   {
     "objectID": "integration_regression.html#footnotes",
     "href": "integration_regression.html#footnotes",
-    "title": "5  Using {xgboost} and {SLmetrics} in regression tasks",
+    "title": "Using {xgboost} and {SLmetrics} in regression tasks",
     "section": "",
     "text": "The obesity dataset comes (almost) ready for analysis. See the repo for more details on the data-manipulation steps taken.↩︎",
     "crumbs": [
       "Integrating {SLmetrics} with other pkgs",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Using {xgboost} and {SLmetrics} in regression tasks</span>"
+      "Using {xgboost} and {SLmetrics} in regression tasks"
     ]
   },
   {
     "objectID": "openmp.html",
     "href": "openmp.html",
-    "title": "6  OpenMP",
+    "title": "4  OpenMP",
     "section": "",
-    "text": "6.1 Enabling/Disabling OpenMP\n{SLmetrics} supports parallelization through OpenMP. In this section this functionality is introduced.\nOpenMP is disabled by default, but can be enabled as follows:\nSLmetrics::openmp.on()\n\n#&gt; OpenMP enabled!\nAnd disabled as follows:\nSLmetrics::openmp.off()\n\n#&gt; OpenMP disabled!\nBy default all threads are used. To control the amount of threads, see the following code:\nSLmetrics::openmp.threads(3)\n\n#&gt; Using 3 threads.\nTo use all threads:\nSLmetrics::openmp.threads(NULL)\n\n#&gt; Using 4 threads.",
+    "text": "4.1 Enabling/Disabling OpenMP\n{SLmetrics} supports parallelization through OpenMP. In this section this functionality is introduced.\nOpenMP is disabled by default, but can be enabled as follows:\nSLmetrics::openmp.on()\n\n#&gt; OpenMP enabled!\nAnd disabled as follows:\nSLmetrics::openmp.off()\n\n#&gt; OpenMP disabled!\nBy default all threads are used. To control the amount of threads, see the following code:\nSLmetrics::openmp.threads(3)\n\n#&gt; Using 3 threads.\nTo use all threads:\nSLmetrics::openmp.threads(NULL)\n\n#&gt; Using 4 threads.",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>OpenMP</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>OpenMP</span>"
     ]
   },
   {
     "objectID": "openmp.html#available-threads",
     "href": "openmp.html#available-threads",
-    "title": "6  OpenMP",
-    "section": "6.2 Available threads",
-    "text": "6.2 Available threads\nThe number of available threads are detected automatically, but can also be viewed using SLmetrics::openmp.threads() without passing any arguments. See below:\n\nSLmetrics::openmp.threads()\n\n#&gt; [1] 4",
+    "title": "4  OpenMP",
+    "section": "4.2 Available threads",
+    "text": "4.2 Available threads\nThe number of available threads are detected automatically, but can also be viewed using SLmetrics::openmp.threads() without passing any arguments. See below:\n\nSLmetrics::openmp.threads()\n\n#&gt; [1] 4",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>OpenMP</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>OpenMP</span>"
     ]
   },
   {
     "objectID": "openmp.html#benchmarking-openmp",
     "href": "openmp.html#benchmarking-openmp",
-    "title": "6  OpenMP",
-    "section": "6.3 Benchmarking OpenMP",
-    "text": "6.3 Benchmarking OpenMP\nTo benchmark the performance gain on enabling OpenMP, the same setup as in Chapter 3 is used. Below is the actual and predicted values are generated.\n\n# 1) set seed for reproducibility\nset.seed(1903)\n\n# 2) create classification\n# problem\nfct_actual &lt;- create_factor()\nfct_predicted &lt;- create_factor()\n\n\nCode\nSLmetrics::openmp.on()\n\nbenchmark(\n    `With OpenMP` = SLmetrics::cmatrix(fct_actual, fct_predicted)\n)\n\n\n\n\nTable 6.1: Benchmark of computing a 3x3 confusion matrix with OpenMP enabled. Each benchmark is run 10 times with two input vectors of 10 million elements.\n\n\n\n#&gt; # A tibble: 1 × 4\n#&gt;   expression  execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 With OpenMP         3.86ms           0B        0\n\n\n\n\n\nCode\nSLmetrics::openmp.off()\n\nbenchmark(\n    `Wihtout OpenMP` = SLmetrics::cmatrix(fct_actual, fct_predicted)\n)\n\n\n\n\nTable 6.2: Benchmark of computing a 3x3 confusion matrix with OpenMP enabled. Each benchmark is run 10 times with two input vectors of 10 million elements.\n\n\n\n#&gt; # A tibble: 1 × 4\n#&gt;   expression     execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 Wihtout OpenMP         8.53ms           0B        0",
+    "title": "4  OpenMP",
+    "section": "4.3 Benchmarking OpenMP",
+    "text": "4.3 Benchmarking OpenMP\nTo benchmark the performance gain on enabling OpenMP, the same setup as in Chapter 3 is used. Below is the actual and predicted values are generated.\n\n# 1) set seed for reproducibility\nset.seed(1903)\n\n# 2) create classification\n# problem\nfct_actual &lt;- create_factor()\nfct_predicted &lt;- create_factor()\n\n\nCode\nSLmetrics::openmp.on()\n\nbenchmark(\n    `With OpenMP` = SLmetrics::cmatrix(fct_actual, fct_predicted)\n)\n\n\n\n\nTable 4.1: Benchmark of computing a 3x3 confusion matrix with OpenMP enabled. Each benchmark is run 10 times with two input vectors of 10 million elements.\n\n\n\n#&gt; # A tibble: 1 × 4\n#&gt;   expression  execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 With OpenMP         3.86ms           0B        0\n\n\n\n\n\nCode\nSLmetrics::openmp.off()\n\nbenchmark(\n    `Wihtout OpenMP` = SLmetrics::cmatrix(fct_actual, fct_predicted)\n)\n\n\n\n\nTable 4.2: Benchmark of computing a 3x3 confusion matrix with OpenMP enabled. Each benchmark is run 10 times with two input vectors of 10 million elements.\n\n\n\n#&gt; # A tibble: 1 × 4\n#&gt;   expression     execution_time memory_usage gc_calls\n#&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;\n#&gt; 1 Wihtout OpenMP         8.54ms           0B        0",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>OpenMP</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>OpenMP</span>"
     ]
   },
   {
     "objectID": "openmp.html#key-take-aways",
     "href": "openmp.html#key-take-aways",
-    "title": "6  OpenMP",
-    "section": "6.4 Key take-aways",
-    "text": "6.4 Key take-aways\nEnabling OpenMP support can decrease computation time significantly - but it should only be used consciously, and with care, to avoid function calls competing for the same threads. This is especially the case if you are running a, say, neural network in parallel.",
+    "title": "4  OpenMP",
+    "section": "4.4 Key take-aways",
+    "text": "4.4 Key take-aways\nEnabling OpenMP support can decrease computation time significantly - but it should only be used consciously, and with care, to avoid function calls competing for the same threads. This is especially the case if you are running a, say, neural network in parallel.",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>OpenMP</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>OpenMP</span>"
     ]
   },
   {
     "objectID": "garbage.html",
     "href": "garbage.html",
-    "title": "7  Garbage in, garbage out",
+    "title": "5  Garbage in, garbage out",
     "section": "",
-    "text": "7.1 Implicit assumptions\nThis section examines the underlying assumptions in {SLmetrics}, and how it may affect your pipeline if you decide adopt it.\nAll evaluation functions in {SLmetrics} assumes that end-user follows the typical AI/ML workflow:\nflowchart LR\n    B(Data Cleaning)\n    B --&gt; C[Feature Engineering]\n    C --&gt; D[Training]\n    D --&gt; E{Evaluation}\nThe implications of this assumption is two-fold:\nHence, the implicit assumption is that the end-user has a high degree of control over the training process and an understanding of R beyond beginner-level. See, for example, the following code:\n# 1) define values\nactual    &lt;- c(-1.2, 1.3, 2.6, 3)\npredicted &lt;- rev(actual) \n\n# 2) evaluate with RMSLE\nSLmetrics::rmsle(\n    actual,\n    predicted\n)\n\n#&gt; [1] NaN\nThe actual- and predicted-vector contains negative values, and is being passed to the root mean squared logarithmic error (rmsle())-function. It returns NaN without any warnings. The same action in using base R would lead to verbose errors:\nmean(log(actual))\n\n#&gt; Warning in log(actual): NaNs produced\n\n\n#&gt; [1] NaN",
+    "text": "5.1 Implicit assumptions\nThis section examines the underlying assumptions in {SLmetrics}, and how it may affect your pipeline if you decide adopt it.\nAll evaluation functions in {SLmetrics} assumes that end-user follows the typical AI/ML workflow:\nflowchart LR\n    B(Data Cleaning)\n    B --&gt; C[Feature Engineering]\n    C --&gt; D[Training]\n    D --&gt; E{Evaluation}\nThe implications of this assumption is two-fold:\nHence, the implicit assumption is that the end-user has a high degree of control over the training process and an understanding of R beyond beginner-level. See, for example, the following code:\n# 1) define values\nactual    &lt;- c(-1.2, 1.3, 2.6, 3)\npredicted &lt;- rev(actual) \n\n# 2) evaluate with RMSLE\nSLmetrics::rmsle(\n    actual,\n    predicted\n)\n\n#&gt; [1] NaN\nThe actual- and predicted-vector contains negative values, and is being passed to the root mean squared logarithmic error (rmsle())-function. It returns NaN without any warnings. The same action in using base R would lead to verbose errors:\nmean(log(actual))\n\n#&gt; Warning in log(actual): NaNs produced\n\n\n#&gt; [1] NaN",
     "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
     ]
   },
   {
     "objectID": "garbage.html#implicit-assumptions",
     "href": "garbage.html#implicit-assumptions",
-    "title": "7  Garbage in, garbage out",
+    "title": "5  Garbage in, garbage out",
     "section": "",
     "text": "There is no handling of missing data in input variables\nThere is no validity check of inputs",
     "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
     ]
   },
   {
     "objectID": "garbage.html#undefined-behavior",
     "href": "garbage.html#undefined-behavior",
-    "title": "7  Garbage in, garbage out",
-    "section": "7.2 Undefined behavior",
-    "text": "7.2 Undefined behavior\n\n\n\n\n\n\nImportant\n\n\n\nDo NOT run the chunks in this section in an R-session where you have important work, as your session will crash.\n\n\n{SLmetrics} uses pointer arithmetics via C++ which, contrary to usual practice in R, performs computations on memory addresses rather than the object itself. If the memory address is ill-defined, which can occur in cases where values lack valid binary representations for the operations being performed, undefined behavior1 follows and will crash your R-session. See this code:\n\n# 1) define values\nactual &lt;- factor(c(NA, \"A\", \"B\", \"A\"))\npredicted &lt;- rev(actual)\n\n# 2) pass into\n# cmatrix\nSLmetrics::cmatrix(\n    actual,\n    predicted\n)\n#&gt; address 0x5946ff482178, cause 'memory not mapped'\n#&gt; An irrecoverable exception occurred. R is aborting now ...\n\nThis is not something that can prevented with, say, try(), as the error is undefined. See this SO-post for details.",
+    "title": "5  Garbage in, garbage out",
+    "section": "5.2 Undefined behavior",
+    "text": "5.2 Undefined behavior\n\n\n\n\n\n\nImportant\n\n\n\nDo NOT run the chunks in this section in an R-session where you have important work, as your session will crash.\n\n\n{SLmetrics} uses pointer arithmetics via C++ which, contrary to usual practice in R, performs computations on memory addresses rather than the object itself. If the memory address is ill-defined, which can occur in cases where values lack valid binary representations for the operations being performed, undefined behavior1 follows and will crash your R-session. See this code:\n\n# 1) define values\nactual &lt;- factor(c(NA, \"A\", \"B\", \"A\"))\npredicted &lt;- rev(actual)\n\n# 2) pass into\n# cmatrix\nSLmetrics::cmatrix(\n    actual,\n    predicted\n)\n#&gt; address 0x5946ff482178, cause 'memory not mapped'\n#&gt; An irrecoverable exception occurred. R is aborting now ...\n\nThis is not something that can prevented with, say, try(), as the error is undefined. See this SO-post for details.",
     "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
     ]
   },
   {
     "objectID": "garbage.html#edge-cases",
     "href": "garbage.html#edge-cases",
-    "title": "7  Garbage in, garbage out",
-    "section": "7.3 Edge cases",
-    "text": "7.3 Edge cases\nThere are cases, where it can be hard to predict what will happen when passing a given set of actual and predicted classes. Especially if the input is too large, and it becomes inefficient to check these every iteration. In such cases {SLmetrics} does help. See for example the following code:\n\n# 1) define values\nactual &lt;- factor(\n    sample(letters[1:3],size = 1e7, replace = TRUE, prob = c(0.5, 0.5, 0)),\n    levels = letters[1:3]\n    )\npredicted &lt;- rev(actual)\n\n# 2) pass into\n# cmatrix\nSLmetrics::fbeta(\n    actual,\n    predicted\n)\n\n#&gt;         a         b         c \n#&gt; 0.4997446 0.4998578       NaN\n\n\nOne class, c, is never predicted, nor is it present in the actual labels - therefore, by construction, the value is NaN as there is division by zero. During aggregation to micro or macro averages these are being handled according to na.rm. See below:\n\n# 1) macro average\nSLmetrics::fbeta(\n    actual,\n    predicted,\n    micro = FALSE,\n    na.rm = TRUE\n)\n\n#&gt; [1] 0.4998012\n\n# 2) macro average\nSLmetrics::fbeta(\n    actual,\n    predicted,\n    micro = FALSE,\n    na.rm = FALSE\n)\n\n#&gt; [1] 0.3332008\n\n\n\n# 1) define values\nactual    &lt;- c(-1.2, 1.3, 2.6, 3)\npredicted &lt;- rev(actual) \n\n# 2) evaluate with RMSLE\ntry(\n    SLmetrics::RMSLE(\n        actual,\n        predicted\n    )\n)\n\n#&gt; Error : 'RMSLE' is not an exported object from 'namespace:SLmetrics'\n\n\nIn these cases, there is no undefined behaviour or exploding R sessions as all of this is handled internally.",
+    "title": "5  Garbage in, garbage out",
+    "section": "5.3 Edge cases",
+    "text": "5.3 Edge cases\nThere are cases, where it can be hard to predict what will happen when passing a given set of actual and predicted classes. Especially if the input is too large, and it becomes inefficient to check these every iteration. In such cases {SLmetrics} does help. See for example the following code:\n\n# 1) define values\nactual &lt;- factor(\n    sample(letters[1:3],size = 1e7, replace = TRUE, prob = c(0.5, 0.5, 0)),\n    levels = letters[1:3]\n    )\npredicted &lt;- rev(actual)\n\n# 2) pass into\n# cmatrix\nSLmetrics::fbeta(\n    actual,\n    predicted\n)\n\n#&gt;         a         b         c \n#&gt; 0.5003941 0.5000930       NaN\n\n\nOne class, c, is never predicted, nor is it present in the actual labels - therefore, by construction, the value is NaN as there is division by zero. During aggregation to micro or macro averages these are being handled according to na.rm. See below:\n\n# 1) macro average\nSLmetrics::fbeta(\n    actual,\n    predicted,\n    micro = FALSE,\n    na.rm = TRUE\n)\n\n#&gt; [1] 0.5002436\n\n# 2) macro average\nSLmetrics::fbeta(\n    actual,\n    predicted,\n    micro = FALSE,\n    na.rm = FALSE\n)\n\n#&gt; [1] 0.3334957\n\n\n\n# 1) define values\nactual    &lt;- c(-1.2, 1.3, 2.6, 3)\npredicted &lt;- rev(actual) \n\n# 2) evaluate with RMSLE\ntry(\n    SLmetrics::RMSLE(\n        actual,\n        predicted\n    )\n)\n\n#&gt; Error : 'RMSLE' is not an exported object from 'namespace:SLmetrics'\n\n\nIn these cases, there is no undefined behaviour or exploding R sessions as all of this is handled internally.",
     "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
     ]
   },
   {
     "objectID": "garbage.html#staying-safe",
     "href": "garbage.html#staying-safe",
-    "title": "7  Garbage in, garbage out",
-    "section": "7.4 Staying “safe”",
-    "text": "7.4 Staying “safe”\nTo avoid undefined behavior when passing ill-defined input one option is to write a wrapper function, or using existing infrastructure. Below is an example of a wrapper function:\n\n# 1) RMSLE\nconfusion_matrix &lt;- function(\n    actual, \n    predicted) {\n\n        if (any(is.na(actual))) {\n            stop(\"`actual` contains missing values\")\n        }\n\n        if (any(is.na(predicted))) {\n            stop(\"`predicted` contains missing values\")\n        }\n\n        SLmetrics::cmatrix(\n            actual,\n            predicted\n        )\n\n}\n\n\n# 1) define values\nactual &lt;- factor(c(NA, \"A\", \"B\", \"A\", \"B\"))\npredicted &lt;- rev(actual)\n\n# 2) \ntry(\n    confusion_matrix(\n    actual,\n    predicted\n    )\n)\n\n#&gt; Error in confusion_matrix(actual, predicted) : \n#&gt;   `actual` contains missing values\n\n\nAnother option is to use the existing infrastructure. {yardstick} does all kinds of safety checks before executing a function, and you can, via the metric_vec_template() pass a SLmetrics::foo() in the foo_impl()-function. This gives you the safety of {yardstick}, and the efficiency of {SLmetrics}.2\n\n\n\n\n\n\nImportant\n\n\n\nBe aware that using {SLmetrics} with {yardstick} will introduce some efficiency overhead - especially on large vectors.",
+    "title": "5  Garbage in, garbage out",
+    "section": "5.4 Staying “safe”",
+    "text": "5.4 Staying “safe”\nTo avoid undefined behavior when passing ill-defined input one option is to write a wrapper function, or using existing infrastructure. Below is an example of a wrapper function:\n\n# 1) RMSLE\nconfusion_matrix &lt;- function(\n    actual, \n    predicted) {\n\n        if (any(is.na(actual))) {\n            stop(\"`actual` contains missing values\")\n        }\n\n        if (any(is.na(predicted))) {\n            stop(\"`predicted` contains missing values\")\n        }\n\n        SLmetrics::cmatrix(\n            actual,\n            predicted\n        )\n\n}\n\n\n# 1) define values\nactual &lt;- factor(c(NA, \"A\", \"B\", \"A\", \"B\"))\npredicted &lt;- rev(actual)\n\n# 2) \ntry(\n    confusion_matrix(\n    actual,\n    predicted\n    )\n)\n\n#&gt; Error in confusion_matrix(actual, predicted) : \n#&gt;   `actual` contains missing values\n\n\nAnother option is to use the existing infrastructure. {yardstick} does all kinds of safety checks before executing a function, and you can, via the metric_vec_template() pass a SLmetrics::foo() in the foo_impl()-function. This gives you the safety of {yardstick}, and the efficiency of {SLmetrics}.2\n\n\n\n\n\n\nImportant\n\n\n\nBe aware that using {SLmetrics} with {yardstick} will introduce some efficiency overhead - especially on large vectors.",
     "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
     ]
   },
   {
     "objectID": "garbage.html#key-take-aways",
     "href": "garbage.html#key-take-aways",
-    "title": "7  Garbage in, garbage out",
-    "section": "7.5 Key take-aways",
-    "text": "7.5 Key take-aways\n{SLmetrics} assumes that the end-user follows the typical AI/ML workflow, and has an understanding of R beyond beginner-level. And therefore {SLmetrics} does not check the validity of the user-input, which may lead to undefined behavior if input is ill-defined.",
+    "title": "5  Garbage in, garbage out",
+    "section": "5.5 Key take-aways",
+    "text": "5.5 Key take-aways\n{SLmetrics} assumes that the end-user follows the typical AI/ML workflow, and has an understanding of R beyond beginner-level. And therefore {SLmetrics} does not check the validity of the user-input, which may lead to undefined behavior if input is ill-defined.",
     "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
     ]
   },
   {
     "objectID": "garbage.html#footnotes",
     "href": "garbage.html#footnotes",
-    "title": "7  Garbage in, garbage out",
+    "title": "5  Garbage in, garbage out",
     "section": "",
     "text": "Undefined behavior refers to program operations that are not prescribed by the language specification, leading to unpredictable results or crashes.↩︎\nAn example would be appropriate. But my first attempt lead to a decrecated-warning, which is also one of the main reasons I developed this {pkg}, and gave up. See the {documentation} on how to create custom metrics using {yardstick}.↩︎",
     "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Garbage in, garbage out</span>"
     ]
   },
   {

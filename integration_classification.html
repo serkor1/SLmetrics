@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Using {lightgbm} and {SLmetrics} in classification tasks – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
+<title>Using {lightgbm} and {SLmetrics} in classification tasks – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./integration.html">Integrating {SLmetrics} with other pkgs</a></li><li class="breadcrumb-item"><a href="./integration_classification.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Using {lightgbm} and {SLmetrics} in classification tasks</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./integration.html">Integrating {SLmetrics} with other pkgs</a></li><li class="breadcrumb-item"><a href="./integration_classification.html">Using {lightgbm} and {SLmetrics} in classification tasks</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -461,13 +461,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./integration_classification.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Using {lightgbm} and {SLmetrics} in classification tasks</span></span></a>
+ <span class="menu-text">Using {lightgbm} and {SLmetrics} in classification tasks</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./integration_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Using {xgboost} and {SLmetrics} in regression tasks</span></span></a>
+ <span class="menu-text">Using {xgboost} and {SLmetrics} in regression tasks</span></a>
   </div>
 </li>
       </ul>
@@ -475,13 +475,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./openmp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">OpenMP</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">OpenMP</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./garbage.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -500,22 +500,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#training-the-gbm" id="toc-training-the-gbm" class="nav-link active" data-scroll-target="#training-the-gbm"><span class="header-section-number">4.1</span> Training the GBM</a>
+  <li><a href="#training-the-gbm" id="toc-training-the-gbm" class="nav-link active" data-scroll-target="#training-the-gbm">Training the GBM</a>
   <ul class="collapse">
-  <li><a href="#evaluation-function" id="toc-evaluation-function" class="nav-link" data-scroll-target="#evaluation-function"><span class="header-section-number">4.1.1</span> Evaluation function</a></li>
-  <li><a href="#training-the-gbm-1" id="toc-training-the-gbm-1" class="nav-link" data-scroll-target="#training-the-gbm-1"><span class="header-section-number">4.1.2</span> Training the GBM</a></li>
+  <li><a href="#evaluation-function" id="toc-evaluation-function" class="nav-link" data-scroll-target="#evaluation-function">Evaluation function</a></li>
+  <li><a href="#training-the-gbm-1" id="toc-training-the-gbm-1" class="nav-link" data-scroll-target="#training-the-gbm-1">Training the GBM</a></li>
   </ul></li>
-  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation"><span class="header-section-number">4.2</span> Evaluation</a></li>
-  <li><a href="#receiver-operator-characteristics" id="toc-receiver-operator-characteristics" class="nav-link" data-scroll-target="#receiver-operator-characteristics"><span class="header-section-number">4.3</span> Receiver Operator Characteristics</a></li>
+  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation">Evaluation</a></li>
+  <li><a href="#receiver-operator-characteristics" id="toc-receiver-operator-characteristics" class="nav-link" data-scroll-target="#receiver-operator-characteristics">Receiver Operator Characteristics</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/integration_classification.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/integration_classification.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./integration.html">Integrating {SLmetrics} with other pkgs</a></li><li class="breadcrumb-item"><a href="./integration_classification.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Using {lightgbm} and {SLmetrics} in classification tasks</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./integration.html">Integrating {SLmetrics} with other pkgs</a></li><li class="breadcrumb-item"><a href="./integration_classification.html">Using {lightgbm} and {SLmetrics} in classification tasks</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Using {lightgbm} and {SLmetrics} in classification tasks</span></h1>
+<h1 class="title">Using {lightgbm} and {SLmetrics} in classification tasks</h1>
 </div>
 
 
@@ -586,8 +586,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="training-the-gbm" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="training-the-gbm"><span class="header-section-number">4.1</span> Training the GBM</h2>
+<section id="training-the-gbm" class="level2">
+<h2 class="anchored" data-anchor-id="training-the-gbm">Training the GBM</h2>
 <p>The GBM will be trained with default parameters, except for the <code>objective</code>, <code>num_class</code> and <code>eval</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) define parameters</span></span>
@@ -596,8 +596,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_class     =</span> <span class="fu">length</span>(<span class="fu">unique</span>(outcome))</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="evaluation-function" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="evaluation-function"><span class="header-section-number">4.1.1</span> Evaluation function</h3>
+<section id="evaluation-function" class="level3">
+<h3 class="anchored" data-anchor-id="evaluation-function">Evaluation function</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) define the custom</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># evaluation metric</span></span>
@@ -628,8 +628,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="training-the-gbm-1" class="level3" data-number="4.1.2">
-<h3 data-number="4.1.2" class="anchored" data-anchor-id="training-the-gbm-1"><span class="header-section-number">4.1.2</span> Training the GBM</h3>
+<section id="training-the-gbm-1" class="level3">
+<h3 class="anchored" data-anchor-id="training-the-gbm-1">Training the GBM</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> lightgbm<span class="sc">::</span><span class="fu">lgb.train</span>(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">params  =</span> training_parameters,</span>
@@ -641,8 +641,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="evaluation" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="evaluation"><span class="header-section-number">4.2</span> Evaluation</h2>
+<section id="evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="evaluation">Evaluation</h2>
 <p>The predicted classes can be extracted using <code>predict()</code> - these values will be converted to <code>factor</code> values</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) prediction</span></span>
@@ -709,8 +709,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="receiver-operator-characteristics" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="receiver-operator-characteristics"><span class="header-section-number">4.3</span> Receiver Operator Characteristics</h2>
+<section id="receiver-operator-characteristics" class="level2">
+<h2 class="anchored" data-anchor-id="receiver-operator-characteristics">Receiver Operator Characteristics</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) prediction</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># from the model</span></span>
@@ -1349,7 +1349,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./integration_regression.html" class="pagination-link" aria-label="Using {xgboost} and {SLmetrics} in regression tasks">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Using {xgboost} and {SLmetrics} in regression tasks</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text">Using {xgboost} and {SLmetrics} in regression tasks</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
