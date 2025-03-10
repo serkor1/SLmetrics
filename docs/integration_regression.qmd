@@ -17,7 +17,7 @@ knitr:
 library(SLmetrics)
 ```
 
-# Using {xgboost} and {SLmetrics} in regression tasks
+# Using {xgboost} and {SLmetrics} in regression tasks {.unnumbered}
 
 In this section a gradient boosting machine (GBM) is trained on the [obesity](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)-dataset, and evaluated using [{SLmetrics}](https://github.com/serkor1/SLmetrics). The gbm trained here is a light gradient boosting machine from [{xgboost}](https://github.com/dmlc/xgboost).[^1]
 

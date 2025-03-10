@@ -17,7 +17,7 @@ knitr:
 library(SLmetrics)
 ```
 
-# Using {lightgbm} and {SLmetrics} in classification tasks
+# Using {lightgbm} and {SLmetrics} in classification tasks {.unnumbered}
 
 In this section a gradient boosting machine (GBM) is trained on the [wine quality](https://archive.ics.uci.edu/dataset/186/wine+quality)-dataset, and evaluated using [{SLmetrics}](https://github.com/serkor1/SLmetrics). The gbm trained here is a light gradient boosting machine from [{lightgbm}](https://github.com/microsoft/LightGBM).[^1]
 

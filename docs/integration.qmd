@@ -1,3 +1,3 @@
-# Integrating {SLmetrics} with other pkgs
+# Integrating {SLmetrics} with other pkgs {.unnumbered}
 
-In this part
+In this section a few examples on how to integrate [{SLmetrics}](https://github.com/serkor1/SLmetrics) into other `R` packages is given.
