@@ -21,18 +21,14 @@ LinkingTo:
     RcppEigen
 Suggests: 
     knitr,
-    lightgbm,
-    mlbench,
     reticulate,
     rmarkdown,
-    testthat (>= 3.0.0),
-    xgboost
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports:
     grDevices,
     lattice,
     Rcpp
-VignetteBuilder: knitr
 Depends: 
     R (>= 4.3)
 URL: https://serkor1.github.io/SLmetrics/, https://github.com/serkor1/SLmetrics

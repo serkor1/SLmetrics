@@ -17,17 +17,14 @@ knitr:
 library(SLmetrics)
 ```
 
-# Training a {lightgbm} classifier and evaluating it with {SLmetrics}
+# Using {lightgbm} and {SLmetrics} in classification tasks
 
-## The setup
+In this section a gradient boosting machine (GBM) is trained on the [wine quality](https://archive.ics.uci.edu/dataset/186/wine+quality)-dataset, and evaluated using [{SLmetrics}](https://github.com/serkor1/SLmetrics). The gbm trained here is a light gradient boosting machine from [{lightgbm}](https://github.com/microsoft/LightGBM).[^1]
 
-In this section, we setup the essential the workflow for using [{SLmetrics}](https://github.com/serkor1/SLmetrics) with [{lightgbm}](https://github.com/microsoft/LightGBM).
-
-### The data
 
 ```{r data}
 # 1) load data
-# from {mlbench}
+# from {SLmetrics}
 data("wine_quality", package = "SLmetrics")
 ```
 
@@ -38,8 +35,8 @@ data("wine_quality", package = "SLmetrics")
 
 # 1.1) define the features
 # and outcomes
-outcome  <- c("class")
-features <- setdiff(x = colnames(wine_quality), y = c(outcome, "quality"))
+outcome  <- wine_quality$target$class
+features <- wine_quality$features
 
 # 2) split data in training
 # and test
@@ -51,19 +48,19 @@ set.seed(1903)
 # 2.2) exttract
 # indices with a simple
 # 80/20 split
-index <- sample(1:nrow(wine_quality), size = 0.95 * nrow(wine_quality))
+index <- sample(1:nrow(features), size = 0.95 * nrow(features))
 
 # 1.1) extract training
 # data and construct
 # as lgb.Dataset
-train <- wine_quality[index,]
+train <- features[index,]
 dtrain <- lightgbm::lgb.Dataset(
-    data  = data.matrix(train[,features]),
-    label = as.numeric(train$class) - 1
+    data  = data.matrix(train),
+    label = as.numeric(outcome[index]) - 1
 )
 # 1.2) extract test
 # data
-test <- wine_quality[-index,]
+test <- features[-index,]
 
 
 # 1.2.1) extract actual
@@ -71,27 +68,29 @@ test <- wine_quality[-index,]
 # as.factor for {SLmetrics}
 # methods
 actual <- as.factor(
-    test$class
+    outcome[-index]
 )
 
 # 1.2.2) construct as data.matrix
 # for predict method
 test <- data.matrix(
-    test[,features]
+    test
 )
 ```
 
 ## Training the GBM
 
-### Parameters and custom evaluation function
+The GBM will be trained with default parameters, except for the `objective`, `num_class` and `eval`.
 
 ```{r}
 # 1) define parameters
-parameters <- list(
+training_parameters <- list(
     objective     = "multiclass",
-    num_class     = length(levels(wine_quality$class))
+    num_class     = length(unique(outcome))
 )
 ```
+
+### Evaluation function
 
 ```{r}
 # 1) define the custom
@@ -127,7 +126,7 @@ eval_fbeta <- function(
 
 ```{r}
 model <- lightgbm::lgb.train(
-    params  = parameters,
+    params  = training_parameters,
     data    = dtrain,
     nrounds = 100L,
     eval    = eval_fbeta,
@@ -136,6 +135,8 @@ model <- lightgbm::lgb.train(
 ```
 
 ## Evaluation
+
+The predicted classes can be extracted using `predict()` - these values will be converted to `factor` values
 
 ```{r forecasts}
 # 1) prediction
@@ -146,6 +147,22 @@ predicted <- as.factor(
         newdata = test,
         type    = "class"
     )
+)
+```
+
+
+```{r}
+#| eval: false
+#| code-fold: true
+#| code-summary: "Safe conversion"
+predicted <- factor(
+     predict(
+         model,
+         newdata = test,
+         type    = "class"
+     ),
+     labels = levels(outcome),
+     levels = seq_along(levels(outcome)) - 1 
 )
 ```
 
@@ -169,8 +186,7 @@ summary(
 ```
 
 
-## Receiver Operator Curves
-
+## Receiver Operator Characteristics
 
 ```{r response}
 # 1) prediction
@@ -211,3 +227,6 @@ roc.auc(
     response
 )
 ```
+
+
+[^1]: The wine quality dataset comes (almost) ready for analysis. See the [repo](https://github.com/serkor1/SLmetrics) for more details on the data-manipulation steps taken.
