@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; OpenMP – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
+<title>6&nbsp; OpenMP – {SLmetrics}: Machine Learning Performance Evaluation on Steroids</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./garbage.html" rel="next">
-<link href="./integration_classification.html" rel="prev">
+<link href="./integration_regression.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./openmp.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">OpenMP</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./openmp.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">OpenMP</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -452,7 +452,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./integration.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Integrating</span></a>
+ <span class="menu-text">Integrating {SLmetrics} with other pkgs</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -461,7 +461,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./integration_classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Training a {lightgbm} classifier and evaluating it with</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Using {lightgbm} and {SLmetrics} in classification tasks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./integration_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Using {xgboost} and {SLmetrics} in regression tasks</span></span></a>
   </div>
 </li>
       </ul>
@@ -469,13 +475,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./openmp.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">OpenMP</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">OpenMP</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./garbage.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -494,10 +500,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#enablingdisabling-openmp" id="toc-enablingdisabling-openmp" class="nav-link active" data-scroll-target="#enablingdisabling-openmp"><span class="header-section-number">5.1</span> Enabling/Disabling OpenMP</a></li>
-  <li><a href="#available-threads" id="toc-available-threads" class="nav-link" data-scroll-target="#available-threads"><span class="header-section-number">5.2</span> Available threads</a></li>
-  <li><a href="#benchmarking-openmp" id="toc-benchmarking-openmp" class="nav-link" data-scroll-target="#benchmarking-openmp"><span class="header-section-number">5.3</span> Benchmarking OpenMP</a></li>
-  <li><a href="#key-take-aways" id="toc-key-take-aways" class="nav-link" data-scroll-target="#key-take-aways"><span class="header-section-number">5.4</span> Key take-aways</a></li>
+  <li><a href="#enablingdisabling-openmp" id="toc-enablingdisabling-openmp" class="nav-link active" data-scroll-target="#enablingdisabling-openmp"><span class="header-section-number">6.1</span> Enabling/Disabling OpenMP</a></li>
+  <li><a href="#available-threads" id="toc-available-threads" class="nav-link" data-scroll-target="#available-threads"><span class="header-section-number">6.2</span> Available threads</a></li>
+  <li><a href="#benchmarking-openmp" id="toc-benchmarking-openmp" class="nav-link" data-scroll-target="#benchmarking-openmp"><span class="header-section-number">6.3</span> Benchmarking OpenMP</a></li>
+  <li><a href="#key-take-aways" id="toc-key-take-aways" class="nav-link" data-scroll-target="#key-take-aways"><span class="header-section-number">6.4</span> Key take-aways</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/serkor1/SLmetrics/edit/development/docs/openmp.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/serkor1/SLmetrics/blob/development/docs/openmp.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/serkor1/SLmetrics/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -506,7 +512,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">OpenMP</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">OpenMP</span></h1>
 </div>
 
 
@@ -524,8 +530,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><a href="https://github.com/serkor1/SLmetrics">{SLmetrics}</a> supports parallelization through <a href="https://www.openmp.org/">OpenMP</a>. In this section this functionality is introduced.</p>
-<section id="enablingdisabling-openmp" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="enablingdisabling-openmp"><span class="header-section-number">5.1</span> Enabling/Disabling OpenMP</h2>
+<section id="enablingdisabling-openmp" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="enablingdisabling-openmp"><span class="header-section-number">6.1</span> Enabling/Disabling OpenMP</h2>
 <p>OpenMP is disabled by <code>default</code>, but can be enabled as follows:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">openmp.on</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -555,8 +561,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="available-threads" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="available-threads"><span class="header-section-number">5.2</span> Available threads</h2>
+<section id="available-threads" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="available-threads"><span class="header-section-number">6.2</span> Available threads</h2>
 <p>The number of available threads are detected automatically, but can also be viewed using <code>SLmetrics::openmp.threads()</code> without passing any arguments. See below:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">openmp.threads</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -565,8 +571,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="benchmarking-openmp" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="benchmarking-openmp"><span class="header-section-number">5.3</span> Benchmarking OpenMP</h2>
+<section id="benchmarking-openmp" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="benchmarking-openmp"><span class="header-section-number">6.3</span> Benchmarking OpenMP</h2>
 <p>To benchmark the performance gain on enabling OpenMP, the same setup as in <a href="benchmark.html" class="quarto-xref"><span>Chapter 3</span></a> is used. Below is the <code>actual</code> and <code>predicted</code> values are generated.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) set seed for reproducibility</span></span>
@@ -588,7 +594,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="tbl-classification-openmp" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-classification-openmp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;5.1: Benchmark of computing a 3x3 confusion matrix with OpenMP enabled. Each benchmark is run 10 times with two input vectors of 10 million elements.
+Table&nbsp;6.1: Benchmark of computing a 3x3 confusion matrix with OpenMP enabled. Each benchmark is run 10 times with two input vectors of 10 million elements.
 </figcaption>
 <div aria-describedby="tbl-classification-openmp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-stdout">
@@ -611,21 +617,21 @@ Table&nbsp;5.1: Benchmark of computing a 3x3 confusion matrix with OpenMP enable
 <div id="tbl-classification" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;5.2: Benchmark of computing a 3x3 confusion matrix with OpenMP enabled. Each benchmark is run 10 times with two input vectors of 10 million elements.
+Table&nbsp;6.2: Benchmark of computing a 3x3 confusion matrix with OpenMP enabled. Each benchmark is run 10 times with two input vectors of 10 million elements.
 </figcaption>
 <div aria-describedby="tbl-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 Wihtout OpenMP         8.55ms           0B        0</code></pre>
+#&gt; 1 Wihtout OpenMP         8.53ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
 </div>
 </section>
-<section id="key-take-aways" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="key-take-aways"><span class="header-section-number">5.4</span> Key take-aways</h2>
+<section id="key-take-aways" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="key-take-aways"><span class="header-section-number">6.4</span> Key take-aways</h2>
 <p>Enabling OpenMP support can decrease computation time significantly - but it should <em>only</em> be used consciously, and with care, to avoid function calls competing for the same threads. This is especially the case if you are running a, say, neural network in parallel.</p>
 
 
@@ -1195,13 +1201,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./integration_classification.html" class="pagination-link" aria-label="Training a {lightgbm} classifier and evaluating it with">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Training a {lightgbm} classifier and evaluating it with</span></span>
+      <a href="./integration_regression.html" class="pagination-link" aria-label="Using {xgboost} and {SLmetrics} in regression tasks">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Using {xgboost} and {SLmetrics} in regression tasks</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./garbage.html" class="pagination-link" aria-label="Garbage in, garbage out">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Garbage in, garbage out</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
