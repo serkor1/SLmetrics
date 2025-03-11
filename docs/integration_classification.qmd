@@ -1,0 +1,232 @@
+---
+format:
+  html:
+    code-overflow: wrap
+execute: 
+  cache: true
+knitr:
+  opts_chunk:
+    comment: "#>"
+    messages: true
+    warning: false
+---
+
+```{r}
+#| echo: false
+#| include: false
+library(SLmetrics)
+```
+
+# Using {lightgbm} and {SLmetrics} in classification tasks {.unnumbered}
+
+In this section a gradient boosting machine (GBM) is trained on the [wine quality](https://archive.ics.uci.edu/dataset/186/wine+quality)-dataset, and evaluated using [{SLmetrics}](https://github.com/serkor1/SLmetrics). The gbm trained here is a light gradient boosting machine from [{lightgbm}](https://github.com/microsoft/LightGBM).[^1]
+
+
+```{r data}
+# 1) load data
+# from {SLmetrics}
+data("wine_quality", package = "SLmetrics")
+```
+
+
+```{r}
+#| code-fold: true
+#| code-summary: "Data preparation"
+
+# 1.1) define the features
+# and outcomes
+outcome  <- wine_quality$target$class
+features <- wine_quality$features
+
+# 2) split data in training
+# and test
+
+# 2.1) set seed for 
+# for reproducibility
+set.seed(1903)
+
+# 2.2) exttract
+# indices with a simple
+# 80/20 split
+index <- sample(1:nrow(features), size = 0.95 * nrow(features))
+
+# 1.1) extract training
+# data and construct
+# as lgb.Dataset
+train <- features[index,]
+dtrain <- lightgbm::lgb.Dataset(
+    data  = data.matrix(train),
+    label = as.numeric(outcome[index]) - 1
+)
+# 1.2) extract test
+# data
+test <- features[-index,]
+
+
+# 1.2.1) extract actual
+# values and constuct
+# as.factor for {SLmetrics}
+# methods
+actual <- as.factor(
+    outcome[-index]
+)
+
+# 1.2.2) construct as data.matrix
+# for predict method
+test <- data.matrix(
+    test
+)
+```
+
+## Training the GBM
+
+The GBM will be trained with default parameters, except for the `objective`, `num_class` and `eval`.
+
+```{r}
+# 1) define parameters
+training_parameters <- list(
+    objective     = "multiclass",
+    num_class     = length(unique(outcome))
+)
+```
+
+### Evaluation function
+
+```{r}
+# 1) define the custom
+# evaluation metric
+eval_fbeta <- function(
+    dtrain, 
+    preds) {
+
+        # 1) extract values
+        actual    <- as.factor(dtrain)
+        predicted <- lightgbm::get_field(preds, "label")
+        value     <- fbeta(
+            actual    = actual,
+            predicted = predicted,
+            beta      = 2,
+            # Use micro-averaging to account
+            # for class imbalances
+            micro     = TRUE
+        )
+
+        # 2) construnct output
+        # list
+        list(
+            name          = "fbeta",
+            value         = value,
+            higher_better = TRUE 
+        )
+    
+}
+```
+
+### Training the GBM
+
+```{r}
+model <- lightgbm::lgb.train(
+    params  = training_parameters,
+    data    = dtrain,
+    nrounds = 100L,
+    eval    = eval_fbeta,
+    verbose = -1
+)
+```
+
+## Evaluation
+
+The predicted classes can be extracted using `predict()` - these values will be converted to `factor` values
+
+```{r forecasts}
+# 1) prediction
+# from the model
+predicted <- as.factor(
+    predict(
+        model,
+        newdata = test,
+        type    = "class"
+    )
+)
+```
+
+
+```{r}
+#| eval: false
+#| code-fold: true
+#| code-summary: "Safe conversion"
+predicted <- factor(
+     predict(
+         model,
+         newdata = test,
+         type    = "class"
+     ),
+     labels = levels(outcome),
+     levels = seq_along(levels(outcome)) - 1 
+)
+```
+
+```{r cmatrix}
+# 1) construct confusion
+# matrix
+confusion_matrix <- cmatrix(
+    actual = actual,
+    predicted = predicted
+)
+
+# 2) visualize
+plot(
+    confusion_matrix
+)
+
+# 3) summarize
+summary(
+    confusion_matrix
+)
+```
+
+
+## Receiver Operator Characteristics
+
+```{r response}
+# 1) prediction
+# from the model
+response <- predict(
+        model,
+        newdata = test
+    )
+```
+
+The `response` can be passed into the `ROC()`-function,
+
+```{r}
+# 1) calculate the reciever
+# operator characteristics
+roc <- ROC(
+    actual   = actual,
+    response = response
+)
+
+# 2) print the roc
+# object
+print(roc)
+```
+
+The `ROC()`-function returns a `data.frame`-object, with `r nrow(roc)` rows corresponding to the `length` of `response` multiplied with number of classes in the data. The `roc`-object can be plotted as follows,
+
+```{r}
+# 1) plot roc
+# object
+plot(roc)
+```
+
+
+```{r}
+roc.auc(
+    actual, 
+    response
+)
+```
+
+
+[^1]: The wine quality dataset comes (almost) ready for analysis. See the [repo](https://github.com/serkor1/SLmetrics) for more details on the data-manipulation steps taken.

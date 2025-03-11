@@ -1,0 +1,186 @@
+---
+title: "Classification Metrics"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Classification Metrics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment  = "#>",
+  message  = FALSE,
+  warning  = FALSE
+)
+```
+
+```{r setup}
+library(SLmetrics)
+```
+
+In this vignette a brief overview of classification metrics in [{SLmetrics}](https://github.com/serkor1/SLmetrics) will be provided. The classification interface is broadly divided into two methods: `foo.cmatrix()` and `foo.factor()`. The former calculates the classification from a confusion matrix, while the latter calculates the same metric from two vectors: a vector of `actual` values and a vector of `predicted` values. Both are vectors of [factor] values. 
+
+Throughout this vignette, the following data will be used:
+
+```{r}
+# 1) seed
+set.seed(1903)
+
+# 2) actual values
+actual <- factor(
+    x = sample(c("A", "B", "C"), size = 10, replace = TRUE)
+)
+
+# 3) predicted values
+predicted <- factor(
+    x = sample(c("A", "B", "C"), size = 10, replace = TRUE)
+)
+
+# 4) sample weights
+weights <- runif(
+    n = length(actual)
+)
+```
+
+Assume that the `predicted` values come from a trained machine learning model. This vignette introduces a subset of the metrics available in [{SLmetrics}](https://github.com/serkor1/SLmetrics); see the [online documentation](https://serkor1.github.io/SLmetrics/) for more details and other metrics.
+
+## Computing classification metrics
+
+The accuracy of the model can be evaluated using the `accuracy()`-function as follows:
+
+```{r}
+# 1) calculate accuracy
+accuracy(
+    actual    = actual,
+    predicted = predicted
+)
+```
+
+Many classification metrics have different names yet compute the same underlying value. For example, `recall` is also known as the `true positive rate` or `sensitivity`. These metrics can be calculated as follows:
+
+```{r}
+# 1) calculate recall
+recall(
+    actual    = actual,
+    predicted = predicted
+)
+
+# 2) calculate sensitivity
+sensitivity(
+    actual    = actual,
+    predicted = predicted
+)
+
+# 1) calculate true positive rate
+tpr(
+    actual    = actual,
+    predicted = predicted
+)
+```
+
+By default, all classification functions calculates the class-wise performance metrics where possible. The performance metrics can also be aggregated in `micro` and `macro` averages by using the `micro`-parameter:
+
+```{r}
+# 1) macro average
+recall(
+    actual    = actual,
+    predicted = predicted,
+    micro     = FALSE 
+)
+
+# 2) micro average
+recall(
+    actual    = actual,
+    predicted = predicted,
+    micro     = TRUE
+)
+```
+
+Calculating multiple performance metrics using separate calls to `foo.factor()` can be inefficient because each function reconstructs the underlying confusion matrix. A more efficient approach is to construct the confusion matrix once and then pass it to your chosen metric function. To do this, you can use the `cmatrix()` function:
+
+```{r}
+# 1) confusion matrix
+confusion_matrix <- cmatrix(
+    actual    = actual,
+    predicted = predicted
+)
+
+# 2) summarise confusion matrix
+summary(
+    confusion_matrix
+)
+```
+
+Now you can pass the confusion matrix directly into the metric functions:
+
+```{r}
+# 1) calculate accuracy
+accuracy(
+    confusion_matrix
+)
+
+# 2) calculate false positive rate
+fpr(
+    confusion_matrix
+)
+```
+
+## Computing weighted classification metrics
+
+The weighted classification metrics can be calculated by using the `weighted.foo`-method which have a similar interface as the unweighted versions above. Below is an example showing how to compute a weighted version of `recall`:
+
+```{r}
+# 1) calculate recall
+weighted.recall(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+
+# 2) calculate sensitivity
+weighted.sensitivity(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+
+# 1) calculate true positive rate
+weighted.tpr(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+```
+
+A small disclaimer applies to weighted metrics: it is **not** possible to pass a weighted confusion matrix directly into a `weighted.foo()` method. Consider the following example:
+
+```{r}
+# 1) calculate weighted confusion matrix
+weighted_confusion_matrix <- weighted.cmatrix(
+    actual = actual,
+    predicted = predicted,
+    w = weights
+)
+
+# 2) calculate weighted accuracy
+try(
+    weighted.accuracy(weighted_confusion_matrix)
+)
+```
+
+This approach throws an error. Instead, pass the weighted confusion matrix into the unweighted function that uses a confusion matrix interface (i.e., `foo.cmatrix()`). For example:
+
+```{r}
+accuracy(weighted_confusion_matrix)
+```
+
+This returns the same weighted `accuracy` as if it were calculated directly:
+
+```{r}
+all.equal(
+    accuracy(weighted_confusion_matrix),
+    weighted.accuracy(actual, predicted, w = weights)
+)
+```

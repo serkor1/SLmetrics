@@ -26,6 +26,20 @@ knitr:
 
 * **S3 signatures:** All S3-methods now have a generic signature, the functions should now be easier to navigate in  argument-wise.
 
+* **Exported Data:** Three new datasets have been introduced to the package; the [Wine Quality](https://archive.ics.uci.edu/dataset/186/wine+quality)-, [Obesity](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)- and [Banknote Authentication](https://archive.ics.uci.edu/dataset/267/banknote+authentication) datasets. Each dataset is comes in named `list` where features and targets are stored separately. Below is an example from the Obesity dataset:
+
+```{r}
+# 1) summarise list
+summary(SLmetrics::obesity)
+
+# 2) head the features
+head(SLmetrics::obesity$features)
+
+# 3) head the targets
+head(SLmetrics::obesity$target$class)
+head(SLmetrics::obesity$target$regression)
+```
+
 ## :fire: New features
 
 ### :rocket: New metrics
@@ -58,6 +72,26 @@ cat(
 )
 ```
 
+* **Area under the Curve:** A new set of functions have been introduced which calculates the weighted and unweighted area under the Precision-Recall and Receiver Operator Characteristics curve. See below:
+
+```{r}
+# Create factors and response probabilities
+actual   <- factor(c("Class A", "Class B", "Class A"))
+weights  <- c(0.3,0.9,1) 
+response <- matrix(cbind(
+    0.2, 0.8,
+    0.8, 0.2,
+    0.7, 0.3
+),nrow = 3, ncol = 2)
+
+# calculate area under the 
+# precision-recall curve
+SLmetrics::pr.auc(
+    actual = actual,
+    response = response
+)
+```
+
 ### :hammer: Metric tools
 
 A new family of `Tools`-functions are introduced with this update. This addition introduces unexported functions for constructing fast and memory efficient proprietary metrics. These functions are rewritten built-in functions from {stats} and family.
@@ -81,6 +115,9 @@ SLmetrics:::cov.wt(
 * **Area under the curve (AUC):** The function calculates the area under the plot for bivariate curves for ordered and unordered `x` and `y` pairs. The function assumes that values are ordered and calculates the AUC directly - to control this behaviour use the `ordered`-argument in the function. Below is an example:
 
 ```{r}
+## 0) seed
+set.seed(1903)
+
 ## 1) Ordered x and y pair
 x <- seq(0, pi, length.out = 200)
 y <- sin(x)
@@ -485,6 +522,8 @@ SLmetrics::accuracy(
 * The `plot.prROC()`- and `plot.ROC()`-functions now adds a line to the plot when `panels = FALSE`. See Issue https://github.com/serkor1/SLmetrics/issues/9.
 
 ```{r}
+#| eval: false
+
 # 1) define actual
 # classes
 actual <- factor(

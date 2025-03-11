@@ -22,8 +22,8 @@
 #'  ...
 #' )
 #' 
-#' @param response A <[numeric]>-vector of [length] \eqn{n}. The estimated response probabilities.
-#' @param thresholds An optional <[numeric]> \eqn{n \times k} matrix (default: [NULL]).
+#' @param response A \eqn{n \times k} <[numeric]>-[matrix]. The estimated response probabilities for each class \eqn{k}.
+#' @param thresholds An optional <[numeric]> vector of [length] \eqn{n} (default: [NULL]).
 #' @param presorted A <[logical]>-value [length] 1 (default: [FALSE]). If [TRUE] the input will not be sorted by threshold.
 #' @param ... Arguments passed into other methods.
 #'
@@ -35,7 +35,7 @@
 #' \item{fpr}{<[numeric]> The false positive rate}
 #' \item{tpr}{<[numeric]> The true positve rate}
 #'
-#' @example man/examples/scr_RecieverOperatorCurve.R
+#' @example man/examples/scr_ReceiverOperatorCurve.R
 #'
 #' @family Classification
 #' @family Supervised Learning
