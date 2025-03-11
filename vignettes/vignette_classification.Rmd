@@ -44,7 +44,7 @@ weights <- runif(
 )
 ```
 
-Assume that the `predicted` values are from a trained machine learning model. This vignette introduces a subset of the metrics available in [{SLmetrics}](https://github.com/serkor1/SLmetrics); see the [online documentation](https://serkor1.github.io/SLmetrics/) for more details and metrics.
+Assume that the `predicted` values come from a trained machine learning model. This vignette introduces a subset of the metrics available in [{SLmetrics}](https://github.com/serkor1/SLmetrics); see the [online documentation](https://serkor1.github.io/SLmetrics/) for more details and other metrics.
 
 ## Computing classification metrics
 

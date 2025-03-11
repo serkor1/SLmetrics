@@ -1,0 +1,100 @@
+---
+title: "Regression Metrics"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Regression Metrics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment  = "#>",
+  message  = FALSE,
+  warning  = FALSE
+)
+```
+
+```{r setup}
+library(SLmetrics)
+```
+
+In this vignette, a brief overview of the regression metrics in [{SLmetrics}](https://github.com/serkor1/SLmetrics) is provided. The regression interface is based on [numeric] vectors and uses `foo.numeric()` and `weighted.foo.numeric()` methods for unweighted and weighted regression metrics, respectively.
+
+Throughout this vignette, the following data will be used:
+
+```{r}
+# 1) seed
+set.seed(1903)
+
+# 2) actual values
+actual <- rnorm(
+    n = 100
+)
+
+# 3) predicted values
+predicted <- actual + rnorm(n = 100)
+
+# 4) sample weights
+weights <- runif(
+    n = length(actual)
+)
+```
+
+Assume that the `predicted` values come from a trained machine learning model. This vignette introduces a subset of the metrics available in [{SLmetrics}](https://github.com/serkor1/SLmetrics); see the [online documentation](https://serkor1.github.io/SLmetrics/) for more details and other metrics.
+
+## Computing regression metrics
+
+One of the most common metrics for regression tasks is the *root mean squared error (RMSE)* which can be computed with or without sample weights:
+
+```{r}
+# 1) calculate unweighted RMSE
+rmse(
+    actual    = actual,
+    predicted = predicted
+)
+
+# 2) calculate weighted RMSE
+weighted.rmse(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+```
+
+Another metric is the *relative root mean squared error* (RRMSE). It applies a normalization factor to the RMSE, which can help compare errors across datasets with different scales. The RRMSE can be computed with three possible normalization methods:
+
+```{r}
+# 1) calculate RRSME
+# with mean normalization
+rrmse(
+    actual = actual,
+    predicted = predicted,
+    normalization = 0
+)
+
+# 2) calculate RRSME
+# with range normalization
+rrmse(
+    actual = actual,
+    predicted = predicted,
+    normalization = 1
+)
+
+# 3) calculate RRSME
+# with IQR normalization
+rrmse(
+    actual = actual,
+    predicted = predicted,
+    normalization = 2
+)
+```
+
+The parameter `normalization` determines the normalization factor of the RMSE;
+
+* 0: *Mean* normalization
+* 1: *Range* normalization (`max` - `min`)
+* 2: *Interquartile* normalization ($q_{75}$ - $q_{25}$)
+
+The interface for all regression metrics in [{SLmetrics}](https://github.com/serkor1/SLmetrics) follows the same basic signature: two numeric vectors (actual and predicted) and, optionally, sample weights (w) or other metric-specific parameters.
