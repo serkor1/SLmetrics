@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 library(SLmetrics)
 ```
 
-In this vignette a worked example on creating Precision-Recall and Receiver Operator Characteristics curves are provided. Throughout this vignette the [Banknote Authentification](https://archive.ics.uci.edu/dataset/267/banknote+authentication)-dataset is used. The `banknote`-dataset is a part of {SLmetrics} which is `list` of features and targets, and can be called as follows:
+In this vignette a worked example on creating Precision-Recall and Receiver Operator Characteristics curves are provided. Throughout this vignette the [Banknote Authentication](https://archive.ics.uci.edu/dataset/267/banknote+authentication)-dataset is used. The `banknote`-dataset is a part of {SLmetrics} which is `list` of features and targets, and can be called as follows:
 
 ```{r}
 # 1) load data into namespace
@@ -30,7 +30,7 @@ data(
 )
 ```
 
-The `banknote` dataset classification tasks achieves between 95\% and 99\% accuracy and therefore makes a bad case for demonstrating Precision-Recall and Receive Operator Characterists curves. To alliviate this, random noise will be injected to the original dataset as follows:
+The `banknote` dataset classification tasks achieves between 95\% and 99\% accuracy and therefore makes a bad case for demonstrating Precision-Recall and Receiver Operator Characteristics curves. To alleviate this, random noise will be injected to the original dataset as follows:
 
 ```{r}
 # 1) set seed

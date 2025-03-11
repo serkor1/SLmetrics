@@ -66,7 +66,7 @@ weighted.rmse(
 Another metric is the *relative root mean squared error* (RRMSE). It applies a normalization factor to the RMSE, which can help compare errors across datasets with different scales. The RRMSE can be computed with three possible normalization methods:
 
 ```{r}
-# 1) calculate RRSME
+# 1) calculate RRMSE
 # with mean normalization
 rrmse(
     actual = actual,
