@@ -24,9 +24,9 @@ weighted.plr(
 )
 }
 \arguments{
-\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{predicted}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{...}{micro = NULL,
 na.rm = TRUE Arguments passed into other methods}

@@ -32,9 +32,9 @@ weighted.fbeta(
 )
 }
 \arguments{
-\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{predicted}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{beta}{A <\link{numeric}> vector of \link{length} \eqn{1} (default: \eqn{1}).}
 

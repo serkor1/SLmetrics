@@ -19,9 +19,9 @@ npv(...)
 weighted.npv(...)
 }
 \arguments{
-\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{predicted}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
 micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}

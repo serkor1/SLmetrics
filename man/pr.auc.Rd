@@ -31,7 +31,7 @@ weighted.pr.auc(
 )
 }
 \arguments{
-\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{response}{A \eqn{n \times k} <\link{numeric}>-\link{matrix}. The estimated response probabilities for each class \eqn{k}.}
 
