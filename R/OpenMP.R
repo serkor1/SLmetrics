@@ -79,7 +79,7 @@ openmp.threads <- function(threads) {
   available <- .available_threads()
   
   if (missing(threads)) {
-    if (available == 0) {
+    if (available == -1) {
       warning("OpenMP is not available on your system!", call. = FALSE)
       return(invisible(NULL))
     }

@@ -8,7 +8,7 @@ testthat::test_that(
     testthat::skip_on_cran()
 
     # 1) check OpenMP availability
-    # 1.1) define C++ function
+    # 1.1) define C++ function (Obsolete)
     #
     # NOTE: This counts the number of recognized threads
     # at runtime, #ifdef _OPENMP essentially just checks
@@ -16,25 +16,9 @@ testthat::test_that(
     # is not correctly set up to use OpenMP #ifdef _OPENMP will not fail, 
     # but the parallel execution will be done on a single thread; which is essentially
     # the same as not have OpenMP.
-    Rcpp::cppFunction(
-      plugins = "openmp",
-      code = "
-        bool is_available() {
-          int n_threads = 0;
-
-          #pragma omp parallel
-          {
-            #pragma omp atomic
-            n_threads++;
-          }
-
-          return (n_threads > 1);
-        }
-        "
-    )
-
-    # 1.2) check OpenMP availability
-    openmp_available <- is_available()
+    #
+    # The above may be pure bullshit.
+    openmp_available <- has_openmp()
 
     # 2) conduct tests conditional 
     # on availability
@@ -42,7 +26,7 @@ testthat::test_that(
       # 2.1) check that openmp.threads
       # returns the number of available threads
       testthat::expect_true(
-        object = openmp.threads() == SLmetrics:::.available_threads(),
+        object = openmp.threads() == available_threads(),
         label  = "The number of available threads are not equal."
       )
 
