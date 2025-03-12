@@ -58,8 +58,12 @@ jobs:
           brew update
           brew upgrade
           brew reinstall gcc
-          brew install libomp pkg-config
+          brew install libomp pkg-config gettext
           brew cleanup
+
+          sudo mkdir -p /opt/R/arm64/lib
+          sudo ln -sf $(brew --prefix gettext)/lib/libintl.a /opt/R/arm64/lib/libintl.a
+
 
       - name: Configure Makevars (macOS-gcc)
         if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
