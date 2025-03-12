@@ -13,7 +13,7 @@ preorder(
 \arguments{
 \item{x}{a \link{numeric} or \link{integer} matrix to be sorted.}
 
-\item{decreasing}{a \link{logical} value of \link{length} 1 (default: \link{FALSE}). If \link{TRUE} the matrix is return in descending order.}
+\item{decreasing}{a \link{logical} value of \link{length} 1 (default: \link{FALSE}). If \link{TRUE} the matrix is returned in descending order.}
 
 \item{...}{Arguments passed into other methods.}
 }
