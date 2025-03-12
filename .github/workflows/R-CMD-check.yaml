@@ -55,12 +55,23 @@ jobs:
       - name: Install and update build tools (macOS)
         if: runner.os == 'macOS'
         run: |
+          # update and upgrade
+          # everything brew-related
           brew update
           brew upgrade
+
+          # reinstall important
+          # libraries
           brew reinstall gcc
-          brew install libomp pkg-config gettext
+          brew reinstall pkg-config
+          brew reinstall gettext
+          brew install libomp
+
+          # clean up eveything
           brew cleanup
 
+          # creatre folders
+          # and symbolic links
           sudo mkdir -p /opt/R/arm64/lib
           sudo ln -sf $(brew --prefix gettext)/lib/libintl.a /opt/R/arm64/lib/libintl.a
 
@@ -153,10 +164,18 @@ jobs:
           extra-packages: any::rcmdcheck reticulate
           needs: check
           
-      - name: Check if R is properly setup
+      - name: Check R build-tools
         shell: Rscript {0}
         run: |
           pkgbuild::check_build_tools(debug = TRUE)
+
+      - name: Check OpenMP availability
+        if: matrix.config.compiler != 'clang'
+        shell: Rscript {0}
+        run: |
+          stopifnot(
+            "OpenMP not available!" = SLmetrics:::openmp_available()
+          )
 
       - name: Setup Python and {reticulate}
         uses: ./.github/actions/setup-reticulate
