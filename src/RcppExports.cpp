@@ -1726,6 +1726,16 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// openmp_available
+bool openmp_available();
+RcppExport SEXP _SLmetrics_openmp_available() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(openmp_available());
+    return rcpp_result_gen;
+END_RCPP
+}
 // enable_openmp
 bool enable_openmp();
 RcppExport SEXP _SLmetrics_enable_openmp() {
@@ -1921,6 +1931,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_auc", (DL_FUNC) &_SLmetrics_auc, 4},
     {"_SLmetrics_covariance_matrix", (DL_FUNC) &_SLmetrics_covariance_matrix, 5},
     {"_SLmetrics_covariance_dataframe", (DL_FUNC) &_SLmetrics_covariance_dataframe, 5},
+    {"_SLmetrics_openmp_available", (DL_FUNC) &_SLmetrics_openmp_available, 0},
     {"_SLmetrics_enable_openmp", (DL_FUNC) &_SLmetrics_enable_openmp, 0},
     {"_SLmetrics_disable_openmp", (DL_FUNC) &_SLmetrics_disable_openmp, 0},
     {"_SLmetrics_available_threads", (DL_FUNC) &_SLmetrics_available_threads, 0},

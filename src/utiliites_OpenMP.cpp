@@ -29,8 +29,11 @@ bool getUseOpenMP() {
  */
 namespace omp 
 {
-
-    void set_threads(int threads) {
+    /**
+     * @brief set the number of used threads
+     * for the parallel process
+     */
+    inline void set_threads(int threads) {
         #ifdef _OPENMP
             ::omp_set_num_threads(threads);
         #else
@@ -38,77 +41,99 @@ namespace omp
         #endif
     }
 
-    int get_threads() {
+    /**
+     * @brief get the number of max available
+     * threads. If OpenMP is **not** available
+     * it will return -1.
+     *
+     * NOTE: It is not possible to do this inline
+     * so the function here is correct. See commit 
+     * 7f1ba7b44a994c75a2c3d106a0e51cb23692bc3b if in doubt
+     */
+    inline int get_threads() {
         #ifdef _OPENMP
             return ::omp_get_max_threads();
         #else
             return -1;
         #endif
     }
-
-    void enable() {
-        use_openmp_flag = true;
+    
+    /**
+     * @brief this function enables the use of 
+     * OpenMP throughout the package. It will return the value
+     * TRUE if it is successful; ie. if OpenMP is available.
+     */
+    inline bool enable() {
+        bool value;
+        #ifdef _OPENMP
+            use_openmp_flag = true;
+            value = true;
+        #else
+            use_openmp_flag = false;
+            value = false;
+        #endif
+        return value;
+    }
+    
+    /**
+     * @brief this function disables the use of 
+     * OpenMP throughout the package. It will return the value
+     * TRUE if it is successful; ie. if OpenMP is available.
+     */
+    inline bool disable() {
+        use_openmp_flag = false;
+        bool value;
+        #ifdef _OPENMP
+            value = true;
+        #else
+            value = false;
+        #endif
+        return value;
+        
     }
 
-    void disable() {
-        use_openmp_flag = false;
+    /**
+     * @brief check OpenMP
+     * availability on the system.
+     *
+     * @returns true, if its available. false otherwise.
+     *
+     * NOTE: It is not possible to do this inline
+     * so the function here is correct. See commit 
+     * 7f1ba7b44a994c75a2c3d106a0e51cb23692bc3b if in doubt
+     */
+    inline bool available() {
+        bool value;
+        #ifdef _OPENMP
+            value = true;
+        #else
+            value = false;
+        #endif
+        return value;
     }
 
 }
 
-
+// [[Rcpp::export(.openmp_available)]]
+bool openmp_available() {
+    return omp::available();
+}
 
 // [[Rcpp::export(.enable_openmp)]]
 bool enable_openmp()
 {
-    #ifdef _OPENMP // 1) If OpenMP is available
-        // 1.1) set OpenMP flag
-        // accordingly
-        omp::enable();
-
-        // 1.2) return the
-        // value to R
-        return true;
-    #else // 2) If OpenMP is unavailable
-
-        // 2.1) set OpenMP flag
-        // accordingly
-        // NOTE: Has to be false
-        omp::disable();
-
-        // 2.2) return the value
-        // to R
-        return R_NilValue;
-    #endif
+    return omp::enable();
 }
 
 // [[Rcpp::export(.disable_openmp)]]
 bool disable_openmp()
 {
-    #ifdef _OPENMP // 1) If OpenMP is available
-        // 1.1) set OpenMP flag
-        // accordingly
-        omp::disable();
-
-        return false;
-    #else // 2) If OpenMP is unavailable
-
-        // 2.1) set OpenMP flag
-        // accordingly
-        // NOTE: Has to be false
-        omp::disable();
-
-        return R_NilValue;
-    #endif
+    return omp::disable();
 }
 
 // [[Rcpp::export(.available_threads)]]
 int available_threads() {
-    #ifdef _OPENMP
-        return omp_get_num_procs();
-    #else
-        return -1;
-    #endif
+    return omp::get_threads();
 }
 
 // [[Rcpp::export(.use_threads)]]

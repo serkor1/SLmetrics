@@ -18,11 +18,11 @@ testthat::test_that(
     # the same as not have OpenMP.
     #
     # The above may be pure bullshit.
-    openmp_available <- has_openmp()
+    available <- openmp_available()
 
     # 2) conduct tests conditional 
     # on availability
-    if (openmp_available) {
+    if (available) {
       # 2.1) check that openmp.threads
       # returns the number of available threads
       testthat::expect_true(
@@ -35,33 +35,33 @@ testthat::test_that(
       testthat::expect_message(
         object = openmp.threads(2),
         regexp = "Using 2 threads.",
-        label  = "Setting openmp.threads(2) in branch: openmp_available" 
+        label  = "Setting openmp.threads(2) in branch: available" 
       )
 
       # 2.3) expect messages for 
       # for openmp.on and openmp.off
-      testthat::expect_message(openmp.on(), label = "openmp.on() in branch: openmp_available")
-      testthat::expect_message(openmp.off(), label = "openmp.off() in branch: openmp_available")
+      testthat::expect_message(openmp.on(), label = "openmp.on() in branch: available")
+      testthat::expect_message(openmp.off(), label = "openmp.off() in branch: available")
 
     } else {
       # 2.1) check that openmp.threads
       # sends a warning
       testthat::expect_warning(
         object = openmp.threads(),
-        label  = "Number of available threads in branch: !openmp_available"
+        label  = "Number of available threads in branch: !available"
       )
 
       # 2.2) check that openmp.threads
       # sends a warning
       testthat::expect_warning(
         object = openmp.threads(2),
-        label  = "Setting openmp.threads(2) (branch: !openmp_available)" 
+        label  = "Setting openmp.threads(2) (branch: !available)" 
       )
 
       # 2.3) expect warnings
       # for openmp.on and openmp.off
-      testthat::expect_warning(openmp.on(), label = "openmp.on() in branch: !openmp_available")
-      testthat::expect_warning(openmp.off(), label = "openmp.off() in branch: !openmp_available")
+      testthat::expect_warning(openmp.on(), label = "openmp.on() in branch: !available")
+      testthat::expect_warning(openmp.off(), label = "openmp.off() in branch: !available")
 
     }
 
