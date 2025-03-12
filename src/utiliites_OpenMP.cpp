@@ -31,11 +31,19 @@ namespace omp
 {
 
     void set_threads(int threads) {
-        ::omp_set_num_threads(threads);
+        #ifdef _OPENMP
+            ::omp_set_num_threads(threads);
+        #else
+            // pretend to do something cool
+        #endif
     }
 
     int get_threads() {
-        return ::omp_get_max_threads();
+        #ifdef _OPENMP
+            return ::omp_get_max_threads();
+        #else
+            return -1;
+        #endif
     }
 
     void enable() {
