@@ -91,6 +91,9 @@ jobs:
 
           # Linker flags
           LDFLAGS=-L\${OMP_LIB} -L${GCC_PATH}/lib -lomp -lgfortran -lm -isysroot ${SDK_PATH}
+          CPPFLAGS += -I$(brew --prefix gettext)/include
+          LDFLAGS  += -L$(brew --prefix gettext)/lib -lintl
+
 
           # Fortran configuration
           FC=$(brew --prefix gfortran)/bin/gfortran
@@ -124,6 +127,8 @@ jobs:
 
           # Linker flags
           LDFLAGS=-L${GCC_PATH}/lib -lgfortran -lm -isysroot ${SDK_PATH}
+          CPPFLAGS += -I$(brew --prefix gettext)/include
+          LDFLAGS  += -L$(brew --prefix gettext)/lib -lintl
 
           # Fortran configuration
           FC=$(brew --prefix gfortran)/bin/gfortran
