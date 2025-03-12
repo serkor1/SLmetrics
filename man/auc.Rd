@@ -92,6 +92,8 @@ cat(
 }
 \seealso{
 Other Tools: 
-\code{\link{cov.wt.matrix}()}
+\code{\link{cov.wt.matrix}()},
+\code{\link{preorder}()},
+\code{\link{presort}()}
 }
 \concept{Tools}

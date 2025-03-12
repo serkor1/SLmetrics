@@ -31,10 +31,7 @@
 #' This argument is only relevant when `micro != NULL`. 
 #' When `na.rm = TRUE`, the computation corresponds to `sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))`.
 #' When `na.rm = FALSE`, the computation corresponds to `sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))`.
-#' @param 
-#' ..., 
-#' micro = NULL, 
-#' na.rm = TRUE Arguments passed into other methods
+#' @param ... Arguments passed into other methods
 #' 
 #' @section Creating <[factor]>:
 #'

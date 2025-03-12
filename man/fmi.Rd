@@ -18,8 +18,7 @@ fmi(...)
 
 \item{predicted}{A vector of <\link{factor}> with \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{...}{micro = NULL,
-na.rm = TRUE Arguments passed into other methods}
+\item{...}{Arguments passed into other methods}
 
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}}
 }

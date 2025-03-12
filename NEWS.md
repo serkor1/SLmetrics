@@ -18,7 +18,7 @@
   and [Banknote
   Authentication](https://archive.ics.uci.edu/dataset/267/banknote+authentication)
   datasets. Each dataset is comes in named `list` where features and
-  targets are stored seperately. Below is an example from the Obesity
+  targets are stored separately. Below is an example from the Obesity
   dataset:
 
 ``` r

@@ -28,8 +28,7 @@ weighted.plr(
 
 \item{predicted}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{...}{micro = NULL,
-na.rm = TRUE Arguments passed into other methods}
+\item{...}{Arguments passed into other methods}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 
