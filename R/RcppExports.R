@@ -902,6 +902,10 @@ cov.wt.data.frame <- function(x, wt = NULL, cor = FALSE, center = TRUE, method =
     .Call(`_SLmetrics_covariance_dataframe`, x, wt, cor, center, method)
 }
 
+.openmp_available <- function() {
+    .Call(`_SLmetrics_openmp_available`)
+}
+
 .enable_openmp <- function() {
     .Call(`_SLmetrics_enable_openmp`)
 }

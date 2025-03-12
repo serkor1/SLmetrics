@@ -14,20 +14,14 @@
 #' @export
 openmp.on <- function() {
 
-  # 0) define OpenMP
-  # usage
-  usage <- .enable_openmp()
-
-  # 1) check if OpenMP
-  # is available
-  if (is.null(usage)) {
-    warning(
-      "OpenMP is not available on your system!",
-      call. = FALSE
-    )
-
-    invisible(return(NULL))
+  # 0) check availability
+  # on system
+  if (!openmp_available()) {
+    return(NULL)
   }
+  
+  # 1) enable OpenMP
+  .enable_openmp()
 
   # 2) send messagge
   # to user if enabled
@@ -46,20 +40,14 @@ openmp.on <- function() {
 #' @export
 openmp.off <- function() {
 
-  # 0) define OpenMP
-  # usage
-  usage <- .disable_openmp()
-
-  # 1) check if OpenMP
-  # is available
-  if (is.null(usage)) {
-    warning(
-      "OpenMP is not available on your system!",
-      call. = FALSE
-    )
-
-    invisible(return(NULL))
+  # 0) check availability
+  # on system
+  if (!openmp_available()) {
+    return(NULL)
   }
+  
+  # 1) disable OpenMP
+  .disable_openmp()
 
   # 2) send messagge
   # to user if enabled
@@ -76,29 +64,52 @@ openmp.off <- function() {
 #' 
 #' @export
 openmp.threads <- function(threads) {
+
+  # 0) check availability
+  # on system
+  if (!openmp_available()) {
+    return(NULL)
+  }
+
+  # 1) extract available
+  # threads
   available <- .available_threads()
   
+  # 1.1) if no threads have
+  # been passed return the
+  # number of threads
   if (missing(threads)) {
-    if (available == 0) {
-      warning("OpenMP is not available on your system!", call. = FALSE)
-      return(invisible(NULL))
-    }
     return(available)
   }
   
+  # 2) check the passed
+  # number of checks
   if (!is.null(threads)) {
+
+    # 2.1) if negative number
+    # of threads - stop()
+    # or the CPU explodes
     if (threads <= 0) {
-      stop("Number of threads must be a positive integer.", call. = FALSE)
+      stop(
+        "`threads`-argument must be a positive <integer>.",
+         call. = FALSE
+      )
     }
+
+    # 2.2) if the user
+    # passes thread count
+    # higher than available
+    # truncate it
     threads <- min(threads, available)
   }
   
-  usage <- .use_threads(if (is.null(threads)) -1 else threads)
+  # 3) pass the threads to
+  # OpenMP on the C++ side
+  # and lets get rolling!
+  # -1 means all systems go - wutang wutang!
+  threads <- .use_threads(
+    value = if (is.null(threads)) -1 else threads
+  )
   
-  if (!is.null(threads) && usage == 0) {
-    warning("OpenMP is not available on your system!", call. = FALSE)
-    return(invisible(NULL))
-  }
-  
-  message(sprintf("Using %d threads.", usage))
+  message(sprintf("Using %d threads.", threads))
 }
