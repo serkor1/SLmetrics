@@ -61,6 +61,11 @@ jobs:
           brew install libomp pkg-config
           brew cleanup
 
+      - name: Install xcode-command tools
+        if: runner.os == 'macOS' && matrix.config.r == 'devel'
+        run: |
+          xcode-select --install
+
       - name: Configure Makevars (macOS-gcc)
         if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
         run: |
