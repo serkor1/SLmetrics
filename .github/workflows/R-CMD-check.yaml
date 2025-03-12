@@ -173,8 +173,24 @@ jobs:
         if: matrix.config.compiler != 'clang'
         shell: Rscript {0}
         run: |
+          # 1) check if OpenMP
+          # is available
+          Rcpp::cppFunction(plugins = "openmp",
+            code = "
+            bool is_available() {
+              #ifdef _OPENMP
+                return true;
+              #else
+                return false;
+              #endif
+            }
+            "
+          )
+
+          # 2) stop if not
+          # available
           stopifnot(
-            "OpenMP not available!" = SLmetrics:::openmp_available()
+            "OpenMP not available!" = is_available()
           )
 
       - name: Setup Python and {reticulate}
