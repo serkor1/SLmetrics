@@ -39,31 +39,34 @@ testthat::test_that(
       # sets the correct number of threads
       testthat::expect_message(
         object = openmp.threads(2),
-        regexp = "Using 2 threads."
+        regexp = "Using 2 threads.",
+        label  = "Setting openmp.threads(2) in branch: openmp_available" 
       )
 
       # 2.3) expect messages for 
       # for openmp.on and openmp.off
-      testthat::expect_message(openmp.on())
-      testthat::expect_message(openmp.off())
+      testthat::expect_message(openmp.on(), label = "openmp.on() in branch: openmp_available")
+      testthat::expect_message(openmp.off(), label = "openmp.off() in branch: openmp_available")
 
     } else {
       # 2.1) check that openmp.threads
       # sends a warning
       testthat::expect_warning(
-        object = openmp.threads()
+        object = openmp.threads(),
+        label  = "Number of available threads in branch: !openmp_available"
       )
 
       # 2.2) check that openmp.threads
       # sends a warning
       testthat::expect_warning(
-        object = openmp.threads(2)
+        object = openmp.threads(2),
+        label  = "Setting openmp.threads(2) (branch: !openmp_available)" 
       )
 
       # 2.3) expect warnings
       # for openmp.on and openmp.off
-      testthat::expect_warning(openmp.on())
-      testthat::expect_warning(openmp.off())
+      testthat::expect_warning(openmp.on(), label = "openmp.on() in branch: !openmp_available")
+      testthat::expect_warning(openmp.off(), label = "openmp.off() in branch: !openmp_available")
 
     }
 
