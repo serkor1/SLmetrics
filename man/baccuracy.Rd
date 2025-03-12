@@ -38,8 +38,7 @@ weighted.baccuracy(
 
 \item{na.rm}{A \link{logical} value (default: \link{TRUE}).  If \link{TRUE} calculation of the metric is based on valid classes.}
 
-\item{...}{micro = NULL,
-na.rm = TRUE Arguments passed into other methods}
+\item{...}{Arguments passed into other methods}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default}
 

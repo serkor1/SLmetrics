@@ -149,6 +149,26 @@ cat(
 )
 ```
 
+* **Sorting algorithms:** A set of sorting and ordering algorithms applicable to matrices have been implemented. The use-case is currently limited to `auc.foo`, `ROC` and `prROC` functions. The algorithms can be used as follows:
+
+```{r}
+# 1) generate a 4x4 matrix
+# with random values to be sorted
+set.seed(1903)
+X <- matrix(
+  data = cbind(sample(16:1)),
+  nrow = 4
+)
+
+# 2) sort matrix
+# in decreasing order
+SLmetrics::presort(X)
+
+# 3) get indices 
+# for sorted matrix
+SLmetrics::preorder(X)
+```
+
 ## :warning: Breaking changes
 
 * **Logloss:** The argument `pk` has been replaced by `response`.

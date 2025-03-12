@@ -46,8 +46,7 @@ level in \code{actual}, the second column to the second factor level, and so on.
 the mean cross-entropy across all observations is returned; otherwise, the
 sum of cross-entropies is returned.}
 
-\item{...}{micro = NULL,
-na.rm = TRUE Arguments passed into other methods}
+\item{...}{Arguments passed into other methods}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default}
 }

@@ -70,7 +70,9 @@ By default, \code{method = "unbiased"},
 }
 \seealso{
 Other Tools: 
-\code{\link{auc.numeric}()}
+\code{\link{auc.numeric}()},
+\code{\link{preorder}()},
+\code{\link{presort}()}
 }
 \concept{Tools}
 \keyword{internal}

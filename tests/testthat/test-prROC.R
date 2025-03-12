@@ -66,7 +66,7 @@ testthat::test_that(
           # prROC
           prROC_object <- wrapped_prROC(
             actual     = actual,
-            response   = if (presorted) sort(response, decreasing = TRUE) else response,
+            response   = if (presorted) presort(response, decreasing = TRUE) else response,
             w          = if (weighted) w else NULL,
             thresholds = if (custom_thresholds) thresholds else NULL,
             presorted  = presorted

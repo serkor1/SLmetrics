@@ -32,8 +32,7 @@ weighted.ckappa(
 
 \item{beta}{A <\link{numeric}> value of \link{length} 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.}
 
-\item{...}{micro = NULL,
-na.rm = TRUE Arguments passed into other methods}
+\item{...}{Arguments passed into other methods}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 
