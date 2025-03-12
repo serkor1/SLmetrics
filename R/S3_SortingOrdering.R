@@ -20,6 +20,8 @@
 #' @param decreasing a [logical] value of [length] 1 (default: [FALSE]). If [TRUE] the matrix is return in descending order.
 #' @param ... Arguments passed into other methods.
 #' 
+#' @example man/examples/scr_SortingOrdering.R
+#' 
 #' @family Tools
 #' 
 #' @returns
