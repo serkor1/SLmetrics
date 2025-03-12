@@ -918,12 +918,15 @@ cov.wt.data.frame <- function(x, wt = NULL, cor = FALSE, center = TRUE, method =
     .Call(`_SLmetrics_use_threads`, value)
 }
 
+#' @method presort matrix
 #' @export
-sort.matrix <- function(x, decreasing = FALSE, ...) {
+presort.matrix <- function(x, decreasing = FALSE, ...) {
     .Call(`_SLmetrics_sort_matrix`, x, decreasing)
 }
 
-order.matrix <- function(x, decreasing = FALSE, ...) {
+#' @method preorder matrix
+#' @export
+preorder.matrix <- function(x, decreasing = FALSE, ...) {
     .Call(`_SLmetrics_order_matrix`, x, decreasing)
 }
 

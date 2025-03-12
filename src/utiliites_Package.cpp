@@ -108,8 +108,9 @@ int use_threads(int value = -1) {
  * are independent, and sorts each column independently of
  * of eachother
  */
+//' @method presort matrix
 //' @export
-// [[Rcpp::export(sort.matrix)]]
+// [[Rcpp::export(presort.matrix)]]
 Rcpp::NumericMatrix sort_matrix(
   Rcpp::NumericMatrix x, 
   bool decreasing = false) {
@@ -160,7 +161,9 @@ Rcpp::NumericMatrix sort_matrix(
     return x;
 }
 
-// [[Rcpp::export(order.matrix)]]
+//' @method preorder matrix
+//' @export
+// [[Rcpp::export(preorder.matrix)]]
 Rcpp::IntegerMatrix order_matrix(
     Rcpp::NumericMatrix x, 
     bool decreasing = false) {
