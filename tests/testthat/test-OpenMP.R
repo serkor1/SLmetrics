@@ -9,17 +9,28 @@ testthat::test_that(
 
     # 1) check OpenMP availability
     # 1.1) define C++ function
+    #
+    # NOTE: This counts the number of recognized threads
+    # at runtime, #ifdef _OPENMP essentially just checks
+    # if the compiler is *OpenMP ready* - so if your system
+    # is not correctly set up to use OpenMP #ifdef _OPENMP will not fail, 
+    # but the parallel execution will be done on a single thread; which is essentially
+    # the same as not have OpenMP.
     Rcpp::cppFunction(
       plugins = "openmp",
       code = "
         bool is_available() {
-          #ifdef _OPENMP
-            return true;
-          #else
-            return false;
-          #endif
+          int n_threads = 0;
+
+          #pragma omp parallel
+          {
+            #pragma omp atomic
+            n_threads++;
           }
-          "
+
+          return (n_threads > 1);
+        }
+        "
     )
 
     # 1.2) check OpenMP availability
