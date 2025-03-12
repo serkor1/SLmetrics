@@ -61,11 +61,6 @@ jobs:
           brew install libomp pkg-config
           brew cleanup
 
-      - name: Install xcode-command tools
-        if: runner.os == 'macOS' && matrix.config.r == 'devel'
-        run: |
-          xcode-select --install
-
       - name: Configure Makevars (macOS-gcc)
         if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
         run: |
@@ -154,29 +149,10 @@ jobs:
           extra-packages: any::rcmdcheck reticulate
           needs: check
           
-      - name: Check OpenMP availability
-        if: matrix.config.compiler != 'clang'
+      - name: Check if R is properly setup
         shell: Rscript {0}
         run: |
-          # 1) check if OpenMP
-          # is available
-          Rcpp::cppFunction(plugins = "openmp",
-            code = "
-            bool is_available() {
-              #ifdef _OPENMP
-                return true;
-              #else
-                return false;
-              #endif
-            }
-            "
-          )
-
-          # 2) stop if not
-          # available
-          stopifnot(
-            "OpenMP not available!" = is_available()
-          )
+          pkgbuild::check_build_tools(debug = TRUE)
 
       - name: Setup Python and {reticulate}
         uses: ./.github/actions/setup-reticulate
