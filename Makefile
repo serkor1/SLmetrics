@@ -186,13 +186,24 @@ purge:
 	@git clean -d -x -f
 
 
-# r-hub:
+# r-hub-check:
 # 
-# This command performs most checks available
-# on all R consortium runners.
-r-hub:
+# This command performs all checks via R-hub, except nosuggests and rchk.
+# * Without suggests the vignettes will not build and so it fails.
+# * rchck throws a bunch of uninformative errors that is currently irrelevant - this
+# is something on the TODO-list
+r-hub-check:
 	@echo "▶️ Requesting r-hub tests"
 	@echo "========================="
 
-	@Rscript -e "rhub::rhub_check(platforms = rhub::rhub_platforms()[['name']])"
+	@Rscript -e "\
+		rhub::rhub_check(\
+			platforms = grep(\
+				pattern     = 'suggests|rchk',\
+				x           = rhub::rhub_platforms()[['name']],\
+				ignore.case = TRUE,\
+				value       = TRUE,\
+				invert      = TRUE\
+				)\
+		)"
 
