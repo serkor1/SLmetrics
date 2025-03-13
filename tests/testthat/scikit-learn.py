@@ -89,13 +89,6 @@ def py_baccuracy(actual, predicted, adjust = False, average = None, w = None):
       sample_weight = w
     )
     
-def py_cmatrix(actual, predicted, w = None):
-    return metrics.confusion_matrix(
-      y_true = actual,
-      y_pred = predicted,
-      sample_weight = w
-    )
-    
 def py_entropy(actual, qk, normalize = True, w = None, labels = None):
     return metrics.log_loss(
       y_true    = actual,
@@ -191,61 +184,58 @@ def py_ROC(actual, response, w=None):
 
     actual = np.asarray(actual)
     response = np.asarray(response)
-    
     unique_labels = np.unique(actual)
     results = {}
-    
+
     for i, label in enumerate(unique_labels):
-        
         letter = string.ascii_lowercase[i]
-        
+        binary_target = (actual == label).astype(int)
+        scores = response[:, i]
+
         fpr, tpr, thresholds = metrics.roc_curve(
-            actual,
-            response,
-            pos_label=label,
+            binary_target,
+            scores,
             sample_weight=w,
             drop_intermediate=False
         )
-        
+
         results[letter] = {
             'threshold': thresholds.tolist(),
             'level': i + 1,
             'label': letter,
             'fpr': fpr.tolist(),
-            'tpr': tpr.tolist(),
-            
+            'tpr': tpr.tolist()
         }
-    
+
     return results
 
+
 def py_prROC(actual, response, w=None):
-   
     actual = np.asarray(actual)
     response = np.asarray(response)
     
     unique_labels = np.unique(actual)
+   
+    
     results = {}
     
     for i, label in enumerate(unique_labels):
-        
         letter = string.ascii_lowercase[i]
         
+        # Create a binary target: 1 if the sample's label matches, else 0.
+        binary_target = (actual == label).astype(int)
+        # Get the prediction scores from the corresponding column.
+        scores = response[:, i]
+        
         precision, recall, thresholds = metrics.precision_recall_curve(
-            actual,
-            response,
-            pos_label = label,
-            sample_weight = w,
-            drop_intermediate = False
+            binary_target,
+            scores,
+            sample_weight=w,
+            drop_intermediate=False
         )
-
-        # Drop the last element
-        # scikit-learn adds a (1, 0) for recall and precision
-        precision = precision[:-1]
-        recall = recall[:-1]
-
-        # Values are returned in ascending
-        # order. It is needed in descending order
-        # as in ROC
+        
+        # The thresholds from precision_recall_curve are returned in ascending order.
+        # Reverse them to mimic the ROC curve style (descending order).
         sorted_indices = np.argsort(-thresholds)
         thresholds = thresholds[sorted_indices]
         precision = precision[sorted_indices]
@@ -255,8 +245,26 @@ def py_prROC(actual, response, w=None):
             'threshold': thresholds.tolist(),
             'level': i + 1,
             'label': letter,
-            'precision': precision.tolist(),
             'recall': recall.tolist(),
+            'precision': precision.tolist()
         }
     
     return results
+
+
+def py_rocAUC(actual, response, w = None, micro = None):
+  return metrics.roc_auc_score(
+    y_true  = actual,
+    y_score = response,
+    average = micro,
+    multi_class = "ovr",
+    sample_weight = w
+  )
+
+def py_prAUC(actual, response, w = None, micro = None):
+  return metrics.average_precision_score(
+    y_true  = actual,
+    y_score = response,
+    average = micro,
+    sample_weight = w
+  )

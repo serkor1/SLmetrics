@@ -13,6 +13,10 @@
 #' The [mcc()]-function computes the [Matthews Correlation Coefficient](https://en.wikipedia.org/wiki/Matthews_correlation_coefficient) (MCC), also known as the \eqn{\phi}-coefficient, between
 #' two vectors of predicted and observed [factor()] values. The [weighted.mcc()] function computes the weighted Matthews Correlation Coefficient.
 #'
+#' @usage
+#' ## Generic S3 method
+#' mcc(...)
+#' 
 #' @section Definition:
 #'
 #' The metric is calculated as follows,
@@ -30,34 +34,54 @@
 mcc <- function(...) {
   UseMethod(
     generic = "mcc",
-    object  = ..1
+    object = ..1
   )
 }
 
 #' @rdname mcc
+#' @usage
+#' ## Generic S3 method
+#' weighted.mcc(
+#'  ...,
+#'  w
+#' )
 #' @export
-weighted.mcc <- function(...) {
+weighted.mcc <- function(
+  ..., 
+  w) {
   UseMethod(
     generic = "weighted.mcc",
-    object  = ..1
+    object = ..1
   )
 }
 
 #' @rdname mcc
+#' @usage
+#' ## Generic S3 method
+#' phi(...)
+#' 
 #' @export
 phi <- function(...) {
   UseMethod(
     generic = "phi",
-    object  = ..1
+    object = ..1
   )
 }
 
 #' @rdname mcc
+#' @usage
+#' ## Generic S3 method
+#' weighted.phi(
+#'  ...,
+#'  w
+#' )
 #' @export
-weighted.phi <- function(...) {
+weighted.phi <- function(
+  ...,
+  w) {
   UseMethod(
     generic = "weighted.phi",
-    object  = ..1
+    object = ..1
   )
 }
 

@@ -14,14 +14,25 @@
 
 \method{fer}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
 
-fer(...)
+## Generic S3 method
+fer(
+ ...,
+ micro = NULL,
+ na.rm = TRUE
+)
 
-weighted.fer(...)
+## Generic S3 method
+weighted.fer(
+ ...,
+ w,
+ micro = NULL,
+ na.rm = TRUE
+)
 }
 \arguments{
-\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{predicted}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
 micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
@@ -184,9 +195,11 @@ Other Classification:
 \code{\link{nlr.factor}()},
 \code{\link{npv.factor}()},
 \code{\link{plr.factor}()},
+\code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
+\code{\link{roc.auc.matrix}()},
 \code{\link{specificity.factor}()},
 \code{\link{zerooneloss.factor}()}
 
@@ -214,12 +227,14 @@ Other Supervised Learning:
 \code{\link{npv.factor}()},
 \code{\link{pinball.numeric}()},
 \code{\link{plr.factor}()},
+\code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{rae.numeric}()},
 \code{\link{recall.factor}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{roc.auc.matrix}()},
 \code{\link{rrmse.numeric}()},
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},

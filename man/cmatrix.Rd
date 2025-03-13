@@ -11,9 +11,20 @@
 
 \method{weighted.cmatrix}{factor}(actual, predicted, w, ...)
 
-cmatrix(...)
+## Generic S3 method
+cmatrix(
+ actual,
+ predicted,
+ ...
+)
 
-weighted.cmatrix(...)
+## Generic S3 method
+weighted.cmatrix(
+ actual,
+ predicted,
+ w,
+ ...
+)
 }
 \arguments{
 \item{actual}{A <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
@@ -35,7 +46,7 @@ column represents the predicted \link{factor} levels.
 }
 \section{Dimensions}{
 
-There is no robust defensive measure against misspecififying
+There is no robust defensive measure against mis-specifying
 the confusion matrix. If the arguments are correctly specified, the resulting
 confusion matrix is on the form:\tabular{lcr}{
     \tab A (Predicted) \tab B (Predicted) \cr
@@ -173,9 +184,11 @@ Other Classification:
 \code{\link{nlr.factor}()},
 \code{\link{npv.factor}()},
 \code{\link{plr.factor}()},
+\code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
+\code{\link{roc.auc.matrix}()},
 \code{\link{specificity.factor}()},
 \code{\link{zerooneloss.factor}()}
 
@@ -203,12 +216,14 @@ Other Supervised Learning:
 \code{\link{npv.factor}()},
 \code{\link{pinball.numeric}()},
 \code{\link{plr.factor}()},
+\code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{rae.numeric}()},
 \code{\link{recall.factor}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{roc.auc.matrix}()},
 \code{\link{rrmse.numeric}()},
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},

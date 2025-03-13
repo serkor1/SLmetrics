@@ -14,14 +14,27 @@
 
 \method{fbeta}{cmatrix}(x, beta = 1, micro = NULL, na.rm = TRUE, ...)
 
-fbeta(...)
+## Generic S3 method
+fbeta(
+ ...,
+ beta  = 1,
+ micro = NULL,
+ na.rm = TRUE
+)
 
-weighted.fbeta(...)
+## Generic S3 method
+weighted.fbeta(
+ ...,
+ w,
+ beta = 1,
+ micro = NULL,
+ na.rm = TRUE
+)
 }
 \arguments{
-\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{predicted}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{beta}{A <\link{numeric}> vector of \link{length} \eqn{1} (default: \eqn{1}).}
 
@@ -45,11 +58,11 @@ If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of
 If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
 }
 \description{
-A generic funcion for the \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_{\beta}}}-score. Use \code{\link[=weighted.fbeta]{weighted.fbeta()}} for the weighted \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_{\beta}}}-score.
+A generic function for the \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_{\beta}}}-score. Use \code{\link[=weighted.fbeta]{weighted.fbeta()}} for the weighted \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_{\beta}}}-score.
 }
 \section{Definition}{
 
-Let \eqn{\hat{F}_{\beta} \in [0, 1]} be the \eqn{F_{\beta}} score, which is a weighted harmonic mean of precision and recall. \eqn{F_{\beta}} score of thte classifier is is calculated as,
+Let \eqn{\hat{F}_{\beta} \in [0, 1]} be the \eqn{F_{\beta}} score, which is a weighted harmonic mean of precision and recall. \eqn{F_{\beta}} score of the classifier is calculated as,
 
 \deqn{
   \hat{F}_{\beta} = \left(1 + \beta^2\right) \frac{\text{Precision} \times \text{Recall}}
@@ -201,9 +214,11 @@ Other Classification:
 \code{\link{nlr.factor}()},
 \code{\link{npv.factor}()},
 \code{\link{plr.factor}()},
+\code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
+\code{\link{roc.auc.matrix}()},
 \code{\link{specificity.factor}()},
 \code{\link{zerooneloss.factor}()}
 
@@ -231,12 +246,14 @@ Other Supervised Learning:
 \code{\link{npv.factor}()},
 \code{\link{pinball.numeric}()},
 \code{\link{plr.factor}()},
+\code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{rae.numeric}()},
 \code{\link{recall.factor}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{roc.auc.matrix}()},
 \code{\link{rrmse.numeric}()},
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},

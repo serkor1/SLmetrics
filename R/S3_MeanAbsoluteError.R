@@ -12,6 +12,14 @@
 #' The [mae()]-function computes the [mean absolute error](https://en.wikipedia.org/wiki/Mean_absolute_error) between
 #' the observed and predicted <[numeric]> vectors. The [weighted.mae()] function computes the weighted mean absolute error.
 #'
+#' @usage
+#' ## Generic S3 method
+#' mae(
+#'  actual,
+#'  predicted,
+#'  ...
+#' )
+#' 
 #' @section Definition:
 #' 
 #' The metric is calulated as follows,
@@ -26,19 +34,32 @@
 #' @family Supervised Learning
 #' 
 #' @export
-mae <- function(...) {
+mae <- function(
+  actual, 
+  predicted,
+  ...) {
   UseMethod(
-    generic = "mae",
-    object  = ..1
+    generic = "mae"
   )
 }
 
 #' @rdname mae
+#' @usage
+#' ## Generic S3 method
+#' weighted.mae(
+#'  actual,
+#'  predicted,
+#'  w,
+#'  ...
+#' )
 #' @export
-weighted.mae <- function(...) {
+weighted.mae <- function(
+  actual, 
+  predicted,
+  w,
+  ...) {
   UseMethod(
-    generic = "weighted.mae",
-    object  = ..1
+    generic = "weighted.mae"
   )
 }
 

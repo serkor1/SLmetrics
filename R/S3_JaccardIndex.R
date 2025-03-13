@@ -13,6 +13,14 @@
 #' The [jaccard()]-function computes the [Jaccard Index](https://en.wikipedia.org/wiki/Jaccard_index), also known as the Intersection over Union, between
 #' two vectors of predicted and observed [factor()] values. The [weighted.jaccard()] function computes the weighted Jaccard Index.
 #'
+#' @usage
+#' ## Generic S3 method
+#' jaccard(
+#'  ...,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
+#' 
 #' @section Definition:
 #'
 #' The metric is calculated for each class \eqn{k} as follows,
@@ -29,7 +37,10 @@
 #' @family Supervised Learning
 #'
 #' @export
-jaccard <- function(...) {
+jaccard <- function(
+  ..., 
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "jaccard",
     object  = ..1
@@ -37,8 +48,18 @@ jaccard <- function(...) {
 }
 
 #' @rdname jaccard
+#' @usage
+#' ## Generic S3 method
+#' csi(
+#'  ...,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-csi <- function(...) {
+csi <- function(
+  ..., 
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "csi",
     object  = ..1
@@ -46,8 +67,18 @@ csi <- function(...) {
 }
 
 #' @rdname jaccard
+#' @usage
+#' ## Generic S3 method
+#' tscore(
+#'  ...,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-tscore <- function(...) {
+tscore <- function(
+  ...,
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "tscore",
     object  = ..1
@@ -55,8 +86,20 @@ tscore <- function(...) {
 }
 
 #' @rdname jaccard
+#' @usage
+#' ## Generic S3 method
+#' weighted.jaccard(
+#'  ...,
+#'  w,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-weighted.jaccard <- function(...) {
+weighted.jaccard <- function(
+  ...,
+  w,
+  micro = NULL,
+  na.rm = TRUE) {
   UseMethod(
     generic = "weighted.jaccard",
     object  = ..1
@@ -64,8 +107,20 @@ weighted.jaccard <- function(...) {
 }
 
 #' @rdname jaccard
+#' @usage
+#' ## Generic S3 method
+#' weighted.csi(
+#'  ...,
+#'  w,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-weighted.csi <- function(...) {
+weighted.csi <- function(
+  ...,
+  w,
+  micro = NULL,
+  na.rm = TRUE) {
   UseMethod(
     generic = "weighted.csi",
     object  = ..1
@@ -73,8 +128,20 @@ weighted.csi <- function(...) {
 }
 
 #' @rdname jaccard
+#' @usage
+#' ## Generic S3 method
+#' weighted.tscore(
+#'  ...,
+#'  w,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-weighted.tscore <- function(...) {
+weighted.tscore <- function(
+  ..., 
+  w, 
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "weighted.tscore",
     object  = ..1

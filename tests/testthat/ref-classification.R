@@ -1,3 +1,48 @@
+# Reference Confusion Matrix
+py_cmatrix <- function(
+  actual, 
+  predicted, 
+  w = NULL) {
+  
+  if (is.null(w)) {
+    w <- rep(1, length(actual))
+  }
+  
+  cm <- tapply(
+    w, 
+    INDEX = list(actual, predicted),
+    FUN = sum, 
+    default = 0
+  )
+  
+  cm <- as.matrix(cm)
+  
+  cm[is.na(cm)] <- 0
+
+  return(cm)
+}
+
+# Reference fbeta-score
+ref_fbeta <- function(
+  actual,
+  predicted,
+  w = NULL,
+  micro = NULL,
+  na.rm = TRUE,
+  beta = 1) {
+  
+  generalized_metric(
+    actual      = actual,
+    predicted   = predicted,
+    w           = w,
+    micro       = micro,
+    na.rm       = na.rm,
+    metric_expr = ((1 + beta^2) * TP) / (((1 + beta^2) * TP) + (beta^2 * FN) + FP),
+    beta        = beta
+  )
+
+}
+
 # Reference Precision
 ref_precision <- function(
   actual,
@@ -306,4 +351,40 @@ ref_prROC <- function(
   })
 
   output
+}
+
+# Reference Poisson LogLoss
+ref_poisson_logloss <- function(
+  actual, 
+  response,
+  w = NULL,
+  normalize = TRUE) {
+  
+  eps <- 1e-15
+  response <- pmax(response, eps)
+  loss_vals <- log(gamma(actual + 1)) + response - actual * log(response)
+  
+  if (is.null(w)) {
+      # Unweighted
+      if (normalize) {
+          # Mean of losses
+          return(mean(loss_vals))
+      } else {
+          # Sum of losses
+          return(sum(loss_vals))
+      }
+  } else {
+      w <- as.numeric(w) 
+      weighted_loss <- w * loss_vals
+      
+      if (normalize) {
+
+          return(sum(weighted_loss) / sum(w))
+        
+      } else {
+
+          return(sum(weighted_loss))
+        
+      }
+  }
 }

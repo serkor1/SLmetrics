@@ -14,18 +14,29 @@
 
 \method{baccuracy}{cmatrix}(x, adjust = FALSE, na.rm = TRUE, ...)
 
-baccuracy(...)
+## Generic S3 method
+baccuracy(
+  ...,
+  adjust = FALSE,
+  na.rm  = TRUE
+)
 
-weighted.baccuracy(...)
+## Generic S3 method
+weighted.baccuracy(
+  ...,
+  w,
+  adjust = FALSE,
+  na.rm  = TRUE
+)
 }
 \arguments{
-\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels}
+\item{actual}{A vector of <\link{factor}> with \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{predicted}{A vector of <\link{factor}>-vector of \link{length} \eqn{n}, and \eqn{k} levels}
+\item{predicted}{A vector of <\link{factor}> with \link{length} \eqn{n}, and \eqn{k} levels}
 
 \item{adjust}{A \link{logical} value (default: \link{FALSE}). If \link{TRUE} the metric is adjusted for random chance \eqn{\frac{1}{k}}.}
 
-\item{na.rm}{A \link{logical} values (default: \link{TRUE}).  If \link{TRUE} calculation of the metric is based on valid classes.}
+\item{na.rm}{A \link{logical} value (default: \link{TRUE}).  If \link{TRUE} calculation of the metric is based on valid classes.}
 
 \item{...}{Arguments passed into other methods}
 
@@ -45,20 +56,20 @@ Use \code{\link[=weighted.baccuracy]{weighted.baccuracy()}} for the weighted bal
 Let \eqn{\hat{\alpha} \in [0, 1]} be the proportion of correctly predicted classes. If \code{adjust == false}, the balanced \href{https://arxiv.org/abs/2008.05756}{accuracy} of the classifier is calculated as,
 
 \deqn{
-  \hat{\alpha} = \frac{\text{sensitivity} + \text{specificty}}{2}
+  \hat{\alpha} = \frac{\text{sensitivity} + \text{specificity}}{2}
 }
 
 otherwise,
 
 \deqn{
-  \hat{\alpha} = \frac{\text{sensitivity} + \text{specificty}}{2} \frac{1}{k}
+  \hat{\alpha} = \frac{\text{sensitivity} + \text{specificity}}{2} \frac{1}{k}
 }
 
 Where:
 \itemize{
 \item \eqn{k} is the number of classes
 \item \eqn{\text{sensitivity}} is the overall \href{https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall#recall_or_true_positive_rate}{sensitivity}, and
-\item \eqn{\text{specificty}} is the overall \href{https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall#recall_or_true_positive_rate}{specificty}
+\item \eqn{\text{specificity}} is the overall \href{https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall#recall_or_true_positive_rate}{specificity}
 }
 }
 
@@ -169,9 +180,11 @@ Other Classification:
 \code{\link{nlr.factor}()},
 \code{\link{npv.factor}()},
 \code{\link{plr.factor}()},
+\code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
+\code{\link{roc.auc.matrix}()},
 \code{\link{specificity.factor}()},
 \code{\link{zerooneloss.factor}()}
 
@@ -199,12 +212,14 @@ Other Supervised Learning:
 \code{\link{npv.factor}()},
 \code{\link{pinball.numeric}()},
 \code{\link{plr.factor}()},
+\code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{rae.numeric}()},
 \code{\link{recall.factor}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{roc.auc.matrix}()},
 \code{\link{rrmse.numeric}()},
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},

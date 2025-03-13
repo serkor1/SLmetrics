@@ -6,119 +6,131 @@
 # script start;
 
 testthat::test_that(
-  desc = "Test that `prROC()`-function works as expected",
-  code = {
+  desc = "Test that `prROC()`-function works as expected", code = {
 
-    # 0) construct ROC
+    testthat::skip_on_cran()
+
+    # 0) construct prROC
     # wrapper
     wrapped_prROC <- function(
       actual,
       response,
       thresholds = NULL,
       w = NULL,
-      micro = TRUE) {
+      presorted = FALSE) {
       
-      if (is.null(w)) {
+        if (is.null(w)) {
 
-        prROC(
-          actual,
-          response,
-          thresholds = if (is.null(thresholds))  {NULL} else thresholds
-        )
-
-      } else {
-
-        weighted.prROC(
-          actual,
-          response,
-          thresholds = if (is.null(thresholds))  {NULL} else thresholds,
-          w = w
-        )
-
-      }
-      
+          prROC(
+            actual,
+            response,
+            thresholds = if (is.null(thresholds))  {NULL} else thresholds,
+            presorted  = presorted 
+          )
+  
+        } else {
+  
+          weighted.prROC(
+            actual,
+            response,
+            thresholds = if (is.null(thresholds))  {NULL} else thresholds,
+            w = w,
+            presorted  = presorted 
+          )
+  
+        }
       
     }
 
     # 1) generate class
     # values
-    actual     <- create_factor(n = 100, k = 5)
-    response   <- runif(n = length(actual))
+    actual     <- create_factor()
+    response   <- create_response(actual, as_matrix = TRUE)
     w          <- runif(n = length(actual))
-    thresholds <- seq(0.1, 0.9, by = 0.1)
-
-    for (weighted in c(TRUE, FALSE)) {
+    thresholds <- seq(1, 0, length.out = 10)
     
-      # 2) test that the are 
-      # equal to target values
-      for (micro in c(NA, TRUE, FALSE)) {
+    # 2) run tests
+    for (presorted in c(TRUE, FALSE)) {
+      for (custom_thresholds in c(TRUE, FALSE)) {
+        for (weighted in c(TRUE, FALSE)) {
 
-        # 2.1) generate sensible 
-        # label information
-        info <- paste(
-          "Weighted = ", weighted,
-          "Micro = ", micro
-        )
-
-        # 2.2) generate score
-        # from {slmetrics}
-        score <- wrapped_prROC(
-          actual     = actual,
-          response   = response,
-          w          = if (weighted) w else NULL,
-          micro      = if (is.na(micro)) { NULL } else micro
-        )
-
-        # 2.3) Test that methods
-        # works as expected
-        testthat::expect_no_condition(
-          object = invisible(capture.output(print(score))),
-          message = info
-        )
-
-        testthat::expect_no_condition(
-          object = invisible(capture.output(summary(score))),
-          message = info
-        )
-
-        testthat::expect_no_condition(
-          object  = plot(score, panels = FALSE),
-          message = info
-        )
-
-        testthat::expect_no_condition(
-          object  = plot(score, panels = TRUE),
-          message = info
-        )
-        
-
-        # 2.4) test that the values
-        # are equal to target value
-
-        # 2.4.1) calculate py_score
-        py_score <- do.call(
-          rbind,
-          lapply(py_prROC(
-            actual    = actual,
-            response  = response,
-            w         = if (weighted) w else NULL),
-            FUN = as.data.frame)
+          # 2.1) generate information 
+          # label
+          info <- paste(
+            "presorted = ", presorted,
+            "custom_thresholds = ", custom_thresholds,
+            "weighted = ", weighted
           )
 
-        # 2.4.2) test for equality
-        testthat::expect_true(
-          object = set_equal(
-            current = score[is.finite(score$thresholds),],
-            target  = py_score[is.finite(py_score$thresholds),]
-          ),
-          info = info
-        )
+          # 2.2) construct
+          # prROC
+          prROC_object <- wrapped_prROC(
+            actual     = actual,
+            response   = if (presorted) presort(response, decreasing = TRUE) else response,
+            w          = if (weighted) w else NULL,
+            thresholds = if (custom_thresholds) thresholds else NULL,
+            presorted  = presorted
+          )
 
+          # 2.3) test that methods
+          # works as expected
+          testthat::expect_true(
+            inherits(
+              prROC_object,
+              what = c("prROC", "data.frame")
+            )
+          )
 
+          testthat::expect_no_condition(
+            object = invisible(capture.output(print(prROC_object))),
+            message = info
+          )
+  
+          testthat::expect_no_condition(
+            object = invisible(capture.output(summary(prROC_object))),
+            message = info
+          )
+  
+          testthat::expect_no_condition(
+            object  = plot(prROC_object, panels = FALSE),
+            message = info
+          )
+  
+          testthat::expect_no_condition(
+            object  = plot(prROC_object, panels = TRUE),
+            message = info
+          )
+
+          # 2.4) construct
+          # py_prROC
+          prROC_reference <- do.call(
+            rbind,
+            lapply(
+              py_prROC(
+              actual    = actual,
+              response  = response,
+              w         = if (weighted) w else NULL),
+              FUN = as.data.frame
+              )
+            )
+          
+          # 2.5) test if equal
+          # only without custom thresholds
+          # {scikit-learn} doesn't support
+          # it
+          if (!custom_thresholds) {
+            testthat::expect_true(
+              object = set_equal(
+                current = prROC_object[is.finite(prROC_object$thresholds),],
+                target  = prROC_reference[is.finite(prROC_reference$thresholds),]
+              ),
+              info = info
+            )
+          }
+          
+        }
       }
-
     }
-
 
   }
 )

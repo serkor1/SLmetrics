@@ -65,3 +65,7 @@ docs/_quarto.yaml
 !meta/README_*/
 !meta/NEWS_*/
 !meta/_freeze/
+
+# CRAN comments
+cran_comments.md
+cran-comments.md

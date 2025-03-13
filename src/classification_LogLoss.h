@@ -1,74 +1,75 @@
 #ifndef CLASSIFICATION_CROSS_ENTROPY_LOSS_H
 #define CLASSIFICATION_CROSS_ENTROPY_LOSS_H
 
+#include "utilities_Package.h"
 #include <Rcpp.h>
-#include <cmath> 
+#include <cmath>
+#include <cstddef>
 
-/*
-    NOTE: The positive class is irrelevant
-    as long as the probility matrix is correctly specified.
-*/
+#ifdef _OPENMP
+    #include <omp.h>
+#endif
 
-class LogLossClass {
-    private:
-        bool normalize_;
-
+class LogLoss {
     public:
-        LogLossClass(bool normalize) : normalize_(normalize) {}
+        static double compute(
+            const int* actual_ptr,
+            const double* response_ptr,
+            std::size_t n,
+            std::size_t nrows,
+            bool normalize) {
 
-
-        double compute(const Rcpp::IntegerVector &actual, const Rcpp::NumericMatrix &response) const {
-            const int n = actual.size();
             double loss = 0.0;
-
-            
-            const int *actual_ptr     = &actual[0];
-            const double *response_ptr = &response(0, 0);
-            const int nrows = response.nrow();
-
-            for (int i = 0; i < n; ++i) {
-
+            #ifdef _OPENMP
+                #pragma omp parallel for reduction(+:loss) if(getUseOpenMP())
+            #endif
+            for (std::size_t i = 0; i < n; ++i) {
                 const int c = actual_ptr[i] - 1;
-                const double p = response_ptr[i + c * nrows];
+                const double p = response_ptr[i + static_cast<std::size_t>(c) * nrows];
                 loss -= std::log(p);
-
             }
 
-            // If requested, average the loss
-            if (normalize_) {
-                loss /= n;
-            }
-
-            return loss;
-        }
-
-        // Weighted cross-entropy
-        double compute(const Rcpp::IntegerVector &actual, const Rcpp::NumericMatrix &response, const Rcpp::NumericVector &w) const {
-            const int n = actual.size();
-            double loss = 0.0;
-            double wsum = 0.0;
-
-            const int *actual_ptr      = &actual[0];
-            const double *response_ptr = &response(0, 0);
-            const double *w_ptr        = &w[0];
-
-            const int nrows = response.nrow();
-
-            for (int i = 0; i < n; ++i) {
-                const int c = actual_ptr[i] - 1;
-                const double p = response_ptr[i + c * nrows];
-                const double weight = w_ptr[i];
-
-                wsum += weight;
-                loss -= weight * std::log(p);
-            }
-
-            if (normalize_) {
-                loss /= wsum;
+            if (normalize) {
+                loss /= static_cast<double>(n);
             }
 
             return loss;
         }
+
+        static double compute(
+            const int* actual_ptr,
+            const double* response_ptr,
+            const double* w_ptr,
+            std::size_t   n,
+            std::size_t   nrows,
+            bool          normalize) {
+
+                double loss = 0.0;
+                double wsum = 0.0;
+
+                #ifdef _OPENMP
+                    #pragma omp parallel for reduction(+:loss, wsum) if(getUseOpenMP())
+                #endif
+                for (std::size_t i = 0; i < n; ++i) {
+                    const int c       = actual_ptr[i] - 1;
+                    const double p    = response_ptr[i + static_cast<std::size_t>(c) * nrows];
+                    const double wval = w_ptr[i];
+
+                    loss -= wval * std::log(p);
+                    wsum += wval;
+                }
+
+                // Normalize if requested
+                if (normalize) {
+                    loss /= wsum;
+                }
+
+                return loss;
+            }
+
+    private:
+        LogLoss()  = delete;
+        ~LogLoss() = delete;
 };
 
-#endif 
+#endif

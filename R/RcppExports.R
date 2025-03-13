@@ -305,15 +305,15 @@ tscore.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
 #' @rdname logloss
 #' @method logloss factor
 #' @export
-logloss.factor <- function(actual, qk, normalize = TRUE, ...) {
-    .Call(`_SLmetrics_LogLoss`, actual, qk, normalize)
+logloss.factor <- function(actual, response, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_LogLoss`, actual, response, normalize)
 }
 
 #' @rdname logloss
 #' @method weighted.logloss factor
 #' @export
-weighted.logloss.factor <- function(actual, qk, w, normalize = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_LogLoss`, actual, qk, w, normalize)
+weighted.logloss.factor <- function(actual, response, w, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_LogLoss`, actual, response, w, normalize)
 }
 
 #' @rdname mcc
@@ -466,15 +466,29 @@ ppv.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
 #' @rdname prROC
 #' @method prROC factor
 #' @export
-prROC.factor <- function(actual, response, thresholds = NULL, ...) {
-    .Call(`_SLmetrics_PrecisionRecallCurve`, actual, response, thresholds)
+prROC.factor <- function(actual, response, thresholds = NULL, presorted = FALSE, ...) {
+    .Call(`_SLmetrics_precision_recall_curve`, actual, response, thresholds, presorted)
 }
 
 #' @rdname prROC
 #' @method weighted.prROC factor
 #' @export
-weighted.prROC.factor <- function(actual, response, w, thresholds = NULL, ...) {
-    .Call(`_SLmetrics_weighted_PrecisionRecallCurve`, actual, response, w, thresholds)
+weighted.prROC.factor <- function(actual, response, w, thresholds = NULL, presorted = FALSE, ...) {
+    .Call(`_SLmetrics_weighted_precision_recall_curve`, actual, response, w, thresholds, presorted)
+}
+
+#' @rdname pr.auc
+#' @method pr.auc matrix
+#' @export
+pr.auc.matrix <- function(actual, response, micro = NULL, method = 0L, ...) {
+    .Call(`_SLmetrics_precision_recall_auc`, actual, response, micro, method)
+}
+
+#' @rdname pr.auc
+#' @method weighted.pr.auc matrix
+#' @export
+weighted.pr.auc.matrix <- function(actual, response, w, micro = NULL, method = 0L, ...) {
+    .Call(`_SLmetrics_precision_recall_auc_weighted`, actual, response, w, micro, method)
 }
 
 #' @rdname recall
@@ -545,22 +559,32 @@ tpr.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_TruePositiveRate`, x, micro, na_rm = na.rm)
 }
 
-auc <- function(y, x, method = 0L) {
-    .Call(`_SLmetrics_auc`, y, x, method)
-}
-
 #' @rdname ROC
 #' @method ROC factor
 #' @export
-ROC.factor <- function(actual, response, thresholds = NULL, ...) {
-    .Call(`_SLmetrics_RecieverOperatorCharacteristics`, actual, response, thresholds)
+ROC.factor <- function(actual, response, thresholds = NULL, presorted = FALSE, ...) {
+    .Call(`_SLmetrics_roc_curve_unweighted`, actual, response, thresholds, presorted)
 }
 
 #' @rdname ROC
 #' @method weighted.ROC factor
 #' @export
-weighted.ROC.factor <- function(actual, response, w, thresholds = NULL, ...) {
-    .Call(`_SLmetrics_weighted_RecieverOperatorCharacteristics`, actual, response, w, thresholds)
+weighted.ROC.factor <- function(actual, response, w, thresholds = NULL, presorted = FALSE, ...) {
+    .Call(`_SLmetrics_roc_curve_weighted`, actual, response, w, thresholds, presorted)
+}
+
+#' @rdname roc.auc
+#' @method roc.auc matrix
+#' @export
+roc.auc.matrix <- function(actual, response, micro = NULL, method = 0L, ...) {
+    .Call(`_SLmetrics_roc_auc`, actual, response, micro, method)
+}
+
+#' @rdname roc.auc
+#' @method weighted.roc.auc matrix
+#' @export
+weighted.roc.auc.matrix <- function(actual, response, w, micro = NULL, method = 0L, ...) {
+    .Call(`_SLmetrics_roc_auc_weighted`, actual, response, w, micro, method)
 }
 
 #' @rdname specificity
@@ -645,6 +669,20 @@ weighted.zerooneloss.factor <- function(actual, predicted, w, ...) {
 #' @export
 zerooneloss.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_ZeroOneLoss`, x)
+}
+
+#' @rdname logloss
+#' @method logloss integer
+#' @export
+logloss.integer <- function(actual, response, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_PoissonLogLoss`, actual, response, normalize)
+}
+
+#' @rdname logloss
+#' @method weighted.logloss integer
+#' @export
+weighted.logloss.integer <- function(actual, response, w, normalize = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_PoissonLogLoss`, actual, response, w, normalize)
 }
 
 #' @rdname rsq
@@ -843,6 +881,31 @@ weighted.smape.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_smape`, actual, predicted, w)
 }
 
+#' @rdname auc
+#' @method auc numeric
+#' @export
+auc.numeric <- function(y, x, method = 0L, presorted = TRUE, ...) {
+    .Call(`_SLmetrics_auc`, y, x, method, presorted)
+}
+
+#' @rdname cov.wt
+#' @method cov.wt matrix
+#' @export
+cov.wt.matrix <- function(x, wt = NULL, cor = FALSE, center = TRUE, method = "unbiased", ...) {
+    .Call(`_SLmetrics_covariance_matrix`, x, wt, cor, center, method)
+}
+
+#' @rdname cov.wt
+#' @method cov.wt data.frame
+#' @export
+cov.wt.data.frame <- function(x, wt = NULL, cor = FALSE, center = TRUE, method = "unbiased", ...) {
+    .Call(`_SLmetrics_covariance_dataframe`, x, wt, cor, center, method)
+}
+
+.openmp_available <- function() {
+    .Call(`_SLmetrics_openmp_available`)
+}
+
 .enable_openmp <- function() {
     .Call(`_SLmetrics_enable_openmp`)
 }
@@ -857,5 +920,17 @@ weighted.smape.numeric <- function(actual, predicted, w, ...) {
 
 .use_threads <- function(value = -1L) {
     .Call(`_SLmetrics_use_threads`, value)
+}
+
+#' @method presort matrix
+#' @export
+presort.matrix <- function(x, decreasing = FALSE, ...) {
+    .Call(`_SLmetrics_sort_matrix`, x, decreasing)
+}
+
+#' @method preorder matrix
+#' @export
+preorder.matrix <- function(x, decreasing = FALSE, ...) {
+    .Call(`_SLmetrics_order_matrix`, x, decreasing)
 }
 

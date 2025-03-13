@@ -12,6 +12,14 @@
 #' The [mse()]-function computes the [mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error) between
 #' the observed and predicted <[numeric]> vectors. The [weighted.mse()] function computes the weighted mean squared error.
 #' 
+#' @usage
+#' ## Generic S3 method
+#' mse(
+#'  actual,
+#'  predicted,
+#'  ...
+#' )
+#' 
 #' @section Definition:
 #'
 #' The metric is calculated as,
@@ -28,19 +36,32 @@
 #' @family Supervised Learning
 #' 
 #' @export
-mse <- function(...) {
+mse <- function( 
+  actual, 
+  predicted,
+  ...) {
   UseMethod(
-    generic = "mse",
-    object  = ..1
+    generic = "mse"
   )
 }
 
 #' @rdname mse
+#' @usage
+#' ## Generic S3 method
+#' weighted.mse(
+#'  actual,
+#'  predicted,
+#'  w,
+#'  ...
+#' )
 #' @export
-weighted.mse <- function(...) {
+weighted.mse <- function(
+  actual, 
+  predicted,
+  w,
+  ...) {
   UseMethod(
-    generic = "weighted.mse",
-    object  = ..1
+    generic = "weighted.mse"
   )
 }
 

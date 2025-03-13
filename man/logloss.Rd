@@ -3,22 +3,41 @@
 \name{logloss.factor}
 \alias{logloss.factor}
 \alias{weighted.logloss.factor}
+\alias{logloss.integer}
+\alias{weighted.logloss.integer}
 \alias{logloss}
 \alias{weighted.logloss}
 \title{Log Loss}
 \usage{
-\method{logloss}{factor}(actual, qk, normalize = TRUE, ...)
+\method{logloss}{factor}(actual, response, normalize = TRUE, ...)
 
-\method{weighted.logloss}{factor}(actual, qk, w, normalize = TRUE, ...)
+\method{weighted.logloss}{factor}(actual, response, w, normalize = TRUE, ...)
 
-logloss(...)
+\method{logloss}{integer}(actual, response, normalize = TRUE, ...)
 
-weighted.logloss(...)
+\method{weighted.logloss}{integer}(actual, response, w, normalize = TRUE, ...)
+
+## Generic S3 method
+logloss(
+ actual,
+ response,
+ normalize = TRUE,
+ ...
+)
+
+## Generic S3 method
+weighted.logloss(
+ actual,
+ response,
+ w,
+ normalize = TRUE,
+ ...
+)
 }
 \arguments{
-\item{actual}{A vector of <\link{factor}>- of \link{length} \eqn{n}, and \eqn{k} levels}
+\item{actual}{A vector of <\link{factor}> with \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{qk}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
+\item{response}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
 The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 over the \eqn{k} classes). The first column corresponds to the first factor
 level in \code{actual}, the second column to the second factor level, and so on.}
@@ -40,12 +59,12 @@ The \code{\link[=logloss]{logloss()}} function computes the \strong{Log Loss} be
 \section{Definition}{
 
 
-\deqn{H(p, qk) = -\sum_{i} \sum_{j} y_{ij} \log_2(qk_{ij})}{
-H(p, qk) = -\sum_{i} \sum_{j} y_ij log(qk_ij)}
+\deqn{H(p, response) = -\sum_{i} \sum_{j} y_{ij} \log_2(response_{ij})}{
+H(p, response) = -\sum_{i} \sum_{j} y_ij log(response_ij)}
 where:
 \itemize{
 \item \eqn{y_{ij}} is the \code{actual}-values, where \eqn{y_{ij}} = 1 if the \code{i}-th sample belongs to class \code{j}, and 0 otherwise.
-\item \eqn{qk_{ij}} is the estimated probability for the \code{i}-th sample belonging to class \code{j}.
+\item \eqn{response_{ij}} is the estimated probability for the \code{i}-th sample belonging to class \code{j}.
 }
 }
 
@@ -117,14 +136,14 @@ actual <- factor(
 #   1st column = P("Virginica")
 #   2nd column = P("Others") = 1 - P("Virginica")
 predicted_probs <- predict(model, type = "response")
-qk_matrix <- cbind(predicted_probs, 1 - predicted_probs)
+response_matrix <- cbind(predicted_probs, 1 - predicted_probs)
 
 # 4) Evaluate unweighted Log Loss
-#    'logloss' takes (actual, qk_matrix, normalize=TRUE/FALSE).
+#    'logloss' takes (actual, response_matrix, normalize=TRUE/FALSE).
 #    The factor 'actual' must have the positive class (Virginica) as its first level.
 unweighted_LogLoss <- logloss(
   actual    = actual,           # factor
-  qk        = qk_matrix,        # numeric matrix of probabilities
+  response  = response_matrix,  # numeric matrix of probabilities
   normalize = TRUE              # normalize = TRUE
 )
 
@@ -133,7 +152,7 @@ unweighted_LogLoss <- logloss(
 weights <- iris$Petal.Length / mean(iris$Petal.Length)
 weighted_LogLoss <- weighted.logloss(
   actual    = actual,
-  qk  = qk_matrix,
+  response  = response_matrix,
   w         = weights,
   normalize = TRUE
 )
@@ -164,9 +183,11 @@ Other Classification:
 \code{\link{nlr.factor}()},
 \code{\link{npv.factor}()},
 \code{\link{plr.factor}()},
+\code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
+\code{\link{roc.auc.matrix}()},
 \code{\link{specificity.factor}()},
 \code{\link{zerooneloss.factor}()}
 
@@ -194,12 +215,14 @@ Other Supervised Learning:
 \code{\link{npv.factor}()},
 \code{\link{pinball.numeric}()},
 \code{\link{plr.factor}()},
+\code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{rae.numeric}()},
 \code{\link{recall.factor}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{roc.auc.matrix}()},
 \code{\link{rrmse.numeric}()},
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},

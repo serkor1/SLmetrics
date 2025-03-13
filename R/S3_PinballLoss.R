@@ -12,6 +12,16 @@
 #' The [pinball()]-function computes the [pinball loss](https://en.wikipedia.org/wiki/Quantile_regression) between
 #' the observed and predicted <[numeric]> vectors. The [weighted.pinball()] function computes the weighted Pinball Loss.
 #'
+#' @usage
+#' ## Generic S3 method
+#' pinball(
+#'  actual,
+#'  predicted,
+#'  alpha    = 0.5,
+#'  deviance = FALSE,
+#'  ...
+#' )
+#' 
 #' @param alpha A <[numeric]>-value of [length] \eqn{1} (default: \eqn{0.5}). The slope of the pinball loss function.
 #' @param deviance A <[logical]>-value of [length] 1 (default: [FALSE]). If [TRUE] the function returns the \eqn{D^2} loss.
 #' 
@@ -29,19 +39,38 @@
 #' @family Supervised Learning
 #' 
 #' @export
-pinball <- function(...) {
+pinball <- function(
+  actual,
+  predicted,
+  alpha    = 0.5,
+  deviance = FALSE,
+  ...) {
   UseMethod(
-    generic = "pinball",
-    object  = ..1
+    generic = "pinball"
   )
 }
 
 #' @rdname pinball
+#' @usage
+#' ## Generic S3 method
+#' weighted.pinball(
+#'  actual,
+#'  predicted,
+#'  w,
+#'  alpha    = 0.5,
+#'  deviance = FALSE,
+#'  ...
+#' )
 #' @export
-weighted.pinball <- function(...) {
+weighted.pinball <- function(
+  actual,
+  predicted,
+  w,
+  alpha    = 0.5,
+  deviance = FALSE,
+  ...) {
   UseMethod(
-    generic = "weighted.pinball",
-    object  = ..1
+    generic = "weighted.pinball"
   )
 }
 

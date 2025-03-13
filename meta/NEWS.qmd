@@ -6,6 +6,7 @@ always_allow_html: true
 execute: 
   cache: true
   freeze: auto
+  dir: meta
 knitr:
   opts_chunk: 
     collapse: true
@@ -15,9 +16,162 @@ knitr:
     out.width: 100%
 ---
 
-> Version 0.3-2 is considered pre-release of {SLmetrics}. We do not
+> Version 0.3-3 is considered pre-release of {SLmetrics}. We do not
 > expect any breaking changes, unless a major bug/issue is reported and its nature
 > forces breaking changes.
+
+# Version 0.3-3
+
+## :rocket: Improvements
+
+* **S3 signatures:** All S3-methods now have a generic signature, the functions should now be easier to navigate in  argument-wise.
+
+* **Exported Data:** Three new datasets have been introduced to the package; the [Wine Quality](https://archive.ics.uci.edu/dataset/186/wine+quality)-, [Obesity](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)- and [Banknote Authentication](https://archive.ics.uci.edu/dataset/267/banknote+authentication) datasets. Each dataset is comes in named `list` where features and targets are stored separately. Below is an example from the Obesity dataset:
+
+```{r}
+# 1) summarise list
+summary(SLmetrics::obesity)
+
+# 2) head the features
+head(SLmetrics::obesity$features)
+
+# 3) head the targets
+head(SLmetrics::obesity$target$class)
+head(SLmetrics::obesity$target$regression)
+```
+
+## :fire: New features
+
+### :rocket: New metrics
+
+* **Poisson LogLoss:** The logloss for count data has been implemented. This metric shares the method of logloss and can be used as follows:
+
+```{r}
+# Create factors and response probabilities
+actual   <- as.integer(factor(c("Class A", "Class B", "Class A")))
+weights  <- c(0.3,0.9,1) 
+response <- matrix(cbind(
+    0.2, 0.8,
+    0.8, 0.2,
+    0.7, 0.3
+),nrow = 3, ncol = 2)
+
+cat(
+    "Unweighted Poisson Log Loss:",
+    SLmetrics::logloss(
+        actual,
+        response
+    ),
+    "Weighted Poisson Log Loss:",
+    SLmetrics::weighted.logloss(
+        actual   = actual,
+        response = response,
+        w        = weights
+    ),
+    sep = "\n"
+)
+```
+
+* **Area under the Curve:** A new set of functions have been introduced which calculates the weighted and unweighted area under the Precision-Recall and Receiver Operator Characteristics curve. See below:
+
+```{r}
+# Create factors and response probabilities
+actual   <- factor(c("Class A", "Class B", "Class A"))
+weights  <- c(0.3,0.9,1) 
+response <- matrix(cbind(
+    0.2, 0.8,
+    0.8, 0.2,
+    0.7, 0.3
+),nrow = 3, ncol = 2)
+
+# calculate area under the 
+# precision-recall curve
+SLmetrics::pr.auc(
+    actual = actual,
+    response = response
+)
+```
+
+### :hammer: Metric tools
+
+A new family of `Tools`-functions are introduced with this update. This addition introduces unexported functions for constructing fast and memory efficient proprietary metrics. These functions are rewritten built-in functions from {stats} and family.
+
+* **Covariance Matrix:** A re-written `stats::cov.wt()`, using `Rcpp`. Example usage:
+
+```{r}
+## generate values
+actual    <- c(1.2,  0.3, 0.56, 0.11, 1.01)
+predicted <- c(0.9, 0.22, 0.76, 0.21, 1.1) 
+
+## generate covariance matrix
+SLmetrics:::cov.wt(
+    cbind(
+        actual,
+        predicted
+    )
+)
+```
+
+* **Area under the curve (AUC):** The function calculates the area under the plot for bivariate curves for ordered and unordered `x` and `y` pairs. The function assumes that values are ordered and calculates the AUC directly - to control this behaviour use the `ordered`-argument in the function. Below is an example:
+
+```{r}
+## 0) seed
+set.seed(1903)
+
+## 1) Ordered x and y pair
+x <- seq(0, pi, length.out = 200)
+y <- sin(x)
+
+## 1.1) calculate area
+ordered_auc <- SLmetrics::auc(y = y,  x = x)
+
+## 2) Unordered x and y pair
+x <- sample(seq(0, pi, length.out = 200))
+y <- sin(x)
+
+## 2.1) calculate area
+unordered_auc <- SLmetrics::auc(y = y,  x = x)
+
+## 2.2) calculate area with explicit
+## ordering
+unordered_auc_flag <- SLmetrics::auc(
+  y = y,
+  x = x,
+  ordered = FALSE
+)
+
+## 3) display result
+cat(
+  "AUC (ordered x and y pair)", ordered_auc,
+  "AUC (unordered x and y pair)", unordered_auc,
+  "AUC (unordered x and y pair, with unordered flag)", unordered_auc_flag,
+  sep = "\n"
+)
+```
+
+* **Sorting algorithms:** A set of sorting and ordering algorithms applicable to matrices have been implemented. The use-case is currently limited to `auc.foo`, `ROC` and `prROC` functions. The algorithms can be used as follows:
+
+```{r}
+# 1) generate a 4x4 matrix
+# with random values to be sorted
+set.seed(1903)
+X <- matrix(
+  data = cbind(sample(16:1)),
+  nrow = 4
+)
+
+# 2) sort matrix
+# in decreasing order
+SLmetrics::presort(X)
+
+# 3) get indices 
+# for sorted matrix
+SLmetrics::preorder(X)
+```
+
+## :warning: Breaking changes
+
+* **Logloss:** The argument `pk` has been replaced by `response`.
 
 # Version 0.3-2
 
@@ -149,7 +303,7 @@ cat(
 
 ## New Feature
 
-* **Relative Root Mean Squared Error:** The function normalizes the Root Mean Squared Error by a facttor. There is no official way of normalizing it - and in {SLmetrics} the RMSE can be normalized using three options; mean-, range- and IQR-normalization. It can be used as follows,
+* **Relative Root Mean Squared Error:** The function normalizes the Root Mean Squared Error by a factor. There is no official way of normalizing it - and in {SLmetrics} the RMSE can be normalized using three options; mean-, range- and IQR-normalization. It can be used as follows,
 
 ```{r}
 # 1) define values
@@ -180,10 +334,10 @@ cat(
 * **Log Loss:** Weighted and unweighted Log Loss, with and without normalization. The function can be used as follows,
 
 ```{r}
-# Create factors and response probabilities (qk)
+# Create factors and response probabilities
 actual   <- factor(c("Class A", "Class B", "Class A"))
 weights  <- c(0.3,0.9,1) 
-qk <- matrix(cbind(
+response <- matrix(cbind(
     0.2, 0.8,
     0.8, 0.2,
     0.7, 0.3
@@ -193,12 +347,12 @@ cat(
     "Unweighted Log Loss:",
     SLmetrics::logloss(
         actual,
-        qk
+        response
     ),
     "Weighted log Loss:",
     SLmetrics::weighted.logloss(
         actual   = actual,
-        qk       = qk,
+        response = response,
         w        = weights
     ),
     sep = "\n"
@@ -207,11 +361,11 @@ cat(
 
 * **Weighted Receiver Operator Characteristics:** `weighted.ROC()`, the function calculates the weighted True Positive and False Positive Rates for each threshold.
 
-* **Weighted Precision-Recall Curve:** `weighted.prROC()`, the function calculates the weighted Recall and Precsion for each threshold.
+* **Weighted Precision-Recall Curve:** `weighted.prROC()`, the function calculates the weighted Recall and Precision for each threshold.
 
 ## Breaking Changes
 
-* **Weighted Confusion Matix:** The `w`-argument in `cmatrix()` has been removed in favor of the more verbose weighted confusion matrix call `weighted.cmatrix()`-function. See below,
+* **Weighted Confusion Matrix:** The `w`-argument in `cmatrix()` has been removed in favor of the more verbose weighted confusion matrix call `weighted.cmatrix()`-function. See below,
 
 Prior to version `0.3-0` the weighted confusion matrix were a part of the `cmatrix()`-function and were called as follows,
 
@@ -304,9 +458,9 @@ SLmetrics::weighted.accuracy(
 )
 ```
 
-Please note, however, that it is not possible to pass `cmatix()`-into `weighted.accurracy()`,
+Please note, however, that it is not possible to pass `cmatrix()`-into `weighted.accuracy()`,
 
-* **Unit-testing:** All functions are now being tested for edge-cases in balanced and imbalanced classifcation problems, and regression problems, individually. This will enable a more robust development process and prevent avoidable bugs.
+* **Unit-testing:** All functions are now being tested for edge-cases in balanced and imbalanced classification problems, and regression problems, individually. This will enable a more robust development process and prevent avoidable bugs.
 
 ```{r}
 try(
@@ -334,7 +488,7 @@ try(
 
 ## Breaking changes
 
-* All regression metrics have had `na.rm`- and `w`-arguments removed. All  weighted regression metrics have a seperate function on the `weighted.foo()` to increase consistency across all metrics. See example below,
+* All regression metrics have had `na.rm`- and `w`-arguments removed. All  weighted regression metrics have a separate function on the `weighted.foo()` to increase consistency across all metrics. See example below,
 
 ```{r}
 # 1) define regression problem
@@ -355,7 +509,7 @@ SLmetrics::weighted.rmse(actual, predicted, w = w)
 
 ## General
 
-* **Backend changes:** All pair-wise metrics arer moved from {Rcpp} to C++, this have reduced execution time by half. All pair-wise metrics are now faster.
+* **Backend changes:** All pair-wise metrics are moved from {Rcpp} to C++, this have reduced execution time by half. All pair-wise metrics are now faster.
 
 ## Improvements
 
@@ -388,6 +542,8 @@ SLmetrics::accuracy(
 * The `plot.prROC()`- and `plot.ROC()`-functions now adds a line to the plot when `panels = FALSE`. See Issue https://github.com/serkor1/SLmetrics/issues/9.
 
 ```{r}
+#| eval: false
+
 # 1) define actual
 # classes
 actual <- factor(

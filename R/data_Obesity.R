@@ -1,0 +1,48 @@
+#' Obesity Levels Dataset
+#'
+#' This dataset is used to estimate obesity levels based on eating habits and physical
+#' condition. The data originates from the UCI Machine Learning Repository and has been
+#' preprocessed to include both predictors and a target variable.
+#'
+#' The dataset is provided as a list with two components:
+#'
+#' \describe{
+#'   \item{features}{A data frame containing various predictors related to lifestyle,
+#'     eating habits, and physical condition. The variables include:
+#'     \describe{
+#'       \item{age}{The age of the individual in years.}
+#'       \item{height}{The height of the individual in meters.}
+#'       \item{family_history_with_overweight}{Binary variable indicating whether the individual has a family history of overweight (1 = yes, 0 = no).}
+#'       \item{favc}{Binary variable indicating whether the individual frequently consumes high-calorie foods (1 = yes, 0 = no).}
+#'       \item{fcvc}{The frequency of consumption of vegetables in meals.}
+#'       \item{ncp}{The number of main meals consumed per day.}
+#'       \item{caec}{Categorical variable indicating the frequency of consumption of food between meals.
+#'         Typical levels include \code{"no"}, \code{"sometimes"}, \code{"frequently"}, and \code{"always"}.}
+#'       \item{smoke}{Binary variable indicating whether the individual smokes (1 = yes, 0 = no).}
+#'       \item{ch2o}{Daily water consumption (typically in liters).}
+#'       \item{scc}{Binary variable indicating whether the individual monitors calorie consumption (1 = yes, 0 = no).}
+#'       \item{faf}{The frequency of physical activity.}
+#'       \item{tue}{The time spent using electronic devices (e.g., screen time in hours).}
+#'       \item{calc}{Categorical variable indicating the frequency of alcohol consumption.
+#'         Typical levels include \code{"no"}, \code{"sometimes"}, \code{"frequently"}, and \code{"always"}.}
+#'       \item{male}{Binary variable indicating the gender of the individual (1 = male, 0 = female).}
+#'     }
+#'   }
+#'   \item{target}{A list containing two elements:
+#'     \describe{
+#'       \item{regression}{A numeric vector representing the weight of the individual (used as the regression target).}
+#'       \item{class}{A factor indicating the obesity level classification. The levels are derived from the original \code{nobeyesdad} variable in the dataset.}
+#'     }
+#'   }
+#' }
+#'
+#' @docType data
+#' @usage data(obesity)
+#' @format A list with two components:
+#' \describe{
+#'   \item{features}{A data frame containing various predictors related to eating habits, physical condition, and lifestyle.}
+#'   \item{target}{A list with two elements: \code{regression} (weight in kilograms) and \code{class} (obesity level classification).}
+#' }
+#' @source \url{https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition}
+#' @keywords datasets
+"obesity"

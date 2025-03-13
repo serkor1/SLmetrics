@@ -26,7 +26,7 @@ public:
                           bool correction)
     {
         
-        CovarianceResult<int> covRes = CovarianceCalculator::cov_unweighted(
+        CovarianceResult<int> covRes = CovarianceCalculator::cov(
             actual,
             predicted,
             static_cast<int>(n),
@@ -66,7 +66,7 @@ public:
                           bool correction)
     {
 
-        CovarianceResult<double> covRes = CovarianceCalculator::cov_weighted(
+        CovarianceResult<double> covRes = CovarianceCalculator::cov(
             actual,
             predicted,
             weights,

@@ -11,9 +11,24 @@
 
 \method{weighted.pinball}{numeric}(actual, predicted, w, alpha = 0.5, deviance = FALSE, ...)
 
-pinball(...)
+## Generic S3 method
+pinball(
+ actual,
+ predicted,
+ alpha    = 0.5,
+ deviance = FALSE,
+ ...
+)
 
-weighted.pinball(...)
+## Generic S3 method
+weighted.pinball(
+ actual,
+ predicted,
+ w,
+ alpha    = 0.5,
+ deviance = FALSE,
+ ...
+)
 }
 \arguments{
 \item{actual}{A <\link{numeric}>-vector of \link{length} \eqn{n}. The observed (continuous) response variable.}
@@ -114,12 +129,14 @@ Other Supervised Learning:
 \code{\link{nlr.factor}()},
 \code{\link{npv.factor}()},
 \code{\link{plr.factor}()},
+\code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{rae.numeric}()},
 \code{\link{recall.factor}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
+\code{\link{roc.auc.matrix}()},
 \code{\link{rrmse.numeric}()},
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},

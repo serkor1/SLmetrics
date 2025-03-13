@@ -5,6 +5,8 @@
 testthat::test_that(
   desc = "Test `cmatrix()`-function", code = {
 
+    testthat::skip_on_cran()
+
     # 2) test that the are 
     # equal to target values
     for (OpenMP in c(TRUE, FALSE)) {

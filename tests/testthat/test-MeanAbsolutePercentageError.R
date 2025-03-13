@@ -5,6 +5,8 @@
 testthat::test_that(
   desc = "Test `mape()`-function", code = {
 
+    testthat::skip_on_cran()
+
     # 0) construct mape-wrapperr
     wrapped_mape <- function(
       actual,

@@ -1,4 +1,4 @@
-# script: Reciever Operator Characteristics
+# script: Receiver Operator Characteristics
 # date: 2024-10-25
 # author: Serkan Korkmaz, serkor1@duck.com
 # objective: Generate Methods
@@ -6,14 +6,25 @@
 
 #' @inherit specificity
 #'
-#' @title Reciever Operator Characteristics
+#' @title Receiver Operator Characteristics
 #'
 #' @description
 #' The [ROC()]-function computes the [tpr()] and [fpr()] at thresholds provided by the \eqn{response}- or \eqn{thresholds}-vector. The function
 #' constructs a [data.frame()] grouped by \eqn{k}-classes where each class is treated as a binary classification problem.
 #' 
-#' @param response A <[numeric]>-vector of [length] \eqn{n}. The estimated response probabilities.
-#' @param thresholds An optional <[numeric]>-vector of non-zero [length] (default: [NULL]).
+#' @usage
+#' ## Generic S3 method
+#' ROC(
+#'  actual,
+#'  response,
+#'  thresholds = NULL,
+#'  presorted  = FALSE,
+#'  ...
+#' )
+#' 
+#' @param response A \eqn{n \times k} <[numeric]>-[matrix]. The estimated response probabilities for each class \eqn{k}.
+#' @param thresholds An optional <[numeric]> vector of [length] \eqn{n} (default: [NULL]).
+#' @param presorted A <[logical]>-value [length] 1 (default: [FALSE]). If [TRUE] the input will not be sorted by threshold.
 #' @param ... Arguments passed into other methods.
 #'
 #' @returns A [data.frame] on the following form,
@@ -24,25 +35,44 @@
 #' \item{fpr}{<[numeric]> The false positive rate}
 #' \item{tpr}{<[numeric]> The true positve rate}
 #'
-#' @example man/examples/scr_RecieverOperatorCurve.R
+#' @example man/examples/scr_ReceiverOperatorCurve.R
 #'
 #' @family Classification
 #' @family Supervised Learning
 #'
 #' @export
-ROC <- function(...) {
+ROC <- function(
+  actual,
+  response, 
+  thresholds = NULL,
+  presorted  = FALSE,
+  ...) {
   UseMethod(
-    generic = "ROC",
-    object  = ..1
+    generic = "ROC"
   )
 }
 
 #' @rdname ROC
+#' @usage
+#' ## Generic S3 method
+#' weighted.ROC(
+#'  actual,
+#'  response,
+#'  w,
+#'  thresholds = NULL,
+#'  presorted  = FALSE,
+#'  ...
+#' )
 #' @export
-weighted.ROC <- function(...) {
+weighted.ROC <- function(
+  actual,
+  response,
+  w,
+  thresholds = NULL,
+  presorted  = FALSE,
+  ...) {
   UseMethod(
-    generic = "weighted.ROC",
-    object  = ..1
+    generic = "weighted.ROC"
   )
 }
 

@@ -1,6 +1,6 @@
 Package: SLmetrics
 Title: Machine Learning Performance Evaluation on Steroids
-Version: 0.3-2
+Version: 0.3-3
 Authors@R: c(
     person(
       given   = "Serkan", 
@@ -21,18 +21,17 @@ LinkingTo:
     RcppEigen
 Suggests: 
     knitr,
-    lightgbm,
-    mlbench,
     reticulate,
     rmarkdown,
-    testthat (>= 3.0.0),
-    xgboost
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports:
     grDevices,
     lattice,
     Rcpp
-VignetteBuilder: knitr
 Depends: 
     R (>= 4.3)
-URL: https://serkor1.github.io/SLmetrics/
+URL: https://serkor1.github.io/SLmetrics/, https://github.com/serkor1/SLmetrics
+BugReports: https://github.com/serkor1/SLmetrics/issues
+LazyData: true
+VignetteBuilder: knitr

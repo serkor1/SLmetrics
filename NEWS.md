@@ -1,8 +1,239 @@
 
 
-> Version 0.3-2 is considered pre-release of {SLmetrics}. We do not
+> Version 0.3-3 is considered pre-release of {SLmetrics}. We do not
 > expect any breaking changes, unless a major bug/issue is reported and
 > its nature forces breaking changes.
+
+# Version 0.3-3
+
+## :rocket: Improvements
+
+- **S3 signatures:** All S3-methods now have a generic signature, the
+  functions should now be easier to navigate in argument-wise.
+
+- **Exported Data:** Three new datasets have been introduced to the
+  package; the [Wine
+  Quality](https://archive.ics.uci.edu/dataset/186/wine+quality)-,
+  [Obesity](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)-
+  and [Banknote
+  Authentication](https://archive.ics.uci.edu/dataset/267/banknote+authentication)
+  datasets. Each dataset is comes in named `list` where features and
+  targets are stored separately. Below is an example from the Obesity
+  dataset:
+
+``` r
+# 1) summarise list
+summary(SLmetrics::obesity)
+#>          Length Class      Mode
+#> features 15     data.frame list
+#> target    2     -none-     list
+
+# 2) head the features
+head(SLmetrics::obesity$features)
+#>        caec       calc                mtrans family_history_with_overweight
+#> 1 sometimes         no public_transportation                              1
+#> 2 sometimes  sometimes public_transportation                              1
+#> 3 sometimes frequently public_transportation                              1
+#> 4 sometimes frequently               walking                              0
+#> 5 sometimes  sometimes public_transportation                              0
+#> 6 sometimes  sometimes            automobile                              0
+#>   favc smoke scc male age height fcvc ncp ch2o faf tue
+#> 1    0     0   0    0  21   1.62    2   3    2   0   1
+#> 2    0     1   1    0  21   1.52    3   3    3   3   0
+#> 3    0     0   0    1  23   1.80    2   3    2   2   1
+#> 4    0     0   0    1  27   1.80    3   3    2   2   0
+#> 5    0     0   0    1  22   1.78    2   1    2   0   0
+#> 6    1     0   0    1  29   1.62    2   3    2   0   0
+
+# 3) head the targets
+head(SLmetrics::obesity$target$class)
+#> [1] Normal_Weight       Normal_Weight       Normal_Weight      
+#> [4] Overweight_Level_I  Overweight_Level_II Normal_Weight      
+#> 7 Levels: Insufficient_Weight Normal_Weight Obesity_Type_I ... Overweight_Level_II
+head(SLmetrics::obesity$target$regression)
+#> [1] 64.0 56.0 77.0 87.0 89.8 53.0
+```
+
+## :fire: New features
+
+### :rocket: New metrics
+
+- **Poisson LogLoss:** The logloss for count data has been implemented.
+  This metric shares the method of logloss and can be used as follows:
+
+``` r
+# Create factors and response probabilities
+actual   <- as.integer(factor(c("Class A", "Class B", "Class A")))
+weights  <- c(0.3,0.9,1) 
+response <- matrix(cbind(
+    0.2, 0.8,
+    0.8, 0.2,
+    0.7, 0.3
+),nrow = 3, ncol = 2)
+
+cat(
+    "Unweighted Poisson Log Loss:",
+    SLmetrics::logloss(
+        actual,
+        response
+    ),
+    "Weighted Poisson Log Loss:",
+    SLmetrics::weighted.logloss(
+        actual   = actual,
+        response = response,
+        w        = weights
+    ),
+    sep = "\n"
+)
+#> Unweighted Poisson Log Loss:
+#> 1.590672
+#> Weighted Poisson Log Loss:
+#> 1.505212
+```
+
+- **Area under the Curve:** A new set of functions have been introduced
+  which calculates the weighted and unweighted area under the
+  Precision-Recall and Receiver Operator Characteristics curve. See
+  below:
+
+``` r
+# Create factors and response probabilities
+actual   <- factor(c("Class A", "Class B", "Class A"))
+weights  <- c(0.3,0.9,1) 
+response <- matrix(cbind(
+    0.2, 0.8,
+    0.8, 0.2,
+    0.7, 0.3
+),nrow = 3, ncol = 2)
+
+# calculate area under the 
+# precision-recall curve
+SLmetrics::pr.auc(
+    actual = actual,
+    response = response
+)
+#>   Class A   Class B 
+#> 0.4166667 1.0000000
+```
+
+### :hammer: Metric tools
+
+A new family of `Tools`-functions are introduced with this update. This
+addition introduces unexported functions for constructing fast and
+memory efficient proprietary metrics. These functions are rewritten
+built-in functions from {stats} and family.
+
+- **Covariance Matrix:** A re-written `stats::cov.wt()`, using `Rcpp`.
+  Example usage:
+
+``` r
+## generate values
+actual    <- c(1.2,  0.3, 0.56, 0.11, 1.01)
+predicted <- c(0.9, 0.22, 0.76, 0.21, 1.1) 
+
+## generate covariance matrix
+SLmetrics:::cov.wt(
+    cbind(
+        actual,
+        predicted
+    )
+)
+#> $cov
+#>             actual predicted
+#> actual    0.213330  0.169215
+#> predicted 0.169215  0.163720
+#> 
+#> $center
+#>    actual predicted 
+#>     0.636     0.638 
+#> 
+#> $n.obs
+#> [1] 5
+```
+
+- **Area under the curve (AUC):** The function calculates the area under
+  the plot for bivariate curves for ordered and unordered `x` and `y`
+  pairs. The function assumes that values are ordered and calculates the
+  AUC directly - to control this behaviour use the `ordered`-argument in
+  the function. Below is an example:
+
+``` r
+## 0) seed
+set.seed(1903)
+
+## 1) Ordered x and y pair
+x <- seq(0, pi, length.out = 200)
+y <- sin(x)
+
+## 1.1) calculate area
+ordered_auc <- SLmetrics::auc(y = y,  x = x)
+
+## 2) Unordered x and y pair
+x <- sample(seq(0, pi, length.out = 200))
+y <- sin(x)
+
+## 2.1) calculate area
+unordered_auc <- SLmetrics::auc(y = y,  x = x)
+
+## 2.2) calculate area with explicit
+## ordering
+unordered_auc_flag <- SLmetrics::auc(
+  y = y,
+  x = x,
+  ordered = FALSE
+)
+
+## 3) display result
+cat(
+  "AUC (ordered x and y pair)", ordered_auc,
+  "AUC (unordered x and y pair)", unordered_auc,
+  "AUC (unordered x and y pair, with unordered flag)", unordered_auc_flag,
+  sep = "\n"
+)
+#> AUC (ordered x and y pair)
+#> 1.999958
+#> AUC (unordered x and y pair)
+#> -1.720771
+#> AUC (unordered x and y pair, with unordered flag)
+#> -1.720771
+```
+
+- **Sorting algorithms:** A set of sorting and ordering algorithms
+  applicable to matrices have been implemented. The use-case is
+  currently limited to `auc.foo`, `ROC` and `prROC` functions. The
+  algorithms can be used as follows:
+
+``` r
+# 1) generate a 4x4 matrix
+# with random values to be sorted
+set.seed(1903)
+X <- matrix(
+  data = cbind(sample(16:1)),
+  nrow = 4
+)
+
+# 2) sort matrix
+# in decreasing order
+SLmetrics::presort(X)
+#>      [,1] [,2] [,3] [,4]
+#> [1,]    3    2    6    1
+#> [2,]    4    5   10    7
+#> [3,]    9    8   15   11
+#> [4,]   13   14   16   12
+
+# 3) get indices 
+# for sorted matrix
+SLmetrics::preorder(X)
+#>      [,1] [,2] [,3] [,4]
+#> [1,]    1    1    2    4
+#> [2,]    2    3    3    2
+#> [3,]    3    2    1    1
+#> [4,]    4    4    4    3
+```
+
+## :warning: Breaking changes
+
+- **Logloss:** The argument `pk` has been replaced by `response`.
 
 # Version 0.3-2
 
@@ -167,7 +398,7 @@ cat(
 ## New Feature
 
 - **Relative Root Mean Squared Error:** The function normalizes the Root
-  Mean Squared Error by a facttor. There is no official way of
+  Mean Squared Error by a factor. There is no official way of
   normalizing it - and in {SLmetrics} the RMSE can be normalized using
   three options; mean-, range- and IQR-normalization. It can be used as
   follows,
@@ -197,21 +428,21 @@ cat(
   sep = "\n"
 )
 #> Mean Relative Root Mean Squared Error
-#> -44.04587
+#> 15.48538
 #> Range Relative Root Mean Squared Error
-#> 0.1353589
+#> 0.1411795
 #> IQR Relative Root Mean Squared Error
-#> 0.7141406
+#> 0.6884482
 ```
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
   normalization. The function can be used as follows,
 
 ``` r
-# Create factors and response probabilities (qk)
+# Create factors and response probabilities
 actual   <- factor(c("Class A", "Class B", "Class A"))
 weights  <- c(0.3,0.9,1) 
-qk <- matrix(cbind(
+response <- matrix(cbind(
     0.2, 0.8,
     0.8, 0.2,
     0.7, 0.3
@@ -221,12 +452,12 @@ cat(
     "Unweighted Log Loss:",
     SLmetrics::logloss(
         actual,
-        qk
+        response
     ),
     "Weighted log Loss:",
     SLmetrics::weighted.logloss(
         actual   = actual,
-        qk       = qk,
+        response = response,
         w        = weights
     ),
     sep = "\n"
@@ -242,13 +473,13 @@ cat(
   Rates for each threshold.
 
 - **Weighted Precision-Recall Curve:** `weighted.prROC()`, the function
-  calculates the weighted Recall and Precsion for each threshold.
+  calculates the weighted Recall and Precision for each threshold.
 
 ## Breaking Changes
 
-- **Weighted Confusion Matix:** The `w`-argument in `cmatrix()` has been
-  removed in favor of the more verbose weighted confusion matrix call
-  `weighted.cmatrix()`-function. See below,
+- **Weighted Confusion Matrix:** The `w`-argument in `cmatrix()` has
+  been removed in favor of the more verbose weighted confusion matrix
+  call `weighted.cmatrix()`-function. See below,
 
 Prior to version `0.3-0` the weighted confusion matrix were a part of
 the `cmatrix()`-function and were called as follows,
@@ -278,9 +509,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a  7  9  8
-#> b 13 14  9
-#> c 15 14 11
+#> a 12  4 10
+#> b  9 11 14
+#> c 13 11 16
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -289,9 +520,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 3.839868 4.325252 4.988679
-#> b 7.870727 7.305495 3.519039
-#> c 6.457460 5.404790 4.341409
+#> a 6.398180 3.300309 7.014582
+#> b 4.630983 3.072605 8.605201
+#> c 5.105148 6.173261 8.634757
 ```
 
 ## :bug: Bug-fixes
@@ -326,9 +557,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a 17 12 12
-#> b 13 10  7
-#> c 12  9  8
+#> a 11 15 13
+#> b 11  7 12
+#> c  7 10 14
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -337,9 +568,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 6.147879 6.110632 6.105292
-#> b 5.906721 4.768532 3.620641
-#> c 6.412300 3.722566 2.991023
+#> a 5.352066 7.240180 7.697274
+#> b 6.087686 3.786870 5.320007
+#> c 4.235406 5.129860 8.382574
 ```
 
 Calculating weighted metrics manually or by using
@@ -359,7 +590,7 @@ confusion_matrix <- SLmetrics::cmatrix(
 SLmetrics::accuracy(
     confusion_matrix
 )
-#> [1] 0.35
+#> [1] 0.32
 
 # 3) calculate the weighted
 # accuracy manually
@@ -368,14 +599,14 @@ SLmetrics::weighted.accuracy(
     predicted = predicted,
     w         = weights
 )
-#> [1] 0.3037514
+#> [1] 0.3291542
 ```
 
-Please note, however, that it is not possible to pass `cmatix()`-into
-`weighted.accurracy()`,
+Please note, however, that it is not possible to pass `cmatrix()`-into
+`weighted.accuracy()`,
 
 - **Unit-testing:** All functions are now being tested for edge-cases in
-  balanced and imbalanced classifcation problems, and regression
+  balanced and imbalanced classification problems, and regression
   problems, individually. This will enable a more robust development
   process and prevent avoidable bugs.
 
@@ -430,7 +661,7 @@ try(
 ## Breaking changes
 
 - All regression metrics have had `na.rm`- and `w`-arguments removed.
-  All weighted regression metrics have a seperate function on the
+  All weighted regression metrics have a separate function on the
   `weighted.foo()` to increase consistency across all metrics. See
   example below,
 
@@ -442,11 +673,11 @@ w         <- runif(n = 1e3)
 
 # 2) unweighted metrics
 SLmetrics::rmse(actual, predicted)
-#> [1] 0.9891275
+#> [1] 1.001696
 
 # 3) weighted metrics
 SLmetrics::weighted.rmse(actual, predicted, w = w)
-#> [1] 0.9784827
+#> [1] 1.01469
 ```
 
 - The `rrmse()`-function have been removed in favor of the
@@ -457,7 +688,7 @@ SLmetrics::weighted.rmse(actual, predicted, w = w)
 
 ## General
 
-- **Backend changes:** All pair-wise metrics arer moved from {Rcpp} to
+- **Backend changes:** All pair-wise metrics are moved from {Rcpp} to
   C++, this have reduced execution time by half. All pair-wise metrics
   are now faster.
 
@@ -530,21 +761,12 @@ plot(
   roc,
   panels = FALSE
 )
-```
-
-<img src="meta/NEWS_files/figure-commonmark/unnamed-chunk-17-1.png"
-style="width:100.0%" />
-
-``` r
 
 plot(
     prroc,
     panels = FALSE
 )
 ```
-
-<img src="meta/NEWS_files/figure-commonmark/unnamed-chunk-17-2.png"
-style="width:100.0%" />
 
 # Version 0.1-0
 
@@ -565,7 +787,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-#>  [1] b b b a c c b a a b
+#>  [1] b c c c a c a c c b
 #> Levels: a b c
 
 # 2) predicted classes
@@ -574,7 +796,7 @@ print(
         sample(letters[1:3], size = 10, replace = TRUE)
     )
 )
-#>  [1] c a b b c c b a c a
+#>  [1] a a c c b c a c a c
 #> Levels: a b c
 ```
 
@@ -591,13 +813,13 @@ summary(
 #> Confusion Matrix (3 x 3) 
 #> ================================================================================
 #>   a b c
-#> a 1 1 1
-#> b 2 2 1
-#> c 0 0 2
+#> a 1 1 0
+#> b 1 0 1
+#> c 2 0 4
 #> ================================================================================
 #> Overall Statistics (micro average)
 #>  - Accuracy:          0.50
-#>  - Balanced Accuracy: 0.58
+#>  - Balanced Accuracy: 0.39
 #>  - Sensitivity:       0.50
 #>  - Specificity:       0.75
 #>  - Precision:         0.50
@@ -607,8 +829,8 @@ summary(
 SLmetrics::fpr(
     confusion_matrix
 )
-#>         a         b         c 
-#> 0.2857143 0.2000000 0.2500000
+#>     a     b     c 
+#> 0.375 0.125 0.250
 ```
 
 ### Supervised regression metrics
@@ -628,5 +850,5 @@ SLmetrics::huberloss(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.3714747
+#> [1] 0.3350288
 ```

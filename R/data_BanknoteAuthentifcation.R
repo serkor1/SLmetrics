@@ -1,0 +1,38 @@
+#' Banknote Authentication Dataset
+#'
+#' This dataset contains features extracted from the wavelet transform of banknote
+#' images, which are used to classify banknotes as authentic or inauthentic. The data
+#' originates from the UCI Machine Learning Repository.
+#'
+#' The data is provided as a list with two components:
+#'
+#' \describe{
+#'   \item{features}{A data frame containing the following variables:
+#'     \describe{
+#'       \item{variance}{Variance of the wavelet transformed image.}
+#'       \item{skewness}{Skewness of the wavelet transformed image.}
+#'       \item{curtosis}{Curtosis of the wavelet transformed image.}
+#'       \item{entropy}{Entropy of the image.}
+#'     }
+#'   }
+#'   \item{target}{A factor indicating the authenticity of the banknote. The factor has
+#'     two levels:
+#'     \describe{
+#'       \item{inauthentic}{Indicates the banknote is not genuine.}
+#'       \item{authentic}{Indicates the banknote is genuine.}
+#'     }
+#'   }
+#' }
+#'
+#' @docType data
+#' @usage data(banknote)
+#' @format A list with two components:
+#' \describe{
+#'   \item{features}{A data frame with 4 variables: \code{variance}, \code{skewness},
+#'   \code{curtosis}, and \code{entropy}.}
+#'   \item{target}{A factor with levels \code{"inauthentic"} and \code{"authentic"}
+#'   representing the banknote's authenticity.}
+#' }
+#' @source \url{https://archive.ics.uci.edu/dataset/267/banknote+authentication}
+#' @keywords datasets
+"banknote"

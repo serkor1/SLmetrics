@@ -1,0 +1,213 @@
+---
+title: "Precision-Recall and Receiver Operator Characteristics Curves"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette_ROC-PRC}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment  = "#>",
+  message  = FALSE,
+  warning  = FALSE
+)
+```
+
+```{r setup}
+library(SLmetrics)
+```
+
+In this vignette a worked example on creating Precision-Recall and Receiver Operator Characteristics curves are provided. Throughout this vignette the [Banknote Authentication](https://archive.ics.uci.edu/dataset/267/banknote+authentication)-dataset is used. The `banknote`-dataset is a part of {SLmetrics} which is `list` of features and targets, and can be called as follows:
+
+```{r}
+# 1) load data into namespace
+data(
+    banknote,
+    package = "SLmetrics"
+)
+```
+
+The `banknote` dataset classification tasks achieves between 95\% and 99\% accuracy and therefore makes a bad case for demonstrating Precision-Recall and Receiver Operator Characteristics curves. To alleviate this, random noise will be injected to the original dataset as follows:
+
+```{r}
+# 1) set seed
+set.seed(1903)
+
+# 2) extract indices
+# for shuffling
+noise <- sample(
+    x = 1:nrow(banknote$features),
+    size = nrow(banknote$features) * 0.50
+)
+
+# 3) reshuffle
+# features and target
+noise <- cbind(
+    banknote$features[sample(noise),],
+    target = banknote$target[sample(noise)]
+)
+```
+
+The `data.frame` is constructed as follows:
+
+```{r}
+# 1) convert to data.frame
+# and head
+head(
+    banknote <- cbind(
+        banknote$features,
+        target = banknote$target
+        )
+)
+
+# 2) introduce random
+# noise to the data
+# NOTE: wrapped in `try()` in case 
+# noise is removed
+try(
+    expr = {
+        banknote <- rbind(
+        banknote,
+        noise
+    )
+    },
+    silent = TRUE
+)
+
+# 3) convert target to binary
+# value
+banknote$target <- as.numeric(
+    banknote$target == "inauthentic"
+)
+```
+
+## Authentic or inauthentic banknote
+
+To predict whether the banknotes are authentic or inauthentic a logistic regression will be trained on a training sample, and evaluated on a the test sample.
+
+### Training/Test split
+
+To train and test test the model a training/test split with 80\% and 20\%.
+
+```{r}
+# 1) set seed
+set.seed(1903)
+
+# 2) generate indices
+index <- sample(
+    x = 1:nrow(banknote),
+    size = nrow(banknote) * 0.80
+)
+
+# 3) split data
+# 3.1) training
+train <- banknote[index,]
+test  <- banknote[-index,]
+```
+
+### Training the logistic regression
+
+```{r}
+# 1) train the logistic
+# regression
+model <- glm(
+    formula = target ~ .,
+    data    = train,
+    family  = binomial(
+        link = "logit"
+    ) 
+)
+```
+
+## Evaluate Performance
+
+To evaluate the performance we will extract the response probabilities
+
+```{r}
+# 1) extract class
+# probabilites
+class_probabilities <- predict(
+    object  = model,
+    newdata = subset(test, select = -target),
+    type    = "response"
+)
+
+# 2) calculate class
+class_probabilities <- as.matrix(
+    cbind(
+        class_probabilities,
+        1 - class_probabilities
+    )
+)
+```
+
+### Visualize Precision-Recall Curve
+
+```{r}
+# 1) create actual
+# value
+actual <- factor(
+    x = test$target,
+    levels = c(1, 0),
+    labels = c("inauthentic", "authentic")
+)
+```
+
+
+```{r}
+# 1) construct precision-recall 
+# object
+print(
+    precision_recall <- prROC(
+        actual   = actual,
+        response = class_probabilities
+    )
+)
+```
+
+The Precision-Recall object can be visualized by using `plot()`
+
+```{r}
+plot(
+    precision_recall
+)
+```
+
+```{r}
+pr.auc(
+    actual   = actual,
+    response = class_probabilities
+)
+```
+
+
+### Visualize Receiver Operator Characteristics Curve
+
+```{r}
+# 1) construct Receiver Operator Characteristics 
+# object
+print(
+    receiver_operator_characteristics <- ROC(
+        actual   = actual,
+        response = class_probabilities
+    )
+)
+```
+
+The Receiver Operator Characteristics object can be visualized by using `plot()`
+
+```{r}
+plot(
+    receiver_operator_characteristics
+)
+```
+
+```{r}
+roc.auc(
+    actual   = actual,
+    response = class_probabilities
+)
+```

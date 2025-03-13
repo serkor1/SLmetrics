@@ -12,6 +12,14 @@
 #' The [smape()]-function computes the  [symmetric mean absolute percentage error](https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error) between
 #' the observed and predicted <[numeric]> vectors. The [weighted.smape()] function computes the weighted symmetric mean absolute percentage error.
 #' 
+#' @usage
+#' ## Generic S3 method
+#' smape(
+#'  actual,
+#'  predicted,
+#'  ...
+#' )
+#' 
 #' @section Definition:
 #' The metric is calculated as follows,
 #'
@@ -27,19 +35,32 @@
 #' @family Supervised Learning
 #' 
 #' @export
-smape <- function(...) {
+smape <- function(
+  actual,
+  predicted,
+  ...) {
   UseMethod(
-    generic = "smape",
-    object  = ..1
+    generic = "smape"
   )
 }
 
 #' @rdname smape
+#' @usage
+#' ## Generic S3 method
+#' weighted.smape(
+#'  actual,
+#'  predicted,
+#'  w,
+#'  ...
+#' )
 #' @export
-weighted.smape <- function(...) {
+weighted.smape <- function(
+  actual, 
+  predicted, 
+  w, 
+  ...) {
   UseMethod(
-    generic = "weighted.smape",
-    object  = ..1
+    generic = "weighted.smape"
   )
 }
 

@@ -53,6 +53,8 @@ jobs:
             any::tidyverse
             any::tidymodels
             any::stringi
+            any::lightgbm
+            any::xgboost
 
       - name: Setup Python 
         uses: actions/setup-python@v5

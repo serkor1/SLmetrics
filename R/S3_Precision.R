@@ -15,6 +15,14 @@
 #' ## Other names
 #' Positive Predictive Value
 #' 
+#' @usage
+#' ## Generic S3 method
+#' precision(
+#'  ...,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
+#' 
 #' @section Definition:
 #' Let \eqn{\hat{\pi} \in [0, 1]} be the proportion of true positives among the predicted positives. The precision of the classifier is calculated as,
 #'
@@ -33,7 +41,10 @@
 #' @family Supervised Learning
 #'
 #' @export
-precision <- function(...) {
+precision <- function(
+  ..., 
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "precision",
     object  = ..1
@@ -41,8 +52,20 @@ precision <- function(...) {
 }
 
 #' @rdname precision
+#' @usage
+#' ## Generic S3 method
+#' weighted.precision(
+#'  ...,
+#'  w,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-weighted.precision <- function(...) {
+weighted.precision <- function(
+  ..., 
+  w,
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "weighted.precision",
     object  = ..1
@@ -50,8 +73,18 @@ weighted.precision <- function(...) {
 }
 
 #' @rdname precision
+#' @usage
+#' ## Generic S3 method
+#' ppv(
+#'  ...,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-ppv <- function(...) {
+ppv <- function(
+  ..., 
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "ppv",
     object  = ..1
@@ -59,8 +92,20 @@ ppv <- function(...) {
 }
 
 #' @rdname precision
+#' @usage
+#' ## Generic S3 method
+#' weighted.ppv(
+#'  ...,
+#'  w,
+#'  micro = NULL,
+#'  na.rm = TRUE
+#' )
 #' @export
-weighted.ppv <- function(...) {
+weighted.ppv <- function(
+  ...,
+  w,
+  micro = NULL, 
+  na.rm = TRUE) {
   UseMethod(
     generic = "weighted.ppv",
     object  = ..1

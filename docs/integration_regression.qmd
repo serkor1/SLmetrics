@@ -1,0 +1,154 @@
+---
+format:
+  html:
+    code-overflow: wrap
+execute: 
+  cache: true
+knitr:
+  opts_chunk:
+    comment: "#>"
+    messages: true
+    warning: false
+---
+
+```{r}
+#| echo: false
+#| include: false
+library(SLmetrics)
+```
+
+# Using {xgboost} and {SLmetrics} in regression tasks {.unnumbered}
+
+In this section a gradient boosting machine (GBM) is trained on the [obesity](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)-dataset, and evaluated using [{SLmetrics}](https://github.com/serkor1/SLmetrics). The gbm trained here is a light gradient boosting machine from [{xgboost}](https://github.com/dmlc/xgboost).[^1]
+
+
+```{r data}
+# 1) load data
+# from {SLmetrics}
+data("obesity", package = "SLmetrics")
+```
+
+
+```{r}
+#| code-fold: true
+#| code-summary: "Data preparation"
+
+# 1.1) define the features
+# and outcomes
+outcome  <- obesity$target$regression
+features <- obesity$features
+
+# 2) split data in training
+# and test
+
+# 2.1) set seed for 
+# for reproducibility
+set.seed(1903)
+
+# 2.2) exttract
+# indices with a simple
+# 80/20 split
+index <- sample(1:nrow(features), size = 0.95 * nrow(features))
+
+# 1.1) extract training
+# data and construct
+# as lgb.Dataset
+train <- features[index,]
+dtrain <- xgboost::xgb.DMatrix(
+    data  = data.matrix(train),
+    label = outcome[index]
+)
+
+# 1.2) extract test
+# data
+test <- features[-index,]
+
+# 1.2.1) extract actual
+# values and constuct
+# as.factor for {SLmetrics}
+# methods
+actual <- outcome[-index]
+
+# 1.2.2) construct as data.matrix
+# for predict method
+dtest <-  xgboost::xgb.DMatrix(
+    data = data.matrix(test),
+    label = data.matrix(actual)
+)
+```
+
+## Training the GBM
+
+### Evaluation function
+
+```{r}
+# 1) define the custom
+# evaluation metric
+eval_rrse <- function(
+    preds, 
+    dtrain) {
+
+        # 1) extract values
+        actual    <- xgboost::getinfo(dtrain, "label")
+        predicted <- preds
+        value     <- rrse(
+            actual    = actual,
+            predicted = predicted
+        )
+
+        # 2) construnct output
+        # list
+        list(
+            metric = "RRMSE",
+            value  = value
+        )
+    
+}
+```
+
+### Training the GBM
+
+We train the model using the `xgb.train()`-function,
+
+```{r}
+# 1) model training
+model <- xgboost::xgb.train(
+    data    = dtrain,
+    nrounds = 10L,
+    verbose = 0,
+    feval   = eval_rrse,
+    watchlist = list(
+        train = dtrain,
+        test  = dtest
+    ),
+    maximize = FALSE
+)
+```
+
+## Performance Evaluation
+
+We extract the predicted values using the `predict()`-function,
+
+```{r}
+# 1) out of sample
+# prediction
+predicted <- predict(
+    model,
+    newdata = dtest
+)
+```
+
+We summarize the performance using *relative root mean squared error*, *root mean squared error* and *concordance correlation coefficient*
+
+```{r}
+# 1) summarize all
+# performance measures 
+# in data.frame
+data.frame(
+    RRMSE  = rrse(actual, predicted), 
+    RMSE   = rmse(actual, predicted),
+    CCC    = ccc(actual, predicted)
+)
+```
+
+[^1]: The obesity dataset comes (almost) ready for analysis. See the [repo](https://github.com/serkor1/SLmetrics) for more details on the data-manipulation steps taken.

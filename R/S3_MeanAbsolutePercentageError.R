@@ -12,6 +12,14 @@
 #' The [mape()]-function computes the [mean absolute percentage error](https://en.wikipedia.org/wiki/Mean_absolute_percentage_error) between
 #' the observed and predicted <[numeric]> vectors. The [weighted.mape()] function computes the weighted mean absolute percentage error.
 #' 
+#' @usage
+#' ## Generic S3 method
+#' mape(
+#'  actual,
+#'  predicted,
+#'  ...
+#' )
+#' 
 #' @section Definition:
 #'
 #' The metric is calculated as,
@@ -26,19 +34,32 @@
 #' @family Supervised Learning
 #' 
 #' @export
-mape <- function(...) {
+mape <- function(
+  actual, 
+  predicted,
+  ...) {
   UseMethod(
-    generic = "mape",
-    object  = ..1
+    generic = "mape"
   )
 }
 
 #' @rdname mape
+#' @usage
+#' ## Generic S3 method
+#' weighted.mape(
+#'  actual,
+#'  predicted,
+#'  w,
+#'  ...
+#' )
 #' @export
-weighted.mape <- function(...) {
+weighted.mape <- function(
+  actual, 
+  predicted,
+  w,
+  ...) {
   UseMethod(
-    generic = "weighted.mape",
-    object  = ..1
+    generic = "weighted.mape"
   )
 }
 

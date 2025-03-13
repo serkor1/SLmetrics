@@ -11,6 +11,14 @@
 #' @description
 #' The [rrse()]-function calculates the [root relative  squared error](https://en.wikipedia.org/wiki/Root_mean_square_deviation) between
 #' the predicted and observed <[numeric]> vectors. The [weighted.rrse()] function computes the weighed root relative squared errorr.
+#' 
+#' @usage
+#' ## Generic S3 method
+#' rrse(
+#'  actual,
+#'  predicted,
+#'  ...
+#' )
 #'
 #' @section Definition:
 #'
@@ -29,19 +37,32 @@
 #' @family Supervised Learning
 #' 
 #' @export
-rrse <- function(...) {
+rrse <- function(
+  actual,
+  predicted,
+  ...) {
   UseMethod(
-    generic = "rrse",
-    object  = ..1
+    generic = "rrse"
   )
 }
 
 #' @rdname rrse
+#' @usage
+#' ## Generic S3 method
+#' weighted.rrse(
+#'  actual,
+#'  predicted,
+#'  w,
+#'  ...
+#' )
 #' @export
-weighted.rrse <- function(...) {
+weighted.rrse <- function(
+  actual,
+  predicted,
+  w,
+  ...) {
   UseMethod(
-    generic = "weighted.rrse",
-    object  = ..1
+    generic = "weighted.rrse"
   )
 }
 

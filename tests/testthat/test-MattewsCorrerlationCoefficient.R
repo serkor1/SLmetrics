@@ -5,6 +5,8 @@
 testthat::test_that(
   desc = "Test `mcc()`-function", code = {
 
+    testthat::skip_on_cran()
+
     # 0) construct mcc
     # wrapper
     wrapped_mcc <- function(

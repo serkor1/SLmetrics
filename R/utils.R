@@ -90,4 +90,44 @@ roc_plot <- function(
 
 }
 
+
+# OpenMP-tools
+
+# OpenMP availability
+openmp_available <- function() {
+
+  # 1) check if available
+  available <- .openmp_available()
+
+  if (!available) {
+    # throw warning and 
+    # return NULL
+    warning(
+      "OpenMP is not available on your system!",
+      call. = FALSE
+    )
+
+  }
+
+  return(
+    available
+  )
+
+}
+
+# available threads
+available_threads <- function() {
+
+  # 1) get available
+  # threads
+  threads <- .available_threads()
+
+  if (threads != -1) {
+    return(threads)
+  }
+  
+  NULL
+  
+}
+
 # script end;
