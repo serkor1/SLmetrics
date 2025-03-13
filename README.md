@@ -133,13 +133,13 @@ due to:
 by being:
 
 1.  **Fast:** Powered by `C++` and
-    [Rcpp](https://github.com/RcppCore/Rcpp)  
+    [{Rcpp}](https://github.com/RcppCore/Rcpp)  
 2.  **Memory-efficient:** Everything is structured around pointers and
     references
 3.  **Lightweight:** Only depends on
-    [Rcpp](https://github.com/RcppCore/Rcpp),
-    [RcppEigen](https://github.com/RcppCore/RcppEigen), and
-    [lattice](https://github.com/deepayan/lattice)
+    [{Rcpp}](https://github.com/RcppCore/Rcpp),
+    [{RcppEigen}](https://github.com/RcppCore/RcppEigen), and
+    [{lattice}](https://github.com/deepayan/lattice)
 4.  **Simple:** S3-based, minimal overhead, and flexible inputs
 
 Performance evaluation should be plug-and-play and “just work” out of
@@ -207,8 +207,8 @@ remains extremely memory-efficient, even at large sample sizes.
 
 In its simplest form,
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/)-functions work
-directly with pairs of \<numeric\> vectors (for regression) or
-\<factor\> vectors (for classification). Below we demonstrate this on
+directly with pairs of `<numeric>` vectors (for regression) or
+`<factor>` vectors (for classification). Below we demonstrate this on
 two well-known datasets, `mtcars` (regression) and `iris`
 (classification).
 
@@ -270,7 +270,7 @@ actual <- factor(
 # 4) generate
 # confusion matrix
 summary(
-  confusion_matrix <-  cmatrix(
+  confusion_matrix <- cmatrix(
     actual    = actual,
     predicted = predicted
   )

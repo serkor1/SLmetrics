@@ -139,9 +139,9 @@ At its core, performance evaluation is essentially just comparing two vectors �
 
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) solves these issues by being:
 
-1. **Fast:** Powered by `C++` and [Rcpp](https://github.com/RcppCore/Rcpp)  
+1. **Fast:** Powered by `C++` and [{Rcpp}](https://github.com/RcppCore/Rcpp)  
 2. **Memory-efficient:** Everything is structured around pointers and references
-3. **Lightweight:** Only depends on [Rcpp](https://github.com/RcppCore/Rcpp), [RcppEigen](https://github.com/RcppCore/RcppEigen), and [lattice](https://github.com/deepayan/lattice)
+3. **Lightweight:** Only depends on [{Rcpp}](https://github.com/RcppCore/Rcpp), [{RcppEigen}](https://github.com/RcppCore/RcppEigen), and [{lattice}](https://github.com/deepayan/lattice)
 4. **Simple:** S3-based, minimal overhead, and flexible inputs
 
 Performance evaluation should be plug-and-play and “just work” out of the box — there’s no need to worry about *quasiquations*, *dependencies*, *deprecations*, or variations of the same functions relative to their arguments when using [{SLmetrics}](https://serkor1.github.io/SLmetrics/).
@@ -220,7 +220,7 @@ In both tasks, [{SLmetrics}](https://serkor1.github.io/SLmetrics/) remains extre
 
 ## :information_source: Basic usage
 
-In its simplest form, [{SLmetrics}](https://serkor1.github.io/SLmetrics/)-functions work directly with pairs of \<numeric\> vectors (for regression) or \<factor\> vectors (for classification). Below we demonstrate this on two well-known datasets, `mtcars` (regression) and `iris` (classification).
+In its simplest form, [{SLmetrics}](https://serkor1.github.io/SLmetrics/)-functions work directly with pairs of `<numeric>` vectors (for regression) or `<factor>` vectors (for classification). Below we demonstrate this on two well-known datasets, `mtcars` (regression) and `iris` (classification).
 
 ### :books: Regression
 
@@ -276,7 +276,7 @@ actual <- factor(
 # 4) generate
 # confusion matrix
 summary(
-  confusion_matrix <-  cmatrix(
+  confusion_matrix <- cmatrix(
     actual    = actual,
     predicted = predicted
   )
@@ -335,8 +335,6 @@ colnames(DT_) <- column_names
 
 knitr::kable(DT_, caption = "1e6 x 200 matrix with OpenMP", digits = 2)
 ```
-
-
 
 ### :shield: Stable version
 ```{r}
