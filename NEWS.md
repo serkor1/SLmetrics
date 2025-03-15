@@ -393,7 +393,7 @@ cat(
 
 # Version 0.3-0
 
-## Improvements
+## :sparkles: Improvements
 
 ## New Feature
 
@@ -475,7 +475,7 @@ cat(
 - **Weighted Precision-Recall Curve:** `weighted.prROC()`, the function
   calculates the weighted Recall and Precision for each threshold.
 
-## Breaking Changes
+## :boom: Breaking Changes
 
 - **Weighted Confusion Matrix:** The `w`-argument in `cmatrix()` has
   been removed in favor of the more verbose weighted confusion matrix
@@ -509,9 +509,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>    a  b  c
-#> a 12  4 10
-#> b  9 11 14
-#> c 13 11 16
+#> a  8  9 18
+#> b  6 13 14
+#> c 13 15  4
 
 # 2) with weights
 SLmetrics::weighted.cmatrix(
@@ -520,9 +520,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 6.398180 3.300309 7.014582
-#> b 4.630983 3.072605 8.605201
-#> c 5.105148 6.173261 8.634757
+#> a 4.775797 5.142631 8.579314
+#> b 3.432184 5.334526 5.941353
+#> c 6.416993 6.896212 1.105382
 ```
 
 ## :bug: Bug-fixes
@@ -530,9 +530,9 @@ SLmetrics::weighted.cmatrix(
 - **Return named vectors:** The classification metrics when
   `micro == NULL` were not returning named vectors. This has been fixed.
 
-# Version 0.2-0
+# :bookmark: Version 0.2-0
 
-## Improvements
+## :hammer_and_wrench: General
 
 - **documentation:** The documentation has gotten some extra love, and
   now all functions have their formulas embedded, the details section
@@ -540,37 +540,47 @@ SLmetrics::weighted.cmatrix(
   This will make room for future expansions on the various functions
   where more details are required.
 
+- **Unit-testing:** All functions are now being tested for edge-cases in
+  balanced and imbalanced classification problems, and regression
+  problems, individually. This will enable a more robust development
+  process and prevent avoidable bugs.
+
+## :sparkles: Improvements
+
 - **weighted classification metrics:** The `cmatrix()`-function now
   accepts the argument `w` which is the sample weights; if passed the
   respective method will return the weighted metric. Below is an example
   using sample weights for the confusion matrix,
 
 ``` r
-# 1) define factors
-actual    <- factor(sample(letters[1:3], 100, replace = TRUE))
-predicted <- factor(sample(letters[1:3], 100, replace = TRUE))
+## 1) define actual and 
+## predicted values with
+## sample weights
+actual    <- factor(sample(letters[1:3], 50, replace = TRUE))
+predicted <- factor(sample(letters[1:3], 50, replace = TRUE))
 weights   <- runif(length(actual))
 
-# 2) without weights
+## 2) compute weighted
+## and unweighted confusion
+## matrix
 SLmetrics::cmatrix(
     actual    = actual,
     predicted = predicted
 )
 #>    a  b  c
-#> a 11 15 13
-#> b 11  7 12
-#> c  7 10 14
+#> a  6  7  3
+#> b  2 11  6
+#> c  5  4  6
 
-# 2) with weights
-SLmetrics::weighted.cmatrix(
+SLmetrics::cmatrix(
     actual    = actual,
     predicted = predicted,
     w         = weights
 )
-#>          a        b        c
-#> a 5.352066 7.240180 7.697274
-#> b 6.087686 3.786870 5.320007
-#> c 4.235406 5.129860 8.382574
+#>           a         b         c
+#> a 3.0411781 4.5523184 1.7037120
+#> b 0.3311925 4.6572094 2.5186260
+#> c 2.9550988 1.0236650 4.2041960
 ```
 
 Calculating weighted metrics manually or by using
@@ -590,7 +600,7 @@ confusion_matrix <- SLmetrics::cmatrix(
 SLmetrics::accuracy(
     confusion_matrix
 )
-#> [1] 0.32
+#> [1] 0.43
 
 # 3) calculate the weighted
 # accuracy manually
@@ -599,16 +609,11 @@ SLmetrics::weighted.accuracy(
     predicted = predicted,
     w         = weights
 )
-#> [1] 0.3291542
+#> [1] 0.4509814
 ```
 
 Please note, however, that it is not possible to pass `cmatrix()`-into
-`weighted.accuracy()`,
-
-- **Unit-testing:** All functions are now being tested for edge-cases in
-  balanced and imbalanced classification problems, and regression
-  problems, individually. This will enable a more robust development
-  process and prevent avoidable bugs.
+`weighted.accuracy()`. See below:
 
 ``` r
 try(
@@ -658,41 +663,41 @@ try(
 - **Calculation Error in Relative Absolute Error:** The function was
   incorrectly calculating means, instead of sums. This has been fixed.
 
-## Breaking changes
+## :boom: Breaking changes
 
 - All regression metrics have had `na.rm`- and `w`-arguments removed.
   All weighted regression metrics have a separate function on the
-  `weighted.foo()` to increase consistency across all metrics. See
-  example below,
+  `weighted.foo()` to increase consistency across all metrics. The new
+  function call is given below:
 
 ``` r
 # 1) define regression problem
-actual    <- rnorm(n = 1e3)
-predicted <- actual + rnorm(n = 1e3)
-w         <- runif(n = 1e3)
+actual    <- rnorm(n = 50)
+predicted <- actual + rnorm(n = 50)
+w         <- runif(n = 50)
 
 # 2) unweighted metrics
 SLmetrics::rmse(actual, predicted)
-#> [1] 1.001696
+#> [1] 0.996521
 
 # 3) weighted metrics
 SLmetrics::weighted.rmse(actual, predicted, w = w)
-#> [1] 1.01469
+#> [1] 1.032605
 ```
 
 - The `rrmse()`-function have been removed in favor of the
   `rrse()`-function. This function was incorrectly specified and
   described in the package.
 
-# Version 0.1-1
+# :bookmark: Version 0.1-1
 
-## General
+## :hammer_and_wrench: General
 
-- **Backend changes:** All pair-wise metrics are moved from {Rcpp} to
-  C++, this have reduced execution time by half. All pair-wise metrics
-  are now faster.
+- **Backend changes:** All pair-wise metrics are moved from
+  [{Rcpp}](https://github.com/RcppCore/Rcpp) to `C++`, this have reduced
+  execution time by half. All pair-wise metrics are now faster.
 
-## Improvements
+## :sparkles: Improvements
 
 - **NA-controls:** All pair-wise metrics that doesn’t have a
   `micro`-argument were handling missing values as according to C++ and
@@ -703,23 +708,27 @@ SLmetrics::weighted.rmse(actual, predicted, w = w)
   below,
 
 ``` r
-# 1) define factors
-actual    <- factor(c("no", "yes"))
-predicted <- factor(c(NA, "no"))
+## 1) define actual and
+## predicted classes
+actual    <- factor(c("no", "yes", "yes"))
+predicted <- factor(c(NA, "no", "yes"))
 
-# 2) accuracy with na.rm = TRUE
+## 2) calculate
+## accuracy with
+## and without na.rm
 SLmetrics::accuracy(
     actual    = actual,
     predicted = predicted,
     na.rm     = TRUE
 )
+#> [1] 0.5
 
-# 2) accuracy with na.rm = FALSE
 SLmetrics::accuracy(
     actual    = actual,
     predicted = predicted,
     na.rm     = FALSE
 )
+#> [1] NaN
 ```
 
 ## :bug: Bug-fixes
@@ -729,81 +738,82 @@ SLmetrics::accuracy(
   https://github.com/serkor1/SLmetrics/issues/9.
 
 ``` r
-# 1) define actual
-# classes
+## 1) define actual classes
+## and response probabilities
 actual <- factor(
-  sample(letters[1:2], size = 100, replace = TRUE)
+    sample(letters[1:3], size = 50, replace = TRUE)
 )
 
-# 2) define response
-# probabilities
-response <- runif(100)
-
-# 3) calculate
-# ROC and prROC
-
-# 3.1) ROC
-roc <- SLmetrics::ROC(
-    actual,
-    response
+response <- rbeta(
+    n = 50,
+    shape1 = 20,
+    shape2 = 2
 )
 
-# 3.2) prROC
-prroc <- SLmetrics::prROC(
-    actual,
-    response
+## 2) define ROC and
+## prROC objects
+roc_obj <- SLmetrics::ROC(
+    actual   = actual,
+    response = response 
 )
 
-# 4) plot with panels
-# FALSE
+pr_obj <- SLmetrics::prROC(
+    actual   = actual,
+    response = response 
+)
+```
+
+``` r
+## set plot grid
 par(mfrow = c(1,2))
-plot(
-  roc,
-  panels = FALSE
-)
 
-plot(
-    prroc,
-    panels = FALSE
-)
+## plot data
+## with panels = FALSE
+plot(roc_obj, panels = FALSE)
 ```
 
-# Version 0.1-0
-
-## General
-
-- {SLmetrics} is a collection of Machine Learning performance evaluation
-  functions for supervised learning. Visit the online documentation on
-  [GitHub Pages](https://serkor1.github.io/SLmetrics/).
-
-## Examples
-
-### Supervised classification metrics
+<img src="meta/NEWS_files/figure-commonmark/unnamed-chunk-30-1.png"
+style="width:100.0%" />
 
 ``` r
-# 1) actual classes
-print(
-    actual <- factor(
-        sample(letters[1:3], size = 10, replace = TRUE)
-    )
-)
-#>  [1] b c c c a c a c c b
-#> Levels: a b c
+plot(pr_obj, panels = FALSE)
+```
 
-# 2) predicted classes
-print(
-    predicted <- factor(
-        sample(letters[1:3], size = 10, replace = TRUE)
-    )
+<img src="meta/NEWS_files/figure-commonmark/unnamed-chunk-30-2.png"
+style="width:100.0%" />
+
+# :package: [{SLmetrics}](https://serkor1.github.io/SLmetrics/) Version 0.1-0
+
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) is a collection of
+Machine Learning performance evaluation functions for supervised
+learning written in `C++`
+with[{Rcpp}](https://github.com/RcppCore/Rcpp). Visit the online
+documentation on [Github pages](https://serkor1.github.io/SLmetrics/).
+
+## :information_source: Basic usage
+
+### Classification metrics
+
+``` r
+## 1) define actual and
+## predicted classes
+actual <- factor(
+    sample(letters[1:3], size = 10, replace = TRUE)
 )
-#>  [1] a a c c b c a c a c
+
+predicted <- factor(
+    sample(letters[1:3], size = 10, replace = TRUE)
+)
+
+## 2) print values
+print(actual)
+#>  [1] a c a c c a b a b b
 #> Levels: a b c
 ```
 
 ``` r
-# 1) calculate confusion
-# matrix and summarise
-# it
+## 1) compute and summarise the
+## the confusion matrix
 summary(
     confusion_matrix <- SLmetrics::cmatrix(
         actual    = actual,
@@ -813,42 +823,56 @@ summary(
 #> Confusion Matrix (3 x 3) 
 #> ================================================================================
 #>   a b c
-#> a 1 1 0
-#> b 1 0 1
-#> c 2 0 4
+#> a 2 2 0
+#> b 1 1 1
+#> c 2 0 1
 #> ================================================================================
 #> Overall Statistics (micro average)
-#>  - Accuracy:          0.50
+#>  - Accuracy:          0.40
 #>  - Balanced Accuracy: 0.39
-#>  - Sensitivity:       0.50
-#>  - Specificity:       0.75
-#>  - Precision:         0.50
+#>  - Sensitivity:       0.40
+#>  - Specificity:       0.70
+#>  - Precision:         0.40
+```
 
-# 2) calculate false positive
-# rate using micro average
+``` r
+## 1) false positive rate
+## using <cmatrix> method
+SLmetrics::fpr(confusion_matrix)
+#>         a         b         c 
+#> 0.5000000 0.2857143 0.1428571
+
+## 2) false positive rate
+## using <factor> method
 SLmetrics::fpr(
-    confusion_matrix
+    actual    = actual, 
+    predicted = predicted
 )
-#>     a     b     c 
-#> 0.375 0.125 0.250
+#>         a         b         c 
+#> 0.5000000 0.2857143 0.1428571
 ```
 
-### Supervised regression metrics
+### Regression metrics
 
 ``` r
-# 1) actual values
-actual <- rnorm(n = 100)
-
-# 2) predicted values
-predicted <- actual + rnorm(n = 100)
+## 1) define actual and
+## predicted values
+actual <- rnorm(n = 10)
+predicted <- actual + rnorm(n = 10)
 ```
 
 ``` r
-# 1) calculate
-# huber loss
+## 1) calculate Huber Loss and
+## Root Mean Squared Error
 SLmetrics::huberloss(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.3350288
+#> [1] 0.4517491
+
+SLmetrics::rmse(
+    actual    = actual,
+    predicted = predicted
+)
+#> [1] 1.058786
 ```

@@ -1,0 +1,80 @@
+```{r}
+#| include: false
+#| echo: false
+pak::pak(
+    pkg = "serkor1/SLmetrics@v0.1-1", 
+    ask = FALSE
+    )
+```
+
+# :bookmark: Version 0.1-1
+
+## :hammer_and_wrench: General
+
+* **Backend changes:** All pair-wise metrics are moved from [{Rcpp}](https://github.com/RcppCore/Rcpp) to `C++`, this have reduced execution time by half. All pair-wise metrics are now faster.
+
+## :sparkles: Improvements
+
+* **NA-controls:** All pair-wise metrics that doesn't have a `micro`-argument were handling missing values as according to C++ and {Rcpp} internals. See [Issue](https://github.com/serkor1/SLmetrics/issues/8). Thank you @EmilHvitfeldt for pointing this out. This has now been fixed so functions uses an `na.rm`-argument to explicitly control for this. See below,
+
+```{r}
+## 1) define actual and
+## predicted classes
+actual    <- factor(c("no", "yes", "yes"))
+predicted <- factor(c(NA, "no", "yes"))
+
+## 2) calculate
+## accuracy with
+## and without na.rm
+SLmetrics::accuracy(
+    actual    = actual,
+    predicted = predicted,
+    na.rm     = TRUE
+)
+
+SLmetrics::accuracy(
+    actual    = actual,
+    predicted = predicted,
+    na.rm     = FALSE
+)
+```
+
+## :bug: Bug-fixes
+
+* The `plot.prROC()`- and `plot.ROC()`-functions now adds a line to the plot when `panels = FALSE`. See Issue https://github.com/serkor1/SLmetrics/issues/9.
+
+```{r}
+## 1) define actual classes
+## and response probabilities
+actual <- factor(
+    sample(letters[1:3], size = 50, replace = TRUE)
+)
+
+response <- rbeta(
+    n = 50,
+    shape1 = 20,
+    shape2 = 2
+)
+
+## 2) define ROC and
+## prROC objects
+roc_obj <- SLmetrics::ROC(
+    actual   = actual,
+    response = response 
+)
+
+pr_obj <- SLmetrics::prROC(
+    actual   = actual,
+    response = response 
+)
+```
+
+```{r}
+## set plot grid
+par(mfrow = c(1,2))
+
+## plot data
+## with panels = FALSE
+plot(roc_obj, panels = FALSE)
+plot(pr_obj, panels = FALSE)
+```

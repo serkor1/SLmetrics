@@ -1,0 +1,114 @@
+```{r}
+#| include: false
+#| echo: false
+pak::pak(
+    pkg = "serkor1/SLmetrics@v0.2-0", 
+    ask = FALSE
+    )
+```
+
+# :bookmark: Version 0.2-0
+
+## :hammer_and_wrench: General
+
+* **documentation:** The documentation has gotten some extra love, and now all functions have their formulas embedded, the details section have been freed from a general description of [factor] creation. This will make room for future expansions on the various functions where more details are required.
+
+* **Unit-testing:** All functions are now being tested for edge-cases in balanced and imbalanced classification problems, and regression problems, individually. This will enable a more robust development process and prevent avoidable bugs.
+
+## :sparkles: Improvements
+
+* **weighted classification metrics:** The `cmatrix()`-function now accepts the argument `w` which is the sample weights; if passed the respective method will return the weighted metric. Below is an example using sample weights for the confusion matrix,
+
+```{r}
+## 1) define actual and 
+## predicted values with
+## sample weights
+actual    <- factor(sample(letters[1:3], 50, replace = TRUE))
+predicted <- factor(sample(letters[1:3], 50, replace = TRUE))
+weights   <- runif(length(actual))
+
+## 2) compute weighted
+## and unweighted confusion
+## matrix
+SLmetrics::cmatrix(
+    actual    = actual,
+    predicted = predicted
+)
+
+SLmetrics::cmatrix(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+```
+
+Calculating weighted metrics manually or by using `foo.cmatrix()`-method,
+
+```{r}
+# 1) weigthed confusion matrix
+# and weighted accuray
+confusion_matrix <- SLmetrics::cmatrix(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+
+# 2) pass into accuracy
+# function
+SLmetrics::accuracy(
+    confusion_matrix
+)
+
+# 3) calculate the weighted
+# accuracy manually
+SLmetrics::weighted.accuracy(
+    actual    = actual,
+    predicted = predicted,
+    w         = weights
+)
+```
+
+Please note, however, that it is not possible to pass `cmatrix()`-into `weighted.accuracy()`. See below:
+
+```{r}
+try(
+    SLmetrics::weighted.accuracy(
+        confusion_matrix
+    )
+)
+```
+
+## :bug: Bug-fixes
+
+* **Floating precision:** Metrics would give different results based on the method used. This means that `foo.cmatrix()` and `foo.factor()` would produce different results (See Issue https://github.com/serkor1/SLmetrics/issues/16). This has been fixed by using higher precision `Rcpp::NumericMatrix` instead of `Rcpp::IntegerMatrix`.
+
+* **Miscalculation of Confusion Matrix elements:** An error in how `FN`, `TN`, `FP` and `TP` were calculated have been fixed. No issue has been raised for this bug. This was not something that was caught by the unit-tests, as the total samples were too high to spot this error. It has, however, been fixed now. This means that all metrics that uses these explicitly are now stable, and produces the desired output.
+
+* **Calculation Error in Fowlks Mallows Index:** A bug in the calculation of the `fmi()`-function has been fixed. The `fmi()`-function now correctly calculates the measure.
+
+* **Calculation Error in Pinball Deviance and Concordance Correlation Coefficient:** See issue https://github.com/serkor1/SLmetrics/issues/19. Switched to unbiased variance calculation in `ccc()`-function. The `pinball()`-function were missing a weighted quantile function. The issue is now fixed.
+
+* **Calculation Error in Balanced Accuracy:** See issue https://github.com/serkor1/SLmetrics/issues/24. The function now correctly adjusts for random chance, and the result matches that of {scikit-learn}
+
+* **Calculation Error in F-beta Score:** See issue https://github.com/serkor1/SLmetrics/issues/23. The function werent respecting `na.rm` and `micro`, this has been fixed accordingly.
+
+* **Calculation Error in Relative Absolute Error:** The function was incorrectly calculating means, instead of sums. This has been fixed.
+
+## :boom: Breaking changes
+
+* All regression metrics have had `na.rm`- and `w`-arguments removed. All  weighted regression metrics have a separate function on the `weighted.foo()` to increase consistency across all metrics. The new function call is given below:
+
+```{r}
+# 1) define regression problem
+actual    <- rnorm(n = 50)
+predicted <- actual + rnorm(n = 50)
+w         <- runif(n = 50)
+
+# 2) unweighted metrics
+SLmetrics::rmse(actual, predicted)
+
+# 3) weighted metrics
+SLmetrics::weighted.rmse(actual, predicted, w = w)
+```
+
+* The `rrmse()`-function have been removed in favor of the `rrse()`-function. This function was incorrectly specified and described in the package.

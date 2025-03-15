@@ -22,6 +22,8 @@ TARBALL = $(PKGNAME)_$(VERSION).tar.gz
 build-meta:
 	@echo "📚 Rendering README and NEWS"
 
+	@echo tools/build_news.sh
+
 	@if [ "$(RESET)" = "true" ]; then \
 		quarto render meta/README.qmd --cache-refresh;  \
 	    quarto render meta/NEWS.qmd --cache-refresh; \
