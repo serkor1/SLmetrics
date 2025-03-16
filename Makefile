@@ -19,25 +19,37 @@ TARBALL = $(PKGNAME)_$(VERSION).tar.gz
 #
 # Because of stuff, the command now replaces all dirs with meta/dir... Otherwise images are
 # not rendered
-build-meta:
-	@echo "📚 Rendering README and NEWS"
+build-news:
+	@echo "📚 Rendering NEWS"
+
+	@./tools/build_news.sh
 
 	@if [ "$(RESET)" = "true" ]; then \
-		quarto render meta/README.qmd --cache-refresh;  \
 	    quarto render meta/NEWS.qmd --cache-refresh; \
 	else \
-		quarto render  meta/README.qmd; \
 		quarto render  meta/NEWS.qmd; \
 	fi
 
-	@mv meta/README.md .
+	
 	@mv meta/NEWS.md .
 
 	@Rscript -e "file_path <- 'NEWS.md'; \
 	             file_contents <- readLines(file_path); \
-	             modified_contents <- gsub('NEWS_files/', 'meta/NEWS_files/', file_contents); \
+	             modified_contents <- gsub('(v.*_files/)', 'meta/CHANGELOG/\\\\1', file_contents, perl = TRUE, ignore.case = TRUE); \
 	             writeLines(modified_contents, file_path); \
 	             cat('Replacements completed in NEWS.md\\n')"
+
+
+build-readme: build
+	@echo "📚 Rendering README"
+
+	@if [ "$(RESET)" = "true" ]; then \
+		quarto render meta/README.qmd --cache-refresh;  \
+	else \
+		quarto render  meta/README.qmd; \
+	fi
+
+	@mv meta/README.md .
 
 	@Rscript -e "file_path <- 'README.md'; \
 	             file_contents <- readLines(file_path); \
@@ -134,10 +146,7 @@ build: document
 	@R CMD INSTALL $(TARBALL) > /dev/null 2>&1
 	@echo "✅ Done!"
 	@echo ""
-
-
-	$(MAKE) clean
-	$(MAKE) build-meta
+	
 	@echo "✅ Build process done!"
 
 # check:
@@ -207,3 +216,16 @@ r-hub-check:
 				)\
 		)"
 
+# new-version:
+#
+# This command creates a new template
+# for the the NEWS. It creates a new entry (quarto file) based
+# on the version given in DESCRIPTION. 
+#
+# Example:
+#
+# v0.3-3.qmd in the meta/CHANGELOG-folder if the DESCRIPTION
+# version is 0.3-3
+new-version:
+	@echo "📚 Creating new NEWS entry $(VERSION)"
+	@tools/news_template.sh
