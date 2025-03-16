@@ -1,5 +1,37 @@
 
 
+- [:bookmark: Version 0.3-3](#bookmark-version-03-3)
+  - [:sparkles: Improvements](#sparkles-improvements)
+    - [:rocket: New features](#rocket-new-features)
+  - [:boom: Breaking changes](#boom-breaking-changes)
+- [:bookmark: Version 0.3-2](#bookmark-version-03-2)
+  - [:sparkles: Improvements](#sparkles-improvements-1)
+    - [:rocket: New features](#rocket-new-features-1)
+  - [:bug: Bug-fixes](#bug-bug-fixes)
+  - [:boom: Breaking Changes](#boom-breaking-changes-1)
+- [:bookmark: Version 0.3-1](#bookmark-version-03-1)
+  - [:sparkles: Improvements](#sparkles-improvements-2)
+  - [:bug: Bug-fixes](#bug-bug-fixes-1)
+  - [:boom: Breaking changes](#boom-breaking-changes-2)
+- [:bookmark: Version 0.3-0](#bookmark-version-03-0)
+  - [:sparkles: Improvements](#sparkles-improvements-3)
+    - [New features](#new-features)
+  - [:bug: Bug-fixes](#bug-bug-fixes-2)
+  - [:boom: Breaking Changes](#boom-breaking-changes-3)
+- [:bookmark: Version 0.2-0](#bookmark-version-02-0)
+  - [:hammer_and_wrench: General](#hammer_and_wrench-general)
+  - [:sparkles: Improvements](#sparkles-improvements-4)
+  - [:bug: Bug-fixes](#bug-bug-fixes-3)
+  - [:boom: Breaking changes](#boom-breaking-changes-4)
+- [:bookmark: Version 0.1-1](#bookmark-version-01-1)
+  - [:hammer_and_wrench: General](#hammer_and_wrench-general-1)
+  - [:sparkles: Improvements](#sparkles-improvements-5)
+  - [:bug: Bug-fixes](#bug-bug-fixes-4)
+- [:package: {SLmetrics} Version 0.1-0](#package-slmetrics-version-01-0)
+  - [:information_source: Basic usage](#information_source-basic-usage)
+    - [Classification metrics](#classification-metrics)
+    - [Regression metrics](#regression-metrics)
+
 > Version 0.3-3 is considered pre-release of {SLmetrics}. We do not
 > expect any breaking changes, unless a major bug/issue is reported and
 > its nature forces breaking changes.
@@ -384,6 +416,13 @@ cat(
 #> 1.203973
 ```
 
+## :bug: Bug-fixes
+
+- **Plot-method in ROC and prROC
+  (https://github.com/serkor1/SLmetrics/issues/36):** Fixed a bug in
+  `plot.ROC()` and `plot.prROC()` where if `panels = FALSE` additional
+  lines would be added to the plot.
+
 ## :boom: Breaking changes
 
 - **logloss:** The argument `response` have ben renamed to `qk` as in
@@ -391,13 +430,6 @@ cat(
 - **entropy.factor():** The function have been deleted and is no more.
   This was mainly due to avoid the documentation from being too large.
   The `logloss()`-function replaces it.
-
-## :bug: Bug-fixes
-
-- **Plot-method in ROC and prROC
-  (https://github.com/serkor1/SLmetrics/issues/36):** Fixed a bug in
-  `plot.ROC()` and `plot.prROC()` where if `panels = FALSE` additional
-  lines would be added to the plot.
 
 # :bookmark: Version 0.3-0
 
@@ -492,6 +524,11 @@ cat(
 - **Weighted Precision-Recall Curve:** `weighted.prROC()`, the function
   calculates the weighted Recall and Precision for each threshold.
 
+## :bug: Bug-fixes
+
+- **Return named vectors:** The classification metrics when
+  `micro == NULL` were not returning named vectors. This has been fixed.
+
 ## :boom: Breaking Changes
 
 - **Weighted Confusion Matrix:** The `w`-argument in `cmatrix()` has
@@ -545,11 +582,6 @@ SLmetrics::weighted.cmatrix(
 #> b 2.766585 4.259595 0.550205
 #> c 3.620850 3.732882 2.151884
 ```
-
-## :bug: Bug-fixes
-
-- **Return named vectors:** The classification metrics when
-  `micro == NULL` were not returning named vectors. This has been fixed.
 
 # :bookmark: Version 0.2-0
 

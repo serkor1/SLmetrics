@@ -85,12 +85,12 @@ cat(
 )
 ```
 
+## :bug: Bug-fixes
+
+* **Plot-method in ROC and prROC (https://github.com/serkor1/SLmetrics/issues/36):** Fixed a bug in  `plot.ROC()` and `plot.prROC()` where if `panels = FALSE` additional lines would be added to the plot.
+
 ## :boom: Breaking changes
 
 * **logloss:** The argument `response` have ben renamed to `qk` as in the `entropy()`-family to maintain some degree of consistency.
 * **entropy.factor():** The function have been deleted and is no more. This was mainly due to avoid the documentation from being too large. The `logloss()`-function replaces it.
-
-## :bug: Bug-fixes
-
-* **Plot-method in ROC and prROC (https://github.com/serkor1/SLmetrics/issues/36):** Fixed a bug in  `plot.ROC()` and `plot.prROC()` where if `panels = FALSE` additional lines would be added to the plot.
 

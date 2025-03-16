@@ -100,6 +100,10 @@ cat(
 
 * **Weighted Precision-Recall Curve:** `weighted.prROC()`, the function calculates the weighted Recall and Precision for each threshold.
 
+## :bug: Bug-fixes
+
+* **Return named vectors:** The classification metrics when `micro == NULL` were not returning named vectors. This has been fixed. 
+
 ## :boom: Breaking Changes
 
 * **Weighted Confusion Matrix:** The `w`-argument in `cmatrix()` has been removed in favor of the more verbose weighted confusion matrix call `weighted.cmatrix()`-function. See below,
@@ -140,8 +144,4 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 ```
-
-## :bug: Bug-fixes
-
-* **Return named vectors:** The classification metrics when `micro == NULL` were not returning named vectors. This has been fixed. 
 
