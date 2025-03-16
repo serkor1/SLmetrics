@@ -4,9 +4,9 @@
 > expect any breaking changes, unless a major bug/issue is reported and
 > its nature forces breaking changes.
 
-# Version 0.3-3
+# :bookmark: Version 0.3-3
 
-## :rocket: Improvements
+## :sparkles: Improvements
 
 - **S3 signatures:** All S3-methods now have a generic signature, the
   functions should now be easier to navigate in argument-wise.
@@ -22,13 +22,14 @@
   dataset:
 
 ``` r
-# 1) summarise list
+## 1) summarise the
+## list
 summary(SLmetrics::obesity)
 #>          Length Class      Mode
 #> features 15     data.frame list
 #> target    2     -none-     list
 
-# 2) head the features
+## 2) head the featues
 head(SLmetrics::obesity$features)
 #>        caec       calc                mtrans family_history_with_overweight
 #> 1 sometimes         no public_transportation                              1
@@ -45,7 +46,8 @@ head(SLmetrics::obesity$features)
 #> 5    0     0   0    1  22   1.78    2   1    2   0   0
 #> 6    1     0   0    1  29   1.62    2   3    2   0   0
 
-# 3) head the targets
+## 3) head target
+## variables
 head(SLmetrics::obesity$target$class)
 #> [1] Normal_Weight       Normal_Weight       Normal_Weight      
 #> [4] Overweight_Level_I  Overweight_Level_II Normal_Weight      
@@ -54,15 +56,16 @@ head(SLmetrics::obesity$target$regression)
 #> [1] 64.0 56.0 77.0 87.0 89.8 53.0
 ```
 
-## :fire: New features
+### :rocket: New features
 
-### :rocket: New metrics
+#### New metrics
 
 - **Poisson LogLoss:** The logloss for count data has been implemented.
   This metric shares the method of logloss and can be used as follows:
 
 ``` r
-# Create factors and response probabilities
+## 1) define observed integers
+## and response probabilities
 actual   <- as.integer(factor(c("Class A", "Class B", "Class A")))
 weights  <- c(0.3,0.9,1) 
 response <- matrix(cbind(
@@ -71,6 +74,9 @@ response <- matrix(cbind(
     0.7, 0.3
 ),nrow = 3, ncol = 2)
 
+## 2) weighted
+## and unweighted poisson
+## distributed log-loss
 cat(
     "Unweighted Poisson Log Loss:",
     SLmetrics::logloss(
@@ -97,7 +103,8 @@ cat(
   below:
 
 ``` r
-# Create factors and response probabilities
+## 1) define observed integers
+## and response probabilities
 actual   <- factor(c("Class A", "Class B", "Class A"))
 weights  <- c(0.3,0.9,1) 
 response <- matrix(cbind(
@@ -106,17 +113,17 @@ response <- matrix(cbind(
     0.7, 0.3
 ),nrow = 3, ncol = 2)
 
-# calculate area under the 
-# precision-recall curve
+## 2) area under
+## the precision-recall curve
 SLmetrics::pr.auc(
-    actual = actual,
+    actual   = actual,
     response = response
 )
 #>   Class A   Class B 
 #> 0.4166667 1.0000000
 ```
 
-### :hammer: Metric tools
+#### Metric tools
 
 A new family of `Tools`-functions are introduced with this update. This
 addition introduces unexported functions for constructing fast and
@@ -127,16 +134,15 @@ built-in functions from {stats} and family.
   Example usage:
 
 ``` r
-## generate values
+## 1) actual and
+## predicted values
 actual    <- c(1.2,  0.3, 0.56, 0.11, 1.01)
 predicted <- c(0.9, 0.22, 0.76, 0.21, 1.1) 
 
-## generate covariance matrix
+## 2) covariance
+## matrix 
 SLmetrics:::cov.wt(
-    cbind(
-        actual,
-        predicted
-    )
+    cbind(actual, predicted)
 )
 #> $cov
 #>             actual predicted
@@ -204,16 +210,16 @@ cat(
   algorithms can be used as follows:
 
 ``` r
-# 1) generate a 4x4 matrix
-# with random values to be sorted
+## 1) generate a 4x4 matrix
+## with random values to be sorted
 set.seed(1903)
 X <- matrix(
   data = cbind(sample(16:1)),
   nrow = 4
 )
 
-# 2) sort matrix
-# in decreasing order
+## 2) sort matrix
+## in decreasing order
 SLmetrics::presort(X)
 #>      [,1] [,2] [,3] [,4]
 #> [1,]    3    2    6    1
@@ -221,8 +227,8 @@ SLmetrics::presort(X)
 #> [3,]    9    8   15   11
 #> [4,]   13   14   16   12
 
-# 3) get indices 
-# for sorted matrix
+## 3) get indices 
+## for sorted matrix
 SLmetrics::preorder(X)
 #>      [,1] [,2] [,3] [,4]
 #> [1,]    1    1    2    4
@@ -231,13 +237,13 @@ SLmetrics::preorder(X)
 #> [4,]    4    4    4    3
 ```
 
-## :warning: Breaking changes
+## :boom: Breaking changes
 
 - **Logloss:** The argument `pk` has been replaced by `response`.
 
-# Version 0.3-2
+# :bookmark: Version 0.3-2
 
-## :rocket: Improvements
+## :sparkles: Improvements
 
 - **Regression metrics (See PR
   https://github.com/serkor1/SLmetrics/pull/64):** All regression
@@ -256,7 +262,7 @@ suppressMessages(
 )
 ```
 
-## :fire: New features
+### :rocket: New features
 
 - **Available threads:** The available number of threads can be
   retrieved using the `openmp.threads()`. See below:
@@ -274,7 +280,7 @@ SLmetrics::openmp.threads()
   `<[numeric]>`-value instead of `k` number of identical
   `<[numeric]>`-values.
 
-## :warning: Breaking Changes
+## :boom: Breaking Changes
 
 - **OpenMP Interface:** The interface to enabling/disabling OpenMP
   support has been reworked and has a more natural flow. The new
@@ -300,35 +306,40 @@ SLmetrics::openmp.threads(3)
 #> Using 3 threads.
 ```
 
-# Version 0.3-1
+# :bookmark: Version 0.3-1
 
-## :rocket: Improvements
+## :sparkles: Improvements
 
 - **OpenMP Support (PR https://github.com/serkor1/SLmetrics/pull/40):**
   {SLmetrics} now supports parallelization through OpenMP. The OpenMP
   can be utilized as follows:
 
 ``` r
-# 1) probability distribution
-# generator
+set.seed(1903)
+
+## 1) probability distribution
+## function
 rand.sum <- function(n){
     x <- sort(runif(n-1))
     c(x,1) - c(0,x)
   }
 
-# 2) generate probability
-# matrix
-set.seed(1903)
-pk <- t(replicate(100,rand.sum(1e3)))
+## 2) generate probability
+## matrix
+pk <- t(replicate(
+    n = 100,
+    expr = rand.sum(1e3)
+    )
+)
 
-# 3) Enable OpenMP
+## 3) calulate entropy
+## with and without OpenMP
 SLmetrics::setUseOpenMP(TRUE)
 #> OpenMP usage set to: enabled
 system.time(SLmetrics::entropy(pk))
 #>    user  system elapsed 
-#>   0.414   0.000   0.019
+#>   0.009   0.004   0.001
 
-# 3) Disable OpenMP
 SLmetrics::setUseOpenMP(FALSE)
 #> OpenMP usage set to: disabled
 system.time(SLmetrics::entropy(pk))
@@ -343,35 +354,26 @@ system.time(SLmetrics::entropy(pk))
   as follows:
 
 ``` r
-# 1) Define actual
-# and observed probabilities
+## 1) Define actual
+## and observed probabilities
 
-# 1.1) actual probabilies
+## 1.1) actual probabilies
 pk <- matrix(
   cbind(1/2, 1/2),
   ncol = 2
 )
 
-# 1.2) observed (estimated) probabilites
+## 1.2) observed (estimated) probabilites
 qk <- matrix(
   cbind(9/10, 1/10), 
   ncol = 2
 )
 
-# 2) calculate
-# Entropy
+## 2) calculate entropy
 cat(
-  "Entropy", SLmetrics::entropy(
-    pk
-  ),
-  "Relative Entropy", SLmetrics::relative.entropy(
-    pk,
-    qk
-  ),
-  "Cross Entropy", SLmetrics::cross.entropy(
-    pk,
-    qk
-  ),
+  "Entropy", SLmetrics::entropy(pk),
+  "Relative Entropy", SLmetrics::relative.entropy(pk, qk),
+  "Cross Entropy", SLmetrics::cross.entropy(pk, qk),
   sep = "\n"
 )
 #> Entropy
@@ -382,7 +384,7 @@ cat(
 #> 1.203973
 ```
 
-## :warning: Breaking changes
+## :boom: Breaking changes
 
 - **logloss:** The argument `response` have ben renamed to `qk` as in
   the `entropy()`-family to maintain some degree of consistency.
@@ -397,11 +399,11 @@ cat(
   `plot.ROC()` and `plot.prROC()` where if `panels = FALSE` additional
   lines would be added to the plot.
 
-# Version 0.3-0
+# :bookmark: Version 0.3-0
 
 ## :sparkles: Improvements
 
-## New Feature
+### New features
 
 - **Relative Root Mean Squared Error:** The function normalizes the Root
   Mean Squared Error by a factor. There is no official way of
@@ -410,11 +412,16 @@ cat(
   follows,
 
 ``` r
-# 1) define values
-actual <- rnorm(1e3)
-predicted <- actual + rnorm(1e3)
+## 1) define actual and
+## predicted values
+actual <- rnorm(50)
+predicted <- actual + rnorm(50)
 
-# 2) calculate Relative Root Mean Squared Error
+## 2) calculate rrse
+## with normalization
+## 0: mean
+## 1: range
+## 2: iqr
 cat(
   "Mean Relative Root Mean Squared Error", SLmetrics::rrmse(
     actual        = actual,
@@ -434,18 +441,20 @@ cat(
   sep = "\n"
 )
 #> Mean Relative Root Mean Squared Error
-#> -71.7067
+#> 8.784975
 #> Range Relative Root Mean Squared Error
-#> 0.1639767
+#> 0.1951562
 #> IQR Relative Root Mean Squared Error
-#> 0.6992538
+#> 0.5694271
 ```
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
   normalization. The function can be used as follows,
 
 ``` r
-# Create factors and response probabilities
+## 1) define actual
+## values and estimated
+## probabilities
 actual   <- factor(c("Class A", "Class B", "Class A"))
 weights  <- c(0.3,0.9,1) 
 response <- matrix(cbind(
@@ -454,6 +463,8 @@ response <- matrix(cbind(
     0.7, 0.3
 ),nrow = 3, ncol = 2)
 
+## 2) weighted and unweighted
+## log-loss
 cat(
     "Unweighted Log Loss:",
     SLmetrics::logloss(
@@ -504,31 +515,35 @@ and simplicity the weighted confusion matrix are now retrieved as
 follows,
 
 ``` r
-# 1) define factors
-actual    <- factor(sample(letters[1:3], 100, replace = TRUE))
-predicted <- factor(sample(letters[1:3], 100, replace = TRUE))
+## 1) define actual
+## and predicted values
+## with sample weights
+actual    <- factor(sample(letters[1:3], 50, replace = TRUE))
+predicted <- factor(sample(letters[1:3], 50, replace = TRUE))
 weights   <- runif(length(actual))
 
-# 2) without weights
+## 2) unweighted confusion
+## matrix
 SLmetrics::cmatrix(
     actual    = actual,
     predicted = predicted
 )
-#>    a  b  c
-#> a 15  7 11
-#> b 12 13 10
-#> c 12  8 12
+#>   a b c
+#> a 5 8 4
+#> b 5 7 2
+#> c 9 6 4
 
-# 2) with weights
+## 3) weighted confusion
+## matrix
 SLmetrics::weighted.cmatrix(
     actual    = actual,
     predicted = predicted,
     w         = weights
 )
 #>          a        b        c
-#> a 7.895429 2.839450 6.452447
-#> b 5.118556 5.867541 4.991559
-#> c 5.813217 4.628780 5.060704
+#> a 2.322289 2.454870 1.638391
+#> b 2.766585 4.259595 0.550205
+#> c 3.620850 3.732882 2.151884
 ```
 
 ## :bug: Bug-fixes
@@ -573,10 +588,10 @@ SLmetrics::cmatrix(
     actual    = actual,
     predicted = predicted
 )
-#>    a  b  c
-#> a  4  6 10
-#> b  4  3  4
-#> c 11  5  3
+#>   a b c
+#> a 7 4 5
+#> b 3 8 5
+#> c 9 4 5
 
 SLmetrics::cmatrix(
     actual    = actual,
@@ -584,38 +599,38 @@ SLmetrics::cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 2.332352 1.607707 6.749139
-#> b 3.052375 1.355002 2.281607
-#> c 3.996287 2.890201 1.450086
+#> a 3.834480 1.594902 2.070598
+#> b 2.100894 3.949499 1.813142
+#> c 4.363751 2.002751 2.396716
 ```
 
-Calculating weighted metrics manually or by using
-`foo.cmatrix()`-method,
+Calculating weighted metrics using the `<factor>`- or
+`<cmatrix>`-method,
 
 ``` r
-# 1) weigthed confusion matrix
-# and weighted accuray
+## 1) weigthed confusion matrix
+## and weighted accuray
 confusion_matrix <- SLmetrics::cmatrix(
     actual    = actual,
     predicted = predicted,
     w         = weights
 )
 
-# 2) pass into accuracy
-# function
+## 2) weighted accuracy
+## using <cmatrix> method
 SLmetrics::accuracy(
     confusion_matrix
 )
-#> [1] 0.1997857
+#> [1] 0.4219674
 
-# 3) calculate the weighted
-# accuracy manually
+## 2) weighted accuracy
+## using <factor> method
 SLmetrics::weighted.accuracy(
     actual    = actual,
     predicted = predicted,
     w         = weights
 )
-#> [1] 0.1997857
+#> [1] 0.4219674
 ```
 
 Please note, however, that it is not possible to pass `cmatrix()`-into
@@ -677,18 +692,18 @@ try(
   function call is given below:
 
 ``` r
-# 1) define regression problem
+## 1) define actual and
+## predicted values
 actual    <- rnorm(n = 50)
 predicted <- actual + rnorm(n = 50)
 w         <- runif(n = 50)
 
-# 2) unweighted metrics
+## 2) weighted and unweighted
+## root mean squared error
 SLmetrics::rmse(actual, predicted)
-#> [1] 0.9196059
-
-# 3) weighted metrics
+#> [1] 0.9705207
 SLmetrics::weighted.rmse(actual, predicted, w = w)
-#> [1] 1.019061
+#> [1] 0.9819614
 ```
 
 - The `rrmse()`-function have been removed in favor of the
@@ -813,7 +828,7 @@ predicted <- factor(
 
 ## 2) print values
 print(actual)
-#>  [1] c c c b c c c b a a
+#>  [1] b a a b a a c b c c
 #> Levels: a b c
 ```
 
@@ -829,24 +844,24 @@ summary(
 #> Confusion Matrix (3 x 3) 
 #> ================================================================================
 #>   a b c
-#> a 1 1 0
-#> b 0 1 1
-#> c 1 2 3
+#> a 2 1 1
+#> b 1 2 0
+#> c 0 1 2
 #> ================================================================================
 #> Overall Statistics (micro average)
-#>  - Accuracy:          0.50
-#>  - Balanced Accuracy: 0.50
-#>  - Sensitivity:       0.50
-#>  - Specificity:       0.75
-#>  - Precision:         0.50
+#>  - Accuracy:          0.60
+#>  - Balanced Accuracy: 0.61
+#>  - Sensitivity:       0.60
+#>  - Specificity:       0.80
+#>  - Precision:         0.60
 ```
 
 ``` r
 ## 1) false positive rate
 ## using <cmatrix> method
 SLmetrics::fpr(confusion_matrix)
-#>     a     b     c 
-#> 0.125 0.375 0.250
+#>         a         b         c 
+#> 0.1666667 0.2857143 0.1428571
 
 ## 2) false positive rate
 ## using <factor> method
@@ -854,8 +869,8 @@ SLmetrics::fpr(
     actual    = actual, 
     predicted = predicted
 )
-#>     a     b     c 
-#> 0.125 0.375 0.250
+#>         a         b         c 
+#> 0.1666667 0.2857143 0.1428571
 ```
 
 ### Regression metrics
@@ -874,11 +889,11 @@ SLmetrics::huberloss(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.6265706
+#> [1] 0.3963274
 
 SLmetrics::rmse(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 1.235888
+#> [1] 0.9120952
 ```

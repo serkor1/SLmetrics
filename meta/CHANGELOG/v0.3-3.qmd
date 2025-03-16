@@ -25,34 +25,37 @@ pak::pak(
     )
 ```
 
-# Version 0.3-3
+# :bookmark: Version 0.3-3
 
-## :rocket: Improvements
+## :sparkles: Improvements
 
 * **S3 signatures:** All S3-methods now have a generic signature, the functions should now be easier to navigate in  argument-wise.
 
 * **Exported Data:** Three new datasets have been introduced to the package; the [Wine Quality](https://archive.ics.uci.edu/dataset/186/wine+quality)-, [Obesity](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)- and [Banknote Authentication](https://archive.ics.uci.edu/dataset/267/banknote+authentication) datasets. Each dataset is comes in named `list` where features and targets are stored separately. Below is an example from the Obesity dataset:
 
 ```{r data (v0.3-3)}
-# 1) summarise list
+## 1) summarise the
+## list
 summary(SLmetrics::obesity)
 
-# 2) head the features
+## 2) head the featues
 head(SLmetrics::obesity$features)
 
-# 3) head the targets
+## 3) head target
+## variables
 head(SLmetrics::obesity$target$class)
 head(SLmetrics::obesity$target$regression)
 ```
 
-## :fire: New features
+### :rocket: New features
 
-### :rocket: New metrics
+#### New metrics
 
 * **Poisson LogLoss:** The logloss for count data has been implemented. This metric shares the method of logloss and can be used as follows:
 
 ```{r Poisson LogLoss (v0.3-3)}
-# Create factors and response probabilities
+## 1) define observed integers
+## and response probabilities
 actual   <- as.integer(factor(c("Class A", "Class B", "Class A")))
 weights  <- c(0.3,0.9,1) 
 response <- matrix(cbind(
@@ -61,6 +64,9 @@ response <- matrix(cbind(
     0.7, 0.3
 ),nrow = 3, ncol = 2)
 
+## 2) weighted
+## and unweighted poisson
+## distributed log-loss
 cat(
     "Unweighted Poisson Log Loss:",
     SLmetrics::logloss(
@@ -80,7 +86,8 @@ cat(
 * **Area under the Curve:** A new set of functions have been introduced which calculates the weighted and unweighted area under the Precision-Recall and Receiver Operator Characteristics curve. See below:
 
 ```{r Precision-Recall AUC (v0.3-3)}
-# Create factors and response probabilities
+## 1) define observed integers
+## and response probabilities
 actual   <- factor(c("Class A", "Class B", "Class A"))
 weights  <- c(0.3,0.9,1) 
 response <- matrix(cbind(
@@ -89,31 +96,30 @@ response <- matrix(cbind(
     0.7, 0.3
 ),nrow = 3, ncol = 2)
 
-# calculate area under the 
-# precision-recall curve
+## 2) area under
+## the precision-recall curve
 SLmetrics::pr.auc(
-    actual = actual,
+    actual   = actual,
     response = response
 )
 ```
 
-### :hammer: Metric tools
+#### Metric tools
 
 A new family of `Tools`-functions are introduced with this update. This addition introduces unexported functions for constructing fast and memory efficient proprietary metrics. These functions are rewritten built-in functions from {stats} and family.
 
 * **Covariance Matrix:** A re-written `stats::cov.wt()`, using `Rcpp`. Example usage:
 
 ```{r Covariance-Variance Matrix (v0.3-3)}
-## generate values
+## 1) actual and
+## predicted values
 actual    <- c(1.2,  0.3, 0.56, 0.11, 1.01)
 predicted <- c(0.9, 0.22, 0.76, 0.21, 1.1) 
 
-## generate covariance matrix
+## 2) covariance
+## matrix 
 SLmetrics:::cov.wt(
-    cbind(
-        actual,
-        predicted
-    )
+    cbind(actual, predicted)
 )
 ```
 
@@ -157,23 +163,23 @@ cat(
 * **Sorting algorithms:** A set of sorting and ordering algorithms applicable to matrices have been implemented. The use-case is currently limited to `auc.foo`, `ROC` and `prROC` functions. The algorithms can be used as follows:
 
 ```{r Presort (v0.3-3)}
-# 1) generate a 4x4 matrix
-# with random values to be sorted
+## 1) generate a 4x4 matrix
+## with random values to be sorted
 set.seed(1903)
 X <- matrix(
   data = cbind(sample(16:1)),
   nrow = 4
 )
 
-# 2) sort matrix
-# in decreasing order
+## 2) sort matrix
+## in decreasing order
 SLmetrics::presort(X)
 
-# 3) get indices 
-# for sorted matrix
+## 3) get indices 
+## for sorted matrix
 SLmetrics::preorder(X)
 ```
 
-## :warning: Breaking changes
+## :boom: Breaking changes
 
 * **Logloss:** The argument `pk` has been replaced by `response`.

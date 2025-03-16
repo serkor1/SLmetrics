@@ -60,25 +60,25 @@ SLmetrics::cmatrix(
 )
 ```
 
-Calculating weighted metrics manually or by using `foo.cmatrix()`-method,
+Calculating weighted metrics using the `<factor>`- or `<cmatrix>`-method,
 
 ```{r confusion matrix (v0.2-0)}
-# 1) weigthed confusion matrix
-# and weighted accuray
+## 1) weigthed confusion matrix
+## and weighted accuray
 confusion_matrix <- SLmetrics::cmatrix(
     actual    = actual,
     predicted = predicted,
     w         = weights
 )
 
-# 2) pass into accuracy
-# function
+## 2) weighted accuracy
+## using <cmatrix> method
 SLmetrics::accuracy(
     confusion_matrix
 )
 
-# 3) calculate the weighted
-# accuracy manually
+## 2) weighted accuracy
+## using <factor> method
 SLmetrics::weighted.accuracy(
     actual    = actual,
     predicted = predicted,
@@ -117,15 +117,15 @@ try(
 * All regression metrics have had `na.rm`- and `w`-arguments removed. All  weighted regression metrics have a separate function on the `weighted.foo()` to increase consistency across all metrics. The new function call is given below:
 
 ```{r regression metrics (v0.2-0)}
-# 1) define regression problem
+## 1) define actual and
+## predicted values
 actual    <- rnorm(n = 50)
 predicted <- actual + rnorm(n = 50)
 w         <- runif(n = 50)
 
-# 2) unweighted metrics
+## 2) weighted and unweighted
+## root mean squared error
 SLmetrics::rmse(actual, predicted)
-
-# 3) weighted metrics
 SLmetrics::weighted.rmse(actual, predicted, w = w)
 ```
 

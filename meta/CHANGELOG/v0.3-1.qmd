@@ -25,30 +25,35 @@ pak::pak(
     )
 ```
 
-# Version 0.3-1
+# :bookmark: Version 0.3-1
 
-## :rocket: Improvements
+## :sparkles: Improvements
 
 * **OpenMP Support (PR https://github.com/serkor1/SLmetrics/pull/40):** {SLmetrics} now supports parallelization through OpenMP. The OpenMP can be utilized as follows:
 
 ```{r OpenMP (v0.3-1)}
-# 1) probability distribution
-# generator
+set.seed(1903)
+
+## 1) probability distribution
+## function
 rand.sum <- function(n){
     x <- sort(runif(n-1))
     c(x,1) - c(0,x)
   }
 
-# 2) generate probability
-# matrix
-set.seed(1903)
-pk <- t(replicate(100,rand.sum(1e3)))
+## 2) generate probability
+## matrix
+pk <- t(replicate(
+    n = 100,
+    expr = rand.sum(1e3)
+    )
+)
 
-# 3) Enable OpenMP
+## 3) calulate entropy
+## with and without OpenMP
 SLmetrics::setUseOpenMP(TRUE)
 system.time(SLmetrics::entropy(pk))
 
-# 3) Disable OpenMP
 SLmetrics::setUseOpenMP(FALSE)
 system.time(SLmetrics::entropy(pk))
 ```
@@ -56,40 +61,31 @@ system.time(SLmetrics::entropy(pk))
 * **Entropy with soft labels (https://github.com/serkor1/SLmetrics/issues/37):** `entropy()`, `cross.entropy()` and `relative.entropy()` have been introduced. These functions are heavily inspired by {scipy}.  The functions can be used as follows:
 
 ```{r entropy (v0.3-1)}
-# 1) Define actual
-# and observed probabilities
+## 1) Define actual
+## and observed probabilities
 
-# 1.1) actual probabilies
+## 1.1) actual probabilies
 pk <- matrix(
   cbind(1/2, 1/2),
   ncol = 2
 )
 
-# 1.2) observed (estimated) probabilites
+## 1.2) observed (estimated) probabilites
 qk <- matrix(
   cbind(9/10, 1/10), 
   ncol = 2
 )
 
-# 2) calculate
-# Entropy
+## 2) calculate entropy
 cat(
-  "Entropy", SLmetrics::entropy(
-    pk
-  ),
-  "Relative Entropy", SLmetrics::relative.entropy(
-    pk,
-    qk
-  ),
-  "Cross Entropy", SLmetrics::cross.entropy(
-    pk,
-    qk
-  ),
+  "Entropy", SLmetrics::entropy(pk),
+  "Relative Entropy", SLmetrics::relative.entropy(pk, qk),
+  "Cross Entropy", SLmetrics::cross.entropy(pk, qk),
   sep = "\n"
 )
 ```
 
-## :warning: Breaking changes
+## :boom: Breaking changes
 
 * **logloss:** The argument `response` have ben renamed to `qk` as in the `entropy()`-family to maintain some degree of consistency.
 * **entropy.factor():** The function have been deleted and is no more. This was mainly due to avoid the documentation from being too large. The `logloss()`-function replaces it.

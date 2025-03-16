@@ -25,20 +25,25 @@ pak::pak(
     )
 ```
 
-# Version 0.3-0
+# :bookmark: Version 0.3-0
 
 ## :sparkles: Improvements
 
-## New Feature
+### New features
 
 * **Relative Root Mean Squared Error:** The function normalizes the Root Mean Squared Error by a factor. There is no official way of normalizing it - and in {SLmetrics} the RMSE can be normalized using three options; mean-, range- and IQR-normalization. It can be used as follows,
 
 ```{r Relative Root Mean Squared Error (v0.3-0)}
-# 1) define values
-actual <- rnorm(1e3)
-predicted <- actual + rnorm(1e3)
+## 1) define actual and
+## predicted values
+actual <- rnorm(50)
+predicted <- actual + rnorm(50)
 
-# 2) calculate Relative Root Mean Squared Error
+## 2) calculate rrse
+## with normalization
+## 0: mean
+## 1: range
+## 2: iqr
 cat(
   "Mean Relative Root Mean Squared Error", SLmetrics::rrmse(
     actual        = actual,
@@ -62,7 +67,9 @@ cat(
 * **Log Loss:** Weighted and unweighted Log Loss, with and without normalization. The function can be used as follows,
 
 ```{r logloss (v0.3-0)}
-# Create factors and response probabilities
+## 1) define actual
+## values and estimated
+## probabilities
 actual   <- factor(c("Class A", "Class B", "Class A"))
 weights  <- c(0.3,0.9,1) 
 response <- matrix(cbind(
@@ -71,6 +78,8 @@ response <- matrix(cbind(
     0.7, 0.3
 ),nrow = 3, ncol = 2)
 
+## 2) weighted and unweighted
+## log-loss
 cat(
     "Unweighted Log Loss:",
     SLmetrics::logloss(
@@ -109,18 +118,22 @@ SLmetrics::cmatrix(
 This solution, although simple, were inconsistent with the remaining implementation of weighted metrics in {SLmetrics}. To regain consistency and simplicity the weighted confusion matrix are now retrieved as follows,
 
 ```{r confusion matrix (v0.3-0)}
-# 1) define factors
-actual    <- factor(sample(letters[1:3], 100, replace = TRUE))
-predicted <- factor(sample(letters[1:3], 100, replace = TRUE))
+## 1) define actual
+## and predicted values
+## with sample weights
+actual    <- factor(sample(letters[1:3], 50, replace = TRUE))
+predicted <- factor(sample(letters[1:3], 50, replace = TRUE))
 weights   <- runif(length(actual))
 
-# 2) without weights
+## 2) unweighted confusion
+## matrix
 SLmetrics::cmatrix(
     actual    = actual,
     predicted = predicted
 )
 
-# 2) with weights
+## 3) weighted confusion
+## matrix
 SLmetrics::weighted.cmatrix(
     actual    = actual,
     predicted = predicted,
