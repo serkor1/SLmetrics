@@ -1,3 +1,21 @@
+---
+format:
+    gfm:
+        default-image-extension: ".png"
+always_allow_html: true
+execute:
+  cache: true
+  freeze: auto
+  dir: meta
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    dpi: 1280
+    fig.height: 6
+    out.width: 100%
+---
+
 ```{r}
 #| include: false
 #| echo: false

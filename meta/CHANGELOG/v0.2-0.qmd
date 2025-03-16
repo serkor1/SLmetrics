@@ -1,4 +1,22 @@
-```{r}
+---
+format:
+    gfm:
+        default-image-extension: ".png"
+always_allow_html: true
+execute:
+  cache: true
+  freeze: auto
+  dir: meta
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    dpi: 1280
+    fig.height: 6
+    out.width: 100%
+---
+
+```{r install version (v0.2-0)}
 #| include: false
 #| echo: false
 pak::pak(
@@ -19,7 +37,7 @@ pak::pak(
 
 * **weighted classification metrics:** The `cmatrix()`-function now accepts the argument `w` which is the sample weights; if passed the respective method will return the weighted metric. Below is an example using sample weights for the confusion matrix,
 
-```{r}
+```{r weigthed classification metrics (v0.2-0)}
 ## 1) define actual and 
 ## predicted values with
 ## sample weights
@@ -44,7 +62,7 @@ SLmetrics::cmatrix(
 
 Calculating weighted metrics manually or by using `foo.cmatrix()`-method,
 
-```{r}
+```{r confusion matrix (v0.2-0)}
 # 1) weigthed confusion matrix
 # and weighted accuray
 confusion_matrix <- SLmetrics::cmatrix(
@@ -70,7 +88,7 @@ SLmetrics::weighted.accuracy(
 
 Please note, however, that it is not possible to pass `cmatrix()`-into `weighted.accuracy()`. See below:
 
-```{r}
+```{r try (v0.2-0)}
 try(
     SLmetrics::weighted.accuracy(
         confusion_matrix
@@ -98,7 +116,7 @@ try(
 
 * All regression metrics have had `na.rm`- and `w`-arguments removed. All  weighted regression metrics have a separate function on the `weighted.foo()` to increase consistency across all metrics. The new function call is given below:
 
-```{r}
+```{r regression metrics (v0.2-0)}
 # 1) define regression problem
 actual    <- rnorm(n = 50)
 predicted <- actual + rnorm(n = 50)

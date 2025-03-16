@@ -1,4 +1,22 @@
-```{r}
+---
+format:
+    gfm:
+        default-image-extension: ".png"
+always_allow_html: true
+execute:
+  cache: true
+  freeze: auto
+  dir: meta
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    dpi: 1280
+    fig.height: 6
+    out.width: 100%
+---
+
+```{r install version (v0.3-1)}
 #| include: false
 #| echo: false
 pak::pak(
@@ -13,7 +31,7 @@ pak::pak(
 
 * **OpenMP Support (PR https://github.com/serkor1/SLmetrics/pull/40):** {SLmetrics} now supports parallelization through OpenMP. The OpenMP can be utilized as follows:
 
-```{r, eval = FALSE}
+```{r OpenMP (v0.3-1)}
 # 1) probability distribution
 # generator
 rand.sum <- function(n){
@@ -37,7 +55,7 @@ system.time(SLmetrics::entropy(pk))
 
 * **Entropy with soft labels (https://github.com/serkor1/SLmetrics/issues/37):** `entropy()`, `cross.entropy()` and `relative.entropy()` have been introduced. These functions are heavily inspired by {scipy}.  The functions can be used as follows:
 
-```{r}
+```{r entropy (v0.3-1)}
 # 1) Define actual
 # and observed probabilities
 

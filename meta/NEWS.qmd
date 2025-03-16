@@ -20,17 +20,17 @@ knitr:
 > expect any breaking changes, unless a major bug/issue is reported and its nature
 > forces breaking changes.
 
-{{< include CHANGELOG/v0.3-3.qmd >}}
+{{< include CHANGELOG/v0.3-3.md >}}
 
-{{< include CHANGELOG/v0.3-2.qmd >}}
+{{< include CHANGELOG/v0.3-2.md >}}
 
-{{< include CHANGELOG/v0.3-1.qmd >}}
+{{< include CHANGELOG/v0.3-1.md >}}
 
-{{< include CHANGELOG/v0.3-0.qmd >}}
+{{< include CHANGELOG/v0.3-0.md >}}
 
-{{< include CHANGELOG/v0.2-0.qmd >}}
+{{< include CHANGELOG/v0.2-0.md >}}
 
-{{< include CHANGELOG/v0.1-1.qmd >}}
+{{< include CHANGELOG/v0.1-1.md >}}
 
-{{< include CHANGELOG/v0.1-0.qmd >}}
+{{< include CHANGELOG/v0.1-0.md >}}
 

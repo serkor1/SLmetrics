@@ -1,4 +1,22 @@
-```{r}
+---
+format:
+    gfm:
+        default-image-extension: ".png"
+always_allow_html: true
+execute:
+  cache: true
+  freeze: auto
+  dir: meta
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    dpi: 1280
+    fig.height: 6
+    out.width: 100%
+---
+
+```{r install version (v0.3-3)}
 #| include: false
 #| echo: false
 pak::pak(
@@ -15,7 +33,7 @@ pak::pak(
 
 * **Exported Data:** Three new datasets have been introduced to the package; the [Wine Quality](https://archive.ics.uci.edu/dataset/186/wine+quality)-, [Obesity](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)- and [Banknote Authentication](https://archive.ics.uci.edu/dataset/267/banknote+authentication) datasets. Each dataset is comes in named `list` where features and targets are stored separately. Below is an example from the Obesity dataset:
 
-```{r}
+```{r data (v0.3-3)}
 # 1) summarise list
 summary(SLmetrics::obesity)
 
@@ -33,7 +51,7 @@ head(SLmetrics::obesity$target$regression)
 
 * **Poisson LogLoss:** The logloss for count data has been implemented. This metric shares the method of logloss and can be used as follows:
 
-```{r}
+```{r Poisson LogLoss (v0.3-3)}
 # Create factors and response probabilities
 actual   <- as.integer(factor(c("Class A", "Class B", "Class A")))
 weights  <- c(0.3,0.9,1) 
@@ -61,7 +79,7 @@ cat(
 
 * **Area under the Curve:** A new set of functions have been introduced which calculates the weighted and unweighted area under the Precision-Recall and Receiver Operator Characteristics curve. See below:
 
-```{r}
+```{r Precision-Recall AUC (v0.3-3)}
 # Create factors and response probabilities
 actual   <- factor(c("Class A", "Class B", "Class A"))
 weights  <- c(0.3,0.9,1) 
@@ -85,7 +103,7 @@ A new family of `Tools`-functions are introduced with this update. This addition
 
 * **Covariance Matrix:** A re-written `stats::cov.wt()`, using `Rcpp`. Example usage:
 
-```{r}
+```{r Covariance-Variance Matrix (v0.3-3)}
 ## generate values
 actual    <- c(1.2,  0.3, 0.56, 0.11, 1.01)
 predicted <- c(0.9, 0.22, 0.76, 0.21, 1.1) 
@@ -101,7 +119,7 @@ SLmetrics:::cov.wt(
 
 * **Area under the curve (AUC):** The function calculates the area under the plot for bivariate curves for ordered and unordered `x` and `y` pairs. The function assumes that values are ordered and calculates the AUC directly - to control this behaviour use the `ordered`-argument in the function. Below is an example:
 
-```{r}
+```{r Area Under the Curve (v0.3-3)}
 ## 0) seed
 set.seed(1903)
 
@@ -138,7 +156,7 @@ cat(
 
 * **Sorting algorithms:** A set of sorting and ordering algorithms applicable to matrices have been implemented. The use-case is currently limited to `auc.foo`, `ROC` and `prROC` functions. The algorithms can be used as follows:
 
-```{r}
+```{r Presort (v0.3-3)}
 # 1) generate a 4x4 matrix
 # with random values to be sorted
 set.seed(1903)

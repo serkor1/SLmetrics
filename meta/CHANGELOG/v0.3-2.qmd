@@ -1,4 +1,22 @@
-```{r}
+---
+format:
+    gfm:
+        default-image-extension: ".png"
+always_allow_html: true
+execute:
+  cache: true
+  freeze: auto
+  dir: meta
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    dpi: 1280
+    fig.height: 6
+    out.width: 100%
+---
+
+```{r install version (v0.3-2)}
 #| include: false
 #| echo: false
 pak::pak(
@@ -15,7 +33,7 @@ pak::pak(
 * **LAPACK/BLAS Support (https://github.com/serkor1/SLmetrics/pull/65):** Added LAPACK/BLAS support for efficient matrix-operations.
 * **OpenMP:** Enabling/disabling OpenMP is now handled on the `R`-side and obeys `suppressMessages()`. See below:
 
-```{r}
+```{r OpenMP off (suppress message) (v0.3-2)}
 ## suppress OpenMP messages
 suppressMessages(
   SLmetrics::openmp.off()
@@ -26,7 +44,7 @@ suppressMessages(
 
 * **Available threads:** The available number of threads can be retrieved using the `openmp.threads()`. See below:
 
-```{r}
+```{r OpenMP threads (v0.3-2)}
 ## number of available
 ## threads
 SLmetrics::openmp.threads()
@@ -40,21 +58,19 @@ SLmetrics::openmp.threads()
 
 * **OpenMP Interface:** The interface to enabling/disabling OpenMP support has been reworked and has a more natural flow. The new interface is described below:
 
-```{r}
+```{r OpenMP on (v0.3-2)}
 ## enable OpenMP
 SLmetrics::openmp.on()
 ```
 
-```{r}
+```{r OpenMP off (v0.3-2)}
 ## disable OpenMP
 SLmetrics::openmp.off()
 ```
 
 To set the number of threads use the `openmp.threads()` as follows:
 
-```{r}
+```{r set OpenMP threads (v0.3-2)}
 ## set number of threads
 SLmetrics::openmp.threads(3)
 ```
-
-
