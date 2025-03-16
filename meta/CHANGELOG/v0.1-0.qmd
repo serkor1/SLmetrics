@@ -27,7 +27,7 @@ pak::pak(
 
 # :package: [{SLmetrics}](https://serkor1.github.io/SLmetrics/) Version 0.1-0
 
-[{SLmetrics}](https://serkor1.github.io/SLmetrics/) is a collection of Machine Learning performance evaluation functions for supervised learning written in `C++` with[{Rcpp}](https://github.com/RcppCore/Rcpp). Visit the online documentation on [Github pages](https://serkor1.github.io/SLmetrics/).
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) is a collection of Machine Learning performance evaluation functions for supervised learning written in `C++` with [{Rcpp}](https://github.com/RcppCore/Rcpp). Visit the online documentation on [Github pages](https://serkor1.github.io/SLmetrics/).
 
 ## :information_source: Basic usage
 
@@ -48,7 +48,7 @@ predicted <- factor(
 print(actual)
 ```
 
-```{r confusion matrix (v0-1-0)}
+```{r confusion matrix (v0.1-0)}
 ## 1) compute and summarise the
 ## the confusion matrix
 summary(

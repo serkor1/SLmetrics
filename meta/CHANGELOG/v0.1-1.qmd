@@ -33,7 +33,7 @@ pak::pak(
 
 ## :sparkles: Improvements
 
-* **NA-controls:** All pair-wise metrics that doesn't have a `micro`-argument were handling missing values as according to C++ and {Rcpp} internals. See [Issue](https://github.com/serkor1/SLmetrics/issues/8). Thank you @EmilHvitfeldt for pointing this out. This has now been fixed so functions uses an `na.rm`-argument to explicitly control for this. See below,
+* **NA-controls:** All pair-wise metrics that don't have a `micro`-argument were handling missing values as according to C++ and {Rcpp} internals. See [Issue](https://github.com/serkor1/SLmetrics/issues/8). Thank you @EmilHvitfeldt for pointing this out. This has now been fixed so functions use an `na.rm`-argument to explicitly control for this. See below,
 
 ```{r}
 ## 1) define actual and

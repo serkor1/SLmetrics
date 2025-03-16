@@ -29,7 +29,7 @@ pak::pak(
 
 ## :sparkles: Improvements
 
-* **S3 signatures:** All S3-methods now have a generic signature, the functions should now be easier to navigate in  argument-wise.
+* **S3 signatures:** All S3-methods now have a generic signature, making it easier to navigate the functions argument-wise.
 
 * **Exported Data:** Three new datasets have been introduced to the package; the [Wine Quality](https://archive.ics.uci.edu/dataset/186/wine+quality)-, [Obesity](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)- and [Banknote Authentication](https://archive.ics.uci.edu/dataset/267/banknote+authentication) datasets. Each dataset is comes in named `list` where features and targets are stored separately. Below is an example from the Obesity dataset:
 
