@@ -73,9 +73,9 @@ your first metric, the Root Mean Squared Error (RMSE).
 
 ``` r
 ## install stable release
-devtools::install_github(
-  repo = 'https://github.com/serkor1/SLmetrics@*release',
-  ref  = 'main'
+pak::pak(
+    pkg = "serkor1/SLmetrics@*release",
+    ask = FALSE
 )
 ```
 
@@ -159,7 +159,7 @@ RMSE[^1].
 
 ### :fast_forward: Speed comparison
 
-<img src="meta/README_files/figure-commonmark/unnamed-chunk-4-1.png"
+<img src="meta/README_files/figure-commonmark/plot%20speed-performance-1.png"
 style="width:100.0%" />
 
 As shown in the chart,
@@ -218,7 +218,7 @@ We first fit a linear model to predict `mpg` in the `mtcars` dataset,
 then compute the in-sample RMSE:
 
 ``` r
-# Evaluate a linear model on mpg (mtcars)
+## Evaluate a linear model on mpg (mtcars)
 model <- lm(mpg ~ ., data = mtcars)
 rmse(mtcars$mpg, fitted(model))
 #> [1] 2.146905
@@ -231,14 +231,14 @@ vs. “others”) and fit a logistic regression. Then we generate predicted
 classes, compute the confusion matrix and summarize it.
 
 ``` r
-# 1) recode iris
-# to binary problem
+## 1) recode iris
+## to binary problem
 iris$species_num <- as.numeric(
   iris$Species == "virginica"
 )
 
-# 2) fit the logistic
-# regression
+## 2) fit the logistic
+## regression
 model <- glm(
   formula = species_num ~ Sepal.Length + Sepal.Width,
   data    = iris,
@@ -247,8 +247,8 @@ model <- glm(
   )
 )
 
-# 3) generate predicted
-# classes
+## 3) generate predicted
+## classes
 predicted <- factor(
   as.numeric(
     predict(model, type = "response") > 0.5
@@ -257,8 +257,8 @@ predicted <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) generate actual
-# values as factor
+## 4) generate actual
+## values as factor
 actual <- factor(
   x = iris$species_num,
   levels = c(1,0),
@@ -267,8 +267,8 @@ actual <- factor(
 ```
 
 ``` r
-# 4) generate
-# confusion matrix
+## 4) generate
+## confusion matrix
 summary(
   confusion_matrix <- cmatrix(
     actual    = actual,
@@ -303,11 +303,11 @@ setUseOpenMP function. Below are examples demonstrating how to enable
 and disable OpenMP:
 
 ``` r
-# enable OpenMP
+## enable OpenMP
 SLmetrics::openmp.on()
 #> OpenMP enabled!
 
-# disable OpenMP
+## disable OpenMP
 SLmetrics::openmp.off()
 #> OpenMP disabled!
 ```
@@ -336,9 +336,9 @@ over 100 iterations[^3].
 
 ``` r
 ## install stable release
-devtools::install_github(
-  repo = 'https://github.com/serkor1/SLmetrics@*release',
-  ref  = 'main'
+pak::pak(
+    pkg = "serkor1/SLmetrics@*release",
+    ask = FALSE
 )
 ```
 
@@ -346,9 +346,9 @@ devtools::install_github(
 
 ``` r
 ## install development version
-devtools::install_github(
-  repo = 'https://github.com/serkor1/SLmetrics',
-  ref  = 'development'
+pak::pak(
+    pkg = "serkor1/SLmetrics",
+    ask = FALSE
 )
 ```
 
