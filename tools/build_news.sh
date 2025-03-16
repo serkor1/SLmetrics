@@ -33,9 +33,15 @@ knitr:
 
 EOF
 
-# 2. List the files in CHANGELOG/ and add to the
-#    NEWS.qmd document
+# 2. Render .qmd files to md
 for f in $(ls meta/CHANGELOG/*.qmd | sort -rV);
+do
+    quarto render $f
+done
+
+# 3. List the files in CHANGELOG/ and add to the
+#    NEWS.qmd document
+for f in $(ls meta/CHANGELOG/*.md | sort -rV);
 do
   clean_path="${f#meta/}"
   echo -e "{{< include $clean_path >}}\n" >> meta/NEWS.qmd
