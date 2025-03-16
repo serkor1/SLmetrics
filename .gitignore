@@ -54,18 +54,17 @@ inst/doc
 # (from rendering markdown/quarto)
 *.html
 
-# Ignore all subdirectories in meta/ and docs/
-meta/**/
+# Ignore all subdirectories in docs/
 docs/**/
+
+# ignore all but the 
+# files in meta/
+!meta/*_files/
+!meta/*_files/**
+
 
 # ignore quarto yaml
 docs/_quarto.yaml
-
-# Do not ignore NEWS_files and README_files within meta/
-!meta/README_*/
-!meta/NEWS_*/
-!meta/_freeze/
-!meta/CHANGELOG
 
 # CRAN comments
 cran_comments.md
