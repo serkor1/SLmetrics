@@ -216,3 +216,16 @@ r-hub-check:
 				)\
 		)"
 
+# new-version:
+#
+# This command creates a new template
+# for the the NEWS. It creates a new entry (quarto file) based
+# on the version given in DESCRIPTION. 
+#
+# Example:
+#
+# v0.3-3.qmd in the meta/CHANGELOG-folder if the DESCRIPTION
+# version is 0.3-3
+new-version:
+	@echo "📚 Creating new NEWS entry $(VERSION)"
+	@tools/news_template.sh
