@@ -13,7 +13,6 @@ cat <<EOF > meta/NEWS.qmd
 format:
     gfm:
         default-image-extension: ".png"
-        toc: true
 always_allow_html: true
 execute:
   cache: true
