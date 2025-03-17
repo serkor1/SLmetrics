@@ -55,16 +55,13 @@ inst/doc
 *.html
 
 # Ignore all subdirectories in docs/
-docs/**/
+.meta/DOCUMENTATION/**/
+.meta/DOCUMENTATION/_quarto.yaml
 
 # ignore all but the 
 # files in meta/
-!meta/*_files/
-!meta/*_files/**
-
-
-# ignore quarto yaml
-docs/_quarto.yaml
+!.meta/*_files/
+!.meta/*_files/**
 
 # CRAN comments
 cran_comments.md

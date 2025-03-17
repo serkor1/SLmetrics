@@ -7,11 +7,11 @@ rm(list = ls()); invisible(gc())
 
 # 1) load look up table
 # from file
-source("tools/doc-builders/lookup-table.R")
+source(".meta/DEVTOOLS/doc-builders/lookup-table.R")
 
 # 1.1) load all functions
 # from parse-rd.R
-source("tools/doc-builders/parse-rd.R")
+source(".meta/DEVTOOLS/doc-builders/parse-rd.R")
 
 
 # 2) generate qmd-files
@@ -46,13 +46,13 @@ for (i in seq_len(N)) {
   if (DT$type[i] == "r") {
     process_html_to_markdown(
       input_file = html,
-      output_file = paste0("docs/ref_regression/", DT$name[i] ,".qmd"),
+      output_file = paste0(".meta/DOCUMENTATION/ref_regression/", DT$name[i] ,".qmd"),
       title = DT$title[i]
     )
   } else {
     process_html_to_markdown(
       input_file = html,
-      output_file = paste0("docs/ref_classification/", DT$name[i] ,".qmd"),
+      output_file = paste0(".meta/DOCUMENTATION/ref_classification/", DT$name[i] ,".qmd"),
       title = DT$title[i]
     )
   }

@@ -68,13 +68,13 @@ build-readme: build
 preview-docs:
 	@echo "📚 Building Quarto Book"
 	
-	@mkdir docs/ref_regression -p
-	@mkdir docs/ref_classification -p
+	@mkdir .meta/DOCUMENTATION/ref_regression -p
+	@mkdir .meta/DOCUMENTATION/ref_classification -p
 
-	@Rscript -e "source('tools/doc-builders/build-qmd.R')"
-	@python3 tools/doc-builders/build-yaml.py
+	@Rscript -e "source('.meta/DEVTOOLS/doc-builders/build-qmd.R')"
+	@python3 .meta/DEVTOOLS/doc-builders/build-yaml.py
 
-	@cd docs/ && quarto preview
+	@cd .meta/DOCUMENTATION/ && quarto preview
 
 # document:
 #

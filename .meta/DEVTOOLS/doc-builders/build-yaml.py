@@ -4,7 +4,9 @@ import yaml
 
 class YAML:
     def __init__(self, docs_dir="docs"):
-        self.root_dir = os.path.abspath(os.path.join(os.getcwd(), docs_dir, ".."))
+        docs_abs_path = os.path.abspath(os.path.join(os.getcwd(), docs_dir))
+        segments = [s for s in docs_dir.split('/') if s and s != '.']
+        self.root_dir = os.path.abspath(os.path.join(docs_abs_path, *['..'] * len(segments)))
         self._version = self.get_version()
         os.chdir(os.path.join(os.getcwd(), docs_dir))
 
@@ -127,7 +129,7 @@ class YAML:
 
 if __name__ == "__main__":
     # 1) initiate YAML
-    builder = YAML(docs_dir="docs")
+    builder = YAML(docs_dir=".meta/DOCUMENTATION")
 
     # 2) build YAML
     builder.build()
