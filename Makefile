@@ -228,4 +228,4 @@ r-hub-check:
 # version is 0.3-3
 new-version:
 	@echo "📚 Creating new NEWS entry $(VERSION)"
-	@tools/news_template.sh
+	@.meta/DEVTOOLS/changelog_template.sh
