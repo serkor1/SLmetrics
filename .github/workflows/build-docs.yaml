@@ -1,7 +1,7 @@
 on:
   workflow_dispatch:
   push:
-    paths: ['man/**','docs/**', '.github/workflows/build-docs.yaml', 'tools/doc-builders/build-yaml.py']
+    paths: ['man/**','.meta/DOCUMENTATION/**', '.github/workflows/build-docs.yaml', '.meta/DEVTOOLS/doc-builders/build-yaml.py']
     branches-ignore:
       - stable
       - main
@@ -65,7 +65,7 @@ jobs:
       - name: "Setup Python dependencies"
         shell: bash
         run: |
-          pip install -r tools/requirements.txt
+          pip install -r .meta/DEVTOOLS/requirements.txt
 
       - name: Parse Roxygen files
         shell: Rscript {0}
@@ -76,10 +76,10 @@ jobs:
           dir.create("docs/ref_classification")
 
           # 2) source builders
-          source('tools/doc-builders/build-qmd.R')
+          source('.meta/DEVTOOLS/doc-builders/build-qmd.R')
 
       - name: Build YAML-file
-        run: python tools/doc-builders/build-yaml.py
+        run: python .meta/DEVTOOLS/doc-builders/build-yaml.py
 
       - name: Render docs
         uses: quarto-dev/quarto-actions/render@v2

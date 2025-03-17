@@ -43,7 +43,7 @@ metrics, and a sandbox for me to develop my `C++` skills.
 ## :books: Table of Contents
 
 - [:rocket: Gettting Started](#rocket-gettting-started)
-  - [:package: Installation](#package-installation)
+  - [:package: CRAN version](#package-cran-version)
   - [:books: Basic Usage](#books-basic-usage)
 - [:information_source: Why?](#information_source-why)
 - [:zap: Performance Comparison](#zap-performance-comparison)
@@ -56,8 +56,8 @@ metrics, and a sandbox for me to develop my `C++` skills.
   OpenMP](#information_source-enable-openmp)
   - [:books: Entropy without OpenMP](#books-entropy-without-openmp)
   - [:books: Entropy with OpenMP](#books-entropy-with-openmp)
-- [:package: Installation](#package-installation)
-  - [Github release](#github-release)
+- [:package: Install from source](#package-installation)
+  - [Latest release](#github-release)
   - [Nightly build](#nightly-build)
 - [:information_source: Code of
   Conduct](#information_source-code-of-conduct)
@@ -68,7 +68,7 @@ Below you’ll find instructions to install
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) and get started with
 your first metric, the Root Mean Squared Error (RMSE).
 
-### :package: CRAN build
+### :package: CRAN version
 
 ``` r
 ## install latest CRAN build
@@ -328,7 +328,7 @@ over 100 iterations[^3].
 
 1e6 x 200 matrix with OpenMP
 
-## :package: Installation
+## :package: Install from source
 
 ### Github release
 
