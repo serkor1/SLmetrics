@@ -31,7 +31,7 @@ function template() {
     local package=$2
     local output_file=$3
 
-    cat <<EOF > "${output_file}"
+    cat <<-EOF > "${output_file}"
     ---
     format:
         gfm:

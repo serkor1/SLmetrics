@@ -1,4 +1,4 @@
-# Build news document
+# Build NEWS document
 .PHONY: build-news
 build-news:
 	@echo $(ECHO_PREFIX) "Rendering NEWS"
