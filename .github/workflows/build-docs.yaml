@@ -72,8 +72,8 @@ jobs:
         run: |
 
           # 1) create folders
-          dir.create("docs/ref_regression")
-          dir.create("docs/ref_classification")
+          dir.create(".meta/DOCUMENTATION/ref_regression")
+          dir.create(".meta/DOCUMENTATION/ref_classification")
 
           # 2) source builders
           source('.meta/DEVTOOLS/doc-builders/build-qmd.R')
@@ -85,12 +85,12 @@ jobs:
         uses: quarto-dev/quarto-actions/render@v2
         with:
           to: html
-          path: docs/
+          path: .meta/DOCUMENTATION
           
       - name: Publish docs
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
-          path: docs/
+          path: .meta/DOCUMENTATION
           render: false
         

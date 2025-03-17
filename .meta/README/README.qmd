@@ -77,7 +77,7 @@ Depending on the mood and alignment of planets [{SLmetrics}](https://serkor1.git
 * [:information_source: Enable OpenMP](#information_source-enable-openmp)
   + [:books: Entropy without OpenMP](#books-entropy-without-openmp)
   + [:books: Entropy with OpenMP](#books-entropy-with-openmp)
-* [:package: Install from source](#package-installation)
+* [:package: Install from source](#package-install-from-source)
   + [Latest release](#github-release)
   + [Nightly build](#nightly-build)
 * [:information_source: Code of Conduct](#information_source-code-of-conduct)
