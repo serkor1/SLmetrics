@@ -58,6 +58,12 @@ build-readme: build
 	             cat('Replacements completed in README.md\\n')"
 
 
+build-meta:
+	$(MAKE) build-news
+	$(MAKE) build-readme
+
+
+
 # preview-docs
 #
 # This command runs all builders in 
