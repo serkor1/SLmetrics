@@ -65,7 +65,7 @@ Depending on the mood and alignment of planets [{SLmetrics}](https://serkor1.git
 ## :books: Table of Contents
 
 * [:rocket: Gettting Started](#rocket-gettting-started)
-  + [:shield: Installation](#shield-installation)
+  + [:package: CRAN version](#package-cran-version)
   + [:books: Basic Usage](#books-basic-usage)
 * [:information_source: Why?](#information_source-why)
 * [:zap: Performance Comparison](#zap-performance-comparison)
@@ -77,9 +77,9 @@ Depending on the mood and alignment of planets [{SLmetrics}](https://serkor1.git
 * [:information_source: Enable OpenMP](#information_source-enable-openmp)
   + [:books: Entropy without OpenMP](#books-entropy-without-openmp)
   + [:books: Entropy with OpenMP](#books-entropy-with-openmp)
-* [:information_source: Installation](#information_source-installation)
-  + [:shield: Stable version](#shield-stable-version)
-  + [:hammer_and_wrench: Development version](#hammer_and_wrench-development-version)
+* [:package: Install from source](#package-install-from-source)
+  + [Latest release](#github-release)
+  + [Nightly build](#nightly-build)
 * [:information_source: Code of Conduct](#information_source-code-of-conduct)
 
 
@@ -87,15 +87,12 @@ Depending on the mood and alignment of planets [{SLmetrics}](https://serkor1.git
 
 Below you’ll find instructions to install [{SLmetrics}](https://serkor1.github.io/SLmetrics/) and get started with your first metric, the Root Mean Squared Error (RMSE).
 
-### :shield: Installation 
+### :package: CRAN version
 
 ```{r quick-install instructions}
 #| eval: false
-## install stable release
-pak::pak(
-    pkg = "serkor1/SLmetrics@*release",
-    ask = FALSE
-)
+## install latest CRAN build
+install.packages("SLmetrics")
 ```
 
 ### :books: Basic Usage
@@ -334,24 +331,26 @@ colnames(DT_) <- column_names
 knitr::kable(DT_, caption = "1e6 x 200 matrix with OpenMP", digits = 2)
 ```
 
-### :shield: Stable version
-```{r stable version installation guide}
+## :package: Install from source
+
+### Github release
+```{r release-installation guide}
 #| echo: TRUE
 #| eval: FALSE
 
-## install stable release
+## install github release
 pak::pak(
     pkg = "serkor1/SLmetrics@*release",
     ask = FALSE
 )
 ```
 
-### :hammer_and_wrench: Development version
-```{r development version installation guide}
+### Nightly build
+```{r nightly-installation guide}
 #| echo: TRUE
 #| eval: FALSE
 
-## install development version
+## install nightly build
 pak::pak(
     pkg = "serkor1/SLmetrics",
     ask = FALSE

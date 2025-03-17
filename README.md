@@ -43,7 +43,7 @@ metrics, and a sandbox for me to develop my `C++` skills.
 ## :books: Table of Contents
 
 - [:rocket: Gettting Started](#rocket-gettting-started)
-  - [:shield: Installation](#shield-installation)
+  - [:package: CRAN version](#package-cran-version)
   - [:books: Basic Usage](#books-basic-usage)
 - [:information_source: Why?](#information_source-why)
 - [:zap: Performance Comparison](#zap-performance-comparison)
@@ -56,10 +56,9 @@ metrics, and a sandbox for me to develop my `C++` skills.
   OpenMP](#information_source-enable-openmp)
   - [:books: Entropy without OpenMP](#books-entropy-without-openmp)
   - [:books: Entropy with OpenMP](#books-entropy-with-openmp)
-- [:information_source: Installation](#information_source-installation)
-  - [:shield: Stable version](#shield-stable-version)
-  - [:hammer_and_wrench: Development
-    version](#hammer_and_wrench-development-version)
+- [:package: Install from source](#package-installation)
+  - [Latest release](#github-release)
+  - [Nightly build](#nightly-build)
 - [:information_source: Code of
   Conduct](#information_source-code-of-conduct)
 
@@ -69,14 +68,11 @@ Below you’ll find instructions to install
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) and get started with
 your first metric, the Root Mean Squared Error (RMSE).
 
-### :shield: Installation
+### :package: CRAN version
 
 ``` r
-## install stable release
-pak::pak(
-    pkg = "serkor1/SLmetrics@*release",
-    ask = FALSE
-)
+## install latest CRAN build
+install.packages("SLmetrics")
 ```
 
 ### :books: Basic Usage
@@ -159,7 +155,7 @@ RMSE[^1].
 
 ### :fast_forward: Speed comparison
 
-<img src="meta/README_files/figure-commonmark/plot%20speed-performance-1.png"
+<img src=".meta/README/README_files/figure-commonmark/plot%20speed-performance-1.png"
 style="width:100.0%" />
 
 As shown in the chart,
@@ -332,20 +328,22 @@ over 100 iterations[^3].
 
 1e6 x 200 matrix with OpenMP
 
-### :shield: Stable version
+## :package: Install from source
+
+### Github release
 
 ``` r
-## install stable release
+## install github release
 pak::pak(
     pkg = "serkor1/SLmetrics@*release",
     ask = FALSE
 )
 ```
 
-### :hammer_and_wrench: Development version
+### Nightly build
 
 ``` r
-## install development version
+## install nightly build
 pak::pak(
     pkg = "serkor1/SLmetrics",
     ask = FALSE

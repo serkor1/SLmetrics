@@ -30,7 +30,7 @@ runs:
     - name: "Setup Python dependencies"
       shell: bash
       run: |
-       pip install -r tools/requirements.txt
+       pip install -r .meta/DEVTOOLS/requirements.txt
 
     - name: Setup venv with {Reticulate}
       shell: Rscript {0}

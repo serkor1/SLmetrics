@@ -29,7 +29,7 @@ suppressMessages(
 # roxygenize run; it is necessary to
 # modify RcppExports.R so the function
 # arg naming can be done.
-source("tools/modifyRcppExports.R")
+source(".meta/DEVTOOLS/modifyRcppExports.R")
 
 # 3) After the RcppExports.R
 # has been modified, the Roxygenize can be run
