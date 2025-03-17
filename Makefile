@@ -22,20 +22,20 @@ TARBALL = $(PKGNAME)_$(VERSION).tar.gz
 build-news:
 	@echo "📚 Rendering NEWS"
 
-	@./tools/build_news.sh
+	@./.meta/DEVTOOLS/changelog_build.sh
 
 	@if [ "$(RESET)" = "true" ]; then \
-	    quarto render meta/NEWS.qmd --cache-refresh; \
+	    quarto render .meta/CHANGELOG/NEWS.qmd --cache-refresh; \
 	else \
-		quarto render  meta/NEWS.qmd; \
+		quarto render  .meta/CHANGELOG/NEWS.qmd; \
 	fi
 
 	
-	@mv meta/NEWS.md .
+	@mv .meta/CHANGELOG/NEWS.md .
 
 	@Rscript -e "file_path <- 'NEWS.md'; \
 	             file_contents <- readLines(file_path); \
-	             modified_contents <- gsub('(v.*_files/)', 'meta/CHANGELOG/\\\\1', file_contents, perl = TRUE, ignore.case = TRUE); \
+	             modified_contents <- gsub('(v.*_files/)', '.meta/CHANGELOG/\\\\1', file_contents, perl = TRUE, ignore.case = TRUE); \
 	             writeLines(modified_contents, file_path); \
 	             cat('Replacements completed in NEWS.md\\n')"
 
@@ -44,16 +44,16 @@ build-readme: build
 	@echo "📚 Rendering README"
 
 	@if [ "$(RESET)" = "true" ]; then \
-		quarto render meta/README.qmd --cache-refresh;  \
+		quarto render .meta/README/README.qmd --cache-refresh;  \
 	else \
-		quarto render  meta/README.qmd; \
+		quarto render  .meta/README/README.qmd; \
 	fi
 
-	@mv meta/README.md .
+	@mv .meta/README/README.md .
 
 	@Rscript -e "file_path <- 'README.md'; \
 	             file_contents <- readLines(file_path); \
-	             modified_contents <- gsub('README_files/', 'meta/README_files/', file_contents); \
+	             modified_contents <- gsub('README_files/', '.meta/README/README_files/', file_contents); \
 	             writeLines(modified_contents, file_path); \
 	             cat('Replacements completed in README.md\\n')"
 
@@ -87,7 +87,7 @@ preview-docs:
 document:
 	@echo "📚 Documenting {$(PKGNAME)}"
 
-	@Rscript tools/document.R
+	@Rscript .meta/DEVTOOLS/document.R
 
 # ---------- MAKE commands ---------- #
 # performance:
