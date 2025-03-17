@@ -10,7 +10,10 @@
 #' @param threads A positive <[integer]>-value (Default: None). If `threads` is missing, the `openmp.threads()` returns the number of available threads. If [NULL] all available threads will be used.
 #' 
 #' @example man/examples/scr_OpenMP.R
-#'
+#' 
+#' @returns
+#' If OpenMP is unavailable, the function returns [NULL].
+#' 
 #' @export
 openmp.on <- function() {
 
@@ -37,6 +40,8 @@ openmp.on <- function() {
 #' ## disable OpenMP
 #' openmp.off()
 #' 
+#' @returns
+#' If OpenMP is unavailable, the function returns [NULL].
 #' @export
 openmp.off <- function() {
 
@@ -62,6 +67,8 @@ openmp.off <- function() {
 #' ## set number of threads
 #' openmp.threads(threads)
 #' 
+#' @returns
+#' If OpenMP is unavailable, the function returns [NULL].
 #' @export
 openmp.threads <- function(threads) {
 

@@ -18,6 +18,13 @@ openmp.threads(threads)
 \arguments{
 \item{threads}{A positive <\link{integer}>-value (Default: None). If \code{threads} is missing, the \code{openmp.threads()} returns the number of available threads. If \link{NULL} all available threads will be used.}
 }
+\value{
+If OpenMP is unavailable, the function returns \link{NULL}.
+
+If OpenMP is unavailable, the function returns \link{NULL}.
+
+If OpenMP is unavailable, the function returns \link{NULL}.
+}
 \description{
 This function allows you to enable or disable the use of OpenMP for parallelizing computations.
 }
