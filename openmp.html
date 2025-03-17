@@ -557,7 +557,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">openmp.threads</span>(<span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>#&gt; Using 4 threads.</code></pre>
+<pre><code>#&gt; Using 3 threads.</code></pre>
 </div>
 </div>
 </section>
@@ -567,7 +567,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>SLmetrics<span class="sc">::</span><span class="fu">openmp.threads</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 4</code></pre>
+<pre><code>#&gt; [1] 3</code></pre>
 </div>
 </div>
 </section>
@@ -601,7 +601,7 @@ Table&nbsp;4.1: Benchmark of computing a 3x3 confusion matrix with OpenMP enable
 <pre><code>#&gt; # A tibble: 1 × 4
 #&gt;   expression  execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;             &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 With OpenMP         3.87ms           0B        0</code></pre>
+#&gt; 1 With OpenMP         5.01ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
@@ -624,7 +624,7 @@ Table&nbsp;4.2: Benchmark of computing a 3x3 confusion matrix with OpenMP enable
 <pre><code>#&gt; # A tibble: 1 × 4
 #&gt;   expression     execution_time memory_usage gc_calls
 #&gt;   &lt;fct&gt;                &lt;bch:tm&gt;    &lt;bch:byt&gt;    &lt;dbl&gt;
-#&gt; 1 Wihtout OpenMP         8.56ms           0B        0</code></pre>
+#&gt; 1 Wihtout OpenMP         8.55ms           0B        0</code></pre>
 </div>
 </div>
 </figure>
