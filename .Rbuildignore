@@ -20,7 +20,8 @@ src/CMakeLists.txt
 src/cmake-build-debug
 src/.idea
 tools/
-meta/
+.meta/
+^\.meta$
 .venv/
 ^NEWs_files
 \.qmd$
