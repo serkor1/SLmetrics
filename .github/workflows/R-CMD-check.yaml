@@ -102,6 +102,7 @@ jobs:
           CXX14=${GCC_PATH}/bin/${GXX_BIN}
           CXX17=${GCC_PATH}/bin/${GXX_BIN}
           CXX20=${GCC_PATH}/bin/${GXX_BIN}
+          CXX23=${GCC_PATH}/bin/${GXX_BIN}
 
           OMP_LIB=${OMP_PATH}/lib
           OMP_INC=${OMP_PATH}/include
@@ -141,6 +142,7 @@ jobs:
           CXX14=${GCC_PATH}/bin/${GXX_BIN}
           CXX17=${GCC_PATH}/bin/${GXX_BIN}
           CXX20=${GCC_PATH}/bin/${GXX_BIN}
+          CXX23=${GCC_PATH}/bin/${GXX_BIN}
 
           # Compiler flags
           CPPFLAGS=-isysroot ${SDK_PATH}
