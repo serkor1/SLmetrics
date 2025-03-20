@@ -1,5 +1,6 @@
 # See: https://stackoverflow.com/questions/54056594/cran-acceptable-way-of-linking-to-openmp-some-c-code-called-from-rcpp
 # Use C++23 standard
+CXX_STD = CXX23
 PKG_CXX_STD = CXX23
 
 # Compiler flags
