@@ -60,12 +60,19 @@ jobs:
           brew update
           brew upgrade
 
+          
+
           # reinstall important
           # libraries
           brew reinstall gcc
           brew reinstall pkg-config
           brew reinstall gettext
-          brew install libomp
+
+          # see: https://stackoverflow.com/questions/60005176/how-to-deal-with-clang-error-unsupported-option-fopenmp-on-travis
+          # NOTE: it might be a better idea to have it as a separate step
+          brew install llvm libomp
+          export CC=/usr/local/opt/llvm/bin/clang
+          export CXX=/usr/local/opt/llvm/bin/clang++
 
           # clean up eveything
           brew cleanup
