@@ -68,14 +68,22 @@ ckappa.cmatrix <- function(x, beta = 0.0, ...) {
 #' @method cmatrix factor
 #' @export
 cmatrix.factor <- function(actual, predicted, ...) {
-    .Call(`_SLmetrics_UnweightedConfusionMatrix`, actual, predicted)
+    .Call(`_SLmetrics_confusion_matrix`, actual, predicted)
 }
 
 #' @rdname cmatrix
 #' @method weighted.cmatrix factor
 #' @export
 weighted.cmatrix.factor <- function(actual, predicted, w, ...) {
-    .Call(`_SLmetrics_WeightedConfusionMatrix`, actual, predicted, w)
+    .Call(`_SLmetrics_weighted_confusion_matrix`, actual, predicted, w)
+}
+
+NEWUnweightedConfusionMatrix <- function(actual, predicted) {
+    .Call(`_SLmetrics_NEWUnweightedConfusionMatrix`, actual, predicted)
+}
+
+NEWWeightedConfusionMatrix <- function(actual, predicted, w) {
+    .Call(`_SLmetrics_NEWWeightedConfusionMatrix`, actual, predicted, w)
 }
 
 #' @rdname dor

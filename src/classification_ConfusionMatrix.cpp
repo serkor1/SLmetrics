@@ -2,24 +2,33 @@
 #include <RcppEigen.h>
 #include "classification_ConfusionMatrix.h"
 #include <Rcpp.h>
+#include <memory>
+
 using namespace Rcpp;
 
 //' @rdname cmatrix
 //' @method cmatrix factor
 //' @export
 // [[Rcpp::export(cmatrix.factor)]]
-Rcpp::NumericMatrix UnweightedConfusionMatrix(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) 
-{
-    ConfusionMatrixClass args(actual, predicted);
-    return args.constructMatrix();
+Rcpp::NumericMatrix confusion_matrix(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted) {
+
+        auto args = std::make_unique<ConfusionMatrixClass>(actual, predicted);
+        return args -> construct_matrix();
+
 }
 
 //' @rdname cmatrix
 //' @method weighted.cmatrix factor
 //' @export
 // [[Rcpp::export(weighted.cmatrix.factor)]]
-Rcpp::NumericMatrix WeightedConfusionMatrix(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w) 
-{
-    ConfusionMatrixClass args(actual, predicted);
-    return args.constructMatrix(w);
+Rcpp::NumericMatrix weighted_confusion_matrix(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const Rcpp::NumericVector& w) {
+
+        auto args = std::make_unique<ConfusionMatrixClass>(actual, predicted);
+        return args->construct_matrix(w);
+
 }
