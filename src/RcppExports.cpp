@@ -153,31 +153,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// NEWUnweightedConfusionMatrix
-Rcpp::NumericMatrix NEWUnweightedConfusionMatrix(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
-RcppExport SEXP _SLmetrics_NEWUnweightedConfusionMatrix(SEXP actualSEXP, SEXP predictedSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type predicted(predictedSEXP);
-    rcpp_result_gen = Rcpp::wrap(NEWUnweightedConfusionMatrix(actual, predicted));
-    return rcpp_result_gen;
-END_RCPP
-}
-// NEWWeightedConfusionMatrix
-Rcpp::NumericMatrix NEWWeightedConfusionMatrix(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w);
-RcppExport SEXP _SLmetrics_NEWWeightedConfusionMatrix(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
-    rcpp_result_gen = Rcpp::wrap(NEWWeightedConfusionMatrix(actual, predicted, w));
-    return rcpp_result_gen;
-END_RCPP
-}
 // DiagnosticOddsRatio
 Rcpp::NumericVector DiagnosticOddsRatio(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
 RcppExport SEXP _SLmetrics_DiagnosticOddsRatio(SEXP actualSEXP, SEXP predictedSEXP) {
@@ -1839,8 +1814,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_cmatrix_CohensKappa", (DL_FUNC) &_SLmetrics_cmatrix_CohensKappa, 2},
     {"_SLmetrics_confusion_matrix", (DL_FUNC) &_SLmetrics_confusion_matrix, 2},
     {"_SLmetrics_weighted_confusion_matrix", (DL_FUNC) &_SLmetrics_weighted_confusion_matrix, 3},
-    {"_SLmetrics_NEWUnweightedConfusionMatrix", (DL_FUNC) &_SLmetrics_NEWUnweightedConfusionMatrix, 2},
-    {"_SLmetrics_NEWWeightedConfusionMatrix", (DL_FUNC) &_SLmetrics_NEWWeightedConfusionMatrix, 3},
     {"_SLmetrics_DiagnosticOddsRatio", (DL_FUNC) &_SLmetrics_DiagnosticOddsRatio, 2},
     {"_SLmetrics_weighted_DiagnosticOddsRatio", (DL_FUNC) &_SLmetrics_weighted_DiagnosticOddsRatio, 3},
     {"_SLmetrics_cmatrix_DiagnosticOddsRatio", (DL_FUNC) &_SLmetrics_cmatrix_DiagnosticOddsRatio, 1},

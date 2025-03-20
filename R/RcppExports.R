@@ -78,14 +78,6 @@ weighted.cmatrix.factor <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_confusion_matrix`, actual, predicted, w)
 }
 
-NEWUnweightedConfusionMatrix <- function(actual, predicted) {
-    .Call(`_SLmetrics_NEWUnweightedConfusionMatrix`, actual, predicted)
-}
-
-NEWWeightedConfusionMatrix <- function(actual, predicted, w) {
-    .Call(`_SLmetrics_NEWWeightedConfusionMatrix`, actual, predicted, w)
-}
-
 #' @rdname dor
 #' @method dor factor
 #' @export
