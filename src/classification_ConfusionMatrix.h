@@ -62,8 +62,8 @@ class ConfusionMatrixClass {
             MatrixType placeholder = MatrixType::Zero(k_, k_);
             const int n = actual_.size();
             for (int i = 0; i < n; ++i) {
-                // Increment the corresponding cell (using predicted as row, actual as column)
-                placeholder(predicted_[i], actual_[i]) += 1.0;
+                // Increment the corresponding cell (using predicted as column, actual as row)
+                placeholder(actual_[i], predicted_[i]) += 1.0;
             }
             return placeholder.block(1, 1, k_ - 1, k_ - 1);
         }
@@ -80,7 +80,7 @@ class ConfusionMatrixClass {
             MatrixType placeholder = MatrixType::Zero(k_, k_);
             const int n = actual_.size();
             for (int i = 0; i < n; ++i) {
-                placeholder(predicted_[i], actual_[i]) += weights[i];
+                placeholder(actual_[i], predicted_[i]) += weights[i];
             }
             return placeholder.block(1, 1, k_ - 1, k_ - 1);
         }
@@ -98,11 +98,11 @@ class ConfusionMatrixClass {
             #ifdef _OPENMP
                     #pragma omp parallel for reduction(matrixPlus:global_matrix) schedule(static)
                     for (int i = 0; i < n; ++i) {
-                        global_matrix(predicted_[i], actual_[i]) += 1.0;
+                        global_matrix(actual_[i], predicted_[i]) += 1.0;
                     }
             #else
                     for (int i = 0; i < n; ++i) {
-                        global_matrix(predicted_[i], actual_[i]) += 1.0;
+                        global_matrix(actual_[i], predicted_[i]) += 1.0;
                     }
             #endif
                     return global_matrix.block(1, 1, k_ - 1, k_ - 1);
@@ -122,11 +122,11 @@ class ConfusionMatrixClass {
             #ifdef _OPENMP
                     #pragma omp parallel for reduction(matrixPlus:global_matrix) schedule(static)
                     for (int i = 0; i < n; ++i) {
-                        global_matrix(predicted_[i], actual_[i]) += weights[i];
+                        global_matrix(actual_[i], predicted_[i]) += weights[i];
                     }
             #else
                     for (int i = 0; i < n; ++i) {
-                        global_matrix(predicted_[i], actual_[i]) += weights[i];
+                        global_matrix(actual_[i], predicted_[i]) += weights[i];
                     }
             #endif
                     return global_matrix.block(1, 1, k_ - 1, k_ - 1);
