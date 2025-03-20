@@ -26,21 +26,21 @@ accuracy.cmatrix <- function(x, ...) {
 #' @method baccuracy factor
 #' @export
 baccuracy.factor <- function(actual, predicted, adjust = FALSE, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_BalancedAccuracy`, actual, predicted, adjust, na_rm = na.rm)
+    .Call(`_SLmetrics_balanced_accuracy`, actual, predicted, adjust, na_rm = na.rm)
 }
 
 #' @rdname baccuracy
 #' @method weighted.baccuracy factor
 #' @export
 weighted.baccuracy.factor <- function(actual, predicted, w, adjust = FALSE, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_BalancedAccuracy`, actual, predicted, w, adjust, na_rm = na.rm)
+    .Call(`_SLmetrics_weighted_balanced_accuracy`, actual, predicted, w, adjust, na_rm = na.rm)
 }
 
 #' @rdname baccuracy
 #' @method baccuracy cmatrix
 #' @export
 baccuracy.cmatrix <- function(x, adjust = FALSE, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_cmatrix_BalancedAccuracy`, x, adjust, na_rm = na.rm)
+    .Call(`_SLmetrics_cmatrix_balanced_accuracy`, x, adjust, na_rm = na.rm)
 }
 
 #' @rdname ckappa

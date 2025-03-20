@@ -47,9 +47,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// BalancedAccuracy
-Rcpp::NumericVector BalancedAccuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const bool& adjust, bool na_rm);
-RcppExport SEXP _SLmetrics_BalancedAccuracy(SEXP actualSEXP, SEXP predictedSEXP, SEXP adjustSEXP, SEXP na_rmSEXP) {
+// balanced_accuracy
+Rcpp::NumericVector balanced_accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const bool& adjust, bool na_rm);
+RcppExport SEXP _SLmetrics_balanced_accuracy(SEXP actualSEXP, SEXP predictedSEXP, SEXP adjustSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -57,13 +57,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type predicted(predictedSEXP);
     Rcpp::traits::input_parameter< const bool& >::type adjust(adjustSEXP);
     Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(BalancedAccuracy(actual, predicted, adjust, na_rm));
+    rcpp_result_gen = Rcpp::wrap(balanced_accuracy(actual, predicted, adjust, na_rm));
     return rcpp_result_gen;
 END_RCPP
 }
-// weighted_BalancedAccuracy
-Rcpp::NumericVector weighted_BalancedAccuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, const bool& adjust, bool na_rm);
-RcppExport SEXP _SLmetrics_weighted_BalancedAccuracy(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP adjustSEXP, SEXP na_rmSEXP) {
+// weighted_balanced_accuracy
+Rcpp::NumericVector weighted_balanced_accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, const bool& adjust, bool na_rm);
+RcppExport SEXP _SLmetrics_weighted_balanced_accuracy(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP adjustSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -72,20 +72,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
     Rcpp::traits::input_parameter< const bool& >::type adjust(adjustSEXP);
     Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(weighted_BalancedAccuracy(actual, predicted, w, adjust, na_rm));
+    rcpp_result_gen = Rcpp::wrap(weighted_balanced_accuracy(actual, predicted, w, adjust, na_rm));
     return rcpp_result_gen;
 END_RCPP
 }
-// cmatrix_BalancedAccuracy
-Rcpp::NumericVector cmatrix_BalancedAccuracy(const NumericMatrix& x, const bool& adjust, bool na_rm);
-RcppExport SEXP _SLmetrics_cmatrix_BalancedAccuracy(SEXP xSEXP, SEXP adjustSEXP, SEXP na_rmSEXP) {
+// cmatrix_balanced_accuracy
+Rcpp::NumericVector cmatrix_balanced_accuracy(const NumericMatrix& x, const bool& adjust, bool na_rm);
+RcppExport SEXP _SLmetrics_cmatrix_balanced_accuracy(SEXP xSEXP, SEXP adjustSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const bool& >::type adjust(adjustSEXP);
     Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(cmatrix_BalancedAccuracy(x, adjust, na_rm));
+    rcpp_result_gen = Rcpp::wrap(cmatrix_balanced_accuracy(x, adjust, na_rm));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1806,9 +1806,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_Accuracy", (DL_FUNC) &_SLmetrics_Accuracy, 2},
     {"_SLmetrics_weighted_Accuracy", (DL_FUNC) &_SLmetrics_weighted_Accuracy, 3},
     {"_SLmetrics_cmatrix_Accuracy", (DL_FUNC) &_SLmetrics_cmatrix_Accuracy, 1},
-    {"_SLmetrics_BalancedAccuracy", (DL_FUNC) &_SLmetrics_BalancedAccuracy, 4},
-    {"_SLmetrics_weighted_BalancedAccuracy", (DL_FUNC) &_SLmetrics_weighted_BalancedAccuracy, 5},
-    {"_SLmetrics_cmatrix_BalancedAccuracy", (DL_FUNC) &_SLmetrics_cmatrix_BalancedAccuracy, 3},
+    {"_SLmetrics_balanced_accuracy", (DL_FUNC) &_SLmetrics_balanced_accuracy, 4},
+    {"_SLmetrics_weighted_balanced_accuracy", (DL_FUNC) &_SLmetrics_weighted_balanced_accuracy, 5},
+    {"_SLmetrics_cmatrix_balanced_accuracy", (DL_FUNC) &_SLmetrics_cmatrix_balanced_accuracy, 3},
     {"_SLmetrics_CohensKappa", (DL_FUNC) &_SLmetrics_CohensKappa, 3},
     {"_SLmetrics_weighted_CohensKappa", (DL_FUNC) &_SLmetrics_weighted_CohensKappa, 4},
     {"_SLmetrics_cmatrix_CohensKappa", (DL_FUNC) &_SLmetrics_cmatrix_CohensKappa, 2},
