@@ -3,4 +3,6 @@
 rm -f config.*
 rm -f src/Makevars
 rm -f src/Makevars.win
+rm -f test_cpp_version.cpp
+rm -f test_cpp_version.exe
 rm -rf autom4te.cache
