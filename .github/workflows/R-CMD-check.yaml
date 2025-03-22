@@ -137,42 +137,6 @@ jobs:
           FLIBS=-L$(brew --prefix gfortran)/lib -lgfortran -lquadmath
           EOF
 
-      - name: Configure Makevars (macOS-clang)
-        if: runner.os == 'macOS' && matrix.config.compiler == 'clang'
-        run: |
-          mkdir -p ~/.R
-          GCC_PATH=$(brew --prefix gcc)
-          SDK_PATH=$(xcrun --show-sdk-path)
-
-          GCC_BIN=gcc-14
-          GXX_BIN=g++-14
-
-          cat << EOF > ~/.R/Makevars
-          # Compiler settings
-          CC=${GCC_PATH}/bin/${GCC_BIN}
-          CXX=${GCC_PATH}/bin/${GXX_BIN}
-          CXX11=${GCC_PATH}/bin/${GXX_BIN}
-          CXX14=${GCC_PATH}/bin/${GXX_BIN}
-          CXX17=${GCC_PATH}/bin/${GXX_BIN}
-          CXX20=${GCC_PATH}/bin/${GXX_BIN}
-          CXX23=${GCC_PATH}/bin/${GXX_BIN}
-
-          # Compiler flags
-          CPPFLAGS=-isysroot ${SDK_PATH}
-          CFLAGS=-O3 -pedantic
-          CXXFLAGS=-O3 -pedantic
-
-          # Linker flags
-          LDFLAGS=-L${GCC_PATH}/lib -lgfortran -lm -isysroot ${SDK_PATH}
-          CPPFLAGS += -I$(brew --prefix gettext)/include
-          LDFLAGS  += -L$(brew --prefix gettext)/lib -lintl
-
-          # Fortran configuration
-          FC=$(brew --prefix gfortran)/bin/gfortran
-          F77=$(brew --prefix gfortran)/bin/gfortran
-          FLIBS=-L$(brew --prefix gfortran)/lib -lgfortran -lquadmath
-          EOF
-
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
         with:
