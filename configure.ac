@@ -120,3 +120,6 @@ AC_SUBST([PKG_LIBS])
 ##    file and celebrate
 AC_CONFIG_FILES([src/Makevars])
 AC_OUTPUT
+
+## 8) End of program
+##    (For the LF/CRF warnings)
