@@ -1,2 +1,2 @@
-text=auto eol=lf
-configure.ac text eol=lf
+* text=auto 
+*.ac text eol=lf
