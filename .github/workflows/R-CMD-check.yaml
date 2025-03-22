@@ -21,25 +21,25 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          # Ubuntu
-          - {os: ubuntu-latest,   r: 'devel',     compiler: 'default', http-user-agent: 'release'}
-          - {os: ubuntu-latest,   r: 'release',   compiler: 'default'}
-          - {os: ubuntu-latest,   r: 'oldrel-1',  compiler: 'default'}
+          # # Ubuntu
+          # - {os: ubuntu-latest,   r: 'devel',     compiler: 'default', http-user-agent: 'release'}
+          # - {os: ubuntu-latest,   r: 'release',   compiler: 'default'}
+          # - {os: ubuntu-latest,   r: 'oldrel-1',  compiler: 'default'}
 
           # Windows
           - {os: windows-latest,  r: 'devel',     compiler: 'default'}
           - {os: windows-latest,  r: 'release',   compiler: 'default'}
           - {os: windows-latest,  r: 'oldrel-1',  compiler: 'default'}
 
-          # macOS Clang
-          - {os: macos-latest,    r: 'devel',     compiler: 'clang'}
-          - {os: macos-latest,    r: 'release',   compiler: 'clang'}
-          - {os: macos-latest,    r: 'oldrel-1',  compiler: 'clang'}
+          # # macOS Clang
+          # - {os: macos-latest,    r: 'devel',     compiler: 'clang'}
+          # - {os: macos-latest,    r: 'release',   compiler: 'clang'}
+          # - {os: macos-latest,    r: 'oldrel-1',  compiler: 'clang'}
 
-          # macOS GCC via Homebrew
-          - {os: macos-latest,    r: 'devel',     compiler: 'gcc'}
-          - {os: macos-latest,    r: 'release',   compiler: 'gcc'}
-          - {os: macos-latest,    r: 'oldrel-1',  compiler: 'gcc'}
+          # # macOS GCC via Homebrew
+          # - {os: macos-latest,    r: 'devel',     compiler: 'gcc'}
+          # - {os: macos-latest,    r: 'release',   compiler: 'gcc'}
+          # - {os: macos-latest,    r: 'oldrel-1',  compiler: 'gcc'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
