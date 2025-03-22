@@ -21,15 +21,15 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          # # Ubuntu
-          # - {os: ubuntu-latest,   r: 'devel',     compiler: 'default', http-user-agent: 'release'}
-          # - {os: ubuntu-latest,   r: 'release',   compiler: 'default'}
-          # - {os: ubuntu-latest,   r: 'oldrel-1',  compiler: 'default'}
+          # Ubuntu
+          - {os: ubuntu-latest,   r: 'devel',     compiler: 'default', http-user-agent: 'release'}
+          - {os: ubuntu-latest,   r: 'release',   compiler: 'default'}
+          - {os: ubuntu-latest,   r: 'oldrel-1',  compiler: 'default'}
 
-          # # Windows
-          # - {os: windows-latest,  r: 'devel',     compiler: 'default'}
-          # - {os: windows-latest,  r: 'release',   compiler: 'default'}
-          # - {os: windows-latest,  r: 'oldrel-1',  compiler: 'default'}
+          # Windows
+          - {os: windows-latest,  r: 'devel',     compiler: 'default'}
+          - {os: windows-latest,  r: 'release',   compiler: 'default'}
+          - {os: windows-latest,  r: 'oldrel-1',  compiler: 'default'}
 
           # macOS Clang
           - {os: macos-latest,    r: 'devel',     compiler: 'clang'}
@@ -95,6 +95,7 @@ jobs:
           CXX14=${GCC_PATH}/bin/${GXX_BIN}
           CXX17=${GCC_PATH}/bin/${GXX_BIN}
           CXX20=${GCC_PATH}/bin/${GXX_BIN}
+          CXX23=${GCC_PATH}/bin/${GXX_BIN}
 
           OMP_LIB=${OMP_PATH}/lib
           OMP_INC=${OMP_PATH}/include
