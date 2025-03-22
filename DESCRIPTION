@@ -30,7 +30,7 @@ Imports:
     lattice,
     Rcpp
 Depends: 
-    R (>= 4.3)
+    R (>= 4.0.0)
 URL: https://serkor1.github.io/SLmetrics/, https://github.com/serkor1/SLmetrics
 BugReports: https://github.com/serkor1/SLmetrics/issues
 LazyData: true
