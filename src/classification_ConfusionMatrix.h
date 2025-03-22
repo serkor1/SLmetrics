@@ -4,7 +4,10 @@
 #include "utilities_Package.h"
 #include <RcppEigen.h>
 #include <cmath>
-#include <span>
+
+#if __cplusplus > 201703L
+    #include <span>
+#endif
 
 #ifdef _OPENMP
     #include <omp.h>
