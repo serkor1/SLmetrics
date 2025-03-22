@@ -1,3 +1,0 @@
-PKG_CPPFLAGS = 
-PKG_CXXFLAGS = -std=gnu++20 -g -O2 -ffile-prefix-map=/build/r-base-JpkSDg/r-base-4.4.3=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -fopenmp
-PKG_LIBS     = -lblas -llapack -lgfortran -lm -lquadmath
