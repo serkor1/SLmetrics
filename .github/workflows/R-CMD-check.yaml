@@ -62,22 +62,10 @@ jobs:
 
           # reinstall important
           # libraries
-
-          # force reinstalling
-          # gcc version 14.x.x
-          # and add system links
-          brew reinstall gcc@14
-          brew link gcc@14 --force
-
-          # export system links
-          # for the compiler and 
-          # OS
-          export PATH="$(brew --prefix gcc@14)/bin:$PATH"
-
-          # install packages
-          # nobody really knows why
+          brew reinstall gcc
           brew reinstall pkg-config
           brew reinstall gettext
+          brew install libomp
 
           # clean up eveything
           brew cleanup
@@ -107,7 +95,6 @@ jobs:
           CXX14=${GCC_PATH}/bin/${GXX_BIN}
           CXX17=${GCC_PATH}/bin/${GXX_BIN}
           CXX20=${GCC_PATH}/bin/${GXX_BIN}
-          CXX23=${GCC_PATH}/bin/${GXX_BIN}
 
           OMP_LIB=${OMP_PATH}/lib
           OMP_INC=${OMP_PATH}/include
