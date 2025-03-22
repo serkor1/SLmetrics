@@ -67,7 +67,7 @@ jobs:
           # gcc version 14.x.x
           # and add system links
           brew reinstall gcc@14
-          brew link gcc@14
+          brew link gcc@14 --force
 
           # export system links
           # for the compiler and 
@@ -78,14 +78,6 @@ jobs:
           # nobody really knows why
           brew reinstall pkg-config
           brew reinstall gettext
-
-          # see: https://stackoverflow.com/questions/60005176/how-to-deal-with-clang-error-unsupported-option-fopenmp-on-travis
-          # NOTE: it might be a better idea to have it as a separate step
-          # NOTE (Again): This step might be redundant - was not necessary on my own
-          # machine
-          brew install llvm libomp
-          export CC=/usr/local/opt/llvm/bin/clang
-          export CXX=/usr/local/opt/llvm/bin/clang++
 
           # clean up eveything
           brew cleanup
