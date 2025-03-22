@@ -6,8 +6,8 @@
 ##    see: https://unconj.ca/blog/an-autoconf-primer-for-r-package-authors.html
 ##    this is a good place to get started, alongside the official documentation
 ##    found here: https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.pdf
-AC_INIT([autoconf_r], [1.0.0])
-AC_MSG_NOTICE([Initialized autoconf])
+AC_INIT([{SLmetrics}], [v0.3-3])
+AC_MSG_NOTICE([Configuring {SLmetrics} ${PACKAGE_VERSION}])
 
 ## 1) Locate R Home
 ##    this is where R is stored
