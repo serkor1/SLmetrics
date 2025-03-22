@@ -1,14 +1,26 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
-# Script used to generate Makevars.win from Makevars.win.in on Windows
-# It checks for available C++ standards in descending order:
-#    C++23, then C++20, then C++17.
-# If none is available, installation is aborted.
-
-# Locate R executable (using R_HOME and R_ARCH_BIN provided by R)
+## Description: 
+##
+## Script used to generate Makevars.win from Makevars.win.in on Windows
+## It checks for available C++ standards in descending order:
+##    C++23, then C++20, then C++17.
+## If none is available, installation is aborted.
+##
+## 1) Locate R Home
+##    this is where R is stored
+##    often a standard location.
+##
+##    NOTE: It may, or may not, be a a good idea
+##    to search for it in alternative locations 
+##    for users using containers, dockers and other
+##    stuff that changes essential stuff 
 R_EXE="${R_HOME}/bin${R_ARCH_BIN}/R"
 
-# First try C++23
+## 3) Check for C++23 
+##    if not available try C++20, and 
+##    fall back on C++17 (if not available it will abort)
+## 3.1) C++23
 CXX23=`"${R_EXE}" CMD config CXX23`
 CXX23STD=`"${R_EXE}" CMD config CXX23STD`
 if test "${CXX23}" != ""; then
@@ -20,7 +32,7 @@ else
     cpp_supported="no"
 fi
 
-# If C++23 is not supported, try C++20
+## 3.2) C++20
 if test "${cpp_supported}" = "no"; then
     CXX20=`"${R_EXE}" CMD config CXX20`
     CXX20STD=`"${R_EXE}" CMD config CXX20STD`
@@ -32,7 +44,7 @@ if test "${cpp_supported}" = "no"; then
     fi
 fi
 
-# If neither C++23 nor C++20 is supported, try C++17
+## 3.2) C++17
 if test "${cpp_supported}" = "no"; then
     CXX17=`"${R_EXE}" CMD config CXX17`
     CXX17STD=`"${R_EXE}" CMD config CXX17STD`
@@ -44,19 +56,21 @@ if test "${cpp_supported}" = "no"; then
     fi
 fi
 
-echo "Using C++ standard: $CXX_STD"
-
-# Abort if none of the standards are supported
+## 3.3) Abort installation if no
+##      CXXSTD17 compiler is available. 
+##      or echo the CXXSTD
 if test "${cpp_supported}" = "no"; then
     echo "ERROR: Your C++ compiler does not support C++17 or later."
     exit 1
 fi
 
-# Retrieve additional flags from R configuration if needed.
+echo "Using C++ standard: $CXX_STD"
+
+## 4) Extract additional
+##    flags
 CPPFLAGS=`"${R_EXE}" CMD config CPPFLAGS`
 
-# Generate Makevars.win from Makevars.win.in by substituting the C++ standard.
-# It replaces the placeholder @CXX_STD@ with the detected CXX_STD.
+## 5) Create Makevars.win
 sed -e "s/@CXX_STD@/$CXX_STD/" < src/Makevars.win.in > src/Makevars.win
 
 exit 0
