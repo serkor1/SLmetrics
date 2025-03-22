@@ -67,3 +67,10 @@ inst/doc
 cran_comments.md
 cran-comments.md
 /.quarto/
+
+# ignore configure
+# artefacts
+autom4te.cache
+config.log
+config.status
+configure~
