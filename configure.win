@@ -43,7 +43,7 @@ test_cpp_standard() {
 ##    stuff that changes essential stuff 
 R_EXE="${R_HOME}/bin${R_ARCH_BIN}/R"
 CXX=`"${R_EXE}" CMD config CXX`
-cpp_supported="no"
+CPP_SUPPORTED="no"
 
 ## 2) List all possible
 ##    CXXSTD
@@ -60,34 +60,34 @@ if test -n "$STD_C23"; then
     if test $? -eq 0 && test "$value" -ge 202302; then
          CXXFLAGS=`"${R_EXE}" CMD config CXX23FLAGS`
          CXX_STD="CXX23"
-         cpp_supported="yes"
+         CPP_SUPPORTED="yes"
     fi
 fi
 
 ## 3.2) C++20
-if test "$cpp_supported" = "no" && test -n "$STD_C20"; then
+if test "$CPP_SUPPORTED" = "no" && test -n "$STD_C20"; then
     value=`test_cpp_standard "$STD_C20"`
     if test $? -eq 0 && test "$value" -ge 202002; then
          CXXFLAGS=`"${R_EXE}" CMD config CXX20FLAGS`
          CXX_STD="CXX20"
-         cpp_supported="yes"
+         CPP_SUPPORTED="yes"
     fi
 fi
 
 ## 3.2) C++17
-if test "$cpp_supported" = "no" && test -n "$STD_C17"; then
+if test "$CPP_SUPPORTED" = "no" && test -n "$STD_C17"; then
     value=`test_cpp_standard "$STD_C17"`
     if test $? -eq 0 && test "$value" -ge 201703; then
          CXXFLAGS=`"${R_EXE}" CMD config CXX17FLAGS`
          CXX_STD="CXX17"
-         cpp_supported="yes"
+         CPP_SUPPORTED="yes"
     fi
 fi
 
 ## 3.3) Abort installation if no
 ##      CXXSTD17 compiler is available. 
 ##      or echo the CXXSTD
-if test "$cpp_supported" = "no"; then
+if test "$CPP_SUPPORTED" = "no"; then
     echo "ERROR: Your C++ compiler does not support C++17 or later."
     rm -f test_cpp_version.cpp test_cpp_version
     exit 1
