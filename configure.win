@@ -1,0 +1,62 @@
+#!/bin/sh
+
+# Script used to generate Makevars.win from Makevars.win.in on Windows
+# It checks for available C++ standards in descending order:
+#    C++23, then C++20, then C++17.
+# If none is available, installation is aborted.
+
+# Locate R executable (using R_HOME and R_ARCH_BIN provided by R)
+R_EXE="${R_HOME}/bin${R_ARCH_BIN}/R"
+
+# First try C++23
+CXX23=`"${R_EXE}" CMD config CXX23`
+CXX23STD=`"${R_EXE}" CMD config CXX23STD`
+if test "${CXX23}" != ""; then
+    CXX="${CXX23} ${CXX23STD}"
+    CXXFLAGS=`"${R_EXE}" CMD config CXX23FLAGS`
+    CXX_STD="CXX23"
+    cpp_supported="yes"
+else
+    cpp_supported="no"
+fi
+
+# If C++23 is not supported, try C++20
+if test "${cpp_supported}" = "no"; then
+    CXX20=`"${R_EXE}" CMD config CXX20`
+    CXX20STD=`"${R_EXE}" CMD config CXX20STD`
+    if test "${CXX20}" != ""; then
+         CXX="${CXX20} ${CXX20STD}"
+         CXXFLAGS=`"${R_EXE}" CMD config CXX20FLAGS`
+         CXX_STD="CXX20"
+         cpp_supported="yes"
+    fi
+fi
+
+# If neither C++23 nor C++20 is supported, try C++17
+if test "${cpp_supported}" = "no"; then
+    CXX17=`"${R_EXE}" CMD config CXX17`
+    CXX17STD=`"${R_EXE}" CMD config CXX17STD`
+    if test "${CXX17}" != ""; then
+         CXX="${CXX17} ${CXX17STD}"
+         CXXFLAGS=`"${R_EXE}" CMD config CXX17FLAGS`
+         CXX_STD="CXX17"
+         cpp_supported="yes"
+    fi
+fi
+
+echo "Using C++ standard: $CXX_STD"
+
+# Abort if none of the standards are supported
+if test "${cpp_supported}" = "no"; then
+    echo "ERROR: Your C++ compiler does not support C++17 or later."
+    exit 1
+fi
+
+# Retrieve additional flags from R configuration if needed.
+CPPFLAGS=`"${R_EXE}" CMD config CPPFLAGS`
+
+# Generate Makevars.win from Makevars.win.in by substituting the C++ standard.
+# It replaces the placeholder @CXX_STD@ with the detected CXX_STD.
+sed -e "s/@CXX_STD@/$CXX_STD/" < src/Makevars.win.in > src/Makevars.win
+
+exit 0

@@ -2,4 +2,5 @@
 
 rm -f config.*
 rm -f src/Makevars
+rm -f src/Makevars.win
 rm -rf autom4te.cache
