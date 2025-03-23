@@ -12,6 +12,7 @@ Authors@R: c(
   )
 Description:
   Performance evaluation metrics for supervised and unsupervised machine learning, statistical learning and artificial intelligence applications. Core computations are implemented in 'C++' for scalability and efficiency.
+SystemRequirements: C++17
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -30,7 +31,7 @@ Imports:
     lattice,
     Rcpp
 Depends: 
-    R (>= 4.3)
+    R (>= 4.0.0)
 URL: https://serkor1.github.io/SLmetrics/, https://github.com/serkor1/SLmetrics
 BugReports: https://github.com/serkor1/SLmetrics/issues
 LazyData: true

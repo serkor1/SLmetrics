@@ -226,8 +226,8 @@ Rcpp::NumericVector recipe(
 
         ConfusionMatrixClass matrixConstructor(actual, predicted);
         matrix = w.has_value()
-            ? matrixConstructor.InputMatrix(*w)  
-            : matrixConstructor.InputMatrix();
+            ? matrixConstructor.input_matrix(*w)  
+            : matrixConstructor.input_matrix();
 
         return micro.has_value()
             ? prepare(cook, matrix, *micro, names, std::forward<Args>(args)...)
