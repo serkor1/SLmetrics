@@ -7,7 +7,7 @@
 #define EIGEN_USE_MKL_ALL
 EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-class __balanced_accuracy__ : public classification {
+class _balanced_accuracy_ : public classification {
 
 private:
     bool adjust;
@@ -15,7 +15,7 @@ private:
 
 public:
     // Constructor
-    __balanced_accuracy__(bool adjust, bool na_rm)
+    _balanced_accuracy_(bool adjust, bool na_rm)
         : adjust(adjust), na_rm(na_rm) {}
 
     Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {

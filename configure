@@ -2055,7 +2055,7 @@ printf "%s\n" "$as_me: Configuring {SLmetrics} ${PACKAGE_VERSION}" >&6;}
 ##    this is where R is stored
 ##    often a standard location.
 ##
-##    NOTE: It may, or may not, be a a good idea
+##    NOTE: It may, or may not, be a good idea
 ##    to search for it in alternative locations
 ##    for users using containers, dockers and other
 ##    stuff that changes essential stuff
@@ -5522,11 +5522,11 @@ CXXSTD=`"${R_HOME}/bin/R" CMD config CXX${STD_VER}STD`
 ##    on the compiler.
 ##
 ##    This macro returns a $OPENMP_CFLAGS or $OPENMP_CXXFLAGS
-##    which us appended at step 6.
+##    which is appended at step 6.
 ##
 ##    NOTE: As per March 22, 2025 this have not been
 ##    tested on clang, and according to the macro
-##    it doesnt test on clang or llvm. So it is not clear
+##    it doesn't test on clang or LLVM. So it is not clear
 ##    what will happen when it fails.
 # ===========================================================================
 #        https://www.gnu.org/software/autoconf-archive/ax_openmp.html
@@ -5679,7 +5679,7 @@ fi
 ## 5) Check for zlib
 ##    availability.
 ##
-##    At this stage it is unkown why I need
+##    At this stage it is unknown why I need
 ##    it. But its basically there in every single
 ##    tutorial, or documentation. So it must be
 ##    important.
@@ -5766,7 +5766,7 @@ fi
 
 
 ## 6.3) PKG_LIBS
-##      This is wher all the
+##      This is where all the
 ##      relevant extra libraries are added
 PKG_LIBS="${BLAS_LIBS} ${LAPACK_LIBS} ${FLIBS}"
 

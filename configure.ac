@@ -13,7 +13,7 @@ AC_MSG_NOTICE([Configuring {SLmetrics} ${PACKAGE_VERSION}])
 ##    this is where R is stored
 ##    often a standard location.
 ##
-##    NOTE: It may, or may not, be a a good idea
+##    NOTE: It may, or may not, be a good idea
 ##    to search for it in alternative locations 
 ##    for users using containers, dockers and other
 ##    stuff that changes essential stuff 
@@ -67,11 +67,11 @@ CXXSTD=`"${R_HOME}/bin/R" CMD config CXX${STD_VER}STD`
 ##    on the compiler.
 ##
 ##    This macro returns a $OPENMP_CFLAGS or $OPENMP_CXXFLAGS
-##    which us appended at step 6.
+##    which is appended at step 6.
 ##
 ##    NOTE: As per March 22, 2025 this have not been
 ##    tested on clang, and according to the macro
-##    it doesnt test on clang or llvm. So it is not clear
+##    it doesn't test on clang or LLVM. So it is not clear
 ##    what will happen when it fails.
 m4_include([m4/ax_openmp.m4])
 AX_OPENMP([
@@ -83,7 +83,7 @@ AX_OPENMP([
 ## 5) Check for zlib
 ##    availability. 
 ## 
-##    At this stage it is unkown why I need
+##    At this stage it is unknown why I need
 ##    it. But its basically there in every single
 ##    tutorial, or documentation. So it must be
 ##    important.
@@ -111,7 +111,7 @@ fi
 AC_SUBST([PKG_CXXFLAGS])
 
 ## 6.3) PKG_LIBS
-##      This is wher all the 
+##      This is where all the
 ##      relevant extra libraries are added
 PKG_LIBS="${BLAS_LIBS} ${LAPACK_LIBS} ${FLIBS}"
 AC_SUBST([PKG_LIBS])
@@ -120,6 +120,3 @@ AC_SUBST([PKG_LIBS])
 ##    file and celebrate
 AC_CONFIG_FILES([src/Makevars])
 AC_OUTPUT
-
-## 8) End of program
-##    (For the LF/CRF warnings)

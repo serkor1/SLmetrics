@@ -7,7 +7,7 @@
 ##    C++23, then C++20, then C++17.
 ## If none is available, installation is aborted.
 
-## 1) Create a small program
+## 0) Create a small program
 ##    to test for CXXSTD and 
 ##    store as environment
 ##    variable
@@ -74,7 +74,7 @@ if test "$CPP_SUPPORTED" = "no" && test -n "$STD_C20"; then
     fi
 fi
 
-## 3.2) C++17
+## 3.3) C++17
 if test "$CPP_SUPPORTED" = "no" && test -n "$STD_C17"; then
     value=`test_cpp_standard "$STD_C17"`
     if test $? -eq 0 && test "$value" -ge 201703; then
@@ -84,7 +84,7 @@ if test "$CPP_SUPPORTED" = "no" && test -n "$STD_C17"; then
     fi
 fi
 
-## 3.3) Abort installation if no
+## 3.4) Abort installation if no
 ##      CXXSTD17 compiler is available. 
 ##      or echo the CXXSTD
 if test "$CPP_SUPPORTED" = "no"; then
