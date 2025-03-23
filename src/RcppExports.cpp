@@ -77,12 +77,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // cmatrix_balanced_accuracy
-Rcpp::NumericVector cmatrix_balanced_accuracy(const NumericMatrix& x, const bool& adjust, bool na_rm);
+Rcpp::NumericVector cmatrix_balanced_accuracy(const Rcpp::NumericMatrix& x, const bool& adjust, bool na_rm);
 RcppExport SEXP _SLmetrics_cmatrix_balanced_accuracy(SEXP xSEXP, SEXP adjustSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericMatrix& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const bool& >::type adjust(adjustSEXP);
     Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
     rcpp_result_gen = Rcpp::wrap(cmatrix_balanced_accuracy(x, adjust, na_rm));

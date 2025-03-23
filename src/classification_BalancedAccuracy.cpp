@@ -14,7 +14,7 @@ Rcpp::NumericVector balanced_accuracy(
     const bool& adjust = false, 
     bool na_rm = true) {
 
-        _balanced_accuracy_ cook(adjust, na_rm);
+        balanced_accuracy_class cook(adjust, na_rm);
         return recipe(cook, actual, predicted);
 }
 
@@ -29,7 +29,7 @@ Rcpp::NumericVector weighted_balanced_accuracy(
     const bool& adjust = false, 
     bool na_rm = true) {
         
-        _balanced_accuracy_ cook(adjust, na_rm);
+        balanced_accuracy_class cook(adjust, na_rm);
         return recipe(cook, actual, predicted, w);
 }
 
@@ -42,7 +42,7 @@ Rcpp::NumericVector cmatrix_balanced_accuracy(
     const bool& adjust = false, 
     bool na_rm = true) {
         
-        _balanced_accuracy_ cook(adjust, na_rm);
+        balanced_accuracy_class cook(adjust, na_rm);
         return recipe(cook, x);
 
 }
