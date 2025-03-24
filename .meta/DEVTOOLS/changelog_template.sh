@@ -48,38 +48,39 @@ function template() {
     local file=$1
     local version=$2
     
-    cat <<EOF > "${file}"
-    ---
-    format:
-    gfm:
-        default-image-extension: ".png"
-    always_allow_html: true
-    execute:
-    cache: true
-    freeze: auto
-    dir: .meta/CHANGELOG
-    knitr:
-    opts_chunk:
-        collapse: true
-        comment: "#>"
-        dpi: 1280
-        fig.height: 6
-        out.width: 100%
-    ---
-    \`\`\`{r install_version ($version)}
-    #| echo: false
-    #| include: false
-    pak::pak(pkg = "serkor1/SLmetrics@v$version", ask = FALSE)
-    \`\`\`
-    # :bookmark: Version $version
+    cat <<-EOF > "${file}"
+---
+format:
+gfm:
+    default-image-extension: ".png"
+always_allow_html: true
+execute:
+cache: true
+freeze: auto
+dir: .meta/CHANGELOG
+knitr:
+opts_chunk:
+    collapse: true
+    comment: "#>"
+    dpi: 1280
+    fig.height: 6
+    out.width: 100%
+---
+\`\`\`{r install_version ($version)}
+#| echo: false
+#| include: false
+pak::pak(pkg = "serkor1/SLmetrics@v$version", ask = FALSE)
+\`\`\`
 
-    ## :sparkles: Improvements
+# :bookmark: Version $version
 
-    ### :rocket: New features
+## :sparkles: Improvements
 
-    ## :bug: Bug-fixes
+### :rocket: New features
 
-    ## :boom: Breaking changes
+## :bug: Bug-fixes
+
+## :boom: Breaking changes
 EOF
 }
 
