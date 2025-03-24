@@ -30,7 +30,7 @@ array of metrics as
 [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and
 [{PyTorch}](https://github.com/pytorch/pytorch) all without
 [{reticulate}](https://github.com/rstudio/reticulate) and the Python
-compile-run-(crash)-debug cylce.
+compile-run-(crash)-debug cycle.
 
 Depending on the mood and alignment of planets
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) stands for
