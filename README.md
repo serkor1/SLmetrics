@@ -56,7 +56,7 @@ metrics, and a sandbox for me to develop my `C++` skills.
   OpenMP](#information_source-enable-openmp)
   - [:books: Entropy without OpenMP](#books-entropy-without-openmp)
   - [:books: Entropy with OpenMP](#books-entropy-with-openmp)
-- [:package: Install from source](#package-installation)
+- [:package: Install from source](#package-install-from-source)
   - [Latest release](#github-release)
   - [Nightly build](#nightly-build)
 - [:information_source: Code of
@@ -294,9 +294,9 @@ summary(
 > stability may vary based on your system configuration and workload.
 
 You can control OpenMP usage within
-[{SLmetrics}](https://serkor1.github.io/SLmetrics/) using the
-setUseOpenMP function. Below are examples demonstrating how to enable
-and disable OpenMP:
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) using `openmp.on()`
+and `openmp.off()` . Below are examples demonstrating how to enable and
+disable OpenMP:
 
 ``` r
 ## enable OpenMP

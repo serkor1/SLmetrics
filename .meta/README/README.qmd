@@ -291,7 +291,7 @@ column_names <- c("Iterations", "Runtime (sec)" ,"Garbage Collections [gc()]", "
 >
 > OpenMP support in [{SLmetrics}](https://serkor1.github.io/SLmetrics/) is experimental. Use it with caution, as performance gains and stability may vary based on your system configuration and workload.
 
-You can control OpenMP usage within [{SLmetrics}](https://serkor1.github.io/SLmetrics/) using the setUseOpenMP function. Below are examples demonstrating how to enable and disable OpenMP:
+You can control OpenMP usage within [{SLmetrics}](https://serkor1.github.io/SLmetrics/) using `openmp.on()` and `openmp.off()` . Below are examples demonstrating how to enable and disable OpenMP:
 
 ```{r OpenMP on-off switch}
 ## enable OpenMP
