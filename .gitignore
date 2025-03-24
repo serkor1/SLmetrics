@@ -65,7 +65,6 @@ inst/doc
 !.meta/CHANGELOG/src/*_files/
 !.meta/CHANGELOG/src/*_files/**
 
-
 # CRAN comments
 cran_comments.md
 cran-comments.md

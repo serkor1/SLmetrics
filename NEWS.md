@@ -1,15 +1,29 @@
 
 
-> Version 0.3-3 is considered pre-release of {SLmetrics}. We do not
+> Version 0.3-4 is considered pre-release of {SLmetrics}. We do not
 > expect any breaking changes, unless a major bug/issue is reported and
 > its nature forces breaking changes.
+
+# :bookmark: Version 0.3-4
+
+## :sparkles: Improvements
+
+### :rocket: New features
+
+## :bug: Bug-fixes
+
+## :boom: Breaking changes
 
 # :bookmark: Version 0.3-3
 
 ## :sparkles: Improvements
 
-- **S3 signatures:** All S3-methods now have a generic signature, the
-  functions should now be easier to navigate in argument-wise.
+- **Initial CRAN release:** The R-package has (finally) been submitted
+  to CRAN and was released on 2025-03-18 with the classic “Thanks, on
+  its way to CRAN” message.
+
+- **S3 signatures:** All S3-methods now have a generic signature, making
+  it easier to navigate the functions argument-wise.
 
 - **Exported Data:** Three new datasets have been introduced to the
   package; the [Wine
@@ -338,7 +352,7 @@ SLmetrics::setUseOpenMP(TRUE)
 #> OpenMP usage set to: enabled
 system.time(SLmetrics::entropy(pk))
 #>    user  system elapsed 
-#>   0.009   0.004   0.001
+#>   0.323   0.000   0.015
 
 SLmetrics::setUseOpenMP(FALSE)
 #> OpenMP usage set to: disabled
@@ -441,11 +455,11 @@ cat(
   sep = "\n"
 )
 #> Mean Relative Root Mean Squared Error
-#> 8.784975
+#> -11.06719
 #> Range Relative Root Mean Squared Error
-#> 0.1951562
+#> 0.2242294
 #> IQR Relative Root Mean Squared Error
-#> 0.5694271
+#> 0.6875139
 ```
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
@@ -534,9 +548,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>   a b c
-#> a 5 8 4
-#> b 5 7 2
-#> c 9 6 4
+#> a 5 4 4
+#> b 6 8 4
+#> c 5 6 8
 
 ## 3) weighted confusion
 ## matrix
@@ -546,9 +560,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 2.322289 2.454870 1.638391
-#> b 2.766585 4.259595 0.550205
-#> c 3.620850 3.732882 2.151884
+#> a 3.049592 2.054694 2.186599
+#> b 2.969995 4.572255 2.994300
+#> c 2.259963 2.639312 2.909650
 ```
 
 # :bookmark: Version 0.2-0
@@ -589,9 +603,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>   a b c
-#> a 7 4 5
-#> b 3 8 5
-#> c 9 4 5
+#> a 7 3 5
+#> b 5 6 6
+#> c 5 8 5
 
 SLmetrics::cmatrix(
     actual    = actual,
@@ -599,9 +613,9 @@ SLmetrics::cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 3.834480 1.594902 2.070598
-#> b 2.100894 3.949499 1.813142
-#> c 4.363751 2.002751 2.396716
+#> a 3.663436 1.232882 3.274056
+#> b 2.970645 1.622291 3.137881
+#> c 2.760557 3.821165 1.452744
 ```
 
 Calculating weighted metrics using the `<factor>`- or
@@ -621,7 +635,7 @@ confusion_matrix <- SLmetrics::cmatrix(
 SLmetrics::accuracy(
     confusion_matrix
 )
-#> [1] 0.4219674
+#> [1] 0.2815244
 
 ## 2) weighted accuracy
 ## using <factor> method
@@ -630,7 +644,7 @@ SLmetrics::weighted.accuracy(
     predicted = predicted,
     w         = weights
 )
-#> [1] 0.4219674
+#> [1] 0.2815244
 ```
 
 Please note, however, that it is not possible to pass `cmatrix()`-into
@@ -701,9 +715,9 @@ w         <- runif(n = 50)
 ## 2) weighted and unweighted
 ## root mean squared error
 SLmetrics::rmse(actual, predicted)
-#> [1] 0.9705207
+#> [1] 1.045591
 SLmetrics::weighted.rmse(actual, predicted, w = w)
-#> [1] 0.9819614
+#> [1] 1.114496
 ```
 
 - The `rrmse()`-function have been removed in favor of the
@@ -720,12 +734,12 @@ SLmetrics::weighted.rmse(actual, predicted, w = w)
 
 ## :sparkles: Improvements
 
-- **NA-controls:** All pair-wise metrics that doesn’t have a
+- **NA-controls:** All pair-wise metrics that don’t have a
   `micro`-argument were handling missing values as according to C++ and
   {Rcpp} internals. See
   [Issue](https://github.com/serkor1/SLmetrics/issues/8). Thank you
   @EmilHvitfeldt for pointing this out. This has now been fixed so
-  functions uses an `na.rm`-argument to explicitly control for this. See
+  functions use an `na.rm`-argument to explicitly control for this. See
   below,
 
 ``` r
@@ -793,22 +807,22 @@ par(mfrow = c(1,2))
 plot(roc_obj, panels = FALSE)
 ```
 
-<img src="meta/CHANGELOG/.meta/CHANGELOG/v0.1-1_files/figure-commonmark/unnamed-chunk-4-1.png"
+<img src=".meta/CHANGELOG/v0.1-1_files/figure-commonmark/unnamed-chunk-4-1.png"
 style="width:100.0%" />
 
 ``` r
 plot(pr_obj, panels = FALSE)
 ```
 
-<img src="meta/CHANGELOG/.meta/CHANGELOG/v0.1-1_files/figure-commonmark/unnamed-chunk-4-2.png"
+<img src=".meta/CHANGELOG/v0.1-1_files/figure-commonmark/unnamed-chunk-4-2.png"
 style="width:100.0%" />
 
 # :package: [{SLmetrics}](https://serkor1.github.io/SLmetrics/) Version 0.1-0
 
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) is a collection of
 Machine Learning performance evaluation functions for supervised
-learning written in `C++`
-with[{Rcpp}](https://github.com/RcppCore/Rcpp). Visit the online
+learning written in `C++` with
+[{Rcpp}](https://github.com/RcppCore/Rcpp). Visit the online
 documentation on [Github pages](https://serkor1.github.io/SLmetrics/).
 
 ## :information_source: Basic usage
@@ -828,7 +842,7 @@ predicted <- factor(
 
 ## 2) print values
 print(actual)
-#>  [1] b a a b a a c b c c
+#>  [1] a b a b c a c a b c
 #> Levels: a b c
 ```
 
@@ -845,15 +859,15 @@ summary(
 #> ================================================================================
 #>   a b c
 #> a 2 1 1
-#> b 1 2 0
-#> c 0 1 2
+#> b 2 0 1
+#> c 3 0 0
 #> ================================================================================
 #> Overall Statistics (micro average)
-#>  - Accuracy:          0.60
-#>  - Balanced Accuracy: 0.61
-#>  - Sensitivity:       0.60
-#>  - Specificity:       0.80
-#>  - Precision:         0.60
+#>  - Accuracy:          0.20
+#>  - Balanced Accuracy: 0.17
+#>  - Sensitivity:       0.20
+#>  - Specificity:       0.60
+#>  - Precision:         0.20
 ```
 
 ``` r
@@ -861,7 +875,7 @@ summary(
 ## using <cmatrix> method
 SLmetrics::fpr(confusion_matrix)
 #>         a         b         c 
-#> 0.1666667 0.2857143 0.1428571
+#> 0.8333333 0.1428571 0.2857143
 
 ## 2) false positive rate
 ## using <factor> method
@@ -870,7 +884,7 @@ SLmetrics::fpr(
     predicted = predicted
 )
 #>         a         b         c 
-#> 0.1666667 0.2857143 0.1428571
+#> 0.8333333 0.1428571 0.2857143
 ```
 
 ### Regression metrics
@@ -889,11 +903,11 @@ SLmetrics::huberloss(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.3963274
+#> [1] 0.3237516
 
 SLmetrics::rmse(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.9120952
+#> [1] 0.8708552
 ```

@@ -1,23 +1,26 @@
-    ---
-    format:
-        gfm:
-            default-image-extension: ".png"
-    always_allow_html: true
-    execute:
+---
+format:
+    gfm:
+        default-image-extension: ".png"
+always_allow_html: true
+execute:
     cache: true
     freeze: auto
     dir: .meta
-    knitr:
+knitr:
     opts_chunk:
         collapse: true
         comment: "#>"
         dpi: 1280
         fig.height: 6
         out.width: 100%
-    ---
-    > Version 0.3-3 is considered pre-release of {SLmetrics}. We do not
-    > expect any breaking changes, unless a major bug/issue is reported and its nature
-    > forces breaking changes.
+---
+
+> Version 0.3-4 is considered pre-release of {SLmetrics}. We do not
+> expect any breaking changes, unless a major bug/issue is reported and its nature
+> forces breaking changes.
+{{< include /src/v0.3-4.md >}}
+
 {{< include /src/v0.3-3.md >}}
 
 {{< include /src/v0.3-2.md >}}

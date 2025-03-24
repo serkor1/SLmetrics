@@ -1,14 +1,14 @@
 ---
 format:
-gfm:
-    default-image-extension: ".png"
+    gfm:
+        default-image-extension: ".png"
 always_allow_html: true
 execute:
-cache: true
-freeze: auto
-dir: .meta/CHANGELOG
+  cache: true
+  freeze: auto
+  dir: .meta/CHANGELOG
 knitr:
-opts_chunk:
+  opts_chunk:
     collapse: true
     comment: "#>"
     dpi: 1280
@@ -18,6 +18,7 @@ opts_chunk:
 ```{r install_version (0.3-4)}
 #| echo: false
 #| include: false
+#| eval: false
 pak::pak(pkg = "serkor1/SLmetrics@v0.3-4", ask = FALSE)
 ```
 

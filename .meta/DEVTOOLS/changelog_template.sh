@@ -51,15 +51,15 @@ function template() {
     cat <<-EOF > "${file}"
 ---
 format:
-gfm:
-    default-image-extension: ".png"
+    gfm:
+        default-image-extension: ".png"
 always_allow_html: true
 execute:
-cache: true
-freeze: auto
-dir: .meta/CHANGELOG
+  cache: true
+  freeze: auto
+  dir: .meta/CHANGELOG
 knitr:
-opts_chunk:
+  opts_chunk:
     collapse: true
     comment: "#>"
     dpi: 1280

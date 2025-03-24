@@ -32,26 +32,27 @@ function template() {
     local output_file=$3
 
     cat <<-EOF > "${output_file}"
-    ---
-    format:
-        gfm:
-            default-image-extension: ".png"
-    always_allow_html: true
-    execute:
+---
+format:
+    gfm:
+        default-image-extension: ".png"
+always_allow_html: true
+execute:
     cache: true
     freeze: auto
     dir: .meta
-    knitr:
+knitr:
     opts_chunk:
         collapse: true
         comment: "#>"
         dpi: 1280
         fig.height: 6
         out.width: 100%
-    ---
-    > Version ${version} is considered pre-release of {${package}}. We do not
-    > expect any breaking changes, unless a major bug/issue is reported and its nature
-    > forces breaking changes.
+---
+
+> Version ${version} is considered pre-release of {${package}}. We do not
+> expect any breaking changes, unless a major bug/issue is reported and its nature
+> forces breaking changes.
 EOF
 }
 
