@@ -59,9 +59,12 @@ inst/doc
 .meta/DOCUMENTATION/_quarto.yaml
 
 # ignore all but the 
-# files in meta/
-!.meta/*_files/
-!.meta/*_files/**
+# files in .meta/CHANGELOG/src
+.meta/CHANGELOG/**
+!.meta/CHANGELOG/src/
+!.meta/CHANGELOG/src/*_files/
+!.meta/CHANGELOG/src/*_files/**
+
 
 # CRAN comments
 cran_comments.md
