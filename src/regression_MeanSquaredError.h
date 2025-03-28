@@ -17,11 +17,12 @@ namespace metric {
         using regression::task<T>::task;
         
         inline T compute() const override {
-            const arma::uword n = this->actual_.n_elem;
             
-            T norm_val = arma::norm(this->actual_ - this->predicted_, 2);
+            T mse = arma::mean(
+                arma::square( this -> actual_ - this -> predicted_)
+                );
 
-            return norm_val / n;
+            return mse;
         }
     };
 
@@ -44,16 +45,16 @@ namespace metric {
             const T* predicted_ptr = this -> predicted_.memptr();
             const T* weights_ptr   = weights_.memptr();
             
-            T weighted_sum = 0;
+            T weighted_mse = 0;
             T sum_weights  = 0;
             
             for (arma::uword i = 0; i < n; ++i) {
                 T diff = actual_ptr[i] - predicted_ptr[i];
-                weighted_sum += weights_ptr[i] * diff * diff;
+                weighted_mse += weights_ptr[i] * diff * diff;
                 sum_weights  += weights_ptr[i];
             }
             
-            return weighted_sum / sum_weights;
+            return weighted_mse / sum_weights;
         }
     };
 }

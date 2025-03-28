@@ -12,16 +12,6 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// invertMatrix
-Rcpp::NumericMatrix invertMatrix();
-RcppExport SEXP _SLmetrics_invertMatrix() {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(invertMatrix());
-    return rcpp_result_gen;
-END_RCPP
-}
 // Accuracy
 Rcpp::NumericVector Accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
 RcppExport SEXP _SLmetrics_Accuracy(SEXP actualSEXP, SEXP predictedSEXP) {
@@ -1814,7 +1804,6 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_SLmetrics_invertMatrix", (DL_FUNC) &_SLmetrics_invertMatrix, 0},
     {"_SLmetrics_Accuracy", (DL_FUNC) &_SLmetrics_Accuracy, 2},
     {"_SLmetrics_weighted_Accuracy", (DL_FUNC) &_SLmetrics_weighted_Accuracy, 3},
     {"_SLmetrics_cmatrix_Accuracy", (DL_FUNC) &_SLmetrics_cmatrix_Accuracy, 1},
