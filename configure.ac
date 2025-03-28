@@ -87,14 +87,14 @@ CXXSTD=`"${R_HOME}/bin/R" CMD config CXX${STD_VER}STD`
 ##     AC_MSG_NOTICE([OpenMP NOT available])
 ##    ])
 ##
-##    This section have been borrowed and adapted from the configure.ac-file
+##    This section has been borrowed and adapted from the configure.ac-file
 ##    at https://github.com/RcppCore/RcppArmadillo - the entire configure.ac there works
-##    as it should from my own tests. Check out that file made by  Dirk Eddelbuettel and hist team.
+##    as it should from my own tests. Check out that file made by  Dirk Eddelbuettel and his team.
 openmp_already_works="no"
 can_use_openmp="no"
 
 ## 4.1) Define a small .cpp-program that
-##      checks for OpenMP availabiltiy
+##      checks for OpenMP availability
 cat <<EOF > test-omp.cpp
 #include <omp.h>
 int main() {
@@ -115,7 +115,7 @@ fi
 
 ## 4.3) If 4.2) fails, ie. R CMD SHLIB can't compile
 ##      and run the OpenMP program then start looking
-##      avaialbe compilers on host to look for compatible
+##      available compilers on host to look for compatible
 ##      compilers on MacOS, Windows and Linux systems
 if test x"${openmp_already_works}" = x"no"; then
 
