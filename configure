@@ -614,9 +614,10 @@ PACKAGE_URL=''
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
-PKG_LIBS
 PKG_CXXFLAGS
 PKG_CPPFLAGS
+PKG_LIBS
+OPENMP_FLAG
 HAVE_CXX17
 HAVE_CXX20
 HAVE_CXX23
@@ -5528,153 +5529,154 @@ CXXSTD=`"${R_HOME}/bin/R" CMD config CXX${STD_VER}STD`
 ##    tested on clang, and according to the macro
 ##    it doesn't test on clang or LLVM. So it is not clear
 ##    what will happen when it fails.
-# ===========================================================================
-#        https://www.gnu.org/software/autoconf-archive/ax_openmp.html
-# ===========================================================================
-#
-# SYNOPSIS
-#
-#   AX_OPENMP([ACTION-IF-FOUND[, ACTION-IF-NOT-FOUND]])
-#
-# DESCRIPTION
-#
-#   This macro tries to find out how to compile programs that use OpenMP a
-#   standard API and set of compiler directives for parallel programming
-#   (see http://www-unix.mcs/)
-#
-#   On success, it sets the OPENMP_CFLAGS/OPENMP_CXXFLAGS/OPENMP_F77FLAGS
-#   output variable to the flag (e.g. -omp) used both to compile *and* link
-#   OpenMP programs in the current language.
-#
-#   NOTE: You are assumed to not only compile your program with these flags,
-#   but also link it with them as well.
-#
-#   If you want to compile everything with OpenMP, you should set:
-#
-#     CFLAGS="$CFLAGS $OPENMP_CFLAGS"
-#     #OR#  CXXFLAGS="$CXXFLAGS $OPENMP_CXXFLAGS"
-#     #OR#  FFLAGS="$FFLAGS $OPENMP_FFLAGS"
-#
-#   (depending on the selected language).
-#
-#   The user can override the default choice by setting the corresponding
-#   environment variable (e.g. OPENMP_CFLAGS).
-#
-#   ACTION-IF-FOUND is a list of shell commands to run if an OpenMP flag is
-#   found, and ACTION-IF-NOT-FOUND is a list of commands to run it if it is
-#   not found. If ACTION-IF-FOUND is not specified, the default action will
-#   define HAVE_OPENMP.
-#
-# LICENSE
-#
-#   Copyright (c) 2008 Steven G. Johnson <stevenj@alum.mit.edu>
-#   Copyright (c) 2015 John W. Peterson <jwpeterson@gmail.com>
-#   Copyright (c) 2016 Nick R. Papior <nickpapior@gmail.com>
-#
-#   This program is free software: you can redistribute it and/or modify it
-#   under the terms of the GNU General Public License as published by the
-#   Free Software Foundation, either version 3 of the License, or (at your
-#   option) any later version.
-#
-#   This program is distributed in the hope that it will be useful, but
-#   WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-#   Public License for more details.
-#
-#   You should have received a copy of the GNU General Public License along
-#   with this program. If not, see <https://www.gnu.org/licenses/>.
-#
-#   As a special exception, the respective Autoconf Macro's copyright owner
-#   gives unlimited permission to copy, distribute and modify the configure
-#   scripts that are the output of Autoconf when processing the Macro. You
-#   need not follow the terms of the GNU General Public License when using
-#   or distributing such scripts, even though portions of the text of the
-#   Macro appear in them. The GNU General Public License (GPL) does govern
-#   all other use of the material that constitutes the Autoconf Macro.
-#
-#   This special exception to the GPL applies to versions of the Autoconf
-#   Macro released by the Autoconf Archive. When you make and distribute a
-#   modified version of the Autoconf Macro, you may extend this special
-#   exception to the GPL to apply to your modified version as well.
+##
+##    March 27, 2025
+##    UPDATE: This does NOT work on clang, or generally
+##    on MacOS unless ~/.R/Makevars is correctly specified.
+##    This has been tested on locally on Macbook with and without
+##    ~/.R/Makevars
+##
+##    m4_include([m4/ax_openmp.m4])
+##    AX_OPENMP([
+##     AC_MSG_NOTICE([OpenMP available])
+##     ],[
+##     AC_MSG_NOTICE([OpenMP NOT available])
+##    ])
+##
+##    This section have been borrowed and adapted from the configure.ac-file
+##    at https://github.com/RcppCore/RcppArmadillo - the entire configure.ac there works
+##    as it should from my own tests. Check out that file made by  Dirk Eddelbuettel and hist team.
+openmp_already_works="no"
+can_use_openmp="no"
 
-#serial 14
-
-
-
-
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for OpenMP flag of C++ compiler" >&5
-printf %s "checking for OpenMP flag of C++ compiler... " >&6; }
-if test ${ax_cv_cxx_openmp+y}
-then :
-  printf %s "(cached) " >&6
-else $as_nop
-  saveCXXFLAGS=$CXXFLAGS
-ax_cv_cxx_openmp=unknown
-# Flags to try:  -fopenmp (gcc), -mp (SGI & PGI),
-#                -qopenmp (icc>=15), -openmp (icc),
-#                -xopenmp (Sun), -omp (Tru64),
-#                -qsmp=omp (AIX),
-#                none
-ax_openmp_flags="-fopenmp -openmp -qopenmp -mp -xopenmp -omp -qsmp=omp none"
-if test "x$OPENMP_CXXFLAGS" != x; then
-  ax_openmp_flags="$OPENMP_CXXFLAGS $ax_openmp_flags"
-fi
-for ax_openmp_flag in $ax_openmp_flags; do
-  case $ax_openmp_flag in
-    none) CXXFLAGS=$saveCXX ;;
-    *) CXXFLAGS="$saveCXXFLAGS $ax_openmp_flag" ;;
-  esac
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
+## 4.1) Define a small .cpp-program that
+##      checks for OpenMP availabiltiy
+cat <<EOF > test-omp.cpp
 #include <omp.h>
-
-static void
-parallel_fill(int * data, int n)
-{
-  int i;
-#pragma omp parallel for
-  for (i = 0; i < n; ++i)
-    data[i] = i;
+int main() {
+  return omp_get_num_threads();
 }
+EOF
 
-int
-main(void)
-{
-  int arr[100000];
-  omp_set_num_threads(2);
-  parallel_fill(arr, 100000);
-  return 0;
-}
-
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"
-then :
-  ax_cv_cxx_openmp=$ax_openmp_flag; break
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.beam \
-    conftest$ac_exeext conftest.$ac_ext
-done
-CXXFLAGS=$saveCXXFLAGS
-
-fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ax_cv_cxx_openmp" >&5
-printf "%s\n" "$ax_cv_cxx_openmp" >&6; }
-if test "x$ax_cv_cxx_openmp" = "xunknown"; then
-
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: OpenMP NOT available" >&5
-printf "%s\n" "$as_me: OpenMP NOT available" >&6;}
-
+## 4.2) Run OpenMP-program with
+##      standard R CMD SHLIB
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether R CMD SHLIB can already compile programs using OpenMP" >&5
+printf %s "checking whether R CMD SHLIB can already compile programs using OpenMP... " >&6; }
+"${R_HOME}/bin/R" CMD SHLIB test-omp.cpp >/dev/null 2>&1
+if test x"$?" = x"0"; then
+    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+printf "%s\n" "yes" >&6; }
+    openmp_already_works="yes"
 else
-  if test "x$ax_cv_cxx_openmp" != "xnone"; then
-    OPENMP_CXXFLAGS=$ax_cv_cxx_openmp
-  fi
-
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: OpenMP available" >&5
-printf "%s\n" "$as_me: OpenMP available" >&6;}
-
+    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
 fi
 
+## 4.3) If 4.2) fails, ie. R CMD SHLIB can't compile
+##      and run the OpenMP program then start looking
+##      avaialbe compilers on host to look for compatible
+##      compilers on MacOS, Windows and Linux systems
+if test x"${openmp_already_works}" = x"no"; then
+
+    ## Check the C++ compiler using the CXX value set
+
+    ## If it is g++, we have GXX set so let's examine it
+    if test "${GXX}" = yes; then
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether g++ version is sufficient" >&5
+printf %s "checking whether g++ version is sufficient... " >&6; }
+        gxx_version=$(${CXX} -v 2>&1 | awk '/^.*g.. version/ {print $3}')
+        case ${gxx_version} in
+            1.*|2.*|3.*|4.0.*|4.1.*|4.2.*|4.3.*|4.4.*|4.5.*|4.6.*|4.7.0|4.7.1)
+                 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+                 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Only g++ version 4.7.2 or greater can be used with RcppArmadillo." >&5
+printf "%s\n" "$as_me: WARNING: Only g++ version 4.7.2 or greater can be used with RcppArmadillo." >&2;}
+                 as_fn_error $? "Please use a different compiler." "$LINENO" 5
+            ;;
+            4.7.*|4.8.*|4.9.*|5.0*|5.1*|5.2*|5.3*)
+                 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes, but without OpenMP as version ${gxx_version} (Armadillo constraint)" >&5
+printf "%s\n" "yes, but without OpenMP as version ${gxx_version} (Armadillo constraint)" >&6; }
+                 ## we know this one is bad
+                 can_use_openmp="no"
+            ;;
+            5.4*|5.5*|5.6*|5.7*|5.8*|5.9*|6.*|7.*|8.*|9.*|10.*|11.*|12.*)
+                 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes, with OpenMP as version ${gxx_version}" >&5
+printf "%s\n" "yes, with OpenMP as version ${gxx_version}" >&6; }
+                 ## we know this one is good, yay
+                 can_use_openmp="yes"
+            ;;
+            *)
+                 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: almost" >&5
+printf "%s\n" "almost" >&6; }
+                 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Compiler self-identifies as being compliant with GNUC extensions but is not g++." >&5
+printf "%s\n" "$as_me: WARNING: Compiler self-identifies as being compliant with GNUC extensions but is not g++." >&2;}
+                 ## we know nothing, so no
+                 can_use_openmp="no"
+            ;;
+        esac
+    fi
+
+    ## Check for Apple LLVM
+
+    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for macOS" >&5
+printf %s "checking for macOS... " >&6; }
+    RSysinfoName=$("${R_HOME}/bin/Rscript" --vanilla -e 'cat(Sys.info()["sysname"])')
+
+    if test x"${RSysinfoName}" = x"Darwin"; then
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: found" >&5
+printf "%s\n" "found" >&6; }
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for macOS Apple compiler" >&5
+printf %s "checking for macOS Apple compiler... " >&6; }
+
+        apple_compiler=$($CXX --version 2>&1 | grep -i -c -e 'apple llvm')
+
+        if test x"${apple_compiler}" = x"1"; then
+            { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: found" >&5
+printf "%s\n" "found" >&6; }
+            { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: OpenMP unavailable and turned off." >&5
+printf "%s\n" "$as_me: WARNING: OpenMP unavailable and turned off." >&2;}
+            can_use_openmp="no"
+        else
+            { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: not found" >&5
+printf "%s\n" "not found" >&6; }
+            { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for clang compiler" >&5
+printf %s "checking for clang compiler... " >&6; }
+            clang_compiler=$($CXX --version 2>&1 | grep -i -c -e 'clang ')
+
+            if test x"${clang_compiler}" = x"1"; then
+                { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: found" >&5
+printf "%s\n" "found" >&6; }
+                { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for OpenMP compatible version of clang" >&5
+printf %s "checking for OpenMP compatible version of clang... " >&6; }
+                clang_version=$(${CXX} -v 2>&1 | awk '/^.*clang version/ {print $3}')
+
+                case ${clang_version} in
+                    4.*|5.*|6.*|7.*|8.*|9.*|10.*|11.*)
+                        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: found and suitable" >&5
+printf "%s\n" "found and suitable" >&6; }
+                        can_use_openmp="yes"
+                    ;;
+                    *)
+                        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: not found" >&5
+printf "%s\n" "not found" >&6; }
+                        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: OpenMP unavailable and turned off." >&5
+printf "%s\n" "$as_me: WARNING: OpenMP unavailable and turned off." >&2;}
+                        can_use_openmp="no"
+                    ;;
+                esac
+            else
+                { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: not found" >&5
+printf "%s\n" "not found" >&6; }
+                { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: unsupported macOS build detected; if anything breaks, you keep the pieces." >&5
+printf "%s\n" "$as_me: WARNING: unsupported macOS build detected; if anything breaks, you keep the pieces." >&2;}
+            fi
+        fi
+    else
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+    fi
+
+fi
 
 ## 5) Check for zlib
 ##    availability.
@@ -5750,25 +5752,46 @@ fi
 ## 6.1) PKG_CPPFLAGS
 ##      conditional on OPENMP
 ##      availability
-PKG_CPPFLAGS="${CPPFLAGS_R}"
-if test -n "$OPENMP_CFLAGS"; then
-  PKG_CPPFLAGS="$PKG_CPPFLAGS $OPENMP_CFLAGS"
+openmp_flag=""
+
+## Set the fallback, by default it is nope
+arma_have_openmp="#define ARMA_DONT_USE_OPENMP 1"
+
+if test x"${openmp_already_works}" = x"yes"; then
+    arma_have_openmp="#define ARMA_USE_OPENMP 1"
+    openmp_flag='$(SHLIB_OPENMP_CXXFLAGS)'
 fi
 
-
-## 6.2) PKG_CXXFLAGS
-##      conditional on OPENMP
-##      availability
-PKG_CXXFLAGS="${CXXSTD} ${CXXFLAGS_R}"
-if test -n "$OPENMP_CXXFLAGS"; then
-  PKG_CXXFLAGS="$PKG_CXXFLAGS $OPENMP_CXXFLAGS"
+if test x"${can_use_openmp}" = x"yes"; then
+    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for OpenMP" >&5
+printf %s "checking for OpenMP... " >&6; }
+    ## if R has -fopenmp we should be good
+    allldflags=$(${R_HOME}/bin/R CMD config --ldflags)
+    hasOpenMP=$(echo ${allldflags} | grep -- -fopenmp)
+    if test x"${hasOpenMP}" = x""; then
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: missing" >&5
+printf "%s\n" "missing" >&6; }
+        arma_have_openmp="#define ARMA_DONT_USE_OPENMP 1"
+    else
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: found and suitable" >&5
+printf "%s\n" "found and suitable" >&6; }
+        arma_have_openmp="#define ARMA_USE_OPENMP 1"
+        openmp_flag='$(SHLIB_OPENMP_CXXFLAGS)'
+    fi
 fi
+OPENMP_FLAG="${openmp_flag}"
 
 
 ## 6.3) PKG_LIBS
 ##      This is where all the
 ##      relevant extra libraries are added
 PKG_LIBS="${BLAS_LIBS} ${LAPACK_LIBS} ${FLIBS}"
+
+
+## 6.4) CPP AND CXX FLAGS
+PKG_CPPFLAGS="${CPPFLAGS_R}"
+
+PKG_CXXFLAGS="${CXXSTD} ${CXXFLAGS_R}"
 
 
 ## 7) Construct the Makevars
