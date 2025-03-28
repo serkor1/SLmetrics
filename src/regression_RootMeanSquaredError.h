@@ -1,6 +1,7 @@
 #ifndef REGRESSION_ROOTMEANSQUAREDEROR_H
 #define REGRESSION_ROOTMEANSQUAREDEROR_H
 
+#include "SLmetrics.h"
 #include "utilities_Package.h"
 #include <cmath>
 #include <cstddef>
@@ -9,52 +10,50 @@
     #include <omp.h>
 #endif
 
-class RMSE {
+namespace metric {
+    template <typename T>
+    class RMSE : public regression::task<T> {
     public:
-        // Unweighted RMSE
-        static double compute(const double* actual, const double* predicted, std::size_t n)
-        {
-            double squared_sum = 0.0;
-
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:squared_sum) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double difference = actual[i] - predicted[i];
-                squared_sum += difference * difference;
-            }
-
-            double mse = squared_sum / static_cast<double>(n);
-
-            return std::sqrt(mse);
+        using regression::task<T>::task;
+        
+        inline T compute() const override {
+            const arma::uword n = this->actual_.n_elem;
+            T norm_val = arma::norm(this->actual_ - this->predicted_, 2);
+            return norm_val / std::sqrt(n);
         }
+    };
 
-        // Weighted RMSE
-        static double compute(const double* actual, const double* predicted, const double* weights, std::size_t n)
-        {
-            double squared_sum = 0.0;
-            double weighted_sum  = 0.0;
-
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:squared_sum, weighted_sum) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double difference = actual[i] - predicted[i];
-                double w    = weights[i];
-                squared_sum += w * difference * difference;
-                weighted_sum  += w;
-            }
-
-            double mse = squared_sum / weighted_sum;
-            
-            return std::sqrt(mse);
-        }
-
+    template <typename T>
+    class weighted_RMSE : public regression::task<T> {
     private:
-        // Prevents the compiler from doing
-        // bad stuff.
-        RMSE()  = delete;
-        ~RMSE() = delete;
-};
+        arma::Col<T> weights_;
+    public:
+        weighted_RMSE(
+            const vctr_t<T>& actual,
+            const vctr_t<T>& predicted,
+            const vctr_t<T>& weights)
+            : regression::task<T>(actual, predicted),
+            weights_(const_cast<T*>(weights.begin()), weights.size(), false, false)
+            {}
+        
+        inline T compute() const override {
+            const arma::uword n    = this -> actual_.n_elem;
+            const T* actual_ptr    = this -> actual_.memptr();
+            const T* predicted_ptr = this -> predicted_.memptr();
+            const T* weights_ptr   = weights_.memptr();
+            
+            T weighted_sum = 0;
+            T sum_weights  = 0;
+            
+            for (arma::uword i = 0; i < n; ++i) {
+                T diff = actual_ptr[i] - predicted_ptr[i];
+                weighted_sum += weights_ptr[i] * diff * diff;
+                sum_weights  += weights_ptr[i];
+            }
+            
+            return std::sqrt(weighted_sum / sum_weights);
+        }
+    };
+}
 
 #endif
