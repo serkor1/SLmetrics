@@ -1,3 +1,10 @@
+/**
+ * @file templates.hpp
+ * @brief Defines template specializations for Rcpp vector types.
+ *
+ * This file provides a mechanism to map a C++ numeric type (e.g. int or double)
+ * to the corresponding Rcpp vector type (IntegerVector or NumericVector).
+ */
 #ifndef templates_hpp
 #define templates_hpp
 

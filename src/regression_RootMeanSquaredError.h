@@ -13,7 +13,7 @@
 namespace metric {
     template <typename T>
     class RMSE : public regression::task<T> {
-    public:
+        public:
         using regression::task<T>::task;
         
         inline T compute() const override {
@@ -25,9 +25,10 @@ namespace metric {
 
     template <typename T>
     class weighted_RMSE : public regression::task<T> {
-    private:
+        private:
         arma::Col<T> weights_;
-    public:
+
+        public:
         weighted_RMSE(
             const vctr_t<T>& actual,
             const vctr_t<T>& predicted,
