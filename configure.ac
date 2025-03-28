@@ -128,7 +128,7 @@ if test x"${openmp_already_works}" = x"no"; then
         case ${gxx_version} in
             1.*|2.*|3.*|4.0.*|4.1.*|4.2.*|4.3.*|4.4.*|4.5.*|4.6.*|4.7.0|4.7.1)
                  AC_MSG_RESULT([no])
-                 AC_MSG_WARN([Only g++ version 4.7.2 or greater can be used with RcppArmadillo.])
+                 AC_MSG_WARN([Only g++ version 4.7.2 or greater can be used with Armadillo.])
                  AC_MSG_ERROR([Please use a different compiler.])
             ;;
             4.7.*|4.8.*|4.9.*|5.0*|5.1*|5.2*|5.3*)
