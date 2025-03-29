@@ -31,6 +31,7 @@ namespace regression {
         protected:
         arma::Col<T> actual_;
         arma::Col<T> predicted_;
+        arma::Col<T> weights_;
         
         public:
         task(const vctr_t<T>& actual, const vctr_t<T>& predicted)
@@ -47,11 +48,33 @@ namespace regression {
               false
           )
         {}
+
+        task(const vctr_t<T>& actual, const vctr_t<T>& predicted, const vctr_t<T>& weights)
+        : actual_(
+              const_cast<T*>(actual.begin()),
+              actual.size(),
+              false,
+              false
+          )
+        , predicted_(
+              const_cast<T*>(predicted.begin()),
+              predicted.size(),
+              false,
+              false
+          )
+        , weights_(
+            const_cast<T*>(weights.begin()),
+              weights.size(),
+              false,
+              false
+        )
+        {}
         
         virtual ~task() = default;
         
         const arma::Col<T>& actual() const { return actual_; }
         const arma::Col<T>& predicted() const { return predicted_; }
+        const arma::Col<T>& weights() const { return weights_; }
         
         virtual T compute() const = 0;
     };

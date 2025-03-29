@@ -27,23 +27,14 @@ namespace metric {
 
     template <typename T>
     class weighted_RMSE : public regression::task<T> {
-        private:
-        arma::Col<T> weights_;
-
         public:
-        weighted_RMSE(
-            const vctr_t<T>& actual,
-            const vctr_t<T>& predicted,
-            const vctr_t<T>& weights)
-            : regression::task<T>(actual, predicted),
-            weights_(const_cast<T*>(weights.begin()), weights.size(), false, false)
-            {}
+        using regression::task<T>::task;
         
         inline T compute() const override {
             const arma::uword n    = this -> actual_.n_elem;
             const T* actual_ptr    = this -> actual_.memptr();
             const T* predicted_ptr = this -> predicted_.memptr();
-            const T* weights_ptr   = weights_.memptr();
+            const T* weights_ptr   = this -> weights_.memptr();
             
             T weighted_sum = 0;
             T sum_weights  = 0;
