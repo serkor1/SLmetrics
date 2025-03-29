@@ -5543,14 +5543,14 @@ CXXSTD=`"${R_HOME}/bin/R" CMD config CXX${STD_VER}STD`
 ##     AC_MSG_NOTICE([OpenMP NOT available])
 ##    ])
 ##
-##    This section have been borrowed and adapted from the configure.ac-file
+##    This section has been borrowed and adapted from the configure.ac-file
 ##    at https://github.com/RcppCore/RcppArmadillo - the entire configure.ac there works
-##    as it should from my own tests. Check out that file made by  Dirk Eddelbuettel and hist team.
+##    as it should from my own tests. Check out that file made by  Dirk Eddelbuettel and his team.
 openmp_already_works="no"
 can_use_openmp="no"
 
 ## 4.1) Define a small .cpp-program that
-##      checks for OpenMP availabiltiy
+##      checks for OpenMP availability
 cat <<EOF > test-omp.cpp
 #include <omp.h>
 int main() {
@@ -5574,7 +5574,7 @@ fi
 
 ## 4.3) If 4.2) fails, ie. R CMD SHLIB can't compile
 ##      and run the OpenMP program then start looking
-##      avaialbe compilers on host to look for compatible
+##      available compilers on host to look for compatible
 ##      compilers on MacOS, Windows and Linux systems
 if test x"${openmp_already_works}" = x"no"; then
 
@@ -5589,8 +5589,8 @@ printf %s "checking whether g++ version is sufficient... " >&6; }
             1.*|2.*|3.*|4.0.*|4.1.*|4.2.*|4.3.*|4.4.*|4.5.*|4.6.*|4.7.0|4.7.1)
                  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
 printf "%s\n" "no" >&6; }
-                 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Only g++ version 4.7.2 or greater can be used with RcppArmadillo." >&5
-printf "%s\n" "$as_me: WARNING: Only g++ version 4.7.2 or greater can be used with RcppArmadillo." >&2;}
+                 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Only g++ version 4.7.2 or greater can be used with Armadillo." >&5
+printf "%s\n" "$as_me: WARNING: Only g++ version 4.7.2 or greater can be used with Armadillo." >&2;}
                  as_fn_error $? "Please use a different compiler." "$LINENO" 5
             ;;
             4.7.*|4.8.*|4.9.*|5.0*|5.1*|5.2*|5.3*)
