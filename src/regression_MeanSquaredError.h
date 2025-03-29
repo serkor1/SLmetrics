@@ -18,7 +18,7 @@ namespace metric {
         
         inline T compute() const override {
             
-            T mse = arma::mean(
+            T mse = arma::accu(
                 arma::square( this -> actual_ - this -> predicted_)
                 );
 

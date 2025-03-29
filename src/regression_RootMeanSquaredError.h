@@ -17,10 +17,12 @@ namespace metric {
         using regression::task<T>::task;
         
         inline T compute() const override {
-            const arma::uword n = this->actual_.n_elem;
-            T norm_val = arma::norm(this->actual_ - this->predicted_, 2);
+            const arma::uword n = this -> actual_.n_elem;
+            
+            T norm_val = std::sqrt(arma::accu(arma::square( this -> actual_ - this-> predicted_)));
             return norm_val / std::sqrt(n);
         }
+
     };
 
     template <typename T>
