@@ -17,12 +17,13 @@ namespace metric {
         using regression::task<T>::task;
         
         inline T compute() const override {
+            const arma::uword n = this -> actual_.n_elem;
             
             T mse = arma::accu(
                 arma::square( this -> actual_ - this -> predicted_)
                 );
 
-            return mse;
+            return mse/n;
         }
     };
 
