@@ -1,6 +1,7 @@
 #ifndef REGRESSION_MEANABSOLUTEERROR_H
 #define REGRESSION_MEANABSOLUTEERROR_H
 
+#include "SLmetrics.h"
 #include "utilities_Package.h"
 #include <cmath>
 #include <cstddef>
@@ -9,49 +10,40 @@
     #include <omp.h>
 #endif
 
-class MAE {
+namespace metric {
+    template <typename T>
+    class MAE : public regression::task<T> {
     public:
-        // Unweighted MAE
-        static double compute(const double* actual, const double* predicted, std::size_t n)
-        {
-            double sum_abs_diff = 0.0;
-
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_abs_diff) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double diff = actual[i] - predicted[i];
-                sum_abs_diff += std::fabs(diff);
-            }
-
-            return sum_abs_diff / static_cast<double>(n);
+        using regression::task<T>::task;
+        
+        inline T compute() const override {
+            const arma::uword n = this -> actual_.n_elem;
+            T mae = arma::accu( arma::abs( this -> actual_ - this -> predicted_) );
+            return mae / n;
         }
+    };
 
-        // Weighted MAE
-        static double compute(const double* actual, const double* predicted, 
-                            const double* weights, std::size_t n)
-        {
-            double sum_abs_diff = 0.0;
-            double sum_w        = 0.0;
-
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_abs_diff, sum_w) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double w    = weights[i];
-                double diff = actual[i] - predicted[i];
-                sum_abs_diff += w * std::fabs(diff);
-                sum_w        += w;
+    template <typename T>
+    class weighted_MAE : public regression::task<T> {
+    public:
+        using regression::task<T>::task;
+        
+        inline T compute() const override {
+            const arma::uword n    = this -> actual_.n_elem;
+            const T* actual_ptr    = this -> actual_.memptr();
+            const T* predicted_ptr = this -> predicted_.memptr();
+            const T* weights_ptr   = this -> weights_.memptr();
+            
+            T weighted_mae = 0;
+            T sum_weights  = 0;
+            for (arma::uword i = 0; i < n; ++i) {
+                weighted_mae += weights_ptr[i] * std::abs(actual_ptr[i] - predicted_ptr[i]);
+                sum_weights  += weights_ptr[i];
             }
-
-            return sum_abs_diff / sum_w;
+            return weighted_mae / sum_weights;
         }
+    };
 
-    private:
-        // Prevents the compiler from doing
-        // bad stuff.
-        MAE()  = delete;
-        ~MAE() = delete;
-};
+}
 
 #endif
