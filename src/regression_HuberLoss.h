@@ -1,6 +1,7 @@
 #ifndef REGRESSION_HUBERLOSS_H
 #define REGRESSION_HUBERLOSS_H
 
+#include "SLmetrics.h"
 #include "utilities_Package.h"
 #include <cmath>
 #include <cstddef>
@@ -9,85 +10,67 @@
     #include <omp.h>
 #endif
 
-class HuberLoss {
+namespace metric {
+
+    template <typename T>
+    class huberloss : public regression::task<T> {
     public:
-        /**
-        * Compute the Huber Loss (unweighted).
-        *
-        * @param actual Pointer to ground-truth values
-        * @param predicted Pointer to predicted values
-        * @param n Number of elements
-        * @param delta Threshold parameter of the Huber loss
-        *
-        * @return Average Huber loss (scalar)
-        */
+        T delta_;
+        
+        huberloss(const vctr_t<T>& actual, const vctr_t<T>& predicted, T delta)
+            : regression::task<T>(actual, predicted), delta_(delta) {}
 
-        static double compute(const double* actual, const double* predicted, std::size_t n, double delta)
-        {
-            double loss_sum = 0.0;
+        inline T compute() const override {
+            const arma::uword n    = this -> actual_.n_elem;
+            const T* ptr_actual    = this -> actual_.memptr();
+            const T* ptr_predicted = this -> predicted_.memptr();
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:loss_sum) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double diff = actual[i] - predicted[i];
-                double abs_diff = std::fabs(diff);
+            T sum_loss = 0;
+            for (arma::uword i = 0; i < n; ++i) {
+                T error = ptr_actual[i] - ptr_predicted[i];
+                T abs_error = std::abs(error);
 
-                if (abs_diff <= delta) {
-                    // Quadratic region
-                    loss_sum += 0.5 * diff * diff;
-                } else {
-                    // Linear region
-                    loss_sum += delta * (abs_diff - 0.5 * delta);
-                }
+                if (abs_error <= delta_)
+                    sum_loss += 0.5 * error * error;
+                else
+                    sum_loss += delta_ * (abs_error - 0.5 * delta_);
             }
 
-            return loss_sum / static_cast<double>(n);
+            return sum_loss / n;
         }
+    };
 
-        /**
-        * Compute the Huber Loss (weighted).
-        *
-        * @param actual Pointer to ground-truth values
-        * @param predicted Pointer to predicted values
-        * @param weights Pointer to sample weights
-        * @param n Number of elements
-        * @param delta Threshold parameter of the Huber loss
-        *
-        * @return Weighted average Huber loss (scalar)
-        */
-        static double compute(const double* actual, const double* predicted, const double* weights, std::size_t n, double delta)
-        {
-            double loss_sum = 0.0;
-            double weight_sum = 0.0;
+    template <typename T>
+    class weighted_huberloss : public regression::task<T> {
+    public:
+        T delta_;
+        
+        weighted_huberloss(const vctr_t<T>& actual,
+                           const vctr_t<T>& predicted,
+                           const vctr_t<T>& weights,
+                           T delta)
+            : regression::task<T>(actual, predicted, weights), delta_(delta) {}
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:loss_sum, weight_sum) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double w = weights[i];
-                double diff = actual[i] - predicted[i];
-                double abs_diff = std::fabs(diff);
+        inline T compute() const override {
+            const arma::uword n = this->actual_.n_elem;
+            const T* actual_ptr    = this->actual_.memptr();
+            const T* predicted_ptr = this->predicted_.memptr();
+            const T* weights_ptr   = this->weights_.memptr();
 
-                if (abs_diff <= delta) {
-                    // Quadratic region
-                    loss_sum += w * (0.5 * diff * diff);
-                } else {
-                    // Linear region
-                    loss_sum += w * (delta * (abs_diff - 0.5 * delta));
-                }
-
-                weight_sum += w;
+            T weighted_loss = 0;
+            T sum_weights = 0;
+            for (arma::uword i = 0; i < n; ++i) {
+                T error = actual_ptr[i] - predicted_ptr[i];
+                T abs_error = std::abs(error);
+                T loss = (abs_error <= delta_) ? (0.5 * error * error)
+                                               : (delta_ * (abs_error - 0.5 * delta_));
+                weighted_loss += weights_ptr[i] * loss;
+                sum_weights += weights_ptr[i];
             }
-
-            return loss_sum / weight_sum;
+            return weighted_loss / sum_weights;
         }
+    };
 
-    private:
-        // Prevents the compiler from doing
-        // bad stuff.
-        HuberLoss()  = delete;
-        ~HuberLoss() = delete;
-};
+}
 
 #endif
