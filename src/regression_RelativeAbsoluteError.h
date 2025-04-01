@@ -1,6 +1,7 @@
 #ifndef REGRESSION_RELATIVEABSOLUTEERROR_H
 #define REGRESSION_RELATIVEABSOLUTEERROR_H
 
+#include "SLmetrics.h"
 #include "utilities_Package.h"
 #include <cmath>
 #include <cstddef>
@@ -9,94 +10,60 @@
     #include <omp.h>
 #endif
 
-class RAE {
+namespace metric {
+    template <typename T>
+    class RAE : public regression::task<T> {
     public:
-        /**
-        * Unweighted RAE:
-        *
-        * @param actual Pointer to actual values
-        * @param predicted Pointer to predicted values
-        * @param n Number of elements
-        *
-        * @return Relative Absolute Error (unweighted)
-        */
-        static double compute(const double* actual, const double* predicted, std::size_t n)
-        {
-            // 1) Compute mean of actual
-            double sum_actual = 0.0;
-            for (std::size_t i = 0; i < n; ++i) {
-                sum_actual += actual[i];
+        using regression::task<T>::task;
+        
+        inline T compute() const override {
+            const arma::uword n = this  -> actual_.n_elem;
+            T mean_actual = arma::accu( this -> actual_ ) / n;
+            
+            T numerator   = 0;
+            T denominator = 0;
+            
+            const T* actual_ptr    = this -> actual_.memptr();
+            const T* predicted_ptr = this -> predicted_.memptr();
+            
+            for (arma::uword i = 0; i < n; ++i) {
+                numerator   += std::abs(actual_ptr[i] - predicted_ptr[i]);
+                denominator += std::abs(actual_ptr[i] - mean_actual);
             }
-            double mean_actual = sum_actual / static_cast<double>(n);
-
-            // 2) Compute numerator and denominator
-            double numerator = 0.0;
-            double denominator = 0.0;
-
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:numerator, denominator) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double diff_pred = std::fabs(actual[i] - predicted[i]);
-                double diff_mean = std::fabs(actual[i] - mean_actual);
-
-                numerator   += diff_pred;
-                denominator += diff_mean;
-            }
-
-            // 3) Return RAE
-            // No check for zero denominator, per your requirement
             return numerator / denominator;
         }
+    };
 
-        /**
-        * Weighted RAE:
-        *
-        * @param actual Pointer to actual values
-        * @param predicted Pointer to predicted values
-        * @param weights Pointer to sample weights
-        * @param n Number of elements
-        *
-        * @return Weighted Relative Absolute Error
-        */
-        static double compute(const double* actual, const double* predicted, 
-                            const double* weights, std::size_t n)
-        {
-            // 1) Compute weighted mean of actual
-            double weighted_sum = 0.0;
-            double weight_sum   = 0.0;
-            for (std::size_t i = 0; i < n; ++i) {
-                weighted_sum += weights[i] * actual[i];
-                weight_sum   += weights[i];
+    template <typename T>
+    class weighted_RAE : public regression::task<T> {
+    public:
+        using regression::task<T>::task;
+        
+        inline T compute() const override {
+            const arma::uword n    = this -> actual_.n_elem;
+            const T* actual_ptr    = this -> actual_.memptr();
+            const T* predicted_ptr = this -> predicted_.memptr();
+            const T* weights_ptr   = this -> weights_.memptr();
+            
+            // First pass: compute the weighted mean of actual values.
+            T sum_weighted_actual = 0;
+            T sum_weights = 0;
+            for (arma::uword i = 0; i < n; ++i) {
+                sum_weighted_actual += weights_ptr[i] * actual_ptr[i];
+                sum_weights += weights_ptr[i];
             }
-            double weighted_mean_actual = weighted_sum / weight_sum;
-
-            // 2) Compute numerator and denominator
-            double numerator   = 0.0;
-            double denominator = 0.0;
-
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:numerator, denominator) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double w          = weights[i];
-                double diff_pred  = std::fabs(actual[i] - predicted[i]);
-                double diff_mean  = std::fabs(actual[i] - weighted_mean_actual);
-
-                numerator   += w * diff_pred;
-                denominator += w * diff_mean;
+            T weighted_mean = sum_weighted_actual / sum_weights;
+            
+            // Second pass: compute weighted numerator and denominator.
+            T numerator = 0;
+            T denominator = 0;
+            for (arma::uword i = 0; i < n; ++i) {
+                numerator += weights_ptr[i] * std::abs(actual_ptr[i] - predicted_ptr[i]);
+                denominator += weights_ptr[i] * std::abs(actual_ptr[i] - weighted_mean);
             }
-
-            // 3) Return weighted RAE
-            // No check for zero denominator, per your requirement
             return numerator / denominator;
         }
-
-    private:
-        // Prevents the compiler from doing
-        // bad stuff.
-        RAE()  = delete;
-        ~RAE() = delete;
-};
+    };
+}
 
 #endif
