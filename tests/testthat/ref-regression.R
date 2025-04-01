@@ -149,6 +149,7 @@ ref_rrmse <- function(actual, predicted, w = NULL, normalization = 0) {
     w = if (is.null(w)) rep(1, length(actual)) else w
   ))
 
+  denominator <- 1
   if (normalization == 0) {
     denominator <- weighted.mean(
       actual,
@@ -174,10 +175,7 @@ ref_rrmse <- function(actual, predicted, w = NULL, normalization = 0) {
     
   }
 
-
   RMSE / denominator
-  
-  
 
 }
 

@@ -38,22 +38,22 @@ namespace metric {
             const arma::uword n = this->actual_.n_elem;
             // Compute RMSE in one pass
             T rmse = std::sqrt(arma::accu(arma::square( this -> actual_ - this-> predicted_))/n);
-            T normFactor = 1.0;
+            T normalization_factor = 1.0;
             switch(normalization_) {
                 case 0: // Normalize by mean
-                    normFactor = arma::accu(this->actual_) / n;
+                    normalization_factor = arma::accu(this->actual_) / n;
                     break;
                 case 1: // Normalize by range
-                    normFactor = statistic::range<T>::unweighted(this->actual_);
+                    normalization_factor = statistic::range<T>::unweighted(this->actual_);
                     break;
                 case 2: // Normalize by IQR
-                    normFactor = statistic::IQR<T>::unweighted(this->actual_);
+                    normalization_factor = statistic::IQR<T>::unweighted(this->actual_);
                     break;
                 default:
-                    normFactor = 1.0;
+                    normalization_factor = 1.0;
                     break;
             }
-            return rmse / normFactor;
+            return rmse / normalization_factor;
         }
     };
 
@@ -92,22 +92,22 @@ namespace metric {
             }
             
             T rmse = std::sqrt(weighted_sum / sum_weights);
-            T normFactor = 1.0;
+            T normalization_factor = 1.0;
             switch(normalization_) {
                 case 0: // Normalize by weighted mean
-                    normFactor = arma::accu( this->weights_ % this->actual_ ) / sum_weights;
+                    normalization_factor = arma::accu( this->weights_ % this->actual_ ) / sum_weights;
                     break;
                 case 1: // Normalize by range (unweighted)
-                    normFactor = statistic::range<T>::weighted(this->actual_, this -> weights_);
+                    normalization_factor = statistic::range<T>::weighted(this->actual_, this -> weights_);
                     break;
                 case 2: // Normalize by weighted IQR
-                    normFactor = statistic::IQR<T>::weighted(this->actual_, this->weights_);
+                    normalization_factor = statistic::IQR<T>::weighted(this->actual_, this->weights_);
                     break;
                 default:
-                    normFactor = 1.0;
+                    normalization_factor = 1.0;
                     break;
             }
-            return rmse / normFactor;
+            return rmse / normalization_factor;
         }
     };
 

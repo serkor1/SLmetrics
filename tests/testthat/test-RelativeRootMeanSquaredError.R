@@ -31,7 +31,7 @@ testthat::test_that(
 
     for (weighted in c(FALSE, TRUE)) {
 
-      for (normalization in c(0,1,2)) {
+      for (normalization in c(0, 1, 2, 3)) {
 
         # 0) create regression
         # for the test
