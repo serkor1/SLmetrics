@@ -1,6 +1,8 @@
 #ifndef REGRESSION_RELATIVEROOTMEANSQUAREDERROR_H
 #define REGRESSION_RELATIVEROOTMEANSQUAREDERROR_H
 
+#include "SLmetrics.h"
+#include "regression_RootMeanSquaredError.h"
 #include <Rcpp.h>
 #include "utilities_Package.h"
 #include <cmath>
@@ -12,285 +14,104 @@
   #include <omp.h>
 #endif
 
-class RRMSE {
+namespace metric {
+
+    // Unweighted RRMSE: derived from regression::task.
+    // normalization_:
+    //   0 -> normalize by mean of actual values.
+    //   1 -> normalize by range of actual values.
+    //   2 -> normalize by IQR of actual values.
+    //   default -> no normalization (norm factor = 1.0)
+    template <typename T>
+    class RRMSE : public regression::task<T> {
+        int normalization_;
     public:
+        using regression::task<T>::task;
+        
+        RRMSE(const vctr_t<T>& actual,
+              const vctr_t<T>& predicted,
+              int normalization)
+          : regression::task<T>(actual, predicted),
+            normalization_(normalization) {}
 
-        /**
-        * Compute unweighted RRMSE in one pass for RMSE, plus partial pass for IQR if needed.
-        *
-        * Normalization:
-        *   0 -> Mean
-        *   1 -> Range
-        *   2 -> IQR
-        *   default -> 1.0 (no normalization)
-        *
-        * @param actual      Pointer to array of actual values
-        * @param predicted   Pointer to array of predicted values
-        * @param n           Number of elements
-        * @param normalization  Normalization approach
-        */
-        static double compute(const double* actual,
-                            const double* predicted,
-                            std::size_t n,
-                            int normalization)
-        {
-            double sumSq   = 0.0;
-            double sumVals = 0.0;
-            double minVal  = actual[0];
-            double maxVal  = actual[0];
-
-            #ifdef _OPENMP
-            if (getUseOpenMP()) {
-                #pragma omp parallel
-                {
-                    double localSumSq   = 0.0;
-                    double localSumVals = 0.0;
-                    double localMinVal  = actual[0];
-                    double localMaxVal  = actual[0];
-
-                    #pragma omp for nowait
-                    for (std::size_t i = 0; i < n; ++i) {
-                        double diff = actual[i] - predicted[i];
-                        localSumSq   += diff * diff;
-                        localSumVals += actual[i];
-                        if (actual[i] < localMinVal) localMinVal = actual[i];
-                        if (actual[i] > localMaxVal) localMaxVal = actual[i];
-                    }
-                    #pragma omp critical
-                    {
-                        sumSq   += localSumSq;
-                        sumVals += localSumVals;
-                        if (localMinVal < minVal) minVal = localMinVal;
-                        if (localMaxVal > maxVal) maxVal = localMaxVal;
-                    }
-                }
-            } else
-            #endif
-            {
-                // Serial fallback
-                for (std::size_t i = 0; i < n; ++i) {
-                    double diff = actual[i] - predicted[i];
-                    sumSq   += diff * diff;
-                    sumVals += actual[i];
-                    if (actual[i] < minVal) minVal = actual[i];
-                    if (actual[i] > maxVal) maxVal = actual[i];
-                }
+        inline T compute() const override {
+            const arma::uword n = this->actual_.n_elem;
+            // Compute RMSE in one pass
+            T rmse = std::sqrt(arma::accu(arma::square( this -> actual_ - this-> predicted_))/n);
+            T normFactor = 1.0;
+            switch(normalization_) {
+                case 0: // Normalize by mean
+                    normFactor = arma::accu(this->actual_) / n;
+                    break;
+                case 1: // Normalize by range
+                    normFactor = statistic::range<T>::unweighted(this->actual_);
+                    break;
+                case 2: // Normalize by IQR
+                    normFactor = statistic::IQR<T>::unweighted(this->actual_);
+                    break;
+                default:
+                    normFactor = 1.0;
+                    break;
             }
-
-            // 2) Compute RMSE
-            double rmse = std::sqrt(sumSq / static_cast<double>(n));
-
-            // 3) Compute normalization factor
-            double normFactor = 1.0;
-            switch (normalization) {
-            case 0: // mean
-                normFactor = sumVals / static_cast<double>(n);
-                break;
-
-            case 1: // range
-                normFactor = (maxVal - minVal);
-                break;
-
-            case 2: // IQR -> needs sorting, hence a copy is unavoidable
-                normFactor = unweightedIQR(actual, n);
-                break;
-
-            default:
-                normFactor = 1.0; // no normalization
-                break;
-            }
-
-            // 4) Return RRMSE
             return rmse / normFactor;
         }
+    };
 
+    // Weighted RRMSE: derived from regression::task.
+    // normalization_:
+    //   0 -> normalize by weighted mean.
+    //   1 -> normalize by range (unweighted range).
+    //   2 -> normalize by weighted IQR.
+    //   default -> norm factor = 1.0.
+    template <typename T>
+    class weighted_RRMSE : public regression::task<T> {
+        int normalization_;
+    public:
+        using regression::task<T>::task;
+        
+        weighted_RRMSE(const vctr_t<T>& actual,
+                       const vctr_t<T>& predicted,
+                       const vctr_t<T>& weights,
+                       int normalization)
+          : regression::task<T>(actual, predicted, weights),
+            normalization_(normalization) {}
 
-        /**
-        * Compute weighted RRMSE.
-        *
-        * Weighted RMSE = sqrt( sum( w_i*(a_i - p_i)^2 ) / sum(w_i) ).
-        * Then divided by the normalization factor (weighted or unweighted, depending on 'normalization').
-        *
-        * Normalization:
-        *   0 -> Weighted Mean
-        *   1 -> Range (unweighted)
-        *   2 -> Weighted IQR
-        *   default -> 1.0
-        *
-        * @param actual        Pointer to array of actual values
-        * @param predicted     Pointer to array of predicted values
-        * @param weights       Pointer to array of weights
-        * @param n             Number of elements
-        * @param normalization Normalization approach
-        */
-
-        static double compute(const double* actual,
-                            const double* predicted,
-                            const double* weights,
-                            std::size_t n,
-                            int normalization)
-        {
-            double sumSq     = 0.0;  // sum of w_i * (diff^2)
-            double sumW      = 0.0;  // sum of w_i
-            double sumWVals  = 0.0;  // sum of w_i * actual_i
-            double minVal    = actual[0];
-            double maxVal    = actual[0];
-
-            #ifdef _OPENMP
-            if (getUseOpenMP()) {
-                #pragma omp parallel
-                {
-                    double localSumSq    = 0.0;
-                    double localSumW     = 0.0;
-                    double localSumWVals = 0.0;
-                    double localMinVal   = actual[0];
-                    double localMaxVal   = actual[0];
-
-                    #pragma omp for nowait
-                    for (std::size_t i = 0; i < n; ++i) {
-                        double w    = weights[i];
-                        double diff = actual[i] - predicted[i];
-                        localSumSq    += w * diff * diff;
-                        localSumW     += w;
-                        localSumWVals += w * actual[i];
-
-                        if (actual[i] < localMinVal) localMinVal = actual[i];
-                        if (actual[i] > localMaxVal) localMaxVal = actual[i];
-                    }
-
-                    #pragma omp critical
-                    {
-                        sumSq     += localSumSq;
-                        sumW      += localSumW;
-                        sumWVals  += localSumWVals;
-                        if (localMinVal < minVal) minVal = localMinVal;
-                        if (localMaxVal > maxVal) maxVal = localMaxVal;
-                    }
-                }
-            } else
-            #endif
-            {
-                // Serial
-                for (std::size_t i = 0; i < n; ++i) {
-                    double w    = weights[i];
-                    double diff = actual[i] - predicted[i];
-                    sumSq    += w * diff * diff;
-                    sumW     += w;
-                    sumWVals += w * actual[i];
-
-                    if (actual[i] < minVal) minVal = actual[i];
-                    if (actual[i] > maxVal) maxVal = actual[i];
-                }
+        inline T compute() const override {
+            const arma::uword n    = this -> actual_.n_elem;
+            const T* actual_ptr    = this -> actual_.memptr();
+            const T* predicted_ptr = this -> predicted_.memptr();
+            const T* weights_ptr   = this -> weights_.memptr();
+            
+            T weighted_sum = 0;
+            T sum_weights  = 0;
+            
+            for (arma::uword i = 0; i < n; ++i) {
+                T diff = actual_ptr[i] - predicted_ptr[i];
+                weighted_sum += weights_ptr[i] * diff * diff;
+                sum_weights  += weights_ptr[i];
             }
-
-            // 2) Weighted RMSE
-            double rmse = std::sqrt(sumSq / sumW);
-
-            // 3) Compute normalization factor
-            double normFactor = 1.0;
-            switch (normalization) {
-            case 0: // weighted mean
-                normFactor = sumWVals / sumW;
-                break;
-
-            case 1: // range (unweighted)
-                normFactor = (maxVal - minVal);
-                break;
-
-            case 2: // weighted IQR -> requires sorting
-                normFactor = weightedIQR(actual, weights, n);
-                break;
-
-            default:
-                normFactor = 1.0; // no normalization
-                break;
+            
+            T rmse = std::sqrt(weighted_sum / sum_weights);
+            T normFactor = 1.0;
+            switch(normalization_) {
+                case 0: // Normalize by weighted mean
+                    normFactor = arma::accu( this->weights_ % this->actual_ ) / sum_weights;
+                    break;
+                case 1: // Normalize by range (unweighted)
+                    normFactor = statistic::range<T>::weighted(this->actual_, this -> weights_);
+                    break;
+                case 2: // Normalize by weighted IQR
+                    normFactor = statistic::IQR<T>::weighted(this->actual_, this->weights_);
+                    break;
+                default:
+                    normFactor = 1.0;
+                    break;
             }
-
-            // 4) Weighted RRMSE
             return rmse / normFactor;
         }
+    };
 
-    private:
+} // namespace metric
 
-        static double unweightedIQR(const double* values, std::size_t n)
-        {
-            // Copy once (last resort) because we must sort for quantiles:
-            std::vector<double> tmp(values, values + n);
-            std::sort(tmp.begin(), tmp.end());
-
-            double q1 = unweightedQuantileSorted(tmp, 0.25);
-            double q3 = unweightedQuantileSorted(tmp, 0.75);
-            return (q3 - q1);
-        }
-
-
-        static double weightedIQR(const double* values,
-                                const double* weights,
-                                std::size_t n)
-        {
-            
-            std::vector<std::pair<double,double>> vw;
-            vw.reserve(n);
-            for (std::size_t i = 0; i < n; ++i) {
-                vw.emplace_back(values[i], weights[i]);
-            }
-            
-            std::sort(vw.begin(), vw.end(),
-                    [](auto &a, auto &b){ return a.first < b.first; });
-
-            double q1 = weightedQuantileSorted(vw, 0.25);
-            double q3 = weightedQuantileSorted(vw, 0.75);
-            return (q3 - q1);
-        }
-
-        static double unweightedQuantileSorted(const std::vector<double> &sortedVals,
-                                            double alpha)
-        {
-            // No checks for n>1, alpha in [0,1], etc., per user request
-            std::size_t n = sortedVals.size();
-            double pos = alpha * (n - 1);
-            std::size_t idxLower = static_cast<std::size_t>(pos);
-            std::size_t idxUpper = (idxLower + 1 < n) ? (idxLower + 1) : (n - 1);
-            double frac = pos - static_cast<double>(idxLower);
-
-            double valLower = sortedVals[idxLower];
-            double valUpper = sortedVals[idxUpper];
-            return valLower + (valUpper - valLower) * frac;
-        }
-
-        static double weightedQuantileSorted(const std::vector<std::pair<double,double>> &vw,
-                                            double alpha)
-        {
-            // Sum all weights
-            double totalW = 0.0;
-            for (auto &p : vw) {
-                totalW += p.second;
-            }
-            double target = alpha * totalW;
-
-            double cumW = 0.0;
-            double prevVal = vw[0].first;
-            for (auto &p : vw) {
-                double val = p.first;
-                double w   = p.second;
-                cumW += w;
-
-                if (cumW >= target) {
-
-                    return val;
-
-                }
-                prevVal = val;
-            }
-            
-            return vw.back().first;
-        }
-
-    private:
-        // Prevents the compiler from doing
-        // bad stuff.
-        RRMSE()  = delete;
-        ~RRMSE() = delete;
-};
 
 #endif
