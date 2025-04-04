@@ -80,6 +80,4 @@ namespace statistic {
         return arma::max(x % w) - arma::min(x % w);
         }
     };
-
-
 }

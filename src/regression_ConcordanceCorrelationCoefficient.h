@@ -2,7 +2,6 @@
 #define REGRESSION_CONCORDANCE_CORRELATION_COEFFICIENT_H
 
 #include "SLmetrics.h"
-#include "utilities_COV.h" 
 #include <cstddef>
 #include <cmath>
 
@@ -19,7 +18,6 @@ namespace metric {
 
       inline T compute() const override {
           arma::uword n = this -> actual_.n_elem;
-          if(n < 2) return 0;
 
           const T* ptr_actual = this -> actual_.memptr();
           const T* ptr_predicted = this -> predicted_.memptr();
