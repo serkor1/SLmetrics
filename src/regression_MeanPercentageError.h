@@ -19,7 +19,7 @@ namespace metric {
         
         inline T compute() const override {            
             return arma::accu( 
-                ( this -> actual_ - this -> predicted_) / this ->  actual_ ) / this -> actual_.n_elem;
+                ( this -> actual_ - this -> predicted_) / this -> actual_ ) / this -> actual_.n_elem;
         }
     };
 
