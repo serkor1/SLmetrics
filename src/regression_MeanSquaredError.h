@@ -1,6 +1,7 @@
 #ifndef REGRESSION_MEANSQUAREDERROR_H
 #define REGRESSION_MEANSQUAREDERROR_H
 
+#include "SLmetrics.h"
 #include "utilities_Package.h"
 #include <cmath>
 #include <cstddef>
@@ -9,48 +10,46 @@
     #include <omp.h>
 #endif
 
-class MSE {
-    public:
-        // Unweighted MSE
-        static double compute(const double* actual, const double* predicted, std::size_t n)
-        {
-            double sum_sq_diff = 0.0;
+namespace metric {
+    template <typename T>
+    class MSE : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
+        
+        inline T compute() const override {
+            const arma::uword n = this -> actual_.n_elem;
+            
+            T mse = arma::accu(
+                arma::square( this -> actual_ - this -> predicted_)
+                );
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_sq_diff) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double diff = actual[i] - predicted[i];
-                sum_sq_diff += diff * diff;
-            }
-
-            return sum_sq_diff / static_cast<double>(n);
+            return mse/n;
         }
+    };
 
-        // Weighted MSE
-        static double compute(const double* actual, const double* predicted, const double* weights, std::size_t n)
-        {
-            double sum_sq_diff = 0.0;
-            double sum_w       = 0.0;
-
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_sq_diff, sum_w) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double diff = actual[i] - predicted[i];
-                double w    = weights[i];
-                sum_sq_diff += w * diff * diff;
-                sum_w       += w;
+    template <typename T>
+    class weighted_MSE : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
+        
+        inline T compute() const override {
+            const arma::uword n    = this -> actual_.n_elem;
+            const T* actual_ptr    = this -> actual_.memptr();
+            const T* predicted_ptr = this -> predicted_.memptr();
+            const T* weights_ptr   = this -> weights_.memptr();
+            
+            T weighted_mse = 0;
+            T sum_weights  = 0;
+            
+            for (arma::uword i = 0; i < n; ++i) {
+                T diff = actual_ptr[i] - predicted_ptr[i];
+                weighted_mse += weights_ptr[i] * diff * diff;
+                sum_weights  += weights_ptr[i];
             }
-
-            return sum_sq_diff / sum_w;
+            
+            return weighted_mse / sum_weights;
         }
-
-    private:
-            // Prevents the compiler from doing
-            // bad stuff.
-            MSE()  = delete;
-            ~MSE() = delete;
-};
+    };
+}
 
 #endif

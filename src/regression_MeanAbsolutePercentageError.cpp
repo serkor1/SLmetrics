@@ -6,33 +6,23 @@ using namespace Rcpp;
 //' @method mape numeric
 //' @export
 // [[Rcpp::export(mape.numeric)]]
-double mape(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted)
-{
-    // 1) extract pointers to 
-    // to data, and size
-    const double* ptr_actual    = actual.begin();
-    const double* ptr_predicted = predicted.begin();
-    std::size_t n               = actual.size();
+double mape(
+    const Rcpp::NumericVector& actual, 
+    const Rcpp::NumericVector& predicted) {
 
-    // 2) calculate and
-    // return value
-    return MAPE::compute(ptr_actual, ptr_predicted, n);
+        metric::MAPE<double> performance(actual, predicted);
+        return performance.compute();
 }
 
 //' @rdname mape
 //' @method weighted.mape numeric
 //' @export
 // [[Rcpp::export(weighted.mape.numeric)]]
-double weighted_mape(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w)
-{
-    // 1) extract pointers to 
-    // to data, and size
-    const double* ptr_actual    = actual.begin();
-    const double* ptr_predicted = predicted.begin();
-    const double* ptr_w         = w.begin();
-    std::size_t n               = actual.size();
-    
-    // 2) calculate and
-    // return value
-    return MAPE::compute(ptr_actual, ptr_predicted, ptr_w, n);
+double weighted_mape(
+    const Rcpp::NumericVector& actual, 
+    const Rcpp::NumericVector& predicted, 
+    const Rcpp::NumericVector& w) {
+        
+        metric::weighted_MAPE<double> performance(actual, predicted, w);
+        return performance.compute();
 }

@@ -1,6 +1,7 @@
 #ifndef REGRESSION_MEANABSOLUTEPERCENTAGEERROR_H
 #define REGRESSION_MEANABSOLUTEPERCENTAGEERROR_H
 
+#include "SLmetrics.h"
 #include "utilities_Package.h"
 #include <cmath>
 #include <cstddef>
@@ -9,49 +10,39 @@
     #include <omp.h>
 #endif
 
-class MAPE {
-    public:
-        // Unweighted MAPE
-        static double compute(const double* actual, const double* predicted, std::size_t n)
-        {
-            double sum_ap = 0.0;
-
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_ap) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double diff_ratio = std::fabs(actual[i] - predicted[i]) / actual[i];
-                sum_ap += diff_ratio;
+namespace metric {
+    template <typename T>
+    class MAPE : public regression::task<T> {
+      public:
+        using regression::task<T>::task;
+        
+        inline T compute() const override {
+            arma::uword n = this -> actual_.n_elem;
+            T sum_val = 0;
+            for (arma::uword i = 0; i < n; ++i) {
+                sum_val += std::abs( this -> actual_[i] - this -> predicted_[i]) / this -> actual_[i];
             }
-
-            return sum_ap / static_cast<double>(n);
+            return sum_val / n;
         }
+    };
 
-        // Weighted MAPE
-        static double compute(const double* actual, const double* predicted, 
-                            const double* weights, std::size_t n)
-        {
-            double sum_ap_w = 0.0;
-            double sum_w    = 0.0;
-
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_ap_w, sum_w) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double w          = weights[i];
-                double diff_ratio = std::fabs(actual[i] - predicted[i]) / actual[i];
-                sum_ap_w += w * diff_ratio;
-                sum_w    += w;
+    template <typename T>
+    class weighted_MAPE : public regression::task<T> {
+      public:
+        using regression::task<T>::task;
+        
+        inline T compute() const override {
+            arma::uword n = this -> actual_.n_elem;
+            T sum_val = 0, sum_w = 0;
+            for (arma::uword i = 0; i < n; ++i) {
+                T diff_ratio = std::abs( this -> actual_[i] - this -> predicted_[i]) / this -> actual_[i];
+                sum_val += this -> weights_[i] * diff_ratio;
+                sum_w   += this -> weights_[i];
             }
-
-            return sum_ap_w / sum_w;
+            return sum_val / sum_w;
         }
+    };
+}
 
-    private:
-            // Prevents the compiler from doing
-            // bad stuff.
-            MAPE()  = delete;
-            ~MAPE() = delete;
-};
 
 #endif

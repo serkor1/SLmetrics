@@ -1,6 +1,7 @@
 #ifndef REGRESSION_SYMMETRICMEANABSOLUTEPERCENTAGEERROR_H
 #define REGRESSION_SYMMETRICMEANABSOLUTEPERCENTAGEERROR_H
 
+#include "SLmetrics.h"
 #include "utilities_Package.h"
 #include <cmath>
 #include <cstddef>
@@ -9,52 +10,43 @@
     #include <omp.h>
 #endif
 
-class SMAPE {
-    public:
-        // Unweighted SMAPE
-        static double compute(const double* actual, const double* predicted, std::size_t n)
-        {
-            double sum_smape = 0.0;
+namespace metric {
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_smape) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double numerator   = std::fabs(actual[i] - predicted[i]);
-                double denominator = (std::fabs(actual[i]) + std::fabs(predicted[i])) / 2.0;
-                double value       = numerator / denominator;
-                sum_smape += value;
+    template <typename T>
+    class SMAPE : public regression::task<T> {
+      public:
+        using regression::task<T>::task;
+        
+        inline T compute() const override {
+            arma::uword n = this -> actual_.n_elem;
+            T sum_val = 0;
+            for (arma::uword i = 0; i < n; ++i) {
+                T numerator   = std::abs( this -> actual_[i] - this -> predicted_[i]);
+                T denominator = (std::abs( this -> actual_[i]) + std::abs( this -> predicted_[i])) / static_cast<T>(2);
+                sum_val += numerator / denominator;
             }
-
-            return sum_smape / static_cast<double>(n);
+            return sum_val / n;
         }
+    };
 
-        // Weighted SMAPE
-        static double compute(const double* actual, const double* predicted, const double* weights, std::size_t n)
-        {
-            double sum_smape = 0.0;
-            double sum_w     = 0.0;
-
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_smape, sum_w) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double numerator   = std::fabs(actual[i] - predicted[i]);
-                double denominator = (std::fabs(actual[i]) + std::fabs(predicted[i])) / 2.0;
-                double w           = weights[i];
-                double value       = numerator / denominator;
-
-                sum_smape += w * value;
-                sum_w     += w;
+    template <typename T>
+    class weighted_SMAPE : public regression::task<T> {
+      public:
+        using regression::task<T>::task;
+        
+        inline T compute() const override {
+            arma::uword n = this -> actual_.n_elem;
+            T sum_val = 0, sum_w = 0;
+            for (arma::uword i = 0; i < n; ++i) {
+                T numerator   = std::abs( this -> actual_[i] - this -> predicted_[i]);
+                T denominator = (std::abs( this -> actual_[i]) + std::abs( this -> predicted_[i]) ) / static_cast<T>(2);
+                T value       = numerator / denominator;
+                sum_val += this -> weights_[i] * value;
+                sum_w   += this -> weights_[i];
             }
-
-            return sum_smape / sum_w;
+            return sum_val / sum_w;
         }
-    private:
-            // Prevents the compiler from doing
-            // bad stuff.
-            SMAPE()  = delete;
-            ~SMAPE() = delete;
-};
+    };
+}
 
 #endif

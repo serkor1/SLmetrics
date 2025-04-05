@@ -1,6 +1,7 @@
 #ifndef REGRESSION_ROOTMEANSQUAREDLOGARITHMICERROR_H
 #define REGRESSION_ROOTMEANSQUAREDLOGARITHMICERROR_H
 
+#include "SLmetrics.h"
 #include "utilities_Package.h"
 #include <cmath>
 #include <cstddef>
@@ -9,54 +10,44 @@
     #include <omp.h>
 #endif
 
-class RMSLE {
+namespace metric {
+    template <typename T>
+    class RMSLE : public regression::task<T> {
     public:
-        // Unweighted RMSLE
-        static double compute(const double* actual, const double* predicted, std::size_t n)
-        {
-            double sum_log_diff_sq = 0.0;
-
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_log_diff_sq) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double log_a = std::log(actual[i] + 1.0);
-                double log_p = std::log(predicted[i] + 1.0);
-                double diff  = log_a - log_p;
-                sum_log_diff_sq += diff * diff;
-            }
-
-            double mean_log_diff_sq = sum_log_diff_sq / static_cast<double>(n);
-            return std::sqrt(mean_log_diff_sq);
+        using regression::task<T>::task;
+        
+        inline T compute() const override {
+            const arma::uword n = this->actual_.n_elem;
+            return std::sqrt(
+                arma::accu( arma::square( arma::log( this -> predicted_ + 1) - arma::log( this -> actual_ + 1) ) ) / n
+                );
         }
 
-        // Weighted RMSLE
-        static double compute(const double* actual, const double* predicted, const double* weights, std::size_t n)
-        {
-            double sum_log_diff_sq = 0.0;
-            double sum_w           = 0.0;
+    };
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_log_diff_sq, sum_w) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double w     = weights[i];
-                double log_a = std::log(actual[i] + 1.0);
-                double log_p = std::log(predicted[i] + 1.0);
-                double diff  = log_a - log_p;
-                sum_log_diff_sq += w * diff * diff;
-                sum_w           += w;
+    template <typename T>
+    class weighted_RMSLE : public regression::task<T> {
+    public:
+        using regression::task<T>::task;
+        
+        inline T compute() const override {
+            const arma::uword n    = this -> actual_.n_elem;
+            const T* actual_ptr    = this -> actual_.memptr();
+            const T* predicted_ptr = this -> predicted_.memptr();
+            const T* weights_ptr   = this -> weights_.memptr();
+            
+            T weighted_sum = 0;
+            T sum_weights  = 0;
+            for (arma::uword i = 0; i < n; ++i) {
+                T log_actual = std::log(actual_ptr[i] + 1);
+                T log_pred   = std::log(predicted_ptr[i] + 1);
+                T diff_log   = log_pred - log_actual;
+                weighted_sum += weights_ptr[i] * diff_log * diff_log;
+                sum_weights  += weights_ptr[i];
             }
-
-            double mean_log_diff_sq = sum_log_diff_sq / sum_w;
-            return std::sqrt(mean_log_diff_sq);
+            return std::sqrt(weighted_sum / sum_weights);
         }
-
-    private:
-            // Prevents the compiler from doing
-            // bad stuff.
-            RMSLE()  = delete;
-            ~RMSLE() = delete;
-};
+    };
+}
 
 #endif

@@ -1,4 +1,4 @@
-#include <Rcpp.h>
+#include "SLmetrics.h"
 #include "regression_RootMeanSquaredError.h"
 using namespace Rcpp;
 
@@ -6,40 +6,34 @@ using namespace Rcpp;
 //' @method rmse numeric
 //' @export
 // [[Rcpp::export(rmse.numeric)]]
-double rmse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted) 
-{
-    // 1) Extract pointers
-    // to the data
-    const double* ptr_actual    = actual.begin();
-    const double* ptr_predicted = predicted.begin();
+double rmse(
+    const Rcpp::NumericVector& actual,
+    const Rcpp::NumericVector& predicted) {
 
-    // 2) Extract the size
-    // of the actual vector
-    std::size_t n = actual.size();
+        // 1) define metric 
+        // object
+        metric::RMSE<double> performance(actual, predicted);
 
-    // 3) Calculate RMSE
-    return RMSE::compute(ptr_actual, ptr_predicted, n);
-    
-
+        // 2) calculate 
+        // value
+        return performance.compute();
 }
 
 //' @rdname rmse
 //' @method weighted.rmse numeric
 //' @export
 // [[Rcpp::export(weighted.rmse.numeric)]]
-double weighted_rmse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w)
-{
-    // 1) Extract pointers
-    // to the data
-    const double* ptr_actual    = actual.begin();
-    const double* ptr_predicted = predicted.begin();
-    const double* ptr_w         = w.begin();
+double weighted_rmse(
+    const Rcpp::NumericVector& actual, 
+    const Rcpp::NumericVector& predicted,
+    const Rcpp::NumericVector& w) {
 
-    // 2) Extract the size
-    // of the actual vector
-    std::size_t n = actual.size();
+        // 1) define metric 
+        // object
+        metric::weighted_RMSE<double> performance(actual, predicted, w);
 
-    // 3) Calculate RMSE
-    return RMSE::compute(ptr_actual, ptr_predicted, ptr_w, n);
+        // 2) calculate 
+        // value
+        return performance.compute();
    
 }

@@ -149,6 +149,7 @@ ref_rrmse <- function(actual, predicted, w = NULL, normalization = 0) {
     w = if (is.null(w)) rep(1, length(actual)) else w
   ))
 
+  denominator <- 1
   if (normalization == 0) {
     denominator <- weighted.mean(
       actual,
@@ -157,7 +158,7 @@ ref_rrmse <- function(actual, predicted, w = NULL, normalization = 0) {
   } 
 
   if (normalization == 1) {
-    denominator <- diff(range(actual))
+    denominator <- if (is.null(w)) diff(range(actual)) else diff(range(w*actual))
   }
 
   
@@ -165,7 +166,8 @@ ref_rrmse <- function(actual, predicted, w = NULL, normalization = 0) {
   if (normalization == 2) {
     if (is.null(w)) {
       denominator <- IQR(
-        actual
+        actual,
+        type = 5
       )
     } else {
       denominator <- weighted_quantile(actual, weights = w, alpha = 0.75) - weighted_quantile(actual, weights = w, alpha = 0.25)
@@ -173,10 +175,7 @@ ref_rrmse <- function(actual, predicted, w = NULL, normalization = 0) {
     
   }
 
-
   RMSE / denominator
-  
-  
 
 }
 
