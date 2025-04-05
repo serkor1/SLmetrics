@@ -1,8 +1,4 @@
-// [[Rcpp::depends(RcppEigen)]]
-#include <RcppEigen.h>
-#include "classification_ConfusionMatrix.h"
-#include <Rcpp.h>
-#include <memory>
+#include "SLmetrics.h"
 
 using namespace Rcpp;
 
@@ -14,9 +10,8 @@ Rcpp::NumericMatrix confusion_matrix(
     const Rcpp::IntegerVector& actual, 
     const Rcpp::IntegerVector& predicted) {
 
-        auto args = std::make_unique<ConfusionMatrixClass>(actual, predicted);
-        return args -> construct_matrix();
-
+        classification::confusion_matrix<int> cmatrix(actual, predicted);
+        return cmatrix.construct_matrix();
 }
 
 //' @rdname cmatrix
@@ -28,7 +23,6 @@ Rcpp::NumericMatrix weighted_confusion_matrix(
     const Rcpp::IntegerVector& predicted, 
     const Rcpp::NumericVector& w) {
 
-        auto args = std::make_unique<ConfusionMatrixClass>(actual, predicted);
-        return args->construct_matrix(w);
-
+        classification::confusion_matrix<int> cmatrix(actual, predicted);
+        return cmatrix.construct_matrix(w);
 }
