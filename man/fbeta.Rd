@@ -8,11 +8,19 @@
 \alias{weighted.fbeta}
 \title{\eqn{F_{\beta}}-score}
 \usage{
-\method{fbeta}{factor}(actual, predicted, beta = 1, micro = NULL, na.rm = TRUE, ...)
+\method{fbeta}{factor}(actual, predicted, beta = 1, estimator = 0L, na.rm = TRUE, ...)
 
-\method{weighted.fbeta}{factor}(actual, predicted, w, beta = 1, micro = NULL, na.rm = TRUE, ...)
+\method{weighted.fbeta}{factor}(
+  actual,
+  predicted,
+  w,
+  beta = 1,
+  estimator = 0L,
+  na.rm = TRUE,
+  ...
+)
 
-\method{fbeta}{cmatrix}(x, beta = 1, micro = NULL, na.rm = TRUE, ...)
+\method{fbeta}{cmatrix}(x, beta = 1, estimator = 0L, na.rm = TRUE, ...)
 
 ## Generic S3 method
 fbeta(
@@ -38,9 +46,6 @@ weighted.fbeta(
 
 \item{beta}{A <\link{numeric}> vector of \link{length} \eqn{1} (default: \eqn{1}).}
 
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
-
 \item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
 This argument is only relevant when \code{micro != NULL}.
 When \code{na.rm = TRUE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))}.
@@ -51,6 +56,9 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
+
+\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
+micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
 }
 \value{
 If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k

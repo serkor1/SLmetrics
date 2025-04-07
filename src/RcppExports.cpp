@@ -13,7 +13,7 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // Accuracy
-Rcpp::NumericVector Accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
+double Accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
 RcppExport SEXP _SLmetrics_Accuracy(SEXP actualSEXP, SEXP predictedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -25,7 +25,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // weighted_Accuracy
-Rcpp::NumericVector weighted_Accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w);
+double weighted_Accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w);
 RcppExport SEXP _SLmetrics_weighted_Accuracy(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -49,7 +49,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // balanced_accuracy
-Rcpp::NumericVector balanced_accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const bool& adjust, bool na_rm);
+double balanced_accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const bool& adjust, bool na_rm);
 RcppExport SEXP _SLmetrics_balanced_accuracy(SEXP actualSEXP, SEXP predictedSEXP, SEXP adjustSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -63,7 +63,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // weighted_balanced_accuracy
-Rcpp::NumericVector weighted_balanced_accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, const bool& adjust, bool na_rm);
+double weighted_balanced_accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, const bool& adjust, bool na_rm);
 RcppExport SEXP _SLmetrics_weighted_balanced_accuracy(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP adjustSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -78,7 +78,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cmatrix_balanced_accuracy
-Rcpp::NumericVector cmatrix_balanced_accuracy(const Rcpp::NumericMatrix& x, const bool& adjust, bool na_rm);
+double cmatrix_balanced_accuracy(const Rcpp::NumericMatrix& x, const bool& adjust, bool na_rm);
 RcppExport SEXP _SLmetrics_cmatrix_balanced_accuracy(SEXP xSEXP, SEXP adjustSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -91,7 +91,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // CohensKappa
-Rcpp::NumericVector CohensKappa(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const double& beta);
+double CohensKappa(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const double& beta);
 RcppExport SEXP _SLmetrics_CohensKappa(SEXP actualSEXP, SEXP predictedSEXP, SEXP betaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -104,7 +104,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // weighted_CohensKappa
-Rcpp::NumericVector weighted_CohensKappa(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, const double& beta);
+double weighted_CohensKappa(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, const double& beta);
 RcppExport SEXP _SLmetrics_weighted_CohensKappa(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP betaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -118,7 +118,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cmatrix_CohensKappa
-Rcpp::NumericVector cmatrix_CohensKappa(const Rcpp::NumericMatrix& x, const double& beta);
+double cmatrix_CohensKappa(const Rcpp::NumericMatrix& x, const double& beta);
 RcppExport SEXP _SLmetrics_cmatrix_CohensKappa(SEXP xSEXP, SEXP betaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -231,24 +231,24 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// FBetaScore
-Rcpp::NumericVector FBetaScore(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const double& beta, Rcpp::Nullable<bool> micro, bool na_rm);
-RcppExport SEXP _SLmetrics_FBetaScore(SEXP actualSEXP, SEXP predictedSEXP, SEXP betaSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
+// fbeta_score
+Rcpp::NumericVector fbeta_score(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const double& beta, const int& estimator, bool na_rm);
+RcppExport SEXP _SLmetrics_fbeta_score(SEXP actualSEXP, SEXP predictedSEXP, SEXP betaSEXP, SEXP estimatorSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type predicted(predictedSEXP);
     Rcpp::traits::input_parameter< const double& >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
+    Rcpp::traits::input_parameter< const int& >::type estimator(estimatorSEXP);
     Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(FBetaScore(actual, predicted, beta, micro, na_rm));
+    rcpp_result_gen = Rcpp::wrap(fbeta_score(actual, predicted, beta, estimator, na_rm));
     return rcpp_result_gen;
 END_RCPP
 }
-// weighted_FBetaScore
-Rcpp::NumericVector weighted_FBetaScore(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, const double& beta, Rcpp::Nullable<bool> micro, bool na_rm);
-RcppExport SEXP _SLmetrics_weighted_FBetaScore(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP betaSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
+// weighted_fbeta_score
+Rcpp::NumericVector weighted_fbeta_score(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, const double& beta, const int& estimator, bool na_rm);
+RcppExport SEXP _SLmetrics_weighted_fbeta_score(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP betaSEXP, SEXP estimatorSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -256,23 +256,23 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type predicted(predictedSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
     Rcpp::traits::input_parameter< const double& >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
+    Rcpp::traits::input_parameter< const int& >::type estimator(estimatorSEXP);
     Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(weighted_FBetaScore(actual, predicted, w, beta, micro, na_rm));
+    rcpp_result_gen = Rcpp::wrap(weighted_fbeta_score(actual, predicted, w, beta, estimator, na_rm));
     return rcpp_result_gen;
 END_RCPP
 }
-// cmatrix_FBetaScore
-Rcpp::NumericVector cmatrix_FBetaScore(const Rcpp::NumericMatrix& x, const double& beta, Rcpp::Nullable<bool> micro, bool na_rm);
-RcppExport SEXP _SLmetrics_cmatrix_FBetaScore(SEXP xSEXP, SEXP betaSEXP, SEXP microSEXP, SEXP na_rmSEXP) {
+// cmatrix_fbeta_score
+Rcpp::NumericVector cmatrix_fbeta_score(const Rcpp::NumericMatrix& x, const double& beta, const int& estimator, bool na_rm);
+RcppExport SEXP _SLmetrics_cmatrix_fbeta_score(SEXP xSEXP, SEXP betaSEXP, SEXP estimatorSEXP, SEXP na_rmSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const double& >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< Rcpp::Nullable<bool> >::type micro(microSEXP);
+    Rcpp::traits::input_parameter< const int& >::type estimator(estimatorSEXP);
     Rcpp::traits::input_parameter< bool >::type na_rm(na_rmSEXP);
-    rcpp_result_gen = Rcpp::wrap(cmatrix_FBetaScore(x, beta, micro, na_rm));
+    rcpp_result_gen = Rcpp::wrap(cmatrix_fbeta_score(x, beta, estimator, na_rm));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -444,26 +444,75 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// FowlkesMallowsIndex
-Rcpp::NumericVector FowlkesMallowsIndex(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
-RcppExport SEXP _SLmetrics_FowlkesMallowsIndex(SEXP actualSEXP, SEXP predictedSEXP) {
+// fowlkes_mallows_index
+double fowlkes_mallows_index(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
+RcppExport SEXP _SLmetrics_fowlkes_mallows_index(SEXP actualSEXP, SEXP predictedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type predicted(predictedSEXP);
-    rcpp_result_gen = Rcpp::wrap(FowlkesMallowsIndex(actual, predicted));
+    rcpp_result_gen = Rcpp::wrap(fowlkes_mallows_index(actual, predicted));
     return rcpp_result_gen;
 END_RCPP
 }
-// cmatrix_FowlkesMallowsIndexClass
-Rcpp::NumericVector cmatrix_FowlkesMallowsIndexClass(const Rcpp::NumericMatrix& x);
-RcppExport SEXP _SLmetrics_cmatrix_FowlkesMallowsIndexClass(SEXP xSEXP) {
+// weighted_fowlkes_mallows_index
+double weighted_fowlkes_mallows_index(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w);
+RcppExport SEXP _SLmetrics_weighted_fowlkes_mallows_index(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_fowlkes_mallows_index(actual, predicted, w));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cmatrix_fowlkes_mallows_index
+double cmatrix_fowlkes_mallows_index(const Rcpp::NumericMatrix& x);
+RcppExport SEXP _SLmetrics_cmatrix_fowlkes_mallows_index(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(cmatrix_FowlkesMallowsIndexClass(x));
+    rcpp_result_gen = Rcpp::wrap(cmatrix_fowlkes_mallows_index(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// hamming_loss
+double hamming_loss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
+RcppExport SEXP _SLmetrics_hamming_loss(SEXP actualSEXP, SEXP predictedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type predicted(predictedSEXP);
+    rcpp_result_gen = Rcpp::wrap(hamming_loss(actual, predicted));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_hamming_loss
+double weighted_hamming_loss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w);
+RcppExport SEXP _SLmetrics_weighted_hamming_loss(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_hamming_loss(actual, predicted, w));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cmatrix_hamming_loss
+double cmatrix_hamming_loss(const Rcpp::NumericMatrix& x);
+RcppExport SEXP _SLmetrics_cmatrix_hamming_loss(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(cmatrix_hamming_loss(x));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -621,7 +670,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // MatthewsCorrelationCoefficient
-Rcpp::NumericVector MatthewsCorrelationCoefficient(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
+double MatthewsCorrelationCoefficient(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
 RcppExport SEXP _SLmetrics_MatthewsCorrelationCoefficient(SEXP actualSEXP, SEXP predictedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -632,21 +681,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// weigthed_MatthewsCorrelationCoefficient
-Rcpp::NumericVector weigthed_MatthewsCorrelationCoefficient(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector w);
-RcppExport SEXP _SLmetrics_weigthed_MatthewsCorrelationCoefficient(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+// weighted_MatthewsCorrelationCoefficient
+double weighted_MatthewsCorrelationCoefficient(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w);
+RcppExport SEXP _SLmetrics_weighted_MatthewsCorrelationCoefficient(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector >::type w(wSEXP);
-    rcpp_result_gen = Rcpp::wrap(weigthed_MatthewsCorrelationCoefficient(actual, predicted, w));
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_MatthewsCorrelationCoefficient(actual, predicted, w));
     return rcpp_result_gen;
 END_RCPP
 }
 // cmatrix_MatthewsCorrelationCoefficient
-Rcpp::NumericVector cmatrix_MatthewsCorrelationCoefficient(const Rcpp::NumericMatrix& x);
+double cmatrix_MatthewsCorrelationCoefficient(const Rcpp::NumericMatrix& x);
 RcppExport SEXP _SLmetrics_cmatrix_MatthewsCorrelationCoefficient(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -657,7 +706,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // PhiCoefficient
-Rcpp::NumericVector PhiCoefficient(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
+double PhiCoefficient(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
 RcppExport SEXP _SLmetrics_PhiCoefficient(SEXP actualSEXP, SEXP predictedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -669,20 +718,20 @@ BEGIN_RCPP
 END_RCPP
 }
 // weighted_PhiCoefficient
-Rcpp::NumericVector weighted_PhiCoefficient(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector w);
+double weighted_PhiCoefficient(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w);
 RcppExport SEXP _SLmetrics_weighted_PhiCoefficient(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type predicted(predictedSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
     rcpp_result_gen = Rcpp::wrap(weighted_PhiCoefficient(actual, predicted, w));
     return rcpp_result_gen;
 END_RCPP
 }
 // cmatrix_PhiCoefficient
-Rcpp::NumericVector cmatrix_PhiCoefficient(const Rcpp::NumericMatrix& x);
+double cmatrix_PhiCoefficient(const Rcpp::NumericMatrix& x);
 RcppExport SEXP _SLmetrics_cmatrix_PhiCoefficient(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1259,7 +1308,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // ZeroOneLoss
-Rcpp::NumericVector ZeroOneLoss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
+double ZeroOneLoss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted);
 RcppExport SEXP _SLmetrics_ZeroOneLoss(SEXP actualSEXP, SEXP predictedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1271,7 +1320,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // weighted_ZeroOneLoss
-Rcpp::NumericVector weighted_ZeroOneLoss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w);
+double weighted_ZeroOneLoss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w);
 RcppExport SEXP _SLmetrics_weighted_ZeroOneLoss(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1284,7 +1333,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cmatrix_ZeroOneLoss
-Rcpp::NumericVector cmatrix_ZeroOneLoss(const Rcpp::NumericMatrix& x);
+double cmatrix_ZeroOneLoss(const Rcpp::NumericMatrix& x);
 RcppExport SEXP _SLmetrics_cmatrix_ZeroOneLoss(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -1821,9 +1870,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_ShannonsEntropy", (DL_FUNC) &_SLmetrics_ShannonsEntropy, 3},
     {"_SLmetrics_RelativeEntropy", (DL_FUNC) &_SLmetrics_RelativeEntropy, 4},
     {"_SLmetrics_CrossEntropy", (DL_FUNC) &_SLmetrics_CrossEntropy, 4},
-    {"_SLmetrics_FBetaScore", (DL_FUNC) &_SLmetrics_FBetaScore, 5},
-    {"_SLmetrics_weighted_FBetaScore", (DL_FUNC) &_SLmetrics_weighted_FBetaScore, 6},
-    {"_SLmetrics_cmatrix_FBetaScore", (DL_FUNC) &_SLmetrics_cmatrix_FBetaScore, 4},
+    {"_SLmetrics_fbeta_score", (DL_FUNC) &_SLmetrics_fbeta_score, 5},
+    {"_SLmetrics_weighted_fbeta_score", (DL_FUNC) &_SLmetrics_weighted_fbeta_score, 6},
+    {"_SLmetrics_cmatrix_fbeta_score", (DL_FUNC) &_SLmetrics_cmatrix_fbeta_score, 4},
     {"_SLmetrics_FalseDiscoveryRate", (DL_FUNC) &_SLmetrics_FalseDiscoveryRate, 4},
     {"_SLmetrics_weighted_FalseDiscoveryRate", (DL_FUNC) &_SLmetrics_weighted_FalseDiscoveryRate, 5},
     {"_SLmetrics_cmatrix_FalseDiscoveryRate", (DL_FUNC) &_SLmetrics_cmatrix_FalseDiscoveryRate, 3},
@@ -1836,8 +1885,12 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_Fallout", (DL_FUNC) &_SLmetrics_Fallout, 4},
     {"_SLmetrics_weighted_Fallout", (DL_FUNC) &_SLmetrics_weighted_Fallout, 5},
     {"_SLmetrics_cmatrix_Fallout", (DL_FUNC) &_SLmetrics_cmatrix_Fallout, 3},
-    {"_SLmetrics_FowlkesMallowsIndex", (DL_FUNC) &_SLmetrics_FowlkesMallowsIndex, 2},
-    {"_SLmetrics_cmatrix_FowlkesMallowsIndexClass", (DL_FUNC) &_SLmetrics_cmatrix_FowlkesMallowsIndexClass, 1},
+    {"_SLmetrics_fowlkes_mallows_index", (DL_FUNC) &_SLmetrics_fowlkes_mallows_index, 2},
+    {"_SLmetrics_weighted_fowlkes_mallows_index", (DL_FUNC) &_SLmetrics_weighted_fowlkes_mallows_index, 3},
+    {"_SLmetrics_cmatrix_fowlkes_mallows_index", (DL_FUNC) &_SLmetrics_cmatrix_fowlkes_mallows_index, 1},
+    {"_SLmetrics_hamming_loss", (DL_FUNC) &_SLmetrics_hamming_loss, 2},
+    {"_SLmetrics_weighted_hamming_loss", (DL_FUNC) &_SLmetrics_weighted_hamming_loss, 3},
+    {"_SLmetrics_cmatrix_hamming_loss", (DL_FUNC) &_SLmetrics_cmatrix_hamming_loss, 1},
     {"_SLmetrics_JaccardIndex", (DL_FUNC) &_SLmetrics_JaccardIndex, 4},
     {"_SLmetrics_weighted_JaccardIndex", (DL_FUNC) &_SLmetrics_weighted_JaccardIndex, 5},
     {"_SLmetrics_cmatrix_JaccardIndex", (DL_FUNC) &_SLmetrics_cmatrix_JaccardIndex, 3},
@@ -1850,7 +1903,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_LogLoss", (DL_FUNC) &_SLmetrics_LogLoss, 3},
     {"_SLmetrics_weighted_LogLoss", (DL_FUNC) &_SLmetrics_weighted_LogLoss, 4},
     {"_SLmetrics_MatthewsCorrelationCoefficient", (DL_FUNC) &_SLmetrics_MatthewsCorrelationCoefficient, 2},
-    {"_SLmetrics_weigthed_MatthewsCorrelationCoefficient", (DL_FUNC) &_SLmetrics_weigthed_MatthewsCorrelationCoefficient, 3},
+    {"_SLmetrics_weighted_MatthewsCorrelationCoefficient", (DL_FUNC) &_SLmetrics_weighted_MatthewsCorrelationCoefficient, 3},
     {"_SLmetrics_cmatrix_MatthewsCorrelationCoefficient", (DL_FUNC) &_SLmetrics_cmatrix_MatthewsCorrelationCoefficient, 1},
     {"_SLmetrics_PhiCoefficient", (DL_FUNC) &_SLmetrics_PhiCoefficient, 2},
     {"_SLmetrics_weighted_PhiCoefficient", (DL_FUNC) &_SLmetrics_weighted_PhiCoefficient, 3},
