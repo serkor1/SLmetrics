@@ -1,35 +1,47 @@
-// [[Rcpp::depends(RcppEigen)]]
-#include <RcppEigen.h>
-#include "classification_DiagnosticOddsRatio.h" // DiagnosticOddsRatioClass definition
+#include <Rcpp.h>
+#include "classification_DiagnosticOddsRatio.h"
 
-using namespace Rcpp;
+// declare metric
+using dor_impl = metric::diagnostic_odds_ratio<int>;
 
 //' @rdname dor
 //' @method dor factor
 //' @export
 // [[Rcpp::export(dor.factor)]]
-Rcpp::NumericVector DiagnosticOddsRatio(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) 
-{
-    DiagnosticOddsRatioClass cook;
-    return recipe(cook, actual, predicted);
+Rcpp::NumericVector diagnostic_odds_ratio(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+        
+        dor_impl performance(actual, predicted, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
 //' @rdname dor
 //' @method weighted.dor factor
 //' @export
 // [[Rcpp::export(weighted.dor.factor)]]
-Rcpp::NumericVector weighted_DiagnosticOddsRatio(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w) 
-{
-    DiagnosticOddsRatioClass cook;
-    return recipe(cook, actual, predicted, w);
+Rcpp::NumericVector weighted_diagnostic_odds_ratio(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const Rcpp::NumericVector& w, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+
+        dor_impl performance(actual, predicted, w, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
 //' @rdname dor
 //' @method dor cmatrix
 //' @export
 // [[Rcpp::export(dor.cmatrix)]]
-Rcpp::NumericVector cmatrix_DiagnosticOddsRatio(const Rcpp::NumericMatrix& x) 
-{
-    DiagnosticOddsRatioClass cook;
-    return recipe(cook, x);
+Rcpp::NumericVector cmatrix_diagnostic_odds_ratio(
+    const Rcpp::NumericMatrix& x,
+    const int& estimator = 0,
+    bool na_rm = true) {
+        
+        dor_impl performance(x, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
