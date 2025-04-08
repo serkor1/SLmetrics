@@ -13,17 +13,17 @@
 \alias{weighted.fallout}
 \title{False Positive Rate}
 \usage{
-\method{fpr}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+\method{fpr}{factor}(actual, predicted, estimator = 0L, na.rm = TRUE, ...)
 
-\method{weighted.fpr}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+\method{weighted.fpr}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
 
-\method{fpr}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
+\method{fpr}{cmatrix}(x, estimator = 0L, na.rm = TRUE, ...)
 
-\method{fallout}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+\method{fallout}{factor}(actual, predicted, estimator = 0L, na.rm = TRUE, ...)
 
-\method{weighted.fallout}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+\method{weighted.fallout}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
 
-\method{fallout}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
+\method{fallout}{cmatrix}(x, estimator = 0L, na.rm = TRUE, ...)
 
 ## Generic S3 method
 fpr(
@@ -60,9 +60,6 @@ weighted.fallout(
 
 \item{predicted}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
-
 \item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
 This argument is only relevant when \code{micro != NULL}.
 When \code{na.rm = TRUE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))}.
@@ -73,6 +70,9 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
+
+\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
+micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
 }
 \value{
 If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
