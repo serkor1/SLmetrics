@@ -35,10 +35,10 @@ weighted.fer(
 \item{predicted}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{estimator}{An <\link{integer}>-value of \link{length} \eqn{1} (default: \eqn{0}).
-\describe{
-\item 0: Classwise metric
-\item 1: Micro averaged metric
-\item 2: Macro averaged metric
+\itemize{
+\item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
+\item 1 - a <\link{numeric}> value (Micro averaged metric)
+\item 2 - a <\link{numeric}> value (macro averaged metric)
 }}
 
 \item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
@@ -53,11 +53,11 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 }
 \value{
-If \code{estimator} is given as,
-\describe{
-\item 0: a named <\link{numeric}>-vector of \link{length} k (class-wise)
-\item 1: a <\link{numeric}> value (Micro averaged metric)
-\item 2: a <\link{numeric}> value (macro averaged metric)
+If \code{estimator} is giveen as
+\itemize{
+\item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
+\item 1 - a <\link{numeric}> value (Micro averaged metric)
+\item 2 - a <\link{numeric}> value (macro averaged metric)
 }
 }
 \description{

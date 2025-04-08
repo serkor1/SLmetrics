@@ -39,11 +39,11 @@ weighted.ckappa(
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 }
 \value{
-If \code{estimator} is given as,
-\describe{
-\item 0: a named <\link{numeric}>-vector of \link{length} k (class-wise)
-\item 1: a <\link{numeric}> value (Micro averaged metric)
-\item 2: a <\link{numeric}> value (macro averaged metric)
+If \code{estimator} is giveen as
+\itemize{
+\item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
+\item 1 - a <\link{numeric}> value (Micro averaged metric)
+\item 2 - a <\link{numeric}> value (macro averaged metric)
 }
 }
 \description{

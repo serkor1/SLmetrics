@@ -26,10 +26,10 @@
 #' @param w A <[numeric]>-vector of [length] \eqn{n}. [NULL] by default. 
 #' @param x A confusion matrix created [cmatrix()].
 #' @param estimator An <[integer]>-value of [length] \eqn{1} (default: \eqn{0}).
-#' \describe{
-#'    \item 0: Classwise metric
-#'    \item 1: Micro averaged metric
-#'    \item 2: Macro averaged metric
+#' \itemize{
+#'   \item 0 - a named <[numeric]>-vector of [length] k (class-wise)
+#'   \item 1 - a <[numeric]> value (Micro averaged metric)
+#'   \item 2 - a <[numeric]> value (macro averaged metric)
 #' }
 #' @param na.rm A <[logical]> value of [length] \eqn{1} (default: [TRUE]). If [TRUE], [NA] values are removed from the computation. 
 #' This argument is only relevant when `micro != NULL`. 
@@ -69,12 +69,11 @@
 #'
 #' In both cases, \eqn{k = 3}, determined indirectly by the `levels` argument.
 #'
-#' @returns
-#' If `estimator` is given as,
-#' \describe{
-#'    \item 0: a named <[numeric]>-vector of [length] k (class-wise)
-#'    \item 1: a <[numeric]> value (Micro averaged metric)
-#'    \item 2: a <[numeric]> value (macro averaged metric)
+#' @returns If `estimator` is giveen as
+#' \itemize{
+#'   \item 0 - a named <[numeric]>-vector of [length] k (class-wise)
+#'   \item 1 - a <[numeric]> value (Micro averaged metric)
+#'   \item 2 - a <[numeric]> value (macro averaged metric)
 #' }
 #'
 #' @section Definition:
