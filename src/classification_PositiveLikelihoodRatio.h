@@ -1,34 +1,61 @@
-#ifndef CLASSIFICATION_PLR_H
-#define CLASSIFICATION_PLR_H
+#ifndef CLASSIFICATION_POSITIVELIKELIHOODRATIO_H
+#define CLASSIFICATION_POSITIVELIKELIHOODRATIO_H
 
-#include "classification_Helpers.h"
-#include <RcppEigen.h>
-#include <cmath>
-#define EIGEN_USE_MKL_ALL
-EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+#include "SLmetrics.h"
+#include <armadillo>
 
-class PositiveLikelihoodRatioClass : public classification {
+namespace metric {
 
-    public:
+    template <typename T>
+    using base_metric = classification::metric_tools::base_metric<T>;
 
-        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
-            Eigen::ArrayXd output(matrix.rows());
-            Eigen::ArrayXd tp(matrix.rows()), fn(matrix.rows()), tn(matrix.rows()), fp(matrix.rows());
-            Eigen::ArrayXd tpr(matrix.rows()), fpr(matrix.rows());
-
-            TP(matrix, tp);
-            FN(matrix, fn);
-            TN(matrix, tn);
-            FP(matrix, fp);
-
-            tpr = tp / (tp + fn);
-            fpr = fp / (fp + tn);
-
-            output = tpr / fpr;
-
-            return Rcpp::wrap(output);
-        }
+    using aggregate = classification::metric_tools::aggregation_level;
     
-};
+    template <typename T>
+    class positive_likelihood_ratio : public base_metric<T> {
+        
+    protected:
+        // Class-wise
+        arma::Col<double> calculate_class_values() const override {
+            // PLR = (TP/(TP+FN)) / (FP/(FP+TN))
+            // PLR = Sensitivity / (1-Specificity)
+            arma::Col<double> sensitivity = this->tp_ / (this->tp_ + this->fn_);
+            arma::Col<double> specificity = this->tn_ / (this->tn_ + this->fp_);
+            return sensitivity / (1.0 - specificity);
+        }
+        
+        // Micro average
+        double calculate_micro_value() const override {
+            return this->calculate_micro([](double tp, double fp, double fn, double tn) {
+                // PLR = (TP/(TP+FN)) / (FP/(FP+TN))
+                double sensitivity = tp / (tp + fn);
+                double specificity = tn / (tn + fp);
+                return sensitivity / (1.0 - specificity);
+            });
+        }
+        
+    public:
+        // Unweighted constructor
+        positive_likelihood_ratio(const vctr_t<T>& actual, 
+               const vctr_t<T>& predicted,
+               aggregate mode = aggregate::CLASS_WISE, 
+               bool na_rm = true) 
+               : base_metric<T>(actual, predicted, mode, na_rm) {}
 
-#endif // CLASSIFICATION_PLR_H
+        // Weighted constructor
+        positive_likelihood_ratio(const vctr_t<T>& actual, 
+               const vctr_t<T>& predicted,
+               const vctr_t<double>& weights,
+               aggregate mode = aggregate::CLASS_WISE, 
+               bool na_rm = true) 
+               : base_metric<T>(actual, predicted, weights, mode, na_rm) {}
+
+        // Matrix constructor
+        positive_likelihood_ratio(const Rcpp::NumericMatrix& x,
+               aggregate mode = aggregate::CLASS_WISE, 
+               bool na_rm = true)
+               : base_metric<T>(x, mode, na_rm) {}
+    };
+}
+
+#endif
