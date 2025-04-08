@@ -13,20 +13,20 @@ testthat::test_that(
       actual,
       predicted,
       w = NULL,
-      micro = TRUE) {
+      estimator = 0) {
       
         if (is.null(w)) {
           jaccard(
             actual     = actual,
             predicted  = predicted,
-            micro      = micro
+            estimator  = estimator
           )
         } else {
           weighted.jaccard(
             actual     = actual,
             predicted  = predicted,
             w          = w,
-            micro      = micro
+            estimator  = estimator
           )
         }
       
@@ -44,14 +44,14 @@ testthat::test_that(
       
         # 2) test that the are 
         # equal to target values
-        for (micro in c(NA, TRUE, FALSE)) {
+        for (estimator in 0:2) {
 
           # 2.1) generate sensible 
           # label information
           info <- paste(
             "Balanced = ", balanced,
             "Weighted = ", weighted,
-            "Micro = ", micro
+            "estimator = ", estimator
           )
 
           # 2.2) generate score
@@ -60,7 +60,7 @@ testthat::test_that(
             actual     = actual,
             predicted  = predicted,
             w          = if (weighted) w else NULL,
-            micro      = if (is.na(micro)) { NULL } else micro
+            estimator  = estimator
           )
 
           # 2.3) test that the values
@@ -75,11 +75,11 @@ testthat::test_that(
           py_score <- py_jaccard(
             actual    = actual,
             predicted = predicted,
-            average   = if (is.na(micro)) { NULL } else ifelse(micro, "micro", "macro"),
+            average   = switch(estimator + 1, {NULL}, {'micro'}, {'macro'}),
             w         = if (weighted) w else NULL
           )
 
-          if (is.na(micro)) {
+          if (is.na(estimator)) {
 
             # Python returns values
             # that is less than the number

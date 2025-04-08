@@ -27,7 +27,7 @@ ref_fbeta <- function(
   actual,
   predicted,
   w = NULL,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE,
   beta = 1) {
   
@@ -35,7 +35,7 @@ ref_fbeta <- function(
     actual      = actual,
     predicted   = predicted,
     w           = w,
-    micro       = micro,
+    estimator   = estimator,
     na.rm       = na.rm,
     metric_expr = ((1 + beta^2) * TP) / (((1 + beta^2) * TP) + (beta^2 * FN) + FP),
     beta        = beta
@@ -48,14 +48,14 @@ ref_precision <- function(
   actual,
   predicted,
   w = NULL ,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE) {
   
   generalized_metric(
     actual      = actual,
     predicted   = predicted,
     w           = w,
-    micro       = micro,
+    estimator   = estimator,
     na.rm       = na.rm,
     metric_expr = TP / (TP + FP)
   )
@@ -67,14 +67,14 @@ ref_recall <- function(
   actual,
   predicted,
   w = NULL ,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE) {
   
   generalized_metric(
     actual      = actual,
     predicted   = predicted,
     w           = w,
-    micro       = micro,
+    estimator   = estimator,
     na.rm       = na.rm,
     metric_expr = TP / (TP + FN)
   )
@@ -85,14 +85,14 @@ ref_specificity <- function(
   actual,
   predicted,
   w = NULL,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE) {
   
   generalized_metric(
     actual      = actual,
     predicted   = predicted,
     w           = w,
-    micro       = micro,
+    estimator   = estimator,
     na.rm       = na.rm,
     metric_expr = TN / (TN + FP)
   )
@@ -103,14 +103,14 @@ ref_fdr <- function(
   actual,
   predicted,
   w = NULL,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE) {
   
   generalized_metric(
     actual      = actual,
     predicted   = predicted,
     w           = w,
-    micro       = micro,
+    estimator   = estimator,
     na.rm       = na.rm,
     metric_expr = FP / (FP + TP)
   )
@@ -121,14 +121,14 @@ ref_fpr <- function(
   actual,
   predicted,
   w = NULL,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE) {
   
   generalized_metric(
     actual      = actual,
     predicted   = predicted,
     w           = w,
-    micro       = micro,
+    estimator   = estimator,
     na.rm       = na.rm,
     metric_expr = FP / (FP + TN)
   )
@@ -139,14 +139,14 @@ ref_npv <- function(
   actual,
   predicted,
   w = NULL,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE) {
   
   generalized_metric(
     actual      = actual,
     predicted   = predicted,
     w           = w,
-    micro       = micro,
+    estimator   = estimator,
     na.rm       = na.rm,
     metric_expr = TN / (TN + FN)
   )
@@ -157,14 +157,14 @@ ref_fer <- function(
   actual,
   predicted,
   w = NULL,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE) {
   
   generalized_metric(
     actual      = actual,
     predicted   = predicted,
     w           = w,
-    micro       = micro,
+    estimator   = estimator,
     na.rm       = na.rm,
     metric_expr = FN / (TN + FN)
   )
@@ -175,14 +175,14 @@ ref_plr <- function(
   actual,
   predicted,
   w = NULL,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE) {
   
   generalized_metric(
     actual      = actual,
     predicted   = predicted,
     w           = w,
-    micro       = micro,
+    estimator   = estimator,
     na.rm       = na.rm,
     metric_expr = (TP / (TP + FN)) / (FP / (FP + TN))
   )
@@ -193,14 +193,14 @@ ref_nlr <- function(
   actual,
   predicted,
   w = NULL,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE) {
   
   generalized_metric(
     actual      = actual,
     predicted   = predicted,
     w           = w,
-    micro       = micro,
+    estimator   = estimator,
     na.rm       = na.rm,
     metric_expr = (1 - (TP / (TP + FN))) / (TN / (TN + FP))
   )
@@ -211,7 +211,7 @@ ref_dor <- function(
   actual,
   predicted,
   w = NULL,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE) {
   
   generalized_metric(
@@ -224,7 +224,7 @@ ref_dor <- function(
   )
 }
 
-ref_ROC <-function(actual, response, thresholds = NULL, w = NULL, micro = NULL) {
+ref_ROC <-function(actual, response, thresholds = NULL, w = NULL, estimator = 0) {
 
   n_levels <- length(levels(actual))
 
@@ -254,7 +254,7 @@ ref_ROC <-function(actual, response, thresholds = NULL, w = NULL, micro = NULL) 
       actual      = actual,
       predicted   = predicted,
       metric_expr = FP / (FP + TN),
-      micro       = micro,
+      estimator   = estimator,
       w           = w
     )[level]
 
