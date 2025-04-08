@@ -14,7 +14,7 @@
 #' 
 #' @usage
 #' ## Generic S3 method
-#' zerooneloss(...)
+#' hammingloss(...)
 #' 
 #' @section Definition:
 #'
@@ -26,7 +26,7 @@
 #'
 #' Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} represent the true positives, true negatives, false positives, and false negatives, respectively.
 #'
-#' @example man/examples/scr_ZeroOneLoss.R
+#' @example man/examples/scr_HammingLoss.R
 #'
 #' @family Classification
 #' @family Supervised Learning
