@@ -7,7 +7,6 @@
 \alias{tnr.factor}
 \alias{weighted.tnr.factor}
 \alias{tnr.cmatrix}
-\alias{selectivity.factor}
 \alias{weighted.selectivity.factor}
 \alias{selectivity.cmatrix}
 \alias{specificity}
@@ -18,23 +17,23 @@
 \alias{weighted.selectivity}
 \title{Specificity}
 \usage{
-\method{specificity}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+\method{specificity}{factor}(actual, predicted, estimator = 0L, na.rm = TRUE, ...)
 
-\method{weighted.specificity}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+\method{weighted.specificity}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
 
-\method{specificity}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
+\method{specificity}{cmatrix}(x, estimator = 0L, na.rm = TRUE, ...)
 
-\method{tnr}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+\method{tnr}{factor}(actual, predicted, estimator = 0L, na.rm = TRUE, ...)
 
-\method{weighted.tnr}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+\method{weighted.tnr}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
 
-\method{tnr}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
+\method{tnr}{cmatrix}(x, estimator = 0L, na.rm = TRUE, ...)
 
-\method{selectivity}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+\method{tnr}{factor}(actual, predicted, estimator = 0L, na.rm = TRUE, ...)
 
-\method{weighted.selectivity}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+\method{weighted.selectivity}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
 
-\method{selectivity}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
+\method{selectivity}{cmatrix}(x, estimator = 0L, na.rm = TRUE, ...)
 
 ## Generic S3 method
 specificity(
@@ -86,9 +85,6 @@ weighted.selectivity(
 
 \item{predicted}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
-
 \item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
 This argument is only relevant when \code{micro != NULL}.
 When \code{na.rm = TRUE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))}.
@@ -99,6 +95,9 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
+
+\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
+micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
 }
 \value{
 If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
