@@ -39,4 +39,21 @@ fmi <- function(...) {
   )
 }
 
+#' @rdname fmi
+#' @usage
+#' ## Generic S3 method
+#' weighted.fmi(
+#' ...,
+#' w
+#' )
+#' @export
+weighted.fmi <- function(
+  ...,
+  w) {
+  UseMethod(
+    generic = "weighted.fmi",
+    object  = ..1
+  )
+}
+
 # script end;
