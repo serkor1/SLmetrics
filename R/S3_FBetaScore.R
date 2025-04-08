@@ -16,7 +16,7 @@
 #' fbeta(
 #'  ...,
 #'  beta  = 1,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' 
@@ -54,7 +54,7 @@
 fbeta <- function(
   ...,
   beta  = 1,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE) {
   UseMethod(
     generic = "fbeta",
@@ -69,7 +69,7 @@ fbeta <- function(
 #'  ...,
 #'  w,
 #'  beta = 1,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
@@ -77,7 +77,7 @@ weighted.fbeta <- function(
   ...,
   w,
   beta  = 1,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE) {
   UseMethod(
     generic = "weighted.fbeta",

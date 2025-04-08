@@ -81,22 +81,22 @@ weighted.cmatrix.factor <- function(actual, predicted, w, ...) {
 #' @rdname dor
 #' @method dor factor
 #' @export
-dor.factor <- function(actual, predicted, ...) {
-    .Call(`_SLmetrics_DiagnosticOddsRatio`, actual, predicted)
+dor.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_diagnostic_odds_ratio`, actual, predicted, estimator, na_rm = na.rm)
 }
 
 #' @rdname dor
 #' @method weighted.dor factor
 #' @export
-weighted.dor.factor <- function(actual, predicted, w, ...) {
-    .Call(`_SLmetrics_weighted_DiagnosticOddsRatio`, actual, predicted, w)
+weighted.dor.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_diagnostic_odds_ratio`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
 #' @rdname dor
 #' @method dor cmatrix
 #' @export
-dor.cmatrix <- function(x, ...) {
-    .Call(`_SLmetrics_cmatrix_DiagnosticOddsRatio`, x)
+dor.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_cmatrix_diagnostic_odds_ratio`, x, estimator, na_rm = na.rm)
 }
 
 #' @rdname entropy
@@ -144,43 +144,43 @@ fbeta.cmatrix <- function(x, beta = 1.0, estimator = 0L, na.rm = TRUE, ...) {
 #' @rdname fdr
 #' @method fdr factor
 #' @export
-fdr.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_FalseDiscoveryRate`, actual, predicted, micro, na_rm = na.rm)
+fdr.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_false_discovery_rate`, actual, predicted, estimator, na_rm = na.rm)
 }
 
 #' @rdname fdr
 #' @method weighted.fdr factor
 #' @export
-weighted.fdr.factor <- function(actual, predicted, w, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_FalseDiscoveryRate`, actual, predicted, w, micro, na_rm = na.rm)
+weighted.fdr.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_false_discovery_rate`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
 #' @rdname fdr
 #' @method fdr cmatrix
 #' @export
-fdr.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_cmatrix_FalseDiscoveryRate`, x, micro, na_rm = na.rm)
+fdr.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_cmatrix_false_discovery_rate`, x, estimator, na_rm = na.rm)
 }
 
 #' @rdname fer
 #' @method fer factor
 #' @export
-fer.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_FalseOmissionRate`, actual, predicted, micro, na_rm = na.rm)
+fer.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_false_omission_rate`, actual, predicted, estimator, na_rm = na.rm)
 }
 
 #' @rdname fer
 #' @method weighted.fer factor
 #' @export
-weighted.fer.factor <- function(actual, predicted, w, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_FalseOmissionRate`, actual, predicted, w, micro, na_rm = na.rm)
+weighted.fer.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_false_omission_rate`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
 #' @rdname fer
 #' @method fer cmatrix
 #' @export
-fer.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_cmatrix_FalseOmissionRate`, x, micro, na_rm = na.rm)
+fer.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_cmatrix_false_omission_rate`, x, estimator, na_rm = na.rm)
 }
 
 #' @rdname fpr
@@ -270,64 +270,64 @@ hammingloss.cmatrix <- function(x, ...) {
 #' @rdname jaccard
 #' @method jaccard factor
 #' @export
-jaccard.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_JaccardIndex`, actual, predicted, micro, na_rm = na.rm)
+jaccard.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_jaccard_score`, actual, predicted, estimator, na_rm = na.rm)
 }
 
 #' @rdname jaccard
 #' @method weighted.jaccard factor
 #' @export
-weighted.jaccard.factor <- function(actual, predicted, w, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_JaccardIndex`, actual, predicted, w, micro, na_rm = na.rm)
+weighted.jaccard.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_jaccard_score`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
 #' @rdname jaccard
 #' @method jaccard cmatrix
 #' @export
-jaccard.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_cmatrix_JaccardIndex`, x, micro, na_rm = na.rm)
+jaccard.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_cmatrix_jaccard_score`, x, estimator, na_rm = na.rm)
 }
 
 #' @rdname jaccard
 #' @method csi factor
 #' @export
-csi.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_CriticalSuccessIndex`, actual, predicted, micro, na_rm = na.rm)
+csi.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_critical_success_index`, actual, predicted, estimator, na_rm = na.rm)
 }
 
 #' @rdname jaccard
 #' @method weighted.csi factor
 #' @export
-weighted.csi.factor <- function(actual, predicted, w, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_CriticalSuccessIndex`, actual, predicted, w, micro, na_rm = na.rm)
+weighted.csi.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_critical_success_index`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
 #' @rdname jaccard
 #' @method csi cmatrix
 #' @export
-csi.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_cmatrix_CriticalSuccessIndex`, x, micro, na_rm = na.rm)
+csi.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_cmatrix_critical_success_index`, x, estimator, na_rm = na.rm)
 }
 
 #' @rdname jaccard
 #' @method tscore factor
 #' @export
-tscore.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_ThreatScore`, actual, predicted, micro, na_rm = na.rm)
+tscore.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_threat_score`, actual, predicted, estimator, na_rm = na.rm)
 }
 
 #' @rdname jaccard
 #' @method weighted.tscore factor
 #' @export
-weighted.tscore.factor <- function(actual, predicted, w, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_ThreatScore`, actual, predicted, w, micro, na_rm = na.rm)
+weighted.tscore.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_threat_score`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
 #' @rdname jaccard
 #' @method tscore cmatrix
 #' @export
-tscore.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_cmatrix_ThreatScore`, x, micro, na_rm = na.rm)
+tscore.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_cmatrix_threat_score`, x, estimator, na_rm = na.rm)
 }
 
 #' @rdname logloss
@@ -389,64 +389,64 @@ phi.cmatrix <- function(x, ...) {
 #' @rdname nlr
 #' @method nlr factor
 #' @export
-nlr.factor <- function(actual, predicted, ...) {
-    .Call(`_SLmetrics_NegativeLikelihoodRatio`, actual, predicted)
+nlr.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_negative_likelihood_ratio`, actual, predicted, estimator, na_rm = na.rm)
 }
 
 #' @rdname nlr
 #' @method weighted.nlr factor
 #' @export
-weighted.nlr.factor <- function(actual, predicted, w, ...) {
-    .Call(`_SLmetrics_weighted_NegativeLikelihoodRatio`, actual, predicted, w)
+weighted.nlr.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_negative_likelihood_ratio`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
 #' @rdname nlr
 #' @method nlr cmatrix
 #' @export
-nlr.cmatrix <- function(x, ...) {
-    .Call(`_SLmetrics_cmatrix_NegativeLikelihoodRatio`, x)
+nlr.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_cmatrix_negative_likelihood_ratio`, x, estimator, na_rm = na.rm)
 }
 
 #' @rdname npv
 #' @method npv factor
 #' @export
-npv.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_NegativePredictitveValue`, actual, predicted, micro, na_rm = na.rm)
+npv.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_negative_predictive_value`, actual, predicted, estimator, na_rm = na.rm)
 }
 
 #' @rdname npv
 #' @method weighted.npv factor
 #' @export
-weighted.npv.factor <- function(actual, predicted, w, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_NegativePredictitveValue`, actual, predicted, w, micro, na_rm = na.rm)
+weighted.npv.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_negative_predictive_value`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
 #' @rdname npv
 #' @method npv cmatrix
 #' @export
-npv.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_cmatrix_NegativePredictitveValue`, x, micro, na_rm = na.rm)
+npv.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_cmatrix_negative_predictive_value`, x, estimator, na_rm = na.rm)
 }
 
 #' @rdname plr
 #' @method plr factor
 #' @export
-plr.factor <- function(actual, predicted, ...) {
-    .Call(`_SLmetrics_PositiveLikelihoodRatio`, actual, predicted)
+plr.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_positive_likelihood_ratio`, actual, predicted, estimator, na_rm = na.rm)
 }
 
 #' @rdname plr
 #' @method weighted.plr factor
 #' @export
-weighted.plr.factor <- function(actual, predicted, w, ...) {
-    .Call(`_SLmetrics_weighted_PositiveLikelihoodRatio`, actual, predicted, w)
+weighted.plr.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_positive_likelihood_ratio`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
 #' @rdname plr
 #' @method plr cmatrix
 #' @export
-plr.cmatrix <- function(x, ...) {
-    .Call(`_SLmetrics_cmatrix_PositiveLikelihoodRatio`, x)
+plr.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_cmatrix_positive_likelihood_ratio`, x, estimator, na_rm = na.rm)
 }
 
 #' @rdname precision
@@ -522,69 +522,69 @@ weighted.pr.auc.matrix <- function(actual, response, w, micro = NULL, method = 0
 #' @rdname recall
 #' @method recall factor
 #' @export
-recall.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_Recall`, actual, predicted, micro, na_rm = na.rm)
+recall.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_recall_score`, actual, predicted, estimator, na_rm = na.rm)
 }
 
 #' @rdname recall
 #' @method weighted.recall factor
 #' @export
-weighted.recall.factor <- function(actual, predicted, w, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_Recall`, actual, predicted, w, micro, na_rm = na.rm)
+weighted.recall.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_recall_score`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
 #' @rdname recall
 #'
 #' @method recall cmatrix
 #' @export
-recall.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_cmatrix_Recall`, x, micro, na_rm = na.rm)
+recall.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_cmatrix_recall_score`, x, estimator, na_rm = na.rm)
 }
 
 #' @rdname recall
 #' @method sensitivity factor
 #'
 #' @export
-sensitivity.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_Sensitivity`, actual, predicted, micro, na_rm = na.rm)
+sensitivity.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_sensitivity_score`, actual, predicted, estimator, na_rm = na.rm)
 }
 
 #' @rdname recall
 #' @method weighted.sensitivity factor
 #' @export
-weighted.sensitivity.factor <- function(actual, predicted, w, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_Sensitivity`, actual, predicted, w, micro, na_rm = na.rm)
+weighted.sensitivity.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_sensitivity_score`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
 #' @rdname recall
 #'
 #' @method sensitivity cmatrix
 #' @export
-sensitivity.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_cmatrix_Sensitivity`, x, micro, na_rm = na.rm)
+sensitivity.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_cmatrix_sensitivity_score`, x, estimator, na_rm = na.rm)
 }
 
 #' @rdname recall
 #'
 #' @method tpr factor
 #' @export
-tpr.factor <- function(actual, predicted, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_TruePositiveRate`, actual, predicted, micro, na_rm = na.rm)
+tpr.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_true_positive_rate`, actual, predicted, estimator, na_rm = na.rm)
 }
 
 #' @rdname recall
 #' @method weighted.tpr factor
 #' @export
-weighted.tpr.factor <- function(actual, predicted, w, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_TruePositiveRate`, actual, predicted, w, micro, na_rm = na.rm)
+weighted.tpr.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_true_positive_rate`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
 #' @rdname recall
 #'
 #' @method tpr cmatrix
 #' @export
-tpr.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_cmatrix_TruePositiveRate`, x, micro, na_rm = na.rm)
+tpr.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_cmatrix_true_positive_rate`, x, estimator, na_rm = na.rm)
 }
 
 #' @rdname ROC
@@ -658,9 +658,9 @@ tnr.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
 }
 
 #' @rdname specificity
-#' @method tnr factor
+#' @method selectivity factor
 #' @export
-tnr.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
+selectivity.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_selectivity`, actual, predicted, estimator, na_rm = na.rm)
 }
 

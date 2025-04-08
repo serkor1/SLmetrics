@@ -8,11 +8,11 @@
 \alias{weighted.npv}
 \title{Negative Predictive Value}
 \usage{
-\method{npv}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+\method{npv}{factor}(actual, predicted, estimator = 0L, na.rm = TRUE, ...)
 
-\method{weighted.npv}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+\method{weighted.npv}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
 
-\method{npv}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
+\method{npv}{cmatrix}(x, estimator = 0L, na.rm = TRUE, ...)
 
 npv(...)
 
@@ -23,8 +23,12 @@ weighted.npv(...)
 
 \item{predicted}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
+\item{estimator}{An <\link{integer}>-value of \link{length} \eqn{1} (default: \eqn{0}).
+\describe{
+\item 0: Classwise metric
+\item 1: Micro averaged metric
+\item 2: Macro averaged metric
+}}
 
 \item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
 This argument is only relevant when \code{micro != NULL}.
@@ -38,9 +42,12 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 }
 \value{
-If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
-
-If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
+If \code{estimator} is given as,
+\describe{
+\item 0: a named <\link{numeric}>-vector of \link{length} k (class-wise)
+\item 1: a <\link{numeric}> value (Micro averaged metric)
+\item 2: a <\link{numeric}> value (macro averaged metric)
+}
 }
 \description{
 The \code{\link[=npv]{npv()}}-function computes the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{negative predictive value}, also known as the True Negative Predictive Value, between

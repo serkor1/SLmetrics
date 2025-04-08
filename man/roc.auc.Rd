@@ -35,9 +35,6 @@ weighted.roc.auc(
 
 \item{response}{A \eqn{n \times k} <\link{numeric}>-\link{matrix}. The estimated response probabilities for each class \eqn{k}.}
 
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
-
 \item{method}{A <\link{numeric}> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the \code{trapezoid}-method, if \eqn{1} it is calculated using the \code{step}-method.}
 
 \item{...}{Arguments passed into other methods.}

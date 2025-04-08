@@ -39,9 +39,12 @@ weighted.ckappa(
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 }
 \value{
-If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
-
-If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
+If \code{estimator} is given as,
+\describe{
+\item 0: a named <\link{numeric}>-vector of \link{length} k (class-wise)
+\item 1: a <\link{numeric}> value (Micro averaged metric)
+\item 2: a <\link{numeric}> value (macro averaged metric)
+}
 }
 \description{
 A generic function for \href{https://en.wikipedia.org/wiki/Cohen\%27s_kappa}{Cohen's \eqn{\kappa}}-statistic. Use \code{\link[=weighted.ckappa]{weighted.ckappa()}} for the weighted \href{https://en.wikipedia.org/wiki/Cohen\%27s_kappa}{\eqn{\kappa}}-statistic.

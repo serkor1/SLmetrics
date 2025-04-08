@@ -15,7 +15,7 @@
 #' ## Generic S3 method
 #' fdr(
 #'  ...,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' 
@@ -39,7 +39,7 @@
 #' @export
 fdr <- function(
   ...,
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "fdr",
@@ -53,14 +53,14 @@ fdr <- function(
 #' weighted.fdr(
 #'  ...,
 #'  w,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 weighted.fdr <- function(
   ..., 
   w, 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "weighted.fdr",

@@ -17,7 +17,7 @@
 #' ## Generic S3 method
 #' jaccard(
 #'  ...,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' 
@@ -39,7 +39,7 @@
 #' @export
 jaccard <- function(
   ..., 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "jaccard",
@@ -52,13 +52,13 @@ jaccard <- function(
 #' ## Generic S3 method
 #' csi(
 #'  ...,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 csi <- function(
   ..., 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "csi",
@@ -71,13 +71,13 @@ csi <- function(
 #' ## Generic S3 method
 #' tscore(
 #'  ...,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 tscore <- function(
   ...,
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "tscore",
@@ -91,14 +91,14 @@ tscore <- function(
 #' weighted.jaccard(
 #'  ...,
 #'  w,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 weighted.jaccard <- function(
   ...,
   w,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE) {
   UseMethod(
     generic = "weighted.jaccard",
@@ -112,14 +112,14 @@ weighted.jaccard <- function(
 #' weighted.csi(
 #'  ...,
 #'  w,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 weighted.csi <- function(
   ...,
   w,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE) {
   UseMethod(
     generic = "weighted.csi",
@@ -133,14 +133,14 @@ weighted.csi <- function(
 #' weighted.tscore(
 #'  ...,
 #'  w,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 weighted.tscore <- function(
   ..., 
   w, 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "weighted.tscore",

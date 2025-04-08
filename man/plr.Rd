@@ -8,11 +8,11 @@
 \alias{weighted.plr}
 \title{Positive Likelihood Ratio}
 \usage{
-\method{plr}{factor}(actual, predicted, ...)
+\method{plr}{factor}(actual, predicted, estimator = 0L, na.rm = TRUE, ...)
 
-\method{weighted.plr}{factor}(actual, predicted, w, ...)
+\method{weighted.plr}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
 
-\method{plr}{cmatrix}(x, ...)
+\method{plr}{cmatrix}(x, estimator = 0L, na.rm = TRUE, ...)
 
 ## Generic S3 method
 plr(...)
@@ -28,6 +28,18 @@ weighted.plr(
 
 \item{predicted}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
+\item{estimator}{An <\link{integer}>-value of \link{length} \eqn{1} (default: \eqn{0}).
+\describe{
+\item 0: Classwise metric
+\item 1: Micro averaged metric
+\item 2: Macro averaged metric
+}}
+
+\item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
+This argument is only relevant when \code{micro != NULL}.
+When \code{na.rm = TRUE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))}.
+When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))}.}
+
 \item{...}{Arguments passed into other methods}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
@@ -35,9 +47,12 @@ weighted.plr(
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 }
 \value{
-If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
-
-If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
+If \code{estimator} is given as,
+\describe{
+\item 0: a named <\link{numeric}>-vector of \link{length} k (class-wise)
+\item 1: a <\link{numeric}> value (Micro averaged metric)
+\item 2: a <\link{numeric}> value (macro averaged metric)
+}
 }
 \description{
 A generic function for the \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{positive likelihood ratio} in classification tasks. Use \code{\link[=weighted.plr]{weighted.plr()}} weighted \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{positive likelihood ratio}.

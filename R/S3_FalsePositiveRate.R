@@ -20,7 +20,7 @@
 #' ## Generic S3 method
 #' fpr(
 #'  ...,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' 
@@ -44,7 +44,7 @@
 #' @export
 fpr <- function(
   ..., 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "fpr",
@@ -57,13 +57,13 @@ fpr <- function(
 #' ## Generic S3 method
 #' fallout(
 #'  ...,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 fallout <- function(
   ..., 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "fallout",
@@ -77,14 +77,14 @@ fallout <- function(
 #' weighted.fpr(
 #'  ...,
 #'  w,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 weighted.fpr <- function(
   ...,
   w,
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "weighted.fpr",
@@ -98,14 +98,14 @@ weighted.fpr <- function(
 #' weighted.fallout(
 #'  ...,
 #'  w,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 weighted.fallout <- function(
   ...,
   w,
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "weighted.fallout",
