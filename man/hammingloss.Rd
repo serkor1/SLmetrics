@@ -2,11 +2,17 @@
 % Please edit documentation in R/RcppExports.R, R/S3_HammingLoss.R
 \name{hammingloss.factor}
 \alias{hammingloss.factor}
+\alias{weighted.hammingloss.factor}
+\alias{hammingloss.cmatrix}
 \alias{hammingloss}
 \alias{weighted.hammingloss}
 \title{Hamming Loss}
 \usage{
 \method{hammingloss}{factor}(actual, predicted, ...)
+
+\method{weighted.hammingloss}{factor}(actual, predicted, w, ...)
+
+\method{hammingloss}{cmatrix}(x, ...)
 
 ## Generic S3 method
 zerooneloss(...)
@@ -25,6 +31,8 @@ weighted.hammingloss(
 \item{...}{Arguments passed into other methods}
 
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default}
+
+\item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}}
 }
 \value{
 A <\link{numeric}>-vector of \link{length} 1

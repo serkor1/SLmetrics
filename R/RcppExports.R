@@ -5,21 +5,21 @@
 #' @method accuracy factor
 #' @export
 accuracy.factor <- function(actual, predicted, ...) {
-    .Call(`_SLmetrics_Accuracy`, actual, predicted)
+    .Call(`_SLmetrics_accuracy`, actual, predicted)
 }
 
 #' @rdname accuracy
 #' @method weighted.accuracy factor
 #' @export
 weighted.accuracy.factor <- function(actual, predicted, w, ...) {
-    .Call(`_SLmetrics_weighted_Accuracy`, actual, predicted, w)
+    .Call(`_SLmetrics_weighted_accuracy`, actual, predicted, w)
 }
 
 #' @rdname accuracy
 #' @method accuracy cmatrix
 #' @export
 accuracy.cmatrix <- function(x, ...) {
-    .Call(`_SLmetrics_cmatrix_Accuracy`, x)
+    .Call(`_SLmetrics_cmatrix_accuracy`, x)
 }
 
 #' @rdname baccuracy
@@ -47,21 +47,21 @@ baccuracy.cmatrix <- function(x, adjust = FALSE, na.rm = TRUE, ...) {
 #' @method ckappa factor
 #' @export
 ckappa.factor <- function(actual, predicted, beta = 0.0, ...) {
-    .Call(`_SLmetrics_CohensKappa`, actual, predicted, beta)
+    .Call(`_SLmetrics_cohens_kappa`, actual, predicted, beta)
 }
 
 #' @rdname ckappa
 #' @method weighted.ckappa factor
 #' @export
 weighted.ckappa.factor <- function(actual, predicted, w, beta = 0.0, ...) {
-    .Call(`_SLmetrics_weighted_CohensKappa`, actual, predicted, w, beta)
+    .Call(`_SLmetrics_weighted_cohens_kappa`, actual, predicted, w, beta)
 }
 
 #' @rdname ckappa
 #' @method ckappa cmatrix
 #' @export
 ckappa.cmatrix <- function(x, beta = 0.0, ...) {
-    .Call(`_SLmetrics_cmatrix_CohensKappa`, x, beta)
+    .Call(`_SLmetrics_cmatrix_cohens_kappa`, x, beta)
 }
 
 #' @rdname cmatrix
@@ -123,22 +123,22 @@ cross.entropy.matrix <- function(pk, qk, dim = 0L, base = -1.0, ...) {
 #' @rdname fbeta
 #' @method fbeta factor
 #' @export
-fbeta.factor <- function(actual, predicted, beta = 1.0, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_FBetaScore`, actual, predicted, beta, micro, na_rm = na.rm)
+fbeta.factor <- function(actual, predicted, beta = 1.0, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_fbeta_score`, actual, predicted, beta, estimator, na_rm = na.rm)
 }
 
 #' @rdname fbeta
 #' @method weighted.fbeta factor
 #' @export
-weighted.fbeta.factor <- function(actual, predicted, w, beta = 1.0, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_weighted_FBetaScore`, actual, predicted, w, beta, micro, na_rm = na.rm)
+weighted.fbeta.factor <- function(actual, predicted, w, beta = 1.0, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_weighted_fbeta_score`, actual, predicted, w, beta, estimator, na_rm = na.rm)
 }
 
 #' @rdname fbeta
 #' @method fbeta cmatrix
 #' @export
-fbeta.cmatrix <- function(x, beta = 1.0, micro = NULL, na.rm = TRUE, ...) {
-    .Call(`_SLmetrics_cmatrix_FBetaScore`, x, beta, micro, na_rm = na.rm)
+fbeta.cmatrix <- function(x, beta = 1.0, estimator = 0L, na.rm = TRUE, ...) {
+    .Call(`_SLmetrics_cmatrix_fbeta_score`, x, beta, estimator, na_rm = na.rm)
 }
 
 #' @rdname fdr
@@ -229,14 +229,42 @@ fallout.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
 #' @method fmi factor
 #' @export
 fmi.factor <- function(actual, predicted, ...) {
-    .Call(`_SLmetrics_FowlkesMallowsIndex`, actual, predicted)
+    .Call(`_SLmetrics_fowlkes_mallows_index`, actual, predicted)
+}
+
+#' @rdname fmi
+#' @method weighted.fmi factor
+#' @export
+weighted.fmi.factor <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_fowlkes_mallows_index`, actual, predicted, w)
 }
 
 #' @rdname fmi
 #' @method fmi cmatrix
 #' @export
 fmi.cmatrix <- function(x, ...) {
-    .Call(`_SLmetrics_cmatrix_FowlkesMallowsIndexClass`, x)
+    .Call(`_SLmetrics_cmatrix_fowlkes_mallows_index`, x)
+}
+
+#' @rdname hammingloss
+#' @method hammingloss factor
+#' @export
+hammingloss.factor <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_hamming_loss`, actual, predicted)
+}
+
+#' @rdname hammingloss
+#' @method weighted.hammingloss factor
+#' @export
+weighted.hammingloss.factor <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_hamming_loss`, actual, predicted, w)
+}
+
+#' @rdname hammingloss
+#' @method hammingloss cmatrix
+#' @export
+hammingloss.cmatrix <- function(x, ...) {
+    .Call(`_SLmetrics_cmatrix_hamming_loss`, x)
 }
 
 #' @rdname jaccard
@@ -320,42 +348,42 @@ weighted.logloss.factor <- function(actual, response, w, normalize = TRUE, ...) 
 #' @method mcc factor
 #' @export
 mcc.factor <- function(actual, predicted, ...) {
-    .Call(`_SLmetrics_MatthewsCorrelationCoefficient`, actual, predicted)
+    .Call(`_SLmetrics_mcc`, actual, predicted)
 }
 
 #' @rdname mcc
 #' @method weighted.mcc factor
 #' @export
 weighted.mcc.factor <- function(actual, predicted, w, ...) {
-    .Call(`_SLmetrics_weigthed_MatthewsCorrelationCoefficient`, actual, predicted, w)
+    .Call(`_SLmetrics_weighted_mcc`, actual, predicted, w)
 }
 
 #' @rdname mcc
 #' @method mcc cmatrix
 #' @export
 mcc.cmatrix <- function(x, ...) {
-    .Call(`_SLmetrics_cmatrix_MatthewsCorrelationCoefficient`, x)
+    .Call(`_SLmetrics_cmatrix_mcc`, x)
 }
 
 #' @rdname mcc
 #' @method phi factor
 #' @export
 phi.factor <- function(actual, predicted, ...) {
-    .Call(`_SLmetrics_PhiCoefficient`, actual, predicted)
+    .Call(`_SLmetrics_phi_coefficient`, actual, predicted)
 }
 
 #' @rdname mcc
 #' @method weighted.phi factor
 #' @export
 weighted.phi.factor <- function(actual, predicted, w, ...) {
-    .Call(`_SLmetrics_weighted_PhiCoefficient`, actual, predicted, w)
+    .Call(`_SLmetrics_weighted_phi_coefficient`, actual, predicted, w)
 }
 
 #' @rdname mcc
 #' @method phi cmatrix
 #' @export
 phi.cmatrix <- function(x, ...) {
-    .Call(`_SLmetrics_cmatrix_PhiCoefficient`, x)
+    .Call(`_SLmetrics_cmatrix_phi_coefficient`, x)
 }
 
 #' @rdname nlr
@@ -654,21 +682,21 @@ selectivity.cmatrix <- function(x, micro = NULL, na.rm = TRUE, ...) {
 #' @method zerooneloss factor
 #' @export
 zerooneloss.factor <- function(actual, predicted, ...) {
-    .Call(`_SLmetrics_ZeroOneLoss`, actual, predicted)
+    .Call(`_SLmetrics_zero_one_loss`, actual, predicted)
 }
 
 #' @rdname zerooneloss
 #' @method weighted.zerooneloss factor
 #' @export
 weighted.zerooneloss.factor <- function(actual, predicted, w, ...) {
-    .Call(`_SLmetrics_weighted_ZeroOneLoss`, actual, predicted, w)
+    .Call(`_SLmetrics_weighted_zero_one_loss`, actual, predicted, w)
 }
 
 #' @rdname zerooneloss
 #' @method zerooneloss cmatrix
 #' @export
 zerooneloss.cmatrix <- function(x, ...) {
-    .Call(`_SLmetrics_cmatrix_ZeroOneLoss`, x)
+    .Call(`_SLmetrics_cmatrix_zero_one_loss`, x)
 }
 
 #' @rdname logloss
