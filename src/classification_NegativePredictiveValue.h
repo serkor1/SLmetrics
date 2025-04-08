@@ -1,63 +1,53 @@
-#ifndef CLASSIFICATION_NEGATIVE_PREDICTIVE_VALUE_H
-#define CLASSIFICATION_NEGATIVE_PREDICTIVE_VALUE_H
+#ifndef CLASSIFICATION_NEGATIVEPREDICTIVEVALUE_H
+#define CLASSIFICATION_NEGATIVEPREDICTIVEVALUE_H
 
-#include "classification_Helpers.h"
-#include <RcppEigen.h>
-#include <cmath>
-#define EIGEN_USE_MKL_ALL
-EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+#include "SLmetrics.h"
+#include <armadillo>
 
-/*
-    NOTE:
-        To increase maintainability, all functions are passed through
-        the confusion matrix. So there is no need to add an overloaded function
-        for the weighted metrics.
-*/
-class NegativePredictiveValueClass : public classification {
+namespace metric {
 
-    private:
-        bool na_rm;
+    template <typename T>
+    using base_metric = classification::metric_tools::base_metric<T>;
 
+    using aggregate = classification::metric_tools::aggregation_level;
+    
+    template <typename T>
+    class negative_predictive_value : public base_metric<T> {
+    protected:
+        // Class-wise calculation: NPV = TN / (TN + FN)
+        arma::Col<double> calculate_class_values() const override {
+            return this->tn_ / (this->tn_ + this->fn_);
+        }
+        
+        // Micro average calculation
+        double calculate_micro_value() const override {
+            return this->calculate_micro([](double tp, double fp, double fn, double tn) {
+                return tn / (tn + fn);
+            });
+        }
+            
     public:
- 
-        NegativePredictiveValueClass(bool na_rm)
-            : na_rm(na_rm) {}
+        // Unweighted constructor
+        negative_predictive_value(const vctr_t<T>& actual, 
+                        const vctr_t<T>& predicted,
+                        aggregate mode = aggregate::CLASS_WISE, 
+                        bool na_rm = true) 
+                        : base_metric<T>(actual, predicted, mode, na_rm) {}
 
-        // Compute NPV with micro or macro aggregation
-        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro) const override {
-            // Declare the output value and TN/FN arrays
-            Eigen::ArrayXd output(1);
-            Eigen::ArrayXd tn(matrix.rows()), fn(matrix.rows());
+        // Weighted constructor
+        negative_predictive_value(const vctr_t<T>& actual, 
+                        const vctr_t<T>& predicted,
+                        const vctr_t<double>& weights,
+                        aggregate mode = aggregate::CLASS_WISE, 
+                        bool na_rm = true) 
+                        : base_metric<T>(actual, predicted, weights, mode, na_rm) {}
 
-            // Populate TN and FN arrays for calculations
-            TN(matrix, tn);
-            FN(matrix, fn);
+        // Matrix constructor
+        negative_predictive_value(const Rcpp::NumericMatrix& x,
+                        aggregate mode = aggregate::CLASS_WISE, 
+                        bool na_rm = true)
+                        : base_metric<T>(x, mode, na_rm) {}
+    };
+}
 
-
-            // 2) retun with 
-            // ternary expression
-            return do_micro
-                ? micro(tn, (tn + fn), na_rm)
-                : macro(tn, (tn + fn), na_rm);
-
-        }
-
-        // Compute NPV without micro aggregation
-        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
-            // Declare the output value and TN/FN arrays
-            Eigen::ArrayXd output(matrix.rows());
-            Eigen::ArrayXd tn(matrix.rows()), fn(matrix.rows());
-
-            // Populate TN and FN arrays for calculations
-            TN(matrix, tn);
-            FN(matrix, fn);
-
-            // Calculate metric
-            output = tn / (tn + fn);
-
-            // Return with R-compatible class
-            return Rcpp::wrap(output);
-        }
-};
-
-#endif // CLASSIFICATION_NEGATIVE_PREDICTIVE_VALUE_H
+#endif
