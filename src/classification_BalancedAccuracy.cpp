@@ -1,48 +1,47 @@
-// [[Rcpp::depends(RcppEigen)]]
-#include <RcppEigen.h>
+#include <Rcpp.h>
 #include "classification_BalancedAccuracy.h"
 
-using namespace Rcpp;
+// implementation of metric
+using balanced_accuracy_score_impl = metric::balanced_accuracy_score<int>;
 
 //' @rdname baccuracy
 //' @method baccuracy factor
 //' @export
 // [[Rcpp::export(baccuracy.factor)]]
-Rcpp::NumericVector balanced_accuracy(
+double balanced_accuracy(
     const Rcpp::IntegerVector& actual, 
-    const Rcpp::IntegerVector& predicted, 
-    const bool& adjust = false, 
+    const Rcpp::IntegerVector& predicted,
+    const bool& adjust = false,
     bool na_rm = true) {
 
-        balanced_accuracy_class cook(adjust, na_rm);
-        return recipe(cook, actual, predicted);
+        balanced_accuracy_score_impl performance(actual, predicted, adjust, na_rm);
+        return performance.compute();
 }
 
 //' @rdname baccuracy
 //' @method weighted.baccuracy factor
 //' @export
 // [[Rcpp::export(weighted.baccuracy.factor)]]
-Rcpp::NumericVector weighted_balanced_accuracy(
+double weighted_balanced_accuracy(
     const Rcpp::IntegerVector& actual, 
     const Rcpp::IntegerVector& predicted, 
-    const Rcpp::NumericVector& w,  
-    const bool& adjust = false, 
+    const Rcpp::NumericVector& w,
+    const bool& adjust = false,
     bool na_rm = true) {
-        
-        balanced_accuracy_class cook(adjust, na_rm);
-        return recipe(cook, actual, predicted, w);
+
+        balanced_accuracy_score_impl performance(actual, predicted, w, adjust, na_rm);
+        return performance.compute();
 }
 
 //' @rdname baccuracy
 //' @method baccuracy cmatrix
 //' @export
 // [[Rcpp::export(baccuracy.cmatrix)]]
-Rcpp::NumericVector cmatrix_balanced_accuracy(
-    const Rcpp::NumericMatrix& x, 
-    const bool& adjust = false, 
+double cmatrix_balanced_accuracy(
+    const Rcpp::NumericMatrix& x,
+    const bool& adjust = false,
     bool na_rm = true) {
-        
-        balanced_accuracy_class cook(adjust, na_rm);
-        return recipe(cook, x);
 
+        balanced_accuracy_score_impl performance(x, adjust, na_rm);
+        return performance.compute();
 }
