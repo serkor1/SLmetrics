@@ -45,7 +45,7 @@ testthat::test_that(
         )
 
         # 2.2) generate score
-        # from {slmetrics}
+        # from {SLmetrics}
         score <- wrapped_hammingloss(
           actual     = actual,
           predicted  = predicted,

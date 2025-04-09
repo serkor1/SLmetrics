@@ -24,7 +24,7 @@ namespace metric {
         return numerator / denominator;
     }
     
-    // Micro avergage
+    // Micro average
     double calculate_micro_value() const override {
         return this->calculate_micro([this](double tp, double fp, double fn, double tn) {
             double numerator = (1.0 + beta_ * beta_) * tp;
