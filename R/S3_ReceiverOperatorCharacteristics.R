@@ -25,8 +25,6 @@
 #' @param response A \eqn{n \times k} <[numeric]>-[matrix]. The estimated response probabilities for each class \eqn{k}.
 #' @param thresholds An optional <[numeric]> vector of [length] \eqn{n} (default: [NULL]).
 #' @param presorted A <[logical]>-value [length] 1 (default: [FALSE]). If [TRUE] the input will not be sorted by threshold.
-#' @param micro A <[logical]>-value of [length] \eqn{1} (default: [NULL]). If [TRUE] it returns the
-#' micro average across all \eqn{k} classes, if [FALSE] it returns the macro average.
 #' @param ... Arguments passed into other methods.
 #'
 #' @returns A [data.frame] on the following form,
