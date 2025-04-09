@@ -8,13 +8,11 @@ using dor_impl = metric::diagnostic_odds_ratio<int>;
 //' @method dor factor
 //' @export
 // [[Rcpp::export(dor.factor)]]
-Rcpp::NumericVector diagnostic_odds_ratio(
-    const Rcpp::IntegerVector& actual, 
-    const Rcpp::IntegerVector& predicted, 
-    const int& estimator = 0, 
-    bool na_rm = true) {
-        
-        dor_impl performance(actual, predicted, static_cast<metric::aggregate>(estimator), na_rm);
+double diagnostic_odds_ratio(
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::IntegerVector& predicted) {
+
+        dor_impl performance(actual, predicted);
         return performance.compute();
 }
 
@@ -22,14 +20,12 @@ Rcpp::NumericVector diagnostic_odds_ratio(
 //' @method weighted.dor factor
 //' @export
 // [[Rcpp::export(weighted.dor.factor)]]
-Rcpp::NumericVector weighted_diagnostic_odds_ratio(
-    const Rcpp::IntegerVector& actual, 
-    const Rcpp::IntegerVector& predicted, 
-    const Rcpp::NumericVector& w, 
-    const int& estimator = 0, 
-    bool na_rm = true) {
+double weighted_diagnostic_odds_ratio(
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::IntegerVector& predicted,
+    const Rcpp::NumericVector& w) {
 
-        dor_impl performance(actual, predicted, w, static_cast<metric::aggregate>(estimator), na_rm);
+        dor_impl performance(actual, predicted, w);
         return performance.compute();
 }
 
@@ -37,11 +33,9 @@ Rcpp::NumericVector weighted_diagnostic_odds_ratio(
 //' @method dor cmatrix
 //' @export
 // [[Rcpp::export(dor.cmatrix)]]
-Rcpp::NumericVector cmatrix_diagnostic_odds_ratio(
-    const Rcpp::NumericMatrix& x,
-    const int& estimator = 0,
-    bool na_rm = true) {
-        
-        dor_impl performance(x, static_cast<metric::aggregate>(estimator), na_rm);
+double cmatrix_diagnostic_odds_ratio(
+    const Rcpp::NumericMatrix& x) {
+
+        dor_impl performance(x);
         return performance.compute();
 }

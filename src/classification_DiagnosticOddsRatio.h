@@ -5,53 +5,30 @@
 #include <armadillo>
 
 namespace metric {
-
     template <typename T>
-    using base_metric = classification::metric_tools::base_metric<T>;
-
-    using aggregate = classification::metric_tools::aggregation_level;
-    
-    template <typename T>
-    class diagnostic_odds_ratio : public base_metric<T> {
-        
-    protected:
-        // Class-wise
-        arma::Col<double> calculate_class_values() const override {
-            // DOR = (TP/FP) / (FN/TN)
-            // DOR = (TP*TN) / (FP*FN)
-            // DOR = PLR/NLR
-            return (this->tp_ % this->tn_) / (this->fp_ % this->fn_);
-        }
-        
-        // Micro average
-        double calculate_micro_value() const override {
-            return this->calculate_micro([](double tp, double fp, double fn, double tn) {
-                // DOR = (TP*TN) / (FP*FN)
-                return (tp * tn) / (fp * fn);
-            });
-        }
-        
-    public:
+    class diagnostic_odds_ratio : public classification::confusion_matrix<T> {
+        public:
         // Unweighted constructor
-        diagnostic_odds_ratio(const vctr_t<T>& actual, 
-               const vctr_t<T>& predicted,
-               aggregate mode = aggregate::CLASS_WISE, 
-               bool na_rm = true) 
-               : base_metric<T>(actual, predicted, mode, na_rm) {}
+        diagnostic_odds_ratio(const vctr_t<T>& actual, const vctr_t<T>& predicted)
+            : classification::confusion_matrix<T>(actual, predicted) {}
 
         // Weighted constructor
-        diagnostic_odds_ratio(const vctr_t<T>& actual, 
-               const vctr_t<T>& predicted,
-               const vctr_t<double>& weights,
-               aggregate mode = aggregate::CLASS_WISE, 
-               bool na_rm = true) 
-               : base_metric<T>(actual, predicted, weights, mode, na_rm) {}
+        diagnostic_odds_ratio(const vctr_t<T>& actual, const vctr_t<T>& predicted, const vctr_t<double>& weights)
+            : classification::confusion_matrix<T>(actual, predicted, weights) {}
 
-        // Matrix constructor
-        diagnostic_odds_ratio(const Rcpp::NumericMatrix& x,
-               aggregate mode = aggregate::CLASS_WISE, 
-               bool na_rm = true)
-               : base_metric<T>(x, mode, na_rm) {}
+        // Rcpp::NumericMatrix constructor
+        diagnostic_odds_ratio(const Rcpp::NumericMatrix& x)
+            : classification::confusion_matrix<T>(x) {}
+
+        // Calculate metric
+        [[nodiscard]] inline double compute() const noexcept {
+            double tp = arma::accu(this->TP());
+            double fn = arma::accu(this->FN());
+            double fp = arma::accu(this->FP());
+            double tn = arma::accu(this->TN());
+
+            return (tp * tn) / (fp * fn);
+        }
     };
 }
 

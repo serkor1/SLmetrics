@@ -8,11 +8,11 @@
 \alias{weighted.dor}
 \title{Diagnostic Odds Ratio}
 \usage{
-\method{dor}{factor}(actual, predicted, estimator = 0L, na.rm = TRUE, ...)
+\method{dor}{factor}(actual, predicted, ...)
 
-\method{weighted.dor}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
+\method{weighted.dor}{factor}(actual, predicted, w, ...)
 
-\method{dor}{cmatrix}(x, estimator = 0L, na.rm = TRUE, ...)
+\method{dor}{cmatrix}(x, ...)
 
 ## Generic S3 method
 dor(...)
@@ -27,18 +27,6 @@ weighted.dor(
 \item{actual}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{predicted}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
-
-\item{estimator}{An <\link{integer}>-value of \link{length} \eqn{1} (default: \eqn{0}).
-\itemize{
-\item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
-\item 1 - a <\link{numeric}> value (Micro averaged metric)
-\item 2 - a <\link{numeric}> value (macro averaged metric)
-}}
-
-\item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
-This argument is only relevant when \code{micro != NULL}.
-When \code{na.rm = TRUE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))}.
-When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))}.}
 
 \item{...}{Arguments passed into other methods}
 

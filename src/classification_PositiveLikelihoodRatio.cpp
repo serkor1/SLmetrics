@@ -8,13 +8,11 @@ using plr = metric::positive_likelihood_ratio<int>;
 //' @method plr factor
 //' @export
 // [[Rcpp::export(plr.factor)]]
-Rcpp::NumericVector positive_likelihood_ratio(
-    const Rcpp::IntegerVector& actual, 
-    const Rcpp::IntegerVector& predicted, 
-    const int& estimator = 0, 
-    bool na_rm = true) {
-        
-        plr performance(actual, predicted, static_cast<metric::aggregate>(estimator), na_rm);
+double positive_likelihood_ratio(
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::IntegerVector& predicted) {
+
+        plr performance(actual, predicted);
         return performance.compute();
 }
 
@@ -22,14 +20,12 @@ Rcpp::NumericVector positive_likelihood_ratio(
 //' @method weighted.plr factor
 //' @export
 // [[Rcpp::export(weighted.plr.factor)]]
-Rcpp::NumericVector weighted_positive_likelihood_ratio(
-    const Rcpp::IntegerVector& actual, 
-    const Rcpp::IntegerVector& predicted, 
-    const Rcpp::NumericVector& w, 
-    const int& estimator = 0, 
-    bool na_rm = true) {
+double weighted_positive_likelihood_ratio(
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::IntegerVector& predicted,
+    const Rcpp::NumericVector& w) {
 
-        plr performance(actual, predicted, w, static_cast<metric::aggregate>(estimator), na_rm);
+        plr performance(actual, predicted, w);
         return performance.compute();
 }
 
@@ -37,11 +33,9 @@ Rcpp::NumericVector weighted_positive_likelihood_ratio(
 //' @method plr cmatrix
 //' @export
 // [[Rcpp::export(plr.cmatrix)]]
-Rcpp::NumericVector cmatrix_positive_likelihood_ratio(
-    const Rcpp::NumericMatrix& x,
-    const int& estimator = 0,
-    bool na_rm = true) {
-        
-        plr performance(x, static_cast<metric::aggregate>(estimator), na_rm);
+double cmatrix_positive_likelihood_ratio(
+    const Rcpp::NumericMatrix& x) {
+
+        plr performance(x);
         return performance.compute();
 }
