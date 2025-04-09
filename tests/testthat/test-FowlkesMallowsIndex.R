@@ -11,13 +11,43 @@ testthat::test_that(
     # wrapper
     wrapped_fmi <- function(
       actual,
-      predicted) {
+      predicted,
+      w = NULL) {
       
-        fmi(
-          actual     = actual,
-          predicted  = predicted
+        if (is.null(w)) {
+          fmi(
+            actual     = actual,
+            predicted  = predicted
+          )
+        } else {
+          weighted.fmi(
+            actual     = actual,
+            predicted  = predicted,
+            w = w
+          )
+        }
+      
+        
+      
+    }
+
+    wrapped_ref_fmi <- function(
+      actual,
+      predicted,
+      w = NULL
+    ) {
+      if (is.null(w)) {
+        py_fmi(
+          actual   = actual,
+          predicted = predicted
         )
-      
+      } else {
+        ref_fmi(
+          actual    = actual,
+          predicted = predicted,
+          w         = w
+        )
+      }
     }
     
     for (balanced in c(FALSE, TRUE)) {
@@ -42,7 +72,8 @@ testthat::test_that(
         # from {slmetrics}
         score <- wrapped_fmi(
           actual     = actual,
-          predicted  = predicted
+          predicted  = predicted,
+          w          = if (weighted) w else NULL
         )
 
         # 2.3) test that the values
@@ -55,9 +86,10 @@ testthat::test_that(
         # are equal to target value
 
         # 2.4.1) calculate py_score
-        py_score <- py_fmi(
+        py_score <- wrapped_ref_fmi(
           actual    = actual,
-          predicted = predicted
+          predicted = predicted,
+          w         = if (weighted) w else NULL
         )
 
         # 2.4.2) test for equality

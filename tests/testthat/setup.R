@@ -265,7 +265,9 @@ sl_classification <- list(
   "npv"         = npv,
   "fer"         = fer,
 
-  "ckappa"      = ckappa
+  "ckappa"      = ckappa,
+
+  "hammingloss" = hammingloss
 )
 
 # 9) define all weighted classification functions in {SLmetrics}
@@ -316,7 +318,9 @@ sl_wclassification <- list(
   "npv"         = weighted.npv,
   "fer"         = weighted.fer,
 
-  "ckappa"      = weighted.ckappa
+  "ckappa"      = weighted.ckappa,
+
+  "hammingloss" = weighted.hammingloss
 )
 
 # script end;

@@ -224,6 +224,29 @@ ref_dor <- function(
   )
 }
 
+# Reference Fowlkes Mallos Index
+# NOTE: This is for weighted version
+# only
+ref_fmi <- function(
+  actual, 
+  predicted, 
+  w) {
+  
+      conf_mat <- confusion_matrix(actual, predicted, w = w)
+
+      N <- sum(conf_mat)
+      tk <- sum(conf_mat^2) - N
+    
+      col_sums <- colSums(conf_mat)
+      pk <- sum(col_sums^2) - N
+      
+      row_sums <- rowSums(conf_mat)
+      qk <- sum(row_sums^2) - N
+      
+      sqrt((tk / pk) * (tk / qk))
+
+}
+
 ref_ROC <-function(actual, response, thresholds = NULL, w = NULL, estimator = 0) {
 
   n_levels <- length(levels(actual))
@@ -388,3 +411,4 @@ ref_poisson_logloss <- function(
       }
   }
 }
+
