@@ -159,13 +159,13 @@ cat(
   "Micro-averaged Negative Predictive Value", npv(
     actual    = actual,
     predicted = predicted,
-    micro     = TRUE
+    estimator = 1
   ),
   "Micro-averaged Negative Predictive Value (weighted)", weighted.npv(
     actual    = actual,
     predicted = predicted,
     w         = iris$Petal.Length/mean(iris$Petal.Length),
-    micro     = TRUE
+    estimator = 1
   ),
   sep = "\n"
 )

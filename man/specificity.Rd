@@ -228,13 +228,13 @@ cat(
   "Micro-averaged Specificity", specificity(
     actual    = actual,
     predicted = predicted,
-    micro     = TRUE
+    estimator = 1
   ),
   "Micro-averaged Specificity (weighted)", weighted.specificity(
     actual    = actual,
     predicted = predicted,
     w         = iris$Petal.Length/mean(iris$Petal.Length),
-    micro     = TRUE
+    estimator = 1
   ),
   sep = "\n"
 )

@@ -172,13 +172,13 @@ cat(
   "Micro-averaged False Omission Rate", fer(
     actual    = actual,
     predicted = predicted,
-    micro     = TRUE
+    estimator = 1
   ),
   "Micro-averaged False Omission Rate (weighted)", weighted.fer(
     actual    = actual,
     predicted = predicted,
     w         = iris$Petal.Length/mean(iris$Petal.Length),
-    micro     = TRUE
+    estimator = 1
   ),
   sep = "\n"
 )

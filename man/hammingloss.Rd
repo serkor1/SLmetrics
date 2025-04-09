@@ -149,11 +149,11 @@ actual <- factor(
 # 4) evaluate model
 # performance using Zero-One Loss
 cat(
-  "Zero-One Loss", hammingloss(
+  "Hamming Loss", hammingloss(
     actual    = actual,
     predicted = predicted
   ),
-  "Zero-One Loss (weigthed)", weighted.hammingloss(
+  "Hamming Loss (weigthed)", weighted.hammingloss(
     actual    = actual,
     predicted = predicted,
     w         = iris$Petal.Length/mean(iris$Petal.Length)
