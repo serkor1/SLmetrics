@@ -131,12 +131,29 @@ plot.cmatrix <- function(
 #' @export
 summary.cmatrix <- function(
     object,
-    average = "micro",
+    estimator = "micro",
     digits = 2,
     ...) {
+  
+  # 0) determine aggregation
+  # level based on estimator
+  # 
+  # Can be passed as <character>
+  # <numeric> or <integer>
+  estimator <- switch (estimator,
+    "micro" = {1},
+    "macro" = {2},
+    # default value:
+    1
+  )
 
-  micro <- average == "micro"
-
+  # pass the chosen
+  # value to average
+  average <- switch (estimator,
+    "micro",
+    "macro"
+  ) 
+  
   # 1) print the header
   # of the summary
   cat(
@@ -147,22 +164,22 @@ summary.cmatrix <- function(
 
   full_line()
 
-  print(object)
-
+    print(object)
+  
   full_line()
 
   # summary statistics
-  #
+  # for the classification
+  # problem
   cat(
     paste("Overall Statistics", paste0("(", paste(average, "average"), ")")),
     paste(" - Accuracy:         ", formatC(accuracy(object), digits = digits,format = "f")),
     paste(" - Balanced Accuracy:", formatC(baccuracy(object), digits = digits,format = "f")),
-    paste(" - Sensitivity:      ", formatC(sensitivity(object,micro = micro), digits = digits, format = "f")),
-    paste(" - Specificity:      ", formatC(specificity(object,micro = micro), digits = digits, format = "f")),
-    paste(" - Precision:        ", formatC(precision(object,micro = micro), digits = digits, format = "f")),
+    paste(" - Sensitivity:      ", formatC(sensitivity(object,estimator = estimator), digits = digits, format = "f")),
+    paste(" - Specificity:      ", formatC(specificity(object,estimator = estimator), digits = digits, format = "f")),
+    paste(" - Precision:        ", formatC(precision(object,estimator = estimator), digits = digits, format = "f")),
     sep = "\n"
     )
-
 }
 
 # script end;
