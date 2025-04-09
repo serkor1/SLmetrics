@@ -58,14 +58,14 @@ cat(
     actual    = actual,
     predicted = predicted,
     beta      = 1,
-    micro     = TRUE
+    estimator = 1
   ),
   "Micro-averaged F1-score (weighted)", weighted.fbeta(
     actual    = actual,
     predicted = predicted,
     w         = iris$Petal.Length/mean(iris$Petal.Length),
     beta      = 1,
-    micro     = TRUE
+    estimator = 1
   ),
   sep = "\n"
 )

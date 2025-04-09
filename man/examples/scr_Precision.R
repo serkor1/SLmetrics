@@ -55,13 +55,13 @@ cat(
   "Micro-averaged Precision", precision(
     actual    = actual,
     predicted = predicted,
-    micro     = TRUE
+    estimator = 1
   ),
   "Micro-averaged Precision (weighted)", weighted.precision(
     actual    = actual,
     predicted = predicted,
     w         = iris$Petal.Length/mean(iris$Petal.Length),
-    micro     = TRUE
+    estimator = 1
   ),
   sep = "\n"
 )

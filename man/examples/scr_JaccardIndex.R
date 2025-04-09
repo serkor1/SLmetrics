@@ -55,13 +55,13 @@ cat(
   "Micro-averaged Jaccard Index", jaccard(
     actual    = actual,
     predicted = predicted,
-    micro     = TRUE
+    estiamtor = 1
   ),
   "Micro-averaged Jaccard Index (weighted)", weighted.jaccard(
     actual    = actual,
     predicted = predicted,
     w         = iris$Petal.Length/mean(iris$Petal.Length),
-    micro     = TRUE
+    estiamtor = 1
   ),
   sep = "\n"
 )
