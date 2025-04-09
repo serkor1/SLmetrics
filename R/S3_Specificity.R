@@ -17,7 +17,7 @@
 #' ## Generic S3 method
 #' specificity(
 #'  ...,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #'
@@ -25,8 +25,12 @@
 #' @param predicted A vector of <[factor]> values of [length] \eqn{n}, and \eqn{k} levels.
 #' @param w A <[numeric]>-vector of [length] \eqn{n}. [NULL] by default. 
 #' @param x A confusion matrix created [cmatrix()].
-#' @param micro A <[logical]>-value of [length] \eqn{1} (default: [NULL]). If [TRUE] it returns the
-#' micro average across all \eqn{k} classes, if [FALSE] it returns the macro average.
+#' @param estimator An <[integer]>-value of [length] \eqn{1} (default: \eqn{0}).
+#' \itemize{
+#'   \item 0 - a named <[numeric]>-vector of [length] k (class-wise)
+#'   \item 1 - a <[numeric]> value (Micro averaged metric)
+#'   \item 2 - a <[numeric]> value (macro averaged metric)
+#' }
 #' @param na.rm A <[logical]> value of [length] \eqn{1} (default: [TRUE]). If [TRUE], [NA] values are removed from the computation. 
 #' This argument is only relevant when `micro != NULL`. 
 #' When `na.rm = TRUE`, the computation corresponds to `sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))`.
@@ -65,11 +69,12 @@
 #'
 #' In both cases, \eqn{k = 3}, determined indirectly by the `levels` argument.
 #'
-#' @returns
-#'
-#' If `micro` is [NULL] (the default), a named <[numeric]>-vector of [length] k
-#'
-#' If `micro` is [TRUE] or [FALSE], a <[numeric]>-vector of [length] 1
+#' @returns If `estimator` is giveen as
+#' \itemize{
+#'   \item 0 - a named <[numeric]>-vector of [length] k (class-wise)
+#'   \item 1 - a <[numeric]> value (Micro averaged metric)
+#'   \item 2 - a <[numeric]> value (macro averaged metric)
+#' }
 #'
 #' @section Definition:
 #' Let \eqn{\hat{\sigma} \in [0, 1]} be the proportion of true negatives among the actual negatives. The specificity of the classifier is calculated as,
@@ -91,7 +96,7 @@
 #' @export
 specificity <- function(
   ..., 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "specificity",
@@ -104,13 +109,13 @@ specificity <- function(
 #' ## Generic S3 method
 #' tnr(
 #'  ...,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 tnr <- function(
   ..., 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "tnr",
@@ -123,13 +128,13 @@ tnr <- function(
 #' ## Generic S3 method
 #' selectivity(
 #'  ...,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 selectivity <- function(
   ..., 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "selectivity",
@@ -143,14 +148,14 @@ selectivity <- function(
 #' weighted.specificity(
 #'  ...,
 #'  w,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 weighted.specificity <- function(
   ...,
   w,
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "weighted.specificity",
@@ -164,14 +169,14 @@ weighted.specificity <- function(
 #' weighted.tnr(
 #'  ...,
 #'  w,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 weighted.tnr <- function(
   ...,
   w,
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "weighted.tnr",
@@ -185,14 +190,14 @@ weighted.tnr <- function(
 #' weighted.selectivity(
 #'  ...,
 #'  w,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 weighted.selectivity <- function(
   ...,
   w,
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "weighted.selectivity",

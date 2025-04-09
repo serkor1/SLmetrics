@@ -15,7 +15,7 @@
 #' ## Generic S3 method
 #' fer(
 #'  ...,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' 
@@ -39,7 +39,7 @@
 #' @export
 fer <- function(
   ...,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE) {
   UseMethod(
     generic = "fer",
@@ -53,14 +53,14 @@ fer <- function(
 #' weighted.fer(
 #'  ...,
 #'  w,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 weighted.fer <- function(
   ...,
   w,
-  micro = NULL,
+  estimator = 0,
   na.rm = TRUE) {
   UseMethod(
     generic = "weighted.fer",

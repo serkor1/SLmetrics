@@ -1,66 +1,89 @@
-// [[Rcpp::depends(RcppEigen)]]
-#include <RcppEigen.h>
-#include "classification_Precision.h" // PrecisionMetric definition
+#include <Rcpp.h>
+#include "classification_Precision.h"
 
-// Namespace for cleaner usage
-using namespace Rcpp;
+// declare metric
+using precision_impl = metric::precision<int>;
 
 //' @rdname precision
 //' @method precision factor
 //' @export
 // [[Rcpp::export(precision.factor)]]
-Rcpp::NumericVector Precision(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, bool na_rm = true) 
-{
-    PrecisionClass cook(na_rm);
-    return recipe(cook, actual, predicted, std::nullopt, micro);
+Rcpp::NumericVector precision(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+        
+        precision_impl performance(actual, predicted, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
 //' @rdname precision
 //' @method weighted.precision factor
 //' @export
 // [[Rcpp::export(weighted.precision.factor)]]
-Rcpp::NumericVector weighted_Precision(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, bool na_rm = true) 
-{
-    PrecisionClass cook(na_rm);
-    return recipe(cook, actual, predicted, w, micro);
+Rcpp::NumericVector weighted_precision(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const Rcpp::NumericVector& w, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+
+        precision_impl performance(actual, predicted, w, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
 //' @rdname precision
 //' @method precision cmatrix
 //' @export
 // [[Rcpp::export(precision.cmatrix)]]
-Rcpp::NumericVector cmatrix_Precision(const NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    PrecisionClass cook(na_rm);
-    return recipe(cook, x, micro);
+Rcpp::NumericVector cmatrix_precision(
+    const Rcpp::NumericMatrix& x,
+    const int& estimator = 0,
+    bool na_rm = true) {
+        
+        precision_impl performance(x, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
 //' @rdname precision
 //' @method ppv factor
 //' @export
 // [[Rcpp::export(ppv.factor)]]
-Rcpp::NumericVector PositivePredictiveValue(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, bool na_rm = true) 
-{
-    PrecisionClass cook(na_rm);
-    return recipe(cook, actual, predicted, std::nullopt, micro);
+Rcpp::NumericVector ppv(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+        
+        precision_impl performance(actual, predicted, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
 //' @rdname precision
 //' @method weighted.ppv factor
 //' @export
 // [[Rcpp::export(weighted.ppv.factor)]]
-Rcpp::NumericVector weighted_PositivePredictiveValue(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, bool na_rm = true) 
-{
-    PrecisionClass cook(na_rm);
-    return recipe(cook, actual, predicted, w, micro);
+Rcpp::NumericVector weighted_ppv_score(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const Rcpp::NumericVector& w, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+
+        precision_impl performance(actual, predicted, w, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
 //' @rdname precision
 //' @method ppv cmatrix
 //' @export
 // [[Rcpp::export(ppv.cmatrix)]]
-Rcpp::NumericVector cmatrix_PositivePredictiveValue(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    PrecisionClass cook(na_rm);
-    return recipe(cook, x, micro);
+Rcpp::NumericVector cmatrix_ppv_score(
+    const Rcpp::NumericMatrix& x,
+    const int& estimator = 0,
+    bool na_rm = true) {
+        
+        precision_impl performance(x, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }

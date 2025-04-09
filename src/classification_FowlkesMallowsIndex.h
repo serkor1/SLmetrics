@@ -1,49 +1,47 @@
-#ifndef CLASSIFICATION_FMI_H
-#define CLASSIFICATION_FMI_H
+#ifndef CLASSIFICATION_FOWLKESMALLOWSINDEX_H
+#define CLASSIFICATION_FOWLKESMALLOWSINDEX_H
 
-#include "classification_Helpers.h"
-#include <RcppEigen.h>
-#define EIGEN_USE_MKL_ALL
-EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+#include "SLmetrics.h"
+#include <armadillo>
+#include <cmath>
 
-
-/*
-* Calculation of the Fawlks Mallows
-* Index follows that of https://en.wikipedia.org/wiki/Fowlkes%E2%80%93Mallows_index
-* for any specific value k.
-*
-* Using the sqrt(PPV * TPR)-approach directly yields
-* a different result than scikit-learn.Hence this approach
-* is prefferred
-*/
-class FowlkesMallowsIndexClass : public classification {
-
+namespace metric {
+    template <typename T>
+    class fowlkes_mallows_index : public classification::task<T> {
+    private:
+        classification::confusion_matrix<T> cm_;
+    
     public:
+        // Unweighted constructor.
+        fowlkes_mallows_index(const vctr_t<T>& actual, const vctr_t<T>& predicted)
+            : classification::task<T>(actual, predicted), cm_(actual, predicted)
+        { }
+    
+        // Weighted constructor.
+        fowlkes_mallows_index(const vctr_t<T>& actual, const vctr_t<T>& predicted, const vctr_t<double>& weights)
+            : classification::task<T>(actual, predicted, weights), cm_(actual, predicted, weights)
+        { }
+    
+        // Rcpp::NumericMatrix constructor.
+        fowlkes_mallows_index(const Rcpp::NumericMatrix& x)
+            : classification::task<T>(), cm_(x)
+        { }
+    
+        // Calculate metric
+        [[nodiscard]] inline double compute() const noexcept {
+            arma::Mat<double> matrix = cm_.get_matrix();
+            double N = arma::accu(matrix);
+            arma::colvec row_sum = arma::sum(matrix, 1);
+            arma::rowvec col_sum = arma::sum(matrix, 0);
+            
+            double tk = arma::accu(arma::square(matrix)) - N;
+            double pk = arma::accu(arma::square(col_sum)) - N;
+            double qk = arma::accu(arma::square(row_sum)) - N;
 
-        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
-
-            // 0) set sizes
-            // of arrays
-            Eigen::ArrayXd output(1), N(1), pk(1), qk(1), tk(1);
-            Eigen::VectorXd col_sum(matrix.rows()), row_sum(matrix.rows());
-
-            // 1) calculate values
-            // accordingly
-            N       = matrix.sum();
-            row_sum = matrix.rowwise().sum();
-            col_sum = matrix.colwise().sum();
-            tk      = matrix.cwiseProduct(matrix).sum() - N;
-            pk      = col_sum.squaredNorm() - N;
-            qk      = row_sum.squaredNorm() - N;
-
-            // 2) calculate output
-            // value
-            output  = (tk / pk) * (tk / qk);
-
-            return Rcpp::wrap(output.array().sqrt());
-
+            return std::sqrt((tk / pk) * (tk / qk));
         }
+    };
 
-};
+}
 
 #endif

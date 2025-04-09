@@ -18,7 +18,7 @@
 #' ## Generic S3 method
 #' recall(
 #'  ...,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' 
@@ -42,7 +42,7 @@
 #' @export
 recall <- function(
   ..., 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "recall",
@@ -55,13 +55,13 @@ recall <- function(
 #' ## Generic S3 method
 #' sensitivity(
 #'  ...,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 sensitivity <- function(
   ..., 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "sensitivity",
@@ -74,13 +74,13 @@ sensitivity <- function(
 #' ## Generic S3 method
 #' tpr(
 #'  ...,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 tpr <- function(
   ..., 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "tpr",
@@ -95,14 +95,14 @@ tpr <- function(
 #' weighted.recall(
 #'  ...,
 #'  w,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 weighted.recall <- function(
   ..., 
   w, 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "weighted.recall",
@@ -116,14 +116,14 @@ weighted.recall <- function(
 #' weighted.sensitivity(
 #'  ...,
 #'  w,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 weighted.sensitivity <- function(
   ..., 
   w, 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "weighted.sensitivity",
@@ -137,14 +137,14 @@ weighted.sensitivity <- function(
 #' weighted.tpr(
 #'  ...,
 #'  w,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 weighted.tpr <- function(
   ..., 
   w, 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "weighted.tpr",

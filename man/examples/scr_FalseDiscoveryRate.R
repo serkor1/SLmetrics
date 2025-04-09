@@ -55,13 +55,13 @@ cat(
   "Micro-averaged False Discovery Rate", fdr(
     actual    = actual,
     predicted = predicted,
-    micro     = TRUE
+    estimator = 1
   ),
   "Micro-averaged False Discovery Rate (weighted)", weighted.fdr(
     actual    = actual,
     predicted = predicted,
     w         = iris$Petal.Length/mean(iris$Petal.Length),
-    micro     = TRUE
+    estimator = 1
   ),
   sep = "\n"
 )

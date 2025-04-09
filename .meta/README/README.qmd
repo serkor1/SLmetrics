@@ -137,7 +137,7 @@ At its core, performance evaluation is essentially just comparing two vectors �
 
 1. **Fast:** Powered by `C++` and [{Rcpp}](https://github.com/RcppCore/Rcpp)  
 2. **Memory-efficient:** Everything is structured around pointers and references
-3. **Lightweight:** Only depends on [{Rcpp}](https://github.com/RcppCore/Rcpp), [{RcppEigen}](https://github.com/RcppCore/RcppEigen), and [{lattice}](https://github.com/deepayan/lattice)
+3. **Lightweight:** Only depends on [{Rcpp}](https://github.com/RcppCore/Rcpp) and [{lattice}](https://github.com/deepayan/lattice)
 4. **Simple:** S3-based, minimal overhead, and flexible inputs
 
 Performance evaluation should be plug-and-play and “just work” out of the box — there’s no need to worry about *quasiquations*, *dependencies*, *deprecations*, or variations of the same functions relative to their arguments when using [{SLmetrics}](https://serkor1.github.io/SLmetrics/).

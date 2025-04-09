@@ -1,35 +1,47 @@
-// [[Rcpp::depends(RcppEigen)]]
-#include <RcppEigen.h>
+#include <Rcpp.h>
 #include "classification_NegativePredictiveValue.h"
 
-using namespace Rcpp;
+// declare metric
+using npv_impl = metric::negative_predictive_value<int>;
 
 //' @rdname npv
 //' @method npv factor
 //' @export
 // [[Rcpp::export(npv.factor)]]
-Rcpp::NumericVector NegativePredictitveValue(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    NegativePredictiveValueClass cook(na_rm);
-    return recipe(cook, actual, predicted, std::nullopt, micro);
+Rcpp::NumericVector negative_predictive_value(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+        
+        npv_impl performance(actual, predicted, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
 //' @rdname npv
 //' @method weighted.npv factor
 //' @export
 // [[Rcpp::export(weighted.npv.factor)]]
-Rcpp::NumericVector weighted_NegativePredictitveValue(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    NegativePredictiveValueClass cook(na_rm);
-    return recipe(cook, actual, predicted, w, micro);
+Rcpp::NumericVector weighted_negative_predictive_value(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const Rcpp::NumericVector& w, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+
+        npv_impl performance(actual, predicted, w, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
 //' @rdname npv
 //' @method npv cmatrix
 //' @export
 // [[Rcpp::export(npv.cmatrix)]]
-Rcpp::NumericVector cmatrix_NegativePredictitveValue(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    NegativePredictiveValueClass cook(na_rm);
-    return recipe(cook, x, micro);
+Rcpp::NumericVector cmatrix_negative_predictive_value(
+    const Rcpp::NumericMatrix& x,
+    const int& estimator = 0,
+    bool na_rm = true) {
+        
+        npv_impl performance(x, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }

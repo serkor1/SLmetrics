@@ -1,47 +1,54 @@
-#ifndef CLASSIFICATION_MCC_H
-#define CLASSIFICATION_MCC_H
+#ifndef CLASSIFICATION_MATTHEWSCORRELATIONCOEFFICIENT_H
+#define CLASSIFICATION_MATTHEWSCORRELATIONCOEFFICIENT_H
 
-#include "classification_Helpers.h"
-#include <RcppEigen.h>
-#define EIGEN_USE_MKL_ALL
-EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+#include "SLmetrics.h"
+#include <armadillo>
+#include <cmath>
 
-/*
-    MCCMetric class:
-    Calculates the Matthews Correlation Coefficient (MCC) using the provided
-    confusion matrix or actual/predicted labels.
-*/
-class MatthewsCorrelationCoefficientClass : public classification {
+namespace metric {
 
+    template <typename T>
+    class matthews_correlation_coefficient : public classification::task<T> {
+    private:
+        classification::confusion_matrix<T> cm_;
+    
     public:
-        
-        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
-
-            Eigen::ArrayXd output(1), N(1), row_sum(matrix.rows()), col_sum(matrix.cols()), tp_sum(1), cov_ytyp(1), cov_ypyp(1), cov_ytyt(1), product(1);
-
+        // Unweighted constructor.
+        matthews_correlation_coefficient(const vctr_t<T>& actual, const vctr_t<T>& predicted)
+            : classification::task<T>(actual, predicted), cm_(actual, predicted)
+        { }
+    
+        // Weighted constructor.
+        matthews_correlation_coefficient(const vctr_t<T>& actual, const vctr_t<T>& predicted, const vctr_t<double>& weights)
+            : classification::task<T>(actual, predicted, weights), cm_(actual, predicted, weights)
+        { }
+    
+        // Rcpp::NumericMatrix constructor
+        matthews_correlation_coefficient(const Rcpp::NumericMatrix& x)
+            : classification::task<T>(), cm_(x)
+        { }
+    
+        // Calculate metric
+        [[nodiscard]] inline double compute() const noexcept {
+            arma::Mat<double> matrix = cm_.get_matrix();
+            double tp_sum = arma::accu(matrix.diag());
+            arma::rowvec col_sum = arma::sum(matrix, 0);
+            arma::colvec row_sum = arma::sum(matrix, 1);
+            double N = arma::accu(matrix);
             
-            // 1) calculate values
-            // accordingly
-            tp_sum  = matrix.diagonal().sum();
-            row_sum = matrix.rowwise().sum();
-            col_sum = matrix.colwise().sum();
-            N       = matrix.sum();
-
-            // 2) calculate covariances
-            cov_ytyp = tp_sum * N - row_sum.matrix().dot(col_sum.matrix());
-            cov_ypyp = N * N - col_sum.matrix().squaredNorm();
-            cov_ytyt = N * N - row_sum.matrix().squaredNorm();
-
-            // 3) calcualte the product
-            product = cov_ypyp * cov_ytyt;
-
-            // 4) calculate output
-            // value
-            output  = cov_ytyp / product.array().sqrt();
-
-            return Rcpp::wrap(output);
+            // Calculate covariances
+            double cov_ytyp = tp_sum * N - arma::dot(row_sum, col_sum);
+            double cov_ypyp = N * N - arma::dot(col_sum, col_sum);
+            double cov_ytyt = N * N - arma::dot(row_sum, row_sum);
+            
+            // Calculate product
+            double product = cov_ypyp * cov_ytyt;
+            
+            // Calculate MCC
+            return cov_ytyp / std::sqrt(product);
         }
+    };
 
-};
+}
 
 #endif

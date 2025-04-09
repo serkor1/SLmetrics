@@ -1,54 +1,31 @@
-# objective: Test that Fowlks Mallows Index
+# objective: Test that hammingloss
 # implemented in {SLmetrics} is aligned with
 # target functions.
 
 testthat::test_that(
-  desc = "Test `fmi()`-function", code = {
+  desc = "Test `hammingloss()`-function", code = {
 
     testthat::skip_on_cran()
 
-    # 0) construct fmi
+    # 0) construct Balanced hammingloss
     # wrapper
-    wrapped_fmi <- function(
+    wrapped_hammingloss <- function(
       actual,
       predicted,
       w = NULL) {
-      
         if (is.null(w)) {
-          fmi(
+          hammingloss(
             actual     = actual,
             predicted  = predicted
           )
         } else {
-          weighted.fmi(
+          weighted.hammingloss(
             actual     = actual,
             predicted  = predicted,
-            w = w
+            w          = w
           )
         }
-      
-        
-      
-    }
-
-    wrapped_ref_fmi <- function(
-      actual,
-      predicted,
-      w = NULL
-    ) {
-      if (is.null(w)) {
-        py_fmi(
-          actual   = actual,
-          predicted = predicted
-        )
-      } else {
-        ref_fmi(
-          actual    = actual,
-          predicted = predicted,
-          w         = w
-        )
       }
-    }
     
     for (balanced in c(FALSE, TRUE)) {
 
@@ -60,17 +37,16 @@ testthat::test_that(
 
       for (weighted in c(TRUE, FALSE)) {
       
-        # 2) test that the are 
-        # equal to target values
         # 2.1) generate sensible 
         # label information
         info <- paste(
-          "Balanced = ", balanced
+          "Balanced = ", balanced,
+          "Weighted = ", weighted
         )
 
         # 2.2) generate score
-        # from {slmetrics}
-        score <- wrapped_fmi(
+        # from {SLmetrics}
+        score <- wrapped_hammingloss(
           actual     = actual,
           predicted  = predicted,
           w          = if (weighted) w else NULL
@@ -86,10 +62,10 @@ testthat::test_that(
         # are equal to target value
 
         # 2.4.1) calculate py_score
-        py_score <- wrapped_ref_fmi(
+        py_score <- py_hammingloss(
           actual    = actual,
           predicted = predicted,
-          w         = if (weighted) w else NULL
+          w          = if (weighted) w else NULL
         )
 
         # 2.4.2) test for equality

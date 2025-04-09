@@ -1,60 +1,58 @@
-#ifndef CLASSIFICATION_FALSE_OMISSION_RATE_H
-#define CLASSIFICATION_FALSE_OMISSION_RATE_H
+#ifndef CLASSIFICATION_FALSEOMISSIONRATE_H
+#define CLASSIFICATION_FALSEOMISSIONRATE_H
 
-#include "classification_Helpers.h"
-#include <RcppEigen.h>
-#include <cmath>
-#define EIGEN_USE_MKL_ALL
-EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+#include "SLmetrics.h"
+#include <armadillo>
 
-/*
-    NOTE:
-        To increase maintainability all functions are passed through
-        the confusion matrix. So there is no need to add an overloaded function
-        for the weighted metrics.
-*/
-class FalseOmissionRateClass : public classification {
+namespace metric {
 
-    private:
-        bool na_rm;
+    template <typename T>
+    using base_metric = classification::metric_tools::base_metric<T>;
 
+    using aggregate = classification::metric_tools::aggregation_level;
+    
+    template <typename T>
+    class false_omission_rate : public base_metric<T> {
+        
+    protected:
+        // Class-wise
+        arma::Col<double> calculate_class_values() const override {
+            // FER = FN / (FN + TN)
+            arma::Col<double> numerator = this->fn_;
+            arma::Col<double> denominator = this->fn_ + this->tn_;
+            return numerator / denominator;
+        }
+        
+        // Micro average
+        double calculate_micro_value() const override {
+            return this->calculate_micro([](double tp, double fp, double fn, double tn) {
+                // FER = FN / (FN + TN)
+                return fn / (fn + tn);
+            });
+        }
+        
     public:
+        // Unweighted constructor
+        false_omission_rate(const vctr_t<T>& actual, 
+               const vctr_t<T>& predicted,
+               aggregate mode = aggregate::CLASS_WISE, 
+               bool na_rm = true) 
+               : base_metric<T>(actual, predicted, mode, na_rm) {}
 
-        FalseOmissionRateClass(bool na_rm)
-            : na_rm(na_rm) {}
+        // Weighted constructor
+        false_omission_rate(const vctr_t<T>& actual, 
+               const vctr_t<T>& predicted,
+               const vctr_t<double>& weights,
+               aggregate mode = aggregate::CLASS_WISE, 
+               bool na_rm = true) 
+               : base_metric<T>(actual, predicted, weights, mode, na_rm) {}
 
-        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro) const override {
-            // 0) Declare variables and size
-            // for efficiency.
-            // NOTE: Micro and macro already wraps and exports as Rcpp
-            Rcpp::NumericVector output(1);
-            Eigen::ArrayXd fn(matrix.rows()), tn(matrix.rows());
-
-            // Create FN and TN arrays for calculations
-            FN(matrix, fn);
-            TN(matrix, tn);
-
-            return do_micro
-                ? micro(fn, fn + tn, na_rm)
-                : macro(fn, fn + tn, na_rm);
-            
-        }
-
-        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
-            // Declare the output value and FN/TN arrays
-            Eigen::ArrayXd output(matrix.rows());
-            Eigen::ArrayXd fn(matrix.rows()), tn(matrix.rows());
-
-            // Create FN and TN arrays for calculations
-            FN(matrix, fn);
-            TN(matrix, tn);
-
-            // Calculate metric
-            output = fn / (fn + tn);
-
-            // Return with R-compatible class
-            return Rcpp::wrap(output);
-        }
-};
+        // Matrix constructor
+        false_omission_rate(const Rcpp::NumericMatrix& x,
+               aggregate mode = aggregate::CLASS_WISE, 
+               bool na_rm = true)
+               : base_metric<T>(x, mode, na_rm) {}
+    };
+}
 
 #endif

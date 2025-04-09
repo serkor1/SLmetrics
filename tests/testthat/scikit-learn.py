@@ -80,6 +80,13 @@ def py_accuracy(actual, predicted, average = None, w = None):
       y_pred = predicted,
       sample_weight = w
     )
+
+def py_hammingloss(actual, predicted, w = None):
+    return metrics.hamming_loss(
+      y_true = actual,
+      y_pred = predicted,
+      sample_weight = w
+    )
     
 def py_baccuracy(actual, predicted, adjust = False, average = None, w = None):
     return metrics.balanced_accuracy_score(

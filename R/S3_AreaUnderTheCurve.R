@@ -88,6 +88,9 @@ auc <- function(
 #'  ...
 #' )
 #' 
+#' @param micro A <[logical]>-value of [length] \eqn{1} (default: [NULL]). If [TRUE] it returns the
+#' micro average across all \eqn{k} classes, if [FALSE] it returns the macro average.
+#' 
 #' @example man/examples/scr_PrecisionRecallAUC.R
 #' 
 #' @family Classification
@@ -158,6 +161,9 @@ weighted.pr.auc <- function(
 #'  method = 0,
 #'  ...
 #' )
+#' 
+#' @param micro A <[logical]>-value of [length] \eqn{1} (default: [NULL]). If [TRUE] it returns the
+#' micro average across all \eqn{k} classes, if [FALSE] it returns the macro average.
 #'
 #' @example man/examples/scr_ReceiverOperatorCurveAUC.R
 #' 

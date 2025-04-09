@@ -1,35 +1,44 @@
-// [[Rcpp::depends(RcppEigen)]]
-#include <RcppEigen.h>
+#include <Rcpp.h>
 #include "classification_CohensKappa.h"
 
-using namespace Rcpp;
+// implementation of metric
+using cohens_kappa_impl = metric::cohens_kappa<int>;
 
 //' @rdname ckappa
 //' @method ckappa factor
 //' @export
 // [[Rcpp::export(ckappa.factor)]]
-Rcpp::NumericVector CohensKappa(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const double& beta = 0.0) 
-{
-    CohensKappaClass cook(beta);
-    return recipe(cook, actual, predicted);
+double cohens_kappa(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted,
+    const double& beta = 0.0) {
+
+        cohens_kappa_impl performance(actual, predicted, beta);
+        return performance.compute();
 }
 
 //' @rdname ckappa
 //' @method weighted.ckappa factor
 //' @export
 // [[Rcpp::export(weighted.ckappa.factor)]]
-Rcpp::NumericVector weighted_CohensKappa(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, const double& beta = 0.0) 
-{
-    CohensKappaClass cook(beta);
-    return recipe(cook, actual, predicted, w);
+double weighted_cohens_kappa(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const Rcpp::NumericVector& w,
+    const double& beta = 0.0) {
+
+        cohens_kappa_impl performance(actual, predicted, w, beta);
+        return performance.compute();
 }
 
 //' @rdname ckappa
 //' @method ckappa cmatrix
 //' @export
 // [[Rcpp::export(ckappa.cmatrix)]]
-Rcpp::NumericVector cmatrix_CohensKappa(const Rcpp::NumericMatrix& x, const double& beta = 0.0) 
-{
-    CohensKappaClass cook(beta);
-    return recipe(cook, x);
+double cmatrix_cohens_kappa(
+    const Rcpp::NumericMatrix& x,
+    const double& beta = 0.0) {
+
+        cohens_kappa_impl performance(x, beta);
+        return performance.compute();
 }

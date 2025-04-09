@@ -2,16 +2,26 @@
 % Please edit documentation in R/RcppExports.R, R/S3_FowlkesMallowsIndex.R
 \name{fmi.factor}
 \alias{fmi.factor}
+\alias{weighted.fmi.factor}
 \alias{fmi.cmatrix}
 \alias{fmi}
+\alias{weighted.fmi}
 \title{Fowlkes-Mallows Index}
 \usage{
 \method{fmi}{factor}(actual, predicted, ...)
+
+\method{weighted.fmi}{factor}(actual, predicted, w, ...)
 
 \method{fmi}{cmatrix}(x, ...)
 
 ## Generic S3 method
 fmi(...)
+
+## Generic S3 method
+weighted.fmi(
+...,
+w
+)
 }
 \arguments{
 \item{actual}{A vector of <\link{factor}> with \link{length} \eqn{n}, and \eqn{k} levels}
@@ -19,6 +29,8 @@ fmi(...)
 \item{predicted}{A vector of <\link{factor}> with \link{length} \eqn{n}, and \eqn{k} levels}
 
 \item{...}{Arguments passed into other methods}
+
+\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default}
 
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}}
 }
@@ -136,6 +148,7 @@ Other Classification:
 \code{\link{fdr.factor}()},
 \code{\link{fer.factor}()},
 \code{\link{fpr.factor}()},
+\code{\link{hammingloss.factor}()},
 \code{\link{jaccard.factor}()},
 \code{\link{logloss.factor}()},
 \code{\link{mcc.factor}()},

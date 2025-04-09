@@ -55,13 +55,13 @@ cat(
   "Micro-averaged False Positive Rate", fpr(
     actual    = actual,
     predicted = predicted,
-    micro     = TRUE
+    estimator = 1
   ),
   "Micro-averaged False Positive Rate (weighted)", weighted.fpr(
     actual    = actual,
     predicted = predicted,
     w         = iris$Petal.Length/mean(iris$Petal.Length),
-    micro     = TRUE
+    estimator = 1
   ),
   sep = "\n"
 )

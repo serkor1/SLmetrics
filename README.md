@@ -133,8 +133,7 @@ by being:
 2.  **Memory-efficient:** Everything is structured around pointers and
     references
 3.  **Lightweight:** Only depends on
-    [{Rcpp}](https://github.com/RcppCore/Rcpp),
-    [{RcppEigen}](https://github.com/RcppCore/RcppEigen), and
+    [{Rcpp}](https://github.com/RcppCore/Rcpp) and
     [{lattice}](https://github.com/deepayan/lattice)
 4.  **Simple:** S3-based, minimal overhead, and flexible inputs
 
@@ -280,9 +279,12 @@ summary(
 #> Overall Statistics (micro average)
 #>  - Accuracy:          0.81
 #>  - Balanced Accuracy: 0.78
-#>  - Sensitivity:       0.81
-#>  - Specificity:       0.81
-#>  - Precision:         0.81
+#>  - Sensitivity:       0.70
+#>  - Sensitivity:       0.86
+#>  - Specificity:       0.86
+#>  - Specificity:       0.70
+#>  - Precision:         0.71
+#>  - Precision:         0.85
 ```
 
 ## :information_source: Enable OpenMP

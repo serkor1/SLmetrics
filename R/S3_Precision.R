@@ -19,7 +19,7 @@
 #' ## Generic S3 method
 #' precision(
 #'  ...,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' 
@@ -43,7 +43,7 @@
 #' @export
 precision <- function(
   ..., 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "precision",
@@ -57,14 +57,14 @@ precision <- function(
 #' weighted.precision(
 #'  ...,
 #'  w,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 weighted.precision <- function(
   ..., 
   w,
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "weighted.precision",
@@ -77,13 +77,13 @@ weighted.precision <- function(
 #' ## Generic S3 method
 #' ppv(
 #'  ...,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 ppv <- function(
   ..., 
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "ppv",
@@ -97,14 +97,14 @@ ppv <- function(
 #' weighted.ppv(
 #'  ...,
 #'  w,
-#'  micro = NULL,
+#'  estimator = 0,
 #'  na.rm = TRUE
 #' )
 #' @export
 weighted.ppv <- function(
   ...,
   w,
-  micro = NULL, 
+  estimator = 0, 
   na.rm = TRUE) {
   UseMethod(
     generic = "weighted.ppv",

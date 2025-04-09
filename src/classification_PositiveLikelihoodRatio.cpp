@@ -1,35 +1,41 @@
-// [[Rcpp::depends(RcppEigen)]]
-#include <RcppEigen.h>
-#include "classification_PositiveLikelihoodRatio.h" // PLRMetric definition
+#include <Rcpp.h>
+#include "classification_PositiveLikelihoodRatio.h"
 
-using namespace Rcpp;
+// declare metric
+using plr = metric::positive_likelihood_ratio<int>;
 
 //' @rdname plr
 //' @method plr factor
 //' @export
 // [[Rcpp::export(plr.factor)]]
-Rcpp::NumericVector PositiveLikelihoodRatio(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) 
-{
-    PositiveLikelihoodRatioClass cook;
-    return recipe(cook, actual, predicted);
+double positive_likelihood_ratio(
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::IntegerVector& predicted) {
+
+        plr performance(actual, predicted);
+        return performance.compute();
 }
 
 //' @rdname plr
 //' @method weighted.plr factor
 //' @export
 // [[Rcpp::export(weighted.plr.factor)]]
-Rcpp::NumericVector weighted_PositiveLikelihoodRatio(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w) 
-{
-    PositiveLikelihoodRatioClass cook;
-    return recipe(cook, actual, predicted, w);
+double weighted_positive_likelihood_ratio(
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::IntegerVector& predicted,
+    const Rcpp::NumericVector& w) {
+
+        plr performance(actual, predicted, w);
+        return performance.compute();
 }
 
 //' @rdname plr
 //' @method plr cmatrix
 //' @export
 // [[Rcpp::export(plr.cmatrix)]]
-Rcpp::NumericVector cmatrix_PositiveLikelihoodRatio(const Rcpp::NumericMatrix& x) 
-{
-    PositiveLikelihoodRatioClass cook;
-    return recipe(cook, x);
+double cmatrix_positive_likelihood_ratio(
+    const Rcpp::NumericMatrix& x) {
+
+        plr performance(x);
+        return performance.compute();
 }

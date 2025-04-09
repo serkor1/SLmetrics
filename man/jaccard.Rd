@@ -18,42 +18,42 @@
 \alias{weighted.tscore}
 \title{Jaccard Index}
 \usage{
-\method{jaccard}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+\method{jaccard}{factor}(actual, predicted, estimator = 0L, na.rm = TRUE, ...)
 
-\method{weighted.jaccard}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+\method{weighted.jaccard}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
 
-\method{jaccard}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
+\method{jaccard}{cmatrix}(x, estimator = 0L, na.rm = TRUE, ...)
 
-\method{csi}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+\method{csi}{factor}(actual, predicted, estimator = 0L, na.rm = TRUE, ...)
 
-\method{weighted.csi}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+\method{weighted.csi}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
 
-\method{csi}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
+\method{csi}{cmatrix}(x, estimator = 0L, na.rm = TRUE, ...)
 
-\method{tscore}{factor}(actual, predicted, micro = NULL, na.rm = TRUE, ...)
+\method{tscore}{factor}(actual, predicted, estimator = 0L, na.rm = TRUE, ...)
 
-\method{weighted.tscore}{factor}(actual, predicted, w, micro = NULL, na.rm = TRUE, ...)
+\method{weighted.tscore}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
 
-\method{tscore}{cmatrix}(x, micro = NULL, na.rm = TRUE, ...)
+\method{tscore}{cmatrix}(x, estimator = 0L, na.rm = TRUE, ...)
 
 ## Generic S3 method
 jaccard(
  ...,
- micro = NULL,
+ estimator = 0,
  na.rm = TRUE
 )
 
 ## Generic S3 method
 csi(
  ...,
- micro = NULL,
+ estimator = 0,
  na.rm = TRUE
 )
 
 ## Generic S3 method
 tscore(
  ...,
- micro = NULL,
+ estimator = 0,
  na.rm = TRUE
 )
 
@@ -61,7 +61,7 @@ tscore(
 weighted.jaccard(
  ...,
  w,
- micro = NULL,
+ estimator = 0,
  na.rm = TRUE
 )
 
@@ -69,7 +69,7 @@ weighted.jaccard(
 weighted.csi(
  ...,
  w,
- micro = NULL,
+ estimator = 0,
  na.rm = TRUE
 )
 
@@ -77,7 +77,7 @@ weighted.csi(
 weighted.tscore(
  ...,
  w,
- micro = NULL,
+ estimator = 0,
  na.rm = TRUE
 )
 }
@@ -86,8 +86,12 @@ weighted.tscore(
 
 \item{predicted}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
+\item{estimator}{An <\link{integer}>-value of \link{length} \eqn{1} (default: \eqn{0}).
+\itemize{
+\item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
+\item 1 - a <\link{numeric}> value (Micro averaged metric)
+\item 2 - a <\link{numeric}> value (macro averaged metric)
+}}
 
 \item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
 This argument is only relevant when \code{micro != NULL}.
@@ -101,9 +105,12 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 }
 \value{
-If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
-
-If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
+If \code{estimator} is giveen as
+\itemize{
+\item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
+\item 1 - a <\link{numeric}> value (Micro averaged metric)
+\item 2 - a <\link{numeric}> value (macro averaged metric)
+}
 }
 \description{
 The \code{\link[=jaccard]{jaccard()}}-function computes the \href{https://en.wikipedia.org/wiki/Jaccard_index}{Jaccard Index}, also known as the Intersection over Union, between
@@ -215,13 +222,13 @@ cat(
   "Micro-averaged Jaccard Index", jaccard(
     actual    = actual,
     predicted = predicted,
-    micro     = TRUE
+    estiamtor = 1
   ),
   "Micro-averaged Jaccard Index (weighted)", weighted.jaccard(
     actual    = actual,
     predicted = predicted,
     w         = iris$Petal.Length/mean(iris$Petal.Length),
-    micro     = TRUE
+    estiamtor = 1
   ),
   sep = "\n"
 )
@@ -240,6 +247,7 @@ Other Classification:
 \code{\link{fer.factor}()},
 \code{\link{fmi.factor}()},
 \code{\link{fpr.factor}()},
+\code{\link{hammingloss.factor}()},
 \code{\link{logloss.factor}()},
 \code{\link{mcc.factor}()},
 \code{\link{nlr.factor}()},
@@ -266,6 +274,7 @@ Other Supervised Learning:
 \code{\link{fdr.factor}()},
 \code{\link{fer.factor}()},
 \code{\link{fpr.factor}()},
+\code{\link{hammingloss.factor}()},
 \code{\link{huberloss.numeric}()},
 \code{\link{logloss.factor}()},
 \code{\link{mae.numeric}()},

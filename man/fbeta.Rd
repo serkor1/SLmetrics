@@ -8,17 +8,25 @@
 \alias{weighted.fbeta}
 \title{\eqn{F_{\beta}}-score}
 \usage{
-\method{fbeta}{factor}(actual, predicted, beta = 1, micro = NULL, na.rm = TRUE, ...)
+\method{fbeta}{factor}(actual, predicted, beta = 1, estimator = 0L, na.rm = TRUE, ...)
 
-\method{weighted.fbeta}{factor}(actual, predicted, w, beta = 1, micro = NULL, na.rm = TRUE, ...)
+\method{weighted.fbeta}{factor}(
+  actual,
+  predicted,
+  w,
+  beta = 1,
+  estimator = 0L,
+  na.rm = TRUE,
+  ...
+)
 
-\method{fbeta}{cmatrix}(x, beta = 1, micro = NULL, na.rm = TRUE, ...)
+\method{fbeta}{cmatrix}(x, beta = 1, estimator = 0L, na.rm = TRUE, ...)
 
 ## Generic S3 method
 fbeta(
  ...,
  beta  = 1,
- micro = NULL,
+ estimator = 0,
  na.rm = TRUE
 )
 
@@ -27,7 +35,7 @@ weighted.fbeta(
  ...,
  w,
  beta = 1,
- micro = NULL,
+ estimator = 0,
  na.rm = TRUE
 )
 }
@@ -38,8 +46,12 @@ weighted.fbeta(
 
 \item{beta}{A <\link{numeric}> vector of \link{length} \eqn{1} (default: \eqn{1}).}
 
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
+\item{estimator}{An <\link{integer}>-value of \link{length} \eqn{1} (default: \eqn{0}).
+\itemize{
+\item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
+\item 1 - a <\link{numeric}> value (Micro averaged metric)
+\item 2 - a <\link{numeric}> value (macro averaged metric)
+}}
 
 \item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
 This argument is only relevant when \code{micro != NULL}.
@@ -53,9 +65,12 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 }
 \value{
-If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
-
-If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
+If \code{estimator} is giveen as
+\itemize{
+\item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
+\item 1 - a <\link{numeric}> value (Micro averaged metric)
+\item 2 - a <\link{numeric}> value (macro averaged metric)
+}
 }
 \description{
 A generic function for the \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_{\beta}}}-score. Use \code{\link[=weighted.fbeta]{weighted.fbeta()}} for the weighted \href{https://en.wikipedia.org/wiki/F1_score}{\eqn{F_{\beta}}}-score.
@@ -183,14 +198,14 @@ cat(
     actual    = actual,
     predicted = predicted,
     beta      = 1,
-    micro     = TRUE
+    estimator = 1
   ),
   "Micro-averaged F1-score (weighted)", weighted.fbeta(
     actual    = actual,
     predicted = predicted,
     w         = iris$Petal.Length/mean(iris$Petal.Length),
     beta      = 1,
-    micro     = TRUE
+    estimator = 1
   ),
   sep = "\n"
 )
@@ -208,6 +223,7 @@ Other Classification:
 \code{\link{fer.factor}()},
 \code{\link{fmi.factor}()},
 \code{\link{fpr.factor}()},
+\code{\link{hammingloss.factor}()},
 \code{\link{jaccard.factor}()},
 \code{\link{logloss.factor}()},
 \code{\link{mcc.factor}()},
@@ -234,6 +250,7 @@ Other Supervised Learning:
 \code{\link{fdr.factor}()},
 \code{\link{fer.factor}()},
 \code{\link{fpr.factor}()},
+\code{\link{hammingloss.factor}()},
 \code{\link{huberloss.numeric}()},
 \code{\link{jaccard.factor}()},
 \code{\link{logloss.factor}()},

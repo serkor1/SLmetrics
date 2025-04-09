@@ -118,6 +118,7 @@ Other Supervised Learning:
 \code{\link{fdr.factor}()},
 \code{\link{fer.factor}()},
 \code{\link{fpr.factor}()},
+\code{\link{hammingloss.factor}()},
 \code{\link{huberloss.numeric}()},
 \code{\link{jaccard.factor}()},
 \code{\link{logloss.factor}()},

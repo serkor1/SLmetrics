@@ -33,35 +33,17 @@ actual <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) evaluate class-wise performance
-# using False Omission Rate
-
-# 4.1) unweighted False Omission Rate
-fer(
-  actual    = actual,
-  predicted = predicted
-)
-
-# 4.2) weighted False Omission Rate
-weighted.fer(
-  actual    = actual,
-  predicted = predicted,
-  w         = iris$Petal.Length/mean(iris$Petal.Length)
-)
-
-# 5) evaluate overall performance
-# using micro-averaged False Omission Rate
+# 4) evaluate model
+# performance using Zero-One Loss
 cat(
-  "Micro-averaged False Omission Rate", fer(
+  "Hamming Loss", hammingloss(
     actual    = actual,
-    predicted = predicted,
-    estimator = 1
+    predicted = predicted
   ),
-  "Micro-averaged False Omission Rate (weighted)", weighted.fer(
+  "Hamming Loss (weigthed)", weighted.hammingloss(
     actual    = actual,
     predicted = predicted,
-    w         = iris$Petal.Length/mean(iris$Petal.Length),
-    estimator = 1
+    w         = iris$Petal.Length/mean(iris$Petal.Length)
   ),
   sep = "\n"
 )

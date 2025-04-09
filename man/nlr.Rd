@@ -35,9 +35,12 @@ weighted.nlr(
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 }
 \value{
-If \code{micro} is \link{NULL} (the default), a named <\link{numeric}>-vector of \link{length} k
-
-If \code{micro} is \link{TRUE} or \link{FALSE}, a <\link{numeric}>-vector of \link{length} 1
+If \code{estimator} is giveen as
+\itemize{
+\item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
+\item 1 - a <\link{numeric}> value (Micro averaged metric)
+\item 2 - a <\link{numeric}> value (macro averaged metric)
+}
 }
 \description{
 A generic function for the \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{negative likelihood ratio} in classification tasks. Use \code{\link[=weighted.nlr]{weighted.nlr()}} weighted \href{https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing}{negative likelihood ratio}.
@@ -160,6 +163,7 @@ Other Classification:
 \code{\link{fer.factor}()},
 \code{\link{fmi.factor}()},
 \code{\link{fpr.factor}()},
+\code{\link{hammingloss.factor}()},
 \code{\link{jaccard.factor}()},
 \code{\link{logloss.factor}()},
 \code{\link{mcc.factor}()},
@@ -186,6 +190,7 @@ Other Supervised Learning:
 \code{\link{fdr.factor}()},
 \code{\link{fer.factor}()},
 \code{\link{fpr.factor}()},
+\code{\link{hammingloss.factor}()},
 \code{\link{huberloss.numeric}()},
 \code{\link{jaccard.factor}()},
 \code{\link{logloss.factor}()},

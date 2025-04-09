@@ -1,34 +1,38 @@
-#ifndef CLASSIFICATION_NLR_H
-#define CLASSIFICATION_NLR_H
+#ifndef CLASSIFICATION_NEGATIVELIKELIHOODRATIO_H
+#define CLASSIFICATION_NEGATIVELIKELIHOODRATIO_H
 
-#include "classification_Helpers.h"
-#include <RcppEigen.h>
-#include <cmath>
-#define EIGEN_USE_MKL_ALL
-EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+#include "SLmetrics.h"
+#include <armadillo>
 
-class NegativeLikelihoodRatioClass : public classification {
+namespace metric {
+    template <typename T>
+    class negative_likelihood_ratio : public classification::confusion_matrix<T> {
+        public:
+        // Unweighted constructor
+        negative_likelihood_ratio(const vctr_t<T>& actual, const vctr_t<T>& predicted)
+            : classification::confusion_matrix<T>(actual, predicted) {}
 
-    public:
+        // Weighted constructor
+        negative_likelihood_ratio(const vctr_t<T>& actual, const vctr_t<T>& predicted, const vctr_t<double>& weights)
+            : classification::confusion_matrix<T>(actual, predicted, weights) {}
 
-        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
-            Eigen::ArrayXd output(matrix.rows());
-            Eigen::ArrayXd tp(matrix.rows()), fn(matrix.rows()), tn(matrix.rows()), fp(matrix.rows());
-            Eigen::ArrayXd fnr(matrix.rows()), tnr(matrix.rows());
+        // Rcpp::NumericMatrix constructor
+        negative_likelihood_ratio(const Rcpp::NumericMatrix& x)
+            : classification::confusion_matrix<T>(x) {}
 
-            TP(matrix, tp);
-            FN(matrix, fn);
-            TN(matrix, tn);
-            FP(matrix, fp);
+        // Calculate metric
+        [[nodiscard]] inline double compute() const noexcept {
+            double tp = arma::accu(this->TP());
+            double fn = arma::accu(this->FN());
+            double fp = arma::accu(this->FP());
+            double tn = arma::accu(this->TN());
 
-            fnr = fn / (tp + fn);
-            tnr = tn / (fp + tn);
+            double sensitivity = tp / (tp + fn);
+            double specificity = tn / (tn + fp);
 
-            output = fnr / tnr;
-
-            return Rcpp::wrap(output);
+            return (1.0 - sensitivity) / specificity;
         }
+    };
+}
 
-};
-
-#endif // CLASSIFICATION_NLR_H
+#endif

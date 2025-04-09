@@ -14,14 +14,14 @@ testthat::test_that(
       predicted,
       beta,
       w = NULL,
-      micro = TRUE) {
+      estimator = 0) {
       
         if (is.null(w)) {
           fbeta(
             actual     = actual,
             predicted  = predicted,
             beta       = beta,
-            micro      = micro
+            estimator  = estimator
           )
         } else {
           weighted.fbeta(
@@ -29,7 +29,7 @@ testthat::test_that(
             predicted  = predicted,
             w          = w,
             beta       = beta,
-            micro      = micro
+            estimator  = estimator
           )
         }
     }
@@ -47,7 +47,7 @@ testthat::test_that(
         # 2) test that the are 
         # equal to target values
         for (beta in c(0, 4, 8)) {
-          for (micro in c(NA, TRUE, FALSE)) {
+          for (estimator in 0:2) {
 
              
           # 2.1) generate sensible 
@@ -56,7 +56,7 @@ testthat::test_that(
             "Balanced = ", balanced,
             "beta = ", beta,
             "Weighted = ", weighted,
-            "Micro =", micro
+            "estimator =", estimator
           )
 
           # 2.2) generate score
@@ -66,7 +66,7 @@ testthat::test_that(
             predicted  = predicted,
             beta       = beta,
             w          = if (weighted) w else NULL,
-            micro      = if (is.na(micro)) { NULL } else micro
+            estimator  = estimator
           )
 
           # 2.3) test that the values
@@ -82,11 +82,11 @@ testthat::test_that(
             actual    = actual,
             predicted = predicted,
             beta      = beta,
-            micro     = if (is.na(micro)) { NULL } else micro,
+            estimator = estimator,
             w         = if (weighted) w else NULL
           )
             
-          # if (is.na(micro)) {
+          # if (is.na(estimator)) {
 
           #   # Python returns values
           #   # that is less than the number
