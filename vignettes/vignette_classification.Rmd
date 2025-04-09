@@ -80,21 +80,21 @@ tpr(
 )
 ```
 
-By default, all classification functions calculates the class-wise performance metrics where possible. The performance metrics can also be aggregated in `micro` and `macro` averages by using the `micro`-parameter:
+By default, all classification functions calculates the class-wise performance metrics where possible. The performance metrics can also be aggregated in `micro` and `macro` averages by using the `estimator`-parameter:
 
 ```{r}
 # 1) macro average
 recall(
     actual    = actual,
     predicted = predicted,
-    micro     = FALSE 
+    estimator = 2 # macro average: 2
 )
 
 # 2) micro average
 recall(
     actual    = actual,
     predicted = predicted,
-    micro     = TRUE
+    estimator = 1 # micro average: 1
 )
 ```
 
