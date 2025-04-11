@@ -34,8 +34,8 @@ If \code{estimator} is given as
 }
 }
 \description{
-The \code{\link[=npv]{npv()}}-function computes the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{negative predictive value}, also known as the True Negative Predictive Value, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.npv]{weighted.npv()}} function computes the weighted negative predictive value.
+A S3 generic function for calculating the specificity score of a Classification model. The \code{\link[=specificity]{specificity()}} handles the input as is - and therefore there is not sanity checks.
+If the data contains \link{NA}, or \code{lenght(x) != lenght(y)} you are left at the mercy of compiler.
 }
 \examples{
 ## Generate actual

@@ -30,7 +30,7 @@ zerooneloss <- function(...) {
 #' @rdname zerooneloss
 #' @usage
 #' ## Generic S3 method
-#' weighted.zerooneloss(..)
+#' weighted.zerooneloss(...)
 #' @export
 weighted.zerooneloss <- function(...) {
   UseMethod(

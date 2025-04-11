@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{weighted.fpr.factor}
 \alias{weighted.fpr.factor}
-\title{Specificitiy}
+\title{False Positive Rate}
 \usage{
 \method{weighted.fpr}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
 }
@@ -50,7 +50,7 @@ sample_weights <- runif(
 )
 
 ## Evaluate performance
-SLmetrics::fpr(
+SLmetrics::weighted.fpr(
    actual_classes, 
    predicted_classes, 
    sample_weights

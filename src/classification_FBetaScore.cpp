@@ -10,6 +10,8 @@ using f_beta = metric::f_beta<int>;
 //' @template classification_factor_example
 //' @template classification_cmatrix_inherit
 //'
+//' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
+//'
 //' @export
 // [[Rcpp::export(fbeta.factor)]]
 Rcpp::NumericVector fbeta_score(
@@ -28,6 +30,8 @@ Rcpp::NumericVector fbeta_score(
 //' @templateVar .METHOD factor
 //' @template classification_factor_weighted_example
 //' @template classification_cmatrix_inherit
+//'
+//' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
 //'
 //' @export
 // [[Rcpp::export(weighted.fbeta.factor)]]
@@ -48,6 +52,8 @@ Rcpp::NumericVector weighted_fbeta_score(
 //' @templateVar .METHOD cmatrix
 //' @template classification_cmatrix_example
 //' @template classification_cmatrix_inherit
+//'
+//' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
 //'
 //' @export
 // [[Rcpp::export(fbeta.cmatrix)]]

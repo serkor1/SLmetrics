@@ -40,6 +40,8 @@ accuracy.cmatrix <- function(x, ...) {
 #' @template classification_factor_example
 #' @template classification_cmatrix_inherit
 #'
+#' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
+#'
 #' @export
 baccuracy.factor <- function(actual, predicted, adjust = FALSE, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_balanced_accuracy`, actual, predicted, adjust, na_rm = na.rm)
@@ -50,6 +52,8 @@ baccuracy.factor <- function(actual, predicted, adjust = FALSE, na.rm = TRUE, ..
 #' @templateVar .METHOD factor
 #' @template classification_factor_weighted_example
 #' @template classification_cmatrix_inherit
+#'
+#' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
 #'
 #' @export
 weighted.baccuracy.factor <- function(actual, predicted, w, adjust = FALSE, na.rm = TRUE, ...) {
@@ -62,6 +66,8 @@ weighted.baccuracy.factor <- function(actual, predicted, w, adjust = FALSE, na.r
 #' @template classification_cmatrix_example
 #' @template classification_cmatrix_inherit
 #'
+#' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
+#'
 #' @export
 baccuracy.cmatrix <- function(x, adjust = FALSE, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_balanced_accuracy`, x, adjust, na_rm = na.rm)
@@ -72,6 +78,9 @@ baccuracy.cmatrix <- function(x, adjust = FALSE, na.rm = TRUE, ...) {
 #' @templateVar .METHOD factor
 #' @template classification_factor_example
 #' @template classification_cmatrix_inherit
+#'
+#' @param beta A <[numeric]> value of [length] 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.
+#'
 #'
 #' @export
 ckappa.factor <- function(actual, predicted, beta = 0.0, ...) {
@@ -84,6 +93,8 @@ ckappa.factor <- function(actual, predicted, beta = 0.0, ...) {
 #' @template classification_factor_weighted_example
 #' @template classification_cmatrix_inherit
 #'
+#' @param beta A <[numeric]> value of [length] 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.
+#'
 #' @export
 weighted.ckappa.factor <- function(actual, predicted, w, beta = 0.0, ...) {
     .Call(`_SLmetrics_weighted_cohens_kappa`, actual, predicted, w, beta)
@@ -94,6 +105,8 @@ weighted.ckappa.factor <- function(actual, predicted, w, beta = 0.0, ...) {
 #' @templateVar .METHOD cmatrix
 #' @template classification_cmatrix_example
 #' @template classification_cmatrix_inherit
+#'
+#' @param beta A <[numeric]> value of [length] 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.
 #'
 #' @export
 ckappa.cmatrix <- function(x, beta = 0.0, ...) {
@@ -174,6 +187,8 @@ cross.entropy.matrix <- function(pk, qk, dim = 0L, base = -1.0, ...) {
 #' @template classification_factor_example
 #' @template classification_cmatrix_inherit
 #'
+#' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
+#'
 #' @export
 fbeta.factor <- function(actual, predicted, beta = 1.0, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_fbeta_score`, actual, predicted, beta, estimator, na_rm = na.rm)
@@ -185,6 +200,8 @@ fbeta.factor <- function(actual, predicted, beta = 1.0, estimator = 0L, na.rm = 
 #' @template classification_factor_weighted_example
 #' @template classification_cmatrix_inherit
 #'
+#' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
+#'
 #' @export
 weighted.fbeta.factor <- function(actual, predicted, w, beta = 1.0, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_weighted_fbeta_score`, actual, predicted, w, beta, estimator, na_rm = na.rm)
@@ -195,6 +212,8 @@ weighted.fbeta.factor <- function(actual, predicted, w, beta = 1.0, estimator = 
 #' @templateVar .METHOD cmatrix
 #' @template classification_cmatrix_example
 #' @template classification_cmatrix_inherit
+#'
+#' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
 #'
 #' @export
 fbeta.cmatrix <- function(x, beta = 1.0, estimator = 0L, na.rm = TRUE, ...) {
@@ -267,54 +286,33 @@ fer.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_false_omission_rate`, x, estimator, na_rm = na.rm)
 }
 
-#' @inherit fpr description
-#' @inherit fpr return
-#'
-#' @title Specificitiy
-#' @rdname fpr.factor
-#' @name fpr.factor
-#' @method fpr factor
-#' @inheritParams classification_documentation
-#'
+#' @templateVar .TITLE False Positive Rate
 #' @templateVar .FUN fpr
+#' @templateVar .METHOD factor
 #' @template classification_factor_example
+#' @template classification_cmatrix_inherit
 #'
 #' @export
 fpr.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_false_positive_rate`, actual, predicted, estimator, na_rm = na.rm)
 }
 
-#' @inherit fpr description
-#' @inherit fpr return
-#'
-#' @title Specificitiy
-#' @rdname weighted.fpr.factor
-#' @name weighted.fpr.factor
-#' @method weighted.fpr factor
-#' @inheritParams classification_documentation
-#'
-#' @templateVar .FUN fpr
+#' @templateVar .TITLE False Positive Rate
+#' @templateVar .FUN weighted.fpr
+#' @templateVar .METHOD factor
 #' @template classification_factor_weighted_example
+#' @template classification_cmatrix_inherit
 #'
 #' @export
 weighted.fpr.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_weighted_false_positive_rate`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
-#' @inherit fpr description
-#' @inherit fpr return
-#'
-#' @title Specificitiy
-#' @rdname fpr.cmatrix
-#' @name fpr.cmatrix
-#' @method fpr cmatrix
-#' @inheritParams classification_documentation
-#'
+#' @templateVar .TITLE False Positive Rate
 #' @templateVar .FUN fpr
+#' @templateVar .METHOD cmatrix
 #' @template classification_cmatrix_example
-#'
-#' @details 
-#' When passing a matrix
+#' @template classification_cmatrix_inherit
 #'
 #' @export
 fpr.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {

@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{fpr.factor}
 \alias{fpr.factor}
-\title{Specificitiy}
+\title{False Positive Rate}
 \usage{
 \method{fpr}{factor}(actual, predicted, estimator = 0L, na.rm = TRUE, ...)
 }

@@ -3,21 +3,27 @@
 \name{ckappa}
 \alias{ckappa}
 \alias{weighted.ckappa}
-\title{Cohen's \eqn{\kappa}-statistic}
+\title{Cohen's \eqn{\kappa} Statistic}
 \usage{
-ckappa(
- ...,
- beta = 0
-)
+## Generic S3 method
+## for unweighted Cohen's
+## Kappa statistic
+ckappa(...)
 
-weighted.ckappa(
- ...,
- w,
- beta = 0
-)
+## Generic S3 method
+## for weighted Cohen's
+## Kappa statistic
+weighted.ckappa(...)
 }
 \arguments{
-\item{beta}{A <\link{numeric}> value of \link{length} 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.}
+\item{...}{
+  Arguments passed on to \code{\link[=ckappa.factor]{ckappa.factor}}, \code{\link[=weighted.ckappa.factor]{weighted.ckappa.factor}}, \code{\link[=ckappa.cmatrix]{ckappa.cmatrix}}
+  \describe{
+    \item{\code{beta}}{A <\link{numeric}> value of \link{length} 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.}
+    \item{\code{actual,predicted}}{A pair of vectors <\link{factor}> with actual and observed classes.}
+    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
+    \item{\code{x}}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
+  }}
 }
 \value{
 If \code{estimator} is given as
@@ -28,100 +34,19 @@ If \code{estimator} is given as
 }
 }
 \description{
-A generic function for \href{https://en.wikipedia.org/wiki/Cohen\%27s_kappa}{Cohen's \eqn{\kappa}}-statistic. Use \code{\link[=weighted.ckappa]{weighted.ckappa()}} for the weighted \href{https://en.wikipedia.org/wiki/Cohen\%27s_kappa}{\eqn{\kappa}}-statistic.
+A S3 generic function for calculating the ckappa score of a Classification model. The \code{\link[=ckappa]{ckappa()}} handles the input as is - and therefore there is not sanity checks.
+If the data contains \link{NA}, or \code{lenght(x) != lenght(y)} you are left at the mercy of compiler.
 }
-\section{Definition}{
-
-Let \eqn{\kappa \in [0, 1]} be the inter-rater (intra-rater) reliability. The inter-rater (intra-rater) reliability is calculated as,
-
-\deqn{
-  \kappa = \frac{\rho_p - \rho_e}{1-\rho_e}
-}
-
-Where:
-\itemize{
-\item \eqn{\rho_p} is the empirical probability of agreement between predicted and actual values
-\item \eqn{\rho_e} is the expected probability of agreement under random chance
-}
-
-If \eqn{\beta \neq 0} the off-diagonals in the confusion matrix is penalized before \eqn{\rho} is calculated. More formally,
-
-\deqn{
- \chi = X \circ Y^{\beta}
-}
-
-Where:
-\itemize{
-\item \eqn{X} is the confusion matrix
-\item \eqn{Y} is the penalizing matrix and
-\item \eqn{\beta} is the penalizing factor
-}
-}
-
-\section{Other names}{
-
-
-The specificity has other names depending on research field:
-\itemize{
-\item True Negative Rate, \code{\link[=tnr]{tnr()}}
-\item Selectivity, \code{\link[=selectivity]{selectivity()}}
-}
-}
-
 \examples{
-# 1) recode Iris
-# to binary classification
-# problem
-iris$species_num <- as.numeric(
-  iris$Species == "virginica"
-)
+## Generate actual
+## and predicted classes
+actual_classes    <- factor(c(1,2,1,2,2,3,4))
+predicted_classes <- factor(c(1,2,1,2,2,3,4))
 
-# 2) fit the logistic
-# regression
-model <- glm(
-  formula = species_num ~ Sepal.Length + Sepal.Width,
-  data    = iris,
-  family  = binomial(
-    link = "logit"
-  )
-)
-
-# 3) generate predicted
-# classes
-predicted <- factor(
-  as.numeric(
-    predict(model, type = "response") > 0.5
-  ),
-  levels = c(1,0),
-  labels = c("Virginica", "Others")
-)
-
-# 3.1) generate actual
-# classes
-actual <- factor(
-  x = iris$species_num,
-  levels = c(1,0),
-  labels = c("Virginica", "Others")
-)
-
-# 4) evaluate model performance with
-# Cohens Kappa statistic
-cat(
-  "Kappa", ckappa(
-    actual    = actual,
-    predicted = predicted
-  ),
-  "Kappa (penalized)", ckappa(
-    actual    = actual,
-    predicted = predicted,
-    beta      = 2
-  ),
-  "Kappa (weigthed)", weighted.ckappa(
-    actual    = actual,
-    predicted = predicted,
-    w         = iris$Petal.Length/mean(iris$Petal.Length)
-  ),
-  sep = "\n"
+## Evaluate performance
+SLmetrics::ckappa(
+   actual_classes, 
+   predicted_classes
 )
 }
 \seealso{

@@ -41,14 +41,9 @@ mcc <- function(...) {
 #' ## Generic S3 method
 #' ## for weighted Matthews
 #' ## Correlation Coefficient
-#' weighted.mcc(
-#'  ...,
-#'  w
-#' )
+#' weighted.mcc(...)
 #' @export
-weighted.mcc <- function(
-  ..., 
-  w) {
+weighted.mcc <- function(...) {
   UseMethod(
     generic = "weighted.mcc",
     object = ..1
@@ -64,9 +59,7 @@ phi <- function(...) {
 }
 
 #' @export
-weighted.phi <- function(
-  ...,
-  w) {
+weighted.phi <- function(...) {
   UseMethod(
     generic = "weighted.phi",
     object = ..1

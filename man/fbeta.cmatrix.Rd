@@ -9,6 +9,8 @@
 \arguments{
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 
+\item{beta}{A <\link{numeric}> vector of \link{length} \eqn{1} (default: \eqn{1}).}
+
 \item{estimator}{An <\link{integer}>-value of \link{length} \eqn{1} (default: \eqn{0}).
 \itemize{
 \item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)

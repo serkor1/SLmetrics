@@ -9,6 +9,8 @@
 \arguments{
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
 
+\item{adjust}{A \link{logical} value (default: \link{FALSE}). If \link{TRUE} the metric is adjusted for random chance \eqn{\frac{1}{k}}.}
+
 \item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
 This argument is only relevant when \code{micro != NULL}.
 When \code{na.rm = TRUE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))}.

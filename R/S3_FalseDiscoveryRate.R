@@ -21,10 +21,7 @@
 #' @family Supervised Learning
 #' 
 #' @export
-fdr <- function(
-  ...,
-  estimator = 0, 
-  na.rm = TRUE) {
+fdr <- function(...) {
   UseMethod(
     generic = "fdr",
     object   = ..1

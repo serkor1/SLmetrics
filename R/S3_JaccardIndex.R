@@ -28,10 +28,7 @@
 #' @family Supervised Learning
 #'
 #' @export
-jaccard <- function(
-  ..., 
-  estimator = 0, 
-  na.rm = TRUE) {
+jaccard <- function(...) {
   UseMethod(
     generic = "jaccard",
     object  = ..1
@@ -44,11 +41,7 @@ jaccard <- function(
 #' ## for weighted Jaccard Index
 #' weighted.jaccard(...)
 #' @export
-weighted.jaccard <- function(
-  ...,
-  w,
-  estimator = 0,
-  na.rm = TRUE) {
+weighted.jaccard <- function(...) {
   UseMethod(
     generic = "weighted.jaccard",
     object  = ..1

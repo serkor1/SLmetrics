@@ -33,10 +33,7 @@ hammingloss <- function(...) {
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Hamming Loss
-#' weighted.hammingloss(
-#'  ...,
-#'  w
-#' )
+#' weighted.hammingloss(...)
 #' @export
 weighted.hammingloss <- function(...) {
   UseMethod(

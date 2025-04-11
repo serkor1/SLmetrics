@@ -9,7 +9,7 @@
 zerooneloss(...)
 
 ## Generic S3 method
-weighted.zerooneloss(..)
+weighted.zerooneloss(...)
 }
 \arguments{
 \item{...}{

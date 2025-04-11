@@ -15,10 +15,7 @@ mcc(...)
 ## Generic S3 method
 ## for weighted Matthews
 ## Correlation Coefficient
-weighted.mcc(
- ...,
- w
-)
+weighted.mcc(...)
 }
 \arguments{
 \item{...}{

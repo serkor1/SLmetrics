@@ -18,8 +18,6 @@
 #' ## accuracy
 #' baccuracy(...)
 #' 
-#' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
-#' 
 #' @returns
 #'
 #' A [numeric]-vector of [length] 1

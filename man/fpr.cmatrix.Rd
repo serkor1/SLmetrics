@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{fpr.cmatrix}
 \alias{fpr.cmatrix}
-\title{Specificitiy}
+\title{False Positive Rate}
 \usage{
 \method{fpr}{cmatrix}(x, estimator = 0L, na.rm = TRUE, ...)
 }
@@ -34,9 +34,6 @@ If \code{estimator} is given as
 \description{
 A S3 generic function for calculating the fpr score of a Classification model. The \code{\link[=fpr]{fpr()}} handles the input as is - and therefore there is not sanity checks.
 If the data contains \link{NA}, or \code{lenght(x) != lenght(y)} you are left at the mercy of compiler.
-}
-\details{
-When passing a matrix
 }
 \examples{
 ## Generate actual

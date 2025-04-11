@@ -19,6 +19,7 @@ weighted.baccuracy(...)
 \item{...}{
   Arguments passed on to \code{\link[=baccuracy.factor]{baccuracy.factor}}, \code{\link[=weighted.baccuracy.factor]{weighted.baccuracy.factor}}, \code{\link[=baccuracy.cmatrix]{baccuracy.cmatrix}}
   \describe{
+    \item{\code{adjust}}{A \link{logical} value (default: \link{FALSE}). If \link{TRUE} the metric is adjusted for random chance \eqn{\frac{1}{k}}.}
     \item{\code{actual,predicted}}{A pair of vectors <\link{factor}> with actual and observed classes.}
     \item{\code{na.rm}}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
 This argument is only relevant when \code{micro != NULL}.
@@ -27,8 +28,6 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
     \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
     \item{\code{x}}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
   }}
-
-\item{adjust}{A \link{logical} value (default: \link{FALSE}). If \link{TRUE} the metric is adjusted for random chance \eqn{\frac{1}{k}}.}
 }
 \value{
 A <\link{double}>-value

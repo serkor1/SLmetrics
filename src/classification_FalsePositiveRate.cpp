@@ -4,17 +4,11 @@
 // declare metric
 using fpr = metric::false_positive_rate<int>;
 
-//' @inherit fpr description
-//' @inherit fpr return
-//'
-//' @title Specificitiy
-//' @rdname fpr.factor
-//' @name fpr.factor
-//' @method fpr factor
-//' @inheritParams classification_documentation
-//'
+//' @templateVar .TITLE False Positive Rate
 //' @templateVar .FUN fpr
+//' @templateVar .METHOD factor
 //' @template classification_factor_example
+//' @template classification_cmatrix_inherit
 //'
 //' @export
 // [[Rcpp::export(fpr.factor)]]
@@ -28,17 +22,11 @@ Rcpp::NumericVector false_positive_rate(
         return performance.compute();
 }
 
-//' @inherit fpr description
-//' @inherit fpr return
-//'
-//' @title Specificitiy
-//' @rdname weighted.fpr.factor
-//' @name weighted.fpr.factor
-//' @method weighted.fpr factor
-//' @inheritParams classification_documentation
-//'
-//' @templateVar .FUN fpr
+//' @templateVar .TITLE False Positive Rate
+//' @templateVar .FUN weighted.fpr
+//' @templateVar .METHOD factor
 //' @template classification_factor_weighted_example
+//' @template classification_cmatrix_inherit
 //'
 //' @export
 // [[Rcpp::export(weighted.fpr.factor)]]
@@ -53,20 +41,11 @@ Rcpp::NumericVector weighted_false_positive_rate(
         return performance.compute();
 }
 
-//' @inherit fpr description
-//' @inherit fpr return
-//'
-//' @title Specificitiy
-//' @rdname fpr.cmatrix
-//' @name fpr.cmatrix
-//' @method fpr cmatrix
-//' @inheritParams classification_documentation
-//'
+//' @templateVar .TITLE False Positive Rate
 //' @templateVar .FUN fpr
+//' @templateVar .METHOD cmatrix
 //' @template classification_cmatrix_example
-//'
-//' @details 
-//' When passing a matrix
+//' @template classification_cmatrix_inherit
 //'
 //' @export
 // [[Rcpp::export(fpr.cmatrix)]]

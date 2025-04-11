@@ -9,6 +9,8 @@
 \arguments{
 \item{actual, predicted}{A pair of vectors <\link{factor}> with actual and observed classes.}
 
+\item{beta}{A <\link{numeric}> value of \link{length} 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.}
+
 \item{...}{Arguments passed into other methods.}
 }
 \value{
@@ -20,7 +22,8 @@ If \code{estimator} is given as
 }
 }
 \description{
-A generic function for \href{https://en.wikipedia.org/wiki/Cohen\%27s_kappa}{Cohen's \eqn{\kappa}}-statistic. Use \code{\link[=weighted.ckappa]{weighted.ckappa()}} for the weighted \href{https://en.wikipedia.org/wiki/Cohen\%27s_kappa}{\eqn{\kappa}}-statistic.
+A S3 generic function for calculating the ckappa score of a Classification model. The \code{\link[=ckappa]{ckappa()}} handles the input as is - and therefore there is not sanity checks.
+If the data contains \link{NA}, or \code{lenght(x) != lenght(y)} you are left at the mercy of compiler.
 }
 \examples{
 ## Generate actual

@@ -2,12 +2,41 @@
 % Please edit documentation in R/S3_NegativePredictiveValue.R
 \name{npv}
 \alias{npv}
+\alias{tnr}
+\alias{selectivity}
+\alias{weighted.tnr}
+\alias{weighted.selectivity}
 \alias{weighted.npv}
-\title{Negative Predictive Value}
+\title{Specificity}
 \usage{
+## Generic S3 method
+## for unweighted Negative
+## Predictive Value
 npv(...)
 
-weighted.npv(...)
+## Generic S3 method
+## for weighted Negative
+## Predictive Value
+npv(...)
+}
+\arguments{
+\item{...}{
+  Arguments passed on to \code{\link[=specificity.factor]{specificity.factor}}, \code{\link[=weighted.specificity.factor]{weighted.specificity.factor}}, \code{\link[=specificity.cmatrix]{specificity.cmatrix}}
+  \describe{
+    \item{\code{actual,predicted}}{A pair of vectors <\link{factor}> with actual and observed classes.}
+    \item{\code{estimator}}{An <\link{integer}>-value of \link{length} \eqn{1} (default: \eqn{0}).
+\itemize{
+\item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
+\item 1 - a <\link{numeric}> value (Micro averaged metric)
+\item 2 - a <\link{numeric}> value (Macro averaged metric)
+}}
+    \item{\code{na.rm}}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
+This argument is only relevant when \code{micro != NULL}.
+When \code{na.rm = TRUE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))}.
+When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))}.}
+    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
+    \item{\code{x}}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
+  }}
 }
 \value{
 If \code{estimator} is given as
@@ -18,98 +47,19 @@ If \code{estimator} is given as
 }
 }
 \description{
-The \code{\link[=npv]{npv()}}-function computes the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{negative predictive value}, also known as the True Negative Predictive Value, between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.npv]{weighted.npv()}} function computes the weighted negative predictive value.
+A S3 generic function for calculating the specificity score of a Classification model. The \code{\link[=specificity]{specificity()}} handles the input as is - and therefore there is not sanity checks.
+If the data contains \link{NA}, or \code{lenght(x) != lenght(y)} you are left at the mercy of compiler.
 }
-\section{Definition}{
-
-
-The metric is calculated for each class \eqn{k} as follows,
-
-\deqn{
-  \frac{\#TN_k}{\#TN_k + \#FN_k}
-}
-
-Where \eqn{\#TN_k} and \eqn{\#FN_k} are the number of true negatives and false negatives, respectively, for each class \eqn{k}.
-}
-
-\section{Other names}{
-
-
-The specificity has other names depending on research field:
-\itemize{
-\item True Negative Rate, \code{\link[=tnr]{tnr()}}
-\item Selectivity, \code{\link[=selectivity]{selectivity()}}
-}
-}
-
 \examples{
-# 1) recode Iris
-# to binary classification
-# problem
-iris$species_num <- as.numeric(
-  iris$Species == "virginica"
-)
+## Generate actual
+## and predicted classes
+actual_classes    <- factor(c(1,2,1,2,2,3,4))
+predicted_classes <- factor(c(1,2,1,2,2,3,4))
 
-# 2) fit the logistic
-# regression
-model <- glm(
-  formula = species_num ~ Sepal.Length + Sepal.Width,
-  data    = iris,
-  family  = binomial(
-    link = "logit"
-  )
-)
-
-# 3) generate predicted
-# classes
-predicted <- factor(
-  as.numeric(
-    predict(model, type = "response") > 0.5
-  ),
-  levels = c(1,0),
-  labels = c("Virginica", "Others")
-)
-
-# 3.1) generate actual
-# classes
-actual <- factor(
-  x = iris$species_num,
-  levels = c(1,0),
-  labels = c("Virginica", "Others")
-)
-
-# 4) evaluate class-wise performance
-# using Negative Predictive Value
-
-# 4.1) unweighted Negative Predictive Value
-npv(
-  actual    = actual,
-  predicted = predicted
-)
-
-# 4.2) weighted Negative Predictive Value
-weighted.npv(
-  actual    = actual,
-  predicted = predicted,
-  w         = iris$Petal.Length/mean(iris$Petal.Length)
-)
-
-# 5) evaluate overall performance
-# using micro-averaged Negative Predictive Value
-cat(
-  "Micro-averaged Negative Predictive Value", npv(
-    actual    = actual,
-    predicted = predicted,
-    estimator = 1
-  ),
-  "Micro-averaged Negative Predictive Value (weighted)", weighted.npv(
-    actual    = actual,
-    predicted = predicted,
-    w         = iris$Petal.Length/mean(iris$Petal.Length),
-    estimator = 1
-  ),
-  sep = "\n"
+## Evaluate performance
+SLmetrics::specificity(
+   actual_classes, 
+   predicted_classes
 )
 }
 \seealso{
