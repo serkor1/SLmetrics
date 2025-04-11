@@ -4,9 +4,8 @@
 # objective:
 # script start;
 
-#' @aliases tnr selectivity weighted.tnr weighted.selectivity
-#' @templateVar .TITLE specificity
-#' @templateVar .FUN specificity
+#' @templateVar .TITLE Negative Predictive Value
+#' @templateVar .FUN npv
 #' @templateVar .TASK Classification
 #' @template classification_inheritDotParams
 #' @template classification_factor_example

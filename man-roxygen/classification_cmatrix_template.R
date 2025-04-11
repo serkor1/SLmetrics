@@ -7,8 +7,21 @@ value = as.logical(.SINGLE_OUTPUT)
 #' @title <%= tools::toTitleCase(.TITLE) %>
 #' 
 #' @description
-#' A S3 generic function for calculating the <%= .FUN %> score of a <%= .TASK %> model. The [<%= .FUN %>()] handles the input as is - and therefore there is not sanity checks. 
-#' If the data contains [NA], or `lenght(x) != lenght(y)` you are left at the mercy of compiler.
+#' A S3 generic function for calculating the <%= tolower(.TITLE) %> score of a <%= tolower(.TASK) %> model. [<%= .FUN %>()] handles the input as is - and therefore there is not sanity checks. 
+#' If the data contains [NA], or `length(x) != length(y)` you are left at the mercy of compiler.
+#' 
+<% if (tolower(.TASK) == "classification") { %>
+#' ## Efficient evaluation
+#' 
+#' The canonical way of measuring the performance of a <%= tolower(.TASK) %> model is to use the [<%= .FUN %>.cmatrix()]-method. [<%= .FUN %>.factor()] calls [cmatrix()] internally, and for multiple measures there is significant speed and memory efficiency gain in constructing the confusion matrix first.
+#' 
+<% } %>
+#'
+#' ## Defensive measures
+#' 
+#' As everything is based on pointers internally values as [NA] and out of bounds values (`length(x) != length(y)`) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in `try()` or `tryCatch()` to recover from sudden errors. Your `R`-session *will* most likely just crash.
+#' A workaroud is to create a wrapper around [<%= .FUN %>()] and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches [<%= .FUN %>()].
+#'
 #' 
 #' @returns 
 <% if (value) { %>

@@ -32,14 +32,31 @@ If \code{estimator} is given as
 }
 }
 \description{
-A S3 generic function for calculating the jaccard score of a Classification model. The \code{\link[=jaccard]{jaccard()}} handles the input as is - and therefore there is not sanity checks.
-If the data contains \link{NA}, or \code{lenght(x) != lenght(y)} you are left at the mercy of compiler.
+A S3 generic function for calculating the jaccard score of a classification model. \code{\link[=jaccard]{jaccard()}} handles the input as is - and therefore there is not sanity checks.
+If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
+\subsection{Efficient evaluation}{
+
+The canonical way of measuring the performance of a classification model is to use the \code{\link[=jaccard.cmatrix]{jaccard.cmatrix()}}-method. \code{\link[=jaccard.factor]{jaccard.factor()}} calls \code{\link[=cmatrix]{cmatrix()}} internally, and for multiple measures there is significant speed and memory efficiency gain in constructing the confusion matrix first.
+}
+
+\subsection{Defensive measures}{
+
+As everything is based on pointers internally values as \link{NA} and out of bounds values (\code{length(x) != length(y)}) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in \code{try()} or \code{tryCatch()} to recover from sudden errors. Your \code{R}-session \emph{will} most likely just crash.
+A workaroud is to create a wrapper around \code{\link[=jaccard]{jaccard()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=jaccard]{jaccard()}}.
+}
 }
 \examples{
 ## Generate actual
 ## and predicted classes
-actual_classes    <- factor(c(1,2,1,2,2,3,4))
-predicted_classes <- factor(c(1,2,1,2,2,3,4))
+actual_classes <- factor(
+    x = c("kebab", "kebab", "kebab", "kebab", "Falafel", "Falafel", "Falafel", "Falafel"),
+    levels = c("kebab", "Falafel")
+)
+
+predicted_classes <- factor(
+    x = c("kebab", "kebab", "Falafel", "Falafel", "Falafel", "Falafel", "kebab", "kebab"),
+    levels = c("kebab", "Falafel")
+)
 
 ## Evaluate performance
 SLmetrics::jaccard(

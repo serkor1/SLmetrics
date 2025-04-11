@@ -2,12 +2,8 @@
 % Please edit documentation in R/S3_NegativePredictiveValue.R
 \name{npv}
 \alias{npv}
-\alias{tnr}
-\alias{selectivity}
-\alias{weighted.tnr}
-\alias{weighted.selectivity}
 \alias{weighted.npv}
-\title{Specificity}
+\title{Negative Predictive Value}
 \usage{
 ## Generic S3 method
 ## for unweighted Negative
@@ -21,7 +17,7 @@ npv(...)
 }
 \arguments{
 \item{...}{
-  Arguments passed on to \code{\link[=specificity.factor]{specificity.factor}}, \code{\link[=weighted.specificity.factor]{weighted.specificity.factor}}, \code{\link[=specificity.cmatrix]{specificity.cmatrix}}
+  Arguments passed on to \code{\link[=npv.factor]{npv.factor}}, \code{\link[=weighted.npv.factor]{weighted.npv.factor}}, \code{\link[=npv.cmatrix]{npv.cmatrix}}
   \describe{
     \item{\code{actual,predicted}}{A pair of vectors <\link{factor}> with actual and observed classes.}
     \item{\code{estimator}}{An <\link{integer}>-value of \link{length} \eqn{1} (default: \eqn{0}).
@@ -47,17 +43,34 @@ If \code{estimator} is given as
 }
 }
 \description{
-A S3 generic function for calculating the specificity score of a Classification model. The \code{\link[=specificity]{specificity()}} handles the input as is - and therefore there is not sanity checks.
-If the data contains \link{NA}, or \code{lenght(x) != lenght(y)} you are left at the mercy of compiler.
+A S3 generic function for calculating the negative predictive value score of a classification model. \code{\link[=npv]{npv()}} handles the input as is - and therefore there is not sanity checks.
+If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
+\subsection{Efficient evaluation}{
+
+The canonical way of measuring the performance of a classification model is to use the \code{\link[=npv.cmatrix]{npv.cmatrix()}}-method. \code{\link[=npv.factor]{npv.factor()}} calls \code{\link[=cmatrix]{cmatrix()}} internally, and for multiple measures there is significant speed and memory efficiency gain in constructing the confusion matrix first.
+}
+
+\subsection{Defensive measures}{
+
+As everything is based on pointers internally values as \link{NA} and out of bounds values (\code{length(x) != length(y)}) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in \code{try()} or \code{tryCatch()} to recover from sudden errors. Your \code{R}-session \emph{will} most likely just crash.
+A workaroud is to create a wrapper around \code{\link[=npv]{npv()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=npv]{npv()}}.
+}
 }
 \examples{
 ## Generate actual
 ## and predicted classes
-actual_classes    <- factor(c(1,2,1,2,2,3,4))
-predicted_classes <- factor(c(1,2,1,2,2,3,4))
+actual_classes <- factor(
+    x = c("kebab", "kebab", "kebab", "kebab", "Falafel", "Falafel", "Falafel", "Falafel"),
+    levels = c("kebab", "Falafel")
+)
+
+predicted_classes <- factor(
+    x = c("kebab", "kebab", "Falafel", "Falafel", "Falafel", "Falafel", "kebab", "kebab"),
+    levels = c("kebab", "Falafel")
+)
 
 ## Evaluate performance
-SLmetrics::specificity(
+SLmetrics::npv(
    actual_classes, 
    predicted_classes
 )
