@@ -1,7 +1,0 @@
-#' @examples
-#' ## Generate 
-#' actual    <- factor(c(1,2,1,2,2,3,4))
-#' predicted <- factor(c(1,2,1,2,2,3,4))
-#' 
-#' 
-#' <%= fun %>(actual, predicted)
