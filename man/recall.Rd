@@ -73,8 +73,8 @@ SLmetrics::recall(
 \seealso{
 Other Classification: 
 \code{\link{ROC.factor}()},
-\code{\link{accuracy.factor}()},
-\code{\link{baccuracy.factor}()},
+\code{\link{accuracy}()},
+\code{\link{baccuracy}()},
 \code{\link{ckappa.factor}()},
 \code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
@@ -100,8 +100,8 @@ Other Classification:
 
 Other Supervised Learning: 
 \code{\link{ROC.factor}()},
-\code{\link{accuracy.factor}()},
-\code{\link{baccuracy.factor}()},
+\code{\link{accuracy}()},
+\code{\link{baccuracy}()},
 \code{\link{ccc.numeric}()},
 \code{\link{ckappa.factor}()},
 \code{\link{cmatrix.factor}()},

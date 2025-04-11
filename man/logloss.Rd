@@ -35,8 +35,6 @@ weighted.logloss(
 )
 }
 \arguments{
-\item{actual}{A vector of <\link{factor}> with \link{length} \eqn{n}, and \eqn{k} levels}
-
 \item{response}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
 The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 over the \eqn{k} classes). The first column corresponds to the first factor
@@ -45,8 +43,6 @@ level in \code{actual}, the second column to the second factor level, and so on.
 \item{normalize}{A <\link{logical}>-value (default: \link{TRUE}). If \link{TRUE},
 the mean cross-entropy across all observations is returned; otherwise, the
 sum of cross-entropies is returned.}
-
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default}
 }
 \value{
 A <\link{numeric}>-vector of \link{length} 1
@@ -64,42 +60,6 @@ where:
 \item \eqn{y_{ij}} is the \code{actual}-values, where \eqn{y_{ij}} = 1 if the \code{i}-th sample belongs to class \code{j}, and 0 otherwise.
 \item \eqn{response_{ij}} is the estimated probability for the \code{i}-th sample belonging to class \code{j}.
 }
-}
-
-\section{Creating <\link{factor}>}{
-
-
-Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
-set.seed(1903)
-
-## actual
-factor(
-  x = sample(x = 1:3, size = 10, replace = TRUE),
-  levels = c(1, 2, 3),
-  labels = c("A", "B", "C")
-)
-#>  [1] B A B B A C B C C A
-#> Levels: A B C
-}\if{html}{\out{</div>}}
-
-Here, the values 1, 2, and 3 are mapped to \code{A}, \code{B}, and \code{C}, respectively. Now, suppose your model does not predict any \code{B}'s. The predicted vector of \code{\link[=factor]{factor()}} values would be defined as follows:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
-set.seed(1903)
-
-## predicted
-factor(
-  x = sample(x = c(1, 3), size = 10, replace = TRUE),
-  levels = c(1, 2, 3),
-  labels = c("A", "B", "C")
-)
-#>  [1] C A C C C C C C A C
-#> Levels: A B C
-}\if{html}{\out{</div>}}
-
-In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
 }
 
 \examples{
@@ -165,8 +125,8 @@ cat(
 \seealso{
 Other Classification: 
 \code{\link{ROC.factor}()},
-\code{\link{accuracy.factor}()},
-\code{\link{baccuracy.factor}()},
+\code{\link{accuracy}()},
+\code{\link{baccuracy}()},
 \code{\link{ckappa.factor}()},
 \code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
@@ -192,8 +152,8 @@ Other Classification:
 
 Other Supervised Learning: 
 \code{\link{ROC.factor}()},
-\code{\link{accuracy.factor}()},
-\code{\link{baccuracy.factor}()},
+\code{\link{accuracy}()},
+\code{\link{baccuracy}()},
 \code{\link{ccc.numeric}()},
 \code{\link{ckappa.factor}()},
 \code{\link{cmatrix.factor}()},

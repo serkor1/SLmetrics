@@ -21,7 +21,7 @@ double accuracy(
 }
 
 //' @templateVar .TITLE accuracy
-//' @templateVar .FUN weighted.accuracy
+//' @templateVar .FUN accuracy
 //' @templateVar .METHOD factor
 //' @template classification_factor_weighted_example
 //' @template classification_cmatrix_inherit

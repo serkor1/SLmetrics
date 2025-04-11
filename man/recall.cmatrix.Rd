@@ -30,9 +30,6 @@ A generic funcion for the \href{https://en.wikipedia.org/wiki/Sensitivity_and_sp
 Sensitivity, True Positive Rate
 }
 }
-\details{
-When passing a matrix
-}
 \examples{
 ## Generate actual
 ## and predicted classes

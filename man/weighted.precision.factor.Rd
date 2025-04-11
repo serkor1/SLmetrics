@@ -25,14 +25,6 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
 
 \item{...}{Arguments passed into other methods.}
 }
-\value{
-If \code{estimator} is giveen as
-\itemize{
-\item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
-\item 1 - a <\link{numeric}> value (Micro averaged metric)
-\item 2 - a <\link{numeric}> value (macro averaged metric)
-}
-}
 \description{
 A generic funcion for the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{precision}. Use \code{\link[=weighted.fdr]{weighted.fdr()}} for the weighted \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{precision}.
 \subsection{Other names}{
@@ -53,7 +45,7 @@ sample_weights <- runif(
 )
 
 ## Evaluate performance
-SLmetrics::weighted.precision(
+SLmetrics::weighted.weighted.precision(
    actual_classes, 
    predicted_classes, 
    sample_weights

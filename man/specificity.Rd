@@ -36,70 +36,17 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
     \item{\code{x}}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
   }}
 }
-\value{
-If \code{estimator} is giveen as
-\itemize{
-\item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
-\item 1 - a <\link{numeric}> value (Micro averaged metric)
-\item 2 - a <\link{numeric}> value (macro averaged metric)
-}
-}
 \description{
-A generic funcion for the \href{https://en.wikipedia.org/wiki/Sensitivity_and_specificity}{Specificity}. Use \code{\link[=weighted.specificity]{weighted.specificity()}} for the weighted \href{https://en.wikipedia.org/wiki/Sensitivity_and_specificity}{Specificity}.
-\subsection{Other names}{
-
-True Negative Rate (\code{\link[=tnr]{tnr()}})
-Selectivity (\code{\link[=selectivity]{selectivity()}})
+A S3 generic function for calculating the specificity score of a Classification model. The \code{\link[=specificity]{specificity()}} handles the input as is - and therefore there is not sanity checks.
+If the data contains \link{NA}, or \code{lenght(x) != lenght(y)} you are left at the mercy of compiler.
 }
-}
-\section{Creating <\link{factor}>}{
+\section{Other names}{
 
 
-Consider a classification problem with three classes: \code{A}, \code{B}, and \code{C}. The actual vector of \code{\link[=factor]{factor()}} values is defined as follows:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
-set.seed(1903)
-
-## actual
-factor(
-  x = sample(x = 1:3, size = 10, replace = TRUE),
-  levels = c(1, 2, 3),
-  labels = c("A", "B", "C")
-)
-#>  [1] B A B B A C B C C A
-#> Levels: A B C
-}\if{html}{\out{</div>}}
-
-Here, the values 1, 2, and 3 are mapped to \code{A}, \code{B}, and \code{C}, respectively. Now, suppose your model does not predict any \code{B}'s. The predicted vector of \code{\link[=factor]{factor()}} values would be defined as follows:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{## set seed
-set.seed(1903)
-
-## predicted
-factor(
-  x = sample(x = c(1, 3), size = 10, replace = TRUE),
-  levels = c(1, 2, 3),
-  labels = c("A", "B", "C")
-)
-#>  [1] C A C C C C C C A C
-#> Levels: A B C
-}\if{html}{\out{</div>}}
-
-In both cases, \eqn{k = 3}, determined indirectly by the \code{levels} argument.
-}
-
-\section{Definition}{
-
-Let \eqn{\hat{\sigma} \in [0, 1]} be the proportion of true negatives among the actual negatives. The specificity of the classifier is calculated as,
-
-\deqn{
-  \hat{\sigma} = \frac{\#TN_k}{\#TN_k + \#FP_k}
-}
-
-Where:
+The specificity has other names depending on research field:
 \itemize{
-\item \eqn{\#TN_k} is the number of true negatives, and
-\item \eqn{\#FP_k} is the number of false positives.
+\item True Negative Rate, \code{\link[=tnr]{tnr()}}
+\item Selectivity, \code{\link[=selectivity]{selectivity()}}
 }
 }
 
@@ -118,8 +65,8 @@ SLmetrics::specificity(
 \seealso{
 Other Classification: 
 \code{\link{ROC.factor}()},
-\code{\link{accuracy.factor}()},
-\code{\link{baccuracy.factor}()},
+\code{\link{accuracy}()},
+\code{\link{baccuracy}()},
 \code{\link{ckappa.factor}()},
 \code{\link{cmatrix.factor}()},
 \code{\link{dor.factor}()},
@@ -145,8 +92,8 @@ Other Classification:
 
 Other Supervised Learning: 
 \code{\link{ROC.factor}()},
-\code{\link{accuracy.factor}()},
-\code{\link{baccuracy.factor}()},
+\code{\link{accuracy}()},
+\code{\link{baccuracy}()},
 \code{\link{ccc.numeric}()},
 \code{\link{ckappa.factor}()},
 \code{\link{cmatrix.factor}()},

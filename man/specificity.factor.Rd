@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{specificity.factor}
 \alias{specificity.factor}
-\title{Specificitiy}
+\title{Specificity}
 \usage{
 \method{specificity}{factor}(actual, predicted, estimator = 0L, na.rm = TRUE, ...)
 }
@@ -23,21 +23,9 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
 
 \item{...}{Arguments passed into other methods.}
 }
-\value{
-If \code{estimator} is giveen as
-\itemize{
-\item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
-\item 1 - a <\link{numeric}> value (Micro averaged metric)
-\item 2 - a <\link{numeric}> value (macro averaged metric)
-}
-}
 \description{
-A generic funcion for the \href{https://en.wikipedia.org/wiki/Sensitivity_and_specificity}{Specificity}. Use \code{\link[=weighted.specificity]{weighted.specificity()}} for the weighted \href{https://en.wikipedia.org/wiki/Sensitivity_and_specificity}{Specificity}.
-\subsection{Other names}{
-
-True Negative Rate (\code{\link[=tnr]{tnr()}})
-Selectivity (\code{\link[=selectivity]{selectivity()}})
-}
+A S3 generic function for calculating the specificity score of a Classification model. The \code{\link[=specificity]{specificity()}} handles the input as is - and therefore there is not sanity checks.
+If the data contains \link{NA}, or \code{lenght(x) != lenght(y)} you are left at the mercy of compiler.
 }
 \examples{
 ## Generate actual
