@@ -23,6 +23,14 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
 
 \item{...}{Arguments passed into other methods.}
 }
+\value{
+If \code{estimator} is given as
+\itemize{
+\item 0 - a named <\link{numeric}>-vector of \link{length} k
+\item 1 - a <\link{double}> value (Micro averaged metric)
+\item 2 - a <\link{double}> value (Macro averaged metric)
+}
+}
 \description{
 The \code{\link[=npv]{npv()}}-function computes the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{negative predictive value}, also known as the True Negative Predictive Value, between
 two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.npv]{weighted.npv()}} function computes the weighted negative predictive value.

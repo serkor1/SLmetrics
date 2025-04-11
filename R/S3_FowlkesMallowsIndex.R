@@ -7,6 +7,7 @@
 #' @templateVar .TITLE Fowlkes Mallows Index
 #' @templateVar .FUN fmi
 #' @templateVar .TASK Classification
+#' @templateVar .SINGLE_OUTPUT TRUE
 #' @template classification_inheritDotParams
 #' @template classification_factor_example
 #' @template classification_cmatrix_template

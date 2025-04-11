@@ -14,11 +14,11 @@
 \item{...}{Arguments passed into other methods.}
 }
 \value{
-A <\link{numeric}>-vector of \link{length} 1
+A <\link{double}>-value
 }
 \description{
-The \code{\link[=zerooneloss]{zerooneloss()}}-function computes the \href{https://en.wikipedia.org/wiki/Loss_functions_for_classification}{zero-one Loss}, a classification loss function that calculates the proportion of misclassified instances between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.zerooneloss]{weighted.zerooneloss()}} function computes the weighted zero-one loss.
+A S3 generic function for calculating the zerooneloss score of a Classification model. The \code{\link[=zerooneloss]{zerooneloss()}} handles the input as is - and therefore there is not sanity checks.
+If the data contains \link{NA}, or \code{lenght(x) != lenght(y)} you are left at the mercy of compiler.
 }
 \examples{
 ## Generate actual

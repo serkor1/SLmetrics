@@ -7,18 +7,15 @@
 #' @templateVar .TITLE accuracy
 #' @templateVar .FUN accuracy
 #' @templateVar .TASK Classification
+#' @templateVar .SINGLE_OUTPUT TRUE
 #' @template classification_inheritDotParams
 #' @template classification_factor_example
 #' @template classification_cmatrix_template
-#' 
 #'
 #' @usage
 #' ## Generic S3 method
 #' ## for unweighted accuracy
 #' accuracy(...)
-#'
-#' @returns
-#' A <[numeric]>-vector of [length] 1
 #'
 #' @family Classification
 #' @family Supervised Learning

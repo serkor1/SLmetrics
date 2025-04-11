@@ -12,7 +12,7 @@
 \item{...}{Arguments passed into other methods.}
 }
 \value{
-A <\link{numeric}>-vector of \link{length} 1
+A <\link{double}>-value
 }
 \description{
 A S3 generic function for calculating the hammingloss score of a Classification model. The \code{\link[=hammingloss]{hammingloss()}} handles the input as is - and therefore there is not sanity checks.

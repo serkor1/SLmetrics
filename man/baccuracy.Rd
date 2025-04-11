@@ -31,6 +31,8 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
 \item{adjust}{A \link{logical} value (default: \link{FALSE}). If \link{TRUE} the metric is adjusted for random chance \eqn{\frac{1}{k}}.}
 }
 \value{
+A <\link{double}>-value
+
 A \link{numeric}-vector of \link{length} 1
 }
 \description{

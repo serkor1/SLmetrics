@@ -7,6 +7,7 @@
 #' @templateVar .TITLE balanced accuracy
 #' @templateVar .FUN baccuracy
 #' @templateVar .TASK Classification
+#' @templateVar .SINGLE_OUTPUT TRUE
 #' @template classification_inheritDotParams
 #' @template classification_factor_example
 #' @template classification_cmatrix_template

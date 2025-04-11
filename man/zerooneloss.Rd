@@ -9,79 +9,34 @@
 zerooneloss(...)
 
 ## Generic S3 method
-weighted.zerooneloss(
- ...,
- w
-)
+weighted.zerooneloss(..)
+}
+\arguments{
+\item{...}{
+  Arguments passed on to \code{\link[=zerooneloss.factor]{zerooneloss.factor}}, \code{\link[=weighted.zerooneloss.factor]{weighted.zerooneloss.factor}}, \code{\link[=zerooneloss.cmatrix]{zerooneloss.cmatrix}}
+  \describe{
+    \item{\code{actual,predicted}}{A pair of vectors <\link{factor}> with actual and observed classes.}
+    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
+    \item{\code{x}}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
+  }}
 }
 \value{
-A <\link{numeric}>-vector of \link{length} 1
+A <\link{double}>-value
 }
 \description{
-The \code{\link[=zerooneloss]{zerooneloss()}}-function computes the \href{https://en.wikipedia.org/wiki/Loss_functions_for_classification}{zero-one Loss}, a classification loss function that calculates the proportion of misclassified instances between
-two vectors of predicted and observed \code{\link[=factor]{factor()}} values. The \code{\link[=weighted.zerooneloss]{weighted.zerooneloss()}} function computes the weighted zero-one loss.
+A S3 generic function for calculating the zerooneloss score of a Classification model. The \code{\link[=zerooneloss]{zerooneloss()}} handles the input as is - and therefore there is not sanity checks.
+If the data contains \link{NA}, or \code{lenght(x) != lenght(y)} you are left at the mercy of compiler.
 }
-\section{Definition}{
-
-
-The metric is calculated as follows,
-
-\deqn{
-  \frac{\#FP + \#FN}{\#TP + \#TN + \#FP + \#FN}
-}
-
-Where \eqn{\#TP}, \eqn{\#TN}, \eqn{\#FP}, and \eqn{\#FN} represent the true positives, true negatives, false positives, and false negatives, respectively.
-}
-
 \examples{
-# 1) recode Iris
-# to binary classification
-# problem
-iris$species_num <- as.numeric(
-  iris$Species == "virginica"
-)
+## Generate actual
+## and predicted classes
+actual_classes    <- factor(c(1,2,1,2,2,3,4))
+predicted_classes <- factor(c(1,2,1,2,2,3,4))
 
-# 2) fit the logistic
-# regression
-model <- glm(
-  formula = species_num ~ Sepal.Length + Sepal.Width,
-  data    = iris,
-  family  = binomial(
-    link = "logit"
-  )
-)
-
-# 3) generate predicted
-# classes
-predicted <- factor(
-  as.numeric(
-    predict(model, type = "response") > 0.5
-  ),
-  levels = c(1,0),
-  labels = c("Virginica", "Others")
-)
-
-# 3.1) generate actual
-# classes
-actual <- factor(
-  x = iris$species_num,
-  levels = c(1,0),
-  labels = c("Virginica", "Others")
-)
-
-# 4) evaluate model
-# performance using Zero-One Loss
-cat(
-  "Zero-One Loss", zerooneloss(
-    actual    = actual,
-    predicted = predicted
-  ),
-  "Zero-One Loss (weigthed)", weighted.zerooneloss(
-    actual    = actual,
-    predicted = predicted,
-    w         = iris$Petal.Length/mean(iris$Petal.Length)
-  ),
-  sep = "\n"
+## Evaluate performance
+SLmetrics::zerooneloss(
+   actual_classes, 
+   predicted_classes
 )
 }
 \seealso{

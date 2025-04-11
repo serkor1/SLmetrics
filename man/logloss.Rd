@@ -45,7 +45,7 @@ the mean cross-entropy across all observations is returned; otherwise, the
 sum of cross-entropies is returned.}
 }
 \value{
-A <\link{numeric}>-vector of \link{length} 1
+A <\link{double}>-value
 }
 \description{
 The \code{\link[=logloss]{logloss()}} function computes the \strong{Log Loss} between observed classes (as a <\link{factor}>) and their predicted probability distributions (a <\link{numeric}> matrix). The \code{\link[=weighted.logloss]{weighted.logloss()}} function is the weighted version, applying observation-specific weights.

@@ -7,3 +7,4 @@
 #' @name <%= .FUN %>.<%= .METHOD %>
 #' @method <%= .FUN %> <%= .METHOD %>
 #' @inheritParams classification_documentation
+

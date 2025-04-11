@@ -34,6 +34,14 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
 
 \item{beta}{A <\link{numeric}> vector of \link{length} \eqn{1} (default: \eqn{1}).}
 }
+\value{
+If \code{estimator} is given as
+\itemize{
+\item 0 - a named <\link{numeric}>-vector of \link{length} k
+\item 1 - a <\link{double}> value (Micro averaged metric)
+\item 2 - a <\link{double}> value (Macro averaged metric)
+}
+}
 \description{
 A S3 generic function for calculating the fbeta score of a Classification model. The \code{\link[=fbeta]{fbeta()}} handles the input as is - and therefore there is not sanity checks.
 If the data contains \link{NA}, or \code{lenght(x) != lenght(y)} you are left at the mercy of compiler.

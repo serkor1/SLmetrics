@@ -23,7 +23,7 @@ weighted.accuracy(...)
   }}
 }
 \value{
-A <\link{numeric}>-vector of \link{length} 1
+A <\link{double}>-value
 }
 \description{
 A S3 generic function for calculating the accuracy score of a Classification model. The \code{\link[=accuracy]{accuracy()}} handles the input as is - and therefore there is not sanity checks.

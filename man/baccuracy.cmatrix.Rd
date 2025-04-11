@@ -17,6 +17,8 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
 \item{...}{Arguments passed into other methods.}
 }
 \value{
+A <\link{double}>-value
+
 A \link{numeric}-vector of \link{length} 1
 }
 \description{

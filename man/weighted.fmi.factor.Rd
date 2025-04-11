@@ -13,6 +13,9 @@
 
 \item{...}{Arguments passed into other methods.}
 }
+\value{
+A <\link{double}>-value
+}
 \description{
 A S3 generic function for calculating the fmi score of a Classification model. The \code{\link[=fmi]{fmi()}} handles the input as is - and therefore there is not sanity checks.
 If the data contains \link{NA}, or \code{lenght(x) != lenght(y)} you are left at the mercy of compiler.

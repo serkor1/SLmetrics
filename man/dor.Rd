@@ -23,6 +23,13 @@ weighted.dor(...)
   }}
 }
 \value{
+If \code{estimator} is given as
+\itemize{
+\item 0 - a named <\link{numeric}>-vector of \link{length} k
+\item 1 - a <\link{double}> value (Micro averaged metric)
+\item 2 - a <\link{double}> value (Macro averaged metric)
+}
+
 A <\link{numeric}>-vector of \link{length} 1
 }
 \description{

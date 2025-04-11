@@ -9,6 +9,7 @@
 #' @templateVar .TITLE Matthews Correlation Coefficient
 #' @templateVar .FUN mcc
 #' @templateVar .TASK Classification
+#' @templateVar .SINGLE_OUTPUT TRUE
 #' @template classification_inheritDotParams
 #' @template classification_factor_example
 #' @template classification_cmatrix_template

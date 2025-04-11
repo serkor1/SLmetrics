@@ -19,6 +19,14 @@ weighted.ckappa(
 \arguments{
 \item{beta}{A <\link{numeric}> value of \link{length} 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.}
 }
+\value{
+If \code{estimator} is given as
+\itemize{
+\item 0 - a named <\link{numeric}>-vector of \link{length} k
+\item 1 - a <\link{double}> value (Micro averaged metric)
+\item 2 - a <\link{double}> value (Macro averaged metric)
+}
+}
 \description{
 A generic function for \href{https://en.wikipedia.org/wiki/Cohen\%27s_kappa}{Cohen's \eqn{\kappa}}-statistic. Use \code{\link[=weighted.ckappa]{weighted.ckappa()}} for the weighted \href{https://en.wikipedia.org/wiki/Cohen\%27s_kappa}{\eqn{\kappa}}-statistic.
 }
