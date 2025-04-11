@@ -4,8 +4,12 @@
 // implementation of metric
 using balanced_accuracy_score_impl = metric::balanced_accuracy_score<int>;
 
-//' @rdname baccuracy
-//' @method baccuracy factor
+//' @templateVar .TITLE baccuracy
+//' @templateVar .FUN baccuracy
+//' @templateVar .METHOD factor
+//' @template classification_factor_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(baccuracy.factor)]]
 double balanced_accuracy(
@@ -18,8 +22,12 @@ double balanced_accuracy(
         return performance.compute();
 }
 
-//' @rdname baccuracy
-//' @method weighted.baccuracy factor
+//' @templateVar .TITLE baccuracy
+//' @templateVar .FUN weighted.baccuracy
+//' @templateVar .METHOD factor
+//' @template classification_factor_weighted_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.baccuracy.factor)]]
 double weighted_balanced_accuracy(
@@ -33,8 +41,12 @@ double weighted_balanced_accuracy(
         return performance.compute();
 }
 
-//' @rdname baccuracy
-//' @method baccuracy cmatrix
+//' @templateVar .TITLE baccuracy
+//' @templateVar .FUN baccuracy
+//' @templateVar .METHOD cmatrix
+//' @template classification_cmatrix_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(baccuracy.cmatrix)]]
 double cmatrix_balanced_accuracy(
