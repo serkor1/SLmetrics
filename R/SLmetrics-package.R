@@ -29,3 +29,29 @@ NULL
 #' 
 #' @keywords internal 
 "_PACKAGE"
+
+#' @title Classification Documenatation
+#' @name classification_documentation
+#' 
+#' @description
+#' This roxygen block is the generic documnentation
+#' for classification metrics for all the parameters.
+#' 
+#' @param actual,predicted A pair of vectors <[factor]> with actual and observed classes.
+#' @param w A <[numeric]> vector of sample weights.
+#' @param x A confusion matrix created [cmatrix()].
+#' @param estimator An <[integer]>-value of [length] \eqn{1} (default: \eqn{0}).
+#' \itemize{
+#'   \item 0 - a named <[numeric]>-vector of [length] k (class-wise)
+#'   \item 1 - a <[numeric]> value (Micro averaged metric)
+#'   \item 2 - a <[numeric]> value (Macro averaged metric)
+#' }
+#' @param na.rm A <[logical]> value of [length] \eqn{1} (default: [TRUE]). If [TRUE], [NA] values are removed from the computation. 
+#' This argument is only relevant when `micro != NULL`. 
+#' When `na.rm = TRUE`, the computation corresponds to `sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))`.
+#' When `na.rm = FALSE`, the computation corresponds to `sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))`.
+#' @param ... Arguments passed into other methods.
+#'
+#' @keywords internal
+#' @usage NULL
+NULL
