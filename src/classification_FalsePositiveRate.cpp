@@ -4,8 +4,18 @@
 // declare metric
 using fpr = metric::false_positive_rate<int>;
 
-//' @rdname fpr
+//' @inherit fpr description
+//' @inherit fpr return
+//'
+//' @title Specificitiy
+//' @rdname fpr.factor
+//' @name fpr.factor
 //' @method fpr factor
+//' @inheritParams classification_documentation
+//'
+//' @templateVar .FUN fpr
+//' @template classification_factor_example
+//'
 //' @export
 // [[Rcpp::export(fpr.factor)]]
 Rcpp::NumericVector false_positive_rate(
@@ -18,8 +28,18 @@ Rcpp::NumericVector false_positive_rate(
         return performance.compute();
 }
 
-//' @rdname fpr
+//' @inherit fpr description
+//' @inherit fpr return
+//'
+//' @title Specificitiy
+//' @rdname weighted.fpr.factor
+//' @name weighted.fpr.factor
 //' @method weighted.fpr factor
+//' @inheritParams classification_documentation
+//'
+//' @templateVar .FUN fpr
+//' @template classification_factor_weighted_example
+//'
 //' @export
 // [[Rcpp::export(weighted.fpr.factor)]]
 Rcpp::NumericVector weighted_false_positive_rate(
@@ -33,8 +53,21 @@ Rcpp::NumericVector weighted_false_positive_rate(
         return performance.compute();
 }
 
-//' @rdname fpr
+//' @inherit fpr description
+//' @inherit fpr return
+//'
+//' @title Specificitiy
+//' @rdname fpr.cmatrix
+//' @name fpr.cmatrix
 //' @method fpr cmatrix
+//' @inheritParams classification_documentation
+//'
+//' @templateVar .FUN fpr
+//' @template classification_cmatrix_example
+//'
+//' @details 
+//' When passing a matrix
+//'
 //' @export
 // [[Rcpp::export(fpr.cmatrix)]]
 Rcpp::NumericVector cmatrix_false_positive_rate(
@@ -46,7 +79,6 @@ Rcpp::NumericVector cmatrix_false_positive_rate(
         return performance.compute();
 }
 
-//' @rdname fpr
 //' @method fallout factor
 //' @export
 // [[Rcpp::export(fallout.factor)]]
@@ -60,7 +92,6 @@ Rcpp::NumericVector fallout(
         return performance.compute();
 }
 
-//' @rdname fpr
 //' @method weighted.fallout factor
 //' @export
 // [[Rcpp::export(weighted.fallout.factor)]]
@@ -75,7 +106,6 @@ Rcpp::NumericVector weighted_fallout(
         return performance.compute();
 }
 
-//' @rdname fpr
 //' @method fallout cmatrix
 //' @export
 // [[Rcpp::export(fallout.cmatrix)]]

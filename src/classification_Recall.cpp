@@ -3,8 +3,12 @@
 
 using recall_metric_impl = metric::recall<int>;
 
-//' @rdname recall
-//' @method recall factor
+//' @templateVar .TITLE recall
+//' @templateVar .FUN recall
+//' @templateVar .METHOD factor
+//' @template classification_factor_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(recall.factor)]]
 Rcpp::NumericVector recall_score(
@@ -17,8 +21,12 @@ Rcpp::NumericVector recall_score(
         return performance.compute();
 }
 
-//' @rdname recall
-//' @method weighted.recall factor
+//' @templateVar .TITLE recall
+//' @templateVar .FUN weighted.recall
+//' @templateVar .METHOD factor
+//' @template classification_factor_weighted_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.recall.factor)]]
 Rcpp::NumericVector weighted_recall_score(
@@ -32,9 +40,12 @@ Rcpp::NumericVector weighted_recall_score(
         return performance.compute();
 }
 
-//' @rdname recall
+//' @templateVar .TITLE recall
+//' @templateVar .FUN recall
+//' @templateVar .METHOD cmatrix
+//' @template classification_cmatrix_example
+//' @template classification_cmatrix_inherit
 //'
-//' @method recall cmatrix
 //' @export
 // [[Rcpp::export(recall.cmatrix)]]
 Rcpp::NumericVector cmatrix_recall_score(
@@ -46,10 +57,7 @@ Rcpp::NumericVector cmatrix_recall_score(
         return performance.compute();
 }
 
-
-//' @rdname recall
 //' @method sensitivity factor
-//'
 //' @export
 // [[Rcpp::export(sensitivity.factor)]]
 Rcpp::NumericVector sensitivity_score(
@@ -62,7 +70,6 @@ Rcpp::NumericVector sensitivity_score(
         return performance.compute();
 }
 
-//' @rdname recall
 //' @method weighted.sensitivity factor
 //' @export
 // [[Rcpp::export(weighted.sensitivity.factor)]]
@@ -77,8 +84,6 @@ Rcpp::NumericVector weighted_sensitivity_score(
         return performance.compute();
 }
 
-//' @rdname recall
-//'
 //' @method sensitivity cmatrix
 //' @export
 // [[Rcpp::export(sensitivity.cmatrix)]]
@@ -91,9 +96,6 @@ Rcpp::NumericVector cmatrix_sensitivity_score(
         return performance.compute();
 }
 
-
-//' @rdname recall
-//'
 //' @method tpr factor
 //' @export
 // [[Rcpp::export(tpr.factor)]]
@@ -107,7 +109,6 @@ Rcpp::NumericVector true_positive_rate(
         return performance.compute();
 }
 
-//' @rdname recall
 //' @method weighted.tpr factor
 //' @export
 // [[Rcpp::export(weighted.tpr.factor)]]
@@ -122,8 +123,6 @@ Rcpp::NumericVector weighted_true_positive_rate(
         return performance.compute();
 }
 
-//' @rdname recall
-//'
 //' @method tpr cmatrix
 //' @export
 // [[Rcpp::export(tpr.cmatrix)]]

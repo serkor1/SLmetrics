@@ -4,14 +4,12 @@
 // declare metric
 using specificity_score_impl = metric::specificity<int>;
 
-//' @inherit specificity description
-//' @inherit specificity return
+//' @templateVar .TITLE specificity
+//' @templateVar .FUN specificity
+//' @templateVar .METHOD factor
+//' @template classification_factor_example
+//' @template classification_cmatrix_inherit
 //'
-//' @title Specificitiy
-//' @rdname specificity.factor
-//' @name specificity.factor
-//' @method specificity factor
-//' @inheritParams classification_documentation
 //' @export
 // [[Rcpp::export(specificity.factor)]]
 Rcpp::NumericVector specificity(
@@ -24,14 +22,12 @@ Rcpp::NumericVector specificity(
         return performance.compute();
 }
 
-//' @inherit specificity description
-//' @inherit specificity return
+//' @templateVar .TITLE specificity
+//' @templateVar .FUN weighted.specificity
+//' @templateVar .METHOD factor
+//' @template classification_factor_weighted_example
+//' @template classification_cmatrix_inherit
 //'
-//' @title Specificitiy
-//' @rdname weighted.specificity.factor
-//' @name weighted.specificity.factor
-//' @method weighted.specificity factor
-//' @inheritParams classification_documentation
 //' @export
 // [[Rcpp::export(weighted.specificity.factor)]]
 Rcpp::NumericVector weighted_specificity(
@@ -45,17 +41,11 @@ Rcpp::NumericVector weighted_specificity(
         return performance.compute();
 }
 
-//' @inherit specificity description
-//' @inherit specificity return
-//'
-//' @title Specificitiy
-//' @rdname specificity.cmatrix
-//' @name specificity.cmatrix
-//' @method specificity cmatrix
-//' @inheritParams classification_documentation
-//'
-//' @details 
-//' When passing a matrix
+//' @templateVar .TITLE specificity
+//' @templateVar .FUN specificity
+//' @templateVar .METHOD cmatrix
+//' @template classification_cmatrix_example
+//' @template classification_cmatrix_inherit
 //'
 //' @export
 // [[Rcpp::export(specificity.cmatrix)]]
@@ -69,7 +59,6 @@ Rcpp::NumericVector cmatrix_specificity(
 }
 
 //' @method tnr factor
-//' @inheritParams classification_documentation
 //' @export
 // [[Rcpp::export(tnr.factor)]]
 Rcpp::NumericVector true_negative_rate(
@@ -83,7 +72,6 @@ Rcpp::NumericVector true_negative_rate(
 }
 
 //' @method weighted.tnr factor
-//' @inheritParams classification_documentation
 //' @export
 // [[Rcpp::export(weighted.tnr.factor)]]
 Rcpp::NumericVector weighted_true_negative_rate(
@@ -98,7 +86,6 @@ Rcpp::NumericVector weighted_true_negative_rate(
 }
 
 //' @method tnr cmatrix
-//' @inheritParams classification_documentation
 //' @export
 // [[Rcpp::export(tnr.cmatrix)]]
 Rcpp::NumericVector cmatrix_true_negative_rate(
@@ -111,7 +98,6 @@ Rcpp::NumericVector cmatrix_true_negative_rate(
 }
 
 //' @method selectivity factor
-//' @inheritParams classification_documentation
 //' @export
 // [[Rcpp::export(selectivity.factor)]]
 Rcpp::NumericVector selectivity(
@@ -125,7 +111,6 @@ Rcpp::NumericVector selectivity(
 }
 
 //' @method weighted.selectivity factor
-//' @inheritParams classification_documentation
 //' @export
 // [[Rcpp::export(weighted.selectivity.factor)]]
 Rcpp::NumericVector weighted_selectivity(
@@ -140,7 +125,6 @@ Rcpp::NumericVector weighted_selectivity(
 }
 
 //' @method selectivity cmatrix
-//' @inheritParams classification_documentation
 //' @export
 // [[Rcpp::export(selectivity.cmatrix)]]
 Rcpp::NumericVector cmatrix_selectivity(

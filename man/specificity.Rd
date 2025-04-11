@@ -4,6 +4,8 @@
 \alias{specificity}
 \alias{tnr}
 \alias{selectivity}
+\alias{weighted.tnr}
+\alias{weighted.selectivity}
 \alias{weighted.specificity}
 \title{Specificity}
 \usage{
@@ -102,9 +104,16 @@ Where:
 }
 
 \examples{
-actual <- c(1, 2, 4)
-predicted <- c(1, 3, 4)
-specificity(actual, predicted)
+## Generate actual
+## and predicted classes
+actual_classes    <- factor(c(1,2,1,2,2,3,4))
+predicted_classes <- factor(c(1,2,1,2,2,3,4))
+
+## Evaluate performance
+SLmetrics::specificity(
+   actual_classes, 
+   predicted_classes
+)
 }
 \seealso{
 Other Classification: 
@@ -119,7 +128,7 @@ Other Classification:
 \code{\link{fdr.factor}()},
 \code{\link{fer.factor}()},
 \code{\link{fmi.factor}()},
-\code{\link{fpr.factor}()},
+\code{\link{fpr}()},
 \code{\link{hammingloss.factor}()},
 \code{\link{jaccard.factor}()},
 \code{\link{logloss.factor}()},
@@ -129,8 +138,8 @@ Other Classification:
 \code{\link{plr.factor}()},
 \code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
-\code{\link{precision.factor}()},
-\code{\link{recall.factor}()},
+\code{\link{precision}()},
+\code{\link{recall}()},
 \code{\link{roc.auc.matrix}()},
 \code{\link{zerooneloss.factor}()}
 
@@ -146,7 +155,7 @@ Other Supervised Learning:
 \code{\link{fbeta.factor}()},
 \code{\link{fdr.factor}()},
 \code{\link{fer.factor}()},
-\code{\link{fpr.factor}()},
+\code{\link{fpr}()},
 \code{\link{hammingloss.factor}()},
 \code{\link{huberloss.numeric}()},
 \code{\link{jaccard.factor}()},
@@ -162,9 +171,9 @@ Other Supervised Learning:
 \code{\link{plr.factor}()},
 \code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
-\code{\link{precision.factor}()},
+\code{\link{precision}()},
 \code{\link{rae.numeric}()},
-\code{\link{recall.factor}()},
+\code{\link{recall}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
 \code{\link{roc.auc.matrix}()},

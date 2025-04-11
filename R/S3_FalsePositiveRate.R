@@ -5,9 +5,7 @@
 # for False Positive Rate
 # script start;
 
-#' @aliases fpr fallout
-#' @inherit specificity
-#' 
+#' @aliases fallout weighted.fallout
 #' @title False Positive Rate
 #'
 #' @description
@@ -18,11 +16,12 @@
 #' 
 #' @usage 
 #' ## Generic S3 method
-#' fpr(
-#'  ...,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
+#' ## for unweighted false
+#' ## positive rate
+#' fpr(...)
+#' 
+#' @templateVar .FUN fpr
+#' @template classification_inheritDotParams
 #' 
 #' @section Definition:
 #' Let \eqn{\hat{\gamma} \in [0, 1]} be the proportion of false positives among the actual negatives. The false positive rate of the classifier is calculated as,
@@ -36,16 +35,14 @@
 #' - \eqn{\#TN_k} is the number of true negatives, and
 #' - \eqn{\#FP_k} is the number of false positives.
 #'
-#' @example man/examples/scr_FalsePositiveRate.R
+#' @templateVar .FUN fpr
+#' @template classification_factor_example
 #' 
 #' @family Classification
 #' @family Supervised Learning
 #'
 #' @export
-fpr <- function(
-  ..., 
-  estimator = 0, 
-  na.rm = TRUE) {
+fpr <- function(...) {
   UseMethod(
     generic = "fpr",
     object  = ..1
@@ -55,58 +52,27 @@ fpr <- function(
 #' @rdname fpr
 #' @usage
 #' ## Generic S3 method
-#' fallout(
-#'  ...,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
+#' ## for weighted false positive
+#' ## rate
+#' weighted.fpr(...)
 #' @export
-fallout <- function(
-  ..., 
-  estimator = 0, 
-  na.rm = TRUE) {
-  UseMethod(
-    generic = "fallout",
-    object  = ..1
-  )
-}
-
-#' @rdname fpr
-#' @usage
-#' ## Generic S3 method
-#' weighted.fpr(
-#'  ...,
-#'  w,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
-#' @export
-weighted.fpr <- function(
-  ...,
-  w,
-  estimator = 0, 
-  na.rm = TRUE) {
+weighted.fpr <- function(...) {
   UseMethod(
     generic = "weighted.fpr",
     object  = ..1
   )
 }
 
-#' @rdname fpr
-#' @usage
-#' ## Generic S3 method
-#' weighted.fallout(
-#'  ...,
-#'  w,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
 #' @export
-weighted.fallout <- function(
-  ...,
-  w,
-  estimator = 0, 
-  na.rm = TRUE) {
+fallout <- function(...) {
+  UseMethod(
+    generic = "fallout",
+    object  = ..1
+  )
+}
+
+#' @export
+weighted.fallout <- function(...) {
   UseMethod(
     generic = "weighted.fallout",
     object  = ..1

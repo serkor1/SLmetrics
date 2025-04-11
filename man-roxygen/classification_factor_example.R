@@ -5,7 +5,7 @@
 #' predicted_classes <- factor(c(1,2,1,2,2,3,4))
 #' 
 #' ## Evaluate performance
-#' SLmetrics::<%= fun %>(
+#' SLmetrics::<%= .FUN %>(
 #'    actual_classes, 
 #'    predicted_classes
 #' )

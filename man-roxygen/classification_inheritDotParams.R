@@ -1,3 +1,3 @@
-#' @inheritDotParams <%= fun %>.factor
-#' @inheritDotParams weighted.<%= fun %>.factor
-#' @inheritDotParams <%= fun %>.cmatrix
+#' @inheritDotParams <%= .FUN %>.factor
+#' @inheritDotParams weighted.<%= .FUN %>.factor
+#' @inheritDotParams <%= .FUN %>.cmatrix

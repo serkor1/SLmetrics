@@ -4,7 +4,7 @@
 # objective: Generate method
 # script start;
 
-#' @aliases precision ppv
+#' @aliases ppv weighted.ppv
 #' @inherit specificity
 #' 
 #' @title Precision
@@ -17,11 +17,11 @@
 #' 
 #' @usage
 #' ## Generic S3 method
-#' precision(
-#'  ...,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
+#' ## for unweighted precision
+#' precision(...)
+#' 
+#' @templateVar .FUN precision
+#' @template classification_inheritDotParams
 #' 
 #' @section Definition:
 #' Let \eqn{\hat{\pi} \in [0, 1]} be the proportion of true positives among the predicted positives. The precision of the classifier is calculated as,
@@ -35,7 +35,8 @@
 #' - \eqn{\#TP_k} is the number of true positives, and
 #' - \eqn{\#FP_k} is the number of false positives.
 #'
-#' @example man/examples/scr_Precision.R
+#' @templateVar .FUN precision
+#' @template classification_factor_example
 #'
 #' @family Classification
 #' @family Supervised Learning
@@ -54,58 +55,26 @@ precision <- function(
 #' @rdname precision
 #' @usage
 #' ## Generic S3 method
-#' weighted.precision(
-#'  ...,
-#'  w,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
+#' ## for weighted precision
+#' weighted.precision(...)
 #' @export
-weighted.precision <- function(
-  ..., 
-  w,
-  estimator = 0, 
-  na.rm = TRUE) {
+weighted.precision <- function(...) {
   UseMethod(
     generic = "weighted.precision",
     object  = ..1
   )
 }
 
-#' @rdname precision
-#' @usage
-#' ## Generic S3 method
-#' ppv(
-#'  ...,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
 #' @export
-ppv <- function(
-  ..., 
-  estimator = 0, 
-  na.rm = TRUE) {
+ppv <- function(...) {
   UseMethod(
     generic = "ppv",
     object  = ..1
   )
 }
 
-#' @rdname precision
-#' @usage
-#' ## Generic S3 method
-#' weighted.ppv(
-#'  ...,
-#'  w,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
 #' @export
-weighted.ppv <- function(
-  ...,
-  w,
-  estimator = 0, 
-  na.rm = TRUE) {
+weighted.ppv <- function(...) {
   UseMethod(
     generic = "weighted.ppv",
     object  = ..1

@@ -11,7 +11,7 @@
 #' )
 #' 
 #' ## Evaluate performance
-#' SLmetrics::weighted.<%= fun %>(
+#' SLmetrics::weighted.<%= .FUN %>(
 #'    actual_classes, 
 #'    predicted_classes, 
 #'    sample_weights

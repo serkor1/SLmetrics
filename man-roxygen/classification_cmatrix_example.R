@@ -12,4 +12,4 @@
 #' )
 #' 
 #' ## Evaluate performance
-#' SLmetrics::<%= fun %>(confusion_matrix)
+#' SLmetrics::<%= .FUN %>(confusion_matrix)
