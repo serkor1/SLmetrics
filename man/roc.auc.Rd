@@ -31,8 +31,6 @@ weighted.roc.auc(
 )
 }
 \arguments{
-\item{actual}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
-
 \item{response}{A \eqn{n \times k} <\link{numeric}>-\link{matrix}. The estimated response probabilities for each class \eqn{k}.}
 
 \item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
@@ -41,8 +39,6 @@ micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro a
 \item{method}{A <\link{numeric}> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the \code{trapezoid}-method, if \eqn{1} it is calculated using the \code{step}-method.}
 
 \item{...}{Arguments passed into other methods.}
-
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 }
 \value{
 A <\link{numeric}>  vector  of \link{length} 1
@@ -173,7 +169,7 @@ Other Classification:
 \code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
-\code{\link{specificity.factor}()},
+\code{\link{specificity}()},
 \code{\link{zerooneloss.factor}()}
 
 Other Supervised Learning: 
@@ -213,7 +209,7 @@ Other Supervised Learning:
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()},
-\code{\link{specificity.factor}()},
+\code{\link{specificity}()},
 \code{\link{zerooneloss.factor}()}
 
 Other Classification: 
@@ -240,7 +236,7 @@ Other Classification:
 \code{\link{prROC.factor}()},
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
-\code{\link{specificity.factor}()},
+\code{\link{specificity}()},
 \code{\link{zerooneloss.factor}()}
 
 Other Supervised Learning: 
@@ -280,7 +276,7 @@ Other Supervised Learning:
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()},
-\code{\link{specificity.factor}()},
+\code{\link{specificity}()},
 \code{\link{zerooneloss.factor}()}
 }
 \concept{Classification}

@@ -140,7 +140,7 @@ Other Classification:
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
 \code{\link{roc.auc.matrix}()},
-\code{\link{specificity.factor}()},
+\code{\link{specificity}()},
 \code{\link{zerooneloss.factor}()}
 
 Other Supervised Learning: 
@@ -180,7 +180,7 @@ Other Supervised Learning:
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()},
-\code{\link{specificity.factor}()},
+\code{\link{specificity}()},
 \code{\link{zerooneloss.factor}()}
 }
 \concept{Classification}

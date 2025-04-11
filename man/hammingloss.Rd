@@ -28,8 +28,6 @@ weighted.hammingloss(
 
 \item{predicted}{A vector of <\link{factor}> with \link{length} \eqn{n}, and \eqn{k} levels}
 
-\item{...}{Arguments passed into other methods}
-
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default}
 
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}}
@@ -186,7 +184,7 @@ Other Classification:
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
 \code{\link{roc.auc.matrix}()},
-\code{\link{specificity.factor}()},
+\code{\link{specificity}()},
 \code{\link{zerooneloss.factor}()}
 
 Other Supervised Learning: 
@@ -226,7 +224,7 @@ Other Supervised Learning:
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()},
-\code{\link{specificity.factor}()},
+\code{\link{specificity}()},
 \code{\link{zerooneloss.factor}()}
 }
 \concept{Classification}

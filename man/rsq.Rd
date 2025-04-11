@@ -145,7 +145,7 @@ Other Supervised Learning:
 \code{\link{rrmse.numeric}()},
 \code{\link{rrse.numeric}()},
 \code{\link{smape.numeric}()},
-\code{\link{specificity.factor}()},
+\code{\link{specificity}()},
 \code{\link{zerooneloss.factor}()}
 }
 \concept{Regression}

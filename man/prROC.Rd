@@ -31,8 +31,6 @@ weighted.prROC(
 )
 }
 \arguments{
-\item{actual}{A vector of <\link{factor}> values of \link{length} \eqn{n}, and \eqn{k} levels.}
-
 \item{response}{A \eqn{n \times k} <\link{numeric}>-\link{matrix}. The estimated response probabilities for each class \eqn{k}.}
 
 \item{thresholds}{An optional <\link{numeric}> vector of \link{length} \eqn{n} (default: \link{NULL}).}
@@ -40,8 +38,6 @@ weighted.prROC(
 \item{presorted}{A <\link{logical}>-value \link{length} 1 (default: \link{FALSE}). If \link{TRUE} the input will not be sorted by threshold.}
 
 \item{...}{Arguments passed into other methods.}
-
-\item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default.}
 }
 \value{
 A \link{data.frame} on the following form,
@@ -200,7 +196,7 @@ Other Classification:
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
 \code{\link{roc.auc.matrix}()},
-\code{\link{specificity.factor}()},
+\code{\link{specificity}()},
 \code{\link{zerooneloss.factor}()}
 
 Other Supervised Learning: 
@@ -240,7 +236,7 @@ Other Supervised Learning:
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()},
-\code{\link{specificity.factor}()},
+\code{\link{specificity}()},
 \code{\link{zerooneloss.factor}()}
 }
 \concept{Classification}

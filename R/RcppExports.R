@@ -615,64 +615,82 @@ weighted.roc.auc.matrix <- function(actual, response, w, micro = NULL, method = 
     .Call(`_SLmetrics_roc_auc_weighted`, actual, response, w, micro, method)
 }
 
-#' @rdname specificity
+#' @inherit specificity description
+#' @inherit specificity return
+#'
+#' @title Specificitiy
+#' @rdname specificity.factor
+#' @name specificity.factor
 #' @method specificity factor
+#' @inheritParams classification_documentation
 #' @export
 specificity.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_specificity`, actual, predicted, estimator, na_rm = na.rm)
 }
 
-#' @rdname specificity
+#' @inherit specificity description
+#' @inherit specificity return
+#'
+#' @title Specificitiy
+#' @rdname weighted.specificity.factor
+#' @name weighted.specificity.factor
 #' @method weighted.specificity factor
+#' @inheritParams classification_documentation
 #' @export
 weighted.specificity.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_weighted_specificity`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
-#' @rdname specificity
+#' @inherit specificity description
+#' @inherit specificity return
+#'
+#' @title Specificitiy
+#' @rdname specificity.cmatrix
+#' @name specificity.cmatrix
 #' @method specificity cmatrix
+#' @inheritParams classification_documentation
 #' @export
 specificity.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_specificity`, x, estimator, na_rm = na.rm)
 }
 
-#' @rdname specificity
 #' @method tnr factor
+#' @inheritParams classification_documentation
 #' @export
 tnr.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_true_negative_rate`, actual, predicted, estimator, na_rm = na.rm)
 }
 
-#' @rdname specificity
 #' @method weighted.tnr factor
+#' @inheritParams classification_documentation
 #' @export
 weighted.tnr.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_weighted_true_negative_rate`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
-#' @rdname specificity
 #' @method tnr cmatrix
+#' @inheritParams classification_documentation
 #' @export
 tnr.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_true_negative_rate`, x, estimator, na_rm = na.rm)
 }
 
-#' @rdname specificity
 #' @method selectivity factor
+#' @inheritParams classification_documentation
 #' @export
 selectivity.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_selectivity`, actual, predicted, estimator, na_rm = na.rm)
 }
 
-#' @rdname specificity
 #' @method weighted.selectivity factor
+#' @inheritParams classification_documentation
 #' @export
 weighted.selectivity.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_weighted_selectivity`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
-#' @rdname specificity
 #' @method selectivity cmatrix
+#' @inheritParams classification_documentation
 #' @export
 selectivity.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_selectivity`, x, estimator, na_rm = na.rm)

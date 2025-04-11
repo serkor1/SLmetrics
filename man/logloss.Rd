@@ -46,8 +46,6 @@ level in \code{actual}, the second column to the second factor level, and so on.
 the mean cross-entropy across all observations is returned; otherwise, the
 sum of cross-entropies is returned.}
 
-\item{...}{Arguments passed into other methods}
-
 \item{w}{A <\link{numeric}>-vector of \link{length} \eqn{n}. \link{NULL} by default}
 }
 \value{
@@ -189,7 +187,7 @@ Other Classification:
 \code{\link{precision.factor}()},
 \code{\link{recall.factor}()},
 \code{\link{roc.auc.matrix}()},
-\code{\link{specificity.factor}()},
+\code{\link{specificity}()},
 \code{\link{zerooneloss.factor}()}
 
 Other Supervised Learning: 
@@ -229,7 +227,7 @@ Other Supervised Learning:
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()},
-\code{\link{specificity.factor}()},
+\code{\link{specificity}()},
 \code{\link{zerooneloss.factor}()}
 }
 \concept{Classification}
