@@ -6,36 +6,22 @@
 
 #' @aliases specificity tnr selectivity
 #' @title Specificity
-#'
+#' 
 #' @description
 #' A generic funcion for the [Specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity). Use [weighted.specificity()] for the weighted [Specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity).
 #' 
 #' ## Other names
-#' True Negative Rate, Selectivity
+#' True Negative Rate ([tnr()])
+#' Selectivity ([selectivity()])
 #' 
 #' @usage 
 #' ## Generic S3 method
-#' specificity(
-#'  ...,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
-#'
-#' @param actual A vector of <[factor]> values of [length] \eqn{n}, and \eqn{k} levels.
-#' @param predicted A vector of <[factor]> values of [length] \eqn{n}, and \eqn{k} levels.
-#' @param w A <[numeric]>-vector of [length] \eqn{n}. [NULL] by default. 
-#' @param x A confusion matrix created [cmatrix()].
-#' @param estimator An <[integer]>-value of [length] \eqn{1} (default: \eqn{0}).
-#' \itemize{
-#'   \item 0 - a named <[numeric]>-vector of [length] k (class-wise)
-#'   \item 1 - a <[numeric]> value (Micro averaged metric)
-#'   \item 2 - a <[numeric]> value (macro averaged metric)
-#' }
-#' @param na.rm A <[logical]> value of [length] \eqn{1} (default: [TRUE]). If [TRUE], [NA] values are removed from the computation. 
-#' This argument is only relevant when `micro != NULL`. 
-#' When `na.rm = TRUE`, the computation corresponds to `sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))`.
-#' When `na.rm = FALSE`, the computation corresponds to `sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))`.
-#' @param ... Arguments passed into other methods
+#' ## for unweighted specificity
+#' specificity(...)
+#' 
+#' @inheritDotParams specificity.factor
+#' @inheritDotParams weighted.specificity.factor
+#' @inheritDotParams specificity.cmatrix
 #' 
 #' @section Creating <[factor]>:
 #'
@@ -87,17 +73,15 @@
 #' 
 #' - \eqn{\#TN_k} is the number of true negatives, and
 #' - \eqn{\#FP_k} is the number of false positives.
-#'
-#' @example man/examples/scr_Specificity.R
+#' 
+#' @templateVar fun specificity
+#' @template factor_template
 #'
 #' @family Classification
 #' @family Supervised Learning
 #' 
 #' @export
-specificity <- function(
-  ..., 
-  estimator = 0, 
-  na.rm = TRUE) {
+specificity <- function(...) {
   UseMethod(
     generic = "specificity",
     object  = ..1
@@ -107,98 +91,43 @@ specificity <- function(
 #' @rdname specificity
 #' @usage 
 #' ## Generic S3 method
-#' tnr(
-#'  ...,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
+#' ## for weighted specificity
+#' weighted.specificity(...)
 #' @export
-tnr <- function(
-  ..., 
-  estimator = 0, 
-  na.rm = TRUE) {
+weighted.specificity <- function(...) {
+    UseMethod(
+      generic = "weighted.specificity",
+      object  = ..1
+    )
+  }
+
+
+#' @export
+tnr <- function(...) {
   UseMethod(
     generic = "tnr",
     object  = ..1
   )
 }
 
-#' @rdname specificity
-#' @usage 
-#' ## Generic S3 method
-#' selectivity(
-#'  ...,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
 #' @export
-selectivity <- function(
-  ..., 
-  estimator = 0, 
-  na.rm = TRUE) {
+weighted.tnr <- function(...) {
+    UseMethod(
+      generic = "weighted.tnr",
+      object  = ..1
+    )
+  }
+
+#' @export
+selectivity <- function(...) {
   UseMethod(
     generic = "selectivity",
     object  = ..1
   )
 }
 
-#' @rdname specificity
-#' @usage 
-#' ## Generic S3 method
-#' weighted.specificity(
-#'  ...,
-#'  w,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
 #' @export
-weighted.specificity <- function(
-  ...,
-  w,
-  estimator = 0, 
-  na.rm = TRUE) {
-  UseMethod(
-    generic = "weighted.specificity",
-    object  = ..1
-  )
-}
-
-#' @rdname specificity
-#' @usage 
-#' ## Generic S3 method
-#' weighted.tnr(
-#'  ...,
-#'  w,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
-#' @export
-weighted.tnr <- function(
-  ...,
-  w,
-  estimator = 0, 
-  na.rm = TRUE) {
-  UseMethod(
-    generic = "weighted.tnr",
-    object  = ..1
-  )
-}
-
-#' @rdname specificity
-#' @usage 
-#' ## Generic S3 method
-#' weighted.selectivity(
-#'  ...,
-#'  w,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
-#' @export
-weighted.selectivity <- function(
-  ...,
-  w,
-  estimator = 0, 
-  na.rm = TRUE) {
+weighted.selectivity <- function(...) {
   UseMethod(
     generic = "weighted.selectivity",
     object  = ..1
