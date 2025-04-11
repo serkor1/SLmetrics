@@ -33,7 +33,7 @@ sample_weights <- runif(
 )
 
 ## Evaluate performance
-SLmetrics::weighted.weighted.accuracy(
+SLmetrics::weighted.accuracy(
    actual_classes, 
    predicted_classes, 
    sample_weights

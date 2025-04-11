@@ -6,41 +6,24 @@
 
 #' @inherit specificity
 #' 
-#' @title False Omission Rate
+#' @templateVar .TITLE false omission rate
+#' @templateVar .FUN fer
+#' @templateVar .TASK Classification
+#' @template classification_inheritDotParams
+#' @template classification_factor_example
+#' @template classification_cmatrix_template
 #' 
-#' @description
-#' A generic function for the [false omission rate](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate). Use [weighted.fdr()] for the weighted [false omission rate](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate).
-#'
 #' @usage 
 #' ## Generic S3 method
-#' fer(
-#'  ...,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
-#' 
-#' @section Definition:
-#' Let \eqn{\hat{\beta} \in [0, 1]} be the proportion of false negatives among the predicted negatives. The false omission rate of the classifier is calculated as,
-#'
-#' \deqn{
-#'   \hat{\beta} = \frac{\#FN_k}{\#TN_k + \#FN_k}
-#' }
-#'
-#' Where:
-#' 
-#' - \eqn{\#TN_k} is the number of true negatives, and
-#' - \eqn{\#FN_k} is the number of false negatives.
-#'
-#' @example man/examples/scr_FalseOmissionRate.R
+#' ## for unweighted False
+#' ## Omission Rate
+#' fer(...)
 #' 
 #' @family Classification
 #' @family Supervised Learning
 #' 
 #' @export
-fer <- function(
-  ...,
-  estimator = 0,
-  na.rm = TRUE) {
+fer <- function(...) {
   UseMethod(
     generic = "fer",
     object  = ..1
@@ -50,18 +33,11 @@ fer <- function(
 #' @rdname fer
 #' @usage 
 #' ## Generic S3 method
-#' weighted.fer(
-#'  ...,
-#'  w,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
+#' ## for weighted False
+#' ## Omission Rate
+#' weighted.fer(...)
 #' @export
-weighted.fer <- function(
-  ...,
-  w,
-  estimator = 0,
-  na.rm = TRUE) {
+weighted.fer <- function(...) {
   UseMethod(
     generic = "weighted.fer",
     object  = ..1

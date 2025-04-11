@@ -5,34 +5,24 @@
 # methods. Combines Positive, Negative and Diagnostic Odds Ratio
 # script start;
 
-#' @inherit specificity
-#' 
-#' @title Negative Likelihood Ratio
-#'
-#' @description
-#' A generic function for the [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) in classification tasks. Use [weighted.nlr()] weighted [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing).
+#' @templateVar .TITLE negative likelihood ratio
+#' @templateVar .FUN nlr
+#' @templateVar .TASK Classification
+#' @template classification_inheritDotParams
+#' @template classification_factor_example
+#' @template classification_cmatrix_template
 #' 
 #' @usage
 #' ## Generic S3 method
+#' ## for Negative Likelihood
+#' ## Ratio
 #' nlr(...)
-#' 
-#' @section Definition:
-#' Let \eqn{\hat{\alpha} \in [0, \infty]} be the likelihood of a negative outcome. The [negative likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) of the classifier is calculated as,
-#'
-#' \deqn{
-#'   \hat{\alpha} = \frac{1 - \frac{\#TP}{\#TP + \#FN}}{\frac{\#TN}{\#TN + \#FP}}
-#' }
-#'
-#' Where:
-#' 
-#' - \eqn{\frac{\#TP}{\#TP + \#FN}} is the sensitivity, or true positive rate
-#' - \eqn{\frac{\#TN}{\#TN + \#FP}} is the specificity, or true negative rate
+
 #' 
 #' @seealso
 #'
 #' The [plr()]-function for the Positive Likehood Ratio (LR+)
-#'
-#' @example man/examples/scr_NegativeLikelihoodRatio.R
+#' 
 #' 
 #' @family Classification
 #' @family Supervised Learning
@@ -48,48 +38,34 @@ nlr <- function(...) {
 #' @rdname nlr
 #' @usage
 #' ## Generic S3 method
-#' weighted.nlr(
-#'  ...,
-#'  w
-#' )
+#' ## for weighted Negative
+#' ## Likelihood Ratio
+#' 
+#' weighted.nlr(...)
 #' @export
-weighted.nlr <- function(
-  ..., 
-  w) {
+weighted.nlr <- function(...) {
   UseMethod(
     generic = "weighted.nlr",
     object  = ..1
   )
 }
 
-#' @inherit specificity
-#' 
-#' @title Positive Likelihood Ratio
-#'
-#' @description
-#' A generic function for the [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) in classification tasks. Use [weighted.plr()] weighted [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing).
+#' @templateVar .TITLE positive likelihood ratio
+#' @templateVar .FUN plr
+#' @templateVar .TASK Classification
+#' @template classification_inheritDotParams
+#' @template classification_factor_example
+#' @template classification_cmatrix_template
 #' 
 #' @usage
 #' ## Generic S3 method
+#' ## for unweighted Positive
+#' ## Likelihood Ratio
 #' plr(...)
-#' 
-#' @section Definition:
-#' Let \eqn{\hat{\alpha} \in [0, \infty]} be the likelihood of a positive outcome. The [positive likelihood ratio](https://en.wikipedia.org/wiki/Likelihood_ratios_in_diagnostic_testing) of the classifier is calculated as,
-#'
-#' \deqn{
-#'   \hat{\alpha} = \frac{\frac{\#TP}{\#TP + \#FN}}{1 - \frac{\#TN}{\#TN + \#FP}}
-#' }
-#'
-#' Where:
-#' 
-#' - \eqn{\frac{\#TP}{\#TP + \#FN}} is the sensitivity, or true positive rate
-#' - \eqn{\frac{\#TN}{\#TN + \#FP}} is the specificity, or true negative rate
 #' 
 #' @seealso
 #'
 #' The [nlr()]-function for the Negative Likehood Ratio (LR-)
-#'
-#' @example man/examples/scr_PositiveLikelihoodRatio.R
 #' 
 #' @family Classification
 #' @family Supervised Learning
@@ -105,49 +81,31 @@ plr <- function(...) {
 #' @rdname plr
 #' @usage
 #' ## Generic S3 method
-#' weighted.plr(
-#'  ...,
-#'  w
-#' )
+#' ## for weighted Positive 
+#' ##Likelihood Ratio
+#' weighted.plr(...)
 #' @export
-weighted.plr <- function(
-  ...,
-  w) {
+weighted.plr <- function(...) {
   UseMethod(
     generic = "weighted.plr",
     object  = ..1
   )
 }
 
-#' @inherit specificity
-#' 
-#' @title Diagnostic Odds Ratio
-#'
-#' @description
-#' A generic function for the [diagnostic odds ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) in classification tasks. Use [weighted.dor()] weighted [diagnostic odds ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio).
+#' @templateVar .TITLE diagnostic odds ratio
+#' @templateVar .FUN dor
+#' @templateVar .TASK Classification
+#' @template classification_inheritDotParams
+#' @template classification_factor_example
+#' @template classification_cmatrix_template
 #' 
 #' @usage
 #' ## Generic S3 method
+#' ## for Diagnostic Odds Ratio
 #' dor(...)
-#' 
-#' @section Definition:
-#' Let \eqn{\hat{\alpha} \in [0, \infty]} be the effectiveness of the classifier.  The [diagnostic odds ratio](https://en.wikipedia.org/wiki/Diagnostic_odds_ratio) of the classifier is calculated as,
-#'
-#' \deqn{
-#'   \hat{\alpha} = \frac{\text{\#TP} \text{\#TN}}{\text{\#FP} \text{\#FN}}
-#' }
-#'
-#' Where:
-#' 
-#' - \eqn{\text{\#TP}} is the number of true positives
-#' - \eqn{\text{\#TN}} is the number of true negatives
-#' - \eqn{\text{\#FP}} is the number of false positives
-#' - \eqn{\text{\#FN}} is the number of false negatives
 #' 
 #' @returns
 #' A <[numeric]>-vector of [length] 1
-#' 
-#' @example man/examples/scr_DiagnosticOddsRatio.R
 #' 
 #' @family Classification
 #' @family Supervised Learning
@@ -163,14 +121,10 @@ dor <- function(...) {
 #' @rdname dor
 #' @usage
 #' ## Generic S3 method
-#' weighted.dor(
-#'  ...,
-#'  w
-#' )
+#' ## for weighted Diagnostic Odds Ratio
+#' weighted.dor(...)
 #' @export
-weighted.dor <- function(
-  ..., 
-  w) {
+weighted.dor <- function(...) {
   UseMethod(
     generic = "weighted.dor",
     object  = ..1

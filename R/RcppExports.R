@@ -67,22 +67,34 @@ baccuracy.cmatrix <- function(x, adjust = FALSE, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_balanced_accuracy`, x, adjust, na_rm = na.rm)
 }
 
-#' @rdname ckappa
-#' @method ckappa factor
+#' @templateVar .TITLE ckappa
+#' @templateVar .FUN ckappa
+#' @templateVar .METHOD factor
+#' @template classification_factor_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 ckappa.factor <- function(actual, predicted, beta = 0.0, ...) {
     .Call(`_SLmetrics_cohens_kappa`, actual, predicted, beta)
 }
 
-#' @rdname ckappa
-#' @method weighted.ckappa factor
+#' @templateVar .TITLE ckappa
+#' @templateVar .FUN weighted.ckappa
+#' @templateVar .METHOD factor
+#' @template classification_factor_weighted_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 weighted.ckappa.factor <- function(actual, predicted, w, beta = 0.0, ...) {
     .Call(`_SLmetrics_weighted_cohens_kappa`, actual, predicted, w, beta)
 }
 
-#' @rdname ckappa
-#' @method ckappa cmatrix
+#' @templateVar .TITLE ckappa
+#' @templateVar .FUN ckappa
+#' @templateVar .METHOD cmatrix
+#' @template classification_cmatrix_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 ckappa.cmatrix <- function(x, beta = 0.0, ...) {
     .Call(`_SLmetrics_cmatrix_cohens_kappa`, x, beta)
@@ -102,22 +114,34 @@ weighted.cmatrix.factor <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_confusion_matrix`, actual, predicted, w)
 }
 
-#' @rdname dor
-#' @method dor factor
+#' @templateVar .TITLE dor
+#' @templateVar .FUN dor
+#' @templateVar .METHOD factor
+#' @template classification_factor_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 dor.factor <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_diagnostic_odds_ratio`, actual, predicted)
 }
 
-#' @rdname dor
-#' @method weighted.dor factor
+#' @templateVar .TITLE dor
+#' @templateVar .FUN weighted.dor
+#' @templateVar .METHOD factor
+#' @template classification_factor_weighted_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 weighted.dor.factor <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_diagnostic_odds_ratio`, actual, predicted, w)
 }
 
-#' @rdname dor
-#' @method dor cmatrix
+#' @templateVar .TITLE dor
+#' @templateVar .FUN dor
+#' @templateVar .METHOD cmatrix
+#' @template classification_cmatrix_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 dor.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_diagnostic_odds_ratio`, x)
@@ -144,64 +168,100 @@ cross.entropy.matrix <- function(pk, qk, dim = 0L, base = -1.0, ...) {
     .Call(`_SLmetrics_CrossEntropy`, pk, qk, dim, base)
 }
 
-#' @rdname fbeta
-#' @method fbeta factor
+#' @templateVar .TITLE fbeta
+#' @templateVar .FUN fbeta
+#' @templateVar .METHOD factor
+#' @template classification_factor_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 fbeta.factor <- function(actual, predicted, beta = 1.0, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_fbeta_score`, actual, predicted, beta, estimator, na_rm = na.rm)
 }
 
-#' @rdname fbeta
-#' @method weighted.fbeta factor
+#' @templateVar .TITLE fbeta
+#' @templateVar .FUN weighted.fbeta
+#' @templateVar .METHOD factor
+#' @template classification_factor_weighted_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 weighted.fbeta.factor <- function(actual, predicted, w, beta = 1.0, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_weighted_fbeta_score`, actual, predicted, w, beta, estimator, na_rm = na.rm)
 }
 
-#' @rdname fbeta
-#' @method fbeta cmatrix
+#' @templateVar .TITLE fbeta
+#' @templateVar .FUN fbeta
+#' @templateVar .METHOD cmatrix
+#' @template classification_cmatrix_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 fbeta.cmatrix <- function(x, beta = 1.0, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_fbeta_score`, x, beta, estimator, na_rm = na.rm)
 }
 
-#' @rdname fdr
-#' @method fdr factor
+#' @templateVar .TITLE fdr
+#' @templateVar .FUN fdr
+#' @templateVar .METHOD factor
+#' @template classification_factor_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 fdr.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_false_discovery_rate`, actual, predicted, estimator, na_rm = na.rm)
 }
 
-#' @rdname fdr
-#' @method weighted.fdr factor
+#' @templateVar .TITLE fdr
+#' @templateVar .FUN weighted.fdr
+#' @templateVar .METHOD factor
+#' @template classification_factor_weighted_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 weighted.fdr.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_weighted_false_discovery_rate`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
-#' @rdname fdr
-#' @method fdr cmatrix
+#' @templateVar .TITLE fdr
+#' @templateVar .FUN fdr
+#' @templateVar .METHOD cmatrix
+#' @template classification_cmatrix_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 fdr.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_false_discovery_rate`, x, estimator, na_rm = na.rm)
 }
 
-#' @rdname fer
-#' @method fer factor
+#' @templateVar .TITLE fer
+#' @templateVar .FUN fer
+#' @templateVar .METHOD factor
+#' @template classification_factor_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 fer.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_false_omission_rate`, actual, predicted, estimator, na_rm = na.rm)
 }
 
-#' @rdname fer
-#' @method weighted.fer factor
+#' @templateVar .TITLE fer
+#' @templateVar .FUN weighted.fer
+#' @templateVar .METHOD factor
+#' @template classification_factor_weighted_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 weighted.fer.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_weighted_false_omission_rate`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
-#' @rdname fer
-#' @method fer cmatrix
+#' @templateVar .TITLE fer
+#' @templateVar .FUN fer
+#' @templateVar .METHOD cmatrix
+#' @template classification_cmatrix_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 fer.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_false_omission_rate`, x, estimator, na_rm = na.rm)
@@ -279,105 +339,135 @@ fallout.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_fallout`, x, estimator, na_rm = na.rm)
 }
 
-#' @rdname fmi
-#' @method fmi factor
+#' @templateVar .TITLE fmi
+#' @templateVar .FUN fmi
+#' @templateVar .METHOD factor
+#' @template classification_factor_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 fmi.factor <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_fowlkes_mallows_index`, actual, predicted)
 }
 
-#' @rdname fmi
-#' @method weighted.fmi factor
+#' @templateVar .TITLE fmi
+#' @templateVar .FUN weighted.fmi
+#' @templateVar .METHOD factor
+#' @template classification_factor_weighted_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 weighted.fmi.factor <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_fowlkes_mallows_index`, actual, predicted, w)
 }
 
-#' @rdname fmi
-#' @method fmi cmatrix
+#' @templateVar .TITLE fmi
+#' @templateVar .FUN fmi
+#' @templateVar .METHOD cmatrix
+#' @template classification_cmatrix_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 fmi.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_fowlkes_mallows_index`, x)
 }
 
-#' @rdname hammingloss
-#' @method hammingloss factor
+#' @templateVar .TITLE hammingloss
+#' @templateVar .FUN hammingloss
+#' @templateVar .METHOD factor
+#' @template classification_factor_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 hammingloss.factor <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_hamming_loss`, actual, predicted)
 }
 
-#' @rdname hammingloss
-#' @method weighted.hammingloss factor
+#' @templateVar .TITLE hammingloss
+#' @templateVar .FUN weighted.hammingloss
+#' @templateVar .METHOD factor
+#' @template classification_factor_weighted_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 weighted.hammingloss.factor <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_hamming_loss`, actual, predicted, w)
 }
 
-#' @rdname hammingloss
-#' @method hammingloss cmatrix
+#' @templateVar .TITLE hammingloss
+#' @templateVar .FUN hammingloss
+#' @templateVar .METHOD cmatrix
+#' @template classification_cmatrix_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 hammingloss.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_hamming_loss`, x)
 }
 
-#' @rdname jaccard
-#' @method jaccard factor
+#' @templateVar .TITLE jaccard
+#' @templateVar .FUN jaccard
+#' @templateVar .METHOD factor
+#' @template classification_factor_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 jaccard.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_jaccard_score`, actual, predicted, estimator, na_rm = na.rm)
 }
 
-#' @rdname jaccard
-#' @method weighted.jaccard factor
+#' @templateVar .TITLE jaccard
+#' @templateVar .FUN weighted.jaccard
+#' @templateVar .METHOD factor
+#' @template classification_factor_weighted_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 weighted.jaccard.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_weighted_jaccard_score`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
-#' @rdname jaccard
-#' @method jaccard cmatrix
+#' @templateVar .TITLE jaccard
+#' @templateVar .FUN jaccard
+#' @templateVar .METHOD cmatrix
+#' @template classification_cmatrix_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 jaccard.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_jaccard_score`, x, estimator, na_rm = na.rm)
 }
 
-#' @rdname jaccard
 #' @method csi factor
 #' @export
 csi.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_critical_success_index`, actual, predicted, estimator, na_rm = na.rm)
 }
 
-#' @rdname jaccard
 #' @method weighted.csi factor
 #' @export
 weighted.csi.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_weighted_critical_success_index`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
-#' @rdname jaccard
 #' @method csi cmatrix
 #' @export
 csi.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_critical_success_index`, x, estimator, na_rm = na.rm)
 }
 
-#' @rdname jaccard
 #' @method tscore factor
 #' @export
 tscore.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_threat_score`, actual, predicted, estimator, na_rm = na.rm)
 }
 
-#' @rdname jaccard
 #' @method weighted.tscore factor
 #' @export
 weighted.tscore.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_weighted_threat_score`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
-#' @rdname jaccard
 #' @method tscore cmatrix
 #' @export
 tscore.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
@@ -398,106 +488,151 @@ weighted.logloss.factor <- function(actual, response, w, normalize = TRUE, ...) 
     .Call(`_SLmetrics_weighted_LogLoss`, actual, response, w, normalize)
 }
 
-#' @rdname mcc
-#' @method mcc factor
+#' @templateVar .TITLE mcc
+#' @templateVar .FUN mcc
+#' @templateVar .METHOD factor
+#' @template classification_factor_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 mcc.factor <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_mcc`, actual, predicted)
 }
 
-#' @rdname mcc
-#' @method weighted.mcc factor
+#' @templateVar .TITLE mcc
+#' @templateVar .FUN weighted.mcc
+#' @templateVar .METHOD factor
+#' @template classification_factor_weighted_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 weighted.mcc.factor <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_mcc`, actual, predicted, w)
 }
 
-#' @rdname mcc
-#' @method mcc cmatrix
+#' @templateVar .TITLE mcc
+#' @templateVar .FUN mcc
+#' @templateVar .METHOD cmatrix
+#' @template classification_cmatrix_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 mcc.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_mcc`, x)
 }
 
-#' @rdname mcc
 #' @method phi factor
 #' @export
 phi.factor <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_phi_coefficient`, actual, predicted)
 }
 
-#' @rdname mcc
 #' @method weighted.phi factor
 #' @export
 weighted.phi.factor <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_phi_coefficient`, actual, predicted, w)
 }
 
-#' @rdname mcc
 #' @method phi cmatrix
 #' @export
 phi.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_phi_coefficient`, x)
 }
 
-#' @rdname nlr
-#' @method nlr factor
+#' @templateVar .TITLE nlr
+#' @templateVar .FUN nlr
+#' @templateVar .METHOD factor
+#' @template classification_factor_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 nlr.factor <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_negative_likelihood_ratio`, actual, predicted)
 }
 
-#' @rdname nlr
-#' @method weighted.nlr factor
+#' @templateVar .TITLE nlr
+#' @templateVar .FUN weighted.nlr
+#' @templateVar .METHOD factor
+#' @template classification_factor_weighted_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 weighted.nlr.factor <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_negative_likelihood_ratio`, actual, predicted, w)
 }
 
-#' @rdname nlr
-#' @method nlr cmatrix
+#' @templateVar .TITLE nlr
+#' @templateVar .FUN nlr
+#' @templateVar .METHOD cmatrix
+#' @template classification_cmatrix_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 nlr.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_negative_likelihood_ratio`, x)
 }
 
-#' @rdname npv
-#' @method npv factor
+#' @templateVar .TITLE npv
+#' @templateVar .FUN npv
+#' @templateVar .METHOD factor
+#' @template classification_factor_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 npv.factor <- function(actual, predicted, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_negative_predictive_value`, actual, predicted, estimator, na_rm = na.rm)
 }
 
-#' @rdname npv
-#' @method weighted.npv factor
+#' @templateVar .TITLE npv
+#' @templateVar .FUN weighted.npv
+#' @templateVar .METHOD factor
+#' @template classification_factor_weighted_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 weighted.npv.factor <- function(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_weighted_negative_predictive_value`, actual, predicted, w, estimator, na_rm = na.rm)
 }
 
-#' @rdname npv
-#' @method npv cmatrix
+#' @templateVar .TITLE npv
+#' @templateVar .FUN npv
+#' @templateVar .METHOD cmatrix
+#' @template classification_cmatrix_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 npv.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_negative_predictive_value`, x, estimator, na_rm = na.rm)
 }
 
-#' @rdname plr
-#' @method plr factor
+#' @templateVar .TITLE plr
+#' @templateVar .FUN plr
+#' @templateVar .METHOD factor
+#' @template classification_factor_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 plr.factor <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_positive_likelihood_ratio`, actual, predicted)
 }
 
-#' @rdname plr
-#' @method weighted.plr factor
+#' @templateVar .TITLE plr
+#' @templateVar .FUN weighted.plr
+#' @templateVar .METHOD factor
+#' @template classification_factor_weighted_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 weighted.plr.factor <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_positive_likelihood_ratio`, actual, predicted, w)
 }
 
-#' @rdname plr
-#' @method plr cmatrix
+#' @templateVar .TITLE plr
+#' @templateVar .FUN plr
+#' @templateVar .METHOD cmatrix
+#' @template classification_cmatrix_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 plr.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_positive_likelihood_ratio`, x)
@@ -748,22 +883,34 @@ selectivity.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_selectivity`, x, estimator, na_rm = na.rm)
 }
 
-#' @rdname zerooneloss
-#' @method zerooneloss factor
+#' @templateVar .TITLE zerooneloss
+#' @templateVar .FUN zerooneloss
+#' @templateVar .METHOD factor
+#' @template classification_factor_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 zerooneloss.factor <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_zero_one_loss`, actual, predicted)
 }
 
-#' @rdname zerooneloss
-#' @method weighted.zerooneloss factor
+#' @templateVar .TITLE zerooneloss
+#' @templateVar .FUN weighted.zerooneloss
+#' @templateVar .METHOD factor
+#' @template classification_factor_weighted_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 weighted.zerooneloss.factor <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_zero_one_loss`, actual, predicted, w)
 }
 
-#' @rdname zerooneloss
-#' @method zerooneloss cmatrix
+#' @templateVar .TITLE zerooneloss
+#' @templateVar .FUN zerooneloss
+#' @templateVar .METHOD cmatrix
+#' @template classification_cmatrix_example
+#' @template classification_cmatrix_inherit
+#'
 #' @export
 zerooneloss.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_zero_one_loss`, x)

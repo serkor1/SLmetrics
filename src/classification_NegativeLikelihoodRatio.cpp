@@ -4,8 +4,12 @@
 // declare metric
 using negative_likelihood_ratio_impl = metric::negative_likelihood_ratio<int>;
 
-//' @rdname nlr
-//' @method nlr factor
+//' @templateVar .TITLE nlr
+//' @templateVar .FUN nlr
+//' @templateVar .METHOD factor
+//' @template classification_factor_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(nlr.factor)]]
 double negative_likelihood_ratio(
@@ -16,8 +20,12 @@ double negative_likelihood_ratio(
         return performance.compute();
 }
 
-//' @rdname nlr
-//' @method weighted.nlr factor
+//' @templateVar .TITLE nlr
+//' @templateVar .FUN weighted.nlr
+//' @templateVar .METHOD factor
+//' @template classification_factor_weighted_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.nlr.factor)]]
 double weighted_negative_likelihood_ratio(
@@ -29,8 +37,12 @@ double weighted_negative_likelihood_ratio(
         return performance.compute();
 }
 
-//' @rdname nlr
-//' @method nlr cmatrix
+//' @templateVar .TITLE nlr
+//' @templateVar .FUN nlr
+//' @templateVar .METHOD cmatrix
+//' @template classification_cmatrix_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(nlr.cmatrix)]]
 double cmatrix_negative_likelihood_ratio(

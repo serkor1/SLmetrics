@@ -3,8 +3,12 @@
 
 using fowlkes_mallows_index_impl = metric::fowlkes_mallows_index<int>;
 
-//' @rdname fmi
-//' @method fmi factor
+//' @templateVar .TITLE fmi
+//' @templateVar .FUN fmi
+//' @templateVar .METHOD factor
+//' @template classification_factor_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(fmi.factor)]]
 double fowlkes_mallows_index(
@@ -15,8 +19,12 @@ double fowlkes_mallows_index(
         return performance.compute();
 }
 
-//' @rdname fmi
-//' @method weighted.fmi factor
+//' @templateVar .TITLE fmi
+//' @templateVar .FUN weighted.fmi
+//' @templateVar .METHOD factor
+//' @template classification_factor_weighted_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.fmi.factor)]]
 double weighted_fowlkes_mallows_index(
@@ -28,8 +36,12 @@ double weighted_fowlkes_mallows_index(
         return performance.compute();
 }
 
-//' @rdname fmi
-//' @method fmi cmatrix
+//' @templateVar .TITLE fmi
+//' @templateVar .FUN fmi
+//' @templateVar .METHOD cmatrix
+//' @template classification_cmatrix_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(fmi.cmatrix)]]
 double cmatrix_fowlkes_mallows_index(

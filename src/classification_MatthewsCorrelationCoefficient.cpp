@@ -4,8 +4,12 @@
 // implementation of metric
 using mcc_score_impl = metric::matthews_correlation_coefficient<int>;
 
-//' @rdname mcc
-//' @method mcc factor
+//' @templateVar .TITLE mcc
+//' @templateVar .FUN mcc
+//' @templateVar .METHOD factor
+//' @template classification_factor_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(mcc.factor)]]
 double mcc(
@@ -16,8 +20,12 @@ double mcc(
         return performance.compute();
 }
 
-//' @rdname mcc
-//' @method weighted.mcc factor
+//' @templateVar .TITLE mcc
+//' @templateVar .FUN weighted.mcc
+//' @templateVar .METHOD factor
+//' @template classification_factor_weighted_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.mcc.factor)]]
 double weighted_mcc(
@@ -29,8 +37,12 @@ double weighted_mcc(
         return performance.compute();
 }
 
-//' @rdname mcc
-//' @method mcc cmatrix
+//' @templateVar .TITLE mcc
+//' @templateVar .FUN mcc
+//' @templateVar .METHOD cmatrix
+//' @template classification_cmatrix_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(mcc.cmatrix)]]
 double cmatrix_mcc(
@@ -40,7 +52,6 @@ double cmatrix_mcc(
         return performance.compute();
 }
 
-//' @rdname mcc
 //' @method phi factor
 //' @export
 // [[Rcpp::export(phi.factor)]]
@@ -52,7 +63,6 @@ double phi_coefficient(
         return performance.compute();
 }
 
-//' @rdname mcc
 //' @method weighted.phi factor
 //' @export
 // [[Rcpp::export(weighted.phi.factor)]]
@@ -65,7 +75,6 @@ double weighted_phi_coefficient(
         return performance.compute();
 }
 
-//' @rdname mcc
 //' @method phi cmatrix
 //' @export
 // [[Rcpp::export(phi.cmatrix)]]

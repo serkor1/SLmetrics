@@ -4,30 +4,19 @@
 # objective: Generate methods
 # script start;
 
-#' @inherit accuracy
-#' 
-#' @title Fowlkes-Mallows Index
-#'
-#' @description
-#' The [fmi()]-function computes the [Fowlkes-Mallows Index](https://en.wikipedia.org/wiki/Fowlkes%E2%80%93Mallows_index) (FMI), a measure of the similarity between two sets of clusterings, between
-#' two vectors of predicted and observed [factor()] values.
+#' @templateVar .TITLE Fowlkes Mallows Index
+#' @templateVar .FUN fmi
+#' @templateVar .TASK Classification
+#' @template classification_inheritDotParams
+#' @template classification_factor_example
+#' @template classification_cmatrix_template
 #' 
 #' @usage
 #' ## Generic S3 method
+#' ## for unweighted Fowlkes
+#' ## Mallows Index
 #' fmi(...)
 #' 
-#' @section Definition:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
-#'
-#' \deqn{
-#'   \sqrt{\frac{\#TP_k}{\#TP_k + \#FP_k} \times \frac{\#TP_k}{\#TP_k + \#FN_k}}
-#' }
-#'
-#' Where \eqn{\#TP_k}, \eqn{\#FP_k}, and \eqn{\#FN_k} represent the number of true positives, false positives, and false negatives for each class \eqn{k}, respectively.
-#' 
-#' @example man/examples/scr_FowlkesMallowsIndex.R
-#'
 #' @family Classification
 #' @family Unsupervised Learning
 #' 
@@ -42,14 +31,11 @@ fmi <- function(...) {
 #' @rdname fmi
 #' @usage
 #' ## Generic S3 method
-#' weighted.fmi(
-#' ...,
-#' w
-#' )
+#' ## for weighted Fowlkes
+#' ## Mallows Index
+#' weighted.fmi(...)
 #' @export
-weighted.fmi <- function(
-  ...,
-  w) {
+weighted.fmi <- function(...) {
   UseMethod(
     generic = "weighted.fmi",
     object  = ..1

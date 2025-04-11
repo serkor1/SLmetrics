@@ -4,8 +4,12 @@
 // implementation of metric
 using cohens_kappa_impl = metric::cohens_kappa<int>;
 
-//' @rdname ckappa
-//' @method ckappa factor
+//' @templateVar .TITLE ckappa
+//' @templateVar .FUN ckappa
+//' @templateVar .METHOD factor
+//' @template classification_factor_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(ckappa.factor)]]
 double cohens_kappa(
@@ -17,8 +21,12 @@ double cohens_kappa(
         return performance.compute();
 }
 
-//' @rdname ckappa
-//' @method weighted.ckappa factor
+//' @templateVar .TITLE ckappa
+//' @templateVar .FUN weighted.ckappa
+//' @templateVar .METHOD factor
+//' @template classification_factor_weighted_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.ckappa.factor)]]
 double weighted_cohens_kappa(
@@ -31,8 +39,12 @@ double weighted_cohens_kappa(
         return performance.compute();
 }
 
-//' @rdname ckappa
-//' @method ckappa cmatrix
+//' @templateVar .TITLE ckappa
+//' @templateVar .FUN ckappa
+//' @templateVar .METHOD cmatrix
+//' @template classification_cmatrix_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(ckappa.cmatrix)]]
 double cmatrix_cohens_kappa(

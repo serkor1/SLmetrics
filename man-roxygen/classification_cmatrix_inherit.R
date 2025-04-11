@@ -1,5 +1,5 @@
-#' @inherit <%= .TITLE %> description
-#' @inherit <%= .TITLE %> return
+#' @inherit <%= .FUN %> description
+#' @inherit <%= .FUN %> return
 #' 
 #' @title <%= tools::toTitleCase(.TITLE) %>
 #' 

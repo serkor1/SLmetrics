@@ -8,8 +8,8 @@
 \title{False Positive Rate}
 \usage{
 ## Generic S3 method
-## for unweighted false
-## positive rate
+## for unweighted False
+## Positive Rate
 fpr(...)
 
 ## Generic S3 method
@@ -37,27 +37,9 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
   }}
 }
 \description{
-A generic function for the \href{https://en.wikipedia.org/wiki/False_positive_rate}{False Positive Rate}. Use \code{\link[=weighted.fpr]{weighted.fpr()}} for the weighted \href{https://en.wikipedia.org/wiki/False_positive_rate}{False Positive Rate}.
-\subsection{Other names}{
-
-Fallout
+A S3 generic function for calculating the fpr score of a Classification model. The \code{\link[=fpr]{fpr()}} handles the input as is - and therefore there is not sanity checks.
+If the data contains \link{NA}, or \code{lenght(x) != lenght(y)} you are left at the mercy of compiler.
 }
-}
-\section{Definition}{
-
-Let \eqn{\hat{\gamma} \in [0, 1]} be the proportion of false positives among the actual negatives. The false positive rate of the classifier is calculated as,
-
-\deqn{
-  \hat{\gamma} = \frac{\#FP_k}{\#TN_k + \#FP_k}
-}
-
-Where:
-\itemize{
-\item \eqn{\#TN_k} is the number of true negatives, and
-\item \eqn{\#FP_k} is the number of false positives.
-}
-}
-
 \examples{
 ## Generate actual
 ## and predicted classes
@@ -75,54 +57,54 @@ Other Classification:
 \code{\link{ROC.factor}()},
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
-\code{\link{ckappa.factor}()},
+\code{\link{ckappa}()},
 \code{\link{cmatrix.factor}()},
-\code{\link{dor.factor}()},
+\code{\link{dor}()},
 \code{\link{entropy.matrix}()},
-\code{\link{fbeta.factor}()},
-\code{\link{fdr.factor}()},
-\code{\link{fer.factor}()},
-\code{\link{fmi.factor}()},
-\code{\link{hammingloss.factor}()},
-\code{\link{jaccard.factor}()},
+\code{\link{fbeta}()},
+\code{\link{fdr}()},
+\code{\link{fer}()},
+\code{\link{fmi}()},
+\code{\link{hammingloss}()},
+\code{\link{jaccard}()},
 \code{\link{logloss.factor}()},
-\code{\link{mcc.factor}()},
-\code{\link{nlr.factor}()},
-\code{\link{npv.factor}()},
-\code{\link{plr.factor}()},
+\code{\link{mcc}()},
+\code{\link{nlr}()},
+\code{\link{npv}()},
+\code{\link{plr}()},
 \code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{precision}()},
 \code{\link{recall}()},
 \code{\link{roc.auc.matrix}()},
 \code{\link{specificity}()},
-\code{\link{zerooneloss.factor}()}
+\code{\link{zerooneloss}()}
 
 Other Supervised Learning: 
 \code{\link{ROC.factor}()},
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
 \code{\link{ccc.numeric}()},
-\code{\link{ckappa.factor}()},
+\code{\link{ckappa}()},
 \code{\link{cmatrix.factor}()},
-\code{\link{dor.factor}()},
+\code{\link{dor}()},
 \code{\link{entropy.matrix}()},
-\code{\link{fbeta.factor}()},
-\code{\link{fdr.factor}()},
-\code{\link{fer.factor}()},
-\code{\link{hammingloss.factor}()},
+\code{\link{fbeta}()},
+\code{\link{fdr}()},
+\code{\link{fer}()},
+\code{\link{hammingloss}()},
 \code{\link{huberloss.numeric}()},
-\code{\link{jaccard.factor}()},
+\code{\link{jaccard}()},
 \code{\link{logloss.factor}()},
 \code{\link{mae.numeric}()},
 \code{\link{mape.numeric}()},
-\code{\link{mcc.factor}()},
+\code{\link{mcc}()},
 \code{\link{mpe.numeric}()},
 \code{\link{mse.numeric}()},
-\code{\link{nlr.factor}()},
-\code{\link{npv.factor}()},
+\code{\link{nlr}()},
+\code{\link{npv}()},
 \code{\link{pinball.numeric}()},
-\code{\link{plr.factor}()},
+\code{\link{plr}()},
 \code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{precision}()},
@@ -136,7 +118,7 @@ Other Supervised Learning:
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()},
 \code{\link{specificity}()},
-\code{\link{zerooneloss.factor}()}
+\code{\link{zerooneloss}()}
 }
 \concept{Classification}
 \concept{Supervised Learning}

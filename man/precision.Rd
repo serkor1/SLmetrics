@@ -35,34 +35,15 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
   }}
 }
 \description{
-A generic funcion for the \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{precision}. Use \code{\link[=weighted.fdr]{weighted.fdr()}} for the weighted \href{https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values}{precision}.
-\subsection{Other names}{
-
-Positive Predictive Value
+A S3 generic function for calculating the precision score of a Classification model. The \code{\link[=precision]{precision()}} handles the input as is - and therefore there is not sanity checks.
+If the data contains \link{NA}, or \code{lenght(x) != lenght(y)} you are left at the mercy of compiler.
 }
-}
-\section{Definition}{
-
-Let \eqn{\hat{\pi} \in [0, 1]} be the proportion of true positives among the predicted positives. The precision of the classifier is calculated as,
-
-\deqn{
-  \hat{\pi} = \frac{\#TP_k}{\#TP_k + \#FP_k}
-}
-
-Where:
-\itemize{
-\item \eqn{\#TP_k} is the number of true positives, and
-\item \eqn{\#FP_k} is the number of false positives.
-}
-}
-
 \section{Other names}{
 
 
-The specificity has other names depending on research field:
+The precision has other names depending on research field:
 \itemize{
-\item True Negative Rate, \code{\link[=tnr]{tnr()}}
-\item Selectivity, \code{\link[=selectivity]{selectivity()}}
+\item Positive Predictive Value, \code{\link[=ppv]{ppv()}}
 }
 }
 
@@ -83,55 +64,55 @@ Other Classification:
 \code{\link{ROC.factor}()},
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
-\code{\link{ckappa.factor}()},
+\code{\link{ckappa}()},
 \code{\link{cmatrix.factor}()},
-\code{\link{dor.factor}()},
+\code{\link{dor}()},
 \code{\link{entropy.matrix}()},
-\code{\link{fbeta.factor}()},
-\code{\link{fdr.factor}()},
-\code{\link{fer.factor}()},
-\code{\link{fmi.factor}()},
+\code{\link{fbeta}()},
+\code{\link{fdr}()},
+\code{\link{fer}()},
+\code{\link{fmi}()},
 \code{\link{fpr}()},
-\code{\link{hammingloss.factor}()},
-\code{\link{jaccard.factor}()},
+\code{\link{hammingloss}()},
+\code{\link{jaccard}()},
 \code{\link{logloss.factor}()},
-\code{\link{mcc.factor}()},
-\code{\link{nlr.factor}()},
-\code{\link{npv.factor}()},
-\code{\link{plr.factor}()},
+\code{\link{mcc}()},
+\code{\link{nlr}()},
+\code{\link{npv}()},
+\code{\link{plr}()},
 \code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{recall}()},
 \code{\link{roc.auc.matrix}()},
 \code{\link{specificity}()},
-\code{\link{zerooneloss.factor}()}
+\code{\link{zerooneloss}()}
 
 Other Supervised Learning: 
 \code{\link{ROC.factor}()},
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
 \code{\link{ccc.numeric}()},
-\code{\link{ckappa.factor}()},
+\code{\link{ckappa}()},
 \code{\link{cmatrix.factor}()},
-\code{\link{dor.factor}()},
+\code{\link{dor}()},
 \code{\link{entropy.matrix}()},
-\code{\link{fbeta.factor}()},
-\code{\link{fdr.factor}()},
-\code{\link{fer.factor}()},
+\code{\link{fbeta}()},
+\code{\link{fdr}()},
+\code{\link{fer}()},
 \code{\link{fpr}()},
-\code{\link{hammingloss.factor}()},
+\code{\link{hammingloss}()},
 \code{\link{huberloss.numeric}()},
-\code{\link{jaccard.factor}()},
+\code{\link{jaccard}()},
 \code{\link{logloss.factor}()},
 \code{\link{mae.numeric}()},
 \code{\link{mape.numeric}()},
-\code{\link{mcc.factor}()},
+\code{\link{mcc}()},
 \code{\link{mpe.numeric}()},
 \code{\link{mse.numeric}()},
-\code{\link{nlr.factor}()},
-\code{\link{npv.factor}()},
+\code{\link{nlr}()},
+\code{\link{npv}()},
 \code{\link{pinball.numeric}()},
-\code{\link{plr.factor}()},
+\code{\link{plr}()},
 \code{\link{pr.auc.matrix}()},
 \code{\link{prROC.factor}()},
 \code{\link{rae.numeric}()},
@@ -144,7 +125,7 @@ Other Supervised Learning:
 \code{\link{rsq.numeric}()},
 \code{\link{smape.numeric}()},
 \code{\link{specificity}()},
-\code{\link{zerooneloss.factor}()}
+\code{\link{zerooneloss}()}
 }
 \concept{Classification}
 \concept{Supervised Learning}

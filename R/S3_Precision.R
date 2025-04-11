@@ -5,47 +5,29 @@
 # script start;
 
 #' @aliases ppv weighted.ppv
-#' @inherit specificity
 #' 
-#' @title Precision
-#'
-#' @description
-#' A generic funcion for the [precision](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values). Use [weighted.fdr()] for the weighted [precision](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values).
+#' @templateVar .TITLE precision
+#' @templateVar .FUN precision
+#' @templateVar .TASK Classification
+#' @template classification_inheritDotParams
+#' @template classification_factor_example
+#' @template classification_cmatrix_template
 #' 
-#' ## Other names
-#' Positive Predictive Value
+#' @section Other names:
+#' 
+#' The precision has other names depending on research field:
+#' - Positive Predictive Value, [ppv()]
 #' 
 #' @usage
 #' ## Generic S3 method
 #' ## for unweighted precision
 #' precision(...)
-#' 
-#' @templateVar .FUN precision
-#' @template classification_inheritDotParams
-#' 
-#' @section Definition:
-#' Let \eqn{\hat{\pi} \in [0, 1]} be the proportion of true positives among the predicted positives. The precision of the classifier is calculated as,
-#'
-#' \deqn{
-#'   \hat{\pi} = \frac{\#TP_k}{\#TP_k + \#FP_k}
-#' }
-#'
-#' Where:
-#' 
-#' - \eqn{\#TP_k} is the number of true positives, and
-#' - \eqn{\#FP_k} is the number of false positives.
-#'
-#' @templateVar .FUN precision
-#' @template classification_factor_example
 #'
 #' @family Classification
 #' @family Supervised Learning
 #'
 #' @export
-precision <- function(
-  ..., 
-  estimator = 0, 
-  na.rm = TRUE) {
+precision <- function(...) {
   UseMethod(
     generic = "precision",
     object  = ..1

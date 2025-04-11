@@ -4,8 +4,12 @@
 // declare metric
 using plr = metric::positive_likelihood_ratio<int>;
 
-//' @rdname plr
-//' @method plr factor
+//' @templateVar .TITLE plr
+//' @templateVar .FUN plr
+//' @templateVar .METHOD factor
+//' @template classification_factor_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(plr.factor)]]
 double positive_likelihood_ratio(
@@ -16,8 +20,12 @@ double positive_likelihood_ratio(
         return performance.compute();
 }
 
-//' @rdname plr
-//' @method weighted.plr factor
+//' @templateVar .TITLE plr
+//' @templateVar .FUN weighted.plr
+//' @templateVar .METHOD factor
+//' @template classification_factor_weighted_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.plr.factor)]]
 double weighted_positive_likelihood_ratio(
@@ -29,8 +37,12 @@ double weighted_positive_likelihood_ratio(
         return performance.compute();
 }
 
-//' @rdname plr
-//' @method plr cmatrix
+//' @templateVar .TITLE plr
+//' @templateVar .FUN plr
+//' @templateVar .METHOD cmatrix
+//' @template classification_cmatrix_example
+//' @template classification_cmatrix_inherit
+//'
 //' @export
 // [[Rcpp::export(plr.cmatrix)]]
 double cmatrix_positive_likelihood_ratio(

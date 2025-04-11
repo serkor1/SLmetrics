@@ -26,11 +26,8 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
 \item{...}{Arguments passed into other methods.}
 }
 \description{
-A generic function for the \href{https://en.wikipedia.org/wiki/False_positive_rate}{False Positive Rate}. Use \code{\link[=weighted.fpr]{weighted.fpr()}} for the weighted \href{https://en.wikipedia.org/wiki/False_positive_rate}{False Positive Rate}.
-\subsection{Other names}{
-
-Fallout
-}
+A S3 generic function for calculating the fpr score of a Classification model. The \code{\link[=fpr]{fpr()}} handles the input as is - and therefore there is not sanity checks.
+If the data contains \link{NA}, or \code{lenght(x) != lenght(y)} you are left at the mercy of compiler.
 }
 \examples{
 ## Generate actual
@@ -45,7 +42,7 @@ sample_weights <- runif(
 )
 
 ## Evaluate performance
-SLmetrics::weighted.fpr(
+SLmetrics::fpr(
    actual_classes, 
    predicted_classes, 
    sample_weights
