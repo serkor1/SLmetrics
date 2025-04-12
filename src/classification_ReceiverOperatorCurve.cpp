@@ -5,13 +5,13 @@
 using namespace Rcpp;
 
 //' @templateVar .TITLE Receiver Operator Characteristics Curve
-//' @templateVar .FUN roc
-//' @templateVar .TYPE roc
+//' @templateVar .FUN roc.curve
+//' @templateVar .TYPE roc.curve
 //' @templateVar .METHOD factor
 //' @template classification_auc_inherit
 //'
 //' @export
-// [[Rcpp::export(roc.factor)]]
+// [[Rcpp::export(roc.curve.factor)]]
 Rcpp::DataFrame roc_curve_unweighted(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
@@ -26,13 +26,13 @@ Rcpp::DataFrame roc_curve_unweighted(
 }
 
 //' @templateVar .TITLE Receiver Operator Characteristics Curve
-//' @templateVar .FUN weighted.roc
-//' @templateVar .TYPE roc
+//' @templateVar .FUN weighted.roc.curve
+//' @templateVar .TYPE roc.curve
 //' @templateVar .METHOD factor
 //' @template classification_auc_inherit
 //'
 //' @export
-// [[Rcpp::export(weighted.roc.factor)]]
+// [[Rcpp::export(weighted.roc.curve.factor)]]
 Rcpp::DataFrame roc_curve_weighted(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
@@ -48,13 +48,13 @@ Rcpp::DataFrame roc_curve_weighted(
 }
 
 //' @templateVar .TITLE Area under the ROC curve
-//' @templateVar .FUN roc.auc
+//' @templateVar .FUN auc.roc.curve
 //' @templateVar .TYPE auc
 //' @templateVar .METHOD factor
 //' @template classification_auc_inherit
 //'
 //' @export
-// [[Rcpp::export(roc.auc.factor)]]
+// [[Rcpp::export(auc.roc.curve.factor)]]
 Rcpp::NumericVector roc_auc(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
@@ -76,13 +76,13 @@ Rcpp::NumericVector roc_auc(
 }
 
 //' @templateVar .TITLE Area under the ROC curve
-//' @templateVar .FUN weighted.roc.auc
+//' @templateVar .FUN weighted.auc.roc.curve
 //' @templateVar .TYPE auc
 //' @templateVar .METHOD factor
 //' @template classification_auc_inherit
 //'
 //' @export
-// [[Rcpp::export(weighted.roc.auc.factor)]]
+// [[Rcpp::export(weighted.auc.roc.curve.factor)]]
 Rcpp::NumericVector roc_auc_weighted(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,

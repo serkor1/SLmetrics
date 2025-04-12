@@ -107,10 +107,10 @@ Other Classification:
 \code{\link{nlr}()},
 \code{\link{npv}()},
 \code{\link{plr}()},
-\code{\link{prc}()},
+\code{\link{pr.curve}()},
 \code{\link{precision}()},
 \code{\link{recall}()},
-\code{\link{roc}()},
+\code{\link{roc.curve}()},
 \code{\link{zerooneloss}()}
 
 Other Supervised Learning: 
@@ -138,13 +138,13 @@ Other Supervised Learning:
 \code{\link{npv}()},
 \code{\link{pinball.numeric}()},
 \code{\link{plr}()},
-\code{\link{prc}()},
+\code{\link{pr.curve}()},
 \code{\link{precision}()},
 \code{\link{rae.numeric}()},
 \code{\link{recall}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
-\code{\link{roc}()},
+\code{\link{roc.curve}()},
 \code{\link{rrmse.numeric}()},
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},

@@ -5,7 +5,7 @@
 # script start;
 
 #' @templateVar .TITLE Precision Recall Curve
-#' @templateVar .FUN prc
+#' @templateVar .FUN pr.curve
 #' @templateVar .TYPE not_auc
 #' @templateVar .TASK Classification
 #' @template classification_auc_params
@@ -15,7 +15,7 @@
 #' ## Generic S3 method
 #' ## for unweighted Precision
 #' ## Recall Curve
-#' prc(...)
+#' pr.curve(...)
 #' 
 #' @returns A [data.frame] on the following form,
 #'
@@ -29,27 +29,27 @@
 #' @family Supervised Learning
 #' 
 #' @export
-prc <- function(...) {
+pr.curve <- function(...) {
   UseMethod(
-    generic = "prc"
+    generic = "pr.curve"
   )
 }
 
-#' @rdname prc
+#' @rdname pr.curve
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Precision
 #' ## Recall Curve
-#' weighted.prc(...)
+#' weighted.pr.curve(...)
 #' @export
-weighted.prc <- function(...) {
+weighted.pr.curve <- function(...) {
   UseMethod(
-    generic = "weighted.prc"
+    generic = "weighted.pr.curve"
   )
 }
 
 #' @templateVar .TITLE Area under the Precision Recall Curve
-#' @templateVar .FUN prc.auc
+#' @templateVar .FUN auc.pr.curve
 #' @templateVar .TYPE auc
 #' @templateVar .TASK Classification
 #' @template classification_auc_params
@@ -59,31 +59,31 @@ weighted.prc <- function(...) {
 #' ## Generic S3 method for
 #' ## unweighted area under the
 #' ## Precision Recall Curve
-#' prc.auc(...)
+#' auc.pr.curve(...)
 #' 
-#' @export
-prc.auc <- function(...) {
+#' @rawNamespace export(auc.pr.curve)
+auc.pr.curve <- function(...) {
   UseMethod(
-    generic = "prc.auc"
+    generic = "auc.pr.curve"
   )
 }
 
-#' @rdname prc.auc
+#' @rdname auc.pr.curve
 #' @usage
 #' ## Generic S3 method for
 #' ## weighted area under the
 #' ## Precision Recall Curve
-#' weighted.prc.auc(...)
+#' weighted.auc.pr.curve(...)
 #' 
-#' @export
-weighted.prc.auc <- function(...) {
+#' @rawNamespace export(weighted.auc.pr.curve)
+weighted.auc.pr.curve <- function(...) {
   UseMethod(
-    generic = "weighted.prc.auc"
+    generic = "weighted.auc.pr.curve"
   )
 }
 
 #' @export
-print.prc <- function(x, ...) {
+print.pr.curve <- function(x, ...) {
 
   print.data.frame(
     x,
@@ -100,7 +100,7 @@ print.prc <- function(x, ...) {
 }
 
 #' @export
-summary.prc <- function(
+summary.pr.curve <- function(
   object,
   ...) {
   
@@ -142,7 +142,7 @@ summary.prc <- function(
 }
 
 #' @export
-print.summary.prc <- function(
+print.summary.pr.curve <- function(
   x,
   ...) {
 
@@ -159,7 +159,7 @@ print.summary.prc <- function(
 }
 
 #' @export
-plot.prc <- function(
+plot.pr.curve <- function(
     x,
     panels = TRUE,
     ...) {

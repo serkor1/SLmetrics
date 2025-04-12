@@ -3,10 +3,10 @@
 
 using namespace Rcpp;
 
-//' @rdname auc
-//' @method auc numeric
-//' @export
-// [[Rcpp::export(auc.numeric)]]
+//' @rdname xy.auc
+//' @method xy.auc numeric
+//' @rawNamespace S3method(xy.auc,numeric)
+// [[Rcpp::export(xy.auc.numeric)]]
 double auc(
     const Rcpp::NumericVector& y, 
     const Rcpp::NumericVector& x, 

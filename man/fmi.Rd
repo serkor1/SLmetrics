@@ -79,10 +79,10 @@ Other Classification:
 \code{\link{nlr}()},
 \code{\link{npv}()},
 \code{\link{plr}()},
-\code{\link{prc}()},
+\code{\link{pr.curve}()},
 \code{\link{precision}()},
 \code{\link{recall}()},
-\code{\link{roc}()},
+\code{\link{roc.curve}()},
 \code{\link{specificity}()},
 \code{\link{zerooneloss}()}
 }

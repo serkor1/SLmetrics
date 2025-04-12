@@ -4,14 +4,14 @@
 # objective: Generate method
 # script start;
 
-#' @title AUC
+#' @title xy.auc
 #' 
 #' @description
-#' The [auc()]-function calculates the area under the curve.
+#' The [xy.auc()]-function calculates the area under the curve.
 #' 
 #' @usage
 #' ## Generic S3 method
-#' auc(
+#' xy.auc(
 #'  y,
 #'  x,
 #'  method = 0,
@@ -57,14 +57,14 @@
 #' @family Tools
 #' 
 #' @export
-auc <- function(
+xy.auc <- function(
   y,
   x,
   method  = 0,
   presorted = TRUE,
   ...) {
   UseMethod(
-    generic = "auc"
+    generic = "xy.auc"
   )
 }
 

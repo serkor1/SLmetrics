@@ -5,13 +5,13 @@
 using namespace Rcpp;
 
 //' @templateVar .TITLE Receiver Operator Characteristics Curve
-//' @templateVar .FUN prc
+//' @templateVar .FUN pr.curve
 //' @templateVar .TYPE roc
 //' @templateVar .METHOD factor
 //' @template classification_auc_inherit
 //'
 //' @export
-// [[Rcpp::export(prc.factor)]]
+// [[Rcpp::export(pr.curve.factor)]]
 Rcpp::DataFrame precision_recall_curve(
     const Rcpp::IntegerVector& actual, 
     const Rcpp::NumericMatrix& response,
@@ -27,13 +27,13 @@ Rcpp::DataFrame precision_recall_curve(
 }
 
 //' @templateVar .TITLE Receiver Operator Characteristics Curve
-//' @templateVar .FUN weighted.prc
+//' @templateVar .FUN weighted.pr.curve
 //' @templateVar .TYPE roc
 //' @templateVar .METHOD factor
 //' @template classification_auc_inherit
 //'
 //' @export
-// [[Rcpp::export(weighted.prc.factor)]]
+// [[Rcpp::export(weighted.pr.curve.factor)]]
 Rcpp::DataFrame weighted_precision_recall_curve(
     const Rcpp::IntegerVector& actual, 
     const Rcpp::NumericMatrix& response, 
@@ -50,13 +50,13 @@ Rcpp::DataFrame weighted_precision_recall_curve(
 }
 
 //' @templateVar .TITLE Area under the Precision-Recall Curve
-//' @templateVar .FUN prc.auc
+//' @templateVar .FUN auc.pr.curve
 //' @templateVar .TYPE auc
 //' @templateVar .METHOD factor
 //' @template classification_auc_inherit
 //'
-//' @export
-// [[Rcpp::export(prc.auc.factor)]]
+//' @rawNamespace S3method(auc.pr.curve,factor)
+// [[Rcpp::export(auc.pr.curve.factor)]]
 Rcpp::NumericVector precision_recall_auc(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
@@ -78,13 +78,13 @@ Rcpp::NumericVector precision_recall_auc(
 }
 
 //' @templateVar .TITLE Area under the Precision-Recall Curve
-//' @templateVar .FUN weighted.prc.auc
+//' @templateVar .FUN weighted.auc.pr.curve
 //' @templateVar .TYPE auc
 //' @templateVar .METHOD factor
 //' @template classification_auc_inherit
 //'
-//' @export
-// [[Rcpp::export(weighted.prc.auc.factor)]]
+//' @rawNamespace S3method(weighted.auc.pr.curve,factor)
+// [[Rcpp::export(weighted.auc.pr.curve.factor)]]
 Rcpp::NumericVector precision_recall_auc_weighted(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,

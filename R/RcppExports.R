@@ -688,46 +688,46 @@ ppv.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
 }
 
 #' @templateVar .TITLE Receiver Operator Characteristics Curve
-#' @templateVar .FUN prc
+#' @templateVar .FUN pr.curve
 #' @templateVar .TYPE roc
 #' @templateVar .METHOD factor
 #' @template classification_auc_inherit
 #'
 #' @export
-prc.factor <- function(actual, response, thresholds = NULL, presorted = FALSE, ...) {
+pr.curve.factor <- function(actual, response, thresholds = NULL, presorted = FALSE, ...) {
     .Call(`_SLmetrics_precision_recall_curve`, actual, response, thresholds, presorted)
 }
 
 #' @templateVar .TITLE Receiver Operator Characteristics Curve
-#' @templateVar .FUN weighted.prc
+#' @templateVar .FUN weighted.pr.curve
 #' @templateVar .TYPE roc
 #' @templateVar .METHOD factor
 #' @template classification_auc_inherit
 #'
 #' @export
-weighted.prc.factor <- function(actual, response, w, thresholds = NULL, presorted = FALSE, ...) {
+weighted.pr.curve.factor <- function(actual, response, w, thresholds = NULL, presorted = FALSE, ...) {
     .Call(`_SLmetrics_weighted_precision_recall_curve`, actual, response, w, thresholds, presorted)
 }
 
 #' @templateVar .TITLE Area under the Precision-Recall Curve
-#' @templateVar .FUN prc.auc
+#' @templateVar .FUN auc.pr.curve
 #' @templateVar .TYPE auc
 #' @templateVar .METHOD factor
 #' @template classification_auc_inherit
 #'
-#' @export
-prc.auc.factor <- function(actual, response, micro = NULL, method = 0L, ...) {
+#' @rawNamespace S3method(auc.pr.curve,factor)
+auc.pr.curve.factor <- function(actual, response, micro = NULL, method = 0L, ...) {
     .Call(`_SLmetrics_precision_recall_auc`, actual, response, micro, method)
 }
 
 #' @templateVar .TITLE Area under the Precision-Recall Curve
-#' @templateVar .FUN weighted.prc.auc
+#' @templateVar .FUN weighted.auc.pr.curve
 #' @templateVar .TYPE auc
 #' @templateVar .METHOD factor
 #' @template classification_auc_inherit
 #'
-#' @export
-weighted.prc.auc.factor <- function(actual, response, w, micro = NULL, method = 0L, ...) {
+#' @rawNamespace S3method(weighted.auc.pr.curve,factor)
+weighted.auc.pr.curve.factor <- function(actual, response, w, micro = NULL, method = 0L, ...) {
     .Call(`_SLmetrics_precision_recall_auc_weighted`, actual, response, w, micro, method)
 }
 
@@ -801,46 +801,46 @@ tpr.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
 }
 
 #' @templateVar .TITLE Receiver Operator Characteristics Curve
-#' @templateVar .FUN roc
-#' @templateVar .TYPE roc
+#' @templateVar .FUN roc.curve
+#' @templateVar .TYPE roc.curve
 #' @templateVar .METHOD factor
 #' @template classification_auc_inherit
 #'
 #' @export
-roc.factor <- function(actual, response, thresholds = NULL, presorted = FALSE, ...) {
+roc.curve.factor <- function(actual, response, thresholds = NULL, presorted = FALSE, ...) {
     .Call(`_SLmetrics_roc_curve_unweighted`, actual, response, thresholds, presorted)
 }
 
 #' @templateVar .TITLE Receiver Operator Characteristics Curve
-#' @templateVar .FUN weighted.roc
-#' @templateVar .TYPE roc
+#' @templateVar .FUN weighted.roc.curve
+#' @templateVar .TYPE roc.curve
 #' @templateVar .METHOD factor
 #' @template classification_auc_inherit
 #'
 #' @export
-weighted.roc.factor <- function(actual, response, w, thresholds = NULL, presorted = FALSE, ...) {
+weighted.roc.curve.factor <- function(actual, response, w, thresholds = NULL, presorted = FALSE, ...) {
     .Call(`_SLmetrics_roc_curve_weighted`, actual, response, w, thresholds, presorted)
 }
 
 #' @templateVar .TITLE Area under the ROC curve
-#' @templateVar .FUN roc.auc
+#' @templateVar .FUN auc.roc.curve
 #' @templateVar .TYPE auc
 #' @templateVar .METHOD factor
 #' @template classification_auc_inherit
 #'
 #' @export
-roc.auc.factor <- function(actual, response, micro = NULL, method = 0L, ...) {
+auc.roc.curve.factor <- function(actual, response, micro = NULL, method = 0L, ...) {
     .Call(`_SLmetrics_roc_auc`, actual, response, micro, method)
 }
 
 #' @templateVar .TITLE Area under the ROC curve
-#' @templateVar .FUN weighted.roc.auc
+#' @templateVar .FUN weighted.auc.roc.curve
 #' @templateVar .TYPE auc
 #' @templateVar .METHOD factor
 #' @template classification_auc_inherit
 #'
 #' @export
-weighted.roc.auc.factor <- function(actual, response, w, micro = NULL, method = 0L, ...) {
+weighted.auc.roc.curve.factor <- function(actual, response, w, micro = NULL, method = 0L, ...) {
     .Call(`_SLmetrics_roc_auc_weighted`, actual, response, w, micro, method)
 }
 
@@ -1156,10 +1156,10 @@ weighted.smape.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_smape`, actual, predicted, w)
 }
 
-#' @rdname auc
-#' @method auc numeric
-#' @export
-auc.numeric <- function(y, x, method = 0L, presorted = TRUE, ...) {
+#' @rdname xy.auc
+#' @method xy.auc numeric
+#' @rawNamespace S3method(xy.auc,numeric)
+xy.auc.numeric <- function(y, x, method = 0L, presorted = TRUE, ...) {
     .Call(`_SLmetrics_auc`, y, x, method, presorted)
 }
 

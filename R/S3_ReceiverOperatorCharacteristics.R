@@ -5,7 +5,7 @@
 # script start;
 
 #' @templateVar .TITLE Reciever Operator Characteristics
-#' @templateVar .FUN roc
+#' @templateVar .FUN roc.curve
 #' @templateVar .TYPE not_auc
 #' @templateVar .TASK Classification
 #' @template classification_auc_params
@@ -15,7 +15,7 @@
 #' ## Generic S3 method
 #' ## for unweighted Reciever
 #' ## Operator Characteristics
-#' roc(...)
+#' roc.curve(...)
 #'
 #' @returns A [data.frame] on the following form,
 #'
@@ -30,27 +30,27 @@
 #' @family Supervised Learning
 #'
 #' @export
-roc <- function(...) {
+roc.curve <- function(...) {
   UseMethod(
-    generic = "roc"
+    generic = "roc.curve"
   )
 }
 
-#' @rdname roc
+#' @rdname roc.curve
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Receiver
 #' ## Operator Characteristics
-#' weighted.roc(...)
+#' weighted.roc.curve(...)
 #' @export
-weighted.roc <- function(...) {
+weighted.roc.curve <- function(...) {
   UseMethod(
-    generic = "weighted.roc"
+    generic = "weighted.roc.curve"
   )
 }
 
 #' @templateVar .TITLE Area under the Receiver Operator Characteristics Curve
-#' @templateVar .FUN roc.auc
+#' @templateVar .FUN auc.roc.curve
 #' @templateVar .TYPE auc
 #' @templateVar .TASK Classification
 #' @template classification_auc_params
@@ -61,31 +61,31 @@ weighted.roc <- function(...) {
 #' ## unweighted area under the
 #' ## Receiver Operator Characteristics
 #' ## Curve
-#' roc.auc(...)
+#' auc.roc.curve(...)
 #' 
 #' @export
-roc.auc <- function(...) {
+auc.roc.curve <- function(...) {
   UseMethod(
-    generic = "roc.auc"
+    generic = "auc.roc.curve"
   )
 }
 
-#' @rdname roc.auc
+#' @rdname auc.roc.curve
 #' @usage
 #' ## Generic S3 method for
 #' ## weighted area under the
 #' ## Receiver Operator Characteristics
 #' ## Curve
-#' weighted.roc.auc(...)
+#' weighted.auc.roc.curve(...)
 #' @export
-weighted.roc.auc <- function(...) {
+weighted.auc.roc.curve <- function(...) {
   UseMethod(
-    generic = "weighted.roc.auc"
+    generic = "weighted.auc.roc.curve"
   )
 }
 
 #' @export
-print.roc <- function(x, ...) {
+print.roc.curve <- function(x, ...) {
 
   print.data.frame(
     x,
@@ -102,7 +102,7 @@ print.roc <- function(x, ...) {
 }
 
 #' @export
-summary.roc <- function(
+summary.roc.curve <- function(
   object,
   ...) {
   
@@ -138,13 +138,13 @@ summary.roc <- function(
         auc = metric
       )
     },
-    class = "summary.ROC"
+    class = "summary.roc.curve"
   )
 
 }
 
 #' @export
-print.summary.roc <- function(
+print.summary.roc.curve <- function(
   x, 
   ...) {
 
@@ -162,7 +162,7 @@ print.summary.roc <- function(
 
 
 #' @export
-plot.roc <- function(
+plot.roc.curve <- function(
     x,
     panels = TRUE,
     ...) {
