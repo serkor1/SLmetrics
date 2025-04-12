@@ -40,7 +40,7 @@ A S3 generic function for calculating the reciever operator characteristics scor
 If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
 \subsection{Area under the curve}{
 
-Use \code{\link[=roc.curve.auc]{roc.curve.auc()}} for calculating the area under the curve directly.
+Use \link{auc.roc.curve} for calculating the area under the curve directly.
 }
 
 \subsection{Defensive measures}{

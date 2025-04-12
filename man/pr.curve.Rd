@@ -40,7 +40,7 @@ A S3 generic function for calculating the precision recall curve score of a clas
 If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
 \subsection{Area under the curve}{
 
-Use \code{\link[=pr.curve.auc]{pr.curve.auc()}} for calculating the area under the curve directly.
+Use \link{auc.pr.curve} for calculating the area under the curve directly.
 }
 
 \subsection{Defensive measures}{

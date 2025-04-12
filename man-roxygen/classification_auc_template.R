@@ -9,7 +9,7 @@
 <% if (.TYPE != "auc") { %>
 #' ## Area under the curve
 #' 
-#' Use [<%= .FUN %>.auc()] for calculating the area under the curve directly.
+#' Use [auc.<%= .FUN %>] for calculating the area under the curve directly.
 #' 
 <% } else { %>
 #' ## Constructing data.frames

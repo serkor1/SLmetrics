@@ -52,7 +52,6 @@
 #' @returns 
 #' A <[numeric]>  vector  of [length] 1
 #' 
-#' @example man/examples/scr_AreaUnderTheCurve.R
 #' 
 #' @family Tools
 #' 

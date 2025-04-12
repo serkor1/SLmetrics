@@ -119,7 +119,7 @@ summary.pr.curve <- function(
   metric <- vapply(
     x_list, 
     function(x) {
-      auc(
+      xy.auc(
         y = x$precision,
         x = x$recall
       )
