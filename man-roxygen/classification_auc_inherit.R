@@ -1,11 +1,16 @@
 #' @title <%= tools::toTitleCase(.TITLE) %>
 #' 
-<% if (.TYPE == "auc") {%>
+<% if (.TYPE == "auc") { %>
+#'
 #' @rdname <%= .FUN %>.<%= .METHOD %>
 #' @name <%= .FUN %>.<%= .METHOD %>
-<% } else {%>
+#' 
+<% } else { %>
+#'
 #' @rdname <%= .FUN %>.<%= .METHOD %>
 #' @name <%= .FUN %>.<%= .METHOD %>
-<% }
+#' 
+<% } %>
+#'
 #' @method <%= .FUN %> <%= .METHOD %>
 #' @inheritParams classification_documentation

@@ -4,8 +4,6 @@
 # objective: Generate Methods
 # script start;
 
-#' @aliases
-#'
 #' @templateVar .TITLE Precision Recall Curve
 #' @templateVar .FUN prc
 #' @templateVar .TYPE not_auc
@@ -27,18 +25,11 @@
 #' \item{recall}{<[numeric]> The recall}
 #' \item{precision}{<[numeric]> The precision}
 #'
-#' @example man/examples/scr_PrecisionRecallCurve.R
-#'
 #' @family Classification
 #' @family Supervised Learning
 #' 
 #' @export
-prc <- function(
-  actual,
-  response, 
-  thresholds = NULL,
-  presorted = FALSE,
-  ...) {
+prc <- function(...) {
   UseMethod(
     generic = "prc"
   )
@@ -83,6 +74,7 @@ prc.auc <- function(...) {
 #' ## weighted area under the
 #' ## Precision Recall Curve
 #' weighted.prc.auc(...)
+#' 
 #' @export
 weighted.prc.auc <- function(...) {
   UseMethod(
@@ -200,7 +192,7 @@ plot.prc <- function(
 
     }
 
-    prc_plot(
+    roc_plot(
       formula  = pformula,
       groups   = groups,
       xlab     = xlab,

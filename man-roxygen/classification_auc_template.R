@@ -1,22 +1,24 @@
 #' @title <%= tools::toTitleCase(.TITLE) %>
+#' @rdname <%= .FUN %>
+#' @name <%= .FUN %>
 #' 
 #' @description
 #' A S3 generic function for calculating the <%= tolower(.TITLE) %> score of a <%= tolower(.TASK) %> model. [<%= .FUN %>()] handles the input as is - and therefore there is not sanity checks. 
 #' If the data contains [NA], or `length(x) != length(y)` you are left at the mercy of compiler.
 #' 
-<% if (.TYPE == "auc") {%>
+<% if (.TYPE != "auc") { %>
 #' ## Area under the curve
 #' 
 #' Use [<%= .FUN %>.auc()] for calculating the area under the curve directly.
 #' 
-<% } else {%>
+<% } else { %>
 #' ## Constructing data.frames
 #' 
 #' Description for the main function
 #' 
-#' Use [<%= .FUN %>.auc()] for calculating the area under the curve directly.
+#' Use [<%= .FUN %>] for calculating the area under the curve directly.
 #' 
-<% }
+<% } %>
 #' 
 #' ## Defensive measures
 #' 

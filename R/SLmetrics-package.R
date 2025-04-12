@@ -40,6 +40,10 @@ NULL
 #' @param actual,predicted A pair of vectors <[factor]> with actual and observed classes.
 #' @param actual A vector of vector
 #' @param response A matrix
+#' @param method A method
+#' @param micro What?
+#' @param presorted Currently broken.
+#' @param thresholds A vector
 #' @param w A <[numeric]> vector of sample weights.
 #' @param x A confusion matrix created [cmatrix()].
 #' @param estimator An <[integer]>-value of [length] \eqn{1} (default: \eqn{0}).

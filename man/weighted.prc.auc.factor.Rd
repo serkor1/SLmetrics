@@ -13,6 +13,10 @@
 
 \item{w}{A <\link{numeric}> vector of sample weights.}
 
+\item{micro}{What?}
+
+\item{method}{A method}
+
 \item{...}{Arguments passed into other methods.}
 }
 \description{

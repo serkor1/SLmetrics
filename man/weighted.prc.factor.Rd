@@ -13,6 +13,10 @@
 
 \item{w}{A <\link{numeric}> vector of sample weights.}
 
+\item{thresholds}{A vector}
+
+\item{presorted}{Currently broken.}
+
 \item{...}{Arguments passed into other methods.}
 }
 \description{

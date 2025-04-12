@@ -21,6 +21,8 @@ weighted.prc(...)
   \describe{
     \item{\code{actual}}{A vector of vector}
     \item{\code{response}}{A matrix}
+    \item{\code{presorted}}{Currently broken.}
+    \item{\code{thresholds}}{A vector}
     \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
   }}
 }
@@ -36,80 +38,16 @@ A \link{data.frame} on the following form,
 \description{
 A S3 generic function for calculating the precision recall curve score of a classification model. \code{\link[=prc]{prc()}} handles the input as is - and therefore there is not sanity checks.
 If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
-\subsection{Constructing data.frames}{
-
-Description for the main function
+\subsection{Area under the curve}{
 
 Use \code{\link[=prc.auc]{prc.auc()}} for calculating the area under the curve directly.
 }
+
+\subsection{Defensive measures}{
+
+As everything is based on pointers internally values as \link{NA} and out of bounds values (\code{length(x) != length(y)}) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in \code{try()} or \code{tryCatch()} to recover from sudden errors. Your \code{R}-session \emph{will} most likely just crash.
+A workaroud is to create a wrapper around \code{\link[=prc]{prc()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=prc]{prc()}}.
 }
-\examples{
-# 1) recode Iris
-# to binary classification
-# problem
-iris$species_num <- as.numeric(
-  iris$Species == "virginica"
-)
-
-# 2) fit the logistic
-# regression
-model <- glm(
-  formula = species_num ~ Sepal.Length + Sepal.Width,
-  data    = iris,
-  family  = binomial(
-    link = "logit"
-  )
-)
-
-# 3) generate predicted
-# classes
-response <- predict(model, type = "response")
-
-# 3.1) generate actual
-# classes
-actual <- factor(
-  x = iris$species_num,
-  levels = c(1,0),
-  labels = c("Virginica", "Others")
-)
-
-# 4) generate precision-recall
-# data
-
-# 4.1) calculate residual
-# probability and store as matrix
-response <- matrix(
-  data = cbind(response, 1-response),
-  nrow = length(actual)
-)
-
-# 4.2) generate precision-recall
-# data
-roc <- prROC(
-  actual   = actual,
-  response = response
-)
-
-# 5) plot by species
-plot(roc)
-
-# 5.1) summarise
-summary(roc)
-
-# 6) provide custom
-# threholds
-roc <- prROC(
-  actual     = actual,
-  response   = response,
-  thresholds = seq(
-    1,
-    0,
-    length.out = 20
-  )
-)
-
-# 5) plot by species
-plot(roc)
 }
 \seealso{
 Other Classification: 

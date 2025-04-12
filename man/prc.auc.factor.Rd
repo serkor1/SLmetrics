@@ -11,6 +11,10 @@
 
 \item{response}{A matrix}
 
+\item{micro}{What?}
+
+\item{method}{A method}
+
 \item{...}{Arguments passed into other methods.}
 }
 \description{

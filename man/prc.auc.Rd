@@ -21,14 +21,24 @@ weighted.prc.auc(...)
   \describe{
     \item{\code{actual}}{A vector of vector}
     \item{\code{response}}{A matrix}
+    \item{\code{method}}{A method}
+    \item{\code{micro}}{What?}
     \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
   }}
 }
 \description{
 A S3 generic function for calculating the area under the precision recall curve score of a classification model. \code{\link[=prc.auc]{prc.auc()}} handles the input as is - and therefore there is not sanity checks.
 If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
-\subsection{Area under the curve}{
+\subsection{Constructing data.frames}{
 
-Use \code{\link[=prc.auc.auc]{prc.auc.auc()}} for calculating the area under the curve directly.
+Description for the main function
+
+Use \link{prc.auc} for calculating the area under the curve directly.
+}
+
+\subsection{Defensive measures}{
+
+As everything is based on pointers internally values as \link{NA} and out of bounds values (\code{length(x) != length(y)}) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in \code{try()} or \code{tryCatch()} to recover from sudden errors. Your \code{R}-session \emph{will} most likely just crash.
+A workaroud is to create a wrapper around \code{\link[=prc.auc]{prc.auc()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=prc.auc]{prc.auc()}}.
 }
 }

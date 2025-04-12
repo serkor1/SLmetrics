@@ -10,6 +10,14 @@
 
 \item{response}{A matrix}
 
+\item{method}{A method}
+
+\item{micro}{What?}
+
+\item{presorted}{Currently broken.}
+
+\item{thresholds}{A vector}
+
 \item{w}{A <\link{numeric}> vector of sample weights.}
 
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}

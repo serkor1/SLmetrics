@@ -4,8 +4,6 @@
 # objective: Generate Methods
 # script start;
 
-#' @aliases
-#'
 #' @templateVar .TITLE Reciever Operator Characteristics
 #' @templateVar .FUN roc
 #' @templateVar .TYPE not_auc
@@ -43,7 +41,7 @@ roc <- function(...) {
 #' ## Generic S3 method
 #' ## for weighted Receiver
 #' ## Operator Characteristics
-#' weighted.ROC(...)
+#' weighted.roc(...)
 #' @export
 weighted.roc <- function(...) {
   UseMethod(
@@ -85,7 +83,6 @@ weighted.roc.auc <- function(...) {
     generic = "weighted.roc.auc"
   )
 }
-
 
 #' @export
 print.roc <- function(x, ...) {
