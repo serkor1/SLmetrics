@@ -5,6 +5,8 @@ if (!exists(".SINGLE_OUTPUT", inherits = FALSE)) {
 value = as.logical(.SINGLE_OUTPUT)
 %>
 #' @title <%= tools::toTitleCase(.TITLE) %>
+#' @rdname <%= .FUN %>
+#' @name <%= .FUN %>
 #' 
 #' @description
 #' A S3 generic function for calculating the <%= tolower(.TITLE) %> score of a <%= tolower(.TASK) %> model. [<%= .FUN %>()] handles the input as is - and therefore there is not sanity checks. 

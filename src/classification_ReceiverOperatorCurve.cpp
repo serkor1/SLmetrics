@@ -4,10 +4,14 @@
 
 using namespace Rcpp;
 
-//' @rdname ROC
-//' @method ROC factor
+//' @templateVar .TITLE Receiver Operator Characteristics Curve
+//' @templateVar .FUN roc
+//' @templateVar .TYPE roc
+//' @templateVar .METHOD factor
+//' @template classification_auc_inherit
+//'
 //' @export
-// [[Rcpp::export(ROC.factor)]]
+// [[Rcpp::export(roc.factor)]]
 Rcpp::DataFrame roc_curve_unweighted(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
@@ -21,10 +25,14 @@ Rcpp::DataFrame roc_curve_unweighted(
     return ROC::roc_curve(actual, response, presorted, nullptr, nullptr);
 }
 
-//' @rdname ROC
-//' @method weighted.ROC factor
+//' @templateVar .TITLE Receiver Operator Characteristics Curve
+//' @templateVar .FUN weighted.roc
+//' @templateVar .TYPE roc
+//' @templateVar .METHOD factor
+//' @template classification_auc_inherit
+//'
 //' @export
-// [[Rcpp::export(weighted.ROC.factor)]]
+// [[Rcpp::export(weighted.roc.factor)]]
 Rcpp::DataFrame roc_curve_weighted(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
@@ -39,11 +47,14 @@ Rcpp::DataFrame roc_curve_weighted(
     return ROC::roc_curve(actual, response, presorted, &w, nullptr);
 }
 
-
-//' @rdname roc.auc
-//' @method roc.auc matrix
+//' @templateVar .TITLE Area under the ROC curve
+//' @templateVar .FUN roc.auc
+//' @templateVar .TYPE auc
+//' @templateVar .METHOD factor
+//' @template classification_auc_inherit
+//'
 //' @export
-// [[Rcpp::export(roc.auc.matrix)]]
+// [[Rcpp::export(roc.auc.factor)]]
 Rcpp::NumericVector roc_auc(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
@@ -64,10 +75,14 @@ Rcpp::NumericVector roc_auc(
         }
 }
 
-//' @rdname roc.auc
-//' @method weighted.roc.auc matrix
+//' @templateVar .TITLE Area under the ROC curve
+//' @templateVar .FUN weighted.roc.auc
+//' @templateVar .TYPE auc
+//' @templateVar .METHOD factor
+//' @template classification_auc_inherit
+//'
 //' @export
-// [[Rcpp::export(weighted.roc.auc.matrix)]]
+// [[Rcpp::export(weighted.roc.auc.factor)]]
 Rcpp::NumericVector roc_auc_weighted(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,

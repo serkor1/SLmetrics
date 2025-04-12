@@ -6,6 +6,10 @@
 \arguments{
 \item{actual, predicted}{A pair of vectors <\link{factor}> with actual and observed classes.}
 
+\item{actual}{A vector of vector}
+
+\item{response}{A matrix}
+
 \item{w}{A <\link{numeric}> vector of sample weights.}
 
 \item{x}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}

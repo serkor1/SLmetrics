@@ -89,7 +89,6 @@ SLmetrics::recall(
 }
 \seealso{
 Other Classification: 
-\code{\link{ROC.factor}()},
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
 \code{\link{ckappa}()},
@@ -108,15 +107,13 @@ Other Classification:
 \code{\link{nlr}()},
 \code{\link{npv}()},
 \code{\link{plr}()},
-\code{\link{pr.auc.matrix}()},
-\code{\link{prROC.factor}()},
+\code{\link{prc}()},
 \code{\link{precision}()},
-\code{\link{roc.auc.matrix}()},
+\code{\link{roc}()},
 \code{\link{specificity}()},
 \code{\link{zerooneloss}()}
 
 Other Supervised Learning: 
-\code{\link{ROC.factor}()},
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
 \code{\link{ccc.numeric}()},
@@ -141,13 +138,12 @@ Other Supervised Learning:
 \code{\link{npv}()},
 \code{\link{pinball.numeric}()},
 \code{\link{plr}()},
-\code{\link{pr.auc.matrix}()},
-\code{\link{prROC.factor}()},
+\code{\link{prc}()},
 \code{\link{precision}()},
 \code{\link{rae.numeric}()},
 \code{\link{rmse.numeric}()},
 \code{\link{rmsle.numeric}()},
-\code{\link{roc.auc.matrix}()},
+\code{\link{roc}()},
 \code{\link{rrmse.numeric}()},
 \code{\link{rrse.numeric}()},
 \code{\link{rsq.numeric}()},

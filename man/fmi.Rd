@@ -62,7 +62,6 @@ SLmetrics::fmi(
 }
 \seealso{
 Other Classification: 
-\code{\link{ROC.factor}()},
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
 \code{\link{ckappa}()},
@@ -80,11 +79,10 @@ Other Classification:
 \code{\link{nlr}()},
 \code{\link{npv}()},
 \code{\link{plr}()},
-\code{\link{pr.auc.matrix}()},
-\code{\link{prROC.factor}()},
+\code{\link{prc}()},
 \code{\link{precision}()},
 \code{\link{recall}()},
-\code{\link{roc.auc.matrix}()},
+\code{\link{roc}()},
 \code{\link{specificity}()},
 \code{\link{zerooneloss}()}
 }

@@ -1,26 +1,23 @@
-# script: Reciever Operator Characteristics
+# script: Precision Recall Curve
 # date: 2024-10-25
 # author: Serkan Korkmaz, serkor1@duck.com
 # objective: Generate Methods
 # script start;
 
-#' @inherit ROC
+#' @aliases
 #'
-#' @title Precision-Recall Curve
-#'
-#' @description
-#' The [prROC()]-function computes the [precision()] and [recall()] at thresholds provided by the \eqn{response}- or \eqn{thresholds}-vector. The function
-#' constructs a [data.frame()] grouped by \eqn{k}-classes where each class is treated as a binary classification problem.
+#' @templateVar .TITLE Precision Recall Curve
+#' @templateVar .FUN prc
+#' @templateVar .TYPE not_auc
+#' @templateVar .TASK Classification
+#' @template classification_auc_params
+#' @template classification_auc_template
 #' 
 #' @usage
 #' ## Generic S3 method
-#' prROC(
-#'  actual,
-#'  response,
-#'  thresholds = NULL,
-#'  presorted  = FALSE,
-#'  ...
-#' )
+#' ## for unweighted Precision
+#' ## Recall Curve
+#' prc(...)
 #' 
 #' @returns A [data.frame] on the following form,
 #'
@@ -36,43 +33,65 @@
 #' @family Supervised Learning
 #' 
 #' @export
-prROC <- function(
+prc <- function(
   actual,
   response, 
   thresholds = NULL,
   presorted = FALSE,
   ...) {
   UseMethod(
-    generic = "prROC"
+    generic = "prc"
   )
 }
 
-#' @rdname prROC
+#' @rdname prc
 #' @usage
 #' ## Generic S3 method
-#' weighted.prROC(
-#'  actual,
-#'  response,
-#'  w,
-#'  thresholds = NULL,
-#'  presorted  = FALSE,
-#'  ...
-#' )
+#' ## for weighted Precision
+#' ## Recall Curve
+#' weighted.prc(...)
 #' @export
-weighted.prROC <- function( 
-  actual,
-  response, 
-  w,
-  thresholds = NULL,
-  presorted = FALSE, 
-  ...) {
+weighted.prc <- function(...) {
   UseMethod(
-    generic = "weighted.prROC"
+    generic = "weighted.prc"
+  )
+}
+
+#' @templateVar .TITLE Area under the Precision Recall Curve
+#' @templateVar .FUN prc.auc
+#' @templateVar .TYPE auc
+#' @templateVar .TASK Classification
+#' @template classification_auc_params
+#' @template classification_auc_template
+#' 
+#' @usage
+#' ## Generic S3 method for
+#' ## unweighted area under the
+#' ## Precision Recall Curve
+#' prc.auc(...)
+#' 
+#' @export
+prc.auc <- function(...) {
+  UseMethod(
+    generic = "prc.auc"
+  )
+}
+
+#' @rdname prc.auc
+#' @usage
+#' ## Generic S3 method for
+#' ## weighted area under the
+#' ## Precision Recall Curve
+#' weighted.prc.auc(...)
+#' @export
+weighted.prc.auc <- function(...) {
+  UseMethod(
+    generic = "weighted.prc.auc"
   )
 }
 
 #' @export
-print.prROC <- function(x, ...) {
+print.prc <- function(x, ...) {
 
   print.data.frame(
     x,
@@ -89,7 +108,7 @@ print.prROC <- function(x, ...) {
 }
 
 #' @export
-summary.prROC <- function(
+summary.prc <- function(
   object,
   ...) {
   
@@ -125,17 +144,17 @@ summary.prROC <- function(
         auc = metric
       )
     },
-    class = "summary.prROC"
+    class = "summary.prc"
   )
   
 }
 
 #' @export
-print.summary.prROC <- function(
+print.summary.prc <- function(
   x,
   ...) {
 
-  cat("Reciever Operator Characteristics", "\n")
+  cat("Precision Recall Curve", "\n")
   full_line()
   cat(
     "AUC",
@@ -148,7 +167,7 @@ print.summary.prROC <- function(
 }
 
 #' @export
-plot.prROC <- function(
+plot.prc <- function(
     x,
     panels = TRUE,
     ...) {
@@ -181,7 +200,7 @@ plot.prROC <- function(
 
     }
 
-    roc_plot(
+    prc_plot(
       formula  = pformula,
       groups   = groups,
       xlab     = xlab,

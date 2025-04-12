@@ -38,6 +38,8 @@ NULL
 #' for classification metrics for all the parameters.
 #' 
 #' @param actual,predicted A pair of vectors <[factor]> with actual and observed classes.
+#' @param actual A vector of vector
+#' @param response A matrix
 #' @param w A <[numeric]> vector of sample weights.
 #' @param x A confusion matrix created [cmatrix()].
 #' @param estimator An <[integer]>-value of [length] \eqn{1} (default: \eqn{0}).
