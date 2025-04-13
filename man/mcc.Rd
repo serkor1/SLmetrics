@@ -11,8 +11,6 @@
 ## for Matthews Correlation Coefficient
 mcc(...)
 
-mcc(...)
-
 ## Generic S3 method
 ## for weighted Matthews
 ## Correlation Coefficient

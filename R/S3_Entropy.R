@@ -4,6 +4,10 @@
 # objective: Generate method
 # script start;
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
 #' @templateVar .TITLE shannon entropy
 #' @templateVar .FUN shannon.entropy
 #' @templateVar .TASK Classification
@@ -11,7 +15,6 @@
 #' @template classification_entropy_template
 #' 
 #' @inheritDotParams shannon.entropy.matrix
-#' @usage NULL
 #'
 #' @export
 shannon.entropy <- function(...) {

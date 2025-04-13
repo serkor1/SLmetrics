@@ -4,6 +4,10 @@
 # objective: Generate Methods
 # script start;
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
 #' @templateVar .TITLE Zero-One Loss
 #' @templateVar .FUN zerooneloss
 #' @templateVar .TASK Classification

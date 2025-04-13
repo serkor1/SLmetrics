@@ -4,8 +4,9 @@
 # objective: Generate Errors
 # script start;
 
-#' @usage NULL
 #' @title NULL
+#' @usage NULL
+#' @return NULL
 #' 
 #' @templateVar .TITLE mean squeared error
 #' @templateVar .FUN mse

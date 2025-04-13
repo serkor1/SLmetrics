@@ -9,8 +9,6 @@
 ## for Zero-One Loss
 zerooneloss(...)
 
-zerooneloss(...)
-
 ## Generic S3 method
 weighted.zerooneloss(...)
 }

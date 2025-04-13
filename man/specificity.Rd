@@ -13,8 +13,6 @@
 ## for Specificity
 specificity(...)
 
-specificity(...)
-
 ## Generic S3 method
 ## for weighted specificity
 weighted.specificity(...)

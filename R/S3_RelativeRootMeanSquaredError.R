@@ -4,6 +4,10 @@
 # objective: Generate Errors
 # script start;
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
 #' @templateVar .TITLE Relative Root Mean Squared Error
 #' @templateVar .FUN rrmse
 #' @template regression_standard_template

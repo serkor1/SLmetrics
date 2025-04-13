@@ -4,6 +4,10 @@
 # objective: Generate method
 # script start;
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
 #' @aliases tnr selectivity weighted.tnr weighted.selectivity
 #' 
 #' @section Other names:

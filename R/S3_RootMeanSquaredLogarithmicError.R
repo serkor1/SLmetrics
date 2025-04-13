@@ -6,6 +6,7 @@
 
 #' @title NULL
 #' @usage NULL
+#' @return NULL
 #' 
 #' @templateVar .TITLE Root Mean Squared Logarithmic Error
 #' @templateVar .FUN rmsle

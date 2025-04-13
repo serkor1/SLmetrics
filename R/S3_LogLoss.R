@@ -4,6 +4,10 @@
 # objective: Generate method
 # script start;
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
 #' @templateVar .TITLE Logarithmic Loss
 #' @templateVar .FUN logloss
 #' @templateVar .TASK Classification

@@ -4,6 +4,10 @@
 # objective: Generate MCC methods
 # script start;
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
 #' @aliases phi weighted.phi
 #' 
 #' @templateVar .TITLE Matthews Correlation Coefficient

@@ -4,8 +4,9 @@
 # objective: Generate Methods
 # script start;
 
-#' @usage NULL
 #' @title NULL
+#' @usage NULL
+#' @return NULL
 #' 
 #' @templateVar .TITLE \eqn{R^2}
 #' @templateVar .FUN rsq

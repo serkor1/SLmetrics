@@ -4,8 +4,9 @@
 # objective: Genereate Methods
 # script start;
 
-#' @usage NULL
 #' @title NULL
+#' @usage NULL
+#' @return NULL
 #' 
 #' @templateVar .TITLE Root Relative Squared Error
 #' @templateVar .FUN rrse
