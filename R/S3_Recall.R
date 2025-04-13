@@ -4,14 +4,11 @@
 # objective: Generate method
 # script start;
 
-#' @aliases sensitivity tpr weighted.sensitivity weighted.tpr
+#' @title NULL
+#' @usage NULL
+#' @return NULL
 #' 
-#' @templateVar .TITLE recall
-#' @templateVar .FUN recall
-#' @templateVar .TASK Classification
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
+#' @aliases sensitivity tpr weighted.sensitivity weighted.tpr
 #' 
 #' @section Other names:
 #' 
@@ -19,13 +16,11 @@
 #' - Sensitivity, [sensitivity()] 
 #' - True Positive Rate, [tpr()]
 #' 
-#' @usage
-#' ## Generic S3 method
-#' ## for unweighted recall
-#' recall(...)
-#'
-#' @family Classification
-#' @family Supervised Learning
+#' @templateVar .TITLE recall
+#' @templateVar .FUN recall
+#' @templateVar .TASK Classification
+#' @templateVar .MULTI_OUTPUT true
+#' @template classification_standard_template
 #' 
 #' @export
 recall <- function(...) {

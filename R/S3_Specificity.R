@@ -5,12 +5,6 @@
 # script start;
 
 #' @aliases tnr selectivity weighted.tnr weighted.selectivity
-#' @templateVar .TITLE specificity
-#' @templateVar .FUN specificity
-#' @templateVar .TASK Classification
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
 #' 
 #' @section Other names:
 #' 
@@ -18,13 +12,12 @@
 #' - True Negative Rate, [tnr()] 
 #' - Selectivity, [selectivity()]
 #' 
-#' @usage 
-#' ## Generic S3 method
-#' ## for unweighted specificity
-#' specificity(...)
-#'
-#' @family Classification
-#' @family Supervised Learning
+#' 
+#' @templateVar .TITLE specificity
+#' @templateVar .FUN specificity
+#' @templateVar .TASK Classification
+#' @templateVar .MULTI_OUTPUT true
+#' @template classification_standard_template
 #' 
 #' @export
 specificity <- function(...) {

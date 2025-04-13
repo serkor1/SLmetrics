@@ -4,11 +4,9 @@
 // declare metric
 using fdr_impl = metric::false_discovery_rate<int>;
 
-//' @templateVar .TITLE fdr
 //' @templateVar .FUN fdr
 //' @templateVar .METHOD factor
-//' @template classification_factor_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(fdr.factor)]]
@@ -22,11 +20,9 @@ Rcpp::NumericVector false_discovery_rate(
         return performance.compute();
 }
 
-//' @templateVar .TITLE fdr
 //' @templateVar .FUN weighted.fdr
 //' @templateVar .METHOD factor
-//' @template classification_factor_weighted_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(weighted.fdr.factor)]]
@@ -41,11 +37,9 @@ Rcpp::NumericVector weighted_false_discovery_rate(
         return performance.compute();
 }
 
-//' @templateVar .TITLE fdr
 //' @templateVar .FUN fdr
 //' @templateVar .METHOD cmatrix
-//' @template classification_cmatrix_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(fdr.cmatrix)]]

@@ -4,26 +4,20 @@
 # objective: Generate Methods
 # script start;
 
-#' @templateVar .TITLE  Cohen's \eqn{\kappa} statistic
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
+#' @templateVar .TITLE  Cohen's \eqn{\kappa}-statistic
 #' @templateVar .FUN ckappa
 #' @templateVar .TASK Classification
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
-#' @usage
-#' ## Generic S3 method
-#' ## for unweighted Cohen's
-#' ## Kappa statistic
-#' ckappa(...)
-#' 
-#' @family Classification
-#' @family Supervised Learning
-#' 
+#' @templateVar .MULTI_OUTPUT false
+#' @template classification_standard_template
+#'
 #' @export
 ckappa <- function(...) {
   UseMethod(
-    generic = "ckappa",
-    object  = ..1
+    generic = "ckappa"
   )
 }
 
@@ -36,8 +30,7 @@ ckappa <- function(...) {
 #' @export
 weighted.ckappa <- function(...) {
   UseMethod(
-    generic = "weighted.ckappa",
-    object  = ..1
+    generic = "weighted.ckappa"
   )
 }
 

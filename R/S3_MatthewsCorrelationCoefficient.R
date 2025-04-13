@@ -9,24 +9,13 @@
 #' @templateVar .TITLE Matthews Correlation Coefficient
 #' @templateVar .FUN mcc
 #' @templateVar .TASK Classification
-#' @templateVar .SINGLE_OUTPUT TRUE
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
+#' @templateVar .MULTI_OUTPUT false
+#' @template classification_standard_template
 #'
 #' @section Other names:
 #' 
 #' The Matthews Correlation Coefficient has other names depending on research field:
 #' - \eqn{\phi}-coefficient, [phi()]
-#' 
-#' @usage
-#' ## Generic S3 method
-#' ## for unweighted Matthews
-#' ## Correlation Coefficient
-#' mcc(...)
-#'
-#' @family Classification
-#' @family Supervised Learning
 #'
 #' @export
 mcc <- function(...) {

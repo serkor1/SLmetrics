@@ -4,29 +4,24 @@
 # objective: Create Methods
 # script start;
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
 #' @aliases csi tscore weighted.csi weighted.tscore
 #' 
 #' @templateVar .TITLE jaccard
 #' @templateVar .FUN jaccard
 #' @templateVar .TASK Classification
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
+#' @templateVar .MULTI_OUTPUT true
+#' @template classification_standard_template
 #' 
 #' @section Other names:
 #' 
 #' The specificity has other names depending on research field:
 #' - Critical Success Index, [csi()] 
 #' - Threat Score, [tscore()]
-#'
-#' @usage
-#' ## Generic S3 method
-#' ## for unweighted Jaccard Index
-#' jaccard(...)
 #' 
-#' @family Classification
-#' @family Supervised Learning
-#'
 #' @export
 jaccard <- function(...) {
   UseMethod(

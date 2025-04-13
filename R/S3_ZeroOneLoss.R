@@ -7,18 +7,9 @@
 #' @templateVar .TITLE Zero-One Loss
 #' @templateVar .FUN zerooneloss
 #' @templateVar .TASK Classification
-#' @templateVar .SINGLE_OUTPUT TRUE
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
+#' @templateVar .MULTI_OUTPUT false
+#' @template classification_standard_template
 #' 
-#' @usage
-#' ## Generic S3 method
-#' zerooneloss(...)
-#' 
-#' @family Classification
-#' @family Supervised Learning
-#'
 #' @export
 zerooneloss <- function(...) {
   UseMethod(

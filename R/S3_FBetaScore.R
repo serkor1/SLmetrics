@@ -4,23 +4,16 @@
 # objective: Generate methods
 # script start; 
 
-#' @templateVar .TITLE \eqn{F_{\beta}}-score
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
+#' @templateVar .TITLE \eqn{F_{\beta}}
 #' @templateVar .FUN fbeta
 #' @templateVar .TASK Classification
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
-#' 
-#' @usage
-#' ## Generic S3 method
-#' ## for unweighted F-beta
-#' fbeta(...)
-#' 
-#' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
-#' 
-#' @family Classification
-#' @family Supervised Learning
-#' 
+#' @templateVar .MULTI_OUTPUT true
+#' @template classification_standard_template
+#'
 #' @export
 fbeta <- function(...) {
   UseMethod(
@@ -32,7 +25,7 @@ fbeta <- function(...) {
 #' @rdname fbeta
 #' @usage
 #' ## Generic S3 method
-#' ## for weighted F-beta
+#' ## for weighted \eqn{F_{\beta}}
 #' weighted.fbeta(...)
 #' @export
 weighted.fbeta <- function(...) {

@@ -3,11 +3,9 @@
 
 using recall_metric_impl = metric::recall<int>;
 
-//' @templateVar .TITLE recall
 //' @templateVar .FUN recall
 //' @templateVar .METHOD factor
-//' @template classification_factor_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(recall.factor)]]
@@ -21,11 +19,9 @@ Rcpp::NumericVector recall_score(
         return performance.compute();
 }
 
-//' @templateVar .TITLE recall
 //' @templateVar .FUN weighted.recall
 //' @templateVar .METHOD factor
-//' @template classification_factor_weighted_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(weighted.recall.factor)]]
@@ -40,11 +36,9 @@ Rcpp::NumericVector weighted_recall_score(
         return performance.compute();
 }
 
-//' @templateVar .TITLE recall
 //' @templateVar .FUN recall
 //' @templateVar .METHOD cmatrix
-//' @template classification_cmatrix_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(recall.cmatrix)]]

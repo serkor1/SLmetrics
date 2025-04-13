@@ -80,6 +80,7 @@ Other Supervised Learning:
 \code{\link{fbeta}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
+\code{\link{fmi}()},
 \code{\link{fpr}()},
 \code{\link{hammingloss}()},
 \code{\link{huberloss}()},

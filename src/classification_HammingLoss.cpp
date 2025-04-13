@@ -3,11 +3,9 @@
 
 using hamming_loss_t = metric::hamming_loss<int>;
 
-//' @templateVar .TITLE hammingloss
 //' @templateVar .FUN hammingloss
 //' @templateVar .METHOD factor
-//' @template classification_factor_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(hammingloss.factor)]]
@@ -19,11 +17,9 @@ double hamming_loss(
         return performance.compute();
 }
 
-//' @templateVar .TITLE hammingloss
 //' @templateVar .FUN weighted.hammingloss
 //' @templateVar .METHOD factor
-//' @template classification_factor_weighted_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(weighted.hammingloss.factor)]]
@@ -36,11 +32,9 @@ double weighted_hamming_loss(
         return performance.compute();
 }
 
-//' @templateVar .TITLE hammingloss
 //' @templateVar .FUN hammingloss
 //' @templateVar .METHOD cmatrix
-//' @template classification_cmatrix_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(hammingloss.cmatrix)]]

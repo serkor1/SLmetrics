@@ -4,47 +4,33 @@
 # objective: Generate methods for balanced accuracy
 # script start;
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
 #' @templateVar .TITLE balanced accuracy
 #' @templateVar .FUN baccuracy
 #' @templateVar .TASK Classification
-#' @templateVar .SINGLE_OUTPUT TRUE
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
-#' 
-#' @usage
-#' ## Generic S3 method
-#' ## for unweighted balanced
-#' ## accuracy
-#' baccuracy(...)
-#' 
-#' @returns
-#'
-#' A [numeric]-vector of [length] 1
-#'
-#'
-#' @family Classification
-#' @family Supervised Learning
+#' @templateVar .MULTI_OUTPUT false
+#' @template classification_standard_template
 #'
 #' @export
 baccuracy <- function(...) {
   UseMethod(
-    generic = "baccuracy",
-    object  = ..1
+    generic = "baccuracy"
   )
 }
 
 #' @rdname baccuracy
 #' @usage
 #' ## Generic S3 method
-#' ## for weighted balanced
-#' ## accuracy
+#' ## for weighted Balanced
+#' ## Accuracy
 #' weighted.baccuracy(...)
 #' @export
 weighted.baccuracy <- function(...) {
   UseMethod(
-    generic = "weighted.baccuracy",
-    object  = ..1
+    generic = "weighted.baccuracy"
   )
 }
 

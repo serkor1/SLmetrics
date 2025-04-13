@@ -16,3 +16,5 @@
 #' Hastie, Trevor. "The elements of statistical learning: data mining, inference, and prediction." (2009).
 #' 
 #' Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for scientific computing in Python." Nature methods 17.3 (2020): 261-272.
+#' 
+#' Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journal of machine Learning research 12 (2011): 2825-2830.

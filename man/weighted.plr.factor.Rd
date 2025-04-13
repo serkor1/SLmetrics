@@ -14,12 +14,7 @@
 \item{...}{Arguments passed into other methods.}
 }
 \value{
-If \code{estimator} is given as
-\itemize{
-\item 0 - a named <\link{numeric}>-vector of \link{length} k
-\item 1 - a <\link{double}> value (Micro averaged metric)
-\item 2 - a <\link{double}> value (Macro averaged metric)
-}
+A <\link{double}>-value
 }
 \description{
 A S3 generic function for calculating the positive likelihood ratio score of a classification model. \code{\link[=plr]{plr()}} handles the input as is - and therefore there is not sanity checks.
@@ -36,17 +31,24 @@ A workaroud is to create a wrapper around \code{\link[=plr]{plr()}} and any othe
 }
 }
 \examples{
+## Classes and
+## seed
+set.seed(1903)
+classes <- c("Kebab", "Falafel")
+
 ## Generate actual
 ## and predicted classes
 actual_classes <- factor(
-    x = c("kebab", "kebab", "kebab", "kebab", "Falafel", "Falafel", "Falafel", "Falafel"),
-    levels = c("kebab", "Falafel")
+    x = sample(x = classes, size = 10, replace = TRUE),
+    levels = c("Kebab", "Falafel")
 )
 
 predicted_classes <- factor(
-    x = c("kebab", "kebab", "Falafel", "Falafel", "Falafel", "Falafel", "kebab", "kebab"),
-    levels = c("kebab", "Falafel")
+    x = sample(x = classes, size = 10, replace = TRUE),
+    levels = c("Kebab", "Falafel")
 )
+
+
 
 ## Generate sample
 ## weights
@@ -60,13 +62,14 @@ SLmetrics::weighted.plr(
    predicted_classes, 
    sample_weights
 )
+
 }
 \references{
 James, Gareth, et al. An introduction to statistical learning. Vol. 112. No. 1. New York: springer, 2013.
 
 Hastie, Trevor. "The elements of statistical learning: data mining, inference, and prediction." (2009).
 
-Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for scientific computing in Python." Nature methods 17.3 (2020): 261-272.
+Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journal of machine Learning research 12 (2011): 2825-2830.
 }
 \seealso{
 The \code{\link[=nlr]{nlr()}}-function for the Negative Likehood Ratio (LR-)
@@ -109,6 +112,7 @@ Other Supervised Learning:
 \code{\link{fbeta}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
+\code{\link{fmi}()},
 \code{\link{fpr}()},
 \code{\link{hammingloss}()},
 \code{\link{huberloss}()},

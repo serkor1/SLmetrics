@@ -4,40 +4,32 @@
 # objective: Generate methods for accuracy
 # script start;
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
 #' @templateVar .TITLE accuracy
 #' @templateVar .FUN accuracy
 #' @templateVar .TASK Classification
-#' @templateVar .SINGLE_OUTPUT TRUE
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
+#' @templateVar .MULTI_OUTPUT false
+#' @template classification_standard_template
 #'
-#' @usage
-#' ## Generic S3 method
-#' ## for unweighted accuracy
-#' accuracy(...)
-#'
-#' @family Classification
-#' @family Supervised Learning
-#' 
 #' @export
 accuracy <- function(...) {
   UseMethod(
-    generic = "accuracy",
-    object  = ..1
+    generic = "accuracy"
   )
 }
 
 #' @rdname accuracy
 #' @usage
 #' ## Generic S3 method
-#' ## for weighted accuracy
+#' ## for weighted Accuracy
 #' weighted.accuracy(...)
 #' @export
 weighted.accuracy <- function(...) {
   UseMethod(
-    generic = "weighted.accuracy",
-    object  = ..1
+    generic = "weighted.accuracy"
   )
 }
 

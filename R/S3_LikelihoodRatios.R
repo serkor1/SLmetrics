@@ -5,28 +5,19 @@
 # methods. Combines Positive, Negative and Diagnostic Odds Ratio
 # script start;
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
+#' @seealso
+#' The [plr()]-function for the Positive Likehood Ratio (LR+)
+#' 
 #' @templateVar .TITLE negative likelihood ratio
 #' @templateVar .FUN nlr
 #' @templateVar .TASK Classification
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
+#' @templateVar .MULTI_OUTPUT false
+#' @template classification_standard_template
 #' 
-#' @usage
-#' ## Generic S3 method
-#' ## for Negative Likelihood
-#' ## Ratio
-#' nlr(...)
-
-#' 
-#' @seealso
-#'
-#' The [plr()]-function for the Positive Likehood Ratio (LR+)
-#' 
-#' 
-#' @family Classification
-#' @family Supervised Learning
-#'
 #' @export
 nlr <- function(...) {
   UseMethod(
@@ -35,6 +26,10 @@ nlr <- function(...) {
   )
 }
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
 #' @rdname nlr
 #' @usage
 #' ## Generic S3 method
@@ -50,25 +45,19 @@ weighted.nlr <- function(...) {
   )
 }
 
-#' @templateVar .TITLE positive likelihood ratio
-#' @templateVar .FUN plr
-#' @templateVar .TASK Classification
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
-#' 
-#' @usage
-#' ## Generic S3 method
-#' ## for unweighted Positive
-#' ## Likelihood Ratio
-#' plr(...)
+#' @title NULL
+#' @usage NULL
+#' @return NULL
 #' 
 #' @seealso
 #'
 #' The [nlr()]-function for the Negative Likehood Ratio (LR-)
 #' 
-#' @family Classification
-#' @family Supervised Learning
+#' @templateVar .TITLE positive likelihood ratio
+#' @templateVar .FUN plr
+#' @templateVar .TASK Classification
+#' @templateVar .MULTI_OUTPUT false
+#' @template classification_standard_template
 #' 
 #' @export
 plr <- function(...) {
@@ -78,7 +67,12 @@ plr <- function(...) {
   )
 }
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
 #' @rdname plr
+#' 
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Positive 
@@ -92,24 +86,16 @@ weighted.plr <- function(...) {
   )
 }
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
 #' @templateVar .TITLE diagnostic odds ratio
 #' @templateVar .FUN dor
 #' @templateVar .TASK Classification
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
+#' @templateVar .MULTI_OUTPUT false
+#' @template classification_standard_template
 #' 
-#' @usage
-#' ## Generic S3 method
-#' ## for Diagnostic Odds Ratio
-#' dor(...)
-#' 
-#' @returns
-#' A <[numeric]>-vector of [length] 1
-#' 
-#' @family Classification
-#' @family Supervised Learning
-#'
 #' @export
 dor <- function(...) {
   UseMethod(

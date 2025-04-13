@@ -4,11 +4,9 @@
 // declare metric
 using precision_impl = metric::precision<int>;
 
-//' @templateVar .TITLE precision
 //' @templateVar .FUN precision
 //' @templateVar .METHOD factor
-//' @template classification_factor_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(precision.factor)]]
@@ -22,11 +20,9 @@ Rcpp::NumericVector precision(
         return performance.compute();
 }
 
-//' @templateVar .TITLE precision
 //' @templateVar .FUN weighted.precision
 //' @templateVar .METHOD factor
-//' @template classification_factor_weighted_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(weighted.precision.factor)]]
@@ -41,12 +37,9 @@ Rcpp::NumericVector weighted_precision(
         return performance.compute();
 }
 
-
-//' @templateVar .TITLE precision
 //' @templateVar .FUN precision
 //' @templateVar .METHOD cmatrix
-//' @template classification_cmatrix_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(precision.cmatrix)]]

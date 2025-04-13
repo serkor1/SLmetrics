@@ -5,8 +5,6 @@
 # objective:
 # script start;
 
-#' @inheritSection specificity Creating <[factor]>
-#' 
 #' @title Confusion Matrix
 #'
 #' @description

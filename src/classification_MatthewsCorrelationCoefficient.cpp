@@ -4,11 +4,9 @@
 // implementation of metric
 using mcc_score_impl = metric::matthews_correlation_coefficient<int>;
 
-//' @templateVar .TITLE mcc
 //' @templateVar .FUN mcc
 //' @templateVar .METHOD factor
-//' @template classification_factor_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(mcc.factor)]]
@@ -20,11 +18,9 @@ double mcc(
         return performance.compute();
 }
 
-//' @templateVar .TITLE mcc
 //' @templateVar .FUN weighted.mcc
 //' @templateVar .METHOD factor
-//' @template classification_factor_weighted_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(weighted.mcc.factor)]]
@@ -37,11 +33,9 @@ double weighted_mcc(
         return performance.compute();
 }
 
-//' @templateVar .TITLE mcc
 //' @templateVar .FUN mcc
 //' @templateVar .METHOD cmatrix
-//' @template classification_cmatrix_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(mcc.cmatrix)]]

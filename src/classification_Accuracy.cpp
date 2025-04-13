@@ -4,11 +4,9 @@
 // implementation of metric
 using accuracy_score_impl = metric::accuracy_score<int>;
 
-//' @templateVar .TITLE accuracy
 //' @templateVar .FUN accuracy
 //' @templateVar .METHOD factor
-//' @template classification_factor_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(accuracy.factor)]]
@@ -20,11 +18,9 @@ double accuracy(
         return performance.compute();
 }
 
-//' @templateVar .TITLE accuracy
 //' @templateVar .FUN weighted.accuracy
 //' @templateVar .METHOD factor
-//' @template classification_factor_weighted_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(weighted.accuracy.factor)]]
@@ -37,11 +33,9 @@ double weighted_accuracy(
         return performance.compute();
 }
 
-//' @templateVar .TITLE accuracy
 //' @templateVar .FUN accuracy
 //' @templateVar .METHOD cmatrix
-//' @template classification_cmatrix_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(accuracy.cmatrix)]]

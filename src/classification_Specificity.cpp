@@ -4,11 +4,9 @@
 // declare metric
 using specificity_score_impl = metric::specificity<int>;
 
-//' @templateVar .TITLE specificity
 //' @templateVar .FUN specificity
 //' @templateVar .METHOD factor
-//' @template classification_factor_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(specificity.factor)]]
@@ -22,11 +20,9 @@ Rcpp::NumericVector specificity(
         return performance.compute();
 }
 
-//' @templateVar .TITLE specificity
 //' @templateVar .FUN weighted.specificity
 //' @templateVar .METHOD factor
-//' @template classification_factor_weighted_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(weighted.specificity.factor)]]
@@ -41,11 +37,9 @@ Rcpp::NumericVector weighted_specificity(
         return performance.compute();
 }
 
-//' @templateVar .TITLE specificity
 //' @templateVar .FUN specificity
 //' @templateVar .METHOD cmatrix
-//' @template classification_cmatrix_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(specificity.cmatrix)]]

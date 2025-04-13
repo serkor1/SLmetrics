@@ -4,21 +4,15 @@
 # objective: Generate Methods
 # script start;
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
 #' @templateVar .TITLE false discovery rate
 #' @templateVar .FUN fdr
 #' @templateVar .TASK Classification
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
-#' 
-#' @usage 
-#' ## Generic S3 method for
-#' ## unweighted False Discovery
-#' ## Rate
-#' fdr(...)
-#' 
-#' @family Classification
-#' @family Supervised Learning
+#' @templateVar .MULTI_OUTPUT true
+#' @template classification_standard_template
 #' 
 #' @export
 fdr <- function(...) {

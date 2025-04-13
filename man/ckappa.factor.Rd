@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{ckappa.factor}
 \alias{ckappa.factor}
-\title{Cohen's \eqn{\kappa} Statistic}
+\title{Cohen's \eqn{\kappa}-Statistic}
 \usage{
 \method{ckappa}{factor}(actual, predicted, beta = 0, ...)
 }
@@ -14,15 +14,10 @@
 \item{...}{Arguments passed into other methods.}
 }
 \value{
-If \code{estimator} is given as
-\itemize{
-\item 0 - a named <\link{numeric}>-vector of \link{length} k
-\item 1 - a <\link{double}> value (Micro averaged metric)
-\item 2 - a <\link{double}> value (Macro averaged metric)
-}
+A <\link{double}>-value
 }
 \description{
-A S3 generic function for calculating the cohen's \eqn{\kappa} statistic score of a classification model. \code{\link[=ckappa]{ckappa()}} handles the input as is - and therefore there is not sanity checks.
+A S3 generic function for calculating the cohen's \eqn{\kappa}-statistic score of a classification model. \code{\link[=ckappa]{ckappa()}} handles the input as is - and therefore there is not sanity checks.
 If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
 \subsection{Efficient evaluation}{
 
@@ -36,16 +31,21 @@ A workaroud is to create a wrapper around \code{\link[=ckappa]{ckappa()}} and an
 }
 }
 \examples{
+## Classes and
+## seed
+set.seed(1903)
+classes <- c("Kebab", "Falafel")
+
 ## Generate actual
 ## and predicted classes
 actual_classes <- factor(
-    x = c("kebab", "kebab", "kebab", "kebab", "Falafel", "Falafel", "Falafel", "Falafel"),
-    levels = c("kebab", "Falafel")
+    x = sample(x = classes, size = 10, replace = TRUE),
+    levels = c("Kebab", "Falafel")
 )
 
 predicted_classes <- factor(
-    x = c("kebab", "kebab", "Falafel", "Falafel", "Falafel", "Falafel", "kebab", "kebab"),
-    levels = c("kebab", "Falafel")
+    x = sample(x = classes, size = 10, replace = TRUE),
+    levels = c("Kebab", "Falafel")
 )
 
 ## Evaluate performance
@@ -53,13 +53,16 @@ SLmetrics::ckappa(
    actual_classes, 
    predicted_classes
 )
+
+
+
 }
 \references{
 James, Gareth, et al. An introduction to statistical learning. Vol. 112. No. 1. New York: springer, 2013.
 
 Hastie, Trevor. "The elements of statistical learning: data mining, inference, and prediction." (2009).
 
-Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for scientific computing in Python." Nature methods 17.3 (2020): 261-272.
+Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journal of machine Learning research 12 (2011): 2825-2830.
 }
 \seealso{
 Other Classification: 
@@ -99,6 +102,7 @@ Other Supervised Learning:
 \code{\link{fbeta}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
+\code{\link{fmi}()},
 \code{\link{fpr}()},
 \code{\link{hammingloss}()},
 \code{\link{huberloss}()},

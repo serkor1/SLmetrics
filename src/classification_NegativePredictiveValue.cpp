@@ -4,11 +4,9 @@
 // declare metric
 using npv_impl = metric::negative_predictive_value<int>;
 
-//' @templateVar .TITLE npv
 //' @templateVar .FUN npv
 //' @templateVar .METHOD factor
-//' @template classification_factor_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(npv.factor)]]
@@ -22,11 +20,9 @@ Rcpp::NumericVector negative_predictive_value(
         return performance.compute();
 }
 
-//' @templateVar .TITLE npv
 //' @templateVar .FUN weighted.npv
 //' @templateVar .METHOD factor
-//' @template classification_factor_weighted_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(weighted.npv.factor)]]
@@ -41,11 +37,9 @@ Rcpp::NumericVector weighted_negative_predictive_value(
         return performance.compute();
 }
 
-//' @templateVar .TITLE npv
 //' @templateVar .FUN npv
 //' @templateVar .METHOD cmatrix
-//' @template classification_cmatrix_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(npv.cmatrix)]]

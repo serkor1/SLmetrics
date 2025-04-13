@@ -4,11 +4,9 @@
 // Declare metric
 using jaccard_index = metric::jaccard<int>;
 
-//' @templateVar .TITLE jaccard
 //' @templateVar .FUN jaccard
 //' @templateVar .METHOD factor
-//' @template classification_factor_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(jaccard.factor)]]
@@ -22,11 +20,9 @@ Rcpp::NumericVector jaccard_score(
         return performance.compute();
 }
 
-//' @templateVar .TITLE jaccard
 //' @templateVar .FUN weighted.jaccard
 //' @templateVar .METHOD factor
-//' @template classification_factor_weighted_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(weighted.jaccard.factor)]]
@@ -41,11 +37,9 @@ Rcpp::NumericVector weighted_jaccard_score(
         return performance.compute();
 }
 
-//' @templateVar .TITLE jaccard
 //' @templateVar .FUN jaccard
 //' @templateVar .METHOD cmatrix
-//' @template classification_cmatrix_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(jaccard.cmatrix)]]

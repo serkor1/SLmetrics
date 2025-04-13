@@ -4,22 +4,15 @@
 # objective: Generate methods
 # script start;
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
 #' @templateVar .TITLE Fowlkes Mallows Index
 #' @templateVar .FUN fmi
 #' @templateVar .TASK Classification
-#' @templateVar .SINGLE_OUTPUT TRUE
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
-#' 
-#' @usage
-#' ## Generic S3 method
-#' ## for unweighted Fowlkes
-#' ## Mallows Index
-#' fmi(...)
-#' 
-#' @family Classification
-#' @family Unsupervised Learning
+#' @templateVar .MULTI_OUTPUT false
+#' @template classification_standard_template
 #' 
 #' @export
 fmi <- function(...) {

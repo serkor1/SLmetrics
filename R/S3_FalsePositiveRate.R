@@ -5,58 +5,49 @@
 # for False Positive Rate
 # script start;
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
 #' @aliases fallout weighted.fallout
-#' @templateVar .TITLE False Positive Rate
+#' 
+#' @templateVar .TITLE false positive rate
 #' @templateVar .FUN fpr
 #' @templateVar .TASK Classification
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
-#' 
-#' @usage 
-#' ## Generic S3 method
-#' ## for unweighted False
-#' ## Positive Rate
-#' fpr(...)
-#' 
-#' @family Classification
-#' @family Supervised Learning
+#' @templateVar .MULTI_OUTPUT true
+#' @template classification_standard_template
 #'
 #' @export
 fpr <- function(...) {
   UseMethod(
-    generic = "fpr",
-    object  = ..1
+    generic = "fpr"
   )
 }
 
 #' @rdname fpr
 #' @usage
 #' ## Generic S3 method
-#' ## for weighted false positive
-#' ## rate
+#' ## for weighted False Positive
+#' ## Rate
 #' weighted.fpr(...)
 #' @export
 weighted.fpr <- function(...) {
   UseMethod(
-    generic = "weighted.fpr",
-    object  = ..1
+    generic = "weighted.fpr"
   )
 }
 
 #' @export
 fallout <- function(...) {
   UseMethod(
-    generic = "fallout",
-    object  = ..1
+    generic = "fallout"
   )
 }
 
 #' @export
 weighted.fallout <- function(...) {
   UseMethod(
-    generic = "weighted.fallout",
-    object  = ..1
+    generic = "weighted.fallout"
   )
 }
 

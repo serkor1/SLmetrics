@@ -4,22 +4,16 @@
 # objective:
 # script start;
 
+#' @title NULL
+#' @usage NULL
+#' @return NULL
+#' 
 #' @templateVar .TITLE Negative Predictive Value
 #' @templateVar .FUN npv
 #' @templateVar .TASK Classification
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
+#' @templateVar .MULTI_OUTPUT true
+#' @template classification_standard_template
 #' 
-#' @usage 
-#' ## Generic S3 method
-#' ## for unweighted Negative
-#' ## Predictive Value
-#' npv(...)
-#'
-#' @family Classification
-#' @family Supervised Learning
-#'
 #' @export
 npv <- function(...) {
   UseMethod(

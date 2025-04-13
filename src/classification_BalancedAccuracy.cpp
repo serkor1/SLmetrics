@@ -4,11 +4,9 @@
 // implementation of metric
 using balanced_accuracy_score_impl = metric::balanced_accuracy_score<int>;
 
-//' @templateVar .TITLE baccuracy
 //' @templateVar .FUN baccuracy
 //' @templateVar .METHOD factor
-//' @template classification_factor_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
 //'
@@ -24,11 +22,9 @@ double balanced_accuracy(
         return performance.compute();
 }
 
-//' @templateVar .TITLE baccuracy
 //' @templateVar .FUN weighted.baccuracy
 //' @templateVar .METHOD factor
-//' @template classification_factor_weighted_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
 //'
@@ -45,11 +41,9 @@ double weighted_balanced_accuracy(
         return performance.compute();
 }
 
-//' @templateVar .TITLE baccuracy
 //' @templateVar .FUN baccuracy
 //' @templateVar .METHOD cmatrix
-//' @template classification_cmatrix_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
 //'

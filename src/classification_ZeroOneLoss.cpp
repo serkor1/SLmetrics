@@ -3,11 +3,9 @@
 
 using zero_one_loss_impl = metric::zerooneloss_score<int>;
 
-//' @templateVar .TITLE zerooneloss
 //' @templateVar .FUN zerooneloss
 //' @templateVar .METHOD factor
-//' @template classification_factor_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(zerooneloss.factor)]]
@@ -19,11 +17,9 @@ double zero_one_loss(
         return performance.compute();
 }
 
-//' @templateVar .TITLE zerooneloss
 //' @templateVar .FUN weighted.zerooneloss
 //' @templateVar .METHOD factor
-//' @template classification_factor_weighted_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(weighted.zerooneloss.factor)]]
@@ -36,11 +32,9 @@ double weighted_zero_one_loss(
         return performance.compute();
 }
 
-//' @templateVar .TITLE zerooneloss
 //' @templateVar .FUN zerooneloss
 //' @templateVar .METHOD cmatrix
-//' @template classification_cmatrix_example
-//' @template classification_cmatrix_inherit
+//' @template classification_standard_inherit
 //'
 //' @export
 // [[Rcpp::export(zerooneloss.cmatrix)]]

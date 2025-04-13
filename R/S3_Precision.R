@@ -4,28 +4,24 @@
 # objective: Generate method
 # script start;
 
-#' @aliases ppv weighted.ppv
+#' @title NULL
+#' @usage NULL
+#' @return NULL
 #' 
-#' @templateVar .TITLE precision
-#' @templateVar .FUN precision
-#' @templateVar .TASK Classification
-#' @template classification_inheritDotParams
-#' @template classification_factor_example
-#' @template classification_cmatrix_template
+#' @aliases ppv weighted.ppv
 #' 
 #' @section Other names:
 #' 
 #' The precision has other names depending on research field:
 #' - Positive Predictive Value, [ppv()]
 #' 
-#' @usage
-#' ## Generic S3 method
-#' ## for unweighted precision
-#' precision(...)
-#'
-#' @family Classification
-#' @family Supervised Learning
-#'
+#' @templateVar .TITLE precision
+#' @templateVar .FUN precision
+#' @templateVar .TASK Classification
+#' @templateVar .TASK Classification
+#' @templateVar .MULTI_OUTPUT true
+#' @template classification_standard_template
+#' 
 #' @export
 precision <- function(...) {
   UseMethod(
