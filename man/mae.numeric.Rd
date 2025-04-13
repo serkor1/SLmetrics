@@ -23,6 +23,20 @@ As everything is based on pointers internally values as \link{NA} and out of bou
 A workaroud is to create a wrapper around \code{\link[=mae]{mae()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=mae]{mae()}}.
 }
 }
+\examples{
+## Generate actual
+## and predicted values
+actual_values <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
+
+predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
+
+## Evaluate performance
+SLmetrics::mae(
+   actual_values, 
+   predicted_values
+)
+
+}
 \references{
 James, Gareth, et al. An introduction to statistical learning. Vol. 112. No. 1. New York: springer, 2013.
 

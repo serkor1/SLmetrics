@@ -2,6 +2,19 @@
 #' @rdname <%= .FUN %>
 #' @name <%= .FUN %>
 #' 
+#' @examples
+#' ## Generate actual
+#' ## and predicted values
+#' actual_values <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
+#' 
+#' predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
+#' 
+#' ## Evaluate performance
+#' SLmetrics::<%= .FUN %>(
+#'    actual_values, 
+#'    predicted_values
+#' )
+#' 
 #' @description
 #' A S3 generic function for calculating the <%= tolower(.TITLE) %> score of a regression model. [<%= .FUN %>()] handles the input as is - and therefore there is not sanity checks. 
 #' If the data contains [NA], or `length(x) != length(y)` you are left at the mercy of compiler.
