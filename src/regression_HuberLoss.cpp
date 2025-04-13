@@ -2,8 +2,9 @@
 #include "regression_HuberLoss.h"
 using namespace Rcpp;
 
-//' @rdname huberloss
-//' @method huberloss numeric
+//' @templateVar .FUN huberloss
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(huberloss.numeric)]]
 double huberloss(
@@ -16,8 +17,9 @@ double huberloss(
 
 }
 
-//' @rdname huberloss
-//' @method weighted.huberloss numeric
+//' @templateVar .FUN weighted.huberloss
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(weighted.huberloss.numeric)]]
 double weighted_huberloss(

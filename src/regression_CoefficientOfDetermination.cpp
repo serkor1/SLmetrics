@@ -2,8 +2,9 @@
 #include "regression_CoefficientOfDetermination.h"
 using namespace Rcpp;
 
-//' @rdname rsq
-//' @method rsq numeric
+//' @templateVar .FUN rsq
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(rsq.numeric)]]
 double rsq(
@@ -15,8 +16,9 @@ double rsq(
         return performance.compute();
 }
 
-//' @rdname rsq
-//' @method weighted.rsq numeric
+//' @templateVar .FUN weighted.rsq
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(weighted.rsq.numeric)]]
 double weighted_rsq(

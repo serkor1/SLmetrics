@@ -7,7 +7,7 @@
 \method{pr.curve}{factor}(actual, response, thresholds = NULL, presorted = FALSE, ...)
 }
 \arguments{
-\item{actual}{A vector \link{lenght} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
+\item{actual}{A vector \link{length} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
 
 \item{response}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
 The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution

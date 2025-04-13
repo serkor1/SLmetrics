@@ -967,197 +967,225 @@ weighted.logloss.integer <- function(actual, response, w, normalize = TRUE, ...)
     .Call(`_SLmetrics_weighted_PoissonLogLoss`, actual, response, w, normalize)
 }
 
-#' @rdname rsq
-#' @method rsq numeric
+#' @templateVar .FUN rsq
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 rsq.numeric <- function(actual, predicted, k = 0.0, ...) {
     .Call(`_SLmetrics_rsq`, actual, predicted, k)
 }
 
-#' @rdname rsq
-#' @method weighted.rsq numeric
+#' @templateVar .FUN weighted.rsq
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 weighted.rsq.numeric <- function(actual, predicted, w, k = 0.0, ...) {
     .Call(`_SLmetrics_weighted_rsq`, actual, predicted, w, k)
 }
 
-#' @rdname ccc
-#' @method ccc numeric
+#' @templateVar .FUN ccc
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 ccc.numeric <- function(actual, predicted, correction = FALSE, ...) {
     .Call(`_SLmetrics_ccc`, actual, predicted, correction)
 }
 
-#' @rdname ccc
-#' @method weighted.ccc numeric
+#' @templateVar .FUN weighted.ccc
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 weighted.ccc.numeric <- function(actual, predicted, w, correction = FALSE, ...) {
     .Call(`_SLmetrics_weighted_ccc`, actual, predicted, w, correction)
 }
 
-#' @rdname huberloss
-#' @method huberloss numeric
+#' @templateVar .FUN huberloss
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 huberloss.numeric <- function(actual, predicted, delta = 1.0, ...) {
     .Call(`_SLmetrics_huberloss`, actual, predicted, delta)
 }
 
-#' @rdname huberloss
-#' @method weighted.huberloss numeric
+#' @templateVar .FUN weighted.huberloss
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 weighted.huberloss.numeric <- function(actual, predicted, w, delta = 1.0, ...) {
     .Call(`_SLmetrics_weighted_huberloss`, actual, predicted, w, delta)
 }
 
-#' @rdname mae
-#' @method mae numeric
+#' @templateVar .FUN mae
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 mae.numeric <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_mae`, actual, predicted)
 }
 
-#' @rdname mae
-#' @method weighted.mae numeric
+#' @templateVar .FUN weighted.mae
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 weighted.mae.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_mae`, actual, predicted, w)
 }
 
-#' @rdname mape
-#' @method mape numeric
+#' @templateVar .FUN mape
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 mape.numeric <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_mape`, actual, predicted)
 }
 
-#' @rdname mape
-#' @method weighted.mape numeric
+#' @templateVar .FUN weighted.mape
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 weighted.mape.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_mape`, actual, predicted, w)
 }
 
-#' @rdname mpe
-#' @method mpe numeric
+#' @templateVar .FUN mpe
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 mpe.numeric <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_mpe`, actual, predicted)
 }
 
-#' @rdname mpe
-#' @method weighted.mpe numeric
+#' @templateVar .FUN weighted.mpe
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 weighted.mpe.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_mpe`, actual, predicted, w)
 }
 
-#' @rdname mse
-#' @method mse numeric
+#' @templateVar .FUN mse
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 mse.numeric <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_mse`, actual, predicted)
 }
 
-#' @rdname mse
-#' @method weighted.mse numeric
+#' @templateVar .FUN weighted.mse
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 weighted.mse.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_mse`, actual, predicted, w)
 }
 
-#' @rdname pinball
-#' @method pinball numeric
+#' @templateVar .FUN pinball
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 pinball.numeric <- function(actual, predicted, alpha = 0.5, deviance = FALSE, ...) {
     .Call(`_SLmetrics_pinball`, actual, predicted, alpha, deviance)
 }
 
-#' @rdname pinball
-#' @method weighted.pinball numeric
+#' @templateVar .FUN weighted.pinball
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 weighted.pinball.numeric <- function(actual, predicted, w, alpha = 0.5, deviance = FALSE, ...) {
     .Call(`_SLmetrics_weighted_pinball`, actual, predicted, w, alpha, deviance)
 }
 
-#' @rdname rae
-#' @method rae numeric
+#' @templateVar .FUN rae
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 rae.numeric <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_rae`, actual, predicted)
 }
 
-#' @rdname rae
-#' @method weighted.rae numeric
+#' @templateVar .FUN weighted.rae
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 weighted.rae.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_rae`, actual, predicted, w)
 }
 
-#' @rdname rrmse
-#' @method rrmse numeric
+#' @templateVar .FUN rrmse
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 rrmse.numeric <- function(actual, predicted, normalization = 1L, ...) {
     .Call(`_SLmetrics_RelativeRootMeanSquaredError`, actual, predicted, normalization)
 }
 
-#' @rdname rrmse
-#' @method weighted.rrmse numeric
+#' @templateVar .FUN weighted.rrmse
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 weighted.rrmse.numeric <- function(actual, predicted, w, normalization = 1L, ...) {
     .Call(`_SLmetrics_weighted_RelativeRootMeanSquaredError`, actual, predicted, w, normalization)
 }
 
-#' @rdname rmse
-#' @method rmse numeric
+#' @templateVar .FUN rmse
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 rmse.numeric <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_rmse`, actual, predicted)
 }
 
-#' @rdname rmse
-#' @method weighted.rmse numeric
+#' @templateVar .FUN weighted.rmse
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 weighted.rmse.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_rmse`, actual, predicted, w)
 }
 
-#' @rdname rmsle
-#' @method rmsle numeric
+#' @templateVar .FUN rmsle
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 rmsle.numeric <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_rmsle`, actual, predicted)
 }
 
-#' @rdname rmsle
-#' @method weighted.rmsle numeric
+#' @templateVar .FUN weighted.rmsle
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 weighted.rmsle.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_rmsle`, actual, predicted, w)
 }
 
-#' @rdname rrse
-#' @method rrse numeric
+#' @templateVar .FUN rrse
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 rrse.numeric <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_rrse`, actual, predicted)
 }
 
-#' @rdname rrse
-#' @method weighted.rrse numeric
+#' @templateVar .FUN weighted.rrse
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 weighted.rrse.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_rrse`, actual, predicted, w)
 }
 
-#' @rdname smape
-#' @method smape numeric
+#' @templateVar .FUN smape
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 smape.numeric <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_smape`, actual, predicted)
 }
 
-#' @rdname smape
-#' @method weighted.smape numeric
+#' @templateVar .FUN weighted.smape
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
 #' @export
 weighted.smape.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_smape`, actual, predicted, w)

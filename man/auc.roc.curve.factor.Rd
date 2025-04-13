@@ -7,7 +7,7 @@
 \method{auc.roc.curve}{factor}(actual, response, micro = NULL, method = 0L, ...)
 }
 \arguments{
-\item{actual}{A vector \link{lenght} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
+\item{actual}{A vector \link{length} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
 
 \item{response}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
 The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution

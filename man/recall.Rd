@@ -21,7 +21,7 @@ weighted.recall(...)
 \item{...}{
   Arguments passed on to \code{\link[=recall.factor]{recall.factor}}, \code{\link[=weighted.recall.factor]{weighted.recall.factor}}, \code{\link[=recall.cmatrix]{recall.cmatrix}}
   \describe{
-    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{lenght} \eqn{n}, and \eqn{k} levels.}
+    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
     \item{\code{estimator}}{An <\link{integer}>-value of \link{length} \eqn{1} (default: \eqn{0}).
 \itemize{
 \item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
@@ -125,7 +125,7 @@ Other Classification:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
-\code{\link{ccc.numeric}()},
+\code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix.factor}()},
 \code{\link{cross.entropy}()},
@@ -135,30 +135,27 @@ Other Supervised Learning:
 \code{\link{fer}()},
 \code{\link{fpr}()},
 \code{\link{hammingloss}()},
-\code{\link{huberloss.numeric}()},
+\code{\link{huberloss}()},
 \code{\link{jaccard}()},
 \code{\link{logloss}()},
-\code{\link{mae.numeric}()},
-\code{\link{mape.numeric}()},
+\code{\link{mae}()},
+\code{\link{mape}()},
 \code{\link{mcc}()},
-\code{\link{mpe.numeric}()},
-\code{\link{mse.numeric}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
-\code{\link{pinball.numeric}()},
 \code{\link{plr}()},
 \code{\link{pr.curve}()},
 \code{\link{precision}()},
-\code{\link{rae.numeric}()},
+\code{\link{rae}()},
 \code{\link{relative.entropy}()},
-\code{\link{rmse.numeric}()},
-\code{\link{rmsle.numeric}()},
+\code{\link{rmse}()},
+\code{\link{rmsle}()},
 \code{\link{roc.curve}()},
-\code{\link{rrmse.numeric}()},
-\code{\link{rrse.numeric}()},
-\code{\link{rsq.numeric}()},
+\code{\link{rrmse}()},
+\code{\link{rrse}()},
+\code{\link{rsq}()},
 \code{\link{shannon.entropy}()},
-\code{\link{smape.numeric}()},
+\code{\link{smape}()},
 \code{\link{specificity}()},
 \code{\link{zerooneloss}()}
 }

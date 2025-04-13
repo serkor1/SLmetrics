@@ -4,41 +4,16 @@
 # objective: Generate Methods
 # script start;
 
-#' @inherit huberloss
-#'
-#' @title Root Mean Squared Logarithmic Error
+#' @title NULL
+#' @usage NULL
 #' 
-#' @description
-#' The [rmsle()]-function computes the root mean squared logarithmic error between the observed and predicted <[numeric]> vectors. The [weighted.rmsle()] function computes the weighted root mean squared logarithmic error.
-#' 
-#' @usage
-#' ## Generic S3 method
-#' rmsle(
-#'  actual,
-#'  predicted,
-#'  ...
-#' )
-#' 
-#' @section Definition:
-#'
-#' The metric is calculated as,
-#'
-#' \deqn{
-#'   \sqrt{\frac{1}{n} \sum_i^n (\log(1 + y_i) - \log(1 + \upsilon_i))^2}
-#' }
-#'
-#' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. 
-#'
-#' @example man/examples/scr_RootMeanSquaredLogarithmicError.R
-#'
-#' @family Regression
-#' @family Supervised Learning
+#' @templateVar .TITLE Root Mean Squared Logarithmic Error
+#' @templateVar .FUN rmsle
+#' @template regression_standard_template
+#' @template regression_standard_params
 #' 
 #' @export
-rmsle <- function(
-  actual,
-  predicted,
-  ...) {
+rmsle <- function(...) {
   UseMethod(
     generic = "rmsle"
   )
@@ -47,18 +22,10 @@ rmsle <- function(
 #' @rdname rmsle
 #' @usage
 #' ## Generic S3 method
-#' weighted.rmsle(
-#'  actual,
-#'  predicted,
-#'  w,
-#'  ...
-#' )
+#' ## for weighted Root Mean Squared Logarithmic Error
+#' weighted.rmsle(...)
 #' @export
-weighted.rmsle <- function(
-  actual, 
-  predicted, 
-  w,
-  ...) {
+weighted.rmsle <- function(...) {
   UseMethod(
     generic = "weighted.rmsle"
   )

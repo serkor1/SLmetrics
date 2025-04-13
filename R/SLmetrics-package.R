@@ -92,3 +92,19 @@ NULL
 #' @keywords internal
 #' @usage NULL
 NULL
+
+#' @title Regression Documenatation
+#' @name regression_documentation
+#' 
+#' @description
+#' This roxygen block is the generic documnentation
+#' for entropy metrics for all the parameters.
+#' 
+#' @param actual,predicted A pair of [integer] or [factor] vectors of [length] \eqn{n}, and \eqn{k} levels.
+#' @param w A <[numeric]> vector of sample weights.
+#' @param ... Arguments passed into other methods
+#' @param delta A <[numeric]>-vector of [length] \eqn{1} (default: \eqn{1}). The threshold value for switch between functions (see calculation).
+#'
+#' @keywords internal
+#' @usage NULL
+NULL

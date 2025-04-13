@@ -19,7 +19,7 @@ weighted.fmi(...)
 \item{...}{
   Arguments passed on to \code{\link[=fmi.factor]{fmi.factor}}, \code{\link[=weighted.fmi.factor]{weighted.fmi.factor}}, \code{\link[=fmi.cmatrix]{fmi.cmatrix}}
   \describe{
-    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{lenght} \eqn{n}, and \eqn{k} levels.}
+    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
     \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
     \item{\code{x}}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
   }}

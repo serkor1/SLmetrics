@@ -7,7 +7,7 @@
 \method{weighted.fmi}{factor}(actual, predicted, w, ...)
 }
 \arguments{
-\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{lenght} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{w}{A <\link{numeric}> vector of sample weights.}
 

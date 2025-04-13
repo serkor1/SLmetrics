@@ -7,7 +7,7 @@
 \method{fmi}{factor}(actual, predicted, ...)
 }
 \arguments{
-\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{lenght} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{...}{Arguments passed into other methods.}
 }

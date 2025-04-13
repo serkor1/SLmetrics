@@ -4,35 +4,13 @@
 # objective: Generate Methods
 # script start;
 
-#' @inherit huberloss
-#'
-#' @title Symmetric Mean Absolutte Percentage Error
+#' @usage NULL
+#' @title NULL
 #' 
-#' @description
-#' The [smape()]-function computes the  [symmetric mean absolute percentage error](https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error) between
-#' the observed and predicted <[numeric]> vectors. The [weighted.smape()] function computes the weighted symmetric mean absolute percentage error.
-#' 
-#' @usage
-#' ## Generic S3 method
-#' smape(
-#'  actual,
-#'  predicted,
-#'  ...
-#' )
-#' 
-#' @section Definition:
-#' The metric is calculated as follows,
-#'
-#' \deqn{
-#'   \sum_i^n \frac{1}{n} \frac{|y_i - \upsilon_i|}{\frac{|y_i|+|\upsilon_i|}{2}}
-#' }
-#'
-#' where \eqn{y_i} and \eqn{\upsilon_i} is the `actual` and `predicted` values respectively.
-#' 
-#' @example man/examples/scr_SymmetricMeanAbsolutePercentageError.R
-#'
-#' @family Regression
-#' @family Supervised Learning
+#' @templateVar .TITLE Symmetric Mean Absolutte Percentage Error
+#' @templateVar .FUN smape
+#' @template regression_standard_template
+#' @template regression_standard_params
 #' 
 #' @export
 smape <- function(
@@ -47,6 +25,7 @@ smape <- function(
 #' @rdname smape
 #' @usage
 #' ## Generic S3 method
+#' ## for weighted Symmetric Mean Absolutte Percentage Error
 #' weighted.smape(
 #'  actual,
 #'  predicted,

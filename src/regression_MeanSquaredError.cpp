@@ -2,8 +2,9 @@
 #include "regression_MeanSquaredError.h"
 using namespace Rcpp;
 
-//' @rdname mse
-//' @method mse numeric
+//' @templateVar .FUN mse
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(mse.numeric)]]
 double mse(
@@ -19,8 +20,9 @@ double mse(
         return performance.compute();
 }
 
-//' @rdname mse
-//' @method weighted.mse numeric
+//' @templateVar .FUN weighted.mse
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(weighted.mse.numeric)]]
 double weighted_mse(

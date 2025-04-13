@@ -2,8 +2,9 @@
 #include "regression_MeanAbsolutePercentageError.h"
 using namespace Rcpp;
 
-//' @rdname mape
-//' @method mape numeric
+//' @templateVar .FUN mape
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(mape.numeric)]]
 double mape(
@@ -14,8 +15,9 @@ double mape(
         return performance.compute();
 }
 
-//' @rdname mape
-//' @method weighted.mape numeric
+//' @templateVar .FUN weighted.mape
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(weighted.mape.numeric)]]
 double weighted_mape(

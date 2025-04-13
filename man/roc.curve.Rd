@@ -19,7 +19,7 @@ weighted.roc.curve(...)
 \item{...}{
   Arguments passed on to \code{\link[=roc.curve.factor]{roc.curve.factor}}, \code{\link[=weighted.roc.curve.factor]{weighted.roc.curve.factor}}
   \describe{
-    \item{\code{actual}}{A vector \link{lenght} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
+    \item{\code{actual}}{A vector \link{length} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
     \item{\code{response}}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
 The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 over the \eqn{k} classes). The first column corresponds to the first factor
@@ -83,7 +83,7 @@ Other Classification:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
-\code{\link{ccc.numeric}()},
+\code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix.factor}()},
 \code{\link{cross.entropy}()},
@@ -93,30 +93,27 @@ Other Supervised Learning:
 \code{\link{fer}()},
 \code{\link{fpr}()},
 \code{\link{hammingloss}()},
-\code{\link{huberloss.numeric}()},
+\code{\link{huberloss}()},
 \code{\link{jaccard}()},
 \code{\link{logloss}()},
-\code{\link{mae.numeric}()},
-\code{\link{mape.numeric}()},
+\code{\link{mae}()},
+\code{\link{mape}()},
 \code{\link{mcc}()},
-\code{\link{mpe.numeric}()},
-\code{\link{mse.numeric}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
-\code{\link{pinball.numeric}()},
 \code{\link{plr}()},
 \code{\link{pr.curve}()},
 \code{\link{precision}()},
-\code{\link{rae.numeric}()},
+\code{\link{rae}()},
 \code{\link{recall}()},
 \code{\link{relative.entropy}()},
-\code{\link{rmse.numeric}()},
-\code{\link{rmsle.numeric}()},
-\code{\link{rrmse.numeric}()},
-\code{\link{rrse.numeric}()},
-\code{\link{rsq.numeric}()},
+\code{\link{rmse}()},
+\code{\link{rmsle}()},
+\code{\link{rrmse}()},
+\code{\link{rrse}()},
+\code{\link{rsq}()},
 \code{\link{shannon.entropy}()},
-\code{\link{smape.numeric}()},
+\code{\link{smape}()},
 \code{\link{specificity}()},
 \code{\link{zerooneloss}()}
 }

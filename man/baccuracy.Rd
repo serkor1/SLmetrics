@@ -20,7 +20,7 @@ weighted.baccuracy(...)
   Arguments passed on to \code{\link[=baccuracy.factor]{baccuracy.factor}}, \code{\link[=weighted.baccuracy.factor]{weighted.baccuracy.factor}}, \code{\link[=baccuracy.cmatrix]{baccuracy.cmatrix}}
   \describe{
     \item{\code{adjust}}{A \link{logical} value (default: \link{FALSE}). If \link{TRUE} the metric is adjusted for random chance \eqn{\frac{1}{k}}.}
-    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{lenght} \eqn{n}, and \eqn{k} levels.}
+    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
     \item{\code{na.rm}}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
 This argument is only relevant when \code{micro != NULL}.
 When \code{na.rm = TRUE}, the computation corresponds to \code{sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))}.
@@ -104,7 +104,7 @@ Other Classification:
 
 Other Supervised Learning: 
 \code{\link{accuracy}()},
-\code{\link{ccc.numeric}()},
+\code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix.factor}()},
 \code{\link{cross.entropy}()},
@@ -114,31 +114,28 @@ Other Supervised Learning:
 \code{\link{fer}()},
 \code{\link{fpr}()},
 \code{\link{hammingloss}()},
-\code{\link{huberloss.numeric}()},
+\code{\link{huberloss}()},
 \code{\link{jaccard}()},
 \code{\link{logloss}()},
-\code{\link{mae.numeric}()},
-\code{\link{mape.numeric}()},
+\code{\link{mae}()},
+\code{\link{mape}()},
 \code{\link{mcc}()},
-\code{\link{mpe.numeric}()},
-\code{\link{mse.numeric}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
-\code{\link{pinball.numeric}()},
 \code{\link{plr}()},
 \code{\link{pr.curve}()},
 \code{\link{precision}()},
-\code{\link{rae.numeric}()},
+\code{\link{rae}()},
 \code{\link{recall}()},
 \code{\link{relative.entropy}()},
-\code{\link{rmse.numeric}()},
-\code{\link{rmsle.numeric}()},
+\code{\link{rmse}()},
+\code{\link{rmsle}()},
 \code{\link{roc.curve}()},
-\code{\link{rrmse.numeric}()},
-\code{\link{rrse.numeric}()},
-\code{\link{rsq.numeric}()},
+\code{\link{rrmse}()},
+\code{\link{rrse}()},
+\code{\link{rsq}()},
 \code{\link{shannon.entropy}()},
-\code{\link{smape.numeric}()},
+\code{\link{smape}()},
 \code{\link{specificity}()},
 \code{\link{zerooneloss}()}
 }

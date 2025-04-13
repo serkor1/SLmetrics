@@ -2,8 +2,9 @@
 #include "regression_ConcordanceCorrelationCoefficient.h"
 using namespace Rcpp;
 
-//' @rdname ccc
-//' @method ccc numeric
+//' @templateVar .FUN ccc
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(ccc.numeric)]]
 double ccc(
@@ -15,8 +16,9 @@ double ccc(
         return performance.compute();
 }
 
-//' @rdname ccc
-//' @method weighted.ccc numeric
+//' @templateVar .FUN weighted.ccc
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(weighted.ccc.numeric)]]
 double weighted_ccc(

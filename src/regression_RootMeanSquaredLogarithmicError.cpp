@@ -2,8 +2,9 @@
 #include "regression_RootMeanSquaredLogarithmicError.h"
 using namespace Rcpp;
 
-//' @rdname rmsle
-//' @method rmsle numeric
+//' @templateVar .FUN rmsle
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(rmsle.numeric)]]
 double rmsle(
@@ -14,8 +15,9 @@ double rmsle(
         return performance.compute();
 }
 
-//' @rdname rmsle
-//' @method weighted.rmsle numeric
+//' @templateVar .FUN weighted.rmsle
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(weighted.rmsle.numeric)]]
 double weighted_rmsle(
