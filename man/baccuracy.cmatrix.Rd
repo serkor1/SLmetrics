@@ -77,7 +77,7 @@ Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journa
 Other Classification: 
 \code{\link{accuracy}()},
 \code{\link{ckappa}()},
-\code{\link{cmatrix.factor}()},
+\code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
 \code{\link{dor}()},
 \code{\link{fbeta}()},
@@ -105,7 +105,7 @@ Other Supervised Learning:
 \code{\link{accuracy}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
-\code{\link{cmatrix.factor}()},
+\code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
 \code{\link{dor}()},
 \code{\link{fbeta}()},

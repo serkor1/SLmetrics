@@ -94,14 +94,12 @@ ckappa.cmatrix <- function(x, beta = 0.0, ...) {
     .Call(`_SLmetrics_cmatrix_cohens_kappa`, x, beta)
 }
 
-#' @rdname cmatrix
 #' @method cmatrix factor
 #' @export
 cmatrix.factor <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_confusion_matrix`, actual, predicted)
 }
 
-#' @rdname cmatrix
 #' @method weighted.cmatrix factor
 #' @export
 weighted.cmatrix.factor <- function(actual, predicted, w, ...) {

@@ -77,7 +77,7 @@ Other Supervised Learning:
 \code{\link{baccuracy}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
-\code{\link{cmatrix.factor}()},
+\code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
 \code{\link{dor}()},
 \code{\link{fbeta}()},
