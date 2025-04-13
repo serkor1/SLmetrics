@@ -15,7 +15,10 @@ weighted.ccc(...)
 \item{...}{
   Arguments passed on to \code{\link[=ccc.numeric]{ccc.numeric}}, \code{\link[=weighted.ccc.numeric]{weighted.ccc.numeric}}
   \describe{
-    \item{\code{}}{}
+    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+    \item{\code{correction}}{A <\link{logical}> vector of \link{length} \eqn{1} (default: \link{FALSE}). If \link{TRUE} the variance and covariance
+will be adjusted with \eqn{\frac{1-n}{n}}}
+    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
   }}
 }
 \value{
@@ -42,6 +45,9 @@ Other Regression:
 \code{\link{huberloss}()},
 \code{\link{mae}()},
 \code{\link{mape}()},
+\code{\link{mpe}()},
+\code{\link{mse}()},
+\code{\link{pinball}()},
 \code{\link{rae}()},
 \code{\link{rmse}()},
 \code{\link{rmsle}()},
@@ -68,8 +74,11 @@ Other Supervised Learning:
 \code{\link{mae}()},
 \code{\link{mape}()},
 \code{\link{mcc}()},
+\code{\link{mpe}()},
+\code{\link{mse}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
+\code{\link{pinball}()},
 \code{\link{plr}()},
 \code{\link{pr.curve}()},
 \code{\link{precision}()},

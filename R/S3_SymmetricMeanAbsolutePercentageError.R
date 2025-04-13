@@ -13,10 +13,7 @@
 #' @template regression_standard_params
 #' 
 #' @export
-smape <- function(
-  actual,
-  predicted,
-  ...) {
+smape <- function(...) {
   UseMethod(
     generic = "smape"
   )
@@ -26,18 +23,9 @@ smape <- function(
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Symmetric Mean Absolutte Percentage Error
-#' weighted.smape(
-#'  actual,
-#'  predicted,
-#'  w,
-#'  ...
-#' )
+#' weighted.smape(...)
 #' @export
-weighted.smape <- function(
-  actual, 
-  predicted, 
-  w, 
-  ...) {
+weighted.smape <- function(...) {
   UseMethod(
     generic = "weighted.smape"
   )

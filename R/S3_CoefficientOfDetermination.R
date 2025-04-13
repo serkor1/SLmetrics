@@ -13,9 +13,7 @@
 #' @template regression_standard_params
 #' 
 #' @export
-rsq <- function(
-  ..., 
-  k = 0) {
+rsq <- function(...) {
   UseMethod(
     generic = "rsq",
     object  = ..1
@@ -26,16 +24,9 @@ rsq <- function(
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted \eqn{R^2}
-#' weighted.rsq(
-#'  ...,
-#'  w,
-#'  k = 0
-#' )
+#' weighted.rsq(...)
 #' @export
-weighted.rsq <- function(
-  ...,
-  w,
-  k = 0) {
+weighted.rsq <- function(...) {
   UseMethod(
     generic = "weighted.rsq",
     object  = ..1

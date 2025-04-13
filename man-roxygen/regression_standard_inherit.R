@@ -3,7 +3,7 @@
 #' @rdname <%= .FUN %>.<%= .METHOD %>
 #' @name <%= .FUN %>.<%= .METHOD %>
 #' @method <%= .FUN %> <%= .METHOD %>
-#' @inheritParams regression_model
+#' @inheritParams regression_documentation
 #' 
 #' @keywords regression
 #' @keywords evaluation

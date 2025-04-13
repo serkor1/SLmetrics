@@ -104,6 +104,12 @@ NULL
 #' @param w A <[numeric]> vector of sample weights.
 #' @param ... Arguments passed into other methods
 #' @param delta A <[numeric]>-vector of [length] \eqn{1} (default: \eqn{1}). The threshold value for switch between functions (see calculation).
+#' @param correction A <[logical]> vector of [length] \eqn{1} (default: [FALSE]). If [TRUE] the variance and covariance
+#' will be adjusted with \eqn{\frac{1-n}{n}}
+#' @param k A <[numeric]>-vector of [length] 1 (default: 0). For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.
+#' @param normalization A <[numeric]>-value of [length] \eqn{1} (default: \eqn{1}). \eqn{0}: [mean]-normalization, \eqn{1}: [range]-normalization, \eqn{2}: [IQR]-normalization.
+#' @param alpha A <[numeric]>-value of [length] \eqn{1} (default: \eqn{0.5}). The slope of the pinball loss function.
+#' @param deviance A <[logical]>-value of [length] 1 (default: [FALSE]). If [TRUE] the function returns the \eqn{D^2} loss.
 #'
 #' @keywords internal
 #' @usage NULL

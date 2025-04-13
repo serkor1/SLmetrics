@@ -11,11 +11,7 @@
 #' @usage NULL
 #' 
 #' @export
-rrmse <- function(
-  actual,
-  predicted,
-  normalization = 1,
-  ...) {
+rrmse <- function(...) {
   UseMethod(
     generic = "rrmse"
   )
@@ -25,20 +21,9 @@ rrmse <- function(
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Relative Root Mean Squared Error
-#' weighted.rrmse(
-#'  actual,
-#'  predicted,
-#'  w,
-#'  normalization = 1,
-#'  ...
-#' )
+#' weighted.rrmse(...)
 #' @export
-weighted.rrmse <- function(
-  actual,
-  predicted,
-  w,
-  normalization = 1,
-  ...) {
+weighted.rrmse <- function(...) {
   UseMethod(
     generic = "weighted.rrmse"
   )

@@ -8,7 +8,7 @@
 #' @title NULL
 #' 
 #' @templateVar .TITLE mean percentage error
-#' @templateVar .FUN huberloss
+#' @templateVar .FUN mpe
 #' @template regression_standard_template
 #' @template regression_standard_params
 #' 

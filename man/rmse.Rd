@@ -12,18 +12,14 @@ rmse(...)
 ## Generic S3 method
 ## for weighted Root Mean
 ## Squared Error
-weighted.rmse(
- actual,
- predicted,
- w,
- ...
-)
+weighted.rmse(...)
 }
 \arguments{
 \item{...}{
   Arguments passed on to \code{\link[=rmse.numeric]{rmse.numeric}}, \code{\link[=weighted.rmse.numeric]{weighted.rmse.numeric}}
   \describe{
-    \item{\code{}}{}
+    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
   }}
 }
 \value{
@@ -51,6 +47,9 @@ Other Regression:
 \code{\link{huberloss}()},
 \code{\link{mae}()},
 \code{\link{mape}()},
+\code{\link{mpe}()},
+\code{\link{mse}()},
+\code{\link{pinball}()},
 \code{\link{rae}()},
 \code{\link{rmsle}()},
 \code{\link{rrmse}()},
@@ -77,8 +76,11 @@ Other Supervised Learning:
 \code{\link{mae}()},
 \code{\link{mape}()},
 \code{\link{mcc}()},
+\code{\link{mpe}()},
+\code{\link{mse}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
+\code{\link{pinball}()},
 \code{\link{plr}()},
 \code{\link{pr.curve}()},
 \code{\link{precision}()},

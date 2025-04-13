@@ -25,12 +25,7 @@ huberloss <- function(...) {
 #' ## for weighted Huber Loss
 #' weighted.huberloss(...)
 #' @export
-weighted.huberloss <- function(
-  actual, 
-  predicted, 
-  w, 
-  delta = 1,
-   ...) {
+weighted.huberloss <- function(...) {
   UseMethod(
     generic = "weighted.huberloss"
   )

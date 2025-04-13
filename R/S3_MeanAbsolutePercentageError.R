@@ -13,10 +13,7 @@
 #' @template regression_standard_params
 #' 
 #' @export
-mape <- function(
-  actual, 
-  predicted,
-  ...) {
+mape <- function(...) {
   UseMethod(
     generic = "mape"
   )
@@ -28,11 +25,7 @@ mape <- function(
 #' ## for weighted Mean Absolute Percentage Error
 #' weighted.mape(...)
 #' @export
-weighted.mape <- function(
-  actual, 
-  predicted,
-  w,
-  ...) {
+weighted.mape <- function(...) {
   UseMethod(
     generic = "weighted.mape"
   )

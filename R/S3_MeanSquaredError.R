@@ -8,7 +8,7 @@
 #' @title NULL
 #' 
 #' @templateVar .TITLE mean squeared error
-#' @templateVar .FUN huberloss
+#' @templateVar .FUN mse
 #' @template regression_standard_template
 #' @template regression_standard_params
 #' 
@@ -23,12 +23,7 @@ mse <- function(...) {
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Mean Squared Error
-#' weighted.mse(
-#'  actual,
-#'  predicted,
-#'  w,
-#'  ...
-#' )
+#' weighted.mse(...)
 #' @export
 weighted.mse <- function(...) {
   UseMethod(

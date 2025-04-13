@@ -22,12 +22,7 @@ rmse <- function(...) {
 #' ## Generic S3 method
 #' ## for weighted Root Mean
 #' ## Squared Error
-#' weighted.rmse(
-#'  actual,
-#'  predicted,
-#'  w,
-#'  ...
-#' )
+#' weighted.rmse(...)
 #' @export
 weighted.rmse <- function(...) {
   UseMethod(

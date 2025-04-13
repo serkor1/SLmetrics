@@ -13,10 +13,7 @@
 #' @template regression_standard_params
 #' 
 #' @export
-rae <- function(
-  actual,
-  predicted,
-  ...) {
+rae <- function(...) {
   UseMethod(
     generic = "rae"
   )
@@ -26,18 +23,9 @@ rae <- function(
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Relative Absolute Error
-#' weighted.rae(
-#'  actual,
-#'  predicted,
-#'  w,
-#'  ...
-#' )
+#' weighted.rae(...)
 #' @export
-weighted.rae <- function(
-  actual,
-  predicted,
-  w,
-  ...) {
+weighted.rae <- function(...) {
   UseMethod(
     generic = "weighted.rae"
   )

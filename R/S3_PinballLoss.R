@@ -8,7 +8,7 @@
 #' @title NULL
 #' 
 #' @templateVar .TITLE pinball loss
-#' @templateVar .FUN huberloss
+#' @templateVar .FUN pinball
 #' @template regression_standard_template
 #' @template regression_standard_params
 #' 

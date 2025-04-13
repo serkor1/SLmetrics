@@ -6,6 +6,15 @@
 \usage{
 \method{weighted.rsq}{numeric}(actual, predicted, w, k = 0, ...)
 }
+\arguments{
+\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+
+\item{w}{A <\link{numeric}> vector of sample weights.}
+
+\item{k}{A <\link{numeric}>-vector of \link{length} 1 (default: 0). For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.}
+
+\item{...}{Arguments passed into other methods}
+}
 \value{
 A <\link{double}> value
 }
@@ -31,6 +40,9 @@ Other Regression:
 \code{\link{huberloss}()},
 \code{\link{mae}()},
 \code{\link{mape}()},
+\code{\link{mpe}()},
+\code{\link{mse}()},
+\code{\link{pinball}()},
 \code{\link{rae}()},
 \code{\link{rmse}()},
 \code{\link{rmsle}()},
@@ -57,8 +69,11 @@ Other Supervised Learning:
 \code{\link{mae}()},
 \code{\link{mape}()},
 \code{\link{mcc}()},
+\code{\link{mpe}()},
+\code{\link{mse}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
+\code{\link{pinball}()},
 \code{\link{plr}()},
 \code{\link{pr.curve}()},
 \code{\link{precision}()},

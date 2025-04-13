@@ -11,19 +11,15 @@ rrmse(...)
 
 ## Generic S3 method
 ## for weighted Relative Root Mean Squared Error
-weighted.rrmse(
- actual,
- predicted,
- w,
- normalization = 1,
- ...
-)
+weighted.rrmse(...)
 }
 \arguments{
 \item{...}{
   Arguments passed on to \code{\link[=rrmse.numeric]{rrmse.numeric}}, \code{\link[=weighted.rrmse.numeric]{weighted.rrmse.numeric}}
   \describe{
-    \item{\code{}}{}
+    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+    \item{\code{normalization}}{A <\link{numeric}>-value of \link{length} \eqn{1} (default: \eqn{1}). \eqn{0}: \link{mean}-normalization, \eqn{1}: \link{range}-normalization, \eqn{2}: \link{IQR}-normalization.}
+    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
   }}
 }
 \value{
@@ -51,6 +47,9 @@ Other Regression:
 \code{\link{huberloss}()},
 \code{\link{mae}()},
 \code{\link{mape}()},
+\code{\link{mpe}()},
+\code{\link{mse}()},
+\code{\link{pinball}()},
 \code{\link{rae}()},
 \code{\link{rmse}()},
 \code{\link{rmsle}()},
@@ -77,8 +76,11 @@ Other Supervised Learning:
 \code{\link{mae}()},
 \code{\link{mape}()},
 \code{\link{mcc}()},
+\code{\link{mpe}()},
+\code{\link{mse}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
+\code{\link{pinball}()},
 \code{\link{plr}()},
 \code{\link{pr.curve}()},
 \code{\link{precision}()},
