@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{weighted.fdr.factor}
 \alias{weighted.fdr.factor}
-\title{Fdr}
+\title{False Discovery Rate}
 \usage{
 \method{weighted.fdr}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
 }

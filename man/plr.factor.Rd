@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{plr.factor}
 \alias{plr.factor}
-\title{Plr}
+\title{Positive Likelihood Ratio}
 \usage{
 \method{plr}{factor}(actual, predicted, ...)
 }

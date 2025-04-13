@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{hammingloss.cmatrix}
 \alias{hammingloss.cmatrix}
-\title{Hammingloss}
+\title{Hamming Loss}
 \usage{
 \method{hammingloss}{cmatrix}(x, ...)
 }

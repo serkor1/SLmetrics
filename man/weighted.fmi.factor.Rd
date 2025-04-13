@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{weighted.fmi.factor}
 \alias{weighted.fmi.factor}
-\title{Fmi}
+\title{Fowlkes Mallows Index}
 \usage{
 \method{weighted.fmi}{factor}(actual, predicted, w, ...)
 }

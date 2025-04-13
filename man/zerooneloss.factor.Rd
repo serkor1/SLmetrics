@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{zerooneloss.factor}
 \alias{zerooneloss.factor}
-\title{Zerooneloss}
+\title{Zero-One Loss}
 \usage{
 \method{zerooneloss}{factor}(actual, predicted, ...)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{fer.factor}
 \alias{fer.factor}
-\title{Fer}
+\title{False Omission Rate}
 \usage{
 \method{fer}{factor}(actual, predicted, estimator = 0L, na.rm = TRUE, ...)
 }

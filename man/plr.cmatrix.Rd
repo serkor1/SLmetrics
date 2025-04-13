@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{plr.cmatrix}
 \alias{plr.cmatrix}
-\title{Plr}
+\title{Positive Likelihood Ratio}
 \usage{
 \method{plr}{cmatrix}(x, ...)
 }

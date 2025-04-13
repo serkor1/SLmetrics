@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{nlr.cmatrix}
 \alias{nlr.cmatrix}
-\title{Nlr}
+\title{Negative Likelihood Ratio}
 \usage{
 \method{nlr}{cmatrix}(x, ...)
 }

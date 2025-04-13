@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{hammingloss.factor}
 \alias{hammingloss.factor}
-\title{Hammingloss}
+\title{Hamming Loss}
 \usage{
 \method{hammingloss}{factor}(actual, predicted, ...)
 }

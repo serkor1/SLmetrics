@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{mcc.cmatrix}
 \alias{mcc.cmatrix}
-\title{Mcc}
+\title{Matthews Correlation Coefficient}
 \usage{
 \method{mcc}{cmatrix}(x, ...)
 }

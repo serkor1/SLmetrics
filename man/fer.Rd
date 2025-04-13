@@ -151,3 +151,7 @@ Other Supervised Learning:
 }
 \concept{Classification}
 \concept{Supervised Learning}
+\concept{performance evaluation}
+\keyword{classification}
+\keyword{learning}
+\keyword{machine}

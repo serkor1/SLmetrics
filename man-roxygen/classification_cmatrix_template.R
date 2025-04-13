@@ -8,6 +8,10 @@ value = as.logical(.SINGLE_OUTPUT)
 #' @rdname <%= .FUN %>
 #' @name <%= .FUN %>
 #' 
+#' @keywords classification
+#' @keywords evaluation
+#' @concept Machine learning performance evaluation
+#' 
 #' @description
 #' A S3 generic function for calculating the <%= tolower(.TITLE) %> score of a <%= tolower(.TASK) %> model. [<%= .FUN %>()] handles the input as is - and therefore there is not sanity checks. 
 #' If the data contains [NA], or `length(x) != length(y)` you are left at the mercy of compiler.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{fbeta.factor}
 \alias{fbeta.factor}
-\title{Fbeta}
+\title{\eqn{f_{\beta}}-Score}
 \usage{
 \method{fbeta}{factor}(actual, predicted, beta = 1, estimator = 0L, na.rm = TRUE, ...)
 }

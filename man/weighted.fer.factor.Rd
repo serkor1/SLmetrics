@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{weighted.fer.factor}
 \alias{weighted.fer.factor}
-\title{Fer}
+\title{False Omission Rate}
 \usage{
 \method{weighted.fer}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
 }

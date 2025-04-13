@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{baccuracy.cmatrix}
 \alias{baccuracy.cmatrix}
-\title{Baccuracy}
+\title{Balanced Accuracy}
 \usage{
 \method{baccuracy}{cmatrix}(x, adjust = FALSE, na.rm = TRUE, ...)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{nlr.factor}
 \alias{nlr.factor}
-\title{Nlr}
+\title{Negative Likelihood Ratio}
 \usage{
 \method{nlr}{factor}(actual, predicted, ...)
 }

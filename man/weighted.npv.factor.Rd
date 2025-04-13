@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{weighted.npv.factor}
 \alias{weighted.npv.factor}
-\title{Npv}
+\title{Negative Predictive Value}
 \usage{
 \method{weighted.npv}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
 }

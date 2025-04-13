@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{fdr.cmatrix}
 \alias{fdr.cmatrix}
-\title{Fdr}
+\title{False Discovery Rate}
 \usage{
 \method{fdr}{cmatrix}(x, estimator = 0L, na.rm = TRUE, ...)
 }

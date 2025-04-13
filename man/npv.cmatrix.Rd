@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{npv.cmatrix}
 \alias{npv.cmatrix}
-\title{Npv}
+\title{Negative Predictive Value}
 \usage{
 \method{npv}{cmatrix}(x, estimator = 0L, na.rm = TRUE, ...)
 }

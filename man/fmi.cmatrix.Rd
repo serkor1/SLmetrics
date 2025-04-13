@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{fmi.cmatrix}
 \alias{fmi.cmatrix}
-\title{Fmi}
+\title{Fowlkes Mallows Index}
 \usage{
 \method{fmi}{cmatrix}(x, ...)
 }

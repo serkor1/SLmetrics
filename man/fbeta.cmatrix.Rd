@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{fbeta.cmatrix}
 \alias{fbeta.cmatrix}
-\title{Fbeta}
+\title{\eqn{f_{\beta}}-Score}
 \usage{
 \method{fbeta}{cmatrix}(x, beta = 1, estimator = 0L, na.rm = TRUE, ...)
 }

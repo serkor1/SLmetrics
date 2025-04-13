@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{weighted.dor.factor}
 \alias{weighted.dor.factor}
-\title{Dor}
+\title{Diagnostic Odds Ratio}
 \usage{
 \method{weighted.dor}{factor}(actual, predicted, w, ...)
 }

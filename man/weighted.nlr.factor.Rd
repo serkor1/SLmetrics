@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{weighted.nlr.factor}
 \alias{weighted.nlr.factor}
-\title{Nlr}
+\title{Negative Likelihood Ratio}
 \usage{
 \method{weighted.nlr}{factor}(actual, predicted, w, ...)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{fer.cmatrix}
 \alias{fer.cmatrix}
-\title{Fer}
+\title{False Omission Rate}
 \usage{
 \method{fer}{cmatrix}(x, estimator = 0L, na.rm = TRUE, ...)
 }

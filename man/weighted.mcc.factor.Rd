@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{weighted.mcc.factor}
 \alias{weighted.mcc.factor}
-\title{Mcc}
+\title{Matthews Correlation Coefficient}
 \usage{
 \method{weighted.mcc}{factor}(actual, predicted, w, ...)
 }

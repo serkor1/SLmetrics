@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{weighted.fbeta.factor}
 \alias{weighted.fbeta.factor}
-\title{Fbeta}
+\title{\eqn{f_{\beta}}-Score}
 \usage{
 \method{weighted.fbeta}{factor}(
   actual,

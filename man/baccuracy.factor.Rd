@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{baccuracy.factor}
 \alias{baccuracy.factor}
-\title{Baccuracy}
+\title{Balanced Accuracy}
 \usage{
 \method{baccuracy}{factor}(actual, predicted, adjust = FALSE, na.rm = TRUE, ...)
 }

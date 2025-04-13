@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{mcc.factor}
 \alias{mcc.factor}
-\title{Mcc}
+\title{Matthews Correlation Coefficient}
 \usage{
 \method{mcc}{factor}(actual, predicted, ...)
 }

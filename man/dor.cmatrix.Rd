@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{dor.cmatrix}
 \alias{dor.cmatrix}
-\title{Dor}
+\title{Diagnostic Odds Ratio}
 \usage{
 \method{dor}{cmatrix}(x, ...)
 }

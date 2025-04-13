@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{weighted.ckappa.factor}
 \alias{weighted.ckappa.factor}
-\title{Ckappa}
+\title{Cohen's \eqn{\kappa} Statistic}
 \usage{
 \method{weighted.ckappa}{factor}(actual, predicted, w, beta = 0, ...)
 }

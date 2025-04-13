@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{zerooneloss.cmatrix}
 \alias{zerooneloss.cmatrix}
-\title{Zerooneloss}
+\title{Zero-One Loss}
 \usage{
 \method{zerooneloss}{cmatrix}(x, ...)
 }

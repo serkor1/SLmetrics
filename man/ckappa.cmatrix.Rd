@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{ckappa.cmatrix}
 \alias{ckappa.cmatrix}
-\title{Ckappa}
+\title{Cohen's \eqn{\kappa} Statistic}
 \usage{
 \method{ckappa}{cmatrix}(x, beta = 0, ...)
 }

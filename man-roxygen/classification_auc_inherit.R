@@ -14,3 +14,7 @@
 #'
 #' @method <%= .FUN %> <%= .METHOD %>
 #' @inheritParams classification_documentation
+#' 
+#' @keywords classification
+#' @keywords evaluation
+#' @concept Machine learning performance evaluation

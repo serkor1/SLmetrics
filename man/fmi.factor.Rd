@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{fmi.factor}
 \alias{fmi.factor}
-\title{Fmi}
+\title{Fowlkes Mallows Index}
 \usage{
 \method{fmi}{factor}(actual, predicted, ...)
 }
