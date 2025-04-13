@@ -21,7 +21,7 @@ weighted.fpr(...)
 \item{...}{
   Arguments passed on to \code{\link[=fpr.factor]{fpr.factor}}, \code{\link[=weighted.fpr.factor]{weighted.fpr.factor}}, \code{\link[=fpr.cmatrix]{fpr.cmatrix}}
   \describe{
-    \item{\code{actual,predicted}}{A pair of vectors <\link{factor}> with actual and observed classes.}
+    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{lenght} \eqn{n}, and \eqn{k} levels.}
     \item{\code{estimator}}{An <\link{integer}>-value of \link{length} \eqn{1} (default: \eqn{0}).
 \itemize{
 \item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
@@ -76,6 +76,13 @@ SLmetrics::fpr(
    actual_classes, 
    predicted_classes
 )
+}
+\references{
+James, Gareth, et al. An introduction to statistical learning. Vol. 112. No. 1. New York: springer, 2013.
+
+Hastie, Trevor. "The elements of statistical learning: data mining, inference, and prediction." (2009).
+
+Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for scientific computing in Python." Nature methods 17.3 (2020): 261-272.
 }
 \seealso{
 Other Classification: 

@@ -58,6 +58,81 @@ confusion_matrix <- SLmetrics::cmatrix(
 ## Evaluate performance
 SLmetrics::dor(confusion_matrix)
 }
+\references{
+James, Gareth, et al. An introduction to statistical learning. Vol. 112. No. 1. New York: springer, 2013.
+
+Hastie, Trevor. "The elements of statistical learning: data mining, inference, and prediction." (2009).
+
+Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for scientific computing in Python." Nature methods 17.3 (2020): 261-272.
+}
+\seealso{
+Other Classification: 
+\code{\link{accuracy}()},
+\code{\link{baccuracy}()},
+\code{\link{ckappa}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{cross.entropy}()},
+\code{\link{fbeta}()},
+\code{\link{fdr}()},
+\code{\link{fer}()},
+\code{\link{fmi}()},
+\code{\link{fpr}()},
+\code{\link{hammingloss}()},
+\code{\link{jaccard}()},
+\code{\link{logloss}()},
+\code{\link{mcc}()},
+\code{\link{nlr}()},
+\code{\link{npv}()},
+\code{\link{plr}()},
+\code{\link{pr.curve}()},
+\code{\link{precision}()},
+\code{\link{recall}()},
+\code{\link{relative.entropy}()},
+\code{\link{roc.curve}()},
+\code{\link{shannon.entropy}()},
+\code{\link{specificity}()},
+\code{\link{zerooneloss}()}
+
+Other Supervised Learning: 
+\code{\link{accuracy}()},
+\code{\link{baccuracy}()},
+\code{\link{ccc.numeric}()},
+\code{\link{ckappa}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{cross.entropy}()},
+\code{\link{fbeta}()},
+\code{\link{fdr}()},
+\code{\link{fer}()},
+\code{\link{fpr}()},
+\code{\link{hammingloss}()},
+\code{\link{huberloss.numeric}()},
+\code{\link{jaccard}()},
+\code{\link{logloss}()},
+\code{\link{mae.numeric}()},
+\code{\link{mape.numeric}()},
+\code{\link{mcc}()},
+\code{\link{mpe.numeric}()},
+\code{\link{mse.numeric}()},
+\code{\link{nlr}()},
+\code{\link{npv}()},
+\code{\link{pinball.numeric}()},
+\code{\link{plr}()},
+\code{\link{pr.curve}()},
+\code{\link{precision}()},
+\code{\link{rae.numeric}()},
+\code{\link{recall}()},
+\code{\link{relative.entropy}()},
+\code{\link{rmse.numeric}()},
+\code{\link{rmsle.numeric}()},
+\code{\link{roc.curve}()},
+\code{\link{rrmse.numeric}()},
+\code{\link{rrse.numeric}()},
+\code{\link{rsq.numeric}()},
+\code{\link{shannon.entropy}()},
+\code{\link{smape.numeric}()},
+\code{\link{specificity}()},
+\code{\link{zerooneloss}()}
+}
 \concept{Machine learning performance evaluation}
 \keyword{classification}
 \keyword{evaluation}

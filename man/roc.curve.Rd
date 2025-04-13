@@ -19,10 +19,13 @@ weighted.roc.curve(...)
 \item{...}{
   Arguments passed on to \code{\link[=roc.curve.factor]{roc.curve.factor}}, \code{\link[=weighted.roc.curve.factor]{weighted.roc.curve.factor}}
   \describe{
-    \item{\code{actual}}{A vector of vector}
-    \item{\code{response}}{A matrix}
-    \item{\code{presorted}}{Currently broken.}
-    \item{\code{thresholds}}{A vector}
+    \item{\code{actual}}{A vector \link{lenght} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
+    \item{\code{response}}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
+The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
+over the \eqn{k} classes). The first column corresponds to the first factor
+level in \code{actual}, the second column to the second factor level, and so on.}
+    \item{\code{presorted}}{Currently not working.}
+    \item{\code{thresholds}}{An optional <\link{numeric}> vector of \link{length} \eqn{n} (default: \link{NULL}).}
     \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
   }}
 }

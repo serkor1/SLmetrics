@@ -4,19 +4,23 @@
 \alias{classification_documentation}
 \title{Classification Documenatation}
 \arguments{
-\item{actual, predicted}{A pair of vectors <\link{factor}> with actual and observed classes.}
+\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{lenght} \eqn{n}, and \eqn{k} levels.}
 
-\item{actual}{A vector of vector}
+\item{actual}{A vector \link{lenght} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
 
-\item{response}{A matrix}
+\item{response}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
+The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
+over the \eqn{k} classes). The first column corresponds to the first factor
+level in \code{actual}, the second column to the second factor level, and so on.}
 
-\item{method}{A method}
+\item{method}{A <\link{numeric}> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the \code{trapezoid}-method, if \eqn{1} it is calculated using the \code{step}-method.}
 
-\item{micro}{What?}
+\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
+micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
 
-\item{presorted}{Currently broken.}
+\item{presorted}{Currently not working.}
 
-\item{thresholds}{A vector}
+\item{thresholds}{An optional <\link{numeric}> vector of \link{length} \eqn{n} (default: \link{NULL}).}
 
 \item{w}{A <\link{numeric}> vector of sample weights.}
 

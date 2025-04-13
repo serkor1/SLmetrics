@@ -37,13 +37,17 @@ NULL
 #' This roxygen block is the generic documnentation
 #' for classification metrics for all the parameters.
 #' 
-#' @param actual,predicted A pair of vectors <[factor]> with actual and observed classes.
-#' @param actual A vector of vector
-#' @param response A matrix
-#' @param method A method
-#' @param micro What?
-#' @param presorted Currently broken.
-#' @param thresholds A vector
+#' @param actual,predicted A pair of [integer] or [factor] vectors of [lenght] \eqn{n}, and \eqn{k} levels.
+#' @param actual A vector [lenght] \eqn{n}, and \eqn{k} levels. Can be of [integer] or [factor].
+#' @param response A \eqn{n \times k} <[numeric]>-matrix of predicted probabilities.
+#'   The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
+#'   over the \eqn{k} classes). The first column corresponds to the first factor
+#'   level in \code{actual}, the second column to the second factor level, and so on.
+#' @param method A <[numeric]> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the `trapezoid`-method, if \eqn{1} it is calculated using the `step`-method.
+#' @param micro A <[logical]>-value of [length] \eqn{1} (default: [NULL]). If [TRUE] it returns the
+#' micro average across all \eqn{k} classes, if [FALSE] it returns the macro average.
+#' @param presorted Currently not working.
+#' @param thresholds An optional <[numeric]> vector of [length] \eqn{n} (default: [NULL]).
 #' @param w A <[numeric]> vector of sample weights.
 #' @param x A confusion matrix created [cmatrix()].
 #' @param estimator An <[integer]>-value of [length] \eqn{1} (default: \eqn{0}).

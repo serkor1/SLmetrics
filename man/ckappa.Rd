@@ -20,7 +20,7 @@ weighted.ckappa(...)
   Arguments passed on to \code{\link[=ckappa.factor]{ckappa.factor}}, \code{\link[=weighted.ckappa.factor]{weighted.ckappa.factor}}, \code{\link[=ckappa.cmatrix]{ckappa.cmatrix}}
   \describe{
     \item{\code{beta}}{A <\link{numeric}> value of \link{length} 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.}
-    \item{\code{actual,predicted}}{A pair of vectors <\link{factor}> with actual and observed classes.}
+    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{lenght} \eqn{n}, and \eqn{k} levels.}
     \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
     \item{\code{x}}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
   }}
@@ -65,6 +65,13 @@ SLmetrics::ckappa(
    actual_classes, 
    predicted_classes
 )
+}
+\references{
+James, Gareth, et al. An introduction to statistical learning. Vol. 112. No. 1. New York: springer, 2013.
+
+Hastie, Trevor. "The elements of statistical learning: data mining, inference, and prediction." (2009).
+
+Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for scientific computing in Python." Nature methods 17.3 (2020): 261-272.
 }
 \seealso{
 Other Classification: 

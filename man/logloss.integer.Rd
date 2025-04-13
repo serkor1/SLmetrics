@@ -7,9 +7,12 @@
 \method{logloss}{integer}(actual, response, normalize = TRUE, ...)
 }
 \arguments{
-\item{actual}{A vector of vector}
+\item{actual}{A vector \link{lenght} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
 
-\item{response}{A matrix}
+\item{response}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
+The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
+over the \eqn{k} classes). The first column corresponds to the first factor
+level in \code{actual}, the second column to the second factor level, and so on.}
 
 \item{normalize}{A <\link{logical}>-value (default: \link{TRUE}). If \link{TRUE},
 the mean cross-entropy across all observations is returned; otherwise, the

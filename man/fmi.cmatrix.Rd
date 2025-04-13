@@ -51,6 +51,41 @@ confusion_matrix <- SLmetrics::cmatrix(
 ## Evaluate performance
 SLmetrics::fmi(confusion_matrix)
 }
+\references{
+James, Gareth, et al. An introduction to statistical learning. Vol. 112. No. 1. New York: springer, 2013.
+
+Hastie, Trevor. "The elements of statistical learning: data mining, inference, and prediction." (2009).
+
+Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for scientific computing in Python." Nature methods 17.3 (2020): 261-272.
+}
+\seealso{
+Other Classification: 
+\code{\link{accuracy}()},
+\code{\link{baccuracy}()},
+\code{\link{ckappa}()},
+\code{\link{cmatrix.factor}()},
+\code{\link{cross.entropy}()},
+\code{\link{dor}()},
+\code{\link{fbeta}()},
+\code{\link{fdr}()},
+\code{\link{fer}()},
+\code{\link{fpr}()},
+\code{\link{hammingloss}()},
+\code{\link{jaccard}()},
+\code{\link{logloss}()},
+\code{\link{mcc}()},
+\code{\link{nlr}()},
+\code{\link{npv}()},
+\code{\link{plr}()},
+\code{\link{pr.curve}()},
+\code{\link{precision}()},
+\code{\link{recall}()},
+\code{\link{relative.entropy}()},
+\code{\link{roc.curve}()},
+\code{\link{shannon.entropy}()},
+\code{\link{specificity}()},
+\code{\link{zerooneloss}()}
+}
 \concept{Machine learning performance evaluation}
 \keyword{classification}
 \keyword{evaluation}

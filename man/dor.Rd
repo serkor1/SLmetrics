@@ -17,7 +17,7 @@ weighted.dor(...)
 \item{...}{
   Arguments passed on to \code{\link[=dor.factor]{dor.factor}}, \code{\link[=weighted.dor.factor]{weighted.dor.factor}}, \code{\link[=dor.cmatrix]{dor.cmatrix}}
   \describe{
-    \item{\code{actual,predicted}}{A pair of vectors <\link{factor}> with actual and observed classes.}
+    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{lenght} \eqn{n}, and \eqn{k} levels.}
     \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
     \item{\code{x}}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
   }}
@@ -64,6 +64,13 @@ SLmetrics::dor(
    actual_classes, 
    predicted_classes
 )
+}
+\references{
+James, Gareth, et al. An introduction to statistical learning. Vol. 112. No. 1. New York: springer, 2013.
+
+Hastie, Trevor. "The elements of statistical learning: data mining, inference, and prediction." (2009).
+
+Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for scientific computing in Python." Nature methods 17.3 (2020): 261-272.
 }
 \seealso{
 Other Classification: 

@@ -1,7 +1,5 @@
 <% mock = .TITLE %>
-#' @inherit <%= .FUN %> description
-#' @inherit <%= .FUN %> return
-#' @inherit <%= .FUN %> title
+#' @inherit <%= .FUN %>
 #' 
 #' @rdname <%= .FUN %>.<%= .METHOD %>
 #' @name <%= .FUN %>.<%= .METHOD %>

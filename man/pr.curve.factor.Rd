@@ -7,13 +7,16 @@
 \method{pr.curve}{factor}(actual, response, thresholds = NULL, presorted = FALSE, ...)
 }
 \arguments{
-\item{actual}{A vector of vector}
+\item{actual}{A vector \link{lenght} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
 
-\item{response}{A matrix}
+\item{response}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
+The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
+over the \eqn{k} classes). The first column corresponds to the first factor
+level in \code{actual}, the second column to the second factor level, and so on.}
 
-\item{thresholds}{A vector}
+\item{thresholds}{An optional <\link{numeric}> vector of \link{length} \eqn{n} (default: \link{NULL}).}
 
-\item{presorted}{Currently broken.}
+\item{presorted}{Currently not working.}
 
 \item{...}{Arguments passed into other methods.}
 }
