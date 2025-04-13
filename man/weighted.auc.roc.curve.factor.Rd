@@ -22,3 +22,6 @@
 \description{
 Area under the ROC Curve
 }
+\concept{Machine learning performance evaluation}
+\keyword{classification}
+\keyword{evaluation}

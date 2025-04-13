@@ -83,7 +83,7 @@ weighted.auc.pr.curve <- function(...) {
 }
 
 #' @export
-print.pr.curve <- function(x, ...) {
+print.prROC <- function(x, ...) {
 
   print.data.frame(
     x,
@@ -100,7 +100,7 @@ print.pr.curve <- function(x, ...) {
 }
 
 #' @export
-summary.pr.curve <- function(
+summary.prROC <- function(
   object,
   ...) {
   
@@ -142,7 +142,7 @@ summary.pr.curve <- function(
 }
 
 #' @export
-print.summary.pr.curve <- function(
+print.summary.prROC <- function(
   x,
   ...) {
 
@@ -159,7 +159,7 @@ print.summary.pr.curve <- function(
 }
 
 #' @export
-plot.pr.curve <- function(
+plot.prROC <- function(
     x,
     panels = TRUE,
     ...) {

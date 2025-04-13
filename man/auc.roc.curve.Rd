@@ -44,3 +44,6 @@ As everything is based on pointers internally values as \link{NA} and out of bou
 A workaroud is to create a wrapper around \code{\link[=auc.roc.curve]{auc.roc.curve()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=auc.roc.curve]{auc.roc.curve()}}.
 }
 }
+\concept{Machine learning performance evaluation}
+\keyword{classification}
+\keyword{evaluation}

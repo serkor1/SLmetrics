@@ -3,12 +3,12 @@
 # target functions.
 
 testthat::test_that(
-  desc = "Test `roc.auc()`-function", code = {
+  desc = "Test `auc.roc.curve()`-function", code = {
 
     # 0) skip on CRAN
     testthat::skip_on_cran()
 
-    # 1) create roc.auc()-wrapper
+    # 1) create auc.roc.curve()-wrapper
     roc_auc <- function(
       actual, 
       response, 
@@ -19,7 +19,7 @@ testthat::test_that(
       
       if (is.null(w)) {
 
-        roc.auc(
+        auc.roc.curve(
           actual    = actual,
           response  = response,
           micro     = micro,
@@ -28,7 +28,7 @@ testthat::test_that(
 
       } else {
 
-        weighted.roc.auc(
+        weighted.auc.roc.curve(
           actual    = actual,
           response  = response,
           w         = w,
@@ -114,12 +114,12 @@ testthat::test_that(
 )
 
 testthat::test_that(
-  desc = "Test `pr.auc()`-function", code = {
+  desc = "Test `auc.pr.curve()`-function", code = {
 
     # 0) skip on CRAN
     testthat::skip_on_cran()
 
-    # 1) create pr.auc()-wrapper
+    # 1) create auc.pr.curve()-wrapper
     pr_auc <- function(
       actual, 
       response, 
@@ -129,7 +129,7 @@ testthat::test_that(
       
       if (is.null(w)) {
 
-        pr.auc(
+        auc.pr.curve(
           actual    = actual,
           response  = response,
           presorted = presorted,
@@ -139,7 +139,7 @@ testthat::test_that(
 
       } else {
 
-        weighted.pr.auc(
+        weighted.auc.pr.curve(
           actual    = actual,
           response  = response,
           w         = w,

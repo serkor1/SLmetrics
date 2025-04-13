@@ -114,4 +114,7 @@ Other Supervised Learning:
 \code{\link{zerooneloss}()}
 }
 \concept{Classification}
+\concept{Machine learning performance evaluation}
 \concept{Supervised Learning}
+\keyword{classification}
+\keyword{evaluation}

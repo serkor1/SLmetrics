@@ -56,3 +56,6 @@ confusion_matrix <- SLmetrics::cmatrix(
 ## Evaluate performance
 SLmetrics::nlr(confusion_matrix)
 }
+\concept{Machine learning performance evaluation}
+\keyword{classification}
+\keyword{evaluation}

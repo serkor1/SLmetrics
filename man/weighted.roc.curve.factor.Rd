@@ -29,3 +29,6 @@
 \description{
 Receiver Operator Characteristics Curve
 }
+\concept{Machine learning performance evaluation}
+\keyword{classification}
+\keyword{evaluation}

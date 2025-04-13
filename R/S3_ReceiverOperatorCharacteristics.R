@@ -85,7 +85,7 @@ weighted.auc.roc.curve <- function(...) {
 }
 
 #' @export
-print.roc.curve <- function(x, ...) {
+print.ROC <- function(x, ...) {
 
   print.data.frame(
     x,
@@ -102,7 +102,7 @@ print.roc.curve <- function(x, ...) {
 }
 
 #' @export
-summary.roc.curve <- function(
+summary.ROC <- function(
   object,
   ...) {
   
@@ -138,13 +138,13 @@ summary.roc.curve <- function(
         auc = metric
       )
     },
-    class = "summary.roc.curve"
+    class = "summary.ROC"
   )
 
 }
 
 #' @export
-print.summary.roc.curve <- function(
+print.summary.ROC <- function(
   x, 
   ...) {
 
@@ -162,7 +162,7 @@ print.summary.roc.curve <- function(
 
 
 #' @export
-plot.roc.curve <- function(
+plot.ROC <- function(
     x,
     panels = TRUE,
     ...) {

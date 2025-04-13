@@ -73,3 +73,6 @@ SLmetrics::weighted.npv(
    sample_weights
 )
 }
+\concept{Machine learning performance evaluation}
+\keyword{classification}
+\keyword{evaluation}

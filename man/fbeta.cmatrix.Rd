@@ -70,3 +70,6 @@ confusion_matrix <- SLmetrics::cmatrix(
 ## Evaluate performance
 SLmetrics::fbeta(confusion_matrix)
 }
+\concept{Machine learning performance evaluation}
+\keyword{classification}
+\keyword{evaluation}

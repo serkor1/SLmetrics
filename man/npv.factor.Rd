@@ -64,3 +64,6 @@ SLmetrics::npv(
    predicted_classes
 )
 }
+\concept{Machine learning performance evaluation}
+\keyword{classification}
+\keyword{evaluation}

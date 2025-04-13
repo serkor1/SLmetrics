@@ -68,3 +68,6 @@ confusion_matrix <- SLmetrics::cmatrix(
 ## Evaluate performance
 SLmetrics::jaccard(confusion_matrix)
 }
+\concept{Machine learning performance evaluation}
+\keyword{classification}
+\keyword{evaluation}

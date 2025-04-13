@@ -20,3 +20,6 @@
 \description{
 Area under the Precision-Recall Curve
 }
+\concept{Machine learning performance evaluation}
+\keyword{classification}
+\keyword{evaluation}
