@@ -85,3 +85,7 @@ src/Makevars
 # ignore test-omp
 # an artifact of configure.ac
 test-omp.*
+
+# ignore all .RD
+# files
+man/*.Rd
