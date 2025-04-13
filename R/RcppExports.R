@@ -160,22 +160,25 @@ dor.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_diagnostic_odds_ratio`, x)
 }
 
-#' @rdname entropy
-#' @method entropy matrix
+#' @templateVar .FUN shannon.entropy
+#' @templateVar .METHOD matrix
+#' @template classification_entropy_inherit
 #' @export
-entropy.matrix <- function(pk, dim = 0L, base = -1.0, ...) {
+shannon.entropy.matrix <- function(pk, dim = 0L, base = -1.0, ...) {
     .Call(`_SLmetrics_ShannonsEntropy`, pk, dim, base)
 }
 
-#' @rdname entropy
-#' @method relative.entropy matrix
+#' @templateVar .FUN relative.entropy
+#' @templateVar .METHOD matrix
+#' @template classification_entropy_inherit
 #' @export
 relative.entropy.matrix <- function(pk, qk, dim = 0L, base = -1.0, ...) {
     .Call(`_SLmetrics_RelativeEntropy`, pk, qk, dim, base)
 }
 
-#' @rdname entropy
-#' @method cross.entropy matrix
+#' @templateVar .FUN cross.entropy
+#' @templateVar .METHOD matrix
+#' @template classification_entropy_inherit
 #' @export
 cross.entropy.matrix <- function(pk, qk, dim = 0L, base = -1.0, ...) {
     .Call(`_SLmetrics_CrossEntropy`, pk, qk, dim, base)
@@ -472,15 +475,17 @@ tscore.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_threat_score`, x, estimator, na_rm = na.rm)
 }
 
-#' @rdname logloss
-#' @method logloss factor
+#' @templateVar .FUN logloss
+#' @templateVar .METHOD factor
+#' @template classification_entropy_inherit
 #' @export
 logloss.factor <- function(actual, response, normalize = TRUE, ...) {
     .Call(`_SLmetrics_LogLoss`, actual, response, normalize)
 }
 
-#' @rdname logloss
-#' @method weighted.logloss factor
+#' @templateVar .FUN weighted.logloss
+#' @templateVar .METHOD factor
+#' @template classification_entropy_inherit
 #' @export
 weighted.logloss.factor <- function(actual, response, w, normalize = TRUE, ...) {
     .Call(`_SLmetrics_weighted_LogLoss`, actual, response, w, normalize)
@@ -946,15 +951,17 @@ zerooneloss.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_zero_one_loss`, x)
 }
 
-#' @rdname logloss
-#' @method logloss integer
+#' @templateVar .FUN logloss
+#' @templateVar .METHOD integer
+#' @template classification_entropy_inherit
 #' @export
 logloss.integer <- function(actual, response, normalize = TRUE, ...) {
     .Call(`_SLmetrics_PoissonLogLoss`, actual, response, normalize)
 }
 
-#' @rdname logloss
-#' @method weighted.logloss integer
+#' @templateVar .FUN weighted.logloss
+#' @templateVar .METHOD integer
+#' @template classification_entropy_inherit
 #' @export
 weighted.logloss.integer <- function(actual, response, w, normalize = TRUE, ...) {
     .Call(`_SLmetrics_weighted_PoissonLogLoss`, actual, response, w, normalize)

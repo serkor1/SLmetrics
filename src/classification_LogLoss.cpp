@@ -1,8 +1,9 @@
 #include <Rcpp.h>
 #include "classification_LogLoss.h"
 
-//' @rdname logloss
-//' @method logloss factor
+//' @templateVar .FUN logloss
+//' @templateVar .METHOD factor
+//' @template classification_entropy_inherit
 //' @export
 // [[Rcpp::export(logloss.factor)]]
 double LogLoss(const Rcpp::IntegerVector& actual, 
@@ -21,8 +22,9 @@ double LogLoss(const Rcpp::IntegerVector& actual,
     return LogLoss::compute(ptr_actual, ptr_response, n, nrows, normalize);
 }
 
-//' @rdname logloss
-//' @method weighted.logloss factor
+//' @templateVar .FUN weighted.logloss
+//' @templateVar .METHOD factor
+//' @template classification_entropy_inherit
 //' @export
 // [[Rcpp::export(weighted.logloss.factor)]]
 double weighted_LogLoss(const Rcpp::IntegerVector& actual, 

@@ -61,3 +61,30 @@ NULL
 #' @keywords internal
 #' @usage NULL
 NULL
+
+
+#' @title Entropy Documenatation
+#' @name entropy_documentation
+#' 
+#' @description
+#' This roxygen block is the generic documnentation
+#' for entropy metrics for all the parameters.
+#' 
+#' @param pk,qk A pair \eqn{n \times k} <[numeric]>-matrix of observed (pk) and predicted (qk) probabilities.
+#'   The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
+#'   over the \eqn{k} classes). The first column corresponds to the first factor
+#'   level in \code{actual}, the second column to the second factor level, and so on.
+#' @param pk A \eqn{n \times k} <[numeric]>-matrix of predicted probabilities.
+#'   The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
+#'   over the \eqn{k} classes). The first column corresponds to the first factor
+#'   level in \code{actual}, the second column to the second factor level, and so on.
+#' @param dim An <[integer]> value of [length] 1 (Default: 0). Defines the dimension along which to calculate the entropy (0: total, 1: row-wise, 2: column-wise).
+#' @param base A <[numeric]> value of [length] 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.
+#' @param normalize A <[logical]>-value (default: [TRUE]). If [TRUE],
+#'   the mean cross-entropy across all observations is returned; otherwise, the
+#'   sum of cross-entropies is returned.
+#' @param ... Arguments passed into other methods
+#'
+#' @keywords internal
+#' @usage NULL
+NULL

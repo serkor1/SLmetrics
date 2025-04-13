@@ -1,9 +1,9 @@
 #include <Rcpp.h>
 #include "count_PoissonLogLoss.h"
 
-
-//' @rdname logloss
-//' @method logloss integer
+//' @templateVar .FUN logloss
+//' @templateVar .METHOD integer
+//' @template classification_entropy_inherit
 //' @export
 // [[Rcpp::export(logloss.integer)]]
 double PoissonLogLoss(const Rcpp::IntegerVector& actual, 
@@ -22,8 +22,9 @@ double PoissonLogLoss(const Rcpp::IntegerVector& actual,
     return PoissonLogLoss::compute(ptr_actual, ptr_response, n, normalize);
 }
 
-//' @rdname logloss
-//' @method weighted.logloss integer
+//' @templateVar .FUN weighted.logloss
+//' @templateVar .METHOD integer
+//' @template classification_entropy_inherit
 //' @export
 // [[Rcpp::export(weighted.logloss.integer)]]
 double weighted_PoissonLogLoss(const Rcpp::IntegerVector& actual, 
