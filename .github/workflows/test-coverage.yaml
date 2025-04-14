@@ -41,11 +41,6 @@ jobs:
 
       - name: Setup Python and {reticulate}
         uses: ./.github/actions/setup-reticulate
-      
-      - name: devtools::document()
-        shell: bash
-        run: |
-          sudo make clean && sudo make document
 
       - name: Test coverage
         run: |
