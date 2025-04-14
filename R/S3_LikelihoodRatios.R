@@ -35,7 +35,6 @@ nlr <- function(...) {
 #' ## Generic S3 method
 #' ## for weighted Negative
 #' ## Likelihood Ratio
-#' 
 #' weighted.nlr(...)
 #' @export
 weighted.nlr <- function(...) {
