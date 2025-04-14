@@ -4,8 +4,12 @@
 // implementation of metric
 using cohens_kappa_impl = metric::cohens_kappa<int>;
 
-//' @rdname ckappa
-//' @method ckappa factor
+//' @templateVar .FUN ckappa
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
+//' @param beta A <[numeric]> value of [length] 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.
+//'
 //' @export
 // [[Rcpp::export(ckappa.factor)]]
 double cohens_kappa(
@@ -17,8 +21,12 @@ double cohens_kappa(
         return performance.compute();
 }
 
-//' @rdname ckappa
-//' @method weighted.ckappa factor
+//' @templateVar .FUN weighted.ckappa
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
+//' @param beta A <[numeric]> value of [length] 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.
+//'
 //' @export
 // [[Rcpp::export(weighted.ckappa.factor)]]
 double weighted_cohens_kappa(
@@ -31,8 +39,12 @@ double weighted_cohens_kappa(
         return performance.compute();
 }
 
-//' @rdname ckappa
-//' @method ckappa cmatrix
+//' @templateVar .FUN ckappa
+//' @templateVar .METHOD cmatrix
+//' @template classification_standard_inherit
+//'
+//' @param beta A <[numeric]> value of [length] 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.
+//'
 //' @export
 // [[Rcpp::export(ckappa.cmatrix)]]
 double cmatrix_cohens_kappa(

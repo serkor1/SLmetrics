@@ -4,8 +4,10 @@
 // Declare metric
 using jaccard_index = metric::jaccard<int>;
 
-//' @rdname jaccard
-//' @method jaccard factor
+//' @templateVar .FUN jaccard
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(jaccard.factor)]]
 Rcpp::NumericVector jaccard_score(
@@ -18,8 +20,10 @@ Rcpp::NumericVector jaccard_score(
         return performance.compute();
 }
 
-//' @rdname jaccard
-//' @method weighted.jaccard factor
+//' @templateVar .FUN weighted.jaccard
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.jaccard.factor)]]
 Rcpp::NumericVector weighted_jaccard_score(
@@ -33,8 +37,10 @@ Rcpp::NumericVector weighted_jaccard_score(
         return performance.compute();
 }
 
-//' @rdname jaccard
-//' @method jaccard cmatrix
+//' @templateVar .FUN jaccard
+//' @templateVar .METHOD cmatrix
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(jaccard.cmatrix)]]
 Rcpp::NumericVector cmatrix_jaccard_score(
@@ -46,7 +52,6 @@ Rcpp::NumericVector cmatrix_jaccard_score(
         return performance.compute();
 }
 
-//' @rdname jaccard
 //' @method csi factor
 //' @export
 // [[Rcpp::export(csi.factor)]]
@@ -61,7 +66,6 @@ Rcpp::NumericVector critical_success_index(
         return performance.compute();
 }
 
-//' @rdname jaccard
 //' @method weighted.csi factor
 //' @export
 // [[Rcpp::export(weighted.csi.factor)]]
@@ -76,7 +80,6 @@ Rcpp::NumericVector weighted_critical_success_index(
         return performance.compute();
 }
 
-//' @rdname jaccard
 //' @method csi cmatrix
 //' @export
 // [[Rcpp::export(csi.cmatrix)]]
@@ -89,7 +92,6 @@ Rcpp::NumericVector cmatrix_critical_success_index(
         return performance.compute();
 }
 
-//' @rdname jaccard
 //' @method tscore factor
 //' @export
 // [[Rcpp::export(tscore.factor)]]
@@ -104,7 +106,6 @@ Rcpp::NumericVector threat_score(
         return performance.compute();
 }
 
-//' @rdname jaccard
 //' @method weighted.tscore factor
 //' @export
 // [[Rcpp::export(weighted.tscore.factor)]]
@@ -119,7 +120,6 @@ Rcpp::NumericVector weighted_threat_score(
         return performance.compute();
 }
 
-//' @rdname jaccard
 //' @method tscore cmatrix
 //' @export
 // [[Rcpp::export(tscore.cmatrix)]]

@@ -21,7 +21,7 @@ testthat::test_that(
       
         if (is.null(w)) {
 
-          ROC(
+          roc.curve(
             actual,
             response,
             thresholds = if (is.null(thresholds))  {NULL} else thresholds,
@@ -30,7 +30,7 @@ testthat::test_that(
   
         } else {
   
-          weighted.ROC(
+          weighted.roc.curve(
             actual,
             response,
             thresholds = if (is.null(thresholds))  {NULL} else thresholds,

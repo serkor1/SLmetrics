@@ -4,43 +4,26 @@
 # objective: Create Methods
 # script start;
 
-#' @aliases jaccard csi tscore
-#' @inherit specificity
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
 #' 
-#' @title Jaccard Index
-#'
-#' @description
-#' The [jaccard()]-function computes the [Jaccard Index](https://en.wikipedia.org/wiki/Jaccard_index), also known as the Intersection over Union, between
-#' two vectors of predicted and observed [factor()] values. The [weighted.jaccard()] function computes the weighted Jaccard Index.
-#'
-#' @usage
-#' ## Generic S3 method
-#' jaccard(
-#'  ...,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
+#' @aliases csi tscore weighted.csi weighted.tscore
 #' 
-#' @section Definition:
-#'
-#' The metric is calculated for each class \eqn{k} as follows,
-#'
-#' \deqn{
-#'   \frac{\#TP_k}{\#TP_k + \#FP_k + \#FN_k}
-#' }
-#'
-#' Where \eqn{\#TP_k}, \eqn{\#FP_k}, and \eqn{\#FN_k} represent the number of true positives, false positives, and false negatives for each class \eqn{k}, respectively.
+#' @templateVar .TITLE jaccard
+#' @templateVar .FUN jaccard
+#' @templateVar .TASK Classification
+#' @templateVar .MULTI_OUTPUT true
+#' @template classification_standard_template
 #' 
-#' @example man/examples/scr_JaccardIndex.R
-#'
-#' @family Classification
-#' @family Supervised Learning
-#'
+#' @section Other names:
+#' 
+#' The specificity has other names depending on research field:
+#' - Critical Success Index, [csi()] 
+#' - Threat Score, [tscore()]
+#' 
 #' @export
-jaccard <- function(
-  ..., 
-  estimator = 0, 
-  na.rm = TRUE) {
+jaccard <- function(...) {
   UseMethod(
     generic = "jaccard",
     object  = ..1
@@ -50,98 +33,42 @@ jaccard <- function(
 #' @rdname jaccard
 #' @usage
 #' ## Generic S3 method
-#' csi(
-#'  ...,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
+#' ## for weighted Jaccard Index
+#' weighted.jaccard(...)
 #' @export
-csi <- function(
-  ..., 
-  estimator = 0, 
-  na.rm = TRUE) {
-  UseMethod(
-    generic = "csi",
-    object  = ..1
-  )
-}
-
-#' @rdname jaccard
-#' @usage
-#' ## Generic S3 method
-#' tscore(
-#'  ...,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
-#' @export
-tscore <- function(
-  ...,
-  estimator = 0, 
-  na.rm = TRUE) {
-  UseMethod(
-    generic = "tscore",
-    object  = ..1
-  )
-}
-
-#' @rdname jaccard
-#' @usage
-#' ## Generic S3 method
-#' weighted.jaccard(
-#'  ...,
-#'  w,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
-#' @export
-weighted.jaccard <- function(
-  ...,
-  w,
-  estimator = 0,
-  na.rm = TRUE) {
+weighted.jaccard <- function(...) {
   UseMethod(
     generic = "weighted.jaccard",
     object  = ..1
   )
 }
 
-#' @rdname jaccard
-#' @usage
-#' ## Generic S3 method
-#' weighted.csi(
-#'  ...,
-#'  w,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
 #' @export
-weighted.csi <- function(
-  ...,
-  w,
-  estimator = 0,
-  na.rm = TRUE) {
+csi <- function(...) {
+  UseMethod(
+    generic = "csi",
+    object  = ..1
+  )
+}
+
+#' @export
+weighted.csi <- function(...) {
   UseMethod(
     generic = "weighted.csi",
     object  = ..1
   )
 }
 
-#' @rdname jaccard
-#' @usage
-#' ## Generic S3 method
-#' weighted.tscore(
-#'  ...,
-#'  w,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
 #' @export
-weighted.tscore <- function(
-  ..., 
-  w, 
-  estimator = 0, 
-  na.rm = TRUE) {
+tscore <- function(...) {
+  UseMethod(
+    generic = "tscore",
+    object  = ..1
+  )
+}
+
+#' @export
+weighted.tscore <- function(...) {
   UseMethod(
     generic = "weighted.tscore",
     object  = ..1

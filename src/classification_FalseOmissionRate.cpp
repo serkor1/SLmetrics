@@ -4,8 +4,10 @@
 // declare metric
 using fer_impl = metric::false_omission_rate<int>;
 
-//' @rdname fer
-//' @method fer factor
+//' @templateVar .FUN fer
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(fer.factor)]]
 Rcpp::NumericVector false_omission_rate(
@@ -18,8 +20,10 @@ Rcpp::NumericVector false_omission_rate(
         return performance.compute();
 }
 
-//' @rdname fer
-//' @method weighted.fer factor
+//' @templateVar .FUN weighted.fer
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.fer.factor)]]
 Rcpp::NumericVector weighted_false_omission_rate(
@@ -33,8 +37,10 @@ Rcpp::NumericVector weighted_false_omission_rate(
         return performance.compute();
 }
 
-//' @rdname fer
-//' @method fer cmatrix
+//' @templateVar .FUN fer
+//' @templateVar .METHOD cmatrix
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(fer.cmatrix)]]
 Rcpp::NumericVector cmatrix_false_omission_rate(

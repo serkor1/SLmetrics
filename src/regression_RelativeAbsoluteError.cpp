@@ -2,8 +2,9 @@
 #include "regression_RelativeAbsoluteError.h"
 using namespace Rcpp;
 
-//' @rdname rae
-//' @method rae numeric
+//' @templateVar .FUN rae
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(rae.numeric)]]
 double rae(
@@ -14,8 +15,9 @@ double rae(
         return performance.compute();
 }
 
-//' @rdname rae
-//' @method weighted.rae numeric
+//' @templateVar .FUN weighted.rae
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(weighted.rae.numeric)]]
 double weighted_rae(

@@ -4,43 +4,17 @@
 # objective: Genereate Methods
 # script start;
 
-#' @inherit huberloss
-#'
-#' @title Root Relative Squared Error
-#'
-#' @description
-#' The [rrse()]-function calculates the [root relative  squared error](https://en.wikipedia.org/wiki/Root_mean_square_deviation) between
-#' the predicted and observed <[numeric]> vectors. The [weighted.rrse()] function computes the weighed root relative squared errorr.
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
 #' 
-#' @usage
-#' ## Generic S3 method
-#' rrse(
-#'  actual,
-#'  predicted,
-#'  ...
-#' )
-#'
-#' @section Definition:
-#'
-#' The metric is calculated as,
-#'
-#' \deqn{
-#'   \text{RRSE} = \sqrt{\frac{\sum_{i=1}^n (y_i - \upsilon_i)^2}{\sum_{i=1}^n (y_i - \bar{y})^2}}
-#' }
-#'
-#' Where \eqn{y_i} are the `actual` values, \eqn{\upsilon_i} are the `predicted` values,
-#' and \eqn{\bar{y}} is the mean of the `actual` values.
-#'
-#' @example man/examples/scr_RootRelativeSquaredError.R
-#' 
-#' @family Regression
-#' @family Supervised Learning
+#' @templateVar .TITLE Root Relative Squared Error
+#' @templateVar .FUN rrse
+#' @template regression_standard_template
+#' @template regression_standard_params
 #' 
 #' @export
-rrse <- function(
-  actual,
-  predicted,
-  ...) {
+rrse <- function(...) {
   UseMethod(
     generic = "rrse"
   )
@@ -49,18 +23,10 @@ rrse <- function(
 #' @rdname rrse
 #' @usage
 #' ## Generic S3 method
-#' weighted.rrse(
-#'  actual,
-#'  predicted,
-#'  w,
-#'  ...
-#' )
+#' ## for weighted Root Relative Squared Error
+#' weighted.rrse(...)
 #' @export
-weighted.rrse <- function(
-  actual,
-  predicted,
-  w,
-  ...) {
+weighted.rrse <- function(...) {
   UseMethod(
     generic = "weighted.rrse"
   )

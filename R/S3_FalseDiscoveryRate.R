@@ -4,43 +4,18 @@
 # objective: Generate Methods
 # script start;
 
-#' @inherit specificity
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
 #' 
-#' @title false discovery rate
-#'
-#' @description
-#' A generic function for the [False Discovery Rate](https://en.wikipedia.org/wiki/False_discovery_rate). Use [weighted.fdr()] for the weighted [False Discovery Rate](https://en.wikipedia.org/wiki/False_discovery_rate).
-#' 
-#' @usage 
-#' ## Generic S3 method
-#' fdr(
-#'  ...,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
-#' 
-#' @section Definition:
-#' Let \eqn{\hat{\alpha} \in [0, 1]} be the proportion of false positives among the preditced positives. The false discovery rate of the classifier is calculated as,
-#'
-#' \deqn{
-#'   \hat{\alpha} = \frac{\#FP_k}{\#TP_k+\#FP_k}
-#' }
-#' 
-#' Where:
-#' 
-#' - \eqn{\#TP_k} is the number of true positives, and
-#' - \eqn{\#FP_k} is the number of false positives
-#'
-#' @example man/examples/scr_FalseDiscoveryRate.R
-#' 
-#' @family Classification
-#' @family Supervised Learning
+#' @templateVar .TITLE false discovery rate
+#' @templateVar .FUN fdr
+#' @templateVar .TASK Classification
+#' @templateVar .MULTI_OUTPUT true
+#' @template classification_standard_template
 #' 
 #' @export
-fdr <- function(
-  ...,
-  estimator = 0, 
-  na.rm = TRUE) {
+fdr <- function(...) {
   UseMethod(
     generic = "fdr",
     object   = ..1
@@ -49,19 +24,12 @@ fdr <- function(
 
 #' @rdname fdr
 #' @usage 
-#' ## Generic S3 method
-#' weighted.fdr(
-#'  ...,
-#'  w,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
+#' ## Generic S3 method for
+#' ## weighted False Discovery
+#' ## Rate
+#' weighted.fdr(...)
 #' @export
-weighted.fdr <- function(
-  ..., 
-  w, 
-  estimator = 0, 
-  na.rm = TRUE) {
+weighted.fdr <- function(...) {
   UseMethod(
     generic = "weighted.fdr",
     object   = ..1

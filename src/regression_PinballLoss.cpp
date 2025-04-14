@@ -2,8 +2,9 @@
 #include "regression_PinballLoss.h"
 using namespace Rcpp;
 
-//' @rdname pinball
-//' @method pinball numeric
+//' @templateVar .FUN pinball
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(pinball.numeric)]]
 double pinball(
@@ -16,8 +17,9 @@ double pinball(
         return performance.compute();
 }
 
-//' @rdname pinball
-//' @method weighted.pinball numeric
+//' @templateVar .FUN weighted.pinball
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(weighted.pinball.numeric)]]
 double weighted_pinball(

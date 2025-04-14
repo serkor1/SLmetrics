@@ -2,8 +2,9 @@
 #include "regression_RootRelativeSquaredError.h"
 using namespace Rcpp;
 
-//' @rdname rrse
-//' @method rrse numeric
+//' @templateVar .FUN rrse
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(rrse.numeric)]]
 double rrse(
@@ -15,8 +16,9 @@ double rrse(
 
 }
 
-//' @rdname rrse
-//' @method weighted.rrse numeric
+//' @templateVar .FUN weighted.rrse
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(weighted.rrse.numeric)]]
 double weighted_rrse(

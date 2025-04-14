@@ -2,8 +2,9 @@
 #include "regression_SymmetricMeanAbsolutePercentageError.h"
 using namespace Rcpp;
 
-//' @rdname smape
-//' @method smape numeric
+//' @templateVar .FUN smape
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(smape.numeric)]]
 double smape(
@@ -14,8 +15,9 @@ double smape(
         return performance.compute();
 }
 
-//' @rdname smape
-//' @method weighted.smape numeric
+//' @templateVar .FUN weighted.smape
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(weighted.smape.numeric)]]
 double weighted_smape(

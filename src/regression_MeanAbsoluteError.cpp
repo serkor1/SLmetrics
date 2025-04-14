@@ -2,8 +2,9 @@
 #include "regression_MeanAbsoluteError.h"
 using namespace Rcpp;
 
-//' @rdname mae
-//' @method mae numeric
+//' @templateVar .FUN mae
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(mae.numeric)]]
 double mae(
@@ -14,8 +15,9 @@ double mae(
         return performance.compute();
 }
 
-//' @rdname mae
-//' @method weighted.mae numeric
+//' @templateVar .FUN weighted.mae
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(weighted.mae.numeric)]]
 double weighted_mae(

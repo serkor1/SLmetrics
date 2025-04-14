@@ -4,43 +4,17 @@
 # objective: Generate Methods
 # script start;
 
-#' @inherit huberloss
-#'
-#' @title Relative Absolute Error
-#'
-#' @description
-#' The [rae()]-function calculates the normalized [relative absolute error](https://www.statisticshowto.com/relative-absolute-error/) between
-#' the predicted and observed <[numeric]> vectors. The [weighted.rae()] function computes the weigthed relative absolute error.
-#'
-#' @usage
-#' ## Generic S3 method
-#' rae(
-#'  actual,
-#'  predicted,
-#'  ...
-#' )
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
 #' 
-#' @section Definition:
-#'
-#' The Relative Absolute Error (RAE) is calculated as:
-#'
-#' \deqn{
-#'   \text{RAE} = \frac{\sum_{i=1}^n |y_i - \upsilon_i|}{\sum_{i=1}^n |y_i - \bar{y}|}
-#' }
-#'
-#' Where \eqn{y_i} are the `actual` values, \eqn{\upsilon_i} are the `predicted` values,
-#' and \eqn{\bar{y}} is the mean of the `actual` values.
-#' 
-#' @example man/examples/scr_RelativeAbsoluteError.R
-#' 
-#' @family Regression
-#' @family Supervised Learning
+#' @templateVar .TITLE Relative Absolute Error
+#' @templateVar .FUN rae
+#' @template regression_standard_template
+#' @template regression_standard_params
 #' 
 #' @export
-rae <- function(
-  actual,
-  predicted,
-  ...) {
+rae <- function(...) {
   UseMethod(
     generic = "rae"
   )
@@ -49,18 +23,10 @@ rae <- function(
 #' @rdname rae
 #' @usage
 #' ## Generic S3 method
-#' weighted.rae(
-#'  actual,
-#'  predicted,
-#'  w,
-#'  ...
-#' )
+#' ## for weighted Relative Absolute Error
+#' weighted.rae(...)
 #' @export
-weighted.rae <- function(
-  actual,
-  predicted,
-  w,
-  ...) {
+weighted.rae <- function(...) {
   UseMethod(
     generic = "weighted.rae"
   )

@@ -3,8 +3,9 @@
 
 using namespace Rcpp;
 
-//' @rdname rrmse
-//' @method rrmse numeric
+//' @templateVar .FUN rrmse
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(rrmse.numeric)]]
 double RelativeRootMeanSquaredError(
@@ -16,8 +17,9 @@ double RelativeRootMeanSquaredError(
         return performance.compute();
 }
 
-//' @rdname rrmse
-//' @method weighted.rrmse numeric
+//' @templateVar .FUN weighted.rrmse
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(weighted.rrmse.numeric)]]
 double weighted_RelativeRootMeanSquaredError(

@@ -4,8 +4,10 @@
 // declare metric
 using precision_impl = metric::precision<int>;
 
-//' @rdname precision
-//' @method precision factor
+//' @templateVar .FUN precision
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(precision.factor)]]
 Rcpp::NumericVector precision(
@@ -18,8 +20,10 @@ Rcpp::NumericVector precision(
         return performance.compute();
 }
 
-//' @rdname precision
-//' @method weighted.precision factor
+//' @templateVar .FUN weighted.precision
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.precision.factor)]]
 Rcpp::NumericVector weighted_precision(
@@ -33,8 +37,10 @@ Rcpp::NumericVector weighted_precision(
         return performance.compute();
 }
 
-//' @rdname precision
-//' @method precision cmatrix
+//' @templateVar .FUN precision
+//' @templateVar .METHOD cmatrix
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(precision.cmatrix)]]
 Rcpp::NumericVector cmatrix_precision(
@@ -46,7 +52,6 @@ Rcpp::NumericVector cmatrix_precision(
         return performance.compute();
 }
 
-//' @rdname precision
 //' @method ppv factor
 //' @export
 // [[Rcpp::export(ppv.factor)]]
@@ -60,7 +65,6 @@ Rcpp::NumericVector ppv(
         return performance.compute();
 }
 
-//' @rdname precision
 //' @method weighted.ppv factor
 //' @export
 // [[Rcpp::export(weighted.ppv.factor)]]
@@ -75,7 +79,6 @@ Rcpp::NumericVector weighted_ppv_score(
         return performance.compute();
 }
 
-//' @rdname precision
 //' @method ppv cmatrix
 //' @export
 // [[Rcpp::export(ppv.cmatrix)]]

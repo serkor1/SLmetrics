@@ -4,8 +4,12 @@
 // declare metric;
 using f_beta = metric::f_beta<int>;
 
-//' @rdname fbeta
-//' @method fbeta factor
+//' @templateVar .FUN fbeta
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
+//' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
+//'
 //' @export
 // [[Rcpp::export(fbeta.factor)]]
 Rcpp::NumericVector fbeta_score(
@@ -19,8 +23,12 @@ Rcpp::NumericVector fbeta_score(
         return performance.compute();
 }
 
-//' @rdname fbeta
-//' @method weighted.fbeta factor
+//' @templateVar .FUN weighted.fbeta
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
+//' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
+//'
 //' @export
 // [[Rcpp::export(weighted.fbeta.factor)]]
 Rcpp::NumericVector weighted_fbeta_score(
@@ -35,8 +43,12 @@ Rcpp::NumericVector weighted_fbeta_score(
         return performance.compute();
 }
 
-//' @rdname fbeta
-//' @method fbeta cmatrix
+//' @templateVar .FUN fbeta
+//' @templateVar .METHOD cmatrix
+//' @template classification_standard_inherit
+//'
+//' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
+//'
 //' @export
 // [[Rcpp::export(fbeta.cmatrix)]]
 Rcpp::NumericVector cmatrix_fbeta_score(

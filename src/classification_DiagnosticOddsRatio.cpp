@@ -4,8 +4,10 @@
 // declare metric
 using dor_impl = metric::diagnostic_odds_ratio<int>;
 
-//' @rdname dor
-//' @method dor factor
+//' @templateVar .FUN dor
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(dor.factor)]]
 double diagnostic_odds_ratio(
@@ -16,8 +18,10 @@ double diagnostic_odds_ratio(
         return performance.compute();
 }
 
-//' @rdname dor
-//' @method weighted.dor factor
+//' @templateVar .FUN weighted.dor
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.dor.factor)]]
 double weighted_diagnostic_odds_ratio(
@@ -29,8 +33,10 @@ double weighted_diagnostic_odds_ratio(
         return performance.compute();
 }
 
-//' @rdname dor
-//' @method dor cmatrix
+//' @templateVar .FUN dor
+//' @templateVar .METHOD cmatrix
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(dor.cmatrix)]]
 double cmatrix_diagnostic_odds_ratio(

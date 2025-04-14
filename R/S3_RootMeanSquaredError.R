@@ -4,42 +4,18 @@
 # objective: Generate Errors
 # script start;
 
-#' @inherit huberloss
-#'
-#' @title Root Mean Squared Error
-#'
-#' @description 
-#' The [rmse()]-function computes the [root mean squared error](https://en.wikipedia.org/wiki/Root-mean-square_deviation) between
-#' the observed and predicted <[numeric]> vectors. The [weighted.rmse()] function computes the weighted root mean squared error.
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
 #' 
-#' @usage
-#' ## Generic S3 method
-#' rmse(
-#'  actual,
-#'  predicted,
-#'  ...
-#' )
-#' 
-#' @section Definition:
-#'
-#' The metric is calculated as,
-#'
-#' \deqn{
-#'   \sqrt{\frac{1}{n} \sum_i^n (y_i - \upsilon_i)^2}
-#' }
-#'
-#' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively.
-#'
-#' @example man/examples/scr_RootMeanSquaredError.R
-#'
-#' @family Regression
-#' @family Supervised Learning
+#' @templateVar .TITLE root mean squared error
+#' @templateVar .FUN rmse
+#' @template regression_standard_template
+#' @template regression_standard_params
+#' @usage NULL
 #' 
 #' @export
-rmse <- function(
-  actual, 
-  predicted,
-  ...) {
+rmse <- function(...) {
   UseMethod(
     generic = "rmse"
   )
@@ -47,18 +23,12 @@ rmse <- function(
 
 #' @rdname rmse
 #' @usage
-#' weighted.rmse(
-#'  actual,
-#'  predicted,
-#'  w,
-#'  ...
-#' )
+#' ## Generic S3 method
+#' ## for weighted Root Mean
+#' ## Squared Error
+#' weighted.rmse(...)
 #' @export
-weighted.rmse <- function(
-  actual, 
-  predicted, 
-  w,
-  ...) {
+weighted.rmse <- function(...) {
   UseMethod(
     generic = "weighted.rmse"
   )

@@ -4,8 +4,10 @@
 // declare metric
 using fpr = metric::false_positive_rate<int>;
 
-//' @rdname fpr
-//' @method fpr factor
+//' @templateVar .FUN fpr
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(fpr.factor)]]
 Rcpp::NumericVector false_positive_rate(
@@ -18,8 +20,10 @@ Rcpp::NumericVector false_positive_rate(
         return performance.compute();
 }
 
-//' @rdname fpr
-//' @method weighted.fpr factor
+//' @templateVar .FUN weighted.fpr
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.fpr.factor)]]
 Rcpp::NumericVector weighted_false_positive_rate(
@@ -33,8 +37,10 @@ Rcpp::NumericVector weighted_false_positive_rate(
         return performance.compute();
 }
 
-//' @rdname fpr
-//' @method fpr cmatrix
+//' @templateVar .FUN fpr
+//' @templateVar .METHOD cmatrix
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(fpr.cmatrix)]]
 Rcpp::NumericVector cmatrix_false_positive_rate(
@@ -46,7 +52,6 @@ Rcpp::NumericVector cmatrix_false_positive_rate(
         return performance.compute();
 }
 
-//' @rdname fpr
 //' @method fallout factor
 //' @export
 // [[Rcpp::export(fallout.factor)]]
@@ -60,7 +65,6 @@ Rcpp::NumericVector fallout(
         return performance.compute();
 }
 
-//' @rdname fpr
 //' @method weighted.fallout factor
 //' @export
 // [[Rcpp::export(weighted.fallout.factor)]]
@@ -75,7 +79,6 @@ Rcpp::NumericVector weighted_fallout(
         return performance.compute();
 }
 
-//' @rdname fpr
 //' @method fallout cmatrix
 //' @export
 // [[Rcpp::export(fallout.cmatrix)]]

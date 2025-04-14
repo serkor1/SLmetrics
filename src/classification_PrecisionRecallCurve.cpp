@@ -4,10 +4,14 @@
 
 using namespace Rcpp;
 
-//' @rdname prROC
-//' @method prROC factor
+//' @templateVar .TITLE Receiver Operator Characteristics Curve
+//' @templateVar .FUN pr.curve
+//' @templateVar .TYPE roc
+//' @templateVar .METHOD factor
+//' @template classification_auc_inherit
+//'
 //' @export
-// [[Rcpp::export(prROC.factor)]]
+// [[Rcpp::export(pr.curve.factor)]]
 Rcpp::DataFrame precision_recall_curve(
     const Rcpp::IntegerVector& actual, 
     const Rcpp::NumericMatrix& response,
@@ -22,10 +26,14 @@ Rcpp::DataFrame precision_recall_curve(
         return prROC::pr_curve(actual, response, presorted, nullptr, nullptr);
 }
 
-//' @rdname prROC
-//' @method weighted.prROC factor
+//' @templateVar .TITLE Receiver Operator Characteristics Curve
+//' @templateVar .FUN weighted.pr.curve
+//' @templateVar .TYPE roc
+//' @templateVar .METHOD factor
+//' @template classification_auc_inherit
+//'
 //' @export
-// [[Rcpp::export(weighted.prROC.factor)]]
+// [[Rcpp::export(weighted.pr.curve.factor)]]
 Rcpp::DataFrame weighted_precision_recall_curve(
     const Rcpp::IntegerVector& actual, 
     const Rcpp::NumericMatrix& response, 
@@ -41,11 +49,14 @@ Rcpp::DataFrame weighted_precision_recall_curve(
         return  prROC::pr_curve(actual, response, presorted, &w, nullptr);
 }
 
-
-//' @rdname pr.auc
-//' @method pr.auc matrix
-//' @export
-// [[Rcpp::export(pr.auc.matrix)]]
+//' @templateVar .TITLE Area under the Precision-Recall Curve
+//' @templateVar .FUN auc.pr.curve
+//' @templateVar .TYPE auc
+//' @templateVar .METHOD factor
+//' @template classification_auc_inherit
+//'
+//' @rawNamespace S3method(auc.pr.curve,factor)
+// [[Rcpp::export(auc.pr.curve.factor)]]
 Rcpp::NumericVector precision_recall_auc(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,
@@ -66,10 +77,14 @@ Rcpp::NumericVector precision_recall_auc(
         }
 }
 
-//' @rdname pr.auc
-//' @method weighted.pr.auc matrix
-//' @export
-// [[Rcpp::export(weighted.pr.auc.matrix)]]
+//' @templateVar .TITLE Area under the Precision-Recall Curve
+//' @templateVar .FUN weighted.auc.pr.curve
+//' @templateVar .TYPE auc
+//' @templateVar .METHOD factor
+//' @template classification_auc_inherit
+//'
+//' @rawNamespace S3method(weighted.auc.pr.curve,factor)
+// [[Rcpp::export(weighted.auc.pr.curve.factor)]]
 Rcpp::NumericVector precision_recall_auc_weighted(
     const Rcpp::IntegerVector actual,
     const Rcpp::NumericMatrix response,

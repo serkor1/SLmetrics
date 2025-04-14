@@ -7,10 +7,11 @@
 
 using namespace Rcpp;
 
-//' @rdname entropy
-//' @method entropy matrix
+//' @templateVar .FUN shannon.entropy
+//' @templateVar .METHOD matrix
+//' @template classification_entropy_inherit
 //' @export
-// [[Rcpp::export(entropy.matrix)]]
+// [[Rcpp::export(shannon.entropy.matrix)]]
 Rcpp::NumericVector ShannonsEntropy(const Rcpp::NumericMatrix& pk, const int& dim = 0, const double& base = -1.0)
 {
     // 1) create  pointers
@@ -24,8 +25,9 @@ Rcpp::NumericVector ShannonsEntropy(const Rcpp::NumericMatrix& pk, const int& di
     return ShannonsEntropyClass::Entropy(pk_ptr, n, k, dim, base);
 }
 
-//' @rdname entropy
-//' @method relative.entropy matrix
+//' @templateVar .FUN relative.entropy
+//' @templateVar .METHOD matrix
+//' @template classification_entropy_inherit
 //' @export
 // [[Rcpp::export(relative.entropy.matrix)]]
 Rcpp::NumericVector RelativeEntropy(const Rcpp::NumericMatrix& pk, const Rcpp::NumericMatrix& qk, const int& dim = 0, const double& base = -1.0)
@@ -42,8 +44,9 @@ Rcpp::NumericVector RelativeEntropy(const Rcpp::NumericMatrix& pk, const Rcpp::N
     return RelativeEntropyClass::Entropy(pk_ptr, qk_ptr, n, k, dim, base);
 }
 
-//' @rdname entropy
-//' @method cross.entropy matrix
+//' @templateVar .FUN cross.entropy
+//' @templateVar .METHOD matrix
+//' @template classification_entropy_inherit
 //' @export
 // [[Rcpp::export(cross.entropy.matrix)]]
 Rcpp::NumericVector CrossEntropy(const Rcpp::NumericMatrix& pk, const Rcpp::NumericMatrix& qk, const int& dim = 0, const double& base = -1.0)

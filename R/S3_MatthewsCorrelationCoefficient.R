@@ -4,31 +4,22 @@
 # objective: Generate MCC methods
 # script start;
 
-#' @aliases mcc phi
-#' @inherit accuracy
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
 #' 
-#' @title Matthews Correlation Coefficient
-#'
-#' @description
-#' The [mcc()]-function computes the [Matthews Correlation Coefficient](https://en.wikipedia.org/wiki/Matthews_correlation_coefficient) (MCC), also known as the \eqn{\phi}-coefficient, between
-#' two vectors of predicted and observed [factor()] values. The [weighted.mcc()] function computes the weighted Matthews Correlation Coefficient.
-#'
-#' @usage
-#' ## Generic S3 method
-#' mcc(...)
+#' @aliases phi weighted.phi
 #' 
-#' @section Definition:
+#' @templateVar .TITLE Matthews Correlation Coefficient
+#' @templateVar .FUN mcc
+#' @templateVar .TASK Classification
+#' @templateVar .MULTI_OUTPUT false
+#' @template classification_standard_template
 #'
-#' The metric is calculated as follows,
-#'
-#' \deqn{
-#'   \frac{\#TP \times \#TN - \#FP \times \#FN}{\sqrt{(\#TP + \#FP)(\#TP + \#FN)(\#TN + \#FP)(\#TN + \#FN)}}
-#' }
+#' @section Other names:
 #' 
-#' @example man/examples/scr_MatthewsCorrelationCoefficient.R
-#'
-#' @family Classification
-#' @family Supervised Learning
+#' The Matthews Correlation Coefficient has other names depending on research field:
+#' - \eqn{\phi}-coefficient, [phi()]
 #'
 #' @export
 mcc <- function(...) {
@@ -41,25 +32,17 @@ mcc <- function(...) {
 #' @rdname mcc
 #' @usage
 #' ## Generic S3 method
-#' weighted.mcc(
-#'  ...,
-#'  w
-#' )
+#' ## for weighted Matthews
+#' ## Correlation Coefficient
+#' weighted.mcc(...)
 #' @export
-weighted.mcc <- function(
-  ..., 
-  w) {
+weighted.mcc <- function(...) {
   UseMethod(
     generic = "weighted.mcc",
     object = ..1
   )
 }
 
-#' @rdname mcc
-#' @usage
-#' ## Generic S3 method
-#' phi(...)
-#' 
 #' @export
 phi <- function(...) {
   UseMethod(
@@ -68,17 +51,8 @@ phi <- function(...) {
   )
 }
 
-#' @rdname mcc
-#' @usage
-#' ## Generic S3 method
-#' weighted.phi(
-#'  ...,
-#'  w
-#' )
 #' @export
-weighted.phi <- function(
-  ...,
-  w) {
+weighted.phi <- function(...) {
   UseMethod(
     generic = "weighted.phi",
     object = ..1

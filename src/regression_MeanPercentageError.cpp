@@ -2,8 +2,9 @@
 #include "regression_MeanPercentageError.h"
 using namespace Rcpp;
 
-//' @rdname mpe
-//' @method mpe numeric
+//' @templateVar .FUN mpe
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(mpe.numeric)]]
 double mpe(
@@ -14,8 +15,9 @@ double mpe(
         return performance.compute();
 }
 
-//' @rdname mpe
-//' @method weighted.mpe numeric
+//' @templateVar .FUN weighted.mpe
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(weighted.mpe.numeric)]]
 double weighted_mpe(

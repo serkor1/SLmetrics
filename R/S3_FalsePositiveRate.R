@@ -5,111 +5,49 @@
 # for False Positive Rate
 # script start;
 
-#' @aliases fpr fallout
-#' @inherit specificity
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
 #' 
-#' @title False Positive Rate
-#'
-#' @description
-#' A generic function for the [False Positive Rate](https://en.wikipedia.org/wiki/False_positive_rate). Use [weighted.fpr()] for the weighted [False Positive Rate](https://en.wikipedia.org/wiki/False_positive_rate).
+#' @aliases fallout weighted.fallout
 #' 
-#' ## Other names
-#' Fallout
-#' 
-#' @usage 
-#' ## Generic S3 method
-#' fpr(
-#'  ...,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
-#' 
-#' @section Definition:
-#' Let \eqn{\hat{\gamma} \in [0, 1]} be the proportion of false positives among the actual negatives. The false positive rate of the classifier is calculated as,
-#'
-#' \deqn{
-#'   \hat{\gamma} = \frac{\#FP_k}{\#TN_k + \#FP_k}
-#' }
-#'
-#' Where:
-#' 
-#' - \eqn{\#TN_k} is the number of true negatives, and
-#' - \eqn{\#FP_k} is the number of false positives.
-#'
-#' @example man/examples/scr_FalsePositiveRate.R
-#' 
-#' @family Classification
-#' @family Supervised Learning
+#' @templateVar .TITLE false positive rate
+#' @templateVar .FUN fpr
+#' @templateVar .TASK Classification
+#' @templateVar .MULTI_OUTPUT true
+#' @template classification_standard_template
 #'
 #' @export
-fpr <- function(
-  ..., 
-  estimator = 0, 
-  na.rm = TRUE) {
+fpr <- function(...) {
   UseMethod(
-    generic = "fpr",
-    object  = ..1
+    generic = "fpr"
   )
 }
 
 #' @rdname fpr
 #' @usage
 #' ## Generic S3 method
-#' fallout(
-#'  ...,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
+#' ## for weighted False Positive
+#' ## Rate
+#' weighted.fpr(...)
 #' @export
-fallout <- function(
-  ..., 
-  estimator = 0, 
-  na.rm = TRUE) {
+weighted.fpr <- function(...) {
   UseMethod(
-    generic = "fallout",
-    object  = ..1
+    generic = "weighted.fpr"
   )
 }
 
-#' @rdname fpr
-#' @usage
-#' ## Generic S3 method
-#' weighted.fpr(
-#'  ...,
-#'  w,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
 #' @export
-weighted.fpr <- function(
-  ...,
-  w,
-  estimator = 0, 
-  na.rm = TRUE) {
+fallout <- function(...) {
   UseMethod(
-    generic = "weighted.fpr",
-    object  = ..1
+    generic = "fallout"
   )
 }
 
-#' @rdname fpr
-#' @usage
-#' ## Generic S3 method
-#' weighted.fallout(
-#'  ...,
-#'  w,
-#'  estimator = 0,
-#'  na.rm = TRUE
-#' )
 #' @export
-weighted.fallout <- function(
-  ...,
-  w,
-  estimator = 0, 
-  na.rm = TRUE) {
+weighted.fallout <- function(...) {
   UseMethod(
-    generic = "weighted.fallout",
-    object  = ..1
+    generic = "weighted.fallout"
   )
 }
 

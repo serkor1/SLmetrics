@@ -21,7 +21,7 @@ testthat::test_that(
       
         if (is.null(w)) {
 
-          prROC(
+          pr.curve(
             actual,
             response,
             thresholds = if (is.null(thresholds))  {NULL} else thresholds,
@@ -30,7 +30,7 @@ testthat::test_that(
   
         } else {
   
-          weighted.prROC(
+          weighted.pr.curve(
             actual,
             response,
             thresholds = if (is.null(thresholds))  {NULL} else thresholds,

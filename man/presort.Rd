@@ -42,8 +42,8 @@ preorder(X)
 }
 \seealso{
 Other Tools: 
-\code{\link{auc.numeric}()},
 \code{\link{cov.wt.matrix}()},
-\code{\link{preorder}()}
+\code{\link{preorder}()},
+\code{\link{xy.auc.numeric}()}
 }
 \concept{Tools}
