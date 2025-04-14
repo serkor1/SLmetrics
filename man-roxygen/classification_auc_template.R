@@ -14,7 +14,7 @@
 <% } else { %>
 #' ## Visualizing <%= tolower(.TITLE) %>
 #' 
-#' Use [<%= gsub("weighted.auc|auc", "", .FUN) %>()] to construct the [data.frame] and use [plot] to visualize the area under the curve.
+#' Use [<%= gsub("weighted.auc.|auc.", "", .FUN) %>()] to construct the [data.frame] and use [plot] to visualize the area under the curve.
 #' 
 <% } %>
 #' 

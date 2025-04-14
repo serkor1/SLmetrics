@@ -34,7 +34,7 @@ A S3 generic function for calculating the area under the receiver operator chara
 If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
 \subsection{Visualizing area under the receiver operator characteristics curve}{
 
-Use \code{\link[=.roc.curve]{.roc.curve()}} to construct the \link{data.frame} and use \link{plot} to visualize the area under the curve.
+Use \code{\link[=roc.curve]{roc.curve()}} to construct the \link{data.frame} and use \link{plot} to visualize the area under the curve.
 }
 
 \subsection{Defensive measures}{

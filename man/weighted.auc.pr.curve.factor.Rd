@@ -36,7 +36,7 @@ A S3 generic function for calculating the area under the precision recall curve 
 If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
 \subsection{Visualizing area under the precision recall curve}{
 
-Use \code{\link[=.pr.curve]{.pr.curve()}} to construct the \link{data.frame} and use \link{plot} to visualize the area under the curve.
+Use \code{\link[=pr.curve]{pr.curve()}} to construct the \link{data.frame} and use \link{plot} to visualize the area under the curve.
 }
 
 \subsection{Defensive measures}{
