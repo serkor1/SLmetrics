@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{auc.pr.curve.factor}
 \alias{auc.pr.curve.factor}
-\title{Area under the Precision-Recall Curve}
+\title{Area under the Precision Recall Curve}
 \usage{
 \method{auc.pr.curve}{factor}(actual, response, micro = NULL, method = 0L, ...)
 }
@@ -21,8 +21,36 @@ micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro a
 
 \item{...}{Arguments passed into other methods.}
 }
+\value{
+If \code{estimator} is given as
+\itemize{
+\item 0: a named <\link{double}>-vector of \link{length} k
+\item 1: a <\link{double}> value (Micro averaged metric)
+\item 2: a <\link{double}> value (Macro averaged metric)
+}
+}
 \description{
-Area under the Precision-Recall Curve
+A S3 generic function for calculating the area under the precision recall curve score of a classification model. \code{\link[=auc.pr.curve]{auc.pr.curve()}} handles the input as is - and therefore there is not sanity checks.
+If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
+\subsection{Constructing data.frames}{
+
+Description for the main function
+
+Use \link{auc.pr.curve} for calculating the area under the curve directly.
+}
+
+\subsection{Defensive measures}{
+
+As everything is based on pointers internally values as \link{NA} and out of bounds values (\code{length(x) != length(y)}) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in \code{try()} or \code{tryCatch()} to recover from sudden errors. Your \code{R}-session \emph{will} most likely just crash.
+A workaroud is to create a wrapper around \code{\link[=auc.pr.curve]{auc.pr.curve()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=auc.pr.curve]{auc.pr.curve()}}.
+}
+}
+\references{
+James, Gareth, et al. An introduction to statistical learning. Vol. 112. No. 1. New York: springer, 2013.
+
+Hastie, Trevor. "The elements of statistical learning: data mining, inference, and prediction." (2009).
+
+Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journal of machine Learning research 12 (2011): 2825-2830.
 }
 \concept{Machine learning performance evaluation}
 \keyword{classification}

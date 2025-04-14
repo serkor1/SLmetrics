@@ -6,7 +6,7 @@
 
 #' @title NULL
 #' @usage NULL
-#' @return NULL
+#' @returns NULL
 #' 
 #' @templateVar .TITLE pinball loss
 #' @templateVar .FUN pinball

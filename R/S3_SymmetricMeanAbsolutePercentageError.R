@@ -6,7 +6,7 @@
 
 #' @title NULL
 #' @usage NULL
-#' @return NULL
+#' @returns NULL
 #' 
 #' @templateVar .TITLE Symmetric Mean Absolutte Percentage Error
 #' @templateVar .FUN smape

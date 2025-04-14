@@ -6,7 +6,7 @@
 
 #' @title NULL
 #' @usage NULL
-#' @return NULL
+#' @returns NULL
 #' 
 #' @aliases ppv weighted.ppv
 #' 

@@ -25,6 +25,16 @@
 #' @family Classification
 #' @family Supervised Learning
 #' 
+<% if (grepl(pattern = "logloss", x = .FUN)) { %>
+#' @returns 
+#' A <[double]>
+<% } else { %>
+#' @returns A <[double]> value or vector:
+#' - A single <[double]> value (length 1) if `dim == 0`.
+#' - A <[double]> vector with length equal to the [length] of rows if `dim == 1`.
+#' - A <[double]> vector with length equal to the [length] of columns if `dim == 2`.
+<% } %>
+#' 
 #' @references
 #' 
 #' MacKay, David JC. Information theory, inference and learning algorithms. Cambridge university press, 2003.

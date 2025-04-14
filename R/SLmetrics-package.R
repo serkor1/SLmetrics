@@ -62,6 +62,7 @@ NULL
 #' When `na.rm = FALSE`, the computation corresponds to `sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))`.
 #' @param ... Arguments passed into other methods.
 #'
+#' @returns NULL
 #' @keywords internal
 #' @usage NULL
 NULL
@@ -89,6 +90,7 @@ NULL
 #'   sum of cross-entropies is returned.
 #' @param ... Arguments passed into other methods
 #'
+#' @returns NULL
 #' @keywords internal
 #' @usage NULL
 NULL
@@ -111,6 +113,7 @@ NULL
 #' @param alpha A <[numeric]>-value of [length] \eqn{1} (default: \eqn{0.5}). The slope of the pinball loss function.
 #' @param deviance A <[logical]>-value of [length] 1 (default: [FALSE]). If [TRUE] the function returns the \eqn{D^2} loss.
 #'
+#' @returns NULL
 #' @keywords internal
 #' @usage NULL
 NULL

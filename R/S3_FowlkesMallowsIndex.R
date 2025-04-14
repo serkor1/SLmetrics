@@ -6,7 +6,7 @@
 
 #' @title NULL
 #' @usage NULL
-#' @return NULL
+#' @returns NULL
 #' 
 #' @templateVar .TITLE Fowlkes Mallows Index
 #' @templateVar .FUN fmi

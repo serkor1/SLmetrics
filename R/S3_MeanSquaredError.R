@@ -6,7 +6,7 @@
 
 #' @title NULL
 #' @usage NULL
-#' @return NULL
+#' @returns NULL
 #' 
 #' @templateVar .TITLE mean squeared error
 #' @templateVar .FUN mse

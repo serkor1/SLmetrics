@@ -6,7 +6,7 @@
 
 #' @title NULL
 #' @usage NULL
-#' @return NULL
+#' @returns NULL
 #' 
 #' @aliases tnr selectivity weighted.tnr weighted.selectivity
 #' 

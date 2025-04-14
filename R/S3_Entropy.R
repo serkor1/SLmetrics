@@ -6,7 +6,7 @@
 
 #' @title NULL
 #' @usage NULL
-#' @return NULL
+#' @returns NULL
 #' 
 #' @templateVar .TITLE shannon entropy
 #' @templateVar .FUN shannon.entropy
@@ -23,6 +23,10 @@ shannon.entropy <- function(...) {
   )
 }
 
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
+#' 
 #' @templateVar .TITLE relative entropy
 #' @templateVar .FUN relative.entropy
 #' @templateVar .TASK Classification
@@ -39,6 +43,10 @@ relative.entropy <- function(...) {
   )
 }
 
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
+#' 
 #' @templateVar .TITLE cross entropy
 #' @templateVar .FUN cross.entropy
 #' @templateVar .TASK Classification

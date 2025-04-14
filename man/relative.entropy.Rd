@@ -20,6 +20,14 @@ level in \code{actual}, the second column to the second factor level, and so on.
     \item{\code{base}}{A <\link{numeric}> value of \link{length} 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.}
   }}
 }
+\value{
+A <\link{double}> value or vector:
+\itemize{
+\item A single <\link{double}> value (length 1) if \code{dim == 0}.
+\item A <\link{double}> vector with length equal to the \link{length} of rows if \code{dim == 1}.
+\item A <\link{double}> vector with length equal to the \link{length} of columns if \code{dim == 2}.
+}
+}
 \description{
 A S3 generic function for calculating the relative entropy score of a classification model. \code{\link[=relative.entropy]{relative.entropy()}} handles the input as is - and therefore there is not sanity checks.
 If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.

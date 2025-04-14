@@ -28,6 +28,9 @@ sum of cross-entropies is returned.}
     \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
   }}
 }
+\value{
+A <\link{double}>
+}
 \description{
 A S3 generic function for calculating the logarithmic loss score of a classification model. \code{\link[=logloss]{logloss()}} handles the input as is - and therefore there is not sanity checks.
 If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.

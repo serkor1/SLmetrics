@@ -28,7 +28,7 @@ xy.auc(
 \item{...}{Arguments passed into other methods.}
 }
 \value{
-A <\link{numeric}>  vector  of \link{length} 1
+A <\link{double}>  vector  of \link{length} 1
 }
 \description{
 The \code{\link[=xy.auc]{xy.auc()}}-function calculates the area under the curve.

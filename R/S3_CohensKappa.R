@@ -6,7 +6,7 @@
 
 #' @title NULL
 #' @usage NULL
-#' @return NULL
+#' @returns NULL
 #' 
 #' @templateVar .TITLE  Cohen's \eqn{\kappa}-statistic
 #' @templateVar .FUN ckappa

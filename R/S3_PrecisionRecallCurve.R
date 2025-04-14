@@ -4,6 +4,9 @@
 # objective: Generate Methods
 # script start;
 
+#' @title NULL
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Precision Recall Curve
 #' @templateVar .FUN pr.curve
 #' @templateVar .TYPE not_auc
@@ -48,6 +51,10 @@ weighted.pr.curve <- function(...) {
   )
 }
 
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
+#' 
 #' @templateVar .TITLE Area under the Precision Recall Curve
 #' @templateVar .FUN auc.pr.curve
 #' @templateVar .TYPE auc

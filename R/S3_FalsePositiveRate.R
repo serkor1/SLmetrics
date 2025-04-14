@@ -7,7 +7,7 @@
 
 #' @title NULL
 #' @usage NULL
-#' @return NULL
+#' @returns NULL
 #' 
 #' @aliases fallout weighted.fallout
 #' 

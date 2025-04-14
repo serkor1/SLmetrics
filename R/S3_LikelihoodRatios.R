@@ -7,7 +7,7 @@
 
 #' @title NULL
 #' @usage NULL
-#' @return NULL
+#' @returns NULL
 #' 
 #' @seealso
 #' The [plr()]-function for the Positive Likehood Ratio (LR+)
@@ -28,7 +28,7 @@ nlr <- function(...) {
 
 #' @title NULL
 #' @usage NULL
-#' @return NULL
+#' @returns NULL
 #' 
 #' @rdname nlr
 #' @usage
@@ -47,7 +47,7 @@ weighted.nlr <- function(...) {
 
 #' @title NULL
 #' @usage NULL
-#' @return NULL
+#' @returns NULL
 #' 
 #' @seealso
 #'
@@ -67,10 +67,6 @@ plr <- function(...) {
   )
 }
 
-#' @title NULL
-#' @usage NULL
-#' @return NULL
-#' 
 #' @rdname plr
 #' 
 #' @usage
@@ -88,7 +84,7 @@ weighted.plr <- function(...) {
 
 #' @title NULL
 #' @usage NULL
-#' @return NULL
+#' @returns NULL
 #' 
 #' @templateVar .TITLE diagnostic odds ratio
 #' @templateVar .FUN dor

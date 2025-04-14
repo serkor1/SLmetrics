@@ -50,7 +50,7 @@
 #' }
 #' 
 #' @returns 
-#' A <[numeric]>  vector  of [length] 1
+#' A <[double]>  vector  of [length] 1
 #' 
 #' 
 #' @family Tools

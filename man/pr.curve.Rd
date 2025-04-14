@@ -52,6 +52,13 @@ As everything is based on pointers internally values as \link{NA} and out of bou
 A workaroud is to create a wrapper around \code{\link[=pr.curve]{pr.curve()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=pr.curve]{pr.curve()}}.
 }
 }
+\references{
+James, Gareth, et al. An introduction to statistical learning. Vol. 112. No. 1. New York: springer, 2013.
+
+Hastie, Trevor. "The elements of statistical learning: data mining, inference, and prediction." (2009).
+
+Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journal of machine Learning research 12 (2011): 2825-2830.
+}
 \seealso{
 Other Classification: 
 \code{\link{accuracy}()},

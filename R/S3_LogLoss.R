@@ -6,7 +6,7 @@
 
 #' @title NULL
 #' @usage NULL
-#' @return NULL
+#' @returns NULL
 #' 
 #' @templateVar .TITLE Logarithmic Loss
 #' @templateVar .FUN logloss
@@ -18,8 +18,6 @@
 #' @inheritDotParams weighted.logloss.integer
 #' @inheritDotParams logloss.factor
 #' @inheritDotParams weighted.logloss.factor
-#' 
-#' @usage NULL
 #' 
 #' @export
 logloss <- function(...) {

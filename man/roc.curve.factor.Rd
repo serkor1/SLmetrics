@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{roc.curve.factor}
 \alias{roc.curve.factor}
-\title{Receiver Operator Characteristics Curve}
+\title{Reciever Operator Characteristics}
 \usage{
 \method{roc.curve}{factor}(actual, response, thresholds = NULL, presorted = FALSE, ...)
 }
@@ -20,8 +20,104 @@ level in \code{actual}, the second column to the second factor level, and so on.
 
 \item{...}{Arguments passed into other methods.}
 }
+\value{
+A \link{data.frame} on the following form,
+
+\item{threshold}{<\link{numeric}> Thresholds used to determine \code{\link[=tpr]{tpr()}} and \code{\link[=fpr]{fpr()}}}
+\item{level}{<\link{character}> The level of the actual <\link{factor}>}
+\item{label}{<\link{character}> The levels of the actual <\link{factor}>}
+\item{fpr}{<\link{numeric}> The false positive rate}
+\item{tpr}{<\link{numeric}> The true positve rate}
+}
 \description{
-Receiver Operator Characteristics Curve
+A S3 generic function for calculating the reciever operator characteristics score of a classification model. \code{\link[=roc.curve]{roc.curve()}} handles the input as is - and therefore there is not sanity checks.
+If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
+\subsection{Area under the curve}{
+
+Use \link{auc.roc.curve} for calculating the area under the curve directly.
+}
+
+\subsection{Defensive measures}{
+
+As everything is based on pointers internally values as \link{NA} and out of bounds values (\code{length(x) != length(y)}) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in \code{try()} or \code{tryCatch()} to recover from sudden errors. Your \code{R}-session \emph{will} most likely just crash.
+A workaroud is to create a wrapper around \code{\link[=roc.curve]{roc.curve()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=roc.curve]{roc.curve()}}.
+}
+}
+\references{
+James, Gareth, et al. An introduction to statistical learning. Vol. 112. No. 1. New York: springer, 2013.
+
+Hastie, Trevor. "The elements of statistical learning: data mining, inference, and prediction." (2009).
+
+Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journal of machine Learning research 12 (2011): 2825-2830.
+}
+\seealso{
+Other Classification: 
+\code{\link{accuracy}()},
+\code{\link{baccuracy}()},
+\code{\link{ckappa}()},
+\code{\link{cmatrix}()},
+\code{\link{cross.entropy}()},
+\code{\link{dor}()},
+\code{\link{fbeta}()},
+\code{\link{fdr}()},
+\code{\link{fer}()},
+\code{\link{fmi}()},
+\code{\link{fpr}()},
+\code{\link{hammingloss}()},
+\code{\link{jaccard}()},
+\code{\link{logloss}()},
+\code{\link{mcc}()},
+\code{\link{nlr}()},
+\code{\link{npv}()},
+\code{\link{plr}()},
+\code{\link{pr.curve}()},
+\code{\link{precision}()},
+\code{\link{recall}()},
+\code{\link{relative.entropy}()},
+\code{\link{shannon.entropy}()},
+\code{\link{specificity}()},
+\code{\link{zerooneloss}()}
+
+Other Supervised Learning: 
+\code{\link{accuracy}()},
+\code{\link{baccuracy}()},
+\code{\link{ccc}()},
+\code{\link{ckappa}()},
+\code{\link{cmatrix}()},
+\code{\link{cross.entropy}()},
+\code{\link{dor}()},
+\code{\link{fbeta}()},
+\code{\link{fdr}()},
+\code{\link{fer}()},
+\code{\link{fmi}()},
+\code{\link{fpr}()},
+\code{\link{hammingloss}()},
+\code{\link{huberloss}()},
+\code{\link{jaccard}()},
+\code{\link{logloss}()},
+\code{\link{mae}()},
+\code{\link{mape}()},
+\code{\link{mcc}()},
+\code{\link{mpe}()},
+\code{\link{mse}()},
+\code{\link{nlr}()},
+\code{\link{npv}()},
+\code{\link{pinball}()},
+\code{\link{plr}()},
+\code{\link{pr.curve}()},
+\code{\link{precision}()},
+\code{\link{rae}()},
+\code{\link{recall}()},
+\code{\link{relative.entropy}()},
+\code{\link{rmse}()},
+\code{\link{rmsle}()},
+\code{\link{rrmse}()},
+\code{\link{rrse}()},
+\code{\link{rsq}()},
+\code{\link{shannon.entropy}()},
+\code{\link{smape}()},
+\code{\link{specificity}()},
+\code{\link{zerooneloss}()}
 }
 \concept{Machine learning performance evaluation}
 \keyword{classification}

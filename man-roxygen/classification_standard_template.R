@@ -33,8 +33,8 @@
 #' @inheritDotParams <%= .FUN %>.cmatrix
 #' 
 #' 
-#' @returns 
 <% if ( tolower(.MULTI_OUTPUT) == 'false' ) { %>
+#' @returns 
 #' A <[double]>-value 
 <% } else { %>
 #' @returns If `estimator` is given as

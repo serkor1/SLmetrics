@@ -4,6 +4,10 @@
 # objective: Generate Methods
 # script start;
 
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
+#' 
 #' @templateVar .TITLE Reciever Operator Characteristics
 #' @templateVar .FUN roc.curve
 #' @templateVar .TYPE not_auc
@@ -49,6 +53,10 @@ weighted.roc.curve <- function(...) {
   )
 }
 
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
+#' 
 #' @templateVar .TITLE Area under the Receiver Operator Characteristics Curve
 #' @templateVar .FUN auc.roc.curve
 #' @templateVar .TYPE auc
