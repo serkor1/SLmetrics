@@ -90,7 +90,7 @@ jobs:
             - name: Installing {pkgs}
               uses: r-lib/actions/setup-r-dependencies@v2
               with:
-                extra-packages: any::rcmdcheck, reticulate, any::Rcpp, any::lattice
+                extra-packages: any::rcmdcheck reticulate
                 needs: check
                 
             - name: Check R build-tools
