@@ -32,11 +32,9 @@ If \code{estimator} is given as
 \description{
 A S3 generic function for calculating the area under the precision recall curve score of a classification model. \code{\link[=auc.pr.curve]{auc.pr.curve()}} handles the input as is - and therefore there is not sanity checks.
 If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
-\subsection{Constructing data.frames}{
+\subsection{Visualizing area under the precision recall curve}{
 
-Description for the main function
-
-Use \link{auc.pr.curve} for calculating the area under the curve directly.
+Use \code{\link[=.pr.curve]{.pr.curve()}} to construct the \link{data.frame} and use \link{plot} to visualize the area under the curve.
 }
 
 \subsection{Defensive measures}{

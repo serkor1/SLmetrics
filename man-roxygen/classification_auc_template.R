@@ -12,11 +12,9 @@
 #' Use [auc.<%= .FUN %>] for calculating the area under the curve directly.
 #' 
 <% } else { %>
-#' ## Constructing data.frames
+#' ## Visualizing <%= tolower(.TITLE) %>
 #' 
-#' Description for the main function
-#' 
-#' Use [<%= .FUN %>] for calculating the area under the curve directly.
+#' Use [<%= gsub("weighted.auc|auc", "", .FUN) %>()] to construct the [data.frame] and use [plot] to visualize the area under the curve.
 #' 
 <% } %>
 #' 
