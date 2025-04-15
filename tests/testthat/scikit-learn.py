@@ -177,6 +177,28 @@ def py_pinball(actual, predicted, w = None, alpha = 0.5):
       multioutput = "raw_values"
     )
 
+def py_tweedie(actual, predicted, w = None, power = 2):
+    return metrics.mean_tweedie_deviance(
+      y_true = actual,
+      y_pred = predicted,
+      sample_weight = w,
+      power = power
+    )
+
+def py_gamma(actual, predicted, w = None):
+    return metrics.mean_gamma_deviance(
+      y_true = actual,
+      y_pred = predicted,
+      sample_weight = w
+    )
+
+def py_poisson(actual, predicted, w = None):
+    return metrics.mean_poisson_deviance(
+      y_true = actual,
+      y_pred = predicted,
+      sample_weight = w
+    )
+
 
 def py_d2pinball(actual, predicted, w = None, alpha = 0.5):
     return metrics.d2_pinball_score(

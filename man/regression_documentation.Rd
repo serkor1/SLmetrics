@@ -22,6 +22,20 @@ will be adjusted with \eqn{\frac{1-n}{n}}}
 \item{alpha}{A <\link{numeric}>-value of \link{length} \eqn{1} (default: \eqn{0.5}). The slope of the pinball loss function.}
 
 \item{deviance}{A <\link{logical}>-value of \link{length} 1 (default: \link{FALSE}). If \link{TRUE} the function returns the \eqn{D^2} loss.}
+
+\item{power}{A <\link{double}> value, default = 2.
+Tweedie power parameter. Either power <= 0 or power >= 1.
+
+The higher p, the less weight is given to extreme deviations between actual and predicted targets.
+\itemize{
+\item \strong{power < 0:} Extreme stable distribution. Requires: predicted > 0.
+\item \strong{power = 0:} Normal distribution, output corresponds to mean_squared_error. actual and predicted can be any real numbers.
+\item \strong{power = 1:} Poisson distribution. Requires: actual >= 0 and predicted > 0.
+\item \strong{1 < power < 2:} Compound Poisson distribution. Requires: actual >= 0 and predicted > 0.
+\item \strong{power = 2:} Gamma distribution. Requires: actual > 0 and predicted > 0.
+\item \strong{power = 3:} Inverse Gaussian distribution. Requires: actual > 0 and predicted > 0.
+\item \strong{otherwise:} Positive stable distribution. Requires: actual > 0 and predicted > 0.
+}}
 }
 \description{
 This roxygen block is the generic documnentation

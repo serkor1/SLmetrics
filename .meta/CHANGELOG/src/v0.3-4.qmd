@@ -68,6 +68,54 @@ SLmetrics::weighted.hammingloss(
 )
 ```
 
+* **Tweedie Deviance:** The interface to `tweedie.deviance()` is given below:
+
+```{r}
+## Generate actual
+## and predicted values
+actual_values <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
+
+predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
+
+## Evaluate performance
+tweedie.deviance(
+   actual_values, 
+   predicted_values
+)
+```
+
+* **Gamma Deviance:** The interface to `gamma.deviance()` is given below:
+
+```{r}
+## Generate actual
+## and predicted values
+actual_values <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
+
+predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
+
+## Evaluate performance
+gamma.deviance(
+   actual_values, 
+   predicted_values
+)
+```
+
+* **Poisson Deviance:** The interface to `poisson.deviance()` is given below:
+
+```{r}
+## Generate actual
+## and predicted values
+actual_values <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
+
+predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
+
+## Evaluate performance
+poisson.deviance(
+   actual_values, 
+   predicted_values
+)
+```
+
 ## :bug: Bug-fixes
 
 ## :boom: Breaking changes

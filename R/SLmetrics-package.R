@@ -112,6 +112,19 @@ NULL
 #' @param normalization A <[numeric]>-value of [length] \eqn{1} (default: \eqn{1}). \eqn{0}: [mean]-normalization, \eqn{1}: [range]-normalization, \eqn{2}: [IQR]-normalization.
 #' @param alpha A <[numeric]>-value of [length] \eqn{1} (default: \eqn{0.5}). The slope of the pinball loss function.
 #' @param deviance A <[logical]>-value of [length] 1 (default: [FALSE]). If [TRUE] the function returns the \eqn{D^2} loss.
+#' @param power A <[double]> value, default = 2.
+#'   Tweedie power parameter. Either power <= 0 or power >= 1.
+#'
+#'   The higher p, the less weight is given to extreme deviations between actual and predicted targets.
+#'
+#'   - **power < 0:** Extreme stable distribution. Requires: predicted > 0.
+#'   - **power = 0:** Normal distribution, output corresponds to mean_squared_error. actual and predicted can be any real numbers.
+#'   - **power = 1:** Poisson distribution. Requires: actual >= 0 and predicted > 0.
+#'   - **1 < power < 2:** Compound Poisson distribution. Requires: actual >= 0 and predicted > 0.
+#'   - **power = 2:** Gamma distribution. Requires: actual > 0 and predicted > 0.
+#'   - **power = 3:** Inverse Gaussian distribution. Requires: actual > 0 and predicted > 0.
+#'   - **otherwise:** Positive stable distribution. Requires: actual > 0 and predicted > 0.
+#'
 #'
 #' @returns NULL
 #' @keywords internal

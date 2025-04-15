@@ -882,6 +882,22 @@ weighted.ccc.numeric <- function(actual, predicted, w, correction = FALSE, ...) 
     .Call(`_SLmetrics_weighted_ccc`, actual, predicted, w, correction)
 }
 
+#' @templateVar .FUN gamma.deviance
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @export
+gamma.deviance.numeric <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_gamma_deviance`, actual, predicted)
+}
+
+#' @templateVar .FUN weighted.gamma.deviance
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @export
+weighted.gamma.deviance.numeric <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_gamma_deviance`, actual, predicted, w)
+}
+
 #' @templateVar .FUN huberloss
 #' @templateVar .METHOD numeric
 #' @template regression_standard_inherit
@@ -978,6 +994,22 @@ weighted.pinball.numeric <- function(actual, predicted, w, alpha = 0.5, deviance
     .Call(`_SLmetrics_weighted_pinball`, actual, predicted, w, alpha, deviance)
 }
 
+#' @templateVar .FUN poisson.deviance
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @export
+poisson.deviance.numeric <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_poisson_deviance`, actual, predicted)
+}
+
+#' @templateVar .FUN weighted.poisson.deviance
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @export
+weighted.poisson.deviance.numeric <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_poisson_deviance`, actual, predicted, w)
+}
+
 #' @templateVar .FUN rae
 #' @templateVar .METHOD numeric
 #' @template regression_standard_inherit
@@ -1072,6 +1104,22 @@ smape.numeric <- function(actual, predicted, ...) {
 #' @export
 weighted.smape.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_smape`, actual, predicted, w)
+}
+
+#' @templateVar .FUN tweedie.deviance
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @export
+tweedie.deviance.numeric <- function(actual, predicted, power = 2.0, ...) {
+    .Call(`_SLmetrics_tweedie_deviance`, actual, predicted, power)
+}
+
+#' @templateVar .FUN weighted.tweedie.deviance
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @export
+weighted.tweedie.deviance.numeric <- function(actual, predicted, w, power = 2.0, ...) {
+    .Call(`_SLmetrics_weighted_tweedie_deviance`, actual, predicted, w, power)
 }
 
 #' @rdname xy.auc
