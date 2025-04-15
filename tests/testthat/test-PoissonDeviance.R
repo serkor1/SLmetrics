@@ -11,12 +11,12 @@ testthat::test_that(
       predicted,
       w = NULL) {
       if (is.null(w)) {
-        poisson.deviance(
+        deviance.poisson(
           actual = actual,
           predicted = predicted
         )
       } else {
-        weighted.poisson.deviance(
+        weighted.deviance.poisson(
           actual = actual,
           predicted = predicted,
           w = w

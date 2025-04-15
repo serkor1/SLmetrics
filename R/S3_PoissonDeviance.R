@@ -9,28 +9,28 @@
 #' @returns NULL
 #'
 #' @templateVar .TITLE Poisson Deviance
-#' @templateVar .FUN poisson.deviance
+#' @templateVar .FUN deviance.poisson
 #' @template regression_standard_template
 #' @template regression_standard_params
 #' @usage NULL
 #'
-#' @export
-poisson.deviance <- function(...) {
+#' @rawNamespace export(deviance.poisson)
+deviance.poisson <- function(...) {
     UseMethod(
-        generic = "poisson.deviance"
+        generic = "deviance.poisson"
     )
 }
 
-#' @rdname poisson.deviance
+#' @rdname deviance.poisson
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Root Mean
 #' ## Squared Error
-#' weighted.poisson.deviance(...)
-#' @export
-weighted.poisson.deviance <- function(...) {
+#' weighted.deviance.poisson(...)
+#' @rawNamespace export(weighted.deviance.poisson)
+weighted.deviance.poisson <- function(...) {
     UseMethod(
-        generic = "weighted.poisson.deviance"
+        generic = "weighted.deviance.poisson"
     )
 }
 

@@ -2,11 +2,11 @@
 #include "regression_GammaDeviance.h"
 using namespace Rcpp;
 
-//' @templateVar .FUN gamma.deviance
+//' @templateVar .FUN deviance.gamma
 //' @templateVar .METHOD numeric
 //' @template regression_standard_inherit
-//' @export
-// [[Rcpp::export(gamma.deviance.numeric)]]
+//' @rawNamespace S3method(deviance.gamma,numeric)
+// [[Rcpp::export(deviance.gamma.numeric)]]
 double gamma_deviance(
     const Rcpp::NumericVector& actual,
     const Rcpp::NumericVector& predicted) {
@@ -20,11 +20,11 @@ double gamma_deviance(
         return performance.compute();
 }
 
-//' @templateVar .FUN weighted.gamma.deviance
+//' @templateVar .FUN weighted.deviance.gamma
 //' @templateVar .METHOD numeric
 //' @template regression_standard_inherit
-//' @export
-// [[Rcpp::export(weighted.gamma.deviance.numeric)]]
+//' @rawNamespace S3method(weighted.deviance.gamma,numeric)
+// [[Rcpp::export(weighted.deviance.gamma.numeric)]]
 double weighted_gamma_deviance(
     const Rcpp::NumericVector& actual, 
     const Rcpp::NumericVector& predicted,

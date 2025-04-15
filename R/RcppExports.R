@@ -882,19 +882,19 @@ weighted.ccc.numeric <- function(actual, predicted, w, correction = FALSE, ...) 
     .Call(`_SLmetrics_weighted_ccc`, actual, predicted, w, correction)
 }
 
-#' @templateVar .FUN gamma.deviance
+#' @templateVar .FUN deviance.gamma
 #' @templateVar .METHOD numeric
 #' @template regression_standard_inherit
-#' @export
-gamma.deviance.numeric <- function(actual, predicted, ...) {
+#' @rawNamespace S3method(deviance.gamma,numeric)
+deviance.gamma.numeric <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_gamma_deviance`, actual, predicted)
 }
 
-#' @templateVar .FUN weighted.gamma.deviance
+#' @templateVar .FUN weighted.deviance.gamma
 #' @templateVar .METHOD numeric
 #' @template regression_standard_inherit
-#' @export
-weighted.gamma.deviance.numeric <- function(actual, predicted, w, ...) {
+#' @rawNamespace S3method(weighted.deviance.gamma,numeric)
+weighted.deviance.gamma.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_gamma_deviance`, actual, predicted, w)
 }
 
@@ -994,19 +994,19 @@ weighted.pinball.numeric <- function(actual, predicted, w, alpha = 0.5, deviance
     .Call(`_SLmetrics_weighted_pinball`, actual, predicted, w, alpha, deviance)
 }
 
-#' @templateVar .FUN poisson.deviance
+#' @templateVar .FUN deviance.poisson
 #' @templateVar .METHOD numeric
 #' @template regression_standard_inherit
-#' @export
-poisson.deviance.numeric <- function(actual, predicted, ...) {
+#' @rawNamespace S3method(deviance.poisson,numeric)
+deviance.poisson.numeric <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_poisson_deviance`, actual, predicted)
 }
 
-#' @templateVar .FUN weighted.poisson.deviance
+#' @templateVar .FUN weighted.deviance.poisson
 #' @templateVar .METHOD numeric
 #' @template regression_standard_inherit
-#' @export
-weighted.poisson.deviance.numeric <- function(actual, predicted, w, ...) {
+#' @rawNamespace S3method(weighted.deviance.poisson,numeric)
+weighted.deviance.poisson.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_poisson_deviance`, actual, predicted, w)
 }
 
@@ -1106,19 +1106,19 @@ weighted.smape.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_smape`, actual, predicted, w)
 }
 
-#' @templateVar .FUN tweedie.deviance
+#' @templateVar .FUN deviance.tweedie
 #' @templateVar .METHOD numeric
 #' @template regression_standard_inherit
-#' @export
-tweedie.deviance.numeric <- function(actual, predicted, power = 2.0, ...) {
+#' @rawNamespace S3method(deviance.tweedie,numeric)
+deviance.tweedie.numeric <- function(actual, predicted, power = 2.0, ...) {
     .Call(`_SLmetrics_tweedie_deviance`, actual, predicted, power)
 }
 
-#' @templateVar .FUN weighted.tweedie.deviance
+#' @templateVar .FUN weighted.deviance.tweedie
 #' @templateVar .METHOD numeric
 #' @template regression_standard_inherit
-#' @export
-weighted.tweedie.deviance.numeric <- function(actual, predicted, w, power = 2.0, ...) {
+#' @rawNamespace S3method(weighted.deviance.tweedie,numeric)
+weighted.deviance.tweedie.numeric <- function(actual, predicted, w, power = 2.0, ...) {
     .Call(`_SLmetrics_weighted_tweedie_deviance`, actual, predicted, w, power)
 }
 

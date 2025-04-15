@@ -14,13 +14,13 @@ testthat::test_that(
       w = NULL,
       power = 2) {
         if (is.null(w)) {
-          tweedie.deviance(
+          deviance.tweedie(
             actual = actual,
             predicted = predicted,
             power = power
           )
         } else {
-          weighted.tweedie.deviance(
+          weighted.deviance.tweedie(
             actual = actual,
             predicted = predicted,
             w = w,

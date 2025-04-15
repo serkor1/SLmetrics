@@ -107,13 +107,15 @@ Other Supervised Learning:
 \code{\link{ccc}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
+\code{\link{deviance.gamma}()},
+\code{\link{deviance.poisson}()},
+\code{\link{deviance.tweedie}()},
 \code{\link{dor}()},
 \code{\link{fbeta}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
 \code{\link{fmi}()},
 \code{\link{fpr}()},
-\code{\link{gamma.deviance}()},
 \code{\link{hammingloss}()},
 \code{\link{huberloss}()},
 \code{\link{jaccard}()},
@@ -127,7 +129,6 @@ Other Supervised Learning:
 \code{\link{npv}()},
 \code{\link{pinball}()},
 \code{\link{plr}()},
-\code{\link{poisson.deviance}()},
 \code{\link{pr.curve}()},
 \code{\link{precision}()},
 \code{\link{rae}()},
@@ -142,7 +143,6 @@ Other Supervised Learning:
 \code{\link{shannon.entropy}()},
 \code{\link{smape}()},
 \code{\link{specificity}()},
-\code{\link{tweedie.deviance}()},
 \code{\link{zerooneloss}()}
 }
 \concept{Classification}

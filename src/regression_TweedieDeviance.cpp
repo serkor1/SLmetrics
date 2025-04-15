@@ -2,11 +2,11 @@
 #include "regression_TweedieDeviance.h"
 using namespace Rcpp;
 
-//' @templateVar .FUN tweedie.deviance
+//' @templateVar .FUN deviance.tweedie
 //' @templateVar .METHOD numeric
 //' @template regression_standard_inherit
-//' @export
-// [[Rcpp::export(tweedie.deviance.numeric)]]
+//' @rawNamespace S3method(deviance.tweedie,numeric)
+// [[Rcpp::export(deviance.tweedie.numeric)]]
 double tweedie_deviance(
     const Rcpp::NumericVector& actual,
     const Rcpp::NumericVector& predicted,
@@ -21,11 +21,11 @@ double tweedie_deviance(
         return performance.compute();
 }
 
-//' @templateVar .FUN weighted.tweedie.deviance
+//' @templateVar .FUN weighted.deviance.tweedie
 //' @templateVar .METHOD numeric
 //' @template regression_standard_inherit
-//' @export
-// [[Rcpp::export(weighted.tweedie.deviance.numeric)]]
+//' @rawNamespace S3method(weighted.deviance.tweedie,numeric)
+// [[Rcpp::export(weighted.deviance.tweedie.numeric)]]
 double weighted_tweedie_deviance(
     const Rcpp::NumericVector& actual,
     const Rcpp::NumericVector& predicted,

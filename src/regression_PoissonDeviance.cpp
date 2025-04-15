@@ -2,11 +2,11 @@
 #include "regression_PoissonDeviance.h"
 using namespace Rcpp;
 
-//' @templateVar .FUN poisson.deviance
+//' @templateVar .FUN deviance.poisson
 //' @templateVar .METHOD numeric
 //' @template regression_standard_inherit
-//' @export
-// [[Rcpp::export(poisson.deviance.numeric)]]
+//' @rawNamespace S3method(deviance.poisson,numeric)
+// [[Rcpp::export(deviance.poisson.numeric)]]
 double poisson_deviance(
     const Rcpp::NumericVector& actual,
     const Rcpp::NumericVector& predicted) {
@@ -20,11 +20,11 @@ double poisson_deviance(
         return performance.compute();
 }
 
-//' @templateVar .FUN weighted.poisson.deviance
+//' @templateVar .FUN weighted.deviance.poisson
 //' @templateVar .METHOD numeric
 //' @template regression_standard_inherit
-//' @export
-// [[Rcpp::export(weighted.poisson.deviance.numeric)]]
+//' @rawNamespace S3method(weighted.deviance.poisson,numeric)
+// [[Rcpp::export(weighted.deviance.poisson.numeric)]]
 double weighted_poisson_deviance(
     const Rcpp::NumericVector& actual, 
     const Rcpp::NumericVector& predicted,

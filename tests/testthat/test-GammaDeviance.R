@@ -11,12 +11,12 @@ testthat::test_that(
       predicted,
       w = NULL) {
       if (is.null(w)) {
-        gamma.deviance(
+        deviance.gamma(
           actual = actual,
           predicted = predicted
         )
       } else {
-        weighted.gamma.deviance(
+        weighted.deviance.gamma(
           actual = actual,
           predicted = predicted,
           w = w

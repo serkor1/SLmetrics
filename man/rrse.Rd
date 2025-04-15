@@ -57,21 +57,21 @@ Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for scientific comput
 \seealso{
 Other Regression: 
 \code{\link{ccc}()},
-\code{\link{gamma.deviance}()},
+\code{\link{deviance.gamma}()},
+\code{\link{deviance.poisson}()},
+\code{\link{deviance.tweedie}()},
 \code{\link{huberloss}()},
 \code{\link{mae}()},
 \code{\link{mape}()},
 \code{\link{mpe}()},
 \code{\link{mse}()},
 \code{\link{pinball}()},
-\code{\link{poisson.deviance}()},
 \code{\link{rae}()},
 \code{\link{rmse}()},
 \code{\link{rmsle}()},
 \code{\link{rrmse}()},
 \code{\link{rsq}()},
-\code{\link{smape}()},
-\code{\link{tweedie.deviance}()}
+\code{\link{smape}()}
 
 Other Supervised Learning: 
 \code{\link{accuracy}()},
@@ -80,13 +80,15 @@ Other Supervised Learning:
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
+\code{\link{deviance.gamma}()},
+\code{\link{deviance.poisson}()},
+\code{\link{deviance.tweedie}()},
 \code{\link{dor}()},
 \code{\link{fbeta}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
 \code{\link{fmi}()},
 \code{\link{fpr}()},
-\code{\link{gamma.deviance}()},
 \code{\link{hammingloss}()},
 \code{\link{huberloss}()},
 \code{\link{jaccard}()},
@@ -100,7 +102,6 @@ Other Supervised Learning:
 \code{\link{npv}()},
 \code{\link{pinball}()},
 \code{\link{plr}()},
-\code{\link{poisson.deviance}()},
 \code{\link{pr.curve}()},
 \code{\link{precision}()},
 \code{\link{rae}()},
@@ -114,7 +115,6 @@ Other Supervised Learning:
 \code{\link{shannon.entropy}()},
 \code{\link{smape}()},
 \code{\link{specificity}()},
-\code{\link{tweedie.deviance}()},
 \code{\link{zerooneloss}()}
 }
 \concept{Machine learning performance evaluation}

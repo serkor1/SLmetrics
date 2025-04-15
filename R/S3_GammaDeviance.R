@@ -9,28 +9,28 @@
 #' @returns NULL
 #'
 #' @templateVar .TITLE Gamma Deviance
-#' @templateVar .FUN gamma.deviance
+#' @templateVar .FUN deviance.gamma
 #' @template regression_standard_template
 #' @template regression_standard_params
 #' @usage NULL
 #'
-#' @export
-gamma.deviance <- function(...) {
+#' @rawNamespace export(deviance.gamma)
+deviance.gamma <- function(...) {
     UseMethod(
-        generic = "gamma.deviance"
+        generic = "deviance.gamma"
     )
 }
 
-#' @rdname gamma.deviance
+#' @rdname deviance.gamma
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Root Mean
 #' ## Squared Error
-#' weighted.gamma.deviance(...)
-#' @export
-weighted.gamma.deviance <- function(...) {
+#' weighted.deviance.gamma(...)
+#' @rawNamespace export(weighted.deviance.gamma)
+weighted.deviance.gamma <- function(...) {
     UseMethod(
-        generic = "weighted.gamma.deviance"
+        generic = "weighted.deviance.gamma"
     )
 }
 
