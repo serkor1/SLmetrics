@@ -10,33 +10,33 @@ NULL
 
 
 #' @title {SLmetrics}: Machine Learning Performance Evaluation on Steroids
-#' 
+#'
 #' @description
-#' \{SLmetrics\} is a lightweight package written in C++ for supervised and unsupervised Machine Learning applications. The package has been 
-#' developed with two primary goals in mind: memory management and execution speed. All functions are designed with internal pointers and references, 
+#' \{SLmetrics\} is a lightweight package written in C++ for supervised and unsupervised Machine Learning applications. The package has been
+#' developed with two primary goals in mind: memory management and execution speed. All functions are designed with internal pointers and references,
 #' ensuring that passed objects are not copied into memory, resulting in optimized performance.
-#' 
+#'
 #' @section Handling of Missing Values:
-#' 
-#' \{SLmetrics\} does not provide explicit handling for missing values in either regression or classification applications. Users are advised 
-#' to ensure that their input data is preprocessed to remove or impute missing values before passing them to any functions. 
-#' 
-#' Since the package heavily relies on pointers and references for performance, passing data with missing values may lead to undefined behavior, 
+#'
+#' \{SLmetrics\} does not provide explicit handling for missing values in either regression or classification applications. Users are advised
+#' to ensure that their input data is preprocessed to remove or impute missing values before passing them to any functions.
+#'
+#' Since the package heavily relies on pointers and references for performance, passing data with missing values may lead to undefined behavior,
 #' including potential crashes of the R session.
-#' 
-#' For classification metrics that support micro and macro averages, \{SLmetrics\} does handle invalid values such as divisions by zero, 
+#'
+#' For classification metrics that support micro and macro averages, \{SLmetrics\} does handle invalid values such as divisions by zero,
 #' ensuring robust computation and accurate results.
-#' 
-#' @keywords internal 
+#'
+#' @keywords internal
 "_PACKAGE"
 
 #' @title Classification Documenatation
 #' @name classification_documentation
-#' 
+#'
 #' @description
 #' This roxygen block is the generic documnentation
 #' for classification metrics for all the parameters.
-#' 
+#'
 #' @param p,q A pair of <[double]> vectors of [length] \eqn{n} of emprical probabilities \eqn{p} and estimated probabilities \eqn{q}.
 #' @param actual,predicted A pair of <[integer]> or <[factor]> vectors of [length] \eqn{n}, and \eqn{k} levels.
 #' @param actual A vector [length] \eqn{n}, and \eqn{k} levels. Can be of [integer] or [factor].
@@ -57,8 +57,8 @@ NULL
 #'   \item 1 - a <[double]> value (Micro averaged metric)
 #'   \item 2 - a <[double]> value (Macro averaged metric)
 #' }
-#' @param na.rm A <[logical]> value of [length] \eqn{1} (default: [TRUE]). If [TRUE], [NA] values are removed from the computation. 
-#' This argument is only relevant when `micro != NULL`. 
+#' @param na.rm A <[logical]> value of [length] \eqn{1} (default: [TRUE]). If [TRUE], [NA] values are removed from the computation.
+#' This argument is only relevant when `micro != NULL`.
 #' When `na.rm = TRUE`, the computation corresponds to `sum(c(1, 2, NA), na.rm = TRUE) / length(na.omit(c(1, 2, NA)))`.
 #' When `na.rm = FALSE`, the computation corresponds to `sum(c(1, 2, NA), na.rm = TRUE) / length(c(1, 2, NA))`.
 #' @param ... Arguments passed into other methods.
@@ -71,11 +71,11 @@ NULL
 
 #' @title Entropy Documenatation
 #' @name entropy_documentation
-#' 
+#'
 #' @description
 #' This roxygen block is the generic documnentation
 #' for entropy metrics for all the parameters.
-#' 
+#'
 #' @param pk,qk A pair \eqn{n \times k} <[double]>-matrix of observed (pk) and predicted (qk) probabilities.
 #'   The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 #'   over the \eqn{k} classes). The first column corresponds to the first factor
@@ -98,11 +98,11 @@ NULL
 
 #' @title Regression Documenatation
 #' @name regression_documentation
-#' 
+#'
 #' @description
 #' This roxygen block is the generic documnentation
 #' for entropy metrics for all the parameters.
-#' 
+#'
 #' @param actual,predicted A pair of <[double]> vectors of [length] \eqn{n}, and \eqn{k} levels.
 #' @param w A <[double]> vector of sample weights.
 #' @param ... Arguments passed into other methods
@@ -116,13 +116,13 @@ NULL
 #' @param power A <[double]> value, default = 2.
 #'   Tweedie power parameter. Either power <= 0 or power >= 1.
 #'
-#'   The higher p, the less weight is given to extreme deviations between actual and predicted targets.
+#'   The higher \eqn{power}, the less weight is given to extreme deviations between actual and predicted values.
 #'
 #'   - **power < 0:** Extreme stable distribution. Requires: predicted > 0.
-#'   - **power = 0:** Normal distribution, output corresponds to mean_squared_error. actual and predicted can be any real numbers.
-#'   - **power = 1:** Poisson distribution. Requires: actual >= 0 and predicted > 0.
+#'   - **power = 0:** Normal distribution, output corresponds to [mse.()], actual and predicted can be any real numbers.
+#'   - **power = 1:** Poisson distribution ([deviance.poisson()]). Requires: actual >= 0 and predicted > 0.
 #'   - **1 < power < 2:** Compound Poisson distribution. Requires: actual >= 0 and predicted > 0.
-#'   - **power = 2:** Gamma distribution. Requires: actual > 0 and predicted > 0.
+#'   - **power = 2:** Gamma distribution ([deviance.gamma()]). Requires: actual > 0 and predicted > 0.
 #'   - **power = 3:** Inverse Gaussian distribution. Requires: actual > 0 and predicted > 0.
 #'   - **otherwise:** Positive stable distribution. Requires: actual > 0 and predicted > 0.
 #'
