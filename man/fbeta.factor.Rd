@@ -7,15 +7,15 @@
 \method{fbeta}{factor}(actual, predicted, beta = 1, estimator = 0L, na.rm = TRUE, ...)
 }
 \arguments{
-\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of <\link{integer}> or <\link{factor}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{beta}{A <\link{numeric}> vector of \link{length} \eqn{1} (default: \eqn{1}).}
+\item{beta}{A <\link{double}> vector of \link{length} \eqn{1} (default: \eqn{1}).}
 
 \item{estimator}{An <\link{integer}>-value of \link{length} \eqn{1} (default: \eqn{0}).
 \itemize{
-\item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
-\item 1 - a <\link{numeric}> value (Micro averaged metric)
-\item 2 - a <\link{numeric}> value (Macro averaged metric)
+\item 0 - a named <\link{double}>-vector of \link{length} k (class-wise)
+\item 1 - a <\link{double}> value (Micro averaged metric)
+\item 2 - a <\link{double}> value (Macro averaged metric)
 }}
 
 \item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
@@ -28,7 +28,7 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
 \value{
 If \code{estimator} is given as
 \itemize{
-\item 0 - a named <\link{numeric}>-vector of \link{length} k
+\item 0 - a named <\link{double}> vector of \link{length} k
 \item 1 - a <\link{double}> value (Micro averaged metric)
 \item 2 - a <\link{double}> value (Macro averaged metric)
 }
@@ -85,6 +85,7 @@ Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journa
 Other Classification: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
@@ -112,6 +113,7 @@ Other Classification:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

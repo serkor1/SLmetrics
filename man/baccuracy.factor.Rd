@@ -7,9 +7,9 @@
 \method{baccuracy}{factor}(actual, predicted, adjust = FALSE, na.rm = TRUE, ...)
 }
 \arguments{
-\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of <\link{integer}> or <\link{factor}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{adjust}{A \link{logical} value (default: \link{FALSE}). If \link{TRUE} the metric is adjusted for random chance \eqn{\frac{1}{k}}.}
+\item{adjust}{A <\link{logical}> value (default: \link{FALSE}). If \link{TRUE} the metric is adjusted for random chance \eqn{\frac{1}{k}}.}
 
 \item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
 This argument is only relevant when \code{micro != NULL}.
@@ -72,6 +72,7 @@ Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journa
 \seealso{
 Other Classification: 
 \code{\link{accuracy}()},
+\code{\link{brier}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
@@ -99,6 +100,7 @@ Other Classification:
 
 Other Supervised Learning: 
 \code{\link{accuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

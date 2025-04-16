@@ -7,9 +7,9 @@
 \method{rsq}{numeric}(actual, predicted, k = 0, ...)
 }
 \arguments{
-\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{k}{A <\link{numeric}>-vector of \link{length} 1 (default: 0). For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.}
+\item{k}{A <\link{double}>-vector of \link{length} 1 (default: 0). For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.}
 
 \item{...}{Arguments passed into other methods}
 }
@@ -70,6 +70,7 @@ Other Regression:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

@@ -7,7 +7,7 @@
 \method{deviance}{tweedie.numeric}(actual, predicted, power = 2, ...)
 }
 \arguments{
-\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
 
 \item{power}{A <\link{double}> value, default = 2.
 Tweedie power parameter. Either power <= 0 or power >= 1.
@@ -82,6 +82,7 @@ Other Regression:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

@@ -7,11 +7,11 @@
 \method{weighted.ckappa}{factor}(actual, predicted, w, beta = 0, ...)
 }
 \arguments{
-\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of <\link{integer}> or <\link{factor}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{w}{A <\link{numeric}> vector of sample weights.}
+\item{w}{A <\link{double}> vector of sample weights.}
 
-\item{beta}{A <\link{numeric}> value of \link{length} 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.}
+\item{beta}{A <\link{double}> value of \link{length} 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.}
 
 \item{...}{Arguments passed into other methods.}
 }
@@ -77,6 +77,7 @@ Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journa
 Other Classification: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
 \code{\link{dor}()},
@@ -104,6 +105,7 @@ Other Classification:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},

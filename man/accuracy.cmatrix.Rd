@@ -69,6 +69,7 @@ Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journa
 \seealso{
 Other Classification: 
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
@@ -96,6 +97,7 @@ Other Classification:
 
 Other Supervised Learning: 
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

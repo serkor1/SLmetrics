@@ -18,8 +18,8 @@ weighted.fmi(...)
 \item{...}{
   Arguments passed on to \code{\link[=fmi.factor]{fmi.factor}}, \code{\link[=weighted.fmi.factor]{weighted.fmi.factor}}, \code{\link[=fmi.cmatrix]{fmi.cmatrix}}
   \describe{
-    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
-    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
+    \item{\code{actual,predicted}}{A pair of <\link{integer}> or <\link{factor}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+    \item{\code{w}}{A <\link{double}> vector of sample weights.}
     \item{\code{x}}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
   }}
 }
@@ -76,6 +76,7 @@ Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journa
 Other Classification: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
@@ -103,6 +104,7 @@ Other Classification:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

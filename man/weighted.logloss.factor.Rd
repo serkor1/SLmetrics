@@ -9,12 +9,12 @@
 \arguments{
 \item{actual}{A vector \link{length} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
 
-\item{response}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
+\item{response}{A \eqn{n \times k} <\link{double}>-matrix of predicted probabilities.
 The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 over the \eqn{k} classes). The first column corresponds to the first factor
 level in \code{actual}, the second column to the second factor level, and so on.}
 
-\item{w}{A <\link{numeric}> vector of sample weights.}
+\item{w}{A <\link{double}> vector of sample weights.}
 
 \item{normalize}{A <\link{logical}>-value (default: \link{TRUE}). If \link{TRUE},
 the mean cross-entropy across all observations is returned; otherwise, the
@@ -45,6 +45,7 @@ Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for scientific comput
 Other Classification: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
@@ -72,6 +73,7 @@ Other Classification:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

@@ -7,11 +7,11 @@
 \method{weighted.rrmse}{numeric}(actual, predicted, w, normalization = 1L, ...)
 }
 \arguments{
-\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{w}{A <\link{numeric}> vector of sample weights.}
+\item{w}{A <\link{double}> vector of sample weights.}
 
-\item{normalization}{A <\link{numeric}>-value of \link{length} \eqn{1} (default: \eqn{1}). \eqn{0}: \link{mean}-normalization, \eqn{1}: \link{range}-normalization, \eqn{2}: \link{IQR}-normalization.}
+\item{normalization}{A <\link{double}>-value of \link{length} \eqn{1} (default: \eqn{1}). \eqn{0}: \link{mean}-normalization, \eqn{1}: \link{range}-normalization, \eqn{2}: \link{IQR}-normalization.}
 
 \item{...}{Arguments passed into other methods}
 }
@@ -72,6 +72,7 @@ Other Regression:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

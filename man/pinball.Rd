@@ -17,10 +17,10 @@ weighted.pinball(...)
 \item{...}{
   Arguments passed on to \code{\link[=pinball.numeric]{pinball.numeric}}, \code{\link[=weighted.pinball.numeric]{weighted.pinball.numeric}}
   \describe{
-    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
-    \item{\code{alpha}}{A <\link{numeric}>-value of \link{length} \eqn{1} (default: \eqn{0.5}). The slope of the pinball loss function.}
+    \item{\code{actual,predicted}}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+    \item{\code{alpha}}{A <\link{double}>-value of \link{length} \eqn{1} (default: \eqn{0.5}). The slope of the pinball loss function.}
     \item{\code{deviance}}{A <\link{logical}>-value of \link{length} 1 (default: \link{FALSE}). If \link{TRUE} the function returns the \eqn{D^2} loss.}
-    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
+    \item{\code{w}}{A <\link{double}> vector of sample weights.}
   }}
 }
 \value{
@@ -78,6 +78,7 @@ Other Regression:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

@@ -7,9 +7,9 @@
 \method{pinball}{numeric}(actual, predicted, alpha = 0.5, deviance = FALSE, ...)
 }
 \arguments{
-\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{alpha}{A <\link{numeric}>-value of \link{length} \eqn{1} (default: \eqn{0.5}). The slope of the pinball loss function.}
+\item{alpha}{A <\link{double}>-value of \link{length} \eqn{1} (default: \eqn{0.5}). The slope of the pinball loss function.}
 
 \item{deviance}{A <\link{logical}>-value of \link{length} 1 (default: \link{FALSE}). If \link{TRUE} the function returns the \eqn{D^2} loss.}
 
@@ -72,6 +72,7 @@ Other Regression:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

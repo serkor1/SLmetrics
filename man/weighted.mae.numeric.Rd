@@ -7,9 +7,9 @@
 \method{weighted.mae}{numeric}(actual, predicted, w, ...)
 }
 \arguments{
-\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{w}{A <\link{numeric}> vector of sample weights.}
+\item{w}{A <\link{double}> vector of sample weights.}
 
 \item{...}{Arguments passed into other methods}
 }
@@ -70,6 +70,7 @@ Other Regression:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

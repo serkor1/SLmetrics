@@ -7,9 +7,9 @@
 \method{huberloss}{numeric}(actual, predicted, delta = 1, ...)
 }
 \arguments{
-\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{delta}{A <\link{numeric}>-vector of \link{length} \eqn{1} (default: \eqn{1}). The threshold value for switch between functions (see calculation).}
+\item{delta}{A <\link{double}>-vector of \link{length} \eqn{1} (default: \eqn{1}). The threshold value for switch between functions (see calculation).}
 
 \item{...}{Arguments passed into other methods}
 }
@@ -70,6 +70,7 @@ Other Regression:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

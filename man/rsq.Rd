@@ -17,9 +17,9 @@ weighted.rsq(...)
 \item{...}{
   Arguments passed on to \code{\link[=rsq.numeric]{rsq.numeric}}, \code{\link[=weighted.rsq.numeric]{weighted.rsq.numeric}}
   \describe{
-    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
-    \item{\code{k}}{A <\link{numeric}>-vector of \link{length} 1 (default: 0). For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.}
-    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
+    \item{\code{actual,predicted}}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+    \item{\code{k}}{A <\link{double}>-vector of \link{length} 1 (default: 0). For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.}
+    \item{\code{w}}{A <\link{double}> vector of sample weights.}
   }}
 }
 \value{
@@ -77,6 +77,7 @@ Other Regression:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

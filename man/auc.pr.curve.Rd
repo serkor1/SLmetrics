@@ -20,14 +20,14 @@ weighted.auc.pr.curve(...)
   Arguments passed on to \code{\link[=auc.pr.curve.factor]{auc.pr.curve.factor}}, \code{\link[=weighted.auc.pr.curve.factor]{weighted.auc.pr.curve.factor}}
   \describe{
     \item{\code{actual}}{A vector \link{length} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
-    \item{\code{response}}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
+    \item{\code{response}}{A \eqn{n \times k} <\link{double}>-matrix of predicted probabilities.
 The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 over the \eqn{k} classes). The first column corresponds to the first factor
 level in \code{actual}, the second column to the second factor level, and so on.}
-    \item{\code{method}}{A <\link{numeric}> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the \code{trapezoid}-method, if \eqn{1} it is calculated using the \code{step}-method.}
+    \item{\code{method}}{A <\link{double}> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the \code{trapezoid}-method, if \eqn{1} it is calculated using the \code{step}-method.}
     \item{\code{micro}}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
 micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
-    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
+    \item{\code{w}}{A <\link{double}> vector of sample weights.}
   }}
 }
 \value{

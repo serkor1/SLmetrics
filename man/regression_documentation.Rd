@@ -4,22 +4,22 @@
 \alias{regression_documentation}
 \title{Regression Documenatation}
 \arguments{
-\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{w}{A <\link{numeric}> vector of sample weights.}
+\item{w}{A <\link{double}> vector of sample weights.}
 
 \item{...}{Arguments passed into other methods}
 
-\item{delta}{A <\link{numeric}>-vector of \link{length} \eqn{1} (default: \eqn{1}). The threshold value for switch between functions (see calculation).}
+\item{delta}{A <\link{double}>-vector of \link{length} \eqn{1} (default: \eqn{1}). The threshold value for switch between functions (see calculation).}
 
 \item{correction}{A <\link{logical}> vector of \link{length} \eqn{1} (default: \link{FALSE}). If \link{TRUE} the variance and covariance
 will be adjusted with \eqn{\frac{1-n}{n}}}
 
-\item{k}{A <\link{numeric}>-vector of \link{length} 1 (default: 0). For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.}
+\item{k}{A <\link{double}>-vector of \link{length} 1 (default: 0). For adjusted \eqn{R^2} set \eqn{k = \kappa - 1}, where \eqn{\kappa} is the number of parameters.}
 
-\item{normalization}{A <\link{numeric}>-value of \link{length} \eqn{1} (default: \eqn{1}). \eqn{0}: \link{mean}-normalization, \eqn{1}: \link{range}-normalization, \eqn{2}: \link{IQR}-normalization.}
+\item{normalization}{A <\link{double}>-value of \link{length} \eqn{1} (default: \eqn{1}). \eqn{0}: \link{mean}-normalization, \eqn{1}: \link{range}-normalization, \eqn{2}: \link{IQR}-normalization.}
 
-\item{alpha}{A <\link{numeric}>-value of \link{length} \eqn{1} (default: \eqn{0.5}). The slope of the pinball loss function.}
+\item{alpha}{A <\link{double}>-value of \link{length} \eqn{1} (default: \eqn{0.5}). The slope of the pinball loss function.}
 
 \item{deviance}{A <\link{logical}>-value of \link{length} 1 (default: \link{FALSE}). If \link{TRUE} the function returns the \eqn{D^2} loss.}
 

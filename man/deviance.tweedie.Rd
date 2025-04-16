@@ -18,7 +18,7 @@ weighted.deviance.tweedie(...)
 \item{...}{
   Arguments passed on to \code{\link[=deviance.tweedie.numeric]{deviance.tweedie.numeric}}, \code{\link[=weighted.deviance.tweedie.numeric]{weighted.deviance.tweedie.numeric}}
   \describe{
-    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+    \item{\code{actual,predicted}}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
     \item{\code{power}}{A <\link{double}> value, default = 2.
 Tweedie power parameter. Either power <= 0 or power >= 1.
 
@@ -32,7 +32,7 @@ The higher p, the less weight is given to extreme deviations between actual and 
 \item \strong{power = 3:} Inverse Gaussian distribution. Requires: actual > 0 and predicted > 0.
 \item \strong{otherwise:} Positive stable distribution. Requires: actual > 0 and predicted > 0.
 }}
-    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
+    \item{\code{w}}{A <\link{double}> vector of sample weights.}
   }}
 }
 \value{
@@ -90,6 +90,7 @@ Other Regression:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

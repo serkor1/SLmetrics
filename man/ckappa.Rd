@@ -18,9 +18,9 @@ weighted.ckappa(...)
 \item{...}{
   Arguments passed on to \code{\link[=ckappa.factor]{ckappa.factor}}, \code{\link[=weighted.ckappa.factor]{weighted.ckappa.factor}}, \code{\link[=ckappa.cmatrix]{ckappa.cmatrix}}
   \describe{
-    \item{\code{beta}}{A <\link{numeric}> value of \link{length} 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.}
-    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
-    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
+    \item{\code{beta}}{A <\link{double}> value of \link{length} 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.}
+    \item{\code{actual,predicted}}{A pair of <\link{integer}> or <\link{factor}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+    \item{\code{w}}{A <\link{double}> vector of sample weights.}
     \item{\code{x}}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
   }}
 }
@@ -77,6 +77,7 @@ Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journa
 Other Classification: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
 \code{\link{dor}()},
@@ -104,6 +105,7 @@ Other Classification:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},

@@ -7,9 +7,9 @@
 \method{weighted.ccc}{numeric}(actual, predicted, w, correction = FALSE, ...)
 }
 \arguments{
-\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{w}{A <\link{numeric}> vector of sample weights.}
+\item{w}{A <\link{double}> vector of sample weights.}
 
 \item{correction}{A <\link{logical}> vector of \link{length} \eqn{1} (default: \link{FALSE}). If \link{TRUE} the variance and covariance
 will be adjusted with \eqn{\frac{1-n}{n}}}
@@ -73,6 +73,7 @@ Other Regression:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},

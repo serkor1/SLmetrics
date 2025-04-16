@@ -12,12 +12,12 @@ cross.entropy(...)
 \item{...}{
   Arguments passed on to \code{\link[=cross.entropy.matrix]{cross.entropy.matrix}}
   \describe{
-    \item{\code{pk,qk}}{A pair \eqn{n \times k} <\link{numeric}>-matrix of observed (pk) and predicted (qk) probabilities.
+    \item{\code{pk,qk}}{A pair \eqn{n \times k} <\link{double}>-matrix of observed (pk) and predicted (qk) probabilities.
 The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 over the \eqn{k} classes). The first column corresponds to the first factor
 level in \code{actual}, the second column to the second factor level, and so on.}
     \item{\code{dim}}{An <\link{integer}> value of \link{length} 1 (Default: 0). Defines the dimension along which to calculate the entropy (0: total, 1: row-wise, 2: column-wise).}
-    \item{\code{base}}{A <\link{numeric}> value of \link{length} 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.}
+    \item{\code{base}}{A <\link{double}> value of \link{length} 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.}
   }}
 }
 \value{
@@ -48,6 +48,7 @@ Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for scientific comput
 Other Classification: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{dor}()},
@@ -75,6 +76,7 @@ Other Classification:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

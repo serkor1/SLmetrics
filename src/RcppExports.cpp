@@ -89,6 +89,31 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// brier_score
+double brier_score(const Rcpp::NumericVector& p, const Rcpp::NumericVector& q);
+RcppExport SEXP _SLmetrics_brier_score(SEXP pSEXP, SEXP qSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type q(qSEXP);
+    rcpp_result_gen = Rcpp::wrap(brier_score(p, q));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_brier_score
+double weighted_brier_score(const Rcpp::NumericVector& p, const Rcpp::NumericVector& q, const Rcpp::NumericVector& w);
+RcppExport SEXP _SLmetrics_weighted_brier_score(SEXP pSEXP, SEXP qSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type q(qSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_brier_score(p, q, w));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cohens_kappa
 double cohens_kappa(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const double& beta);
 RcppExport SEXP _SLmetrics_cohens_kappa(SEXP actualSEXP, SEXP predictedSEXP, SEXP betaSEXP) {
@@ -1935,6 +1960,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_balanced_accuracy", (DL_FUNC) &_SLmetrics_balanced_accuracy, 4},
     {"_SLmetrics_weighted_balanced_accuracy", (DL_FUNC) &_SLmetrics_weighted_balanced_accuracy, 5},
     {"_SLmetrics_cmatrix_balanced_accuracy", (DL_FUNC) &_SLmetrics_cmatrix_balanced_accuracy, 3},
+    {"_SLmetrics_brier_score", (DL_FUNC) &_SLmetrics_brier_score, 2},
+    {"_SLmetrics_weighted_brier_score", (DL_FUNC) &_SLmetrics_weighted_brier_score, 3},
     {"_SLmetrics_cohens_kappa", (DL_FUNC) &_SLmetrics_cohens_kappa, 3},
     {"_SLmetrics_weighted_cohens_kappa", (DL_FUNC) &_SLmetrics_weighted_cohens_kappa, 4},
     {"_SLmetrics_cmatrix_cohens_kappa", (DL_FUNC) &_SLmetrics_cmatrix_cohens_kappa, 2},

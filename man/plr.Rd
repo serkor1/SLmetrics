@@ -18,8 +18,8 @@ weighted.plr(...)
 \item{...}{
   Arguments passed on to \code{\link[=plr.factor]{plr.factor}}, \code{\link[=weighted.plr.factor]{weighted.plr.factor}}, \code{\link[=plr.cmatrix]{plr.cmatrix}}
   \describe{
-    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
-    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
+    \item{\code{actual,predicted}}{A pair of <\link{integer}> or <\link{factor}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+    \item{\code{w}}{A <\link{double}> vector of sample weights.}
     \item{\code{x}}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
   }}
 }
@@ -78,6 +78,7 @@ The \code{\link[=nlr]{nlr()}}-function for the Negative Likehood Ratio (LR-)
 Other Classification: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
@@ -105,6 +106,7 @@ Other Classification:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

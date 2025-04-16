@@ -15,10 +15,10 @@ weighted.ccc(...)
 \item{...}{
   Arguments passed on to \code{\link[=ccc.numeric]{ccc.numeric}}, \code{\link[=weighted.ccc.numeric]{weighted.ccc.numeric}}
   \describe{
-    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+    \item{\code{actual,predicted}}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
     \item{\code{correction}}{A <\link{logical}> vector of \link{length} \eqn{1} (default: \link{FALSE}). If \link{TRUE} the variance and covariance
 will be adjusted with \eqn{\frac{1-n}{n}}}
-    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
+    \item{\code{w}}{A <\link{double}> vector of sample weights.}
   }}
 }
 \value{
@@ -76,6 +76,7 @@ Other Regression:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},

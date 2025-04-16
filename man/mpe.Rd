@@ -17,8 +17,8 @@ weighted.mpe(...)
 \item{...}{
   Arguments passed on to \code{\link[=mpe.numeric]{mpe.numeric}}, \code{\link[=weighted.mpe.numeric]{weighted.mpe.numeric}}
   \describe{
-    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
-    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
+    \item{\code{actual,predicted}}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+    \item{\code{w}}{A <\link{double}> vector of sample weights.}
   }}
 }
 \value{
@@ -76,6 +76,7 @@ Other Regression:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
