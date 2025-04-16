@@ -8,7 +8,7 @@ using balanced_accuracy_score_impl = metric::balanced_accuracy_score<int>;
 //' @templateVar .METHOD factor
 //' @template classification_standard_inherit
 //'
-//' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
+//' @param adjust A <[logical]> value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
 //'
 //' @export
 // [[Rcpp::export(baccuracy.factor)]]
@@ -26,7 +26,7 @@ double balanced_accuracy(
 //' @templateVar .METHOD factor
 //' @template classification_standard_inherit
 //'
-//' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
+//' @param adjust A <[logical]> value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
 //'
 //' @export
 // [[Rcpp::export(weighted.baccuracy.factor)]]
@@ -45,7 +45,7 @@ double weighted_balanced_accuracy(
 //' @templateVar .METHOD cmatrix
 //' @template classification_standard_inherit
 //'
-//' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
+//' @param adjust A <[logical]> value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
 //'
 //' @export
 // [[Rcpp::export(baccuracy.cmatrix)]]

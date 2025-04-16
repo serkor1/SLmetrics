@@ -39,7 +39,7 @@
 <% } else { %>
 #' @returns If `estimator` is given as
 #' \itemize{
-#'   \item 0 - a named <[numeric]>-vector of [length] k
+#'   \item 0 - a named <[double]> vector of [length] k
 #'   \item 1 - a <[double]> value (Micro averaged metric)
 #'   \item 2 - a <[double]> value (Macro averaged metric)
 #' }
