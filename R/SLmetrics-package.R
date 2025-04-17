@@ -37,7 +37,7 @@ NULL
 #' This roxygen block is the generic documnentation
 #' for classification metrics for all the parameters.
 #'
-#' @param p,q A pair of <[double]> vectors of [length] \eqn{n} of emprical probabilities \eqn{p} and estimated probabilities \eqn{q}.
+#' @param p,q A pair of <[double]> vectors of [length] \eqn{n} of empirical probabilities \eqn{p} and estimated probabilities \eqn{q}.
 #' @param pk,qk A pair of <[double]> matrices of [length] \eqn{n} of emprical probabilities \eqn{p} and estimated probabilities \eqn{q}.
 #' @param ok A <[double]> indicator matrix with \eqn{n} samples and \eqn{k} classes.
 #' @param qk A \eqn{n \times k} <[double]>-matrix of predicted probabilities.

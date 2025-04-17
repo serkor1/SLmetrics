@@ -1,5 +1,5 @@
 # objective: Test that the poisson deviance metric
-# implemented in {SLmetrics} is aligned with
+# implemented in {slmetrics} is aligned with
 # target functions.
 testthat::test_that(
   desc = "Test `poisson.deviance()`-function", code = {
