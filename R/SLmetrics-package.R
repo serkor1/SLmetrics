@@ -86,7 +86,7 @@ NULL
 #'   The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 #'   over the \eqn{k} classes). The first column corresponds to the first factor
 #'   level in \code{actual}, the second column to the second factor level, and so on.
-#' @param qk A \eqn{n \times k} <[double]>-matrix of predicted probabilities.
+#' @param pk A \eqn{n \times k} <[double]>-matrix of observed probabilities.
 #'   The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 #'   over the \eqn{k} classes). The first column corresponds to the first factor
 #'   level in \code{actual}, the second column to the second factor level, and so on.

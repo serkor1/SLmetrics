@@ -126,7 +126,7 @@ def py_prROC(actual, response, pos_label = 1, w = None):
 def py_brier(actual, predicted, w = None):
     return metrics.accuracy_score(
       y_true  = actual,
-      y_prob  = predicted,
+      y_pred  = predicted,
       sample_weight = w
     )
 
