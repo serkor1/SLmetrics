@@ -40,7 +40,7 @@ NULL
 #' @param p,q A pair of <[double]> vectors of [length] \eqn{n} of emprical probabilities \eqn{p} and estimated probabilities \eqn{q}.
 #' @param pk,qk A pair of <[double]> matrices of [length] \eqn{n} of emprical probabilities \eqn{p} and estimated probabilities \eqn{q}.
 #' @param ok A <[double]> indicator matrix with \eqn{n} samples and \eqn{k} classes.
-#' @param pk A \eqn{n \times k} <[double]>-matrix of predicted probabilities.
+#' @param qk A \eqn{n \times k} <[double]>-matrix of predicted probabilities.
 #'   The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 #'   over the \eqn{k} classes). The first column corresponds to the first factor
 #'   level in \code{actual}, the second column to the second factor level, and so on.
@@ -86,7 +86,7 @@ NULL
 #'   The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 #'   over the \eqn{k} classes). The first column corresponds to the first factor
 #'   level in \code{actual}, the second column to the second factor level, and so on.
-#' @param pk A \eqn{n \times k} <[double]>-matrix of predicted probabilities.
+#' @param qk A \eqn{n \times k} <[double]>-matrix of predicted probabilities.
 #'   The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 #'   over the \eqn{k} classes). The first column corresponds to the first factor
 #'   level in \code{actual}, the second column to the second factor level, and so on.
@@ -125,7 +125,7 @@ NULL
 #'   The higher \eqn{power}, the less weight is given to extreme deviations between actual and predicted values.
 #'
 #'   - **power < 0:** Extreme stable distribution. Requires: predicted > 0.
-#'   - **power = 0:** Normal distribution, output corresponds to [mse.()], actual and predicted can be any real numbers.
+#'   - **power = 0:** Normal distribution, output corresponds to [mse()], actual and predicted can be any real numbers.
 #'   - **power = 1:** Poisson distribution ([deviance.poisson()]). Requires: actual >= 0 and predicted > 0.
 #'   - **1 < power < 2:** Compound Poisson distribution. Requires: actual >= 0 and predicted > 0.
 #'   - **power = 2:** Gamma distribution ([deviance.gamma()]). Requires: actual > 0 and predicted > 0.

@@ -7,29 +7,32 @@ testthat::test_that(
     
     # 0) construct brier-wrapper
     wrapped_brier <- function(
-      p,
-      q,
+      ok,
+      qk,
       w = NULL) {
       if (is.null(w)) {
-        brier(
-          p = p,
-          q = q
+        brier.score(
+          ok = ok,
+          qk = qk
         )
       } else {
-        weighted.brier(
-          p = p,
-          q = q,
+        weighted.brier.score(
+          ok = ok,
+          qk = qk,
           w = w
         )
       }
     }
     
+    n_obs <- 10;
+    n_classes <- 3
     for (weighted in c(FALSE, TRUE)) {
       # 0) create classification
       # for the test
-      p <- runif(n = 100)
-      q <- runif(n = 100)
-      weight <- runif(n = 100)
+      ok <- diag(n_classes)[ sample.int(n_classes, n_obs, TRUE), ]
+      qk <- matrix(runif(n_obs * n_classes), n_obs, n_classes)
+      qk <- qk / rowSums(qk)
+      weight <- runif(n = n_obs)
       w <- if (weighted) weight else NULL
       
       # 1) generate sensible
@@ -41,8 +44,8 @@ testthat::test_that(
       # 2) generate score
       # from {slmetrics}
       score <- wrapped_brier(
-        p = p,
-        q = q,
+        ok = ok,
+        qk = qk,
         w = w
       )
       
@@ -53,13 +56,11 @@ testthat::test_that(
       testthat::expect_true(length(score) == 1, info = info)
       
       # 2.2) Manual calculation of brier score for validation
-      if (is.null(w)) {
-        # Unweighted brier score
-        expected_score <- mean((q - p)^2)
-      } else {
-        # Weighted brier score
-        expected_score <- sum(w * (q - p)^2) / sum(w)
-      }
+      expected_score <- py_brier(
+        as.numeric(ok),
+        qk,
+        w = w
+      )
       
       # 2.3) test for equality
       testthat::expect_equal(

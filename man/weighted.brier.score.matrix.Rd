@@ -9,6 +9,11 @@
 \arguments{
 \item{ok}{A <\link{double}> indicator matrix with \eqn{n} samples and \eqn{k} classes.}
 
+\item{qk}{A \eqn{n \times k} <\link{double}>-matrix of predicted probabilities.
+The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
+over the \eqn{k} classes). The first column corresponds to the first factor
+level in \code{actual}, the second column to the second factor level, and so on.}
+
 \item{w}{A <\link{double}> vector of sample weights.}
 
 \item{...}{Arguments passed into other methods.}
