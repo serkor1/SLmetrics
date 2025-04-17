@@ -126,8 +126,9 @@ def py_prROC(actual, response, pos_label = 1, w = None):
 def py_brier(actual, predicted, w = None):
     return metrics.brier_score_loss(
       y_true  = actual,
-      y_pred  = predicted,
-      sample_weight = w
+      y_prob  = predicted,
+      sample_weight = w,
+      pos_label = 1
     )
 
 # regression metrics

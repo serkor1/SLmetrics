@@ -29,12 +29,12 @@ level in \code{actual}, the second column to the second factor level, and so on.
 A <\link{double}>-value
 }
 \description{
-A S3 generic function for calculating the brier score of a classification model. \code{\link[=brier.score]{brier.score()}} handles the input as is - and therefore there is not sanity checks.
+A S3 generic function for calculating the brier score of a classification model. \code{\link[=brier.score]{brier.score()}} handles the input as is - and therefore there are no sanity checks.
 If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
 \subsection{Defensive measures}{
 
 As everything is based on pointers internally values as \link{NA} and out of bounds values (\code{length(x) != length(y)}) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in \code{try()} or \code{tryCatch()} to recover from sudden errors. Your \code{R}-session \emph{will} most likely just crash.
-A workaroud is to create a wrapper around \code{\link[=brier.score]{brier.score()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=brier.score]{brier.score()}}.
+A workaround is to create a wrapper around \code{\link[=brier.score]{brier.score()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=brier.score]{brier.score()}}.
 }
 }
 \examples{
@@ -61,6 +61,8 @@ SLmetrics::brier.score(
 
 }
 \references{
+Gneiting, Tilmann, and Adrian E. Raftery. "Strictly proper scoring rules, prediction, and estimation." Journal of the American statistical Association 102.477 (2007): 359-378.
+
 James, Gareth, et al. An introduction to statistical learning. Vol. 112. No. 1. New York: springer, 2013.
 
 Hastie, Trevor. "The elements of statistical learning: data mining, inference, and prediction." (2009).

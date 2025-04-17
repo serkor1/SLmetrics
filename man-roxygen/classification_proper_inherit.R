@@ -50,6 +50,8 @@
 #' 
 #' @references
 #' 
+#' Gneiting, Tilmann, and Adrian E. Raftery. "Strictly proper scoring rules, prediction, and estimation." Journal of the American statistical Association 102.477 (2007): 359-378.
+#' 
 #' James, Gareth, et al. An introduction to statistical learning. Vol. 112. No. 1. New York: springer, 2013.
 #' 
 #' Hastie, Trevor. "The elements of statistical learning: data mining, inference, and prediction." (2009).

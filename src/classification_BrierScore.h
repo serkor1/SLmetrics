@@ -19,7 +19,7 @@ namespace metric {
         brier_score(const Rcpp::NumericMatrix& observed_outcomes, const Rcpp::NumericMatrix& probabilities) : 
             observed_outcomes_( const_cast<T*>(observed_outcomes.begin()), observed_outcomes.size(), false, false ),
             probabilities_( const_cast<T*>(probabilities.begin()),  probabilities.size(),  false, false ),
-            n_rows_(observed_outcomes.nrow()) {}
+            n_rows_(observed_outcomes.nrow() * observed_outcomes.ncol()) {}
 
         [[nodiscard]] T compute() const {
             return arma::accu( arma::square(observed_outcomes_ - probabilities_) ) / static_cast<T>(n_rows_);
@@ -42,18 +42,25 @@ namespace metric {
             n_rows_(observed_outcomes.nrow()), n_cols_(observed_outcomes.ncol()) {}
 
         [[nodiscard]] T compute() const {
-            T weights_sum = 0, weights_tot = 0;
+            T weighted_se_sum = 0;
+            T weight_sum      = 0;
+
             for (arma::uword r = 0; r < n_rows_; ++r) {
                 const arma::uword off = r * n_cols_;
-                const T roweights_se = arma::accu(
+
+                // squared error for this row, summed over all K classes
+                const T row_se = arma::accu(
                     arma::square( observed_outcomes_.subvec(off, off + n_cols_ - 1)
-                                - probabilities_.subvec(off, off + n_cols_ - 1) ) );
-                const T wr = static_cast<T>(weights_[r]);
-                weights_sum += roweights_se * wr;
-                weights_tot += wr;
+                                - probabilities_     .subvec(off, off + n_cols_ - 1) ) );
+
+                const T w_i = static_cast<T>(weights_[r]);
+                weighted_se_sum += w_i * row_se;
+                weight_sum      += w_i;
             }
-            return weights_sum / weights_tot;
+
+            return weighted_se_sum / (weight_sum * static_cast<T>(n_cols_));
         }
+
         
     };
 }

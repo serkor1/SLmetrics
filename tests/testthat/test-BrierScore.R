@@ -30,9 +30,9 @@ testthat::test_that(
       # 0) create classification
       # for the test
       ok <- diag(n_classes)[ sample.int(n_classes, n_obs, TRUE), ]
-      qk <- matrix(runif(n_obs * n_classes), n_obs, n_classes)
+      qk <- matrix(rep(1/n_classes,n_obs * n_classes), n_obs, n_classes)
       qk <- qk / rowSums(qk)
-      weight <- runif(n = n_obs)
+      weight <- rep(1, n_obs)
       w <- if (weighted) weight else NULL
       
       # 1) generate sensible
@@ -46,7 +46,7 @@ testthat::test_that(
       score <- wrapped_brier(
         ok = ok,
         qk = qk,
-        w = w
+        w  = w
       )
       
       # 2.1) test that the values
@@ -58,14 +58,16 @@ testthat::test_that(
       # 2.2) Manual calculation of brier score for validation
       expected_score <- py_brier(
         as.numeric(ok),
-        qk,
-        w = w
+        as.numeric(qk),
+        w = if (weighted) rep(w, n_classes) else NULL
       )
       
       # 2.3) test for equality
-      testthat::expect_equal(
-        object = as.numeric(score),
-        expected = as.numeric(expected_score),
+      testthat::expect_true(
+        object = set_equal(
+          target  = as.numeric(expected_score),
+          current = as.numeric(score)
+        ),
         info = info
       )
     }

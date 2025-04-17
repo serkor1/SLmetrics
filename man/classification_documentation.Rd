@@ -4,7 +4,7 @@
 \alias{classification_documentation}
 \title{Classification Documenatation}
 \arguments{
-\item{p, q}{A pair of <\link{double}> vectors of \link{length} \eqn{n} of emprical probabilities \eqn{p} and estimated probabilities \eqn{q}.}
+\item{p, q}{A pair of <\link{double}> vectors of \link{length} \eqn{n} of empirical probabilities \eqn{p} and estimated probabilities \eqn{q}.}
 
 \item{pk, qk}{A pair of <\link{double}> matrices of \link{length} \eqn{n} of emprical probabilities \eqn{p} and estimated probabilities \eqn{q}.}
 
