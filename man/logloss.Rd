@@ -18,26 +18,26 @@ weighted.logloss(...)
   Arguments passed on to \code{\link[=logloss.integer]{logloss.integer}}, \code{\link[=weighted.logloss.integer]{weighted.logloss.integer}}, \code{\link[=logloss.factor]{logloss.factor}}, \code{\link[=weighted.logloss.factor]{weighted.logloss.factor}}
   \describe{
     \item{\code{actual}}{A vector \link{length} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
-    \item{\code{response}}{A \eqn{n \times k} <\link{numeric}>-matrix of predicted probabilities.
+    \item{\code{response}}{A \eqn{n \times k} <\link{double}>-matrix of predicted probabilities.
 The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 over the \eqn{k} classes). The first column corresponds to the first factor
 level in \code{actual}, the second column to the second factor level, and so on.}
     \item{\code{normalize}}{A <\link{logical}>-value (default: \link{TRUE}). If \link{TRUE},
 the mean cross-entropy across all observations is returned; otherwise, the
 sum of cross-entropies is returned.}
-    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
+    \item{\code{w}}{A <\link{double}> vector of sample weights.}
   }}
 }
 \value{
 A <\link{double}>
 }
 \description{
-A S3 generic function for calculating the logarithmic loss score of a classification model. \code{\link[=logloss]{logloss()}} handles the input as is - and therefore there is not sanity checks.
+A S3 generic function for calculating the logarithmic loss score of a classification model. \code{\link[=logloss]{logloss()}} handles the input as is - and therefore there are no sanity checks.
 If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
 \subsection{Defensive measures}{
 
 As everything is based on pointers internally values as \link{NA} and out of bounds values (\code{length(x) != length(y)}) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in \code{try()} or \code{tryCatch()} to recover from sudden errors. Your \code{R}-session \emph{will} most likely just crash.
-A workaroud is to create a wrapper around \code{\link[=logloss]{logloss()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=logloss]{logloss()}}.
+A workaround is to create a wrapper around \code{\link[=logloss]{logloss()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=logloss]{logloss()}}.
 }
 }
 \references{
@@ -51,6 +51,7 @@ Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for scientific comput
 Other Classification: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier.score}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
@@ -78,10 +79,14 @@ Other Classification:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier.score}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
+\code{\link{deviance.gamma}()},
+\code{\link{deviance.poisson}()},
+\code{\link{deviance.tweedie}()},
 \code{\link{dor}()},
 \code{\link{fbeta}()},
 \code{\link{fdr}()},

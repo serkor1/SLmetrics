@@ -89,6 +89,31 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// brier_score
+double brier_score(const Rcpp::NumericMatrix& ok, const Rcpp::NumericMatrix& qk);
+RcppExport SEXP _SLmetrics_brier_score(SEXP okSEXP, SEXP qkSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type ok(okSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type qk(qkSEXP);
+    rcpp_result_gen = Rcpp::wrap(brier_score(ok, qk));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_brier_score
+double weighted_brier_score(const Rcpp::NumericMatrix& ok, const Rcpp::NumericMatrix& qk, const Rcpp::NumericVector& w);
+RcppExport SEXP _SLmetrics_weighted_brier_score(SEXP okSEXP, SEXP qkSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type ok(okSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type qk(qkSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_brier_score(ok, qk, w));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cohens_kappa
 double cohens_kappa(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const double& beta);
 RcppExport SEXP _SLmetrics_cohens_kappa(SEXP actualSEXP, SEXP predictedSEXP, SEXP betaSEXP) {
@@ -1423,6 +1448,31 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// gamma_deviance
+double gamma_deviance(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted);
+RcppExport SEXP _SLmetrics_gamma_deviance(SEXP actualSEXP, SEXP predictedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    rcpp_result_gen = Rcpp::wrap(gamma_deviance(actual, predicted));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_gamma_deviance
+double weighted_gamma_deviance(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w);
+RcppExport SEXP _SLmetrics_weighted_gamma_deviance(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_gamma_deviance(actual, predicted, w));
+    return rcpp_result_gen;
+END_RCPP
+}
 // huberloss
 double huberloss(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, double delta);
 RcppExport SEXP _SLmetrics_huberloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP deltaSEXP) {
@@ -1579,6 +1629,31 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// poisson_deviance
+double poisson_deviance(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted);
+RcppExport SEXP _SLmetrics_poisson_deviance(SEXP actualSEXP, SEXP predictedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    rcpp_result_gen = Rcpp::wrap(poisson_deviance(actual, predicted));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_poisson_deviance
+double weighted_poisson_deviance(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w);
+RcppExport SEXP _SLmetrics_weighted_poisson_deviance(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_poisson_deviance(actual, predicted, w));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rae
 double rae(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted);
 RcppExport SEXP _SLmetrics_rae(SEXP actualSEXP, SEXP predictedSEXP) {
@@ -1731,6 +1806,33 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// tweedie_deviance
+double tweedie_deviance(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, double power);
+RcppExport SEXP _SLmetrics_tweedie_deviance(SEXP actualSEXP, SEXP predictedSEXP, SEXP powerSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< double >::type power(powerSEXP);
+    rcpp_result_gen = Rcpp::wrap(tweedie_deviance(actual, predicted, power));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_tweedie_deviance
+double weighted_tweedie_deviance(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w, double power);
+RcppExport SEXP _SLmetrics_weighted_tweedie_deviance(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP, SEXP powerSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< double >::type power(powerSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_tweedie_deviance(actual, predicted, w, power));
+    return rcpp_result_gen;
+END_RCPP
+}
 // auc
 double auc(const Rcpp::NumericVector& y, const Rcpp::NumericVector& x, const int& method, const bool& presorted);
 RcppExport SEXP _SLmetrics_auc(SEXP ySEXP, SEXP xSEXP, SEXP methodSEXP, SEXP presortedSEXP) {
@@ -1858,6 +1960,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_balanced_accuracy", (DL_FUNC) &_SLmetrics_balanced_accuracy, 4},
     {"_SLmetrics_weighted_balanced_accuracy", (DL_FUNC) &_SLmetrics_weighted_balanced_accuracy, 5},
     {"_SLmetrics_cmatrix_balanced_accuracy", (DL_FUNC) &_SLmetrics_cmatrix_balanced_accuracy, 3},
+    {"_SLmetrics_brier_score", (DL_FUNC) &_SLmetrics_brier_score, 2},
+    {"_SLmetrics_weighted_brier_score", (DL_FUNC) &_SLmetrics_weighted_brier_score, 3},
     {"_SLmetrics_cohens_kappa", (DL_FUNC) &_SLmetrics_cohens_kappa, 3},
     {"_SLmetrics_weighted_cohens_kappa", (DL_FUNC) &_SLmetrics_weighted_cohens_kappa, 4},
     {"_SLmetrics_cmatrix_cohens_kappa", (DL_FUNC) &_SLmetrics_cmatrix_cohens_kappa, 2},
@@ -1957,6 +2061,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_weighted_rsq", (DL_FUNC) &_SLmetrics_weighted_rsq, 4},
     {"_SLmetrics_ccc", (DL_FUNC) &_SLmetrics_ccc, 3},
     {"_SLmetrics_weighted_ccc", (DL_FUNC) &_SLmetrics_weighted_ccc, 4},
+    {"_SLmetrics_gamma_deviance", (DL_FUNC) &_SLmetrics_gamma_deviance, 2},
+    {"_SLmetrics_weighted_gamma_deviance", (DL_FUNC) &_SLmetrics_weighted_gamma_deviance, 3},
     {"_SLmetrics_huberloss", (DL_FUNC) &_SLmetrics_huberloss, 3},
     {"_SLmetrics_weighted_huberloss", (DL_FUNC) &_SLmetrics_weighted_huberloss, 4},
     {"_SLmetrics_mae", (DL_FUNC) &_SLmetrics_mae, 2},
@@ -1969,6 +2075,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_weighted_mse", (DL_FUNC) &_SLmetrics_weighted_mse, 3},
     {"_SLmetrics_pinball", (DL_FUNC) &_SLmetrics_pinball, 4},
     {"_SLmetrics_weighted_pinball", (DL_FUNC) &_SLmetrics_weighted_pinball, 5},
+    {"_SLmetrics_poisson_deviance", (DL_FUNC) &_SLmetrics_poisson_deviance, 2},
+    {"_SLmetrics_weighted_poisson_deviance", (DL_FUNC) &_SLmetrics_weighted_poisson_deviance, 3},
     {"_SLmetrics_rae", (DL_FUNC) &_SLmetrics_rae, 2},
     {"_SLmetrics_weighted_rae", (DL_FUNC) &_SLmetrics_weighted_rae, 3},
     {"_SLmetrics_RelativeRootMeanSquaredError", (DL_FUNC) &_SLmetrics_RelativeRootMeanSquaredError, 3},
@@ -1981,6 +2089,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_weighted_rrse", (DL_FUNC) &_SLmetrics_weighted_rrse, 3},
     {"_SLmetrics_smape", (DL_FUNC) &_SLmetrics_smape, 2},
     {"_SLmetrics_weighted_smape", (DL_FUNC) &_SLmetrics_weighted_smape, 3},
+    {"_SLmetrics_tweedie_deviance", (DL_FUNC) &_SLmetrics_tweedie_deviance, 3},
+    {"_SLmetrics_weighted_tweedie_deviance", (DL_FUNC) &_SLmetrics_weighted_tweedie_deviance, 4},
     {"_SLmetrics_auc", (DL_FUNC) &_SLmetrics_auc, 4},
     {"_SLmetrics_covariance_matrix", (DL_FUNC) &_SLmetrics_covariance_matrix, 5},
     {"_SLmetrics_covariance_dataframe", (DL_FUNC) &_SLmetrics_covariance_dataframe, 5},

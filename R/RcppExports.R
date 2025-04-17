@@ -32,7 +32,7 @@ accuracy.cmatrix <- function(x, ...) {
 #' @templateVar .METHOD factor
 #' @template classification_standard_inherit
 #'
-#' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
+#' @param adjust A <[logical]> value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
 #'
 #' @export
 baccuracy.factor <- function(actual, predicted, adjust = FALSE, na.rm = TRUE, ...) {
@@ -43,7 +43,7 @@ baccuracy.factor <- function(actual, predicted, adjust = FALSE, na.rm = TRUE, ..
 #' @templateVar .METHOD factor
 #' @template classification_standard_inherit
 #'
-#' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
+#' @param adjust A <[logical]> value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
 #'
 #' @export
 weighted.baccuracy.factor <- function(actual, predicted, w, adjust = FALSE, na.rm = TRUE, ...) {
@@ -54,18 +54,34 @@ weighted.baccuracy.factor <- function(actual, predicted, w, adjust = FALSE, na.r
 #' @templateVar .METHOD cmatrix
 #' @template classification_standard_inherit
 #'
-#' @param adjust A [logical] value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
+#' @param adjust A <[logical]> value (default: [FALSE]). If [TRUE] the metric is adjusted for random chance \eqn{\frac{1}{k}}.
 #'
 #' @export
 baccuracy.cmatrix <- function(x, adjust = FALSE, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_balanced_accuracy`, x, adjust, na_rm = na.rm)
 }
 
+#' @templateVar .FUN brier.score
+#' @templateVar .METHOD matrix
+#' @template classification_proper_inherit
+#' @export
+brier.score.matrix <- function(ok, qk, ...) {
+    .Call(`_SLmetrics_brier_score`, ok, qk)
+}
+
+#' @templateVar .FUN weighted.brier.score
+#' @templateVar .METHOD matrix
+#' @template classification_proper_inherit
+#' @export
+weighted.brier.score.matrix <- function(ok, qk, w, ...) {
+    .Call(`_SLmetrics_weighted_brier_score`, ok, qk, w)
+}
+
 #' @templateVar .FUN ckappa
 #' @templateVar .METHOD factor
 #' @template classification_standard_inherit
 #'
-#' @param beta A <[numeric]> value of [length] 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.
+#' @param beta A <[double]> value of [length] 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.
 #'
 #' @export
 ckappa.factor <- function(actual, predicted, beta = 0.0, ...) {
@@ -76,7 +92,7 @@ ckappa.factor <- function(actual, predicted, beta = 0.0, ...) {
 #' @templateVar .METHOD factor
 #' @template classification_standard_inherit
 #'
-#' @param beta A <[numeric]> value of [length] 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.
+#' @param beta A <[double]> value of [length] 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.
 #'
 #' @export
 weighted.ckappa.factor <- function(actual, predicted, w, beta = 0.0, ...) {
@@ -87,7 +103,7 @@ weighted.ckappa.factor <- function(actual, predicted, w, beta = 0.0, ...) {
 #' @templateVar .METHOD cmatrix
 #' @template classification_standard_inherit
 #'
-#' @param beta A <[numeric]> value of [length] 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.
+#' @param beta A <[double]> value of [length] 1 (default: 0). If \eqn{\beta \neq 0} the off-diagonals of the confusion matrix are penalized with a factor of \eqn{(y_{+} - y_{i,-})^\beta}.
 #'
 #' @export
 ckappa.cmatrix <- function(x, beta = 0.0, ...) {
@@ -161,7 +177,7 @@ cross.entropy.matrix <- function(pk, qk, dim = 0L, base = -1.0, ...) {
 #' @templateVar .METHOD factor
 #' @template classification_standard_inherit
 #'
-#' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
+#' @param beta A <[double]> vector of [length] \eqn{1} (default: \eqn{1}).
 #'
 #' @export
 fbeta.factor <- function(actual, predicted, beta = 1.0, estimator = 0L, na.rm = TRUE, ...) {
@@ -172,7 +188,7 @@ fbeta.factor <- function(actual, predicted, beta = 1.0, estimator = 0L, na.rm = 
 #' @templateVar .METHOD factor
 #' @template classification_standard_inherit
 #'
-#' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
+#' @param beta A <[double]> vector of [length] \eqn{1} (default: \eqn{1}).
 #'
 #' @export
 weighted.fbeta.factor <- function(actual, predicted, w, beta = 1.0, estimator = 0L, na.rm = TRUE, ...) {
@@ -183,7 +199,7 @@ weighted.fbeta.factor <- function(actual, predicted, w, beta = 1.0, estimator = 
 #' @templateVar .METHOD cmatrix
 #' @template classification_standard_inherit
 #'
-#' @param beta A <[numeric]> vector of [length] \eqn{1} (default: \eqn{1}).
+#' @param beta A <[double]> vector of [length] \eqn{1} (default: \eqn{1}).
 #'
 #' @export
 fbeta.cmatrix <- function(x, beta = 1.0, estimator = 0L, na.rm = TRUE, ...) {
@@ -882,6 +898,22 @@ weighted.ccc.numeric <- function(actual, predicted, w, correction = FALSE, ...) 
     .Call(`_SLmetrics_weighted_ccc`, actual, predicted, w, correction)
 }
 
+#' @templateVar .FUN deviance.gamma
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @rawNamespace S3method(deviance.gamma,numeric)
+deviance.gamma.numeric <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_gamma_deviance`, actual, predicted)
+}
+
+#' @templateVar .FUN weighted.deviance.gamma
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @rawNamespace S3method(weighted.deviance.gamma,numeric)
+weighted.deviance.gamma.numeric <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_gamma_deviance`, actual, predicted, w)
+}
+
 #' @templateVar .FUN huberloss
 #' @templateVar .METHOD numeric
 #' @template regression_standard_inherit
@@ -978,6 +1010,22 @@ weighted.pinball.numeric <- function(actual, predicted, w, alpha = 0.5, deviance
     .Call(`_SLmetrics_weighted_pinball`, actual, predicted, w, alpha, deviance)
 }
 
+#' @templateVar .FUN deviance.poisson
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @rawNamespace S3method(deviance.poisson,numeric)
+deviance.poisson.numeric <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_poisson_deviance`, actual, predicted)
+}
+
+#' @templateVar .FUN weighted.deviance.poisson
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @rawNamespace S3method(weighted.deviance.poisson,numeric)
+weighted.deviance.poisson.numeric <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_poisson_deviance`, actual, predicted, w)
+}
+
 #' @templateVar .FUN rae
 #' @templateVar .METHOD numeric
 #' @template regression_standard_inherit
@@ -1072,6 +1120,22 @@ smape.numeric <- function(actual, predicted, ...) {
 #' @export
 weighted.smape.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_smape`, actual, predicted, w)
+}
+
+#' @templateVar .FUN deviance.tweedie
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @rawNamespace S3method(deviance.tweedie,numeric)
+deviance.tweedie.numeric <- function(actual, predicted, power = 2.0, ...) {
+    .Call(`_SLmetrics_tweedie_deviance`, actual, predicted, power)
+}
+
+#' @templateVar .FUN weighted.deviance.tweedie
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @rawNamespace S3method(weighted.deviance.tweedie,numeric)
+weighted.deviance.tweedie.numeric <- function(actual, predicted, w, power = 2.0, ...) {
+    .Call(`_SLmetrics_weighted_tweedie_deviance`, actual, predicted, w, power)
 }
 
 #' @rdname xy.auc

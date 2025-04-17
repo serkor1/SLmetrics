@@ -7,14 +7,11 @@
 \method{relative.entropy}{matrix}(pk, qk, dim = 0L, base = -1, ...)
 }
 \arguments{
-\item{pk, qk}{A pair \eqn{n \times k} <\link{numeric}>-matrix of observed (pk) and predicted (qk) probabilities.
-The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
-over the \eqn{k} classes). The first column corresponds to the first factor
-level in \code{actual}, the second column to the second factor level, and so on.}
+\item{pk, qk}{A pair of <\link{double}> matrices of \link{length} \eqn{n} of emprical probabilities \eqn{p} and estimated probabilities \eqn{q}.}
 
 \item{dim}{An <\link{integer}> value of \link{length} 1 (Default: 0). Defines the dimension along which to calculate the entropy (0: total, 1: row-wise, 2: column-wise).}
 
-\item{base}{A <\link{numeric}> value of \link{length} 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.}
+\item{base}{A <\link{double}> value of \link{length} 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.}
 
 \item{...}{Arguments passed into other methods.}
 }
@@ -27,12 +24,12 @@ A <\link{double}> value or vector:
 }
 }
 \description{
-A S3 generic function for calculating the relative entropy score of a classification model. \code{\link[=relative.entropy]{relative.entropy()}} handles the input as is - and therefore there is not sanity checks.
+A S3 generic function for calculating the relative entropy score of a classification model. \code{\link[=relative.entropy]{relative.entropy()}} handles the input as is - and therefore there are no sanity checks.
 If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
 \subsection{Defensive measures}{
 
 As everything is based on pointers internally values as \link{NA} and out of bounds values (\code{length(x) != length(y)}) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in \code{try()} or \code{tryCatch()} to recover from sudden errors. Your \code{R}-session \emph{will} most likely just crash.
-A workaroud is to create a wrapper around \code{\link[=relative.entropy]{relative.entropy()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=relative.entropy]{relative.entropy()}}.
+A workaround is to create a wrapper around \code{\link[=relative.entropy]{relative.entropy()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=relative.entropy]{relative.entropy()}}.
 }
 }
 \references{
@@ -46,6 +43,7 @@ Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for scientific comput
 Other Classification: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier.score}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
@@ -73,10 +71,14 @@ Other Classification:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier.score}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
+\code{\link{deviance.gamma}()},
+\code{\link{deviance.poisson}()},
+\code{\link{deviance.tweedie}()},
 \code{\link{dor}()},
 \code{\link{fbeta}()},
 \code{\link{fdr}()},

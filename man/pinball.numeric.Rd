@@ -7,9 +7,9 @@
 \method{pinball}{numeric}(actual, predicted, alpha = 0.5, deviance = FALSE, ...)
 }
 \arguments{
-\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{alpha}{A <\link{numeric}>-value of \link{length} \eqn{1} (default: \eqn{0.5}). The slope of the pinball loss function.}
+\item{alpha}{A <\link{double}>-value of \link{length} \eqn{1} (default: \eqn{0.5}). The slope of the pinball loss function.}
 
 \item{deviance}{A <\link{logical}>-value of \link{length} 1 (default: \link{FALSE}). If \link{TRUE} the function returns the \eqn{D^2} loss.}
 
@@ -19,12 +19,12 @@
 A <\link{double}> value
 }
 \description{
-A S3 generic function for calculating the pinball loss score of a regression model. \code{\link[=pinball]{pinball()}} handles the input as is - and therefore there is not sanity checks.
+A S3 generic function for calculating the pinball loss score of a regression model. \code{\link[=pinball]{pinball()}} handles the input as is - and therefore there are no sanity checks.
 If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
 \subsection{Defensive measures}{
 
 As everything is based on pointers internally values as \link{NA} and out of bounds values (\code{length(x) != length(y)}) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in \code{try()} or \code{tryCatch()} to recover from sudden errors. Your \code{R}-session \emph{will} most likely just crash.
-A workaroud is to create a wrapper around \code{\link[=pinball]{pinball()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=pinball]{pinball()}}.
+A workaround is to create a wrapper around \code{\link[=pinball]{pinball()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=pinball]{pinball()}}.
 }
 }
 \examples{
@@ -53,6 +53,9 @@ Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journa
 \seealso{
 Other Regression: 
 \code{\link{ccc}()},
+\code{\link{deviance.gamma}()},
+\code{\link{deviance.poisson}()},
+\code{\link{deviance.tweedie}()},
 \code{\link{huberloss}()},
 \code{\link{mae}()},
 \code{\link{mape}()},
@@ -69,10 +72,14 @@ Other Regression:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier.score}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
+\code{\link{deviance.gamma}()},
+\code{\link{deviance.poisson}()},
+\code{\link{deviance.tweedie}()},
 \code{\link{dor}()},
 \code{\link{fbeta}()},
 \code{\link{fdr}()},

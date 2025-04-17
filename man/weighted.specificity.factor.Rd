@@ -7,15 +7,15 @@
 \method{weighted.specificity}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
 }
 \arguments{
-\item{actual, predicted}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of <\link{integer}> or <\link{factor}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
 
-\item{w}{A <\link{numeric}> vector of sample weights.}
+\item{w}{A <\link{double}> vector of sample weights.}
 
 \item{estimator}{An <\link{integer}>-value of \link{length} \eqn{1} (default: \eqn{0}).
 \itemize{
-\item 0 - a named <\link{numeric}>-vector of \link{length} k (class-wise)
-\item 1 - a <\link{numeric}> value (Micro averaged metric)
-\item 2 - a <\link{numeric}> value (Macro averaged metric)
+\item 0 - a named <\link{double}>-vector of \link{length} k (class-wise)
+\item 1 - a <\link{double}> value (Micro averaged metric)
+\item 2 - a <\link{double}> value (Macro averaged metric)
 }}
 
 \item{na.rm}{A <\link{logical}> value of \link{length} \eqn{1} (default: \link{TRUE}). If \link{TRUE}, \link{NA} values are removed from the computation.
@@ -28,13 +28,13 @@ When \code{na.rm = FALSE}, the computation corresponds to \code{sum(c(1, 2, NA),
 \value{
 If \code{estimator} is given as
 \itemize{
-\item 0 - a named <\link{numeric}>-vector of \link{length} k
+\item 0 - a named <\link{double}> vector of \link{length} k
 \item 1 - a <\link{double}> value (Micro averaged metric)
 \item 2 - a <\link{double}> value (Macro averaged metric)
 }
 }
 \description{
-A S3 generic function for calculating the specificity score of a classification model. \code{\link[=specificity]{specificity()}} handles the input as is - and therefore there is not sanity checks.
+A S3 generic function for calculating the specificity score of a classification model. \code{\link[=specificity]{specificity()}} handles the input as is - and therefore there are no sanity checks.
 If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
 \subsection{Efficient evaluation}{
 
@@ -44,7 +44,7 @@ The canonical way of measuring the performance of a classification model is to u
 \subsection{Defensive measures}{
 
 As everything is based on pointers internally values as \link{NA} and out of bounds values (\code{length(x) != length(y)}) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in \code{try()} or \code{tryCatch()} to recover from sudden errors. Your \code{R}-session \emph{will} most likely just crash.
-A workaroud is to create a wrapper around \code{\link[=specificity]{specificity()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=specificity]{specificity()}}.
+A workaround is to create a wrapper around \code{\link[=specificity]{specificity()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=specificity]{specificity()}}.
 }
 }
 \section{Other names}{
@@ -102,6 +102,7 @@ Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journa
 Other Classification: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier.score}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
@@ -129,10 +130,14 @@ Other Classification:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier.score}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
+\code{\link{deviance.gamma}()},
+\code{\link{deviance.poisson}()},
+\code{\link{deviance.tweedie}()},
 \code{\link{dor}()},
 \code{\link{fbeta}()},
 \code{\link{fdr}()},

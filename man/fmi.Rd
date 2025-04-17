@@ -18,8 +18,8 @@ weighted.fmi(...)
 \item{...}{
   Arguments passed on to \code{\link[=fmi.factor]{fmi.factor}}, \code{\link[=weighted.fmi.factor]{weighted.fmi.factor}}, \code{\link[=fmi.cmatrix]{fmi.cmatrix}}
   \describe{
-    \item{\code{actual,predicted}}{A pair of \link{integer} or \link{factor} vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
-    \item{\code{w}}{A <\link{numeric}> vector of sample weights.}
+    \item{\code{actual,predicted}}{A pair of <\link{integer}> or <\link{factor}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+    \item{\code{w}}{A <\link{double}> vector of sample weights.}
     \item{\code{x}}{A confusion matrix created \code{\link[=cmatrix]{cmatrix()}}.}
   }}
 }
@@ -27,7 +27,7 @@ weighted.fmi(...)
 A <\link{double}>-value
 }
 \description{
-A S3 generic function for calculating the fowlkes mallows index score of a classification model. \code{\link[=fmi]{fmi()}} handles the input as is - and therefore there is not sanity checks.
+A S3 generic function for calculating the fowlkes mallows index score of a classification model. \code{\link[=fmi]{fmi()}} handles the input as is - and therefore there are no sanity checks.
 If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
 \subsection{Efficient evaluation}{
 
@@ -37,7 +37,7 @@ The canonical way of measuring the performance of a classification model is to u
 \subsection{Defensive measures}{
 
 As everything is based on pointers internally values as \link{NA} and out of bounds values (\code{length(x) != length(y)}) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in \code{try()} or \code{tryCatch()} to recover from sudden errors. Your \code{R}-session \emph{will} most likely just crash.
-A workaroud is to create a wrapper around \code{\link[=fmi]{fmi()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=fmi]{fmi()}}.
+A workaround is to create a wrapper around \code{\link[=fmi]{fmi()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=fmi]{fmi()}}.
 }
 }
 \examples{
@@ -76,6 +76,7 @@ Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journa
 Other Classification: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier.score}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
@@ -103,10 +104,14 @@ Other Classification:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
+\code{\link{brier.score}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
+\code{\link{deviance.gamma}()},
+\code{\link{deviance.poisson}()},
+\code{\link{deviance.tweedie}()},
 \code{\link{dor}()},
 \code{\link{fbeta}()},
 \code{\link{fdr}()},
