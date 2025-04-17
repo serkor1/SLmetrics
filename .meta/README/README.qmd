@@ -62,27 +62,6 @@ lattice::trellis.par.set(
 
 Depending on the mood and alignment of planets [{SLmetrics}](https://serkor1.github.io/SLmetrics/) stands for Supervised Learning metrics, or Statistical Learning metrics. If [{SLmetrics}](https://serkor1.github.io/SLmetrics/) catches on, the latter will be the core philosophy and include unsupervised learning metrics. If not, then it will remain a {pkg} for Supervised Learning metrics, and a sandbox for me to develop my `C++` skills.
 
-## :books: Table of Contents
-
-* [:rocket: Gettting Started](#rocket-gettting-started)
-  + [:package: CRAN version](#package-cran-version)
-  + [:books: Basic Usage](#books-basic-usage)
-* [:information_source: Why?](#information_source-why)
-* [:zap: Performance Comparison](#zap-performance-comparison)
-  + [:fast_forward: Speed comparison](#fast_forward-speed-comparison)
-  + [:floppy_disk: Memory-efficiency](#floppy_disk-memory-efficiency)
-* [:information_source: Basic usage](#information_source-basic-usage)
-  + [:books: Regression](#books-regression)
-  + [:books: Classification](#books-classification)
-* [:information_source: Enable OpenMP](#information_source-enable-openmp)
-  + [:books: Entropy without OpenMP](#books-entropy-without-openmp)
-  + [:books: Entropy with OpenMP](#books-entropy-with-openmp)
-* [:package: Install from source](#package-install-from-source)
-  + [Latest release](#github-release)
-  + [Nightly build](#nightly-build)
-* [:information_source: Code of Conduct](#information_source-code-of-conduct)
-
-
 ## :rocket: Gettting Started
 
 Below you’ll find instructions to install [{SLmetrics}](https://serkor1.github.io/SLmetrics/) and get started with your first metric, the Root Mean Squared Error (RMSE).
@@ -346,13 +325,28 @@ pak::pak(
 ```
 
 ### Nightly build
+
+#### Clone repository with submodules
+
+``` console
+git clone --recurse-submodules https://github.com/serkor1/SLmetrics.git
+```
+
+#### Installing with build tools
+
+``` console
+make build
+```
+
+#### Installing with {pak}
+
 ```{r nightly-installation guide}
 #| echo: TRUE
 #| eval: FALSE
 
 ## install nightly build
 pak::pak(
-    pkg = "serkor1/SLmetrics",
+    pkg = ".",
     ask = FALSE
 )
 ```

@@ -40,28 +40,6 @@ latter will be the core philosophy and include unsupervised learning
 metrics. If not, then it will remain a {pkg} for Supervised Learning
 metrics, and a sandbox for me to develop my `C++` skills.
 
-## :books: Table of Contents
-
-- [:rocket: Gettting Started](#rocket-gettting-started)
-  - [:package: CRAN version](#package-cran-version)
-  - [:books: Basic Usage](#books-basic-usage)
-- [:information_source: Why?](#information_source-why)
-- [:zap: Performance Comparison](#zap-performance-comparison)
-  - [:fast_forward: Speed comparison](#fast_forward-speed-comparison)
-  - [:floppy_disk: Memory-efficiency](#floppy_disk-memory-efficiency)
-- [:information_source: Basic usage](#information_source-basic-usage)
-  - [:books: Regression](#books-regression)
-  - [:books: Classification](#books-classification)
-- [:information_source: Enable
-  OpenMP](#information_source-enable-openmp)
-  - [:books: Entropy without OpenMP](#books-entropy-without-openmp)
-  - [:books: Entropy with OpenMP](#books-entropy-with-openmp)
-- [:package: Install from source](#package-install-from-source)
-  - [Latest release](#github-release)
-  - [Nightly build](#nightly-build)
-- [:information_source: Code of
-  Conduct](#information_source-code-of-conduct)
-
 ## :rocket: Gettting Started
 
 Below you’ll find instructions to install
@@ -279,12 +257,9 @@ summary(
 #> Overall Statistics (micro average)
 #>  - Accuracy:          0.81
 #>  - Balanced Accuracy: 0.78
-#>  - Sensitivity:       0.70
-#>  - Sensitivity:       0.86
-#>  - Specificity:       0.86
-#>  - Specificity:       0.70
-#>  - Precision:         0.71
-#>  - Precision:         0.85
+#>  - Sensitivity:       0.81
+#>  - Specificity:       0.81
+#>  - Precision:         0.81
 ```
 
 ## :information_source: Enable OpenMP
@@ -344,10 +319,24 @@ pak::pak(
 
 ### Nightly build
 
+#### Clone repository with submodules
+
+``` console
+git clone --recurse-submodules https://github.com/serkor1/SLmetrics.git
+```
+
+#### Installing with build tools
+
+``` console
+make build
+```
+
+#### Installing with {pak}
+
 ``` r
 ## install nightly build
 pak::pak(
-    pkg = "serkor1/SLmetrics",
+    pkg = ".",
     ask = FALSE
 )
 ```
