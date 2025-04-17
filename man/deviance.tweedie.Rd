@@ -22,13 +22,13 @@ weighted.deviance.tweedie(...)
     \item{\code{power}}{A <\link{double}> value, default = 2.
 Tweedie power parameter. Either power <= 0 or power >= 1.
 
-The higher p, the less weight is given to extreme deviations between actual and predicted targets.
+The higher \eqn{power}, the less weight is given to extreme deviations between actual and predicted values.
 \itemize{
 \item \strong{power < 0:} Extreme stable distribution. Requires: predicted > 0.
-\item \strong{power = 0:} Normal distribution, output corresponds to mean_squared_error. actual and predicted can be any real numbers.
-\item \strong{power = 1:} Poisson distribution. Requires: actual >= 0 and predicted > 0.
+\item \strong{power = 0:} Normal distribution, output corresponds to \code{\link[=mse.]{mse.()}}, actual and predicted can be any real numbers.
+\item \strong{power = 1:} Poisson distribution (\code{\link[=deviance.poisson]{deviance.poisson()}}). Requires: actual >= 0 and predicted > 0.
 \item \strong{1 < power < 2:} Compound Poisson distribution. Requires: actual >= 0 and predicted > 0.
-\item \strong{power = 2:} Gamma distribution. Requires: actual > 0 and predicted > 0.
+\item \strong{power = 2:} Gamma distribution (\code{\link[=deviance.gamma]{deviance.gamma()}}). Requires: actual > 0 and predicted > 0.
 \item \strong{power = 3:} Inverse Gaussian distribution. Requires: actual > 0 and predicted > 0.
 \item \strong{otherwise:} Positive stable distribution. Requires: actual > 0 and predicted > 0.
 }}
@@ -90,7 +90,7 @@ Other Regression:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
-\code{\link{brier}()},
+\code{\link{brier.score}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

@@ -20,8 +20,8 @@
 #' ## for <%= tools::toTitleCase(.TITLE) %>
 #' <%= .FUN %>(...)
 #' 
-#' @inheritDotParams <%= .FUN %>.numeric
-#' @inheritDotParams weighted.<%= .FUN %>.numeric
+#' @inheritDotParams <%= .FUN %>.matrix
+#' @inheritDotParams weighted.<%= .FUN %>.matrix
 #' 
 #' @returns 
 #' A <[double]>-value 
@@ -34,15 +34,22 @@
 #' ## seed
 #' set.seed(1903)
 #' 
-#' ## Generate actual (p)
-#' ## and predicted (q) probabilities
-#' p <- runif(n = 1e2)
-#' q <- runif(n = 1e2)
+#' ## The general setup
+#' ## with 3 classes
+#' n_obs     <- 10
+#' n_classes <- 3
+#' 
+#' ## Generate indicator matrix
+#' ## with observed outcome (ok) and 
+#' ## its predicted probability matrix (qk)
+#' ok <- diag(n_classes)[ sample.int(n_classes, n_obs, TRUE), ]
+#' qk <- matrix(runif(n_obs * n_classes), n_obs, n_classes)
+#' qk <- qk / rowSums(qk)
 #' 
 #' ## Evaluate performance
 #' SLmetrics::<%= .FUN %>(
-#'    p = p, 
-#'    q = q
+#'    ok = ok, 
+#'    qk = qk
 #' )
 #' 
 #' @references

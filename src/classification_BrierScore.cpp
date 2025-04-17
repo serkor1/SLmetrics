@@ -2,37 +2,38 @@
 #include "classification_BrierScore.h"
 using namespace Rcpp;
 
-//' @templateVar .FUN brier
-//' @templateVar .METHOD numeric
+
+//' @templateVar .FUN brier.score
+//' @templateVar .METHOD matrix
 //' @template classification_proper_inherit
 //' @export
-// [[Rcpp::export(brier.numeric)]]
+// [[Rcpp::export(brier.score.matrix)]]
 double brier_score(
-    const Rcpp::NumericVector& p,
-    const Rcpp::NumericVector& q) {
+    const Rcpp::NumericMatrix& ok,
+    const Rcpp::NumericMatrix& qk) {
 
         // 1) define metric 
         // object
-        metric::BrierScore<double> performance(p, q);
+        metric::brier_score<double> performance(ok, qk);
 
         // 2) calculate 
         // value
         return performance.compute();
 }
 
-//' @templateVar .FUN weighted.brier
-//' @templateVar .METHOD numeric
+//' @templateVar .FUN weighted.brier.score
+//' @templateVar .METHOD matrix
 //' @template classification_proper_inherit
 //' @export
-// [[Rcpp::export(weighted.brier.numeric)]]
+// [[Rcpp::export(weighted.brier.score.matrix)]]
 double weighted_brier_score(
-    const Rcpp::NumericVector& p, 
-    const Rcpp::NumericVector& q,
+    const Rcpp::NumericMatrix& ok, 
+    const Rcpp::NumericMatrix& qk,
     const Rcpp::NumericVector& w) {
 
         // 1) define metric 
         // object
-        metric::weighted_BrierScore<double> performance(p, q, w);
+        metric::weighted_brier_score<double> performance(ok, qk, w);
 
         // 2) calculate 
         // value

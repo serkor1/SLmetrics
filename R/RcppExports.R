@@ -61,20 +61,20 @@ baccuracy.cmatrix <- function(x, adjust = FALSE, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_balanced_accuracy`, x, adjust, na_rm = na.rm)
 }
 
-#' @templateVar .FUN brier
-#' @templateVar .METHOD numeric
+#' @templateVar .FUN brier.score
+#' @templateVar .METHOD matrix
 #' @template classification_proper_inherit
 #' @export
-brier.numeric <- function(p, q, ...) {
-    .Call(`_SLmetrics_brier_score`, p, q)
+brier.score.matrix <- function(ok, qk, ...) {
+    .Call(`_SLmetrics_brier_score`, ok, qk)
 }
 
-#' @templateVar .FUN weighted.brier
-#' @templateVar .METHOD numeric
+#' @templateVar .FUN weighted.brier.score
+#' @templateVar .METHOD matrix
 #' @template classification_proper_inherit
 #' @export
-weighted.brier.numeric <- function(p, q, w, ...) {
-    .Call(`_SLmetrics_weighted_brier_score`, p, q, w)
+weighted.brier.score.matrix <- function(ok, qk, w, ...) {
+    .Call(`_SLmetrics_weighted_brier_score`, ok, qk, w)
 }
 
 #' @templateVar .FUN ckappa

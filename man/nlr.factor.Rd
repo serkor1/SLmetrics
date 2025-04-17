@@ -68,7 +68,7 @@ The \code{\link[=plr]{plr()}}-function for the Positive Likehood Ratio (LR+)
 Other Classification: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
-\code{\link{brier}()},
+\code{\link{brier.score}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
@@ -96,7 +96,7 @@ Other Classification:
 Other Supervised Learning: 
 \code{\link{accuracy}()},
 \code{\link{baccuracy}()},
-\code{\link{brier}()},
+\code{\link{brier.score}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

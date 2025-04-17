@@ -72,7 +72,7 @@ Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journa
 \seealso{
 Other Classification: 
 \code{\link{accuracy}()},
-\code{\link{brier}()},
+\code{\link{brier.score}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
@@ -100,7 +100,7 @@ Other Classification:
 
 Other Supervised Learning: 
 \code{\link{accuracy}()},
-\code{\link{brier}()},
+\code{\link{brier.score}()},
 \code{\link{ccc}()},
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},

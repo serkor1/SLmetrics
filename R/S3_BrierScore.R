@@ -9,26 +9,27 @@
 #' @returns NULL
 #' 
 #' @templateVar .TITLE Brier Score
-#' @templateVar .FUN brier
+#' @templateVar .FUN brier.score
 #' @templateVar .TASK Classification
 #' @template classification_proper_template
 #'
 #' @export
-brier <- function(...) {
+brier.score <- function(...) {
   UseMethod(
-    generic = "brier"
+    generic = "brier.score"
   )
 }
 
-#' @rdname brier
+
+#' @rdname brier.score
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Brier Score
-#' weighted.brier(...)
+#' weighted.brier.score(...)
 #' @export
-weighted.brier <- function(...) {
+weighted.brier.score <- function(...) {
   UseMethod(
-    generic = "weighted.brier"
+    generic = "weighted.brier.score"
   )
 }
 

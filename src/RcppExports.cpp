@@ -90,27 +90,27 @@ BEGIN_RCPP
 END_RCPP
 }
 // brier_score
-double brier_score(const Rcpp::NumericVector& p, const Rcpp::NumericVector& q);
-RcppExport SEXP _SLmetrics_brier_score(SEXP pSEXP, SEXP qSEXP) {
+double brier_score(const Rcpp::NumericMatrix& ok, const Rcpp::NumericMatrix& qk);
+RcppExport SEXP _SLmetrics_brier_score(SEXP okSEXP, SEXP qkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type p(pSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type q(qSEXP);
-    rcpp_result_gen = Rcpp::wrap(brier_score(p, q));
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type ok(okSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type qk(qkSEXP);
+    rcpp_result_gen = Rcpp::wrap(brier_score(ok, qk));
     return rcpp_result_gen;
 END_RCPP
 }
 // weighted_brier_score
-double weighted_brier_score(const Rcpp::NumericVector& p, const Rcpp::NumericVector& q, const Rcpp::NumericVector& w);
-RcppExport SEXP _SLmetrics_weighted_brier_score(SEXP pSEXP, SEXP qSEXP, SEXP wSEXP) {
+double weighted_brier_score(const Rcpp::NumericMatrix& ok, const Rcpp::NumericMatrix& qk, const Rcpp::NumericVector& w);
+RcppExport SEXP _SLmetrics_weighted_brier_score(SEXP okSEXP, SEXP qkSEXP, SEXP wSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type p(pSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type q(qSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type ok(okSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type qk(qkSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
-    rcpp_result_gen = Rcpp::wrap(weighted_brier_score(p, q, w));
+    rcpp_result_gen = Rcpp::wrap(weighted_brier_score(ok, qk, w));
     return rcpp_result_gen;
 END_RCPP
 }

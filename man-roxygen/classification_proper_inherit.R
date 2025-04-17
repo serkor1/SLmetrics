@@ -9,16 +9,23 @@
 #' ## seed
 #' set.seed(1903)
 #' 
-#' ## Generate actual (p)
-#' ## and predicted (q) probabilities
-#' p <- runif(n = 1e2)
-#' q <- runif(n = 1e2)
+#' ## The general setup
+#' ## with 3 classes
+#' n_obs     <- 10
+#' n_classes <- 3
+#' 
+#' ## Generate indicator matrix
+#' ## with observed outcome (ok) and 
+#' ## its predicted probability matrix (qk)
+#' ok <- diag(n_classes)[ sample.int(n_classes, n_obs, TRUE), ]
+#' qk <- matrix(runif(n_obs * n_classes), n_obs, n_classes)
+#' qk <- qk / rowSums(qk)
 #' 
 <% if (tolower(.METHOD) == "numeric" && !grepl(pattern = "weighted", x = .FUN)) { %>
 #' ## Evaluate performance
 #' SLmetrics::<%= .FUN %>(
-#'    p = p, 
-#'    q = q
+#'    ok = ok, 
+#'    qk = qk
 #' )
 <% } %>
 #' 
@@ -26,14 +33,14 @@
 #' ## Generate sample
 #' ## weights
 #' sample_weights <- runif(
-#'    n = length(p)
+#'    n = n_obs
 #' )
 #' 
 #' ## Evaluate performance
 #' SLmetrics::<%= .FUN %>(
-#'    p = p, 
-#'    q = q, 
-#'    sample_weights
+#'    ok = ok, 
+#'    qk = qk,
+#'    w  = sample_weights
 #' )
 <% } %>
 #' 
