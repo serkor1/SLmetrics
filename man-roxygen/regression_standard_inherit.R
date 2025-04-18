@@ -1,6 +1,6 @@
 #' @inherit <%= .FUN %>
 #' 
-#' @rdname <%= .FUN %>.<%= .METHOD %>
+#' @rdname regression_<%= .FUN %>.<%= .METHOD %>
 #' @name <%= .FUN %>.<%= .METHOD %>
 #' @method <%= .FUN %> <%= .METHOD %>
 #' @inheritParams regression_documentation

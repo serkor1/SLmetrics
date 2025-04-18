@@ -1,10 +1,7 @@
 #' @inherit <%= .FUN %>
 #'
-#'
-#' @rdname <%= .FUN %>.<%= .METHOD %>
+#' @rdname classification_<%= .FUN %>.<%= .METHOD %>
 #' @name <%= .FUN %>.<%= .METHOD %>
-#'
-#'
 #' @method <%= .FUN %> <%= .METHOD %>
 #' @inheritParams classification_documentation
 #' 
