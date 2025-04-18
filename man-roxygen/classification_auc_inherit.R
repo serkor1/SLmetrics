@@ -71,7 +71,7 @@
 #' 
 #' SLmetrics::<%= .FUN %>(
 #'     actual   = actual_classes, 
-#'     response = response_probabilities
+#'     response = probability_matrix
 #' )
 #' 
 <% } else { %>
@@ -81,7 +81,7 @@
 #' plot(
 #'     SLmetrics::<%= .FUN %>(
 #'      actual   = actual_classes, 
-#'      response = response_probabilities
+#'      response = probability_matrix
 #'  )
 #' )
 #' 

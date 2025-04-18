@@ -91,7 +91,7 @@ probability_matrix <- cbind(
 plot(
     SLmetrics::roc.curve(
      actual   = actual_classes, 
-     response = response_probabilities
+     response = probability_matrix
  )
 )
 
