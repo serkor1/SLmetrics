@@ -25,7 +25,7 @@
 #')
 #' 
 <% if (tolower(.METHOD) == "factor" && !grepl(pattern = "weighted", x = .FUN)) { %>
-#' ## Evaluate performance
+#' ## <%= if (grepl(pattern = "cmatrix", x = .FUN)) "Compute confusion matrix" else "Evaluate performance" %>
 #' SLmetrics::<%= .FUN %>(
 #'    actual    = actual_classes, 
 #'    predicted = predicted_classes
@@ -51,7 +51,7 @@
 #'    n = length(actual_classes)
 #' )
 #' 
-#' ## Evaluate performance
+#' ## <%= if (grepl(pattern = "cmatrix", x = .FUN)) "Compute confusion matrix" else "Evaluate performance" %>
 #' SLmetrics::<%= .FUN %>(
 #'    actual    = actual_classes, 
 #'    predicted = predicted_classes, 

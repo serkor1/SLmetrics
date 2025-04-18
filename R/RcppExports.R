@@ -110,13 +110,19 @@ ckappa.cmatrix <- function(x, beta = 0.0, ...) {
     .Call(`_SLmetrics_cmatrix_cohens_kappa`, x, beta)
 }
 
-#' @method cmatrix factor
+#' @templateVar .FUN cmatrix
+#' @templateVar .METHOD factor
+#' @template classification_standard_inherit
+#'
 #' @export
 cmatrix.factor <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_confusion_matrix`, actual, predicted)
 }
 
-#' @method weighted.cmatrix factor
+#' @templateVar .FUN weighted.cmatrix
+#' @templateVar .METHOD factor
+#' @template classification_standard_inherit
+#'
 #' @export
 weighted.cmatrix.factor <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_confusion_matrix`, actual, predicted, w)

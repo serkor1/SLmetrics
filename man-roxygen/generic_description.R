@@ -13,7 +13,7 @@
 #' 
 #' @description
 #' 
-#' A generic S3 function to compute the *<%= tolower(.TITLE) %>* score for a <%= tolower(.TASK) %> model. This function dispatches to S3 methods in [<%= .FUN %>()] and performs no input validation. If you supply [NA] values or vectors of unequal [length] (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
+#' A generic S3 function to compute the *<%= tolower(.TITLE) %>* <%= if (grepl(pattern = "cmatrix", x = .FUN)) "" else "score" %> for a <%= tolower(.TASK) %> model. This function dispatches to S3 methods in [<%= .FUN %>()] and performs no input validation. If you supply [NA] values or vectors of unequal [length] (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
 #'
 #' ## Defensive measures
 #'

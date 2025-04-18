@@ -1,7 +1,10 @@
 #include <Rcpp.h>
 #include "classification_ConfusionMatrix.h"
 
-//' @method cmatrix factor
+//' @templateVar .FUN cmatrix
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(cmatrix.factor)]]
 Rcpp::NumericMatrix confusion_matrix(
@@ -12,7 +15,10 @@ Rcpp::NumericMatrix confusion_matrix(
         return cmatrix.as_Rcpp();
 }
 
-//' @method weighted.cmatrix factor
+//' @templateVar .FUN weighted.cmatrix
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.cmatrix.factor)]]
 Rcpp::NumericMatrix weighted_confusion_matrix(
