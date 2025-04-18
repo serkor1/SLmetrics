@@ -26,12 +26,23 @@ sum of cross-entropies is returned.}
 A <\link{double}>
 }
 \description{
-A S3 generic function for calculating the logarithmic loss score of a classification model. \code{\link[=logloss]{logloss()}} handles the input as is - and therefore there are no sanity checks.
-If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
+A generic S3 function to compute the \emph{logarithmic loss} score for a classification model. This function dispatches to S3 methods in \code{logloss()} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
 \subsection{Defensive measures}{
 
-As everything is based on pointers internally values as \link{NA} and out of bounds values (\code{length(x) != length(y)}) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in \code{try()} or \code{tryCatch()} to recover from sudden errors. Your \code{R}-session \emph{will} most likely just crash.
-A workaround is to create a wrapper around \code{\link[=logloss]{logloss()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=logloss]{logloss()}}.
+Because \code{\link[=logloss]{logloss()}} operates on raw pointers, pointer‑level faults (e.g. from \link{NA} or mismatched \link{length}) occur before any \code{R}‑level error handling.  Wrapping calls in \code{\link[=try]{try()}} or \code{\link[=tryCatch]{tryCatch()}} will \emph{not} prevent \code{R}-session crashes.
+
+To guard against this, wrap \code{\link[=logloss]{logloss()}} in a “safe” validator that checks for \link{NA} values and matching \link{length}, for example:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{safe_logloss <- function(x, y, ...) \{
+  stopifnot(
+    !anyNA(x), !anyNA(y),
+    length(x) == length(y)
+  )
+  logloss(x, y, ...)
+\}
+}\if{html}{\out{</div>}}
+
+Apply the same pattern to any custom metric functions to ensure input sanity before calling the underlying \code{C++} code.
 }
 }
 \references{

@@ -24,8 +24,8 @@ deviance.tweedie <- function(...) {
 #' @rdname deviance.tweedie
 #' @usage
 #' ## Generic S3 method
-#' ## for weighted Root Mean
-#' ## Squared Error
+#' ## for weighted Tweedie
+#' ## Deviance
 #' weighted.deviance.tweedie(...)
 #' @rawNamespace export(weighted.deviance.tweedie)
 weighted.deviance.tweedie <- function(...) {

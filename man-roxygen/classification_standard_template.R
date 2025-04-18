@@ -7,21 +7,49 @@
 #' @concept Machine learning performance evaluation
 #' 
 #' @description
-#' A S3 generic function for calculating the <%= tolower(.TITLE) %> score of a <%= tolower(.TASK) %> model. [<%= .FUN %>()] handles the input as is - and therefore there are no sanity checks. 
-#' If the data contains [NA], or `length(x) != length(y)` you are left at the mercy of compiler.
+#' 
+#' A generic S3 function to compute the *<%= tolower(.TITLE) %>* score for a <%= tolower(.TASK) %> model. This function dispatches to S3 methods in \code{<%= .FUN %>()} and performs no input validation. If you supply [NA] values or vectors of unequal [length] (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
 #' 
 <% if (tolower(.TASK) == "classification") { %>
-#' ## Efficient evaluation
+#' ## Efficient multi-metric evaluation
 #' 
-#' The canonical way of measuring the performance of a <%= tolower(.TASK) %> model is to use the [<%= .FUN %>.cmatrix()]-method. [<%= .FUN %>.factor()] calls [cmatrix()] internally, and for multiple measures there is significant speed and memory efficiency gain in constructing the confusion matrix first.
+#' For multiple performance evaluations of a <%= tolower(.TASK) %> model, first compute the confusion matrix once via [cmatrix()]. All other performance metrics can then be derived from this one object via S3 dispatching:
+#' 
+#' ```r
+#' ## compute confusion matrix
+#' confusion_matrix <- cmatrix(actual, predicted)
+#' 
+#' ## evaluate <%= tolower(.TITLE) %>
+#' ## via S3 dispatching
+#' <%= .FUN %>(confusion_matrix)
+#' 
+#' ## additional performance metrics
+#' ## below
+#' ```
+#' 
+#' The [<%= .FUN %>.factor()] method calls [cmatrix()] internally, so explicitly invoking [<%= .FUN %>.cmatrix()] yourself avoids duplicate computation, yielding significant speed and memory effciency gains when you need multiple evaluation metrics.
+#' 
+#' 
 #' 
 <% } %>
 #'
 #' ## Defensive measures
-#' 
-#' As everything is based on pointers internally values as [NA] and out of bounds values (`length(x) != length(y)`) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in `try()` or `tryCatch()` to recover from sudden errors. Your `R`-session *will* most likely just crash.
-#' A workaround is to create a wrapper around [<%= .FUN %>()] and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches [<%= .FUN %>()].
 #'
+#' Because [<%= .FUN %>()] operates on raw pointers, pointer‑level faults (e.g. from [NA] or mismatched [length]) occur before any \code{R}‑level error handling.  Wrapping calls in [try()] or [tryCatch()] will *not* prevent \code{R}-session crashes.
+#' 
+#' To guard against this, wrap [<%= .FUN %>()] in a “safe” validator that checks for [NA] values and matching [length], for example:
+#'
+#' ```r
+#' safe_<%= .FUN %> <- function(x, y, ...) {
+#'   stopifnot(
+#'     !anyNA(x), !anyNA(y),
+#'     length(x) == length(y)
+#'   )
+#'   <%= .FUN %>(x, y, ...)
+#' }
+#' ```
+#' Apply the same pattern to any custom metric functions to ensure input sanity before calling the underlying \code{C++} code.
+#' 
 #' @usage
 #' ## Generic S3 method
 #' ## for <%= tools::toTitleCase(.TITLE) %>

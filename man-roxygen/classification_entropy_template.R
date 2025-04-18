@@ -3,14 +3,26 @@
 #' @name <%= .FUN %>
 #' 
 #' @description
-#' A S3 generic function for calculating the <%= tolower(.TITLE) %> score of a <%= tolower(.TASK) %> model. [<%= .FUN %>()] handles the input as is - and therefore there are no sanity checks. 
-#' If the data contains [NA], or `length(x) != length(y)` you are left at the mercy of compiler.
+#' 
+#' A generic S3 function to compute the *<%= tolower(.TITLE) %>* score for a <%= tolower(.TASK) %> model. This function dispatches to S3 methods in \code{<%= .FUN %>()} and performs no input validation. If you supply [NA] values or vectors of unequal [length] (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
 #' 
 #' ## Defensive measures
-#' 
-#' As everything is based on pointers internally values as [NA] and out of bounds values (`length(x) != length(y)`) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in `try()` or `tryCatch()` to recover from sudden errors. Your `R`-session *will* most likely just crash.
-#' A workaround is to create a wrapper around [<%= .FUN %>()] and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches [<%= .FUN %>()].
 #'
+#' Because [<%= .FUN %>()] operates on raw pointers, pointer‑level faults (e.g. from [NA] or mismatched [length]) occur before any \code{R}‑level error handling.  Wrapping calls in [try()] or [tryCatch()] will *not* prevent \code{R}-session crashes.
+#' 
+#' To guard against this, wrap [<%= .FUN %>()] in a “safe” validator that checks for [NA] values and matching [length], for example:
+#'
+#' ```r
+#' safe_<%= .FUN %> <- function(x, y, ...) {
+#'   stopifnot(
+#'     !anyNA(x), !anyNA(y),
+#'     length(x) == length(y)
+#'   )
+#'   <%= .FUN %>(x, y, ...)
+#' }
+#' ```
+#' Apply the same pattern to any custom metric functions to ensure input sanity before calling the underlying \code{C++} code.
+#' 
 #' @usage 
 #' ## Generic S3 method
 #' ## for <%= tools::toTitleCase(.TITLE) %>
@@ -41,4 +53,4 @@
 #' 
 #' Kramer, Oliver, and Oliver Kramer. "Scikit-learn." Machine learning for evolution strategies (2016): 45-53.
 #' 
-#' Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for scientific computing in Python." Nature methods 17.3 (2020): 261-272.
+#' Virtanen, Pauli, et al. "SciPy 1.0: f'undamental algorithms for scientific computing in Python." Nature methods 17.3 (2020): 261-272.

@@ -24,8 +24,8 @@ deviance.gamma <- function(...) {
 #' @rdname deviance.gamma
 #' @usage
 #' ## Generic S3 method
-#' ## for weighted Root Mean
-#' ## Squared Error
+#' ## for weighted Gamma
+#' ## Deviance
 #' weighted.deviance.gamma(...)
 #' @rawNamespace export(weighted.deviance.gamma)
 weighted.deviance.gamma <- function(...) {

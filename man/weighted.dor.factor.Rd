@@ -17,17 +17,41 @@
 A <\link{double}>-value
 }
 \description{
-A S3 generic function for calculating the diagnostic odds ratio score of a classification model. \code{\link[=dor]{dor()}} handles the input as is - and therefore there are no sanity checks.
-If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
-\subsection{Efficient evaluation}{
+A generic S3 function to compute the \emph{diagnostic odds ratio} score for a classification model. This function dispatches to S3 methods in \code{dor()} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
+\subsection{Efficient multi-metric evaluation}{
 
-The canonical way of measuring the performance of a classification model is to use the \code{\link[=dor.cmatrix]{dor.cmatrix()}}-method. \code{\link[=dor.factor]{dor.factor()}} calls \code{\link[=cmatrix]{cmatrix()}} internally, and for multiple measures there is significant speed and memory efficiency gain in constructing the confusion matrix first.
+For multiple performance evaluations of a classification model, first compute the confusion matrix once via \code{\link[=cmatrix]{cmatrix()}}. All other performance metrics can then be derived from this one object via S3 dispatching:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## compute confusion matrix
+confusion_matrix <- cmatrix(actual, predicted)
+
+## evaluate diagnostic odds ratio
+## via S3 dispatching
+dor(confusion_matrix)
+
+## additional performance metrics
+## below
+}\if{html}{\out{</div>}}
+
+The \code{\link[=dor.factor]{dor.factor()}} method calls \code{\link[=cmatrix]{cmatrix()}} internally, so explicitly invoking \code{\link[=dor.cmatrix]{dor.cmatrix()}} yourself avoids duplicate computation, yielding significant speed and memory effciency gains when you need multiple evaluation metrics.
 }
 
 \subsection{Defensive measures}{
 
-As everything is based on pointers internally values as \link{NA} and out of bounds values (\code{length(x) != length(y)}) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in \code{try()} or \code{tryCatch()} to recover from sudden errors. Your \code{R}-session \emph{will} most likely just crash.
-A workaround is to create a wrapper around \code{\link[=dor]{dor()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=dor]{dor()}}.
+Because \code{\link[=dor]{dor()}} operates on raw pointers, pointer‑level faults (e.g. from \link{NA} or mismatched \link{length}) occur before any \code{R}‑level error handling.  Wrapping calls in \code{\link[=try]{try()}} or \code{\link[=tryCatch]{tryCatch()}} will \emph{not} prevent \code{R}-session crashes.
+
+To guard against this, wrap \code{\link[=dor]{dor()}} in a “safe” validator that checks for \link{NA} values and matching \link{length}, for example:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{safe_dor <- function(x, y, ...) \{
+  stopifnot(
+    !anyNA(x), !anyNA(y),
+    length(x) == length(y)
+  )
+  dor(x, y, ...)
+\}
+}\if{html}{\out{</div>}}
+
+Apply the same pattern to any custom metric functions to ensure input sanity before calling the underlying \code{C++} code.
 }
 }
 \examples{

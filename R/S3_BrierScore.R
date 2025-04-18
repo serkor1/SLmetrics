@@ -20,7 +20,6 @@ brier.score <- function(...) {
   )
 }
 
-
 #' @rdname brier.score
 #' @usage
 #' ## Generic S3 method

@@ -21,7 +21,7 @@
 #' qk <- matrix(runif(n_obs * n_classes), n_obs, n_classes)
 #' qk <- qk / rowSums(qk)
 #' 
-<% if (tolower(.METHOD) == "numeric" && !grepl(pattern = "weighted", x = .FUN)) { %>
+<% if (tolower(.METHOD) == "matrix" && !grepl(pattern = "weighted", x = .FUN)) { %>
 #' ## Evaluate performance
 #' SLmetrics::<%= .FUN %>(
 #'    ok = ok, 
@@ -29,7 +29,7 @@
 #' )
 <% } %>
 #' 
-<% if (tolower(.METHOD) == "numeric" && grepl(pattern = "weighted", x = .FUN)) { %>
+<% if (tolower(.METHOD) == "matrix" && grepl(pattern = "weighted", x = .FUN)) { %>
 #' ## Generate sample
 #' ## weights
 #' sample_weights <- runif(

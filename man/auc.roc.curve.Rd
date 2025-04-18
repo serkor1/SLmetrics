@@ -41,8 +41,7 @@ If \code{estimator} is given as
 }
 }
 \description{
-A S3 generic function for calculating the area under the receiver operator characteristics curve score of a classification model. \code{\link[=auc.roc.curve]{auc.roc.curve()}} handles the input as is - and therefore there are no sanity checks.
-If the data contains \link{NA}, or \code{length(x) != length(y)} you are left at the mercy of compiler.
+A generic S3 function to compute the \emph{area under the receiver operator characteristics curve} score for a classification model. This function dispatches to S3 methods in \code{auc.roc.curve()} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
 \subsection{Visualizing area under the receiver operator characteristics curve}{
 
 Use \code{\link[=roc.curve]{roc.curve()}} to construct the \link{data.frame} and use \link{plot} to visualize the area under the curve.
@@ -50,8 +49,20 @@ Use \code{\link[=roc.curve]{roc.curve()}} to construct the \link{data.frame} and
 
 \subsection{Defensive measures}{
 
-As everything is based on pointers internally values as \link{NA} and out of bounds values (\code{length(x) != length(y)}) the compiler does not know how to react - this is undefined behaviour. And therefore it is not enough to wrap your call in \code{try()} or \code{tryCatch()} to recover from sudden errors. Your \code{R}-session \emph{will} most likely just crash.
-A workaround is to create a wrapper around \code{\link[=auc.roc.curve]{auc.roc.curve()}} and any other evaluation metrics you are planning to use, and do the sanity checks before it reaches \code{\link[=auc.roc.curve]{auc.roc.curve()}}.
+Because \code{\link[=auc.roc.curve]{auc.roc.curve()}} operates on raw pointers, pointer‑level faults (e.g. from \link{NA} or mismatched \link{length}) occur before any \code{R}‑level error handling.  Wrapping calls in \code{\link[=try]{try()}} or \code{\link[=tryCatch]{tryCatch()}} will \emph{not} prevent \code{R}-session crashes.
+
+To guard against this, wrap \code{\link[=auc.roc.curve]{auc.roc.curve()}} in a “safe” validator that checks for \link{NA} values and matching \link{length}, for example:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{safe_auc.roc.curve <- function(x, y, ...) \{
+  stopifnot(
+    !anyNA(x), !anyNA(y),
+    length(x) == length(y)
+  )
+  auc.roc.curve(x, y, ...)
+\}
+}\if{html}{\out{</div>}}
+
+Apply the same pattern to any custom metric functions to ensure input sanity before calling the underlying \code{C++} code.
 }
 }
 \references{

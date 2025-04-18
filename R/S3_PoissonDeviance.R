@@ -24,8 +24,8 @@ deviance.poisson <- function(...) {
 #' @rdname deviance.poisson
 #' @usage
 #' ## Generic S3 method
-#' ## for weighted Root Mean
-#' ## Squared Error
+#' ## for weighted Poisson
+#' ## Deviance
 #' weighted.deviance.poisson(...)
 #' @rawNamespace export(weighted.deviance.poisson)
 weighted.deviance.poisson <- function(...) {
