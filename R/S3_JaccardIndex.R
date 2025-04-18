@@ -10,7 +10,7 @@
 #' 
 #' @aliases csi tscore weighted.csi weighted.tscore
 #' 
-#' @templateVar .TITLE jaccard
+#' @templateVar .TITLE jaccard index
 #' @templateVar .FUN jaccard
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT true
@@ -27,53 +27,48 @@
 #' @export
 jaccard <- function(...) {
   UseMethod(
-    generic = "jaccard",
-    object  = ..1
+    generic = "jaccard"
   )
 }
 
-#' @rdname classification_jaccard
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Jaccard Index
-#' weighted.jaccard(...)
+#' @templateVar .TITLE jaccard index
+#' @templateVar .FUN jaccard
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.jaccard <- function(...) {
   UseMethod(
-    generic = "weighted.jaccard",
-    object  = ..1
+    generic = "weighted.jaccard"
   )
 }
 
 #' @export
 csi <- function(...) {
   UseMethod(
-    generic = "csi",
-    object  = ..1
+    generic = "csi"
   )
 }
 
 #' @export
 weighted.csi <- function(...) {
   UseMethod(
-    generic = "weighted.csi",
-    object  = ..1
+    generic = "weighted.csi"
   )
 }
 
 #' @export
 tscore <- function(...) {
   UseMethod(
-    generic = "tscore",
-    object  = ..1
+    generic = "tscore"
   )
 }
 
 #' @export
 weighted.tscore <- function(...) {
   UseMethod(
-    generic = "weighted.tscore",
-    object  = ..1
+    generic = "weighted.tscore"
   )
 }
 

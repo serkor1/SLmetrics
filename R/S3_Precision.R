@@ -27,37 +27,34 @@
 #' @export
 precision <- function(...) {
   UseMethod(
-    generic = "precision",
-    object  = ..1
+    generic = "precision"
   )
 }
 
-#' @rdname classification_precision
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted precision
-#' weighted.precision(...)
+#' @templateVar .TITLE precision
+#' @templateVar .FUN precision
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.precision <- function(...) {
   UseMethod(
-    generic = "weighted.precision",
-    object  = ..1
+    generic = "weighted.precision"
   )
 }
 
 #' @export
 ppv <- function(...) {
   UseMethod(
-    generic = "ppv",
-    object  = ..1
+    generic = "ppv"
   )
 }
 
 #' @export
 weighted.ppv <- function(...) {
   UseMethod(
-    generic = "weighted.ppv",
-    object  = ..1
+    generic = "weighted.ppv"
   )
 }
 

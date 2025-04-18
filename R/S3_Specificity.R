@@ -28,53 +28,48 @@
 #' @export
 specificity <- function(...) {
   UseMethod(
-    generic = "specificity",
-    object  = ..1
+    generic = "specificity"
   )
 }
 
-#' @rdname classification_specificity
-#' @usage 
-#' ## Generic S3 method
-#' ## for weighted specificity
-#' weighted.specificity(...)
+#' @templateVar .TITLE specificity
+#' @templateVar .FUN specificity
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.specificity <- function(...) {
     UseMethod(
-      generic = "weighted.specificity",
-      object  = ..1
+      generic = "weighted.specificity"
     )
 }
 
 #' @export
 tnr <- function(...) {
   UseMethod(
-    generic = "tnr",
-    object  = ..1
+    generic = "tnr"
   )
 }
 
 #' @export
 weighted.tnr <- function(...) {
     UseMethod(
-      generic = "weighted.tnr",
-      object  = ..1
+      generic = "weighted.tnr"
     )
-  }
+}
 
 #' @export
 selectivity <- function(...) {
   UseMethod(
-    generic = "selectivity",
-    object  = ..1
+    generic = "selectivity"
   )
 }
 
 #' @export
 weighted.selectivity <- function(...) {
   UseMethod(
-    generic = "weighted.selectivity",
-    object  = ..1
+    generic = "weighted.selectivity"
   )
 }
 

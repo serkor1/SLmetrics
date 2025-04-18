@@ -10,9 +10,10 @@
 npv(...)
 
 ## Generic S3 method
-## for weighted Negative
-## Predictive Value
-npv(...)
+## for weighted Negative Predictive Value
+weighted.npv(...)
+
+weighted.npv(...)
 }
 \arguments{
 \item{...}{

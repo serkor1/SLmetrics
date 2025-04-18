@@ -19,20 +19,20 @@
 #' @export
 zerooneloss <- function(...) {
   UseMethod(
-    generic = "zerooneloss",
-    object  = ..1
+    generic = "zerooneloss"
   )
 }
 
-#' @rdname classification_zerooneloss
-#' @usage
-#' ## Generic S3 method
-#' weighted.zerooneloss(...)
+#' @templateVar .TITLE Zero-One Loss
+#' @templateVar .FUN zerooneloss
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.zerooneloss <- function(...) {
   UseMethod(
-    generic = "weighted.zerooneloss",
-    object  = ..1
+    generic = "weighted.zerooneloss"
   )
 }
 

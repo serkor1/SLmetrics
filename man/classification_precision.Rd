@@ -12,7 +12,9 @@
 precision(...)
 
 ## Generic S3 method
-## for weighted precision
+## for weighted Precision
+weighted.precision(...)
+
 weighted.precision(...)
 }
 \arguments{

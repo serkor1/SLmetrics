@@ -2,16 +2,11 @@
 % Please edit documentation in R/S3_LikelihoodRatios.R
 \name{dor}
 \alias{dor}
-\alias{weighted.dor}
 \title{Diagnostic Odds Ratio}
 \usage{
 ## Generic S3 method
 ## for Diagnostic Odds Ratio
 dor(...)
-
-## Generic S3 method
-## for weighted Diagnostic Odds Ratio
-weighted.dor(...)
 }
 \arguments{
 \item{...}{

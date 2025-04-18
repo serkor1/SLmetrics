@@ -9,9 +9,10 @@
 ## for False Discovery Rate
 fdr(...)
 
-## Generic S3 method for
-## weighted False Discovery
-## Rate
+## Generic S3 method
+## for weighted False Discovery Rate
+weighted.fdr(...)
+
 weighted.fdr(...)
 }
 \arguments{

@@ -19,21 +19,20 @@
 #' @export
 fbeta <- function(...) {
   UseMethod(
-    generic = "fbeta",
-    object  = ..1
+    generic = "fbeta"
   )
 }
 
-#' @rdname classification_fbeta
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted \eqn{F_{\beta}}
-#' weighted.fbeta(...)
+#' @templateVar .TITLE \eqn{F_{\beta}}
+#' @templateVar .FUN fbeta
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.fbeta <- function(...) {
   UseMethod(
-    generic = "weighted.fbeta",
-    object  = ..1
+    generic = "weighted.fbeta"
   )
 }
 

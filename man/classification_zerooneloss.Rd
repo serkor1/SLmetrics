@@ -10,6 +10,9 @@
 zerooneloss(...)
 
 ## Generic S3 method
+## for weighted Zero-One Loss
+weighted.zerooneloss(...)
+
 weighted.zerooneloss(...)
 }
 \arguments{

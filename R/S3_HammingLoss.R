@@ -19,21 +19,20 @@
 #' @export
 hammingloss <- function(...) {
   UseMethod(
-    generic = "hammingloss",
-    object  = ..1
+    generic = "hammingloss"
   )
 }
 
-#' @rdname classification_hammingloss
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Hamming Loss
-#' weighted.hammingloss(...)
+#' @templateVar .TITLE hamming loss
+#' @templateVar .FUN hammingloss
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.hammingloss <- function(...) {
   UseMethod(
-    generic = "weighted.hammingloss",
-    object  = ..1
+    generic = "weighted.hammingloss"
   )
 }
 

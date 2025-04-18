@@ -12,8 +12,9 @@
 mcc(...)
 
 ## Generic S3 method
-## for weighted Matthews
-## Correlation Coefficient
+## for weighted Matthews Correlation Coefficient
+weighted.mcc(...)
+
 weighted.mcc(...)
 }
 \arguments{

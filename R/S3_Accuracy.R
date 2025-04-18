@@ -23,11 +23,12 @@ accuracy <- function(...) {
   )
 }
 
-#' @rdname classification_accuracy
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Accuracy
-#' weighted.accuracy(...)
+#' @templateVar .TITLE accuracy
+#' @templateVar .FUN accuracy
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.accuracy <- function(...) {
   UseMethod(

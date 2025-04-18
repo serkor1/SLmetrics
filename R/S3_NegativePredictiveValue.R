@@ -19,22 +19,20 @@
 #' @export
 npv <- function(...) {
   UseMethod(
-    generic = "npv",
-    object  = ..1
+    generic = "npv"
   )
 }
 
-#' @rdname classification_npv
-#' @usage 
-#' ## Generic S3 method
-#' ## for weighted Negative
-#' ## Predictive Value
-#' npv(...)
+#' @templateVar .TITLE Negative Predictive Value
+#' @templateVar .FUN npv
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.npv <- function(...) {
   UseMethod(
-    generic = "weighted.npv",
-    object  = ..1
+    generic = "weighted.npv"
   )
 }
 

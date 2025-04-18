@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{weighted.dor.factor}
 \alias{weighted.dor.factor}
-\title{Diagnostic Odds Ratio}
+\title{Positive Likelihood Ratio}
 \usage{
 \method{weighted.dor}{factor}(actual, predicted, w, ...)
 }
@@ -17,19 +17,19 @@
 A <\link{double}>-value
 }
 \description{
-A generic S3 function to compute the \emph{diagnostic odds ratio} score for a classification model. This function dispatches to S3 methods in \code{\link[=dor]{dor()}} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
+A generic S3 function to compute the \emph{positive likelihood ratio} score for a classification model. This function dispatches to S3 methods in \code{\link[=plr]{plr()}} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
 \subsection{Defensive measures}{
 
-Because \code{\link[=dor]{dor()}} operates on raw pointers, pointer‑level faults (e.g. from \link{NA} or mismatched \link{length}) occur before any \code{R}‑level error handling.  Wrapping calls in \code{\link[=try]{try()}} or \code{\link[=tryCatch]{tryCatch()}} will \emph{not} prevent \code{R}-session crashes.
+Because \code{\link[=plr]{plr()}} operates on raw pointers, pointer‑level faults (e.g. from \link{NA} or mismatched \link{length}) occur before any \code{R}‑level error handling.  Wrapping calls in \code{\link[=try]{try()}} or \code{\link[=tryCatch]{tryCatch()}} will \emph{not} prevent \code{R}-session crashes.
 
-To guard against this, wrap \code{\link[=dor]{dor()}} in a “safe” validator that checks for \link{NA} values and matching \link{length}, for example:
+To guard against this, wrap \code{\link[=plr]{plr()}} in a “safe” validator that checks for \link{NA} values and matching \link{length}, for example:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{safe_dor <- function(x, y, ...) \{
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{safe_plr <- function(x, y, ...) \{
   stopifnot(
     !anyNA(x), !anyNA(y),
     length(x) == length(y)
   )
-  dor(x, y, ...)
+  plr(x, y, ...)
 \}
 }\if{html}{\out{</div>}}
 
@@ -43,15 +43,15 @@ For multiple performance evaluations of a classification model, first compute th
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{## compute confusion matrix
 confusion_matrix <- cmatrix(actual, predicted)
 
-## evaluate diagnostic odds ratio
+## evaluate positive likelihood ratio
 ## via S3 dispatching
-dor(confusion_matrix)
+plr(confusion_matrix)
 
 ## additional performance metrics
 ## below
 }\if{html}{\out{</div>}}
 
-The \code{\link[=dor.factor]{dor.factor()}} method calls \code{\link[=cmatrix]{cmatrix()}} internally, so explicitly invoking \code{\link[=dor.cmatrix]{dor.cmatrix()}} yourself avoids duplicate computation, yielding significant speed and memory effciency gains when you need multiple evaluation metrics.
+The \code{\link[=plr.factor]{plr.factor()}} method calls \code{\link[=cmatrix]{cmatrix()}} internally, so explicitly invoking \code{\link[=plr.cmatrix]{plr.cmatrix()}} yourself avoids duplicate computation, yielding significant speed and memory effciency gains when you need multiple evaluation metrics.
 }
 }
 \examples{
@@ -96,6 +96,8 @@ Hastie, Trevor. "The elements of statistical learning: data mining, inference, a
 Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journal of machine Learning research 12 (2011): 2825-2830.
 }
 \seealso{
+The \code{\link[=nlr]{nlr()}}-function for the Negative Likehood Ratio (LR-)
+
 Other Classification: 
 \code{\link{accuracy}()},
 \code{\link{auc.pr.curve}()},
@@ -105,6 +107,7 @@ Other Classification:
 \code{\link{ckappa}()},
 \code{\link{cmatrix}()},
 \code{\link{cross.entropy}()},
+\code{\link{dor}()},
 \code{\link{fbeta}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
@@ -116,7 +119,6 @@ Other Classification:
 \code{\link{mcc}()},
 \code{\link{nlr}()},
 \code{\link{npv}()},
-\code{\link{plr}()},
 \code{\link{pr.curve}()},
 \code{\link{precision}()},
 \code{\link{recall}()},
@@ -139,6 +141,7 @@ Other Supervised Learning:
 \code{\link{deviance.gamma}()},
 \code{\link{deviance.poisson}()},
 \code{\link{deviance.tweedie}()},
+\code{\link{dor}()},
 \code{\link{fbeta}()},
 \code{\link{fdr}()},
 \code{\link{fer}()},
@@ -156,7 +159,6 @@ Other Supervised Learning:
 \code{\link{nlr}()},
 \code{\link{npv}()},
 \code{\link{pinball}()},
-\code{\link{plr}()},
 \code{\link{pr.curve}()},
 \code{\link{precision}()},
 \code{\link{rae}()},

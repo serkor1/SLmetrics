@@ -3,6 +3,7 @@
 \name{plr}
 \alias{plr}
 \alias{weighted.plr}
+\alias{weighted.dor}
 \title{Positive Likelihood Ratio}
 \usage{
 ## Generic S3 method
@@ -10,9 +11,16 @@
 plr(...)
 
 ## Generic S3 method
-## for weighted Positive 
-##Likelihood Ratio
+## for weighted Positive Likelihood Ratio
 weighted.plr(...)
+
+weighted.plr(...)
+
+## Generic S3 method
+## for weighted Diagnostic Odds Ratio
+weighted.plr(...)
+
+weighted.dor(...)
 }
 \arguments{
 \item{...}{

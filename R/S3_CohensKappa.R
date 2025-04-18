@@ -23,12 +23,12 @@ ckappa <- function(...) {
   )
 }
 
-#' @rdname classification_ckappa
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Cohen's
-#' ## Kappa statistic
-#' weighted.ckappa(...)
+#' @templateVar .TITLE Cohen's \eqn{\kappa}-statistic
+#' @templateVar .FUN ckappa
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.ckappa <- function(...) {
   UseMethod(

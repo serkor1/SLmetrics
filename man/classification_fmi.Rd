@@ -10,8 +10,9 @@
 fmi(...)
 
 ## Generic S3 method
-## for weighted Fowlkes
-## Mallows Index
+## for weighted Fowlkes Mallows Index
+weighted.fmi(...)
+
 weighted.fmi(...)
 }
 \arguments{

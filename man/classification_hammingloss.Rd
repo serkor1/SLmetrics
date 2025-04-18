@@ -12,6 +12,8 @@ hammingloss(...)
 ## Generic S3 method
 ## for weighted Hamming Loss
 weighted.hammingloss(...)
+
+weighted.hammingloss(...)
 }
 \arguments{
 \item{...}{

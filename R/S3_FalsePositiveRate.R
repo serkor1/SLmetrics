@@ -11,6 +11,11 @@
 #' 
 #' @aliases fallout weighted.fallout
 #' 
+#' @section Other names:
+#' 
+#' The false positive rate has other names depending on research field:
+#' - Fallout, [fallout()]
+#' 
 #' @templateVar .TITLE false positive rate
 #' @templateVar .FUN fpr
 #' @templateVar .TASK Classification
@@ -26,12 +31,12 @@ fpr <- function(...) {
   )
 }
 
-#' @rdname classification_fpr
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted False Positive
-#' ## Rate
-#' weighted.fpr(...)
+#' @templateVar .TITLE false positive rate
+#' @templateVar .FUN fpr
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.fpr <- function(...) {
   UseMethod(

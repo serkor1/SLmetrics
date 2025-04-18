@@ -19,22 +19,20 @@
 #' @export
 fmi <- function(...) {
   UseMethod(
-    generic = "fmi",
-    object  = ..1
+    generic = "fmi"
   )
 }
 
-#' @rdname classification_fmi
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Fowlkes
-#' ## Mallows Index
-#' weighted.fmi(...)
+#' @templateVar .TITLE Fowlkes Mallows Index
+#' @templateVar .FUN fmi
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.fmi <- function(...) {
   UseMethod(
-    generic = "weighted.fmi",
-    object  = ..1
+    generic = "weighted.fmi"
   )
 }
 

@@ -23,26 +23,20 @@
 #' @export
 nlr <- function(...) {
   UseMethod(
-    generic = "nlr",
-    object  = ..1
+    generic = "nlr"
   )
 }
 
-#' @title NULL
-#' @usage NULL
-#' @returns NULL
+#' @templateVar .TITLE negative likelihood ratio
+#' @templateVar .FUN nlr
+#' @templateVar .TASK Classification
 #' 
-#' @rdname classification_nlr
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Negative
-#' ## Likelihood Ratio
-#' weighted.nlr(...)
+#' @template generic_inherit
+#' 
 #' @export
 weighted.nlr <- function(...) {
   UseMethod(
-    generic = "weighted.nlr",
-    object  = ..1
+    generic = "weighted.nlr"
   )
 }
 
@@ -65,23 +59,20 @@ weighted.nlr <- function(...) {
 #' @export
 plr <- function(...) {
   UseMethod(
-    generic = "plr",
-    object  = ..1
+    generic = "plr"
   )
 }
 
-#' @rdname classification_plr
+#' @templateVar .TITLE positive likelihood ratio
+#' @templateVar .FUN plr
+#' @templateVar .TASK Classification
 #' 
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Positive 
-#' ##Likelihood Ratio
-#' weighted.plr(...)
+#' @template generic_inherit
+#' 
 #' @export
 weighted.plr <- function(...) {
   UseMethod(
-    generic = "weighted.plr",
-    object  = ..1
+    generic = "weighted.plr"
   )
 }
 
@@ -100,21 +91,20 @@ weighted.plr <- function(...) {
 #' @export
 dor <- function(...) {
   UseMethod(
-    generic = "dor",
-    object  = ..1
+    generic = "dor"
   )
 }
 
-#' @rdname classification_dor
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Diagnostic Odds Ratio
-#' weighted.dor(...)
+#' @templateVar .TITLE diagnostic odds ratio
+#' @templateVar .FUN plr
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.dor <- function(...) {
   UseMethod(
-    generic = "weighted.dor",
-    object  = ..1
+    generic = "weighted.dor"
   )
 }
 

@@ -10,8 +10,9 @@
 ckappa(...)
 
 ## Generic S3 method
-## for weighted Cohen's
-## Kappa statistic
+## for weighted Cohen's \eqn{\kappa}-Statistic
+weighted.ckappa(...)
+
 weighted.ckappa(...)
 }
 \arguments{

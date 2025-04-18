@@ -14,7 +14,9 @@
 specificity(...)
 
 ## Generic S3 method
-## for weighted specificity
+## for weighted Specificity
+weighted.specificity(...)
+
 weighted.specificity(...)
 }
 \arguments{

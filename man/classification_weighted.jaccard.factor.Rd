@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{weighted.jaccard.factor}
 \alias{weighted.jaccard.factor}
-\title{Jaccard}
+\title{Jaccard Index}
 \usage{
 \method{weighted.jaccard}{factor}(actual, predicted, w, estimator = 0L, na.rm = TRUE, ...)
 }
@@ -34,7 +34,7 @@ If \code{estimator} is given as
 }
 }
 \description{
-A generic S3 function to compute the \emph{jaccard} score for a classification model. This function dispatches to S3 methods in \code{\link[=jaccard]{jaccard()}} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
+A generic S3 function to compute the \emph{jaccard index} score for a classification model. This function dispatches to S3 methods in \code{\link[=jaccard]{jaccard()}} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
 \subsection{Defensive measures}{
 
 Because \code{\link[=jaccard]{jaccard()}} operates on raw pointers, pointer‑level faults (e.g. from \link{NA} or mismatched \link{length}) occur before any \code{R}‑level error handling.  Wrapping calls in \code{\link[=try]{try()}} or \code{\link[=tryCatch]{tryCatch()}} will \emph{not} prevent \code{R}-session crashes.
@@ -60,7 +60,7 @@ For multiple performance evaluations of a classification model, first compute th
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{## compute confusion matrix
 confusion_matrix <- cmatrix(actual, predicted)
 
-## evaluate jaccard
+## evaluate jaccard index
 ## via S3 dispatching
 jaccard(confusion_matrix)
 

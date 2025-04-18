@@ -19,22 +19,20 @@
 #' @export
 fer <- function(...) {
   UseMethod(
-    generic = "fer",
-    object  = ..1
+    generic = "fer"
   )
 }
 
-#' @rdname classification_fer
-#' @usage 
-#' ## Generic S3 method
-#' ## for weighted False
-#' ## Omission Rate
-#' weighted.fer(...)
+#' @templateVar .TITLE false omission rate
+#' @templateVar .FUN fer
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.fer <- function(...) {
   UseMethod(
-    generic = "weighted.fer",
-    object  = ..1
+    generic = "weighted.fer"
   )
 }
 

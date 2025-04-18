@@ -54,6 +54,42 @@ Apply the same pattern to any custom metric functions to ensure input sanity bef
 Use \link{auc.roc.curve} for calculating the area under the curve directly.
 }
 }
+\examples{
+## Classes and
+## seed
+set.seed(1903)
+classes <- c("Kebab", "Falafel")
+
+## Generate actual classes
+## and response probabilities
+actual <- factor(
+    x = sample(
+      x = classes, 
+      size = 1e2, 
+      replace = TRUE, 
+      prob = c(0.7, 0.3)
+    )
+)
+
+response <- ifelse(
+    actual == "Kebab", 
+    rbeta(sum(actual == "Kebab"), 2, 5), 
+    rbeta(sum(actual == "Falafel"), 5, 2)
+)
+
+
+
+## Visualize
+
+plot(
+    SLmetrics::roc.curve(
+     actual   = actual, 
+     response = response
+ )
+)
+
+
+}
 \references{
 James, Gareth, et al. An introduction to statistical learning. Vol. 112. No. 1. New York: springer, 2013.
 

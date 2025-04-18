@@ -14,7 +14,9 @@
 recall(...)
 
 ## Generic S3 method
-## for weighted recall
+## for weighted Recall
+weighted.recall(...)
+
 weighted.recall(...)
 }
 \arguments{

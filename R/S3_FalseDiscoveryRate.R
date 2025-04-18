@@ -19,22 +19,20 @@
 #' @export
 fdr <- function(...) {
   UseMethod(
-    generic = "fdr",
-    object   = ..1
+    generic = "fdr"
   )
 }
 
-#' @rdname classification_fdr
-#' @usage 
-#' ## Generic S3 method for
-#' ## weighted False Discovery
-#' ## Rate
-#' weighted.fdr(...)
+#' @templateVar .TITLE false discovery rate
+#' @templateVar .FUN fdr
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.fdr <- function(...) {
   UseMethod(
-    generic = "weighted.fdr",
-    object   = ..1
+    generic = "weighted.fdr"
   )
 }
 

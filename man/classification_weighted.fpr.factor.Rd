@@ -71,6 +71,15 @@ fpr(confusion_matrix)
 The \code{\link[=fpr.factor]{fpr.factor()}} method calls \code{\link[=cmatrix]{cmatrix()}} internally, so explicitly invoking \code{\link[=fpr.cmatrix]{fpr.cmatrix()}} yourself avoids duplicate computation, yielding significant speed and memory effciency gains when you need multiple evaluation metrics.
 }
 }
+\section{Other names}{
+
+
+The false positive rate has other names depending on research field:
+\itemize{
+\item Fallout, \code{\link[=fallout]{fallout()}}
+}
+}
+
 \examples{
 ## Classes and
 ## seed

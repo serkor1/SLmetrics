@@ -23,12 +23,12 @@ baccuracy <- function(...) {
   )
 }
 
-#' @rdname classification_baccuracy
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Balanced
-#' ## Accuracy
-#' weighted.baccuracy(...)
+#' @templateVar .TITLE balanced accuracy
+#' @templateVar .FUN baccuracy
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.baccuracy <- function(...) {
   UseMethod(

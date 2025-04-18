@@ -56,6 +56,43 @@ Apply the same pattern to any custom metric functions to ensure input sanity bef
 Use \code{\link[=pr.curve]{pr.curve()}} to construct the \link{data.frame} and use \link{plot} to visualize the area under the curve.
 }
 }
+\examples{
+## Classes and
+## seed
+set.seed(1903)
+classes <- c("Kebab", "Falafel")
+
+## Generate actual classes
+## and response probabilities
+actual <- factor(
+    x = sample(
+      x = classes, 
+      size = 1e2, 
+      replace = TRUE, 
+      prob = c(0.7, 0.3)
+    )
+)
+
+response <- ifelse(
+    actual == "Kebab", 
+    rbeta(sum(actual == "Kebab"), 2, 5), 
+    rbeta(sum(actual == "Falafel"), 5, 2)
+)
+
+
+w <- runif(1e2)
+
+## Evaluate performance
+
+SLmetrics::weighted.auc.pr.curve(
+    actual   = actual, 
+    response = response,
+    w = w
+)
+
+
+
+}
 \references{
 James, Gareth, et al. An introduction to statistical learning. Vol. 112. No. 1. New York: springer, 2013.
 
