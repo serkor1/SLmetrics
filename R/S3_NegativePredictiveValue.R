@@ -23,6 +23,8 @@ npv <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Negative Predictive Value
 #' @templateVar .FUN npv
 #' @templateVar .TASK Classification

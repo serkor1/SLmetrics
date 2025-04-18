@@ -14,8 +14,6 @@ fpr(...)
 ## Generic S3 method
 ## for weighted False Positive Rate
 weighted.fpr(...)
-
-weighted.fpr(...)
 }
 \arguments{
 \item{...}{

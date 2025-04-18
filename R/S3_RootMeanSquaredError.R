@@ -22,6 +22,8 @@ rmse <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE root mean squared error
 #' @templateVar .FUN rmse
 #' @templateVar .TASK regression

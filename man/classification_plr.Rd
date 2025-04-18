@@ -14,13 +14,9 @@ plr(...)
 ## for weighted Positive Likelihood Ratio
 weighted.plr(...)
 
-weighted.plr(...)
-
 ## Generic S3 method
 ## for weighted Diagnostic Odds Ratio
 weighted.plr(...)
-
-weighted.dor(...)
 }
 \arguments{
 \item{...}{

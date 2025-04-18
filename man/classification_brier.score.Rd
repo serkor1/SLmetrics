@@ -12,8 +12,6 @@ brier.score(...)
 ## Generic S3 method
 ## for weighted Brier Score
 weighted.brier.score(...)
-
-weighted.brier.score(...)
 }
 \arguments{
 \item{...}{

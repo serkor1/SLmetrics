@@ -12,8 +12,6 @@ baccuracy(...)
 ## Generic S3 method
 ## for weighted Balanced Accuracy
 weighted.baccuracy(...)
-
-weighted.baccuracy(...)
 }
 \arguments{
 \item{...}{

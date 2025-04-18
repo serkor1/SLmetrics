@@ -22,6 +22,8 @@ deviance.gamma <- function(...) {
     )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Gamma Deviance
 #' @templateVar .FUN deviance.gamma
 #' @templateVar .TASK regression

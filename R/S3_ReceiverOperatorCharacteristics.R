@@ -30,6 +30,8 @@ roc.curve <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Reciever Operator Characteristics
 #' @templateVar .FUN roc.curve
 #' @templateVar .TASK Classification
@@ -69,6 +71,8 @@ auc.roc.curve <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Area under the Receiver Operator Characteristics Curve
 #' @templateVar .FUN auc.roc.curve
 #' @templateVar .TASK Classification

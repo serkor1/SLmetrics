@@ -23,6 +23,8 @@ zerooneloss <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Zero-One Loss
 #' @templateVar .FUN zerooneloss
 #' @templateVar .TASK Classification

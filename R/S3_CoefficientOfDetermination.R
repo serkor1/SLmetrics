@@ -22,6 +22,8 @@ rsq <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE \eqn{R^2}
 #' @templateVar .FUN rsq
 #' @templateVar .TASK regression

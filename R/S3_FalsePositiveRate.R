@@ -31,6 +31,8 @@ fpr <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE false positive rate
 #' @templateVar .FUN fpr
 #' @templateVar .TASK Classification

@@ -14,8 +14,6 @@ mcc(...)
 ## Generic S3 method
 ## for weighted Matthews Correlation Coefficient
 weighted.mcc(...)
-
-weighted.mcc(...)
 }
 \arguments{
 \item{...}{

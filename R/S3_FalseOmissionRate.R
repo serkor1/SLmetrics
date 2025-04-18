@@ -23,6 +23,8 @@ fer <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE false omission rate
 #' @templateVar .FUN fer
 #' @templateVar .TASK Classification

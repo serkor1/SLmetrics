@@ -23,6 +23,8 @@ hammingloss <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE hamming loss
 #' @templateVar .FUN hammingloss
 #' @templateVar .TASK Classification

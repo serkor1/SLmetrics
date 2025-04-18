@@ -12,8 +12,6 @@ pr.curve(...)
 ## Generic S3 method
 ## for weighted Precision Recall Curve
 weighted.pr.curve(...)
-
-weighted.pr.curve(...)
 }
 \arguments{
 \item{...}{

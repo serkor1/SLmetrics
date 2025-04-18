@@ -23,6 +23,8 @@ fmi <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Fowlkes Mallows Index
 #' @templateVar .FUN fmi
 #' @templateVar .TASK Classification

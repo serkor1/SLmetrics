@@ -12,8 +12,6 @@ weighted.logloss(...)
 ## Generic S3 method
 ## for weighted Logarithmic Loss
 weighted.logloss(...)
-
-weighted.logloss(...)
 }
 \arguments{
 \item{...}{

@@ -15,13 +15,9 @@ mae(...)
 ## for weighted Mean Absolute Error
 weighted.mae(...)
 
-weighted.mae(...)
-
 ## Generic S3 method
 ## for weighted Mean Absolute Percentage Error
 weighted.mae(...)
-
-weighted.mape(...)
 }
 \arguments{
 \item{...}{

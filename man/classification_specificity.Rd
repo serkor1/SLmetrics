@@ -16,8 +16,6 @@ specificity(...)
 ## Generic S3 method
 ## for weighted Specificity
 weighted.specificity(...)
-
-weighted.specificity(...)
 }
 \arguments{
 \item{...}{

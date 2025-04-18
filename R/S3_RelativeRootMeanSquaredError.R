@@ -22,6 +22,8 @@ rrmse <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE concordance correlation coefficient
 #' @templateVar .FUN rrmse
 #' @templateVar .TASK regression

@@ -22,6 +22,8 @@ huberloss <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Huber Loss
 #' @templateVar .FUN huberloss
 #' @templateVar .TASK regression

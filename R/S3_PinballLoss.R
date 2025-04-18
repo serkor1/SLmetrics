@@ -22,6 +22,8 @@ pinball <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE pinball loss
 #' @templateVar .FUN pinball
 #' @templateVar .TASK regression

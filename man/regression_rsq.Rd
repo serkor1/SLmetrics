@@ -12,8 +12,6 @@ rsq(...)
 ## Generic S3 method
 ## for weighted \eqn{r^2}
 weighted.rsq(...)
-
-weighted.rsq(...)
 }
 \arguments{
 \item{...}{

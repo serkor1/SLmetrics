@@ -23,6 +23,8 @@ accuracy <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE accuracy
 #' @templateVar .FUN accuracy
 #' @templateVar .TASK Classification

@@ -12,8 +12,6 @@ huberloss(...)
 ## Generic S3 method
 ## for weighted Huber Loss
 weighted.huberloss(...)
-
-weighted.huberloss(...)
 }
 \arguments{
 \item{...}{

@@ -12,8 +12,6 @@ deviance.poisson(...)
 ## Generic S3 method
 ## for weighted Poisson Deviance
 weighted.deviance.poisson(...)
-
-weighted.deviance.poisson(...)
 }
 \arguments{
 \item{...}{

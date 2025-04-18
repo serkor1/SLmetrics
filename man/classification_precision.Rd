@@ -14,8 +14,6 @@ precision(...)
 ## Generic S3 method
 ## for weighted Precision
 weighted.precision(...)
-
-weighted.precision(...)
 }
 \arguments{
 \item{...}{

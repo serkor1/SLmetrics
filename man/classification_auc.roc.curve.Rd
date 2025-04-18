@@ -18,8 +18,6 @@ auc.roc.curve(...)
 ## Generic S3 method
 ## for weighted Area under the Receiver Operator Characteristics Curve
 weighted.auc.roc.curve(...)
-
-weighted.auc.roc.curve(...)
 }
 \arguments{
 \item{...}{

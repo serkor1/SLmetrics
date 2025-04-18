@@ -12,8 +12,6 @@ rmsle(...)
 ## Generic S3 method
 ## for weighted Root Mean Squared Logarithmic Error
 weighted.rmsle(...)
-
-weighted.rmsle(...)
 }
 \arguments{
 \item{...}{

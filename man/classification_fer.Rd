@@ -12,8 +12,6 @@ fer(...)
 ## Generic S3 method
 ## for weighted False Omission Rate
 weighted.fer(...)
-
-weighted.fer(...)
 }
 \arguments{
 \item{...}{

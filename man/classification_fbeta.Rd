@@ -12,8 +12,6 @@ fbeta(...)
 ## Generic S3 method
 ## for weighted \eqn{f_{\beta}}
 weighted.fbeta(...)
-
-weighted.fbeta(...)
 }
 \arguments{
 \item{...}{

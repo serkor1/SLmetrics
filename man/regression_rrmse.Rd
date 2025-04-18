@@ -12,8 +12,6 @@ rrmse(...)
 ## Generic S3 method
 ## for weighted Concordance Correlation Coefficient
 weighted.rrmse(...)
-
-weighted.rrmse(...)
 }
 \arguments{
 \item{...}{

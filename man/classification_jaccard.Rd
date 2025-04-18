@@ -16,8 +16,6 @@ jaccard(...)
 ## Generic S3 method
 ## for weighted Jaccard Index
 weighted.jaccard(...)
-
-weighted.jaccard(...)
 }
 \arguments{
 \item{...}{

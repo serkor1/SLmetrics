@@ -22,6 +22,8 @@ rae <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Relative Absolute Error
 #' @templateVar .FUN rae
 #' @templateVar .TASK regression

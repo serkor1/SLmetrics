@@ -32,6 +32,8 @@ specificity <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE specificity
 #' @templateVar .FUN specificity
 #' @templateVar .TASK Classification

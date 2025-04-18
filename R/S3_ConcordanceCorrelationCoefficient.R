@@ -22,6 +22,8 @@ ccc <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE concordance correlation coefficient
 #' @templateVar .FUN ccc
 #' @templateVar .TASK regression

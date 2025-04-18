@@ -22,6 +22,8 @@ logloss <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Logarithmic Loss
 #' @templateVar .FUN logloss
 #' @templateVar .TASK Classification

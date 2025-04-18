@@ -23,6 +23,8 @@ fdr <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE false discovery rate
 #' @templateVar .FUN fdr
 #' @templateVar .TASK Classification

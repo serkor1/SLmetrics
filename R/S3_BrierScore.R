@@ -22,6 +22,8 @@ brier.score <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Brier Score
 #' @templateVar .FUN brier.score
 #' @templateVar .TASK Classification

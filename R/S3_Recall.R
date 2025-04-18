@@ -31,6 +31,8 @@ recall <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE recall
 #' @templateVar .FUN recall
 #' @templateVar .TASK Classification

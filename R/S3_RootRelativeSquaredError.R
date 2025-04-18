@@ -22,6 +22,8 @@ rrse <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Root Relative Squared Error
 #' @templateVar .FUN rrse
 #' @templateVar .TASK regression

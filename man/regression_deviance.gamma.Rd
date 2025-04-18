@@ -12,8 +12,6 @@ deviance.gamma(...)
 ## Generic S3 method
 ## for weighted Gamma Deviance
 weighted.deviance.gamma(...)
-
-weighted.deviance.gamma(...)
 }
 \arguments{
 \item{...}{

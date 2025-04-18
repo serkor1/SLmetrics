@@ -12,8 +12,6 @@ ccc(...)
 ## Generic S3 method
 ## for weighted Concordance Correlation Coefficient
 weighted.ccc(...)
-
-weighted.ccc(...)
 }
 \arguments{
 \item{...}{

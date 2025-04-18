@@ -30,6 +30,8 @@ pr.curve <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Precision Recall Curve
 #' @templateVar .FUN pr.curve
 #' @templateVar .TASK Classification
@@ -68,6 +70,8 @@ auc.pr.curve <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Area under the Precision Recall Curve
 #' @templateVar .FUN auc.pr.curve
 #' @templateVar .TASK Classification

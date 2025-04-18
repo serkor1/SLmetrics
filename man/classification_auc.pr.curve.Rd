@@ -17,8 +17,6 @@ auc.pr.curve(...)
 ## Generic S3 method
 ## for weighted Area under the Precision Recall Curve
 weighted.auc.pr.curve(...)
-
-weighted.auc.pr.curve(...)
 }
 \arguments{
 \item{...}{

@@ -12,8 +12,6 @@ mpe(...)
 ## Generic S3 method
 ## for weighted Mean Percentage Error
 weighted.mpe(...)
-
-weighted.mpe(...)
 }
 \arguments{
 \item{...}{

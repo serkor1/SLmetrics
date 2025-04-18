@@ -16,8 +16,6 @@ recall(...)
 ## Generic S3 method
 ## for weighted Recall
 weighted.recall(...)
-
-weighted.recall(...)
 }
 \arguments{
 \item{...}{

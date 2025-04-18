@@ -12,8 +12,6 @@ rae(...)
 ## Generic S3 method
 ## for weighted Relative Absolute Error
 weighted.rae(...)
-
-weighted.rae(...)
 }
 \arguments{
 \item{...}{

@@ -22,6 +22,8 @@ mae <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE mean absolute error
 #' @templateVar .FUN mae
 #' @templateVar .TASK regression

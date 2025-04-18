@@ -8,7 +8,7 @@
 #' @usage NULL
 #' @returns NULL
 #' 
-#' @templateVar .TITLE mean squeared error
+#' @templateVar .TITLE mean squared error
 #' @templateVar .FUN mse
 #' @templateVar .TASK regression
 #' 
@@ -22,7 +22,9 @@ mse <- function(...) {
   )
 }
 
-#' @templateVar .TITLE mean squeared error
+#' @usage NULL
+#' 
+#' @templateVar .TITLE mean squared error
 #' @templateVar .FUN mse
 #' @templateVar .TASK regression
 #' 

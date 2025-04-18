@@ -23,6 +23,8 @@ ckappa <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Cohen's \eqn{\kappa}-statistic
 #' @templateVar .FUN ckappa
 #' @templateVar .TASK Classification

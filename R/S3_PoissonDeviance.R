@@ -22,6 +22,8 @@ deviance.poisson <- function(...) {
     )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Poisson Deviance
 #' @templateVar .FUN deviance.poisson
 #' @templateVar .TASK regression

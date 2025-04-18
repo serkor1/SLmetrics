@@ -12,8 +12,6 @@ deviance.tweedie(...)
 ## Generic S3 method
 ## for weighted Tweedie Deviance
 weighted.deviance.tweedie(...)
-
-weighted.deviance.tweedie(...)
 }
 \arguments{
 \item{...}{

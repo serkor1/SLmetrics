@@ -12,8 +12,6 @@ pinball(...)
 ## Generic S3 method
 ## for weighted Pinball Loss
 weighted.pinball(...)
-
-weighted.pinball(...)
 }
 \arguments{
 \item{...}{

@@ -30,6 +30,8 @@ mcc <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Matthews Correlation Coefficient
 #' @templateVar .FUN mcc
 #' @templateVar .TASK Classification

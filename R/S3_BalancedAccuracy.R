@@ -23,6 +23,8 @@ baccuracy <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE balanced accuracy
 #' @templateVar .FUN baccuracy
 #' @templateVar .TASK Classification

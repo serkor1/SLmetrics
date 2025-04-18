@@ -31,6 +31,8 @@ precision <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE precision
 #' @templateVar .FUN precision
 #' @templateVar .TASK Classification

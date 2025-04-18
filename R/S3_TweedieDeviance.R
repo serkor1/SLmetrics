@@ -22,6 +22,8 @@ deviance.tweedie <- function(...) {
     )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Tweedie Deviance
 #' @templateVar .FUN deviance.tweedie
 #' @templateVar .TASK regression

@@ -23,6 +23,8 @@ fbeta <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE \eqn{F_{\beta}}
 #' @templateVar .FUN fbeta
 #' @templateVar .TASK Classification

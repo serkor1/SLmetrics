@@ -27,6 +27,8 @@ nlr <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE negative likelihood ratio
 #' @templateVar .FUN nlr
 #' @templateVar .TASK Classification
@@ -63,6 +65,8 @@ plr <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE positive likelihood ratio
 #' @templateVar .FUN plr
 #' @templateVar .TASK Classification
@@ -95,6 +99,8 @@ dor <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE diagnostic odds ratio
 #' @templateVar .FUN plr
 #' @templateVar .TASK Classification

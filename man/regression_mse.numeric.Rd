@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{mse.numeric}
 \alias{mse.numeric}
-\title{Mean Squeared Error}
+\title{Mean Squared Error}
 \usage{
 \method{mse}{numeric}(actual, predicted, ...)
 }
@@ -15,7 +15,7 @@
 A <\link{double}> value
 }
 \description{
-A generic S3 function to compute the \emph{mean squeared error} score for a regression model. This function dispatches to S3 methods in \code{\link[=mse]{mse()}} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
+A generic S3 function to compute the \emph{mean squared error} score for a regression model. This function dispatches to S3 methods in \code{\link[=mse]{mse()}} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
 \subsection{Defensive measures}{
 
 Because \code{\link[=mse]{mse()}} operates on raw pointers, pointer‑level faults (e.g. from \link{NA} or mismatched \link{length}) occur before any \code{R}‑level error handling.  Wrapping calls in \code{\link[=try]{try()}} or \code{\link[=tryCatch]{tryCatch()}} will \emph{not} prevent \code{R}-session crashes.

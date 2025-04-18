@@ -12,8 +12,6 @@ nlr(...)
 ## Generic S3 method
 ## for weighted Negative Likelihood Ratio
 weighted.nlr(...)
-
-weighted.nlr(...)
 }
 \arguments{
 \item{...}{

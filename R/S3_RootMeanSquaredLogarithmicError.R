@@ -22,6 +22,8 @@ rmsle <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Root Mean Squared Logarithmic Error
 #' @templateVar .FUN rmsle
 #' @templateVar .TASK regression

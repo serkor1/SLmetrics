@@ -31,6 +31,8 @@ jaccard <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE jaccard index
 #' @templateVar .FUN jaccard
 #' @templateVar .TASK Classification

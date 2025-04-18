@@ -12,8 +12,6 @@ roc.curve(...)
 ## Generic S3 method
 ## for weighted Reciever Operator Characteristics
 weighted.roc.curve(...)
-
-weighted.roc.curve(...)
 }
 \arguments{
 \item{...}{

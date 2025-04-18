@@ -22,6 +22,8 @@ mpe <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE mean percentage error
 #' @templateVar .FUN mpe
 #' @templateVar .TASK regression

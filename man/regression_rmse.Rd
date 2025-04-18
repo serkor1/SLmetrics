@@ -12,8 +12,6 @@ rmse(...)
 ## Generic S3 method
 ## for weighted Root Mean Squared Error
 weighted.rmse(...)
-
-weighted.rmse(...)
 }
 \arguments{
 \item{...}{
