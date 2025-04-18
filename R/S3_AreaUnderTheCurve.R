@@ -4,26 +4,17 @@
 # objective: Generate method
 # script start;
 
-#' @title xy.auc
+#' @title Area under the curve
+#' @rdname tools_auc.xy
 #' 
 #' @description
-#' The [xy.auc()]-function calculates the area under the curve.
+#' The [auc.xy()]-function calculates the area under the curve.
 #' 
 #' @usage
 #' ## Generic S3 method
-#' xy.auc(
-#'  y,
-#'  x,
-#'  method = 0,
-#'  presorted = TRUE,
-#'  ...
-#' )
+#' auc.xy(...)
 #' 
-#' @param y A <[numeric]> vector of [length] \eqn{n}.
-#' @param x A <[numeric]> vector of [length] \eqn{n}.
-#' @param method A <[numeric]> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the `trapezoid`-method, if \eqn{1} it is calculated using the `step`-method.
-#' @param presorted A <[logical]>-value [length] 1 (default: [FALSE]). If [TRUE] the input will not be sorted by threshold.
-#' @param ... Arguments passed into other methods.
+#' @inheritDotParams auc.xy.numeric
 #' 
 #' @section Definition:
 #' 
@@ -50,20 +41,15 @@
 #' }
 #' 
 #' @returns 
-#' A <[double]>  vector  of [length] 1
+#' A <[double]> value.
 #' 
 #' 
 #' @family Tools
 #' 
 #' @export
-xy.auc <- function(
-  y,
-  x,
-  method  = 0,
-  presorted = TRUE,
-  ...) {
+auc.xy <- function(...) {
   UseMethod(
-    generic = "xy.auc"
+    generic = "auc.xy"
   )
 }
 

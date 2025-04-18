@@ -1144,10 +1144,18 @@ weighted.deviance.tweedie.numeric <- function(actual, predicted, w, power = 2.0,
     .Call(`_SLmetrics_weighted_tweedie_deviance`, actual, predicted, w, power)
 }
 
-#' @rdname xy.auc
-#' @method xy.auc numeric
-#' @rawNamespace S3method(xy.auc,numeric)
-xy.auc.numeric <- function(y, x, method = 0L, presorted = TRUE, ...) {
+#' @title Area under the curve
+#'
+#' @rdname tools_auc.xy.numeric
+#' @method auc.xy numeric
+#'
+#' @param y,x A pair of <[double]> vectors of [length] \eqn{n}.
+#' @param method A <[integer]> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the `trapezoid`-method, if \eqn{1} it is calculated using the `step`-method.
+#' @param presorted A <[logical]>-value [length] 1 (default: [FALSE]). If [TRUE] the input will not be sorted by threshold.
+#' @param ... Arguments passed into other methods.
+#'
+#' @export
+auc.xy.numeric <- function(y, x, method = 0L, presorted = TRUE, ...) {
     .Call(`_SLmetrics_auc`, y, x, method, presorted)
 }
 

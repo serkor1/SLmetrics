@@ -122,7 +122,7 @@ summary.prROC <- function(
   metric <- vapply(
     x_list, 
     function(x) {
-      xy.auc(
+      auc.xy(
         y = x$precision,
         x = x$recall
       )

@@ -3,10 +3,18 @@
 
 using namespace Rcpp;
 
-//' @rdname xy.auc
-//' @method xy.auc numeric
-//' @rawNamespace S3method(xy.auc,numeric)
-// [[Rcpp::export(xy.auc.numeric)]]
+//' @title Area under the curve
+//'
+//' @rdname tools_auc.xy.numeric
+//' @method auc.xy numeric
+//'
+//' @param y,x A pair of <[double]> vectors of [length] \eqn{n}.
+//' @param method A <[integer]> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the `trapezoid`-method, if \eqn{1} it is calculated using the `step`-method.
+//' @param presorted A <[logical]>-value [length] 1 (default: [FALSE]). If [TRUE] the input will not be sorted by threshold.
+//' @param ... Arguments passed into other methods.
+//'
+//' @export
+// [[Rcpp::export(auc.xy.numeric)]]
 double auc(
     const Rcpp::NumericVector& y, 
     const Rcpp::NumericVector& x, 
