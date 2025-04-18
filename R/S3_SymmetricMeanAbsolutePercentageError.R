@@ -22,6 +22,8 @@ smape <- function(...) {
   )
 }
 
+#' @usage NULL
+#' 
 #' @templateVar .TITLE Symmetric Mean Absolutte Percentage Error
 #' @templateVar .FUN smape
 #' @templateVar .TASK regression

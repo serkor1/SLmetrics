@@ -12,8 +12,6 @@ smape(...)
 ## Generic S3 method
 ## for weighted Symmetric Mean Absolutte Percentage Error
 weighted.smape(...)
-
-weighted.smape(...)
 }
 \arguments{
 \item{...}{
