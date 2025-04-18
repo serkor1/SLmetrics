@@ -5,6 +5,36 @@
 #' @method <%= .FUN %> <%= .METHOD %>
 #' @inheritParams regression_documentation
 #' 
+#' @examples
+<% if (grepl(pattern = "weighted", x = .FUN)) { %>
+#' ## Generate actual
+#' ## and predicted values
+#' actual_values <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
+#' 
+#' predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
+#' 
+#' weights <- c(0.3, 0.5, 0.3, 0, 0.8, 0.8, 1)
+#' 
+#' ## Evaluate performance
+#' SLmetrics::<%= .FUN %>(
+#'    actual_values, 
+#'    predicted_values,
+#'    weights
+#' )
+<% } else { %>
+#' ## Generate actual
+#' ## and predicted values
+#' actual_values <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
+#' 
+#' predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
+#' 
+#' ## Evaluate performance
+#' SLmetrics::<%= .FUN %>(
+#'    actual_values, 
+#'    predicted_values
+#' )
+<% } %>
+#'
 #' @keywords regression
 #' @keywords evaluation
 #' @concept Machine learning performance evaluation
