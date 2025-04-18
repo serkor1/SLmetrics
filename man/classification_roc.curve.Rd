@@ -69,7 +69,7 @@ classes <- c("Kebab", "Falafel")
 
 ## Generate actual classes
 ## and response probabilities
-actual <- factor(
+actual_classes <- factor(
     x = sample(
       x = classes, 
       size = 1e2, 
@@ -78,18 +78,25 @@ actual <- factor(
     )
 )
 
-response <- ifelse(
-    actual == "Kebab", 
-    rbeta(sum(actual == "Kebab"), 2, 5), 
-    rbeta(sum(actual == "Falafel"), 5, 2)
+response_probabilities <- ifelse(
+    actual_classes == "Kebab", 
+    rbeta(sum(actual_classes == "Kebab"), 2, 5), 
+    rbeta(sum(actual_classes == "Falafel"), 5, 2)
+)
+
+## Construct response
+## matrix
+probability_matrix <- cbind(
+    response_probabilities,
+    1 - response_probabilities
 )
 
 ## Visualize reciever operator characteristics
 
 plot(
     SLmetrics::roc.curve(
-     actual   = actual, 
-     response = response
+     actual   = actual_classes, 
+     response = probability_matrix
  )
 )
 

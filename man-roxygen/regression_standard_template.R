@@ -7,14 +7,13 @@
 #' @examples
 #' ## Generate actual
 #' ## and predicted values
-#' actual_values <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
-#' 
+#' actual_values    <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
 #' predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
 #' 
 #' ## Evaluate performance
 #' SLmetrics::<%= .FUN %>(
-#'    actual_values, 
-#'    predicted_values
+#'    actual    = actual_values, 
+#'    predicted = predicted_values
 #' )
 #'
 #' @references

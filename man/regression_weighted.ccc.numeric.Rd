@@ -7,7 +7,7 @@
 \method{weighted.ccc}{numeric}(actual, predicted, w, correction = FALSE, ...)
 }
 \arguments{
-\item{actual, predicted}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of <\link{double}> vectors of \link{length} \eqn{n}.}
 
 \item{w}{A <\link{double}> vector of sample weights.}
 
@@ -42,17 +42,18 @@ Apply the same pattern to any custom metric functions to ensure input sanity bef
 \examples{
 ## Generate actual
 ## and predicted values
-actual_values <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
-
+actual_values    <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
 predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
 
-weights <- c(0.3, 0.5, 0.3, 0, 0.8, 0.8, 1)
+## Generate sample
+## weights
+sample_weights <- c(0.3, 0.5, 0.3, 0, 0.8, 0.8, 1)
 
 ## Evaluate performance
 SLmetrics::weighted.ccc(
-   actual_values, 
-   predicted_values,
-   weights
+   actual    = actual_values, 
+   predicted = predicted_values,
+   w         = sample_weights
 )
 
 }

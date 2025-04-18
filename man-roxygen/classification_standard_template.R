@@ -44,19 +44,19 @@
 #' ## Generate actual
 #' ## and predicted classes
 #' actual_classes <- factor(
-#'     x = sample(x = classes, size = 10, replace = TRUE),
+#'     x = sample(x = classes, size = 1e3, replace = TRUE),
 #'     levels = c("Kebab", "Falafel")
 #' )
 #' 
 #' predicted_classes <- factor(
-#'     x = sample(x = classes, size = 10, replace = TRUE),
+#'     x = sample(x = classes, size = 1e3, replace = TRUE),
 #'     levels = c("Kebab", "Falafel")
 #')
 #' 
 #' ## Evaluate performance
 #' SLmetrics::<%= .FUN %>(
-#'    actual_classes, 
-#'    predicted_classes
+#'    actual    = actual_classes, 
+#'    predicted = predicted_classes
 #' )
 #' 
 #' @references

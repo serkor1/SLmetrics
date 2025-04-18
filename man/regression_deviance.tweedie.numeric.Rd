@@ -7,7 +7,7 @@
 \method{deviance}{tweedie.numeric}(actual, predicted, power = 2, ...)
 }
 \arguments{
-\item{actual, predicted}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of <\link{double}> vectors of \link{length} \eqn{n}.}
 
 \item{power}{A <\link{double}> value, default = 2.
 Tweedie power parameter. Either power <= 0 or power >= 1.
@@ -51,14 +51,13 @@ Apply the same pattern to any custom metric functions to ensure input sanity bef
 \examples{
 ## Generate actual
 ## and predicted values
-actual_values <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
-
+actual_values    <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
 predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
 
 ## Evaluate performance
 SLmetrics::deviance.tweedie(
-   actual_values, 
-   predicted_values
+   actual    = actual_values, 
+   predicted = predicted_values
 )
 
 }

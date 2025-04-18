@@ -90,12 +90,12 @@ classes <- c("Kebab", "Falafel")
 ## Generate actual
 ## and predicted classes
 actual_classes <- factor(
-    x = sample(x = classes, size = 10, replace = TRUE),
+    x = sample(x = classes, size = 1e3, replace = TRUE),
     levels = c("Kebab", "Falafel")
 )
 
 predicted_classes <- factor(
-    x = sample(x = classes, size = 10, replace = TRUE),
+    x = sample(x = classes, size = 1e3, replace = TRUE),
     levels = c("Kebab", "Falafel")
 )
 
@@ -109,9 +109,9 @@ sample_weights <- runif(
 
 ## Evaluate performance
 SLmetrics::weighted.recall(
-   actual_classes, 
-   predicted_classes, 
-   sample_weights
+   actual    = actual_classes, 
+   predicted = predicted_classes, 
+   w         = sample_weights
 )
 
 }

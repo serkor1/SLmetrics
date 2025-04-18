@@ -109,8 +109,9 @@ NULL
 #' This roxygen block is the generic documnentation
 #' for entropy metrics for all the parameters.
 #'
-#' @param actual,predicted A pair of <[double]> vectors of [length] \eqn{n}, and \eqn{k} levels.
+#' @param actual,predicted A pair of <[double]> vectors of [length] \eqn{n}.
 #' @param w A <[double]> vector of sample weights.
+#' 
 #' @param ... Arguments passed into other methods
 #' @param delta A <[double]>-vector of [length] \eqn{1} (default: \eqn{1}). The threshold value for switch between functions (see calculation).
 #' @param correction A <[logical]> vector of [length] \eqn{1} (default: [FALSE]). If [TRUE] the variance and covariance
