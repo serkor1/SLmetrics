@@ -33,24 +33,6 @@ If \code{estimator} is given as
 }
 \description{
 A generic S3 function to compute the \emph{recall} score for a classification model. This function dispatches to S3 methods in \code{\link[=recall]{recall()}} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
-\subsection{Efficient multi-metric evaluation}{
-
-For multiple performance evaluations of a classification model, first compute the confusion matrix once via \code{\link[=cmatrix]{cmatrix()}}. All other performance metrics can then be derived from this one object via S3 dispatching:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{## compute confusion matrix
-confusion_matrix <- cmatrix(actual, predicted)
-
-## evaluate recall
-## via S3 dispatching
-recall(confusion_matrix)
-
-## additional performance metrics
-## below
-}\if{html}{\out{</div>}}
-
-The \code{\link[=recall.factor]{recall.factor()}} method calls \code{\link[=cmatrix]{cmatrix()}} internally, so explicitly invoking \code{\link[=recall.cmatrix]{recall.cmatrix()}} yourself avoids duplicate computation, yielding significant speed and memory effciency gains when you need multiple evaluation metrics.
-}
-
 \subsection{Defensive measures}{
 
 Because \code{\link[=recall]{recall()}} operates on raw pointers, pointer‑level faults (e.g. from \link{NA} or mismatched \link{length}) occur before any \code{R}‑level error handling.  Wrapping calls in \code{\link[=try]{try()}} or \code{\link[=tryCatch]{tryCatch()}} will \emph{not} prevent \code{R}-session crashes.
@@ -67,6 +49,24 @@ To guard against this, wrap \code{\link[=recall]{recall()}} in a “safe” vali
 }\if{html}{\out{</div>}}
 
 Apply the same pattern to any custom metric functions to ensure input sanity before calling the underlying \code{C++} code.
+}
+
+\subsection{Efficient multi-metric evaluation}{
+
+For multiple performance evaluations of a classification model, first compute the confusion matrix once via \code{\link[=cmatrix]{cmatrix()}}. All other performance metrics can then be derived from this one object via S3 dispatching:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## compute confusion matrix
+confusion_matrix <- cmatrix(actual, predicted)
+
+## evaluate recall
+## via S3 dispatching
+recall(confusion_matrix)
+
+## additional performance metrics
+## below
+}\if{html}{\out{</div>}}
+
+The \code{\link[=recall.factor]{recall.factor()}} method calls \code{\link[=cmatrix]{cmatrix()}} internally, so explicitly invoking \code{\link[=recall.cmatrix]{recall.cmatrix()}} yourself avoids duplicate computation, yielding significant speed and memory effciency gains when you need multiple evaluation metrics.
 }
 }
 \section{Other names}{

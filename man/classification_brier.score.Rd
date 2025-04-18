@@ -32,24 +32,6 @@ A <\link{double}>-value
 }
 \description{
 A generic S3 function to compute the \emph{brier score} score for a classification model. This function dispatches to S3 methods in \code{\link[=brier.score]{brier.score()}} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
-\subsection{Efficient multi-metric evaluation}{
-
-For multiple performance evaluations of a classification model, first compute the confusion matrix once via \code{\link[=cmatrix]{cmatrix()}}. All other performance metrics can then be derived from this one object via S3 dispatching:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{## compute confusion matrix
-confusion_matrix <- cmatrix(actual, predicted)
-
-## evaluate brier score
-## via S3 dispatching
-brier.score(confusion_matrix)
-
-## additional performance metrics
-## below
-}\if{html}{\out{</div>}}
-
-The \code{\link[=brier.score.factor]{brier.score.factor()}} method calls \code{\link[=cmatrix]{cmatrix()}} internally, so explicitly invoking \code{\link[=brier.score.cmatrix]{brier.score.cmatrix()}} yourself avoids duplicate computation, yielding significant speed and memory effciency gains when you need multiple evaluation metrics.
-}
-
 \subsection{Defensive measures}{
 
 Because \code{\link[=brier.score]{brier.score()}} operates on raw pointers, pointer‑level faults (e.g. from \link{NA} or mismatched \link{length}) occur before any \code{R}‑level error handling.  Wrapping calls in \code{\link[=try]{try()}} or \code{\link[=tryCatch]{tryCatch()}} will \emph{not} prevent \code{R}-session crashes.
