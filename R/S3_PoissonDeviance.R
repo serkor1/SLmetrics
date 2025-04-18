@@ -10,10 +10,11 @@
 #'
 #' @templateVar .TITLE Poisson Deviance
 #' @templateVar .FUN deviance.poisson
+#' @templateVar .TASK regression
+#' 
+#' @template generic_description
 #' @template regression_standard_template
-#' @template regression_standard_params
-#' @usage NULL
-#'
+#' 
 #' @rawNamespace export(deviance.poisson)
 deviance.poisson <- function(...) {
     UseMethod(
@@ -21,12 +22,12 @@ deviance.poisson <- function(...) {
     )
 }
 
-#' @rdname deviance.poisson
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Poisson
-#' ## Deviance
-#' weighted.deviance.poisson(...)
+#' @templateVar .TITLE Poisson Deviance
+#' @templateVar .FUN deviance.poisson
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @rawNamespace export(weighted.deviance.poisson)
 weighted.deviance.poisson <- function(...) {
     UseMethod(

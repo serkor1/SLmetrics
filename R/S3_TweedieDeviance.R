@@ -10,10 +10,11 @@
 #'
 #' @templateVar .TITLE Tweedie Deviance
 #' @templateVar .FUN deviance.tweedie
+#' @templateVar .TASK regression
+#' 
+#' @template generic_description
 #' @template regression_standard_template
-#' @template regression_standard_params
-#' @usage NULL
-#'
+#' 
 #' @rawNamespace export(deviance.tweedie)
 deviance.tweedie <- function(...) {
     UseMethod(
@@ -21,12 +22,12 @@ deviance.tweedie <- function(...) {
     )
 }
 
-#' @rdname deviance.tweedie
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Tweedie
-#' ## Deviance
-#' weighted.deviance.tweedie(...)
+#' @templateVar .TITLE Tweedie Deviance
+#' @templateVar .FUN deviance.tweedie
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @rawNamespace export(weighted.deviance.tweedie)
 weighted.deviance.tweedie <- function(...) {
     UseMethod(

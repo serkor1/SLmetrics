@@ -12,6 +12,8 @@
 #' @templateVar .FUN baccuracy
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT false
+#' 
+#' @template generic_description
 #' @template classification_standard_template
 #'
 #' @export
@@ -21,7 +23,7 @@ baccuracy <- function(...) {
   )
 }
 
-#' @rdname baccuracy
+#' @rdname classification_baccuracy
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Balanced

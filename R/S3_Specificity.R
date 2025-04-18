@@ -21,8 +21,10 @@
 #' @templateVar .FUN specificity
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT true
-#' @template classification_standard_template
 #' 
+#' @template generic_description
+#' @template classification_standard_template
+#'
 #' @export
 specificity <- function(...) {
   UseMethod(
@@ -31,7 +33,7 @@ specificity <- function(...) {
   )
 }
 
-#' @rdname specificity
+#' @rdname classification_specificity
 #' @usage 
 #' ## Generic S3 method
 #' ## for weighted specificity

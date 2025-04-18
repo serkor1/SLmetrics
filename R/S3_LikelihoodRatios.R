@@ -16,8 +16,10 @@
 #' @templateVar .FUN nlr
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT false
-#' @template classification_standard_template
 #' 
+#' @template generic_description
+#' @template classification_standard_template
+#'
 #' @export
 nlr <- function(...) {
   UseMethod(
@@ -30,7 +32,7 @@ nlr <- function(...) {
 #' @usage NULL
 #' @returns NULL
 #' 
-#' @rdname nlr
+#' @rdname classification_nlr
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Negative
@@ -56,8 +58,10 @@ weighted.nlr <- function(...) {
 #' @templateVar .FUN plr
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT false
-#' @template classification_standard_template
 #' 
+#' @template generic_description
+#' @template classification_standard_template
+#'
 #' @export
 plr <- function(...) {
   UseMethod(
@@ -66,7 +70,7 @@ plr <- function(...) {
   )
 }
 
-#' @rdname plr
+#' @rdname classification_plr
 #' 
 #' @usage
 #' ## Generic S3 method
@@ -89,8 +93,10 @@ weighted.plr <- function(...) {
 #' @templateVar .FUN dor
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT false
-#' @template classification_standard_template
 #' 
+#' @template generic_description
+#' @template classification_standard_template
+#'
 #' @export
 dor <- function(...) {
   UseMethod(
@@ -99,7 +105,7 @@ dor <- function(...) {
   )
 }
 
-#' @rdname dor
+#' @rdname classification_dor
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Diagnostic Odds Ratio

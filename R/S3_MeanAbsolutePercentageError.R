@@ -10,8 +10,10 @@
 #' 
 #' @templateVar .TITLE mean absolute percentage error
 #' @templateVar .FUN mape
+#' @templateVar .TASK regression
+#' 
+#' @template generic_description
 #' @template regression_standard_template
-#' @template regression_standard_params
 #' 
 #' @export
 mape <- function(...) {
@@ -20,11 +22,12 @@ mape <- function(...) {
   )
 }
 
-#' @rdname mape
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Mean Absolute Percentage Error
-#' weighted.mape(...)
+#' @templateVar .TITLE mean absolute percentage error
+#' @templateVar .FUN mae
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.mape <- function(...) {
   UseMethod(

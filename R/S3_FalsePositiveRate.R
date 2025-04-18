@@ -15,6 +15,8 @@
 #' @templateVar .FUN fpr
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT true
+#' 
+#' @template generic_description
 #' @template classification_standard_template
 #'
 #' @export
@@ -24,7 +26,7 @@ fpr <- function(...) {
   )
 }
 
-#' @rdname fpr
+#' @rdname classification_fpr
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted False Positive

@@ -12,6 +12,8 @@
 #' @templateVar .FUN fbeta
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT true
+#' 
+#' @template generic_description
 #' @template classification_standard_template
 #'
 #' @export
@@ -22,7 +24,7 @@ fbeta <- function(...) {
   )
 }
 
-#' @rdname fbeta
+#' @rdname classification_fbeta
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted \eqn{F_{\beta}}

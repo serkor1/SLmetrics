@@ -12,6 +12,8 @@
 #' @templateVar .FUN accuracy
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT false
+#' 
+#' @template generic_description
 #' @template classification_standard_template
 #'
 #' @export
@@ -21,7 +23,7 @@ accuracy <- function(...) {
   )
 }
 
-#' @rdname accuracy
+#' @rdname classification_accuracy
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Accuracy

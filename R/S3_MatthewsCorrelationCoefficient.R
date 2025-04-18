@@ -14,6 +14,8 @@
 #' @templateVar .FUN mcc
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT false
+#' 
+#' @template generic_description
 #' @template classification_standard_template
 #'
 #' @section Other names:
@@ -29,7 +31,7 @@ mcc <- function(...) {
   )
 }
 
-#' @rdname mcc
+#' @rdname classification_mcc
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Matthews

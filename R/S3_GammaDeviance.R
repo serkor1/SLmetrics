@@ -10,10 +10,11 @@
 #'
 #' @templateVar .TITLE Gamma Deviance
 #' @templateVar .FUN deviance.gamma
+#' @templateVar .TASK regression
+#' 
+#' @template generic_description
 #' @template regression_standard_template
-#' @template regression_standard_params
-#' @usage NULL
-#'
+#' 
 #' @rawNamespace export(deviance.gamma)
 deviance.gamma <- function(...) {
     UseMethod(
@@ -21,12 +22,12 @@ deviance.gamma <- function(...) {
     )
 }
 
-#' @rdname deviance.gamma
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Gamma
-#' ## Deviance
-#' weighted.deviance.gamma(...)
+#' @templateVar .TITLE Gamma Deviance
+#' @templateVar .FUN deviance.gamma
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @rawNamespace export(weighted.deviance.gamma)
 weighted.deviance.gamma <- function(...) {
     UseMethod(

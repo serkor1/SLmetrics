@@ -20,8 +20,10 @@
 #' @templateVar .FUN recall
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT true
-#' @template classification_standard_template
 #' 
+#' @template generic_description
+#' @template classification_standard_template
+#'
 #' @export
 recall <- function(...) {
   UseMethod(
@@ -30,7 +32,7 @@ recall <- function(...) {
   )
 }
 
-#' @rdname recall
+#' @rdname classification_recall
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted recall

@@ -12,8 +12,10 @@
 #' @templateVar .FUN zerooneloss
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT false
-#' @template classification_standard_template
 #' 
+#' @template generic_description
+#' @template classification_standard_template
+#'
 #' @export
 zerooneloss <- function(...) {
   UseMethod(
@@ -22,7 +24,7 @@ zerooneloss <- function(...) {
   )
 }
 
-#' @rdname zerooneloss
+#' @rdname classification_zerooneloss
 #' @usage
 #' ## Generic S3 method
 #' weighted.zerooneloss(...)

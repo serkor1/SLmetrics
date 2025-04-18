@@ -12,8 +12,10 @@
 #' @templateVar .FUN npv
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT true
-#' @template classification_standard_template
 #' 
+#' @template generic_description
+#' @template classification_standard_template
+#'
 #' @export
 npv <- function(...) {
   UseMethod(
@@ -22,7 +24,7 @@ npv <- function(...) {
   )
 }
 
-#' @rdname npv
+#' @rdname classification_npv
 #' @usage 
 #' ## Generic S3 method
 #' ## for weighted Negative

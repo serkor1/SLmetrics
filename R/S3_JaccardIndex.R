@@ -14,8 +14,10 @@
 #' @templateVar .FUN jaccard
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT true
-#' @template classification_standard_template
 #' 
+#' @template generic_description
+#' @template classification_standard_template
+#'
 #' @section Other names:
 #' 
 #' The specificity has other names depending on research field:
@@ -30,7 +32,7 @@ jaccard <- function(...) {
   )
 }
 
-#' @rdname jaccard
+#' @rdname classification_jaccard
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Jaccard Index

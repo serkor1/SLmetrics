@@ -12,8 +12,10 @@
 #' @templateVar .FUN hammingloss
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT false
-#' @template classification_standard_template
 #' 
+#' @template generic_description
+#' @template classification_standard_template
+#'
 #' @export
 hammingloss <- function(...) {
   UseMethod(
@@ -22,7 +24,7 @@ hammingloss <- function(...) {
   )
 }
 
-#' @rdname hammingloss
+#' @rdname classification_hammingloss
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Hamming Loss

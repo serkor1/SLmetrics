@@ -20,8 +20,10 @@
 #' @templateVar .TASK Classification
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT true
-#' @template classification_standard_template
 #' 
+#' @template generic_description
+#' @template classification_standard_template
+#'
 #' @export
 precision <- function(...) {
   UseMethod(
@@ -30,7 +32,7 @@ precision <- function(...) {
   )
 }
 
-#' @rdname precision
+#' @rdname classification_precision
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted precision

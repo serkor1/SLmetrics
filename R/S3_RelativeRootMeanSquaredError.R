@@ -10,9 +10,10 @@
 #' 
 #' @templateVar .TITLE Relative Root Mean Squared Error
 #' @templateVar .FUN rrmse
+#' @templateVar .TASK regression
+#' 
+#' @template generic_description
 #' @template regression_standard_template
-#' @template regression_standard_params
-#' @usage NULL
 #' 
 #' @export
 rrmse <- function(...) {
@@ -21,11 +22,12 @@ rrmse <- function(...) {
   )
 }
 
-#' @rdname rrmse
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Relative Root Mean Squared Error
-#' weighted.rrmse(...)
+#' @templateVar .TITLE concordance correlation coefficient
+#' @templateVar .FUN rrmse
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.rrmse <- function(...) {
   UseMethod(

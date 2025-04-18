@@ -12,6 +12,8 @@
 #' @templateVar .FUN fer
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT true
+#' 
+#' @template generic_description
 #' @template classification_standard_template
 #'
 #' @export
@@ -22,7 +24,7 @@ fer <- function(...) {
   )
 }
 
-#' @rdname fer
+#' @rdname classification_fer
 #' @usage 
 #' ## Generic S3 method
 #' ## for weighted False

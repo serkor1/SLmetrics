@@ -8,10 +8,12 @@
 #' @usage NULL
 #' @returns NULL
 #' 
-#' @templateVar .TITLE Huber Loss Function
+#' @templateVar .TITLE mean absolute error
 #' @templateVar .FUN mae
+#' @templateVar .TASK regression
+#' 
+#' @template generic_description
 #' @template regression_standard_template
-#' @template regression_standard_params
 #' 
 #' @export
 mae <- function(...) {
@@ -20,11 +22,12 @@ mae <- function(...) {
   )
 }
 
-#' @rdname mae
-#' @usage
-#' ## Generic S3 method
-#' ## for unweighted Mean Absolute Error
-#' weighted.mae(...)
+#' @templateVar .TITLE mean absolute error
+#' @templateVar .FUN mae
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.mae <- function(...) {
   UseMethod(

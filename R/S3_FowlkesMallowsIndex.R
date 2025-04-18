@@ -12,8 +12,10 @@
 #' @templateVar .FUN fmi
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT false
-#' @template classification_standard_template
 #' 
+#' @template generic_description
+#' @template classification_standard_template
+#'
 #' @export
 fmi <- function(...) {
   UseMethod(
@@ -22,7 +24,7 @@ fmi <- function(...) {
   )
 }
 
-#' @rdname fmi
+#' @rdname classification_fmi
 #' @usage
 #' ## Generic S3 method
 #' ## for weighted Fowlkes

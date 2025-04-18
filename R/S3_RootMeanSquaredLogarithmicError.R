@@ -10,8 +10,10 @@
 #' 
 #' @templateVar .TITLE Root Mean Squared Logarithmic Error
 #' @templateVar .FUN rmsle
+#' @templateVar .TASK regression
+#' 
+#' @template generic_description
 #' @template regression_standard_template
-#' @template regression_standard_params
 #' 
 #' @export
 rmsle <- function(...) {
@@ -20,11 +22,12 @@ rmsle <- function(...) {
   )
 }
 
-#' @rdname rmsle
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Root Mean Squared Logarithmic Error
-#' weighted.rmsle(...)
+#' @templateVar .TITLE Root Mean Squared Logarithmic Error
+#' @templateVar .FUN rmsle
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.rmsle <- function(...) {
   UseMethod(
