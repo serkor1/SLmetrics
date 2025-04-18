@@ -126,6 +126,8 @@ plot(
 \seealso{
 Other Classification: 
 \code{\link{accuracy}()},
+\code{\link{auc.pr.curve}()},
+\code{\link{auc.roc.curve}()},
 \code{\link{baccuracy}()},
 \code{\link{brier.score}()},
 \code{\link{ckappa}()},
@@ -154,6 +156,8 @@ Other Classification:
 
 Other Supervised Learning: 
 \code{\link{accuracy}()},
+\code{\link{auc.pr.curve}()},
+\code{\link{auc.roc.curve}()},
 \code{\link{baccuracy}()},
 \code{\link{brier.score}()},
 \code{\link{ccc}()},
