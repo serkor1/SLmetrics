@@ -2,6 +2,27 @@
 #' @inheritDotParams weighted.<%= .FUN %>.factor
 #' @inheritDotParams <%= .FUN %>.cmatrix
 #' 
+#' @description
+#' ## Efficient multi-metric evaluation
+#' 
+#' For multiple performance evaluations of a classification model, first compute the confusion matrix once via [cmatrix()]. All other performance metrics can then be derived from this one object via S3 dispatching:
+#' 
+#' ```r
+#' ## compute confusion matrix
+#' confusion_matrix <- cmatrix(actual, predicted)
+#' 
+#' ## evaluate <%= tolower(.TITLE) %>
+#' ## via S3 dispatching
+#' <%= .FUN %>(confusion_matrix)
+#' 
+#' ## additional performance metrics
+#' ## below
+#' ```
+#' 
+#' 
+#' The [<%= .FUN %>.factor()] method calls [cmatrix()] internally, so explicitly invoking [<%= .FUN %>.cmatrix()] yourself avoids duplicate computation, yielding significant speed and memory effciency gains when you need multiple evaluation metrics.
+#' 
+#' 
 <% if ( tolower(.MULTI_OUTPUT) == 'false' ) { %>
 #' @returns 
 #' A <[double]>-value
