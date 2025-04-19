@@ -37,6 +37,7 @@ tasks <- vapply(
   FUN.VALUE = character(1)
 )
 
+
 # 1.3) split the files
 #      by task
 all_files <- split(all_files, tasks)
@@ -77,6 +78,13 @@ files_by_task_and_metric <- mapply(
   SIMPLIFY = FALSE
 )
 
+# 2.2.1) Rename each element
+#        to task metrics - this will be displayed 
+#        properly by Gitbook
+names(files_by_task_and_metric) <- tools::toTitleCase(
+    text = paste(names(files_by_task_and_metric), "metrics")
+)
+
 # 3) Write the HTML files
 #    to a temporary location
 out_base <- tempdir()
@@ -110,24 +118,25 @@ html_files <- list.files(
   full.names = TRUE
 )
 
+
 # 3.2) convert to markdown
 #      and store
 for (html in html_files) {
-  rel <- sub(out_base, "", html)
-  md  <- file.path("gitbook", sub("\\.html$", ".md", rel))
-  
-  # make sure the directory exists
-  dir.create(dirname(md), recursive = TRUE, showWarnings = FALSE)
-  
-  # call pandoc
-  system2("pandoc", args = c(
-    "-f", "html",
-    "-t", "gfm+raw_html",
-    "--wrap=auto",
-    shQuote(html),
-    "-o", shQuote(md)
-  ))
-}
+    rel <- sub(out_base, "", html)
+    md  <- file.path("gitbook", sub("\\.html$", ".md", rel))
+    
+    # make sure the directory exists
+    dir.create(dirname(md), recursive = TRUE, showWarnings = FALSE)
+    
+    # call pandoc
+    system2("pandoc", args = c(
+      "-f", "html",
+      "-t", "gfm+raw_html",
+      "--wrap=auto",
+      shQuote(html),
+      "-o", shQuote(md)
+    ))
+  }
 
 # 4) move relevant files
 #    to documentation
@@ -142,3 +151,6 @@ file.copy(
 )
 
 # script end;
+
+
+
