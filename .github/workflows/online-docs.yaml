@@ -35,8 +35,12 @@ jobs:
 
       - name: Sync docs folder
         run: |
-         rm -rf online-docs/*
-         cp -R main/md_docs/* online-docs/
+          rsync -av --delete \
+            --filter='P .git/' \
+            --exclude='.*' \
+            main/md_docs/ \
+            online-docs/
+
 
       - name: Commit & push to online-docs
         working-directory: online-docs
