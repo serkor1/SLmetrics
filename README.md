@@ -1,14 +1,12 @@
-# Something smart
+# {SLmetrics}: Machine learning performance evaluation on steroids
 
+{% code title="Stable version" overflow="wrap" lineNumbers="true" %}
 
-{% code title="index.js" overflow="wrap" lineNumbers="true" %}
-
-```javascript
-‌import * as React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-
-ReactDOM.render(<App />, window.document.getElementById('root'));
+```r
+pak::pak(
+    pkg = "SLmetrics",
+    ask = FALSE
+    )
 ```
 
 {% endcode %}
