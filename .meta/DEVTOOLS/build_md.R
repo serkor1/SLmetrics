@@ -122,12 +122,11 @@ for (html in html_files) {
   ))
 }
 
-
 # 4) move relevant files
 #    to documentation
 file.copy(
   from = "NEWS.md",
-  to   = "gitbook"
+  to   = "gitbook/Changelog.md"
 )
 
 file.copy(
