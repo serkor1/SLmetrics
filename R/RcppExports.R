@@ -1159,20 +1159,6 @@ auc.xy.numeric <- function(y, x, method = 0L, presorted = TRUE, ...) {
     .Call(`_SLmetrics_auc`, y, x, method, presorted)
 }
 
-#' @rdname cov.wt
-#' @method cov.wt matrix
-#' @export
-cov.wt.matrix <- function(x, wt = NULL, cor = FALSE, center = TRUE, method = "unbiased", ...) {
-    .Call(`_SLmetrics_covariance_matrix`, x, wt, cor, center, method)
-}
-
-#' @rdname cov.wt
-#' @method cov.wt data.frame
-#' @export
-cov.wt.data.frame <- function(x, wt = NULL, cor = FALSE, center = TRUE, method = "unbiased", ...) {
-    .Call(`_SLmetrics_covariance_dataframe`, x, wt, cor, center, method)
-}
-
 .openmp_available <- function() {
     .Call(`_SLmetrics_openmp_available`)
 }

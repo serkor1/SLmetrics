@@ -10,6 +10,8 @@
 \item{x}{A <\link{matrix}> to be sorted}
 
 \item{decreasing}{A <\link{logical}>}
+
+\item{...}{Arguments passed into other methods}
 }
 \value{
 A <\link{matrix}> of same dimensions as the input <\link{matrix}>

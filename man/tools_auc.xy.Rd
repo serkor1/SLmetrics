@@ -48,8 +48,4 @@ endpoint of each subinterval to form rectangles. With the same partition
 }
 }
 
-\seealso{
-Other Tools: 
-\code{\link{cov.wt.matrix}()}
-}
 \concept{Tools}

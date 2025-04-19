@@ -3,7 +3,7 @@
 \docType{data}
 \name{banknote}
 \alias{banknote}
-\title{Banknote Authentication Dataset}
+\title{Banknote authentication dataset}
 \format{
 A list with two components:
 \describe{
@@ -23,8 +23,7 @@ data(banknote)
 This dataset contains features extracted from the wavelet transform of banknote
 images, which are used to classify banknotes as authentic or inauthentic. The data
 originates from the UCI Machine Learning Repository.
-}
-\details{
+
 The data is provided as a list with two components:
 
 \describe{

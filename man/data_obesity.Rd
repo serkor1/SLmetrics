@@ -3,7 +3,7 @@
 \docType{data}
 \name{obesity}
 \alias{obesity}
-\title{Obesity Levels Dataset}
+\title{Obesity levels dataset}
 \format{
 A list with two components:
 \describe{
@@ -21,8 +21,7 @@ data(obesity)
 This dataset is used to estimate obesity levels based on eating habits and physical
 condition. The data originates from the UCI Machine Learning Repository and has been
 preprocessed to include both predictors and a target variable.
-}
-\details{
+
 The dataset is provided as a list with two components:
 
 \describe{

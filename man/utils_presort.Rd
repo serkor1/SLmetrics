@@ -16,6 +16,9 @@ presort(...)
     \item{\code{decreasing}}{A <\link{logical}>}
   }}
 }
+\value{
+A sorted container
+}
 \description{
 A generic S3 function for somehting long. This function dispatches to S3 methods in \code{\link[=presort]{presort()}} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
 \subsection{Defensive measures}{

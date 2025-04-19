@@ -16,6 +16,9 @@ preorder(...)
     \item{\code{decreasing}}{A <\link{logical}>}
   }}
 }
+\value{
+A container of sorted indices
+}
 \description{
 A generic S3 function for somehting long. This function dispatches to S3 methods in \code{\link[=preorder]{preorder()}} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
 \subsection{Defensive measures}{
