@@ -35,11 +35,8 @@ jobs:
 
       - name: Sync docs folder
         run: |
-            rsync -av \
-            --delete \
-            --exclude='.*' \
-            main/md_docs/ \
-            online-docs/
+         rm -rf online-docs/*
+         cp -R main/md_docs/* online-docs/
 
       - name: Commit & push to online-docs
         working-directory: online-docs
