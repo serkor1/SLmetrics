@@ -1,16 +1,23 @@
 # script: Build MD
 # author: Serkan Korkmaz
-# date: 2025-19-04
+# date: 2025-04-19
 # objective: Convert .Rd files to Markdown
 # via Pandoc and Rd2HTML from {tools}
 # script start;
 
 # 1) list all .RD files
-#    in man/ by task
-all_files <- list.files(
-  path = "man",
-  pattern = "classification_|regression_",
-  full.names = TRUE
+#    in man/ by task and
+#    remove those with "documentation"
+all_files <- grep(
+  pattern = "documentation",
+  # List all files
+  x = list.files(
+    path = "man",
+    pattern = "classification_|regression_",
+    full.names = TRUE
+  ), # list.files end
+  invert = TRUE,
+  value = TRUE
 )
 
 # 1.1) split file names
@@ -39,7 +46,7 @@ all_files <- split(all_files, tasks)
 all_metrics <- lapply(all_files, function(x){
 
   metrics <- unique(gsub(
-    pattern = "classification_|regression_|weighted.|.factor|.numeric|.matrix|.cmatrix|.Rd",
+    pattern = "classification_|regression_|weighted\\.|\\.factor|\\.numeric|\\.matrix|\\.cmatrix|\\.Rd",
     replacement = "",
     basename(x)
   ))
@@ -71,7 +78,7 @@ files_by_task_and_metric <- mapply(
 )
 
 # 3) Write the HTML files
-#    to a temprary location
+#    to a temporary location
 out_base <- tempdir()
 for (task in names(files_by_task_and_metric)) {
   
