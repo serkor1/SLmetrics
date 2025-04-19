@@ -1193,13 +1193,22 @@ cov.wt.data.frame <- function(x, wt = NULL, cor = FALSE, center = TRUE, method =
     .Call(`_SLmetrics_use_threads`, value)
 }
 
-#' @method presort matrix
+#' @returns NULL
+#'
+#' @templateVar .FUN presort
+#' @templateVar .METHOD matrix
+#' @template utils_ordering_inherit
+#'
 #' @export
 presort.matrix <- function(x, decreasing = FALSE, ...) {
     .Call(`_SLmetrics_sort_matrix`, x, decreasing)
 }
 
-#' @method preorder matrix
+#' @returns NULL
+#' @templateVar .FUN preorder
+#' @templateVar .METHOD matrix
+#' @template utils_ordering_inherit
+#'
 #' @export
 preorder.matrix <- function(x, decreasing = FALSE, ...) {
     .Call(`_SLmetrics_order_matrix`, x, decreasing)
