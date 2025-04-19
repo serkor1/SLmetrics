@@ -10,9 +10,10 @@
 #' 
 #' @templateVar .TITLE root mean squared error
 #' @templateVar .FUN rmse
+#' @templateVar .TASK regression
+#' 
+#' @template generic_description
 #' @template regression_standard_template
-#' @template regression_standard_params
-#' @usage NULL
 #' 
 #' @export
 rmse <- function(...) {
@@ -21,12 +22,14 @@ rmse <- function(...) {
   )
 }
 
-#' @rdname rmse
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Root Mean
-#' ## Squared Error
-#' weighted.rmse(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE root mean squared error
+#' @templateVar .FUN rmse
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.rmse <- function(...) {
   UseMethod(

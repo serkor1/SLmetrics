@@ -8,10 +8,12 @@
 #' @usage NULL
 #' @returns NULL
 #' 
-#' @templateVar .TITLE mean squeared error
+#' @templateVar .TITLE mean squared error
 #' @templateVar .FUN mse
+#' @templateVar .TASK regression
+#' 
+#' @template generic_description
 #' @template regression_standard_template
-#' @template regression_standard_params
 #' 
 #' @export
 mse <- function(...) {
@@ -20,11 +22,14 @@ mse <- function(...) {
   )
 }
 
-#' @rdname mse
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Mean Squared Error
-#' weighted.mse(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE mean squared error
+#' @templateVar .FUN mse
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.mse <- function(...) {
   UseMethod(

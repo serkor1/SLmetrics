@@ -1,7 +1,7 @@
 # script: Brier Score
 # date: 2025-04-16
 # author: Serkan Korkmaz, serkor1@duck.com
-# objective: Generate methods for accuracy
+# objective: Generate methods for Brier Score
 # script start;
 
 #' @title NULL
@@ -11,6 +11,8 @@
 #' @templateVar .TITLE Brier Score
 #' @templateVar .FUN brier.score
 #' @templateVar .TASK Classification
+#' 
+#' @template generic_description
 #' @template classification_proper_template
 #'
 #' @export
@@ -20,11 +22,14 @@ brier.score <- function(...) {
   )
 }
 
-#' @rdname brier.score
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Brier Score
-#' weighted.brier.score(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE Brier Score
+#' @templateVar .FUN brier.score
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.brier.score <- function(...) {
   UseMethod(

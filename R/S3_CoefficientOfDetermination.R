@@ -10,27 +10,30 @@
 #' 
 #' @templateVar .TITLE \eqn{R^2}
 #' @templateVar .FUN rsq
+#' @templateVar .TASK regression
+#' 
+#' @template generic_description
 #' @template regression_standard_template
-#' @template regression_standard_params
 #' 
 #' @export
 rsq <- function(...) {
   UseMethod(
-    generic = "rsq",
-    object  = ..1
+    generic = "rsq"
   )
 }
 
-#' @rdname rsq
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted \eqn{R^2}
-#' weighted.rsq(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE \eqn{R^2}
+#' @templateVar .FUN rsq
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.rsq <- function(...) {
   UseMethod(
-    generic = "weighted.rsq",
-    object  = ..1
+    generic = "weighted.rsq"
   )
 }
 

@@ -12,26 +12,29 @@
 #' @templateVar .FUN fbeta
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT true
+#' 
+#' @template generic_description
 #' @template classification_standard_template
 #'
 #' @export
 fbeta <- function(...) {
   UseMethod(
-    generic = "fbeta",
-    object  = ..1
+    generic = "fbeta"
   )
 }
 
-#' @rdname fbeta
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted \eqn{F_{\beta}}
-#' weighted.fbeta(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE \eqn{F_{\beta}}
+#' @templateVar .FUN fbeta
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.fbeta <- function(...) {
   UseMethod(
-    generic = "weighted.fbeta",
-    object  = ..1
+    generic = "weighted.fbeta"
   )
 }
 

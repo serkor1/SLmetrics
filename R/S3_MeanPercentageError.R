@@ -10,8 +10,10 @@
 #' 
 #' @templateVar .TITLE mean percentage error
 #' @templateVar .FUN mpe
+#' @templateVar .TASK regression
+#' 
+#' @template generic_description
 #' @template regression_standard_template
-#' @template regression_standard_params
 #' 
 #' @export
 mpe <- function(...) {
@@ -20,11 +22,14 @@ mpe <- function(...) {
   )
 }
 
-#' @rdname mpe
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Mean Percentage Error
-#' weighted.mpe(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE mean percentage error
+#' @templateVar .FUN mpe
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.mpe <- function(...) {
   UseMethod(

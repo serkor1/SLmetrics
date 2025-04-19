@@ -11,11 +11,10 @@
 #' @templateVar .TITLE shannon entropy
 #' @templateVar .FUN shannon.entropy
 #' @templateVar .TASK Classification
-#' @templateVar .METHOD matrix
+#' 
+#' @template generic_description
 #' @template classification_entropy_template
 #' 
-#' @inheritDotParams shannon.entropy.matrix
-#'
 #' @export
 shannon.entropy <- function(...) {
   UseMethod(
@@ -30,12 +29,10 @@ shannon.entropy <- function(...) {
 #' @templateVar .TITLE relative entropy
 #' @templateVar .FUN relative.entropy
 #' @templateVar .TASK Classification
-#' @templateVar .METHOD matrix
+#' 
+#' @template generic_description
 #' @template classification_entropy_template
 #' 
-#' @inheritDotParams relative.entropy.matrix
-#' @usage NULL
-#'
 #' @export
 relative.entropy <- function(...) {
   UseMethod(
@@ -50,11 +47,9 @@ relative.entropy <- function(...) {
 #' @templateVar .TITLE cross entropy
 #' @templateVar .FUN cross.entropy
 #' @templateVar .TASK Classification
-#' @templateVar .METHOD matrix
+#' 
+#' @template generic_description
 #' @template classification_entropy_template
-#'
-#' @inheritDotParams cross.entropy.matrix
-#' @usage NULL
 #' 
 #' @export
 cross.entropy <- function(...) {

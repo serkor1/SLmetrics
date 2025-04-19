@@ -6,21 +6,15 @@
 
 #' @title NULL
 #' @usage NULL
-#' @returns NULL
 #' 
 #' @templateVar .TITLE Reciever Operator Characteristics
 #' @templateVar .FUN roc.curve
 #' @templateVar .TYPE not_auc
 #' @templateVar .TASK Classification
-#' @template classification_auc_params
+#' 
+#' @template generic_description
 #' @template classification_auc_template
 #' 
-#' @usage
-#' ## Generic S3 method
-#' ## for unweighted Reciever
-#' ## Operator Characteristics
-#' roc.curve(...)
-#'
 #' @returns A [data.frame] on the following form,
 #'
 #' \item{threshold}{<[numeric]> Thresholds used to determine [tpr()] and [fpr()]}
@@ -28,11 +22,7 @@
 #' \item{label}{<[character]> The levels of the actual <[factor]>}
 #' \item{fpr}{<[numeric]> The false positive rate}
 #' \item{tpr}{<[numeric]> The true positve rate}
-#'
-#'
-#' @family Classification
-#' @family Supervised Learning
-#'
+#' 
 #' @export
 roc.curve <- function(...) {
   UseMethod(
@@ -40,12 +30,14 @@ roc.curve <- function(...) {
   )
 }
 
-#' @rdname roc.curve
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Receiver
-#' ## Operator Characteristics
-#' weighted.roc.curve(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE Reciever Operator Characteristics
+#' @templateVar .FUN roc.curve
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.roc.curve <- function(...) {
   UseMethod(
@@ -61,7 +53,8 @@ weighted.roc.curve <- function(...) {
 #' @templateVar .FUN auc.roc.curve
 #' @templateVar .TYPE auc
 #' @templateVar .TASK Classification
-#' @template classification_auc_params
+#' 
+#' @template generic_description
 #' @template classification_auc_template
 #' 
 #' @usage
@@ -78,13 +71,14 @@ auc.roc.curve <- function(...) {
   )
 }
 
-#' @rdname auc.roc.curve
-#' @usage
-#' ## Generic S3 method for
-#' ## weighted area under the
-#' ## Receiver Operator Characteristics
-#' ## Curve
-#' weighted.auc.roc.curve(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE Area under the Receiver Operator Characteristics Curve
+#' @templateVar .FUN auc.roc.curve
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.auc.roc.curve <- function(...) {
   UseMethod(
@@ -129,7 +123,7 @@ summary.ROC <- function(
   metric <- vapply(
     x_list, 
     function(x) {
-      xy.auc(
+      auc.xy(
         y = x$tpr,
         x = x$fpr
       )

@@ -1,10 +1,10 @@
 #' @inherit <%= .FUN %>
 #' 
-#' @rdname <%= .FUN %>.<%= .METHOD %>
+#' @rdname classification_<%= .FUN %>.<%= .METHOD %>
 #' @name <%= .FUN %>.<%= .METHOD %>
 #' @method <%= .FUN %> <%= .METHOD %>
-#' @inheritParams classification_documentation
 #' 
+#' @inheritParams classification_documentation
 #' 
 #' @examples
 #' ## Classes and
@@ -15,20 +15,20 @@
 #' ## Generate actual
 #' ## and predicted classes
 #' actual_classes <- factor(
-#'     x = sample(x = classes, size = 10, replace = TRUE),
+#'     x = sample(x = classes, size = 1e3, replace = TRUE),
 #'     levels = c("Kebab", "Falafel")
 #' )
 #' 
 #' predicted_classes <- factor(
-#'     x = sample(x = classes, size = 10, replace = TRUE),
+#'     x = sample(x = classes, size = 1e3, replace = TRUE),
 #'     levels = c("Kebab", "Falafel")
 #')
 #' 
 <% if (tolower(.METHOD) == "factor" && !grepl(pattern = "weighted", x = .FUN)) { %>
-#' ## Evaluate performance
+#' ## <%= if (grepl(pattern = "cmatrix", x = .FUN)) "Compute confusion matrix" else "Evaluate performance" %>
 #' SLmetrics::<%= .FUN %>(
-#'    actual_classes, 
-#'    predicted_classes
+#'    actual    = actual_classes, 
+#'    predicted = predicted_classes
 #' )
 <% } %>
 #' 
@@ -51,11 +51,11 @@
 #'    n = length(actual_classes)
 #' )
 #' 
-#' ## Evaluate performance
+#' ## <%= if (grepl(pattern = "cmatrix", x = .FUN)) "Compute confusion matrix" else "Evaluate performance" %>
 #' SLmetrics::<%= .FUN %>(
-#'    actual_classes, 
-#'    predicted_classes, 
-#'    sample_weights
+#'    actual    = actual_classes, 
+#'    predicted = predicted_classes, 
+#'    w         = sample_weights
 #' )
 <% } %>
 #' 

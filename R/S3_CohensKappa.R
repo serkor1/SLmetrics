@@ -12,6 +12,8 @@
 #' @templateVar .FUN ckappa
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT false
+#' 
+#' @template generic_description
 #' @template classification_standard_template
 #'
 #' @export
@@ -21,12 +23,14 @@ ckappa <- function(...) {
   )
 }
 
-#' @rdname ckappa
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Cohen's
-#' ## Kappa statistic
-#' weighted.ckappa(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE Cohen's \eqn{\kappa}-statistic
+#' @templateVar .FUN ckappa
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.ckappa <- function(...) {
   UseMethod(

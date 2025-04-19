@@ -3,10 +3,7 @@
 
 using namespace Rcpp;
 
-//' @rdname cov.wt
-//' @method cov.wt matrix
-//' @export
-// [[Rcpp::export(cov.wt.matrix)]]
+
 Rcpp::List covariance_matrix(const Rcpp::NumericMatrix& x, const Rcpp::Nullable<Rcpp::NumericVector>& wt = R_NilValue, bool cor = false, bool center = true, const std::string& method = "unbiased") {
 
     if (wt.isNotNull()) {
@@ -20,10 +17,6 @@ Rcpp::List covariance_matrix(const Rcpp::NumericMatrix& x, const Rcpp::Nullable<
 
 }
 
-//' @rdname cov.wt
-//' @method cov.wt data.frame
-//' @export
-// [[Rcpp::export(cov.wt.data.frame)]]
 Rcpp::List covariance_dataframe(const Rcpp::DataFrame& x, const Rcpp::Nullable<Rcpp::NumericVector>& wt = R_NilValue, bool cor = false, bool center = true, const std::string& method = "unbiased") {
 
      if (wt.isNotNull()) {

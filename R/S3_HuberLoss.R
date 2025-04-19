@@ -8,10 +8,12 @@
 #' @usage NULL
 #' @returns NULL
 #' 
-#' @templateVar .TITLE Huber Loss Function
+#' @templateVar .TITLE Huber Loss
 #' @templateVar .FUN huberloss
+#' @templateVar .TASK regression
+#' 
+#' @template generic_description
 #' @template regression_standard_template
-#' @template regression_standard_params
 #' 
 #' @export
 huberloss <- function(...) {
@@ -20,11 +22,14 @@ huberloss <- function(...) {
   )
 }
 
-#' @rdname huberloss
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Huber Loss
-#' weighted.huberloss(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE Huber Loss
+#' @templateVar .FUN huberloss
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.huberloss <- function(...) {
   UseMethod(

@@ -11,14 +11,9 @@
 #' @templateVar .FUN pr.curve
 #' @templateVar .TYPE not_auc
 #' @templateVar .TASK Classification
-#' @template classification_auc_params
-#' @template classification_auc_template
 #' 
-#' @usage
-#' ## Generic S3 method
-#' ## for unweighted Precision
-#' ## Recall Curve
-#' pr.curve(...)
+#' @template generic_description
+#' @template classification_auc_template
 #' 
 #' @returns A [data.frame] on the following form,
 #'
@@ -27,9 +22,6 @@
 #' \item{label}{<[character]> The levels of the actual <[factor]>}
 #' \item{recall}{<[numeric]> The recall}
 #' \item{precision}{<[numeric]> The precision}
-#'
-#' @family Classification
-#' @family Supervised Learning
 #' 
 #' @export
 pr.curve <- function(...) {
@@ -38,12 +30,14 @@ pr.curve <- function(...) {
   )
 }
 
-#' @rdname pr.curve
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Precision
-#' ## Recall Curve
-#' weighted.pr.curve(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE Precision Recall Curve
+#' @templateVar .FUN pr.curve
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.pr.curve <- function(...) {
   UseMethod(
@@ -59,7 +53,8 @@ weighted.pr.curve <- function(...) {
 #' @templateVar .FUN auc.pr.curve
 #' @templateVar .TYPE auc
 #' @templateVar .TASK Classification
-#' @template classification_auc_params
+#' 
+#' @template generic_description
 #' @template classification_auc_template
 #' 
 #' @usage
@@ -75,12 +70,13 @@ auc.pr.curve <- function(...) {
   )
 }
 
-#' @rdname auc.pr.curve
-#' @usage
-#' ## Generic S3 method for
-#' ## weighted area under the
-#' ## Precision Recall Curve
-#' weighted.auc.pr.curve(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE Area under the Precision Recall Curve
+#' @templateVar .FUN auc.pr.curve
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
 #' 
 #' @rawNamespace export(weighted.auc.pr.curve)
 weighted.auc.pr.curve <- function(...) {
@@ -126,7 +122,7 @@ summary.prROC <- function(
   metric <- vapply(
     x_list, 
     function(x) {
-      xy.auc(
+      auc.xy(
         y = x$precision,
         x = x$recall
       )

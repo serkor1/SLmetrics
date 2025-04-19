@@ -12,27 +12,29 @@
 #' @templateVar .FUN npv
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT true
-#' @template classification_standard_template
 #' 
+#' @template generic_description
+#' @template classification_standard_template
+#'
 #' @export
 npv <- function(...) {
   UseMethod(
-    generic = "npv",
-    object  = ..1
+    generic = "npv"
   )
 }
 
-#' @rdname npv
-#' @usage 
-#' ## Generic S3 method
-#' ## for weighted Negative
-#' ## Predictive Value
-#' npv(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE Negative Predictive Value
+#' @templateVar .FUN npv
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.npv <- function(...) {
   UseMethod(
-    generic = "weighted.npv",
-    object  = ..1
+    generic = "weighted.npv"
   )
 }
 

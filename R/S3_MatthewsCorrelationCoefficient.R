@@ -14,6 +14,8 @@
 #' @templateVar .FUN mcc
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT false
+#' 
+#' @template generic_description
 #' @template classification_standard_template
 #'
 #' @section Other names:
@@ -24,38 +26,36 @@
 #' @export
 mcc <- function(...) {
   UseMethod(
-    generic = "mcc",
-    object = ..1
+    generic = "mcc"
   )
 }
 
-#' @rdname mcc
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Matthews
-#' ## Correlation Coefficient
-#' weighted.mcc(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE Matthews Correlation Coefficient
+#' @templateVar .FUN mcc
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.mcc <- function(...) {
   UseMethod(
-    generic = "weighted.mcc",
-    object = ..1
+    generic = "weighted.mcc"
   )
 }
 
 #' @export
 phi <- function(...) {
   UseMethod(
-    generic = "phi",
-    object = ..1
+    generic = "phi"
   )
 }
 
 #' @export
 weighted.phi <- function(...) {
   UseMethod(
-    generic = "weighted.phi",
-    object = ..1
+    generic = "weighted.phi"
   )
 }
 

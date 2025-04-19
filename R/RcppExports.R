@@ -110,13 +110,19 @@ ckappa.cmatrix <- function(x, beta = 0.0, ...) {
     .Call(`_SLmetrics_cmatrix_cohens_kappa`, x, beta)
 }
 
-#' @method cmatrix factor
+#' @templateVar .FUN cmatrix
+#' @templateVar .METHOD factor
+#' @template classification_standard_inherit
+#'
 #' @export
 cmatrix.factor <- function(actual, predicted, ...) {
     .Call(`_SLmetrics_confusion_matrix`, actual, predicted)
 }
 
-#' @method weighted.cmatrix factor
+#' @templateVar .FUN weighted.cmatrix
+#' @templateVar .METHOD factor
+#' @template classification_standard_inherit
+#'
 #' @export
 weighted.cmatrix.factor <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_confusion_matrix`, actual, predicted, w)
@@ -1138,25 +1144,19 @@ weighted.deviance.tweedie.numeric <- function(actual, predicted, w, power = 2.0,
     .Call(`_SLmetrics_weighted_tweedie_deviance`, actual, predicted, w, power)
 }
 
-#' @rdname xy.auc
-#' @method xy.auc numeric
-#' @rawNamespace S3method(xy.auc,numeric)
-xy.auc.numeric <- function(y, x, method = 0L, presorted = TRUE, ...) {
+#' @title Area under the curve
+#'
+#' @rdname tools_auc.xy.numeric
+#' @method auc.xy numeric
+#'
+#' @param y,x A pair of <[double]> vectors of [length] \eqn{n}.
+#' @param method A <[integer]> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the `trapezoid`-method, if \eqn{1} it is calculated using the `step`-method.
+#' @param presorted A <[logical]>-value [length] 1 (default: [FALSE]). If [TRUE] the input will not be sorted by threshold.
+#' @param ... Arguments passed into other methods.
+#'
+#' @export
+auc.xy.numeric <- function(y, x, method = 0L, presorted = TRUE, ...) {
     .Call(`_SLmetrics_auc`, y, x, method, presorted)
-}
-
-#' @rdname cov.wt
-#' @method cov.wt matrix
-#' @export
-cov.wt.matrix <- function(x, wt = NULL, cor = FALSE, center = TRUE, method = "unbiased", ...) {
-    .Call(`_SLmetrics_covariance_matrix`, x, wt, cor, center, method)
-}
-
-#' @rdname cov.wt
-#' @method cov.wt data.frame
-#' @export
-cov.wt.data.frame <- function(x, wt = NULL, cor = FALSE, center = TRUE, method = "unbiased", ...) {
-    .Call(`_SLmetrics_covariance_dataframe`, x, wt, cor, center, method)
 }
 
 .openmp_available <- function() {
@@ -1179,13 +1179,22 @@ cov.wt.data.frame <- function(x, wt = NULL, cor = FALSE, center = TRUE, method =
     .Call(`_SLmetrics_use_threads`, value)
 }
 
-#' @method presort matrix
+#' @returns NULL
+#'
+#' @templateVar .FUN presort
+#' @templateVar .METHOD matrix
+#' @template utils_ordering_inherit
+#'
 #' @export
 presort.matrix <- function(x, decreasing = FALSE, ...) {
     .Call(`_SLmetrics_sort_matrix`, x, decreasing)
 }
 
-#' @method preorder matrix
+#' @returns NULL
+#' @templateVar .FUN preorder
+#' @templateVar .METHOD matrix
+#' @template utils_ordering_inherit
+#'
 #' @export
 preorder.matrix <- function(x, decreasing = FALSE, ...) {
     .Call(`_SLmetrics_order_matrix`, x, decreasing)

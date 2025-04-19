@@ -21,58 +21,57 @@
 #' @templateVar .FUN specificity
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT true
-#' @template classification_standard_template
 #' 
+#' @template generic_description
+#' @template classification_standard_template
+#'
 #' @export
 specificity <- function(...) {
   UseMethod(
-    generic = "specificity",
-    object  = ..1
+    generic = "specificity"
   )
 }
 
-#' @rdname specificity
-#' @usage 
-#' ## Generic S3 method
-#' ## for weighted specificity
-#' weighted.specificity(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE specificity
+#' @templateVar .FUN specificity
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.specificity <- function(...) {
     UseMethod(
-      generic = "weighted.specificity",
-      object  = ..1
+      generic = "weighted.specificity"
     )
 }
 
 #' @export
 tnr <- function(...) {
   UseMethod(
-    generic = "tnr",
-    object  = ..1
+    generic = "tnr"
   )
 }
 
 #' @export
 weighted.tnr <- function(...) {
     UseMethod(
-      generic = "weighted.tnr",
-      object  = ..1
+      generic = "weighted.tnr"
     )
-  }
+}
 
 #' @export
 selectivity <- function(...) {
   UseMethod(
-    generic = "selectivity",
-    object  = ..1
+    generic = "selectivity"
   )
 }
 
 #' @export
 weighted.selectivity <- function(...) {
   UseMethod(
-    generic = "weighted.selectivity",
-    object  = ..1
+    generic = "weighted.selectivity"
   )
 }
 

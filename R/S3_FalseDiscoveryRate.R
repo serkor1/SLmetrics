@@ -12,27 +12,29 @@
 #' @templateVar .FUN fdr
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT true
-#' @template classification_standard_template
 #' 
+#' @template generic_description
+#' @template classification_standard_template
+#'
 #' @export
 fdr <- function(...) {
   UseMethod(
-    generic = "fdr",
-    object   = ..1
+    generic = "fdr"
   )
 }
 
-#' @rdname fdr
-#' @usage 
-#' ## Generic S3 method for
-#' ## weighted False Discovery
-#' ## Rate
-#' weighted.fdr(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE false discovery rate
+#' @templateVar .FUN fdr
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.fdr <- function(...) {
   UseMethod(
-    generic = "weighted.fdr",
-    object   = ..1
+    generic = "weighted.fdr"
   )
 }
 

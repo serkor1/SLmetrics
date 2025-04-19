@@ -11,13 +11,9 @@
 #' @templateVar .TITLE Logarithmic Loss
 #' @templateVar .FUN logloss
 #' @templateVar .TASK Classification
-#' @templateVar .METHOD matrix
-#' @template classification_entropy_template
 #' 
-#' @inheritDotParams logloss.integer
-#' @inheritDotParams weighted.logloss.integer
-#' @inheritDotParams logloss.factor
-#' @inheritDotParams weighted.logloss.factor
+#' @template generic_inherit
+#' @template classification_entropy_template
 #' 
 #' @export
 logloss <- function(...) {
@@ -26,11 +22,13 @@ logloss <- function(...) {
   )
 }
 
-#' @rdname logloss
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Logarithmic Loss
-#' weighted.logloss(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE Logarithmic Loss
+#' @templateVar .FUN logloss
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
 #' 
 #' @export
 weighted.logloss <- function(...) {

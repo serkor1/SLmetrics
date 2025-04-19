@@ -10,25 +10,30 @@
 #' 
 #' @templateVar .TITLE concordance correlation coefficient
 #' @templateVar .FUN ccc
+#' @templateVar .TASK regression
+#' 
+#' @template generic_description
 #' @template regression_standard_template
-#' @template regression_standard_params
 #' 
 #' @export
 ccc <- function(...) {
   UseMethod(
-    generic = "ccc",
-    object  = ..1
+    generic = "ccc"
   )
 }
 
-#' @rdname ccc
-#' @usage
-#' weighted.ccc(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE concordance correlation coefficient
+#' @templateVar .FUN ccc
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.ccc <- function(...) {
   UseMethod(
-    generic = "weighted.ccc",
-    object  = ..1
+    generic = "weighted.ccc"
   )
 }
 

@@ -20,58 +20,57 @@
 #' @templateVar .FUN recall
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT true
-#' @template classification_standard_template
 #' 
+#' @template generic_description
+#' @template classification_standard_template
+#'
 #' @export
 recall <- function(...) {
   UseMethod(
-    generic = "recall",
-    object  = ..1
+    generic = "recall"
   )
 }
 
-#' @rdname recall
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted recall
-#' weighted.recall(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE recall
+#' @templateVar .FUN recall
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.recall <- function(...) {
   UseMethod(
-    generic = "weighted.recall",
-    object  = ..1
+    generic = "weighted.recall"
   )
 }
 
 #' @export
 sensitivity <- function(...) {
   UseMethod(
-    generic = "sensitivity",
-    object  = ..1
+    generic = "sensitivity"
   )
 }
 
 #' @export
 weighted.sensitivity <- function(...) {
   UseMethod(
-    generic = "weighted.sensitivity",
-    object  = ..1
+    generic = "weighted.sensitivity"
   )
 }
 
 #' @export
 tpr <- function(...) {
   UseMethod(
-    generic = "tpr",
-    object  = ..1
+    generic = "tpr"
   )
 }
 
 #' @export
 weighted.tpr <- function(...) {
   UseMethod(
-    generic = "weighted.tpr",
-    object  = ..1
+    generic = "weighted.tpr"
   )
 }
 

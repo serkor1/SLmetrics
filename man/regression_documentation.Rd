@@ -4,7 +4,7 @@
 \alias{regression_documentation}
 \title{Regression Documenatation}
 \arguments{
-\item{actual, predicted}{A pair of <\link{double}> vectors of \link{length} \eqn{n}, and \eqn{k} levels.}
+\item{actual, predicted}{A pair of <\link{double}> vectors of \link{length} \eqn{n}.}
 
 \item{w}{A <\link{double}> vector of sample weights.}
 

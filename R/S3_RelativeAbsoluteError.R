@@ -10,8 +10,10 @@
 #' 
 #' @templateVar .TITLE Relative Absolute Error
 #' @templateVar .FUN rae
+#' @templateVar .TASK regression
+#' 
+#' @template generic_description
 #' @template regression_standard_template
-#' @template regression_standard_params
 #' 
 #' @export
 rae <- function(...) {
@@ -20,11 +22,14 @@ rae <- function(...) {
   )
 }
 
-#' @rdname rae
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Relative Absolute Error
-#' weighted.rae(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE Relative Absolute Error
+#' @templateVar .FUN rae
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.rae <- function(...) {
   UseMethod(

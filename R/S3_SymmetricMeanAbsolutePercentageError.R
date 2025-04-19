@@ -10,8 +10,10 @@
 #' 
 #' @templateVar .TITLE Symmetric Mean Absolutte Percentage Error
 #' @templateVar .FUN smape
+#' @templateVar .TASK regression
+#' 
+#' @template generic_description
 #' @template regression_standard_template
-#' @template regression_standard_params
 #' 
 #' @export
 smape <- function(...) {
@@ -20,11 +22,14 @@ smape <- function(...) {
   )
 }
 
-#' @rdname smape
-#' @usage
-#' ## Generic S3 method
-#' ## for weighted Symmetric Mean Absolutte Percentage Error
-#' weighted.smape(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE Symmetric Mean Absolutte Percentage Error
+#' @templateVar .FUN smape
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.smape <- function(...) {
   UseMethod(

@@ -12,25 +12,29 @@
 #' @templateVar .FUN zerooneloss
 #' @templateVar .TASK Classification
 #' @templateVar .MULTI_OUTPUT false
-#' @template classification_standard_template
 #' 
+#' @template generic_description
+#' @template classification_standard_template
+#'
 #' @export
 zerooneloss <- function(...) {
   UseMethod(
-    generic = "zerooneloss",
-    object  = ..1
+    generic = "zerooneloss"
   )
 }
 
-#' @rdname zerooneloss
-#' @usage
-#' ## Generic S3 method
-#' weighted.zerooneloss(...)
+#' @usage NULL
+#' 
+#' @templateVar .TITLE Zero-One Loss
+#' @templateVar .FUN zerooneloss
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
 weighted.zerooneloss <- function(...) {
   UseMethod(
-    generic = "weighted.zerooneloss",
-    object  = ..1
+    generic = "weighted.zerooneloss"
   )
 }
 
