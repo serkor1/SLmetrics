@@ -42,7 +42,7 @@ DT[
 # as wine_quality
 
 # 4.1) convert to data.frame
-wine_quality <- list(
+wine.quality <- list(
   features = as.data.frame(DT[,-c("class", "quality")]),
   target   = list(
     regression = DT$quality,
@@ -52,7 +52,7 @@ wine_quality <- list(
 
 # 4.2) store
 usethis::use_data(
-  wine_quality,
+  wine.quality,
   internal = FALSE,
   overwrite = TRUE
 )

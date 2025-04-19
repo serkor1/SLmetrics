@@ -1,5 +1,8 @@
-#' Obesity Levels Dataset
+#' @rdname data_obesity
+#' 
+#' @title Obesity levels dataset
 #'
+#' @description
 #' This dataset is used to estimate obesity levels based on eating habits and physical
 #' condition. The data originates from the UCI Machine Learning Repository and has been
 #' preprocessed to include both predictors and a target variable.

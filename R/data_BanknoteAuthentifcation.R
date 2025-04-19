@@ -1,5 +1,8 @@
-#' Banknote Authentication Dataset
+#' @rdname data_banknote
+#' 
+#' @title Banknote authentication dataset
 #'
+#' @description
 #' This dataset contains features extracted from the wavelet transform of banknote
 #' images, which are used to classify banknotes as authentic or inauthentic. The data
 #' originates from the UCI Machine Learning Repository.
