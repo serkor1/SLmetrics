@@ -71,6 +71,7 @@ files_by_task_and_metric <- mapply(
         paths[grepl(paste0("_", m, "\\."), basename(paths))]
       }),
       metrics
+      
     )
   },
   paths   = all_files,
@@ -81,9 +82,26 @@ files_by_task_and_metric <- mapply(
 # 2.2.1) Rename each element
 #        to task metrics - this will be displayed 
 #        properly by Gitbook
+
+files_by_task_and_metric$classification <- setNames(
+    object = files_by_task_and_metric$classification,
+    nm = sapply(files_by_task_and_metric$classification, function(x){
+        as.character(Filter(function(x) attr(x, "Rd_tag")== "\\title", tools::parse_Rd(x[1]))[[1]])
+    })
+)
+
+files_by_task_and_metric$regression <- setNames(
+    object = files_by_task_and_metric$regression,
+    nm = sapply(files_by_task_and_metric$regression, function(x){
+        as.character(Filter(function(x) attr(x, "Rd_tag")== "\\title", tools::parse_Rd(x[1]))[[1]])
+    })
+)
+
 names(files_by_task_and_metric) <- tools::toTitleCase(
     text = paste(names(files_by_task_and_metric), "metrics")
 )
+
+
 
 # 3) Write the HTML files
 #    to a temporary location
@@ -151,6 +169,3 @@ file.copy(
 )
 
 # script end;
-
-
-
