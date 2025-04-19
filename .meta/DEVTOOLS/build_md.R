@@ -106,9 +106,8 @@ html_files <- list.files(
 # 3.2) convert to markdown
 #      and store
 for (html in html_files) {
-  # relative path under html_doc/, then swap to .md under md_docs/
   rel <- sub(out_base, "", html)
-  md  <- file.path("md_docs", sub("\\.html$", ".md", rel))
+  md  <- file.path("gitbook", sub("\\.html$", ".md", rel))
   
   # make sure the directory exists
   dir.create(dirname(md), recursive = TRUE, showWarnings = FALSE)
@@ -122,5 +121,18 @@ for (html in html_files) {
     "-o", shQuote(md)
   ))
 }
+
+
+# 4) move relevant files
+#    to documentation
+file.copy(
+  from = "NEWS.md",
+  to   = "gitbook"
+)
+
+file.copy(
+  from = ".meta/DOCUMENTATION/README.md",
+  to   = "gitbook"
+)
 
 # script end;

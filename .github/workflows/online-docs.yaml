@@ -38,9 +38,8 @@ jobs:
           rsync -av --delete \
             --filter='P .git/' \
             --exclude='.*' \
-            main/md_docs/ \
+            main/gitbook/ \
             online-docs/
-
 
       - name: Commit & push to online-docs
         working-directory: online-docs
