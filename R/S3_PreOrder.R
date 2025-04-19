@@ -21,13 +21,9 @@
 #' A container of sorted indices
 #' 
 #' @export
-preorder <- function(
-  x,
-  decreasing = FALSE,
-  ...) {
+preorder <- function(...) {
   UseMethod(
-    generic = "preorder",
-    object  = x 
+    generic = "preorder"
   )
 }
 

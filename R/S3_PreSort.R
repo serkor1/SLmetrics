@@ -21,13 +21,9 @@
 #' A sorted container
 #' 
 #' @export
-presort <- function(
-  x,
-  decreasing = FALSE,
-  ...) {
+presort <- function(...) {
   UseMethod(
-    generic = "presort",
-    object  = x 
+    generic = "presort"
   )
 }
 

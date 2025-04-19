@@ -25,6 +25,8 @@
 #' ```
 #' 
 <% } %>
+#' 
+#' @param ... Arguments passed into other methods
 #'
 #' 
 #' 
