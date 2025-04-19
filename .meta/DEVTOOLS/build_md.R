@@ -142,6 +142,7 @@ html_files <- list.files(
 for (html in html_files) {
     rel <- sub(out_base, "", html)
     md  <- file.path("gitbook", sub("\\.html$", ".md", rel))
+    md  <- gsub("[a-z]*_", "", md)
     
     # make sure the directory exists
     dir.create(dirname(md), recursive = TRUE, showWarnings = FALSE)
