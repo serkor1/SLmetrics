@@ -3,8 +3,13 @@ name: Gitbook
 permissions:
   contents: write
 
-# Run on any push. Change later
-on: push
+on:
+    push:
+        paths:
+            - 'NEWS.md'
+            - 'man/**'
+            - '.meta/DEVTOOLS/**'
+            - '.meta/DOCUMENTATION/**'
 
 jobs:
   build-docs:
