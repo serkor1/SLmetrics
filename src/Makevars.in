@@ -1,3 +1,0 @@
-PKG_CPPFLAGS = -I../inst/include -I../inst/include/armadillo-code/include @PKG_CPPFLAGS@
-PKG_CXXFLAGS = @OPENMP_FLAG@ @PKG_CXXFLAGS@
-PKG_LIBS     = @OPENMP_FLAG@ @PKG_LIBS@

@@ -1,6 +1,0 @@
-*.o
-*.so
-*.dll
-CMakeLists.txt
-cmake-build-debug
-.idea/
