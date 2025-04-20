@@ -3,11 +3,11 @@
 \name{logloss}
 \alias{logloss}
 \alias{weighted.logloss}
-\title{@inheritDotParams logloss.integer}
+\title{Logarithmic Loss}
 \usage{
 ## Generic S3 method
-## for weighted Logarithmic Loss
-weighted.logloss(...)
+## for Logarithmic Loss
+logloss(...)
 
 ## Generic S3 method
 ## for weighted Logarithmic Loss
@@ -15,7 +15,7 @@ weighted.logloss(...)
 }
 \arguments{
 \item{...}{
-  Arguments passed on to \code{\link[=logloss.factor]{logloss.factor}}
+  Arguments passed on to \code{\link[=logloss.integer]{logloss.integer}}, \code{\link[=logloss.factor]{logloss.factor}}
   \describe{
     \item{\code{actual}}{A vector \link{length} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
     \item{\code{response}}{A \eqn{n \times k} <\link{double}>-matrix of predicted probabilities.
@@ -31,7 +31,24 @@ sum of cross-entropies is returned.}
 A <\link{double}>
 }
 \description{
-@inheritDotParams logloss.integer
+A generic S3 function to compute the \emph{logarithmic loss} score for a classification model. This function dispatches to S3 methods in \code{\link[=logloss]{logloss()}} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
+\subsection{Defensive measures}{
+
+Because \code{\link[=logloss]{logloss()}} operates on raw pointers, pointer‑level faults (e.g. from \link{NA} or mismatched \link{length}) occur before any \code{R}‑level error handling.  Wrapping calls in \code{\link[=try]{try()}} or \code{\link[=tryCatch]{tryCatch()}} will \emph{not} prevent \code{R}-session crashes.
+
+To guard against this, wrap \code{\link[=logloss]{logloss()}} in a “safe” validator that checks for \link{NA} values and matching \link{length}, for example:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{safe_logloss <- function(x, y, ...) \{
+  stopifnot(
+    !anyNA(x), !anyNA(y),
+    length(x) == length(y)
+  )
+  logloss(x, y, ...)
+\}
+}\if{html}{\out{</div>}}
+
+Apply the same pattern to any custom metric functions to ensure input sanity before calling the underlying \code{C++} code.
+}
 }
 \references{
 MacKay, David JC. Information theory, inference and learning algorithms. Cambridge university press, 2003.
@@ -125,5 +142,11 @@ Other Entropy:
 }
 \concept{Classification}
 \concept{Entropy}
+\concept{Machine learning}
+\concept{Performance evaluation}
+\concept{Statistical learning}
 \concept{Supervised Learning}
+\keyword{classification}
 \keyword{entropy}
+\keyword{evaluation}
+\keyword{regression}

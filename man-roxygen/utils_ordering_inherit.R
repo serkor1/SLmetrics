@@ -1,6 +1,6 @@
 #' @inherit <%= .FUN %>
 #' 
-#' @rdname classification_<%= .FUN %>.<%= .METHOD %>
+#' @rdname utils_<%= .FUN %>.<%= .METHOD %>
 #' @name <%= .FUN %>.<%= .METHOD %>
 #' @method <%= .FUN %> <%= .METHOD %>
 #' 

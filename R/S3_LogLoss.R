@@ -12,7 +12,7 @@
 #' @templateVar .FUN logloss
 #' @templateVar .TASK Classification
 #' 
-#' @template generic_inherit
+#' @template generic_description
 #' @template classification_entropy_template
 #' 
 #' @export

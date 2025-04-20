@@ -1,6 +1,6 @@
 <% if (grepl(pattern = "logloss", x = .FUN)) { %>
 #'
-#'  @inheritDotParams <%= .FUN %>.integer
+#' @inheritDotParams <%= .FUN %>.integer
 #' @inheritDotParams <%= .FUN %>.factor
 #' 
 <% } else { %>
