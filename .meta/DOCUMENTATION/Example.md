@@ -1,3 +1,3 @@
 # Basic Usage
 
-A basic usage example of
+A basic usage example of something
