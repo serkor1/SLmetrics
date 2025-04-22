@@ -43,31 +43,3 @@ evolution strategies (2016): 45-53.
 Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for
 scientific computing in Python." Nature methods 17.3 (2020): 261-272.
 
-### See Also
-
-Other Classification: `accuracy()`, `auc.pr.curve()`, `auc.roc.curve()`,
-`baccuracy()`, `brier.score()`, `ckappa()`, `cmatrix()`,
-`cross.entropy()`, `dor()`, `fbeta()`, `fdr()`, `fer()`, `fmi()`,
-`fpr()`, `hammingloss()`, `jaccard()`, `mcc()`, `nlr()`, `npv()`,
-`plr()`, `pr.curve()`, `precision()`, `recall()`, `relative.entropy()`,
-`roc.curve()`, `shannon.entropy()`, `specificity()`, `zerooneloss()`
-
-Other Supervised Learning: `accuracy()`, `auc.pr.curve()`,
-`auc.roc.curve()`, `baccuracy()`, `brier.score()`, `ccc()`, `ckappa()`,
-`cmatrix()`, `cross.entropy()`, `deviance.gamma()`,
-`deviance.poisson()`, `deviance.tweedie()`, `dor()`, `fbeta()`, `fdr()`,
-`fer()`, `fmi()`, `fpr()`, `hammingloss()`, `huberloss()`, `jaccard()`,
-`mae()`, `mape()`, `mcc()`, `mpe()`, `mse()`, `nlr()`, `npv()`,
-`pinball()`, `plr()`, `pr.curve()`, `precision()`, `rae()`, `recall()`,
-`relative.entropy()`, `rmse()`, `rmsle()`, `roc.curve()`, `rrmse()`,
-`rrse()`, `rsq()`, `shannon.entropy()`, `smape()`, `specificity()`,
-`zerooneloss()`
-
-Other Entropy: `cross.entropy()`, `relative.entropy()`,
-`shannon.entropy()`
-```
-
-{% endcode %}
-```
-
-{% endcode %}

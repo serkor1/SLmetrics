@@ -102,24 +102,6 @@ inference, and prediction." (2009).
 Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for
 scientific computing in Python." Nature methods 17.3 (2020): 261-272.
 
-### See Also
-
-Other Regression: `ccc()`, `deviance.gamma()`, `deviance.poisson()`,
-`deviance.tweedie()`, `huberloss()`, `mape()`, `mpe()`, `mse()`,
-`pinball()`, `rae()`, `rmse()`, `rmsle()`, `rrmse()`, `rrse()`, `rsq()`,
-`smape()`
-
-Other Supervised Learning: `accuracy()`, `auc.pr.curve()`,
-`auc.roc.curve()`, `baccuracy()`, `brier.score()`, `ccc()`, `ckappa()`,
-`cmatrix()`, `cross.entropy()`, `deviance.gamma()`,
-`deviance.poisson()`, `deviance.tweedie()`, `dor()`, `fbeta()`, `fdr()`,
-`fer()`, `fmi()`, `fpr()`, `hammingloss()`, `huberloss()`, `jaccard()`,
-`logloss()`, `mape()`, `mcc()`, `mpe()`, `mse()`, `nlr()`, `npv()`,
-`pinball()`, `plr()`, `pr.curve()`, `precision()`, `rae()`, `recall()`,
-`relative.entropy()`, `rmse()`, `rmsle()`, `roc.curve()`, `rrmse()`,
-`rrse()`, `rsq()`, `shannon.entropy()`, `smape()`, `specificity()`,
-`zerooneloss()`
-
 ### Examples
 
 ``` R

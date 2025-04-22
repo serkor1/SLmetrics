@@ -60,12 +60,3 @@ presort(x, decreasing = FALSE, ...)
 
 A \<matrix\> of same dimensions as the input \<matrix\>
 
-### See Also
-
-Other Utilities: `preorder()`
-```
-
-{% endcode %}
-```
-
-{% endcode %}
