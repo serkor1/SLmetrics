@@ -36,7 +36,7 @@ jobs:
 
       - name: Generate Markdown docs
         working-directory: main
-        run: Rscript .meta/DEVTOOLS/build_md.R
+        run: make preview-docs
 
       - name: Sync docs folder
         run: |

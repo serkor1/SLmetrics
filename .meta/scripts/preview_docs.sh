@@ -1,15 +1,29 @@
 #!/bin/bash
-# Script to preview the documentation
+# 0) error recovery
+set -euo pipefail
 
-# Create required directories if they don't exist
-mkdir -p .meta/DOCUMENTATION/ref_regression
-mkdir -p .meta/DOCUMENTATION/ref_classification
+# 1) build markdown
+#    files
+Rscript .meta/DEVTOOLS/build_md.R
 
-# Run R script to build QMD files
-Rscript -e "source('.meta/DEVTOOLS/doc-builders/build-qmd.R')"
+# Recursively process all .md files under gitbook/
+find gitbook/ -type f -name '*.md' -print0 |
+while IFS= read -r -d '' file; do
+  perl -0777 -i -pe '
+    # 1) Match the opening <div class="sourceCode r"> (with any leading spaces)
+    #    and replace it with exactly the Jekyll tag + R fence—no extra spaces.
+    s{^[ \t]*<div\s+class="sourceCode\s+r">\s*\n}{
+{% code overflow="wrap" lineNumbers="true" %}
 
-# Run Python script to build YAML files
-python3 .meta/DEVTOOLS/doc-builders/build-yaml.py
+``` R
 
-# Preview the Quarto book
-cd .meta/DOCUMENTATION/ && quarto preview
+}msg;
+
+    # 2) Match the closing </div> (with any leading spaces or blank lines)
+    #    and replace with exactly the closing fence + endcode.
+    s{\n?[ \t]*</div>\s*(?=\n|$)}{
+```
+{% endcode %} 
+
+}msg; ' "$file"
+done
