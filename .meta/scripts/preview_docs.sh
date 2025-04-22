@@ -23,8 +23,17 @@ done
 # 3) remove redundant indentation
 #    from the divs
 for file in gitbook/**/**/*.md; do
-  sed -E -i.bak '/^```[[:space:]]*R[[:space:]]*$/,/^```[[:space:]]*$/{
+  sed -E -i '/^```[[:space:]]*R[[:space:]]*$/,/^```[[:space:]]*$/{
     /^```/b
     s/^ {4}// 
+  }' "$file"
+done
+
+# 4) remove 'see also'-section
+#    
+for file in gitbook/**/**/*.md; do
+    sed -E -i '/^### See Also$/,/^### /{ 
+      /^### See Also$/d 
+      /^### /!d 
   }' "$file"
 done
