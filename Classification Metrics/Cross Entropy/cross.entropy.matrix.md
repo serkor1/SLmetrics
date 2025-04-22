@@ -27,7 +27,10 @@ handling. Wrapping calls in `try()` or `tryCatch()` will *not* prevent
 To guard against this, wrap `cross.entropy()` in a “safe” validator that
 checks for NA values and matching length, for example:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     safe_cross.entropy <- function(x, y, ...) {
       stopifnot(
@@ -37,7 +40,9 @@ checks for NA values and matching length, for example:
       cross.entropy(x, y, ...)
     }
 
-</div>
+```
+{% endcode %} 
+
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -103,6 +108,10 @@ Other Supervised Learning: `accuracy()`, `auc.pr.curve()`,
 
 Other Entropy: `logloss()`, `relative.entropy()`, `shannon.entropy()`
 
-</div>
+```
+{% endcode %} 
 
-</div>
+
+```
+{% endcode %} 
+

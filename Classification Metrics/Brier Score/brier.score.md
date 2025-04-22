@@ -27,7 +27,10 @@ handling. Wrapping calls in `try()` or `tryCatch()` will *not* prevent
 To guard against this, wrap `brier.score()` in a “safe” validator that
 checks for NA values and matching length, for example:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     safe_brier.score <- function(x, y, ...) {
       stopifnot(
@@ -37,7 +40,9 @@ checks for NA values and matching length, for example:
       brier.score(x, y, ...)
     }
 
-</div>
+```
+{% endcode %} 
+
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -154,6 +159,10 @@ SLmetrics::brier.score(
 )
 ```
 
-</div>
+```
+{% endcode %} 
 
-</div>
+
+```
+{% endcode %} 
+

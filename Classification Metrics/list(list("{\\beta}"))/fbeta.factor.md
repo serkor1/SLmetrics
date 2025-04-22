@@ -27,7 +27,10 @@ crashes.
 To guard against this, wrap `fbeta()` in a “safe” validator that checks
 for NA values and matching length, for example:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     safe_fbeta <- function(x, y, ...) {
       stopifnot(
@@ -37,7 +40,9 @@ for NA values and matching length, for example:
       fbeta(x, y, ...)
     }
 
-</div>
+```
+{% endcode %} 
+
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -48,7 +53,10 @@ For multiple performance evaluations of a classification model, first
 compute the confusion matrix once via `cmatrix()`. All other performance
 metrics can then be derived from this one object via S3 dispatching:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     ## compute confusion matrix
     confusion_matrix <- cmatrix(actual, predicted)
@@ -60,7 +68,9 @@ metrics can then be derived from this one object via S3 dispatching:
     ## additional performance metrics
     ## below
 
-</div>
+```
+{% endcode %} 
+
 
 The `fbeta.factor()` method calls `cmatrix()` internally, so explicitly
 invoking `fbeta.cmatrix()` yourself avoids duplicate computation,
@@ -192,6 +202,10 @@ SLmetrics::fbeta(
 
 ```
 
-</div>
+```
+{% endcode %} 
 
-</div>
+
+```
+{% endcode %} 
+

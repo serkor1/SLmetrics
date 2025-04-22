@@ -26,7 +26,10 @@ handling. Wrapping calls in `try()` or `tryCatch()` will *not* prevent
 To guard against this, wrap `preorder()` in a “safe” validator that
 checks for NA values and matching length, for example:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     safe_preorder <- function(x, y, ...) {
       stopifnot(
@@ -36,7 +39,9 @@ checks for NA values and matching length, for example:
       preorder(x, y, ...)
     }
 
-</div>
+```
+{% endcode %} 
+
 
 ### Usage
 
@@ -61,6 +66,10 @@ A \<matrix\> of same dimensions as the input \<matrix\>
 
 Other Utilities: `presort()`
 
-</div>
+```
+{% endcode %} 
 
-</div>
+
+```
+{% endcode %} 
+

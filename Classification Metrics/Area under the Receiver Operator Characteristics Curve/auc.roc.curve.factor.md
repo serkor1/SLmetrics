@@ -27,7 +27,10 @@ handling. Wrapping calls in `try()` or `tryCatch()` will *not* prevent
 To guard against this, wrap `auc.roc.curve()` in a “safe” validator that
 checks for NA values and matching length, for example:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     safe_auc.roc.curve <- function(x, y, ...) {
       stopifnot(
@@ -37,7 +40,9 @@ checks for NA values and matching length, for example:
       auc.roc.curve(x, y, ...)
     }
 
-</div>
+```
+{% endcode %} 
+
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -147,6 +152,10 @@ SLmetrics::auc.roc.curve(
 
 ```
 
-</div>
+```
+{% endcode %} 
 
-</div>
+
+```
+{% endcode %} 
+

@@ -27,7 +27,10 @@ prevent `R`-session crashes.
 To guard against this, wrap `relative.entropy()` in a “safe” validator
 that checks for NA values and matching length, for example:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     safe_relative.entropy <- function(x, y, ...) {
       stopifnot(
@@ -37,7 +40,9 @@ that checks for NA values and matching length, for example:
       relative.entropy(x, y, ...)
     }
 
-</div>
+```
+{% endcode %} 
+
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -130,6 +135,10 @@ Other Supervised Learning: `accuracy()`, `auc.pr.curve()`,
 
 Other Entropy: `cross.entropy()`, `logloss()`, `shannon.entropy()`
 
-</div>
+```
+{% endcode %} 
 
-</div>
+
+```
+{% endcode %} 
+

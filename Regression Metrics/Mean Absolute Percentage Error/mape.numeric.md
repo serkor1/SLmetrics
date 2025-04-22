@@ -27,7 +27,10 @@ crashes.
 To guard against this, wrap `mape()` in a “safe” validator that checks
 for NA values and matching length, for example:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     safe_mape <- function(x, y, ...) {
       stopifnot(
@@ -37,7 +40,9 @@ for NA values and matching length, for example:
       mape(x, y, ...)
     }
 
-</div>
+```
+{% endcode %} 
+
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -107,6 +112,10 @@ SLmetrics::mape(
 )
 ```
 
-</div>
+```
+{% endcode %} 
 
-</div>
+
+```
+{% endcode %} 
+

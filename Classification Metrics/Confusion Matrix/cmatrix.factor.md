@@ -27,7 +27,10 @@ crashes.
 To guard against this, wrap `cmatrix()` in a “safe” validator that
 checks for NA values and matching length, for example:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     safe_cmatrix <- function(x, y, ...) {
       stopifnot(
@@ -37,7 +40,9 @@ checks for NA values and matching length, for example:
       cmatrix(x, y, ...)
     }
 
-</div>
+```
+{% endcode %} 
+
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -49,7 +54,10 @@ S3 dispatch. These functions internally calls `cmatrix()`, so there is a
 signficant gain in computing the confusion matrix first, and then pass
 it onto the metrics. For example:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     ## Compute confusion matrix
     confusion_matrix <- cmatrix(actual, predicted)
@@ -62,7 +70,9 @@ it onto the metrics. For example:
     ## via S3 dispatching
     recall(confusion_matrix)
 
-</div>
+```
+{% endcode %} 
+
 
 ### Usage
 
@@ -155,6 +165,10 @@ SLmetrics::cmatrix(
 
 ```
 
-</div>
+```
+{% endcode %} 
 
-</div>
+
+```
+{% endcode %} 
+

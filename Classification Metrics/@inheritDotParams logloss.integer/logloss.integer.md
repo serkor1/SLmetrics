@@ -66,6 +66,10 @@ Other Supervised Learning: `accuracy()`, `auc.pr.curve()`,
 Other Entropy: `cross.entropy()`, `relative.entropy()`,
 `shannon.entropy()`
 
-</div>
+```
+{% endcode %} 
 
-</div>
+
+```
+{% endcode %} 
+

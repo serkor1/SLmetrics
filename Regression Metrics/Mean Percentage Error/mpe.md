@@ -26,7 +26,10 @@ crashes.
 To guard against this, wrap `mpe()` in a “safe” validator that checks
 for NA values and matching length, for example:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     safe_mpe <- function(x, y, ...) {
       stopifnot(
@@ -36,7 +39,9 @@ for NA values and matching length, for example:
       mpe(x, y, ...)
     }
 
-</div>
+```
+{% endcode %} 
+
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -128,6 +133,10 @@ SLmetrics::mpe(
 )
 ```
 
-</div>
+```
+{% endcode %} 
 
-</div>
+
+```
+{% endcode %} 
+

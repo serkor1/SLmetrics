@@ -26,7 +26,10 @@ crashes.
 To guard against this, wrap `fpr()` in a “safe” validator that checks
 for NA values and matching length, for example:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     safe_fpr <- function(x, y, ...) {
       stopifnot(
@@ -36,7 +39,9 @@ for NA values and matching length, for example:
       fpr(x, y, ...)
     }
 
-</div>
+```
+{% endcode %} 
+
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -47,7 +52,10 @@ For multiple performance evaluations of a classification model, first
 compute the confusion matrix once via `cmatrix()`. All other performance
 metrics can then be derived from this one object via S3 dispatching:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     ## compute confusion matrix
     confusion_matrix <- cmatrix(actual, predicted)
@@ -59,7 +67,9 @@ metrics can then be derived from this one object via S3 dispatching:
     ## additional performance metrics
     ## below
 
-</div>
+```
+{% endcode %} 
+
 
 The `fpr.factor()` method calls `cmatrix()` internally, so explicitly
 invoking `fpr.cmatrix()` yourself avoids duplicate computation, yielding
@@ -204,6 +214,10 @@ SLmetrics::fpr(
 )
 ```
 
-</div>
+```
+{% endcode %} 
 
-</div>
+
+```
+{% endcode %} 
+

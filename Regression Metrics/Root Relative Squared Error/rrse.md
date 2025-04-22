@@ -27,7 +27,10 @@ crashes.
 To guard against this, wrap `rrse()` in a “safe” validator that checks
 for NA values and matching length, for example:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     safe_rrse <- function(x, y, ...) {
       stopifnot(
@@ -37,7 +40,9 @@ for NA values and matching length, for example:
       rrse(x, y, ...)
     }
 
-</div>
+```
+{% endcode %} 
+
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -129,6 +134,10 @@ SLmetrics::rrse(
 )
 ```
 
-</div>
+```
+{% endcode %} 
 
-</div>
+
+```
+{% endcode %} 
+

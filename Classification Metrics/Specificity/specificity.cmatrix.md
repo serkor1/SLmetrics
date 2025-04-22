@@ -27,7 +27,10 @@ handling. Wrapping calls in `try()` or `tryCatch()` will *not* prevent
 To guard against this, wrap `specificity()` in a “safe” validator that
 checks for NA values and matching length, for example:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     safe_specificity <- function(x, y, ...) {
       stopifnot(
@@ -37,7 +40,9 @@ checks for NA values and matching length, for example:
       specificity(x, y, ...)
     }
 
-</div>
+```
+{% endcode %} 
+
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -48,7 +53,10 @@ For multiple performance evaluations of a classification model, first
 compute the confusion matrix once via `cmatrix()`. All other performance
 metrics can then be derived from this one object via S3 dispatching:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     ## compute confusion matrix
     confusion_matrix <- cmatrix(actual, predicted)
@@ -60,7 +68,9 @@ metrics can then be derived from this one object via S3 dispatching:
     ## additional performance metrics
     ## below
 
-</div>
+```
+{% endcode %} 
+
 
 The `specificity.factor()` method calls `cmatrix()` internally, so
 explicitly invoking `specificity.cmatrix()` yourself avoids duplicate
@@ -197,6 +207,10 @@ SLmetrics::specificity(confusion_matrix)
 
 ```
 
-</div>
+```
+{% endcode %} 
 
-</div>
+
+```
+{% endcode %} 
+

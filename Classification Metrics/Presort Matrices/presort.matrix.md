@@ -26,7 +26,10 @@ crashes.
 To guard against this, wrap `presort()` in a “safe” validator that
 checks for NA values and matching length, for example:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     safe_presort <- function(x, y, ...) {
       stopifnot(
@@ -36,7 +39,9 @@ checks for NA values and matching length, for example:
       presort(x, y, ...)
     }
 
-</div>
+```
+{% endcode %} 
+
 
 ### Usage
 
@@ -61,6 +66,10 @@ A \<matrix\> of same dimensions as the input \<matrix\>
 
 Other Utilities: `preorder()`
 
-</div>
+```
+{% endcode %} 
 
-</div>
+
+```
+{% endcode %} 
+

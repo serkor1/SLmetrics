@@ -27,7 +27,10 @@ crashes.
 To guard against this, wrap `ccc()` in a “safe” validator that checks
 for NA values and matching length, for example:
 
-<div class="sourceCode r">
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
 
     safe_ccc <- function(x, y, ...) {
       stopifnot(
@@ -37,7 +40,9 @@ for NA values and matching length, for example:
       ccc(x, y, ...)
     }
 
-</div>
+```
+{% endcode %} 
+
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -108,6 +113,10 @@ SLmetrics::ccc(
 )
 ```
 
-</div>
+```
+{% endcode %} 
 
-</div>
+
+```
+{% endcode %} 
+
