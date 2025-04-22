@@ -30,18 +30,16 @@ checks for NA values and matching length, for example:
 {% code overflow="wrap" lineNumbers="true" %}
 
 ``` R
-
-    safe_huberloss <- function(x, y, ...) {
-      stopifnot(
-        !anyNA(x), !anyNA(y),
-        length(x) == length(y)
-      )
-      huberloss(x, y, ...)
-    }
-
+safe_huberloss <- function(x, y, ...) {
+  stopifnot(
+    !anyNA(x), !anyNA(y),
+    length(x) == length(y)
+  )
+  huberloss(x, y, ...)
+}
 ```
-{% endcode %} 
 
+{% endcode %}
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -110,11 +108,9 @@ SLmetrics::huberloss(
    predicted = predicted_values
 )
 ```
-
 ```
-{% endcode %} 
 
-
+{% endcode %}
 ```
-{% endcode %} 
 
+{% endcode %}

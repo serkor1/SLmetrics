@@ -30,18 +30,16 @@ for NA values and matching length, for example:
 {% code overflow="wrap" lineNumbers="true" %}
 
 ``` R
-
-    safe_rae <- function(x, y, ...) {
-      stopifnot(
-        !anyNA(x), !anyNA(y),
-        length(x) == length(y)
-      )
-      rae(x, y, ...)
-    }
-
+safe_rae <- function(x, y, ...) {
+  stopifnot(
+    !anyNA(x), !anyNA(y),
+    length(x) == length(y)
+  )
+  rae(x, y, ...)
+}
 ```
-{% endcode %} 
 
+{% endcode %}
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -110,11 +108,9 @@ SLmetrics::rae(
    predicted = predicted_values
 )
 ```
-
 ```
-{% endcode %} 
 
-
+{% endcode %}
 ```
-{% endcode %} 
 
+{% endcode %}

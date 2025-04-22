@@ -30,18 +30,16 @@ checks for NA values and matching length, for example:
 {% code overflow="wrap" lineNumbers="true" %}
 
 ``` R
-
-    safe_presort <- function(x, y, ...) {
-      stopifnot(
-        !anyNA(x), !anyNA(y),
-        length(x) == length(y)
-      )
-      presort(x, y, ...)
-    }
-
+safe_presort <- function(x, y, ...) {
+  stopifnot(
+    !anyNA(x), !anyNA(y),
+    length(x) == length(y)
+  )
+  presort(x, y, ...)
+}
 ```
-{% endcode %} 
 
+{% endcode %}
 
 ### Usage
 
@@ -65,11 +63,9 @@ A \<matrix\> of same dimensions as the input \<matrix\>
 ### See Also
 
 Other Utilities: `preorder()`
-
 ```
-{% endcode %} 
 
-
+{% endcode %}
 ```
-{% endcode %} 
 
+{% endcode %}

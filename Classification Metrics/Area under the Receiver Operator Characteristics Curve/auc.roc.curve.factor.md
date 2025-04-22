@@ -31,18 +31,16 @@ checks for NA values and matching length, for example:
 {% code overflow="wrap" lineNumbers="true" %}
 
 ``` R
-
-    safe_auc.roc.curve <- function(x, y, ...) {
-      stopifnot(
-        !anyNA(x), !anyNA(y),
-        length(x) == length(y)
-      )
-      auc.roc.curve(x, y, ...)
-    }
-
+safe_auc.roc.curve <- function(x, y, ...) {
+  stopifnot(
+    !anyNA(x), !anyNA(y),
+    length(x) == length(y)
+  )
+  auc.roc.curve(x, y, ...)
+}
 ```
-{% endcode %} 
 
+{% endcode %}
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -121,41 +119,39 @@ classes <- c("Kebab", "Falafel")
 ## Generate actual classes
 ## and response probabilities
 actual_classes <- factor(
-    x = sample(
-      x = classes, 
-      size = 1e2, 
-      replace = TRUE, 
-      prob = c(0.7, 0.3)
-    )
+x = sample(
+  x = classes, 
+  size = 1e2, 
+  replace = TRUE, 
+  prob = c(0.7, 0.3)
+)
 )
 
 response_probabilities <- ifelse(
-    actual_classes == "Kebab", 
-    rbeta(sum(actual_classes == "Kebab"), 2, 5), 
-    rbeta(sum(actual_classes == "Falafel"), 5, 2)
+actual_classes == "Kebab", 
+rbeta(sum(actual_classes == "Kebab"), 2, 5), 
+rbeta(sum(actual_classes == "Falafel"), 5, 2)
 )
 
 ## Construct response
 ## matrix
 probability_matrix <- cbind(
-    response_probabilities,
-    1 - response_probabilities
+response_probabilities,
+1 - response_probabilities
 )
 
 
 ## Evaluate performance
 
 SLmetrics::auc.roc.curve(
-    actual   = actual_classes, 
-    response = probability_matrix
+actual   = actual_classes, 
+response = probability_matrix
 )
 
 ```
-
 ```
-{% endcode %} 
 
-
+{% endcode %}
 ```
-{% endcode %} 
 
+{% endcode %}

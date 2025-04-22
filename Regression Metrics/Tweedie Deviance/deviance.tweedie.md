@@ -31,18 +31,16 @@ that checks for NA values and matching length, for example:
 {% code overflow="wrap" lineNumbers="true" %}
 
 ``` R
-
-    safe_deviance.tweedie <- function(x, y, ...) {
-      stopifnot(
-        !anyNA(x), !anyNA(y),
-        length(x) == length(y)
-      )
-      deviance.tweedie(x, y, ...)
-    }
-
+safe_deviance.tweedie <- function(x, y, ...) {
+  stopifnot(
+    !anyNA(x), !anyNA(y),
+    length(x) == length(y)
+  )
+  deviance.tweedie(x, y, ...)
+}
 ```
-{% endcode %} 
 
+{% endcode %}
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -158,11 +156,9 @@ SLmetrics::deviance.tweedie(
    predicted = predicted_values
 )
 ```
-
 ```
-{% endcode %} 
 
-
+{% endcode %}
 ```
-{% endcode %} 
 
+{% endcode %}

@@ -31,18 +31,16 @@ for NA values and matching length, for example:
 {% code overflow="wrap" lineNumbers="true" %}
 
 ``` R
-
-    safe_mcc <- function(x, y, ...) {
-      stopifnot(
-        !anyNA(x), !anyNA(y),
-        length(x) == length(y)
-      )
-      mcc(x, y, ...)
-    }
-
+safe_mcc <- function(x, y, ...) {
+  stopifnot(
+    !anyNA(x), !anyNA(y),
+    length(x) == length(y)
+  )
+  mcc(x, y, ...)
+}
 ```
-{% endcode %} 
 
+{% endcode %}
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -57,20 +55,18 @@ metrics can then be derived from this one object via S3 dispatching:
 {% code overflow="wrap" lineNumbers="true" %}
 
 ``` R
+## compute confusion matrix
+confusion_matrix <- cmatrix(actual, predicted)
 
-    ## compute confusion matrix
-    confusion_matrix <- cmatrix(actual, predicted)
+## evaluate matthews correlation coefficient
+## via S3 dispatching
+mcc(confusion_matrix)
 
-    ## evaluate matthews correlation coefficient
-    ## via S3 dispatching
-    mcc(confusion_matrix)
-
-    ## additional performance metrics
-    ## below
-
+## additional performance metrics
+## below
 ```
-{% endcode %} 
 
+{% endcode %}
 
 The `mcc.factor()` method calls `cmatrix()` internally, so explicitly
 invoking `mcc.cmatrix()` yourself avoids duplicate computation, yielding
@@ -144,13 +140,13 @@ classes <- c("Kebab", "Falafel")
 ## Generate actual
 ## and predicted classes
 actual_classes <- factor(
-    x = sample(x = classes, size = 1e3, replace = TRUE),
-    levels = c("Kebab", "Falafel")
+x = sample(x = classes, size = 1e3, replace = TRUE),
+levels = c("Kebab", "Falafel")
 )
 
 predicted_classes <- factor(
-    x = sample(x = classes, size = 1e3, replace = TRUE),
-    levels = c("Kebab", "Falafel")
+x = sample(x = classes, size = 1e3, replace = TRUE),
+levels = c("Kebab", "Falafel")
 )
 
 ## Evaluate performance
@@ -161,11 +157,9 @@ SLmetrics::mcc(
 
 
 ```
-
 ```
-{% endcode %} 
 
-
+{% endcode %}
 ```
-{% endcode %} 
 
+{% endcode %}

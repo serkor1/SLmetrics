@@ -31,18 +31,16 @@ checks for NA values and matching length, for example:
 {% code overflow="wrap" lineNumbers="true" %}
 
 ``` R
-
-    safe_cmatrix <- function(x, y, ...) {
-      stopifnot(
-        !anyNA(x), !anyNA(y),
-        length(x) == length(y)
-      )
-      cmatrix(x, y, ...)
-    }
-
+safe_cmatrix <- function(x, y, ...) {
+  stopifnot(
+    !anyNA(x), !anyNA(y),
+    length(x) == length(y)
+  )
+  cmatrix(x, y, ...)
+}
 ```
-{% endcode %} 
 
+{% endcode %}
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -58,21 +56,19 @@ it onto the metrics. For example:
 {% code overflow="wrap" lineNumbers="true" %}
 
 ``` R
+## Compute confusion matrix
+confusion_matrix <- cmatrix(actual, predicted)
 
-    ## Compute confusion matrix
-    confusion_matrix <- cmatrix(actual, predicted)
+## Evaluate accuracy
+## via S3 dispatching
+accuracy(confusion_matrix)
 
-    ## Evaluate accuracy
-    ## via S3 dispatching
-    accuracy(confusion_matrix)
-
-    ## Evaluate recall
-    ## via S3 dispatching
-    recall(confusion_matrix)
-
+## Evaluate recall
+## via S3 dispatching
+recall(confusion_matrix)
 ```
-{% endcode %} 
 
+{% endcode %}
 
 ### Usage
 
@@ -172,13 +168,13 @@ classes <- c("Kebab", "Falafel")
 ## Generate actual
 ## and predicted classes
 actual_classes <- factor(
-    x = sample(x = classes, size = 1e3, replace = TRUE),
-    levels = c("Kebab", "Falafel")
+x = sample(x = classes, size = 1e3, replace = TRUE),
+levels = c("Kebab", "Falafel")
 )
 
 predicted_classes <- factor(
-    x = sample(x = classes, size = 1e3, replace = TRUE),
-    levels = c("Kebab", "Falafel")
+x = sample(x = classes, size = 1e3, replace = TRUE),
+levels = c("Kebab", "Falafel")
 )
 
 ## Compute the confusion
@@ -188,11 +184,9 @@ SLmetrics::cmatrix(
  predicted = predicted_classes
 )
 ```
-
 ```
-{% endcode %} 
 
-
+{% endcode %}
 ```
-{% endcode %} 
 
+{% endcode %}

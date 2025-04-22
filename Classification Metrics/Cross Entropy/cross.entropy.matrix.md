@@ -31,18 +31,16 @@ checks for NA values and matching length, for example:
 {% code overflow="wrap" lineNumbers="true" %}
 
 ``` R
-
-    safe_cross.entropy <- function(x, y, ...) {
-      stopifnot(
-        !anyNA(x), !anyNA(y),
-        length(x) == length(y)
-      )
-      cross.entropy(x, y, ...)
-    }
-
+safe_cross.entropy <- function(x, y, ...) {
+  stopifnot(
+    !anyNA(x), !anyNA(y),
+    length(x) == length(y)
+  )
+  cross.entropy(x, y, ...)
+}
 ```
-{% endcode %} 
 
+{% endcode %}
 
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
@@ -107,11 +105,9 @@ Other Supervised Learning: `accuracy()`, `auc.pr.curve()`,
 `zerooneloss()`
 
 Other Entropy: `logloss()`, `relative.entropy()`, `shannon.entropy()`
-
 ```
-{% endcode %} 
 
-
+{% endcode %}
 ```
-{% endcode %} 
 
+{% endcode %}
