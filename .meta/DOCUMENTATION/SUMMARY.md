@@ -6,5 +6,5 @@
 
 ## References
 
-* [Classification Metrics](Classification Metrics)
-* [Regression Metrics](Regression Metrics)
+* [Classification Metrics](Classification-Metrics/)
+* [Regression Metrics](Regression-Metrics/)
