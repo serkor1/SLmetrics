@@ -157,6 +157,11 @@ for (html in html_files) {
     ))
   }
 
+# TEST
+file.create("gitbook/Classification Metrics/README.md")
+file.create("gitbook/Regression Metrics/README.md")
+
+
 # 4) move relevant files
 #    to documentation
 file_list <- list.files(
