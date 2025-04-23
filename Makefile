@@ -27,7 +27,7 @@ help:
 	@echo "  make build-meta      - Build README and NEWS files"
 	@echo "  make build-news      - Build only NEWS file"
 	@echo "  make build-readme    - Build only README file"
-	@echo "  make preview-docs    - Preview the online documentation"
+	@echo "  make build-docs      - Preview the online documentation"
 	@echo "  make document        - Update package documentation"
 	@echo ""
 	@echo "Package Building:"

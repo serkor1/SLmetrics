@@ -159,14 +159,18 @@ for (html in html_files) {
 
 # 4) move relevant files
 #    to documentation
-file.copy(
-  from = "NEWS.md",
-  to   = "gitbook/Changelog.md"
+file_list <- list.files(
+  path       = ".meta/DOCUMENTATION",
+  pattern    = "*.md",
+  full.names = TRUE 
 )
 
-file.copy(
-  from = ".meta/DOCUMENTATION/README.md",
-  to   = "gitbook"
-)
+for (file in file_list) {
+  file.copy(
+    from = file,
+    to   = paste0("gitbook/", basename(file)),
+    overwrite = TRUE
+  )
+}
 
 # script end;

@@ -20,12 +20,12 @@ build-meta:
 	@$(MAKE) build-readme
 	@echo $(SUCCESS) "All documentation built successfully"
 
-# Preview online documentation
-.PHONY: preview-docs
-preview-docs:
-	@echo $(ECHO_PREFIX) "Building Quarto Book"
+# Build docs
+.PHONY: build-docs
+build-docs:
+	@echo $(ECHO_PREFIX) "Building Gitbook folder"
 	@$(SCRIPTS_DIR)/preview_docs.sh
-	@echo $(SUCCESS) "Documentation preview ready"
+	@echo $(SUCCESS) "Gitbook folder ready"
 
 # Document the package functions
 .PHONY: document
