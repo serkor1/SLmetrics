@@ -45,7 +45,7 @@ jobs:
       - name: Install {Quarto}
         shell: bash
         run: |
-            Rscript -e "install.packages(c('knitr', 'rmarkdown'), dependencies = FALSE)"
+            Rscript -e "install.packages(c('knitr', 'rmarkdown'), dependencies = TRUE)"
 
       - name: Generate Markdown docs
         working-directory: main
