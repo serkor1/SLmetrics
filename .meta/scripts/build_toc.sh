@@ -8,8 +8,8 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 DOC_ROOT="$PROJECT_ROOT/DOCUMENTATION"
 GITBOOK_DIR="$DOC_ROOT/gitbook"
 
-SRC_SUMMARY="$DOC_ROOT/SUMMARY.md"        # your source with the {{< include TOC.md  >}} line
-DST_SUMMARY="$GITBOOK_DIR/SUMMARY.md"     # final, in-place file
+SRC_SUMMARY="$DOC_ROOT/SUMMARY.md"
+DST_SUMMARY="$GITBOOK_DIR/SUMMARY.md"
 
 TOC_TMP="$(mktemp)"
 find "$GITBOOK_DIR" -mindepth 1 -print | sort | \
@@ -19,7 +19,7 @@ find "$GITBOOK_DIR" -mindepth 1 -print | sort | \
     indent = ""
     for (i = 1; i <= depth; i++) indent = indent "  "
     name = $NF
-    printf("%s- [%s](%s)\n", indent, name, $0)
+    printf("%s* [%s](%s)\n", indent, name, $0)
   }' > "$TOC_TMP"
 
 sed '/{{< include TOC\.md  >}}/{
