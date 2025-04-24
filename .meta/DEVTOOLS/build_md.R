@@ -60,7 +60,7 @@ all_metrics <- lapply(all_files, function(x){
 
 # 2.2) split files by task and
 #      metrics. Note, we do this
-#      as gitbook organizes everything
+#      as .meta/DOCUMENTATION/gitbook organizes everything
 #      by folders
 files_by_task_and_metric <- mapply(
   FUN = function(paths, metrics) {
@@ -81,7 +81,7 @@ files_by_task_and_metric <- mapply(
 
 # 2.2.1) Rename each element
 #        to task metrics - this will be displayed 
-#        properly by Gitbook
+#        properly by .meta/DOCUMENTATION/Gitbook
 
 files_by_task_and_metric$classification <- setNames(
     object = files_by_task_and_metric$classification,
@@ -141,7 +141,7 @@ html_files <- list.files(
 #      and store
 for (html in html_files) {
     rel <- sub(out_base, "", html)
-    md  <- file.path("gitbook", sub("\\.html$", ".md", rel))
+    md  <- file.path(".meta/DOCUMENTATION/gitbook", sub("\\.html$", ".md", rel))
     md  <- gsub("[a-z]*_", "", md)
     
     # make sure the directory exists
@@ -157,23 +157,31 @@ for (html in html_files) {
     ))
   }
 
-# TEST
-file.create("gitbook/Classification Metrics/README.md")
-file.create("gitbook/Regression Metrics/README.md")
+system2(
+  ".meta/scripts/build_toc.sh"
+)
 
+# save current wd and ensure we come back
+old_wd <- setwd(".meta/DOCUMENTATION/gitbook")
+on.exit(setwd(old_wd), add = TRUE)
+
+quarto::quarto_render(
+  input       = "../SUMMARY.qmd",   # relative to gitbook/
+  output_file = "SUMMARY.md"        # no path here!
+)
 
 # 4) move relevant files
 #    to documentation
 file_list <- list.files(
   path       = ".meta/DOCUMENTATION",
-  pattern    = "*.md",
+  pattern    = "*\\.md",
   full.names = TRUE 
 )
 
 for (file in file_list) {
   file.copy(
     from = file,
-    to   = paste0("gitbook/", basename(file)),
+    to   = paste0(".meta/DOCUMENTATION/gitbook/", basename(file)),
     overwrite = TRUE
   )
 }
