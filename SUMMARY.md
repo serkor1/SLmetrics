@@ -4,7 +4,7 @@
 
 ## Reference
 
-* [Classification Metrics](Classification Metrics)
+* [Classification Metrics](Classification Metrics/@inheritDotParams logloss.integer/logloss.factor.md)
   * [@inheritDotParams logloss.integer](Classification Metrics/@inheritDotParams logloss.integer/logloss.factor.md)
     * [logloss.factor.md](Classification Metrics/@inheritDotParams logloss.integer/logloss.factor.md)
     * [logloss.integer.md](Classification Metrics/@inheritDotParams logloss.integer/logloss.integer.md)
