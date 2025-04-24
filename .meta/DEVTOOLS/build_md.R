@@ -161,15 +161,15 @@ system2(
   ".meta/scripts/build_toc.sh"
 )
 
-
-
 # 4) move relevant files
 #    to documentation
 file_list <- list.files(
-  path       = ".meta/DOCUMENTATION/",
+  path       = ".meta/DOCUMENTATION",
   pattern    = "*.md",
   full.names = TRUE 
 )
+
+file_list <- c(file_list, "NEWS.md")
 
 file_list <- grep(
   pattern = "summary",

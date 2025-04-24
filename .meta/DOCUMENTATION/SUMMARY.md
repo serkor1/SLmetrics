@@ -1,13 +1,10 @@
-Preamble text
 
-## :books: Reference
+* [Introduction](README.md)
 
-Some text
+## Reference
 
 {{< include TOC.md  >}}
 
-## :books: Changelog
+## Changelog
 
-Some text
-
-* [Changelog](Changelog.md)
+* [Changelog](NEWS.md)
