@@ -42,6 +42,11 @@ jobs:
       - name: Setup pandoc
         uses: r-lib/actions/setup-pandoc@v2
 
+      - name: Install {Quarto}
+        shell: bash
+        run: |
+            Rscript -e "install.packages(c('knitr', 'rmarkdown'), dependencies = FALSE)"
+
       - name: Generate Markdown docs
         working-directory: main
         run: make build-docs
