@@ -19,7 +19,7 @@ find "$GITBOOK_DIR" -mindepth 1 -print | sort | \
     indent = ""
     for (i = 1; i <= depth; i++) indent = indent "  "
     name = $NF
-    printf("%s* [%s](%s)\n", indent, name, $0)
+    printf("%s* [%s](<%s>)\n", indent, name, $0)
   }' > "$TOC_TMP"
 
 sed '/{{< include TOC\.md  >}}/{
