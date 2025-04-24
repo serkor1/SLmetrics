@@ -1,8 +1,7 @@
-Preamble text
 
-## :books: Reference
+* [Introduction](README.md)
 
-Some text
+## Reference
 
 * [Classification Metrics](<Classification Metrics>)
   * [@inheritDotParams logloss.integer](<Classification Metrics/@inheritDotParams logloss.integer>)
@@ -169,8 +168,6 @@ Some text
     * [rsq.md](<Regression Metrics/list(list("r^2"))/rsq.md>)
     * [rsq.numeric.md](<Regression Metrics/list(list("r^2"))/rsq.numeric.md>)
 
-## :books: Changelog
+## Changelog
 
-Some text
-
-* [Changelog](Changelog.md)
+* [Changelog](NEWS.md)
