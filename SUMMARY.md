@@ -4,11 +4,11 @@
 
 ## Reference
 
-* [Classification Metrics](Classification-Metrics/@inheritDotParams logloss.integer/logloss.factor.md)
-  * [@inheritDotParams logloss.integer](Classification-Metrics/@inheritDotParams logloss.integer/logloss.factor.md)
-    * [logloss.factor.md](Classification-Metrics/@inheritDotParams logloss.integer/logloss.factor.md)
-    * [logloss.integer.md](Classification-Metrics/@inheritDotParams logloss.integer/logloss.integer.md)
-    * [logloss.md](Classification Metrics/@inheritDotParams logloss.integer/logloss.md)
+* [Classification Metrics](Classification-Metrics/@inheritDotParams-logloss.integer/logloss.factor.md)
+  * [@inheritDotParams logloss.integer](Classification-Metrics/@inheritDotParams-logloss.integer/logloss.factor.md)
+    * [logloss.factor.md](Classification-Metrics/@inheritDotParams-logloss.integer/logloss.factor.md)
+    * [logloss.integer.md](Classification-Metrics/@inheritDotParams-logloss.integer/logloss.integer.md)
+    * [logloss.md](Classification Metrics/@inheritDotParams-logloss.integer/logloss.md)
   * [Accuracy](Classification Metrics/Accuracy)
     * [accuracy.cmatrix.md](Classification Metrics/Accuracy/accuracy.cmatrix.md)
     * [accuracy.factor.md](Classification Metrics/Accuracy/accuracy.factor.md)
