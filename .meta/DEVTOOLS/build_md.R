@@ -166,9 +166,17 @@ system2(
 # 4) move relevant files
 #    to documentation
 file_list <- list.files(
-  path       = ".meta/DOCUMENTATION",
-  pattern    = "*\\.md",
+  path       = ".meta/DOCUMENTATION/",
+  pattern    = "*.md",
   full.names = TRUE 
+)
+
+file_list <- grep(
+  pattern = "summary",
+  x       = file_list,
+  ignore.case = TRUE,
+  invert  = TRUE,
+  value   = TRUE  
 )
 
 for (file in file_list) {
