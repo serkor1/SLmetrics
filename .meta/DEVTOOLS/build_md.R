@@ -161,14 +161,7 @@ system2(
   ".meta/scripts/build_toc.sh"
 )
 
-# save current wd and ensure we come back
-old_wd <- setwd(".meta/DOCUMENTATION/gitbook")
-on.exit(setwd(old_wd), add = TRUE)
 
-quarto::quarto_render(
-  input       = "../SUMMARY.qmd",   # relative to gitbook/
-  output_file = "SUMMARY.md"        # no path here!
-)
 
 # 4) move relevant files
 #    to documentation

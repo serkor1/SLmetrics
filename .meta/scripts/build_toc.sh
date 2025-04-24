@@ -20,5 +20,9 @@ find "$ROOT_DIR" -mindepth 1 -print | sort | \
     printf("%s- [%s](%s)\n", indent, name, $0)
   }' > "$OUTPUT_FILE"
 
-# Notify user
 echo "Generated Markdown TOC in $OUTPUT_FILE"
+
+# build summary
+(cd .meta/DOCUMENTATION/gitbook \
+  && quarto render ../SUMMARY.qmd --to markdown --output SUMMARY.md)
+
