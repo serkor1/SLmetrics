@@ -1,7 +1,13 @@
-## Changelog
+Preamble text
 
-* [Changelog](Changelog.md)
+## :books: Reference
 
-## Reference
+Some text
 
 {{< include TOC.md  >}}
+
+## :books: Changelog
+
+Some text
+
+* [Changelog](Changelog.md)
