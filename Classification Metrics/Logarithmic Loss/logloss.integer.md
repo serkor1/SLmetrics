@@ -2,20 +2,53 @@
 
 <div role="main">
 
-|                |                 |
-|----------------|----------------:|
-| logloss.factor | R Documentation |
+|                 |                 |
+|-----------------|----------------:|
+| logloss.integer | R Documentation |
 
-## @inheritDotParams logloss.integer
+## Logarithmic Loss
 
 ### Description
 
-@inheritDotParams logloss.integer
+A generic S3 function to compute the *logarithmic loss* score for a
+classification model. This function dispatches to S3 methods in
+`logloss()` and performs no input validation. If you supply NA values or
+vectors of unequal length (e.g. `length(x) != length(y)`), the
+underlying `C++` code may trigger undefined behavior and crash your `R`
+session.
+
+#### Defensive measures
+
+Because `logloss()` operates on raw pointers, pointer‑level faults (e.g.
+from NA or mismatched length) occur before any `R`‑level error handling.
+Wrapping calls in `try()` or `tryCatch()` will *not* prevent `R`-session
+crashes.
+
+To guard against this, wrap `logloss()` in a “safe” validator that
+checks for NA values and matching length, for example:
+
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
+safe_logloss <- function(x, y, ...) {
+  stopifnot(
+    !anyNA(x), !anyNA(y),
+    length(x) == length(y)
+  )
+  logloss(x, y, ...)
+}
+```
+
+{% endcode %}
+
+Apply the same pattern to any custom metric functions to ensure input
+sanity before calling the underlying `C++` code.
 
 ### Usage
 
 ``` R
-## S3 method for class 'factor'
+## S3 method for class 'integer'
 logloss(actual, response, normalize = TRUE, ...)
 ```
 
