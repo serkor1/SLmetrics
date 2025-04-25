@@ -6,13 +6,272 @@
 
 # :bookmark: Version 0.3-4
 
+This update has been focused on two three things:
+
+1.  Optimization of the back-end by using Armadillo instead of Eigen.
+2.  Streamlining and extending the documentation
+3.  Making functions more flexible
+
+As an example on the increased flexibility is the introduction of the
+`estimator`-argument in classification metrics - the new approach
+enables new additions of aggregation methods as the field evolves. The
+“old” approach were limited to three values `NULL`, `TRUE` and `FALSE`.
+Furthermore the function signatures of the generics have been made more
+flexible - this will enable possible wrapping packages to freely
+implement argument names off the generic.
+
 ## :sparkles: Improvements
 
+- **Armadillo backend:** All functions have been ported to the C++
+  Armadillo library, and are heavily templated and Object Oriented. The
+  functions are 5-20x faster than before.
+- **Streamlined documentation:** All documentation have been reworked,
+  and are now using generic {roxygen2} templates. The new structure of
+  the documentation is focused on shared documentation and therefore
+  equal metrics like `recall` and `sensitivity` are aliased, and
+  referenced differently - as a result there should be less noise in the
+  documentation. The *creating factor* has been removed, and all
+  examples are simplified.
+
 ### :rocket: New features
+
+- **Hamming Loss:** The fraction of the wrong labels to the total number
+  of labels, i.e. , where is the target, is the prediction, and is the
+  “Exclusive, or” operator that returns zero when the target and
+  prediction are identical and one otherwise. The interface to
+  `hammingloss()` is given below:
+
+``` r
+set.seed(1903)
+
+## classes
+classes <- c("Kebab", "Falafel")
+
+## actual and
+## predicted classes
+actual    <- factor(sample(classes, 10, TRUE))
+predicted <- factor(sample(classes, 10, TRUE))
+w         <- runif(n = 10)
+
+## calculate hamming
+## loss (weighted and unweighted)
+SLmetrics::hammingloss(
+    actual,
+    predicted
+)
+#> [1] 1
+
+SLmetrics::weighted.hammingloss(
+    actual,
+    predicted,
+    w = w
+)
+#> [1] 1
+```
+
+- **Tweedie Deviance:** The interface to `tweedie.deviance()` is given
+  below:
+
+``` r
+## Generate actual
+## and predicted values
+actual_values <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
+
+predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
+
+## Evaluate performance
+SLmetrics::deviance.tweedie(
+   actual_values, 
+   predicted_values
+)
+#> [1] 0.9976545
+```
+
+- **Gamma Deviance:** The interface to `gamma.deviance()` is given
+  below:
+
+``` r
+## Generate actual
+## and predicted values
+actual_values <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
+
+predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
+
+## Evaluate performance
+SLmetrics::deviance.gamma(
+   actual_values, 
+   predicted_values
+)
+#> [1] 0.9976545
+```
+
+- **Poisson Deviance:** The interface to `poisson.deviance()` is given
+  below:
+
+``` r
+## Generate actual
+## and predicted values
+actual_values <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
+
+predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
+
+## Evaluate performance
+SLmetrics::deviance.poisson(
+   actual_values, 
+   predicted_values
+)
+#> [1] 0.3980706
+```
 
 ## :bug: Bug-fixes
 
 ## :boom: Breaking changes
+
+- **Area under the curve:** The new interface is given below:
+
+``` r
+## Generate x and y
+## pair
+x <- seq(0, pi, length.out = 200)
+y <- sin(x)
+
+## 1.1) calculate area
+SLmetrics::auc.xy(y = y,  x = x)
+#> [1] 1.999958
+```
+
+- **Receiver Operating Characteristics:** The new interface is given
+  below:
+
+``` r
+## define classes
+## and response probabilities
+actual   <- factor(c("Class A", "Class B", "Class A"))
+response <- matrix(cbind(
+    0.2, 0.8,
+    0.8, 0.2,
+    0.7, 0.3
+),nrow = 3, ncol = 2)
+
+## receiver operating curve
+SLmetrics::roc.curve(
+    actual,
+    response
+)
+#>   threshold level   label tpr fpr
+#> 1       Inf     1 Class A 0.0 0.0
+#> 2       0.8     1 Class A 0.0 1.0
+#> 3       0.8     1 Class A 0.5 1.0
+#> 4       0.2     1 Class A 1.0 1.0
+#> 5       Inf     2 Class B 0.0 0.0
+#> 6       0.7     2 Class B 1.0 0.0
+#> 7       0.3     2 Class B 1.0 0.5
+#> 8       0.2     2 Class B 1.0 1.0
+
+## area under the receiver operating
+## curve
+SLmetrics::auc.roc.curve(
+    actual,
+    response
+)
+#> Class A Class B 
+#>       0       1
+```
+
+- **Precision-Recall Curve:** The new interface is given below:
+
+``` r
+## define classes
+## and response probabilities
+actual   <- factor(c("Class A", "Class B", "Class A"))
+response <- matrix(cbind(
+    0.2, 0.8,
+    0.8, 0.2,
+    0.7, 0.3
+),nrow = 3, ncol = 2)
+
+## precision-recall curve
+SLmetrics::pr.curve(
+    actual,
+    response
+)
+#>   threshold level   label recall precision
+#> 1       Inf     1 Class A    0.0     1.000
+#> 2       0.8     1 Class A    0.0     0.000
+#> 3       0.8     1 Class A    0.5     0.500
+#> 4       0.2     1 Class A    1.0     0.667
+#> 5       Inf     2 Class B    0.0     1.000
+#> 6       0.7     2 Class B    1.0     1.000
+#> 7       0.3     2 Class B    1.0     0.500
+#> 8       0.2     2 Class B    1.0     0.333
+
+## area under the precision-recall
+## curve
+SLmetrics::auc.pr.curve(
+    actual,
+    response
+)
+#>   Class A   Class B 
+#> 0.4166667 1.0000000
+```
+
+- **Entropy:** `entropy()` has been renamed to `shannon.entropy()`. The
+  new interface to `shannon.entropy()` is given below:
+
+``` r
+## Observed probabilities
+pk <- matrix(
+  cbind(1/2, 1/2),
+  ncol = 2
+)
+
+## Shannon Entropy
+SLmetrics::shannon.entropy(pk)
+#> [1] 0.6931472
+```
+
+- **Aggregation in classification metrics:** The aggregation flag in the
+  classification functions `micro` have been replaced with the
+  `integer`-argument `estimator` which falls back to class-wise
+  evaluation if misspecified. The new interface is given below and is
+  applicable to all functions that has this argument:
+
+``` r
+set.seed(1903)
+
+## classes
+classes <- c("Kebab", "Falafel")
+
+## actual and
+## predicted classes
+actual    <- factor(sample(classes, 10, TRUE))
+predicted <- factor(sample(classes, 10, TRUE))
+
+## recall: class-wise
+SLmetrics::recall(
+    actual,
+    predicted,
+    estimator = 0
+)
+#> Falafel   Kebab 
+#>       0       0
+
+## recall: micro-averaged
+SLmetrics::recall(
+    actual,
+    predicted,
+    estimator = 1
+)
+#> [1] 0
+
+## recall: macro-averaged
+SLmetrics::recall(
+    actual,
+    predicted,
+    estimator = 1
+)
+#> [1] 0
+```
 
 # :bookmark: Version 0.3-3
 
@@ -352,7 +611,7 @@ SLmetrics::setUseOpenMP(TRUE)
 #> OpenMP usage set to: enabled
 system.time(SLmetrics::entropy(pk))
 #>    user  system elapsed 
-#>   0.323   0.000   0.015
+#>   0.017   0.000   0.002
 
 SLmetrics::setUseOpenMP(FALSE)
 #> OpenMP usage set to: disabled
@@ -455,11 +714,11 @@ cat(
   sep = "\n"
 )
 #> Mean Relative Root Mean Squared Error
-#> -11.06719
+#> -36.05853
 #> Range Relative Root Mean Squared Error
-#> 0.2242294
+#> 0.2563829
 #> IQR Relative Root Mean Squared Error
-#> 0.6875139
+#> 0.701429
 ```
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
@@ -547,10 +806,10 @@ SLmetrics::cmatrix(
     actual    = actual,
     predicted = predicted
 )
-#>   a b c
-#> a 5 4 4
-#> b 6 8 4
-#> c 5 6 8
+#>    a  b  c
+#> a  3 11  5
+#> b  4  5  6
+#> c  6  6  4
 
 ## 3) weighted confusion
 ## matrix
@@ -560,9 +819,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 3.049592 2.054694 2.186599
-#> b 2.969995 4.572255 2.994300
-#> c 2.259963 2.639312 2.909650
+#> a 1.380552 5.825622 2.252655
+#> b 2.350051 2.908446 4.385063
+#> c 2.800642 3.142683 2.416731
 ```
 
 # :bookmark: Version 0.2-0
@@ -603,9 +862,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>   a b c
-#> a 7 3 5
-#> b 5 6 6
-#> c 5 8 5
+#> a 7 4 7
+#> b 7 5 9
+#> c 4 4 3
 
 SLmetrics::cmatrix(
     actual    = actual,
@@ -613,9 +872,9 @@ SLmetrics::cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 3.663436 1.232882 3.274056
-#> b 2.970645 1.622291 3.137881
-#> c 2.760557 3.821165 1.452744
+#> a 4.850757 1.358181 4.045283
+#> b 3.243309 2.235341 4.379623
+#> c 1.881334 2.044475 2.688984
 ```
 
 Calculating weighted metrics using the `<factor>`- or
@@ -635,7 +894,7 @@ confusion_matrix <- SLmetrics::cmatrix(
 SLmetrics::accuracy(
     confusion_matrix
 )
-#> [1] 0.2815244
+#> [1] 0.3657341
 
 ## 2) weighted accuracy
 ## using <factor> method
@@ -644,7 +903,7 @@ SLmetrics::weighted.accuracy(
     predicted = predicted,
     w         = weights
 )
-#> [1] 0.2815244
+#> [1] 0.3657341
 ```
 
 Please note, however, that it is not possible to pass `cmatrix()`-into
@@ -715,9 +974,9 @@ w         <- runif(n = 50)
 ## 2) weighted and unweighted
 ## root mean squared error
 SLmetrics::rmse(actual, predicted)
-#> [1] 1.045591
+#> [1] 1.255743
 SLmetrics::weighted.rmse(actual, predicted, w = w)
-#> [1] 1.114496
+#> [1] 1.427956
 ```
 
 - The `rrmse()`-function have been removed in favor of the
@@ -842,7 +1101,7 @@ predicted <- factor(
 
 ## 2) print values
 print(actual)
-#>  [1] a b a b c a c a b c
+#>  [1] b a a c c b a b b b
 #> Levels: a b c
 ```
 
@@ -858,16 +1117,16 @@ summary(
 #> Confusion Matrix (3 x 3) 
 #> ================================================================================
 #>   a b c
-#> a 2 1 1
-#> b 2 0 1
-#> c 3 0 0
+#> a 1 1 1
+#> b 1 2 2
+#> c 1 0 1
 #> ================================================================================
 #> Overall Statistics (micro average)
-#>  - Accuracy:          0.20
-#>  - Balanced Accuracy: 0.17
-#>  - Sensitivity:       0.20
-#>  - Specificity:       0.60
-#>  - Precision:         0.20
+#>  - Accuracy:          0.40
+#>  - Balanced Accuracy: 0.41
+#>  - Sensitivity:       0.40
+#>  - Specificity:       0.70
+#>  - Precision:         0.40
 ```
 
 ``` r
@@ -875,7 +1134,7 @@ summary(
 ## using <cmatrix> method
 SLmetrics::fpr(confusion_matrix)
 #>         a         b         c 
-#> 0.8333333 0.1428571 0.2857143
+#> 0.2857143 0.2000000 0.3750000
 
 ## 2) false positive rate
 ## using <factor> method
@@ -884,7 +1143,7 @@ SLmetrics::fpr(
     predicted = predicted
 )
 #>         a         b         c 
-#> 0.8333333 0.1428571 0.2857143
+#> 0.2857143 0.2000000 0.3750000
 ```
 
 ### Regression metrics
@@ -903,11 +1162,11 @@ SLmetrics::huberloss(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.3237516
+#> [1] 0.2215707
 
 SLmetrics::rmse(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.8708552
+#> [1] 0.6691679
 ```
