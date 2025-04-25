@@ -22,7 +22,7 @@ find "$GITBOOK_DIR" -mindepth 1 -print | sort | \
     printf("%s* [%s](<%s>)\n", indent, name, $0)
   }' > "$TOC_TMP"
 
-sed '/{{< include TOC\.md  >}}/{
+sed '/{{< include TOC\.md >}}/{
   r '"$TOC_TMP"'
   d
 }' "$SRC_SUMMARY" > "$DST_SUMMARY"

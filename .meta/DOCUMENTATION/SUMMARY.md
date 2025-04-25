@@ -3,7 +3,7 @@
 
 ## Reference
 
-{{< include TOC.md  >}}
+{{< include TOC.md >}}
 
 ## Changelog
 
