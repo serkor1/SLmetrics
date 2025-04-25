@@ -3,9 +3,9 @@ set -euo pipefail
 IFS=$'\n\t'
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 
-DOC_ROOT="$PROJECT_ROOT/DOCUMENTATION"
+DOC_ROOT="$PROJECT_ROOT/.meta/DOCUMENTATION"
 GITBOOK_DIR="$DOC_ROOT/gitbook"
 
 SRC_SUMMARY="$DOC_ROOT/SUMMARY.md"

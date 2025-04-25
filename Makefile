@@ -1,5 +1,5 @@
 # Load common variables
-include .meta/DEVTOOLS/makefiles/variables.mk
+include .meta/development_tools/makefiles/variables.mk
 
 # Default target
 .PHONY: all
@@ -13,9 +13,9 @@ install-build-system:
 	@echo $(SUCCESS) "Build system installed"
 
 # Load modular makefiles
-include .meta/DEVTOOLS/makefiles/documentation.mk
-include .meta/DEVTOOLS/makefiles/package.mk
-include .meta/DEVTOOLS/makefiles/maintenance.mk
+include .meta/development_tools/makefiles/documentation.mk
+include .meta/development_tools/makefiles/package.mk
+include .meta/development_tools/makefiles/maintenance.mk
 
 # Default help target
 .PHONY: help
@@ -27,7 +27,7 @@ help:
 	@echo "  make build-meta      - Build README and NEWS files"
 	@echo "  make build-news      - Build only NEWS file"
 	@echo "  make build-readme    - Build only README file"
-	@echo "  make build-docs      - Preview the online documentation"
+	@echo "  make build-gitbook   - Build only Gitbook files"
 	@echo "  make document        - Update package documentation"
 	@echo ""
 	@echo "Package Building:"

@@ -6,10 +6,10 @@ TARBALL := $(PKGNAME)_$(VERSION).tar.gz
 # Directory structure
 META_DIR := .meta
 DOC_DIR := $(META_DIR)/DOCUMENTATION
-DEVTOOLS_DIR := $(META_DIR)/DEVTOOLS
+DEVTOOLS_DIR := $(META_DIR)/development_tools
 README_DIR := $(META_DIR)/README
 CHANGELOG_DIR := $(META_DIR)/CHANGELOG
-SCRIPTS_DIR := $(META_DIR)/DEVTOOLS/scripts
+SCRIPTS_DIR := $(META_DIR)/development_tools/scripts
 
 # File paths
 NEWS_QMD := $(CHANGELOG_DIR)/NEWS.qmd

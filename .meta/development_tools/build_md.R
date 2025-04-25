@@ -161,7 +161,7 @@ for (html in html_files) {
 #      NOTE: it might be more consistent
 #      to call this separately
 system2(
-  ".meta/scripts/build_toc.sh"
+  ".meta/development_tools/scripts/build_toc.sh"
 )
 
 # 4) move relevant files
