@@ -88,6 +88,3 @@ test-omp.*
 
 # ignore .md files
 .meta/documentation/gitbook/**
-
-# ignore m4-folder
-m4

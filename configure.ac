@@ -8,7 +8,6 @@
 ##    found here: https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.pdf
 AC_INIT([{SLmetrics}], [v0.3-3])
 AC_MSG_NOTICE([Configuring {SLmetrics} ${PACKAGE_VERSION}])
-m4_esyscmd([mkdir -p m4 && cp -r .meta/development_tools/m4/* m4/])
 
 ## 1) Locate R Home
 ##    this is where R is stored
