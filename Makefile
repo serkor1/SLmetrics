@@ -1,5 +1,5 @@
 # Load common variables
-include .meta/makefiles/variables.mk
+include .meta/DEVTOOLS/makefiles/variables.mk
 
 # Default target
 .PHONY: all
@@ -13,9 +13,9 @@ install-build-system:
 	@echo $(SUCCESS) "Build system installed"
 
 # Load modular makefiles
-include .meta/makefiles/documentation.mk
-include .meta/makefiles/package.mk
-include .meta/makefiles/maintenance.mk
+include .meta/DEVTOOLS/makefiles/documentation.mk
+include .meta/DEVTOOLS/makefiles/package.mk
+include .meta/DEVTOOLS/makefiles/maintenance.mk
 
 # Default help target
 .PHONY: help
