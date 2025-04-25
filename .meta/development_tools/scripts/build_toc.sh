@@ -2,18 +2,9 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
-
-DOC_ROOT="$PROJECT_ROOT/.meta/DOCUMENTATION"
-GITBOOK_DIR="$DOC_ROOT/gitbook"
-
-SRC_SUMMARY="$DOC_ROOT/SUMMARY.md"
-DST_SUMMARY="$GITBOOK_DIR/SUMMARY.md"
-
 TOC_TMP="$(mktemp)"
-find "$GITBOOK_DIR" -mindepth 1 -print | sort | \
-  sed "s|^$GITBOOK_DIR/||" | \
+find "$documentation_directory/gitbook" -mindepth 1 -print | sort | \
+  sed "s|^$documentation_directory/gitbook/||" | \
   awk -F'/' '{
     depth = NF - 1
     indent = ""
@@ -25,7 +16,7 @@ find "$GITBOOK_DIR" -mindepth 1 -print | sort | \
 sed '/{{< include TOC\.md >}}/{
   r '"$TOC_TMP"'
   d
-}' "$SRC_SUMMARY" > "$DST_SUMMARY"
+}' "$documentation_directory/SUMMARY.md" > "$documentation_directory/gitbook/SUMMARY.md"
 
 rm "$TOC_TMP"
-echo -e "\t ✅ Generated $DST_SUMMARY"
+echo -e "\t ✅ Generated SUMMARY.md"

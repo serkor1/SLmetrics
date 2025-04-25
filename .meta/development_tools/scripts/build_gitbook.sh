@@ -2,21 +2,13 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-# Directories
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
-DOC_ROOT="$PROJECT_ROOT/.meta/DOCUMENTATION"
-GITBOOK_DIR="$DOC_ROOT/gitbook"
-SRC_SUMMARY="$DOC_ROOT/SUMMARY.md"
-DST_SUMMARY="$GITBOOK_DIR/SUMMARY.md"
-
 # 0) Build markdown sources
 Rscript .meta/development_tools/build_md.R
 
 echo -e "\t ✅ Markdown sources built"
 
 # 1) Convert <div class="sourceCode r"> blocks into GitBook code fences
-find "$GITBOOK_DIR" -type f -name '*.md' -print0 | \
+find "$documentation_directory/gitbook" -type f -name '*.md' -print0 | \
   while IFS= read -r -d '' file; do
     perl -0777 -i -pe '
       s{^[ \t]*<div\s+class="sourceCode\s+r">\s*\n}{\
@@ -28,7 +20,7 @@ find "$GITBOOK_DIR" -type f -name '*.md' -print0 | \
 echo -e "\t ✅ Code blocks converted"
 
 # 2) Remove indentation from documents
-find "$GITBOOK_DIR" -type f -name '*.md' -print0 | \
+find "$documentation_directory/gitbook" -type f -name '*.md' -print0 | \
   while IFS= read -r -d '' file; do
     sed -E -i '/^```[[:space:]]*R[[:space:]]*$/,/^```[[:space:]]*$/ { 
       /^```/ b
@@ -39,7 +31,7 @@ find "$GITBOOK_DIR" -type f -name '*.md' -print0 | \
 echo -e "\t ✅ Redundant indentation removed"
 
 # 3) Strip '### See Also' sections
-find "$GITBOOK_DIR" -type f -name '*.md' -print0 | \
+find "$documentation_directory/gitbook" -type f -name '*.md' -print0 | \
   while IFS= read -r -d '' file; do
     sed -E -i '/^### See Also$/,/^###[[:space:]]/{
       /^### See Also$/d

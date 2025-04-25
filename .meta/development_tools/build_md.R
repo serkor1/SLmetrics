@@ -141,7 +141,7 @@ html_files <- list.files(
 #      and store
 for (html in html_files) {
     rel <- sub(out_base, "", html)
-    md  <- file.path(".meta/DOCUMENTATION/gitbook", sub("\\.html$", ".md", rel))
+    md  <- file.path(".meta/documentation/gitbook", sub("\\.html$", ".md", rel))
     md  <- gsub("[a-z]*_", "", md)
     
     # make sure the directory exists
@@ -167,7 +167,7 @@ system2(
 # 4) move relevant files
 #    to documentation
 file_list <- list.files(
-  path       = ".meta/DOCUMENTATION",
+  path       = ".meta/documentation",
   pattern    = "*.md",
   full.names = TRUE 
 )
@@ -192,7 +192,7 @@ file_list <- grep(
 for (file in file_list) {
   file.copy(
     from = file,
-    to   = paste0(".meta/DOCUMENTATION/gitbook/", basename(file)),
+    to   = paste0(".meta/documentation/gitbook/", basename(file)),
     overwrite = TRUE
   )
 }
