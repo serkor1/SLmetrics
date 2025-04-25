@@ -8,12 +8,13 @@ package_version  := $(shell grep "^Version:" DESCRIPTION | sed "s/Version: //")
 tarball_location := $(package_name)_$(package_version).tar.gz
 
 # Directory structure
-meta_directory              := .meta
-documentation_directory     := $(meta_directory)/documentation
-development_tools_directory := $(meta_directory)/development_tools
-readme_directory            := $(meta_directory)/README
-changelog_directory         := $(meta_directory)/changelog
-scripts_directory           := $(meta_directory)/development_tools/scripts
+export root_directory              := $(shell pwd)
+export meta_directory              := .meta
+export documentation_directory     := $(meta_directory)/documentation
+export development_tools_directory := $(meta_directory)/development_tools
+export readme_directory            := $(meta_directory)/README
+export changelog_directory         := $(meta_directory)/changelog
+export scripts_directory           := $(meta_directory)/development_tools/scripts
 
 # File paths
 changelog_qmd := $(changelog_directory)/NEWS.qmd
