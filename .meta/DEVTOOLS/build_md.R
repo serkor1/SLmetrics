@@ -157,6 +157,9 @@ for (html in html_files) {
     ))
   }
 
+# 3.3) execute shell script
+#      NOTE: it might be more consistent
+#      to call this separately
 system2(
   ".meta/scripts/build_toc.sh"
 )
@@ -169,8 +172,13 @@ file_list <- list.files(
   full.names = TRUE 
 )
 
+# 4.1) move NEWS from project 
+#      root. 
+#      NOTE: Has to be a folder at some point
 file_list <- c(file_list, "NEWS.md")
 
+# 4.2) remove the original summary
+#      file
 file_list <- grep(
   pattern = "summary",
   x       = file_list,
@@ -179,6 +187,8 @@ file_list <- grep(
   value   = TRUE  
 )
 
+# 4.3) copy files to gitbook
+#      folder
 for (file in file_list) {
   file.copy(
     from = file,

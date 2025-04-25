@@ -36,11 +36,11 @@ jobs:
       - name: Setup pandoc
         uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Generate Markdown docs
+      - name: Build Gitbook
         working-directory: main
-        run: make build-docs
+        run: make build-gitbook
 
-      - name: Sync docs folder
+      - name: Synchronize
         run: |
           rsync -av --delete \
             --filter='P .git/' \

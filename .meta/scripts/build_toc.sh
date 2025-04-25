@@ -28,4 +28,4 @@ sed '/{{< include TOC\.md  >}}/{
 }' "$SRC_SUMMARY" > "$DST_SUMMARY"
 
 rm "$TOC_TMP"
-echo "✅ Generated $DST_SUMMARY"
+echo -e "\t ✅ Generated $DST_SUMMARY"

@@ -21,10 +21,10 @@ build-meta:
 	@echo $(SUCCESS) "All documentation built successfully"
 
 # Build docs
-.PHONY: build-docs
-build-docs:
+.PHONY: build-gitbook
+build-gitbook:
 	@echo $(ECHO_PREFIX) "Building Gitbook folder"
-	@$(SCRIPTS_DIR)/preview_docs.sh
+	@$(SCRIPTS_DIR)/build_gitbook.sh
 	@echo $(SUCCESS) "Gitbook folder ready"
 
 # Document the package functions
