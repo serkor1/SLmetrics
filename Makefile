@@ -8,9 +8,9 @@ all: build
 # Install target - sets permissions correctly
 .PHONY: install-build-system
 install-build-system:
-	@echo $(ECHO_PREFIX) "Setting up build system"
+	@echo $(echo_prefix) "Setting up build system"
 	@chmod +x .meta/scripts/*.sh
-	@echo $(SUCCESS) "Build system installed"
+	@echo $(echo_success) "Build system installed"
 
 # Load modular makefiles
 include .meta/development_tools/makefiles/documentation.mk
@@ -20,8 +20,8 @@ include .meta/development_tools/makefiles/maintenance.mk
 # Default help target
 .PHONY: help
 help:
-	@echo "SLmetrics Package Build System"
-	@echo "==============================="
+	@echo "{SLmetrics} Package Build System"
+	@echo "================================"
 	@echo ""
 	@echo "Documentation:"
 	@echo "  make build-meta      - Build README and NEWS files"
@@ -39,7 +39,7 @@ help:
 	@echo "Maintenance:"
 	@echo "  make performance     - Run performance tests"
 	@echo "  make clean           - Clean repository"
-	@echo "  make purge           - Aggressively clean repository"
+	@echo "  make purge           - Aggressively clean repository. Deletes all branches except main and development."
 	@echo "  make new-version     - Create a new NEWS entry"
 	@echo ""
 	@echo "Options:"
