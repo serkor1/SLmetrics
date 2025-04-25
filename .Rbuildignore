@@ -30,8 +30,6 @@ README_files
 NEWS_cache
 NEWS_files
 ^CRAN-SUBMISSION$
-^\.meta/development_tools/m4$
-configure.ac
 man-roxygen
 
 # Armadillo folder

@@ -2052,6 +2052,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Configuring {SLmetrics} ${PACKAGE_VERSION}" >&5
 printf "%s\n" "$as_me: Configuring {SLmetrics} ${PACKAGE_VERSION}" >&6;}
 
+
 ## 1) Locate R Home
 ##    this is where R is stored
 ##    often a standard location.
