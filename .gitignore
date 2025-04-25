@@ -85,3 +85,6 @@ src/Makevars
 # ignore test-omp
 # an artifact of configure.ac
 test-omp.*
+
+# ignore .md files
+gitbook/**

@@ -37,6 +37,7 @@ tasks <- vapply(
   FUN.VALUE = character(1)
 )
 
+
 # 1.3) split the files
 #      by task
 all_files <- split(all_files, tasks)
@@ -59,7 +60,7 @@ all_metrics <- lapply(all_files, function(x){
 
 # 2.2) split files by task and
 #      metrics. Note, we do this
-#      as gitbook organizes everything
+#      as .meta/DOCUMENTATION/gitbook organizes everything
 #      by folders
 files_by_task_and_metric <- mapply(
   FUN = function(paths, metrics) {
@@ -70,12 +71,37 @@ files_by_task_and_metric <- mapply(
         paths[grepl(paste0("_", m, "\\."), basename(paths))]
       }),
       metrics
+      
     )
   },
   paths   = all_files,
   metrics = all_metrics,
   SIMPLIFY = FALSE
 )
+
+# 2.2.1) Rename each element
+#        to task metrics - this will be displayed 
+#        properly by .meta/DOCUMENTATION/Gitbook
+
+files_by_task_and_metric$classification <- setNames(
+    object = files_by_task_and_metric$classification,
+    nm = sapply(files_by_task_and_metric$classification, function(x){
+        as.character(Filter(function(x) attr(x, "Rd_tag")== "\\title", tools::parse_Rd(x[1]))[[1]])
+    })
+)
+
+files_by_task_and_metric$regression <- setNames(
+    object = files_by_task_and_metric$regression,
+    nm = sapply(files_by_task_and_metric$regression, function(x){
+        as.character(Filter(function(x) attr(x, "Rd_tag")== "\\title", tools::parse_Rd(x[1]))[[1]])
+    })
+)
+
+names(files_by_task_and_metric) <- tools::toTitleCase(
+    text = paste(names(files_by_task_and_metric), "metrics")
+)
+
+
 
 # 3) Write the HTML files
 #    to a temporary location
@@ -110,35 +136,65 @@ html_files <- list.files(
   full.names = TRUE
 )
 
+
 # 3.2) convert to markdown
 #      and store
 for (html in html_files) {
-  rel <- sub(out_base, "", html)
-  md  <- file.path("gitbook", sub("\\.html$", ".md", rel))
-  
-  # make sure the directory exists
-  dir.create(dirname(md), recursive = TRUE, showWarnings = FALSE)
-  
-  # call pandoc
-  system2("pandoc", args = c(
-    "-f", "html",
-    "-t", "gfm+raw_html",
-    "--wrap=auto",
-    shQuote(html),
-    "-o", shQuote(md)
-  ))
-}
+    rel <- sub(out_base, "", html)
+    md  <- file.path(".meta/DOCUMENTATION/gitbook", sub("\\.html$", ".md", rel))
+    md  <- gsub("[a-z]*_", "", md)
+    
+    # make sure the directory exists
+    dir.create(dirname(md), recursive = TRUE, showWarnings = FALSE)
+    
+    # call pandoc
+    system2("pandoc", args = c(
+      "-f", "html",
+      "-t", "gfm+raw_html",
+      "--wrap=auto",
+      shQuote(html),
+      "-o", shQuote(md)
+    ))
+  }
+
+# 3.3) execute shell script
+#      NOTE: it might be more consistent
+#      to call this separately
+system2(
+  ".meta/scripts/build_toc.sh"
+)
 
 # 4) move relevant files
 #    to documentation
-file.copy(
-  from = "NEWS.md",
-  to   = "gitbook/Changelog.md"
+file_list <- list.files(
+  path       = ".meta/DOCUMENTATION",
+  pattern    = "*.md",
+  full.names = TRUE 
 )
 
-file.copy(
-  from = ".meta/DOCUMENTATION/README.md",
-  to   = "gitbook"
+# 4.1) move NEWS from project 
+#      root. 
+#      NOTE: Has to be a folder at some point
+file_list <- c(file_list, "NEWS.md")
+
+# 4.2) remove the original summary
+#      file
+file_list <- grep(
+  pattern = "summary",
+  x       = file_list,
+  ignore.case = TRUE,
+  invert  = TRUE,
+  value   = TRUE  
 )
+
+# 4.3) copy files to gitbook
+#      folder
+for (file in file_list) {
+  file.copy(
+    from = file,
+    to   = paste0(".meta/DOCUMENTATION/gitbook/", basename(file)),
+    overwrite = TRUE
+  )
+}
 
 # script end;
