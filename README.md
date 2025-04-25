@@ -1,6 +1,6 @@
 # Statistical Learning Metrics in R
 
-[{SLmetrics}](https://github.com/serkor1/SLmetrics) is an implementation of 40+ scoring metrics for supervised and unsuporvised machine learning and statistical learning models.
+[{SLmetrics}](https://github.com/serkor1/SLmetrics) is an implementation of 40+ scoring metrics for supervised and unsupervised machine learning and statistical learning models.
 
 ## Benchmarks
 
@@ -53,7 +53,7 @@ pak::pak(
 {% stepper %}
 {% step %}
 ### Clone repository
-{% code title="Close Repository" overflow="wrap" lineNumbers="true" %}
+{% code title="Clone Repository" overflow="wrap" lineNumbers="true" %}
 
 ``` console
 git clone --recurse-submodules https://github.com/serkor1/SLmetrics.git
