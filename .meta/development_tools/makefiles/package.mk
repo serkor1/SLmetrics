@@ -5,7 +5,7 @@ performance:
 	@echo "==========================================="
 	@$(scripts_directory)/run_performance_tests.sh
 	@echo $(echo_success) "Performance tests completed successfully"
-	@echo $(echjo_warning) "Remember to rebuild $(PKGNAME) to use the new data!"
+	@echo $(echo_warning) "Remember to rebuild $(PKGNAME) to use the new data!"
 
 # Build and install the package
 .PHONY: build
@@ -33,3 +33,11 @@ r-hub-check:
 	@echo "========================="
 	@$(scripts_directory)/run_rhub_checks.sh
 	@echo $(echo_success) "R-hub checks requested"
+
+# Compile and run Autoconf
+.PHONY: build-config
+build-config:
+	@echo $(echo_prefix) "Compiling configure.ac"
+	@echo "========================="
+	@autoconf && ./configure
+	@echo $(echo_success) "Configure done!"

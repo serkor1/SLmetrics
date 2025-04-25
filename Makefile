@@ -35,6 +35,7 @@ help:
 	@echo "  make check           - Build, check and install the package"
 	@echo "  make test-pkg        - Run unit tests"
 	@echo "  make r-hub-check     - Run R-hub checks"
+	@echo "  make build-config    - Compile and run Autoconf"
 	@echo ""
 	@echo "Maintenance:"
 	@echo "  make performance     - Run performance tests"

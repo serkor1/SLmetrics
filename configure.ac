@@ -43,7 +43,7 @@ FLIBS=`"${R_HOME}/bin/R" CMD config FLIBS`
 ##      installation
 AC_LANG([C++])
 AC_PROG_CXX
-m4_include([m4/ax_cxx_compile_stdcxx.m4])
+m4_include([.meta/development_tools/m4/ax_cxx_compile_stdcxx.m4])
 AX_CXX_COMPILE_STDCXX([23], [ext], [optional])
 if test "$HAVE_CXX23" = "1"; then
   STD_VER=23
