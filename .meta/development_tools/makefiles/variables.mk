@@ -15,6 +15,7 @@ export development_tools_directory := $(meta_directory)/development_tools
 export readme_directory            := $(meta_directory)/README
 export changelog_directory         := $(meta_directory)/changelog
 export scripts_directory           := $(meta_directory)/development_tools/scripts
+export makefile_directory          := $(meta_directory)/development_tools/makefiles
 
 # File paths
 changelog_qmd := $(changelog_directory)/NEWS.qmd

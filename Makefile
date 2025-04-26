@@ -9,13 +9,13 @@ all: build
 .PHONY: install-build-system
 install-build-system:
 	@echo $(echo_prefix) "Setting up build system"
-	@chmod +x .meta/scripts/*.sh
+	@chmod +x $(scripts_directory)/*.sh
 	@echo $(echo_success) "Build system installed"
 
 # Load modular makefiles
-include .meta/development_tools/makefiles/documentation.mk
-include .meta/development_tools/makefiles/package.mk
-include .meta/development_tools/makefiles/maintenance.mk
+include $(makefile_directory)/documentation.mk
+include $(makefile_directory)/package.mk
+include $(makefile_directory)/maintenance.mk
 
 # Default help target
 .PHONY: help

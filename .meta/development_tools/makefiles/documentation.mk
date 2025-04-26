@@ -31,5 +31,5 @@ build-gitbook:
 .PHONY: document
 document:
 	@echo $(echo_prefix) "Documenting $(PKGNAME)"
-	@Rscript $(development_tools_directory)/document.R
+	@$(scripts_directory)/build_roxygen.sh
 	@echo $(echo_success) "Package documentation updated"
