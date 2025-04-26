@@ -15,12 +15,6 @@ knitr:
     fig.height: 6
     out.width: 100%
 ---
-```{r install_version (0.3-4)}
-#| echo: false
-#| include: false
-#| eval: false
-pak::pak(pkg = "serkor1/SLmetrics@v0.3-4", ask = FALSE)
-```
 
 # :bookmark: Version 0.3-4
 
@@ -42,7 +36,7 @@ As an example on the increased flexibility is the introduction of the `estimator
 * **Hamming Loss:** The fraction of the wrong labels to the total number of labels, i.e. , where is the target, is the prediction, and is the "Exclusive, or" operator that returns zero when the target and prediction are identical and one otherwise. The interface to `hammingloss()` is given below:
 
 
-```{r hammingloss}
+```{r}
 set.seed(1903)
 
 ## classes
@@ -78,7 +72,7 @@ actual_values <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
 predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
 
 ## Evaluate performance
-tweedie.deviance(
+SLmetrics::deviance.tweedie(
    actual_values, 
    predicted_values
 )
@@ -94,7 +88,7 @@ actual_values <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
 predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
 
 ## Evaluate performance
-gamma.deviance(
+SLmetrics::deviance.gamma(
    actual_values, 
    predicted_values
 )
@@ -110,7 +104,7 @@ actual_values <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
 predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
 
 ## Evaluate performance
-poisson.deviance(
+SLmetrics::deviance.poisson(
    actual_values, 
    predicted_values
 )
@@ -119,6 +113,18 @@ poisson.deviance(
 ## :bug: Bug-fixes
 
 ## :boom: Breaking changes
+
+* **Area under the curve:** The new interface is given below:
+
+```{r}
+## Generate x and y
+## pair
+x <- seq(0, pi, length.out = 200)
+y <- sin(x)
+
+## 1.1) calculate area
+SLmetrics::auc.xy(y = y,  x = x)
+```
 
 * **Receiver Operating Characteristics:** The new interface is given below:
 
@@ -175,7 +181,7 @@ SLmetrics::auc.pr.curve(
 
 * **Entropy:** `entropy()` has been renamed to `shannon.entropy()`. The new interface to `shannon.entropy()` is given below:
 
-```{r hammingloss}
+```{r}
 ## Observed probabilities
 pk <- matrix(
   cbind(1/2, 1/2),
@@ -188,7 +194,7 @@ SLmetrics::shannon.entropy(pk)
 
 * **Aggregation in classification metrics:** The aggregation flag in the classification functions `micro` have been replaced with the `integer`-argument `estimator` which falls back to class-wise evaluation if misspecified. The new interface is given below and is applicable to all functions that has this argument:
 
-```{r hammingloss}
+```{r}
 set.seed(1903)
 
 ## classes

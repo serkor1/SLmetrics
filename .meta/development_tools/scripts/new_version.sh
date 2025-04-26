@@ -5,4 +5,4 @@
 VERSION=$1
 
 # Run the changelog template script
-./.meta/DEVTOOLS/changelog_template.sh
+./.meta/development_tools/changelog_template.sh

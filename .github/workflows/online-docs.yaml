@@ -8,8 +8,8 @@ on:
         paths:
             - 'NEWS.md'
             - 'man/**'
-            - '.meta/DEVTOOLS/**'
-            - '.meta/DOCUMENTATION/**'
+            - '.meta/development_tools/**'
+            - '.meta/documentation/**'
 
 jobs:
   build-docs:
@@ -45,7 +45,7 @@ jobs:
           rsync -av --delete \
             --filter='P .git/' \
             --exclude='.*' \
-            main/.meta/DOCUMENTATION/gitbook/ \
+            main/.meta/documentation/gitbook/ \
             online-docs/
 
       - name: Commit & push to online-docs

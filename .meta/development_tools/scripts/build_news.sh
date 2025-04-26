@@ -5,7 +5,7 @@
 RESET=$1
 
 # Run the changelog build script
-./.meta/DEVTOOLS/changelog_build.sh
+./.meta/development_tools/scripts/changelog_build.sh
 
 # Render the NEWS file
 if [ "$RESET" = "true" ]; then

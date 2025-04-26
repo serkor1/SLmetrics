@@ -87,4 +87,4 @@ src/Makevars
 test-omp.*
 
 # ignore .md files
-gitbook/**
+.meta/documentation/gitbook/**
