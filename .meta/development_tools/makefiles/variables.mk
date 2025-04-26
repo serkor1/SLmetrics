@@ -12,7 +12,7 @@ export root_directory              := $(shell pwd)
 export meta_directory              := .meta
 export documentation_directory     := $(meta_directory)/documentation
 export development_tools_directory := $(meta_directory)/development_tools
-export readme_directory            := $(meta_directory)/README
+export readme_directory            := $(meta_directory)/readme
 export changelog_directory         := $(meta_directory)/changelog
 export scripts_directory           := $(meta_directory)/development_tools/scripts
 export makefile_directory          := $(meta_directory)/development_tools/makefiles
@@ -28,7 +28,8 @@ reset ?= false
 check ?= false
 
 # Output formatting
-echo_prefix  := "\033[1;36m>>\033[0m"
-echo_success := "\033[1;32m✓\033[0m"
-echo_warning := "\033[1;33m⚠️\033[0m"
-echo_error   := "\033[1;31m✗\033[0m"
+export echo_prefix  := "\033[1;36m>>\033[0m"
+export echo_success := "\033[1;32m✓\033[0m"
+export echo_warning := "\033[1;33m⚠️\033[0m"
+export echo_error   := "\033[1;31m✗\033[0m"
+export echo_bullet  := \t \033[1;36m*\033[0m

@@ -56,6 +56,46 @@ for task in "${!FILES_BY_TASK[@]}"; do
       fi
     done <<< "${FILES_BY_TASK[$task]}"
   done
+
+  ## 4.2) Rename metric folders to use the roxygen \title{}
+  ##       instead of the raw metric name
+  for metric in "${METRICS[@]}"; do
+    dir_task="${task^} metrics"
+    old_dir="$OUT_BASE/$dir_task/$metric"
+    # skip if somehow missing
+    [[ ! -d "$old_dir" ]] && continue
+
+    # find one .Rd file to read its title
+    safe_metric="${metric//./\\.}"
+    first_f=""
+    while read -r f; do
+      if [[ "$(basename "$f")" =~ (^|[._])${safe_metric}\.Rd$ ]]; then
+        first_f="$f"
+        break
+      fi
+    done <<< "${FILES_BY_TASK[$task]}"
+
+    if [[ -n "$first_f" ]]; then
+      # extract raw Name: line, strip overstrike/backspace + underscores
+      full_txt="$(Rscript --vanilla --silent -e "tools::Rd2txt('$first_f', out = stdout())")"
+      raw_line="${full_txt%%$'\n'*}"
+      clean_line="$(printf '%s' "$raw_line" | sed -E 's/.\x08//g' | tr -d '_')"
+      title="${clean_line#*: }"
+      [[ -z "$title" ]] && title="${metric^}"
+    else
+      title="${metric^}"
+    fi
+
+    # sanitize for filesystem
+    safe_title="$(printf '%s' "$title" \
+      | sed -E 's/[\/]/-/g; s/[<>:"\\|?*]//g; s/[[:space:]]+/ /g; s/^[[:space:]]+//; s/[[:space:]]+$//')"
+
+    # if the new name differs, rename the folder
+    new_dir="$OUT_BASE/$dir_task/$safe_title"
+    if [[ "$old_dir" != "$new_dir" ]]; then
+      mv "$old_dir" "$new_dir"
+    fi
+  done
 done
 
 ## 5) Convert HTML → Markdown
@@ -67,6 +107,7 @@ find "$OUT_BASE" -type f -name '*.html' | while read -r html; do
   mkdir -p "$(dirname "$md")"
   pandoc -f html -t gfm+raw_html --wrap=auto "$html" -o "$md"
 done
+echo -e "${echo_bullet} Converted HTML to Markdown"
 
 ## 6) Replace Code Blocks with GitBook Fences
 ##     Swap <div class="sourceCode r">…</div> into {% code %} and ``` R ```
@@ -126,6 +167,4 @@ for file in "${FILE_LIST[@]}"; do
   cp -f "$file" "$GITBOOK_DIR/$(basename "$file")"
 done
 
-
-
-echo "✅ Documentation built into $GITBOOK_DIR"
+echo -e "${echo_bullet} Documentation built into $GITBOOK_DIR"
