@@ -46,9 +46,12 @@ for task in "${!FILES_BY_TASK[@]}"; do
     dir_task="${task^} metrics"
     out_dir="$OUT_BASE/$dir_task/$metric"
     mkdir -p "$out_dir"
+
     while read -r f; do
-      if [[ "$(basename "$f")" == *"${metric}"*".Rd" ]]; then
-        html_name="$(basename "$f" .Rd).html"
+      fname="$(basename "$f")"
+      # only match if metric is preceded by "_" or "." and followed by "." or end-of-name
+      if [[ $fname =~ (_|\.)${metric}(\.|\.Rd$) ]]; then
+        html_name="${fname%.Rd}.html"
         Rscript -e "tools::Rd2HTML('$f', out = '$out_dir/$html_name')"
       fi
     done <<< "${FILES_BY_TASK[$task]}"
