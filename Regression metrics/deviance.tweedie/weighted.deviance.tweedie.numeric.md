@@ -1,0 +1,148 @@
+<div class="container">
+
+<div role="main">
+
+|                                   |                 |
+|-----------------------------------|----------------:|
+| weighted.deviance.tweedie.numeric | R Documentation |
+
+## Tweedie Deviance
+
+### Description
+
+A generic S3 function to compute the *tweedie deviance* score for a
+regression model. This function dispatches to S3 methods in
+`deviance.tweedie()` and performs no input validation. If you supply NA
+values or vectors of unequal length (e.g. `length(x) != length(y)`), the
+underlying `C++` code may trigger undefined behavior and crash your `R`
+session.
+
+#### Defensive measures
+
+Because `deviance.tweedie()` operates on raw pointers, pointer‑level
+faults (e.g. from NA or mismatched length) occur before any `R`‑level
+error handling. Wrapping calls in `try()` or `tryCatch()` will *not*
+prevent `R`-session crashes.
+
+To guard against this, wrap `deviance.tweedie()` in a “safe” validator
+that checks for NA values and matching length, for example:
+
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
+safe_deviance.tweedie <- function(x, y, ...) {
+  stopifnot(
+    !anyNA(x), !anyNA(y),
+    length(x) == length(y)
+  )
+  deviance.tweedie(x, y, ...)
+}
+```
+
+{% endcode %}
+
+Apply the same pattern to any custom metric functions to ensure input
+sanity before calling the underlying `C++` code.
+
+### Usage
+
+``` R
+## S3 method for class 'numeric'
+weighted.deviance.tweedie(actual, predicted, w, power = 2, ...)
+```
+
+### Arguments
+
+<table role="presentation">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><code id="actual">actual</code>, <code
+id="predicted">predicted</code></td>
+<td><p>A pair of &lt;double&gt; vectors of length <code
+class="reqn">n</code>.</p></td>
+</tr>
+<tr class="even">
+<td><code id="w">w</code></td>
+<td><p>A &lt;double&gt; vector of sample weights.</p></td>
+</tr>
+<tr class="odd">
+<td><code id="power">power</code></td>
+<td><p>A &lt;double&gt; value, default = 2. Tweedie power parameter.
+Either power &lt;= 0 or power &gt;= 1.</p>
+<p>The higher <code class="reqn">power</code>, the less weight is given
+to extreme deviations between actual and predicted values.</p>
+<ul>
+<li><p><strong>power &lt; 0:</strong> Extreme stable distribution.
+Requires: predicted &gt; 0.</p></li>
+<li><p><strong>power = 0:</strong> Normal distribution, output
+corresponds to <code>mse()</code>, actual and predicted can be any real
+numbers.</p></li>
+<li><p><strong>power = 1:</strong> Poisson distribution
+(<code>deviance.poisson()</code>). Requires: actual &gt;= 0 and
+predicted &gt; 0.</p></li>
+<li><p><strong>1 &lt; power &lt; 2:</strong> Compound Poisson
+distribution. Requires: actual &gt;= 0 and predicted &gt; 0.</p></li>
+<li><p><strong>power = 2:</strong> Gamma distribution
+(<code>deviance.gamma()</code>). Requires: actual &gt; 0 and predicted
+&gt; 0.</p></li>
+<li><p><strong>power = 3:</strong> Inverse Gaussian distribution.
+Requires: actual &gt; 0 and predicted &gt; 0.</p></li>
+<li><p><strong>otherwise:</strong> Positive stable distribution.
+Requires: actual &gt; 0 and predicted &gt; 0.</p></li>
+</ul></td>
+</tr>
+<tr class="even">
+<td><code id="...">...</code></td>
+<td><p>Arguments passed into other methods</p></td>
+</tr>
+</tbody>
+</table>
+
+### Value
+
+A \<double\> value
+
+### References
+
+James, Gareth, et al. An introduction to statistical learning. Vol. 112.
+No. 1. New York: springer, 2013.
+
+Hastie, Trevor. "The elements of statistical learning: data mining,
+inference, and prediction." (2009).
+
+Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for
+scientific computing in Python." Nature methods 17.3 (2020): 261-272.
+
+Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python."
+the Journal of machine Learning research 12 (2011): 2825-2830.
+
+### Examples
+
+``` R
+## Generate actual
+## and predicted values
+actual_values    <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
+predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
+
+## Generate sample
+## weights
+sample_weights <- c(0.3, 0.5, 0.3, 0, 0.8, 0.8, 1)
+
+## Evaluate performance
+SLmetrics::weighted.deviance.tweedie(
+   actual    = actual_values, 
+   predicted = predicted_values,
+   w         = sample_weights
+)
+```
+```
+
+{% endcode %}
+```
+
+{% endcode %}
