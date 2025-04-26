@@ -94,20 +94,7 @@ while IFS= read -r -d '' file; do
     "$file"
 done
 
-## 9) Copy Top-Level Docs + NEWS.md
-##     Copy all .md in documentation_directory (excluding “summary*”) plus NEWS.md into gitbook/
-mapfile -t FILE_LIST < <(
-  find "$DOC_DIR" -maxdepth 1 -type f -name "*.md" ! -iname "*summary*" -print
-)
-if [[ -f NEWS.md ]]; then
-  FILE_LIST+=(NEWS.md)
-fi
-mkdir -p "$GITBOOK_DIR"
-for file in "${FILE_LIST[@]}"; do
-  cp -f "$file" "$GITBOOK_DIR/$(basename "$file")"
-done
-
-## 10) Regenerate SUMMARY.md
+## 9) Regenerate SUMMARY.md
 ##      Build a TOC from gitbook/ directory tree and inject into SUMMARY.md
 TOC_TMP="$(mktemp)"
 find "$GITBOOK_DIR" -mindepth 1 -print | sort | \
@@ -122,5 +109,20 @@ sed '/{{< include TOC\.md >}}/ {
   d
 }' "$DOC_DIR/SUMMARY.md" > "$GITBOOK_DIR/SUMMARY.md"
 rm "$TOC_TMP"
+
+## 10) Copy Top-Level Docs + NEWS.md
+##     Copy all .md in documentation_directory (excluding “summary*”) plus NEWS.md into gitbook/
+mapfile -t FILE_LIST < <(
+  find "$DOC_DIR" -maxdepth 1 -type f -name "*.md" ! -iname "*summary*" -print
+)
+if [[ -f NEWS.md ]]; then
+  FILE_LIST+=(NEWS.md)
+fi
+mkdir -p "$GITBOOK_DIR"
+for file in "${FILE_LIST[@]}"; do
+  cp -f "$file" "$GITBOOK_DIR/$(basename "$file")"
+done
+
+
 
 echo "✅ Documentation built into $GITBOOK_DIR"
