@@ -1,6 +1,10 @@
 
 * [Introduction](README.md)
 
+## Applications
+
+* [Example](<Example.md>)
+
 ## Reference
 
 * [Classification metrics](<Classification metrics>)
@@ -8,11 +12,7 @@
     * [accuracy.cmatrix.md](<Classification metrics/accuracy/accuracy.cmatrix.md>)
     * [accuracy.factor.md](<Classification metrics/accuracy/accuracy.factor.md>)
     * [accuracy.md](<Classification metrics/accuracy/accuracy.md>)
-    * [baccuracy.cmatrix.md](<Classification metrics/accuracy/baccuracy.cmatrix.md>)
-    * [baccuracy.factor.md](<Classification metrics/accuracy/baccuracy.factor.md>)
-    * [baccuracy.md](<Classification metrics/accuracy/baccuracy.md>)
     * [weighted.accuracy.factor.md](<Classification metrics/accuracy/weighted.accuracy.factor.md>)
-    * [weighted.baccuracy.factor.md](<Classification metrics/accuracy/weighted.baccuracy.factor.md>)
   * [auc.pr.curve](<Classification metrics/auc.pr.curve>)
     * [auc.pr.curve.factor.md](<Classification metrics/auc.pr.curve/auc.pr.curve.factor.md>)
     * [auc.pr.curve.md](<Classification metrics/auc.pr.curve/auc.pr.curve.md>)
@@ -170,9 +170,6 @@
     * [zerooneloss.cmatrix.md](<Classification metrics/zerooneloss/zerooneloss.cmatrix.md>)
     * [zerooneloss.factor.md](<Classification metrics/zerooneloss/zerooneloss.factor.md>)
     * [zerooneloss.md](<Classification metrics/zerooneloss/zerooneloss.md>)
-* [Example.md](<Example.md>)
-* [NEWS.md](<NEWS.md>)
-* [README.md](<README.md>)
 * [Regression metrics](<Regression metrics>)
   * [ccc](<Regression metrics/ccc>)
     * [ccc.md](<Regression metrics/ccc/ccc.md>)
@@ -201,10 +198,7 @@
   * [mape](<Regression metrics/mape>)
     * [mape.md](<Regression metrics/mape/mape.md>)
     * [mape.numeric.md](<Regression metrics/mape/mape.numeric.md>)
-    * [smape.md](<Regression metrics/mape/smape.md>)
-    * [smape.numeric.md](<Regression metrics/mape/smape.numeric.md>)
     * [weighted.mape.numeric.md](<Regression metrics/mape/weighted.mape.numeric.md>)
-    * [weighted.smape.numeric.md](<Regression metrics/mape/weighted.smape.numeric.md>)
   * [mpe](<Regression metrics/mpe>)
     * [mpe.md](<Regression metrics/mpe/mpe.md>)
     * [mpe.numeric.md](<Regression metrics/mpe/mpe.numeric.md>)
@@ -212,13 +206,7 @@
   * [mse](<Regression metrics/mse>)
     * [mse.md](<Regression metrics/mse/mse.md>)
     * [mse.numeric.md](<Regression metrics/mse/mse.numeric.md>)
-    * [rmse.md](<Regression metrics/mse/rmse.md>)
-    * [rmse.numeric.md](<Regression metrics/mse/rmse.numeric.md>)
-    * [rrmse.md](<Regression metrics/mse/rrmse.md>)
-    * [rrmse.numeric.md](<Regression metrics/mse/rrmse.numeric.md>)
     * [weighted.mse.numeric.md](<Regression metrics/mse/weighted.mse.numeric.md>)
-    * [weighted.rmse.numeric.md](<Regression metrics/mse/weighted.rmse.numeric.md>)
-    * [weighted.rrmse.numeric.md](<Regression metrics/mse/weighted.rrmse.numeric.md>)
   * [pinball](<Regression metrics/pinball>)
     * [pinball.md](<Regression metrics/pinball/pinball.md>)
     * [pinball.numeric.md](<Regression metrics/pinball/pinball.numeric.md>)
@@ -230,10 +218,7 @@
   * [rmse](<Regression metrics/rmse>)
     * [rmse.md](<Regression metrics/rmse/rmse.md>)
     * [rmse.numeric.md](<Regression metrics/rmse/rmse.numeric.md>)
-    * [rrmse.md](<Regression metrics/rmse/rrmse.md>)
-    * [rrmse.numeric.md](<Regression metrics/rmse/rrmse.numeric.md>)
     * [weighted.rmse.numeric.md](<Regression metrics/rmse/weighted.rmse.numeric.md>)
-    * [weighted.rrmse.numeric.md](<Regression metrics/rmse/weighted.rrmse.numeric.md>)
   * [rmsle](<Regression metrics/rmsle>)
     * [rmsle.md](<Regression metrics/rmsle/rmsle.md>)
     * [rmsle.numeric.md](<Regression metrics/rmsle/rmsle.numeric.md>)
