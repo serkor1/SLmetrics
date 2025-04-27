@@ -31,6 +31,7 @@ NEWS_cache
 NEWS_files
 ^CRAN-SUBMISSION$
 man-roxygen
+m4
 
 # Armadillo folder
 ^inst/include/armadillo-code/armadillo_iccae_2025\.pdf$
