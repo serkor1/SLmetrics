@@ -13,8 +13,7 @@ Rcpp::DataFrame roc_curve_unweighted(
     const Rcpp::IntegerVector& actual,
     const Rcpp::NumericMatrix& response,
     Rcpp::Nullable<Rcpp::NumericVector> thresholds = R_NilValue,
-    Rcpp::Nullable<Rcpp::IntegerMatrix> indices = R_NilValue,
-    int method = 0) {
+    Rcpp::Nullable<Rcpp::IntegerMatrix> indices = R_NilValue) {
         // optional thresholds
         std::optional<Rcpp::NumericVector> thr_opt;
         if ( thresholds.isNotNull() ) {
@@ -31,7 +30,7 @@ Rcpp::DataFrame roc_curve_unweighted(
         metric::roc_curve calc(
             actual,
             response,
-            static_cast<classification::integration_method>(method),
+            static_cast<classification::integration_method>(0),
             std::nullopt,  // no weights
             idx_opt
         );
@@ -51,8 +50,7 @@ Rcpp::DataFrame roc_curve_weighted(
     const Rcpp::NumericMatrix& response,
     const Rcpp::NumericVector& w,
     Rcpp::Nullable<Rcpp::NumericVector> thresholds = R_NilValue,
-    Rcpp::Nullable<Rcpp::IntegerMatrix> indices = R_NilValue,
-    int method = 0) {
+    Rcpp::Nullable<Rcpp::IntegerMatrix> indices = R_NilValue) {
 
         // optional thresholds
         std::optional<Rcpp::NumericVector> thr_opt;
@@ -72,7 +70,7 @@ Rcpp::DataFrame roc_curve_weighted(
         metric::roc_curve calc(
             actual,
             response,
-            static_cast<classification::integration_method>(method),
+            static_cast<classification::integration_method>(0),
             wopt,
             idx_opt
         );
