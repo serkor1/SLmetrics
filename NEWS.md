@@ -34,8 +34,8 @@ implement argument names off the generic.
   examples are simplified.
 - **Efficient multi-metric evaluation:** The Precision-Recall and
   Receiver Operator Characteristics functions now accepts an `indices`
-  arugment. The indices takes an \<\[integer\]\> matrix of corresponding
-  to the sorted probabilites column-wise. See below:
+  argument. The indices takes an `integer`-matrix of corresponding to
+  the sorted probabilities column-wise. See below:
 
 ``` r
 ## Classes and
@@ -223,7 +223,7 @@ SLmetrics::roc.curve(
 SLmetrics::auc.roc.curve(
     actual,
     response,
-    estimator = 0 # 0: class-wise, 1: micro average, 2: maro average 
+    estimator = 0 # 0: class-wise, 1: micro average, 2: macro average 
 )
 #> Class A Class B 
 #>       0       1
@@ -263,7 +263,7 @@ SLmetrics::pr.curve(
 SLmetrics::auc.pr.curve(
     actual,
     response,
-    estimator = 0 # 0: class-wise, 1: micro average, 2: maro average 
+    estimator = 0 # 0: class-wise, 1: micro average, 2: macro average 
 )
 #>   Class A   Class B 
 #> 0.4166667 1.0000000
