@@ -30,6 +30,48 @@ As an example on the increased flexibility is the introduction of the `estimator
 
 * **Armadillo backend:** All functions have been ported to the C++ Armadillo library, and are heavily templated and Object Oriented. The functions are 5-20x faster than before.
 * **Streamlined documentation:** All documentation have been reworked, and are now using generic {roxygen2} templates. The new structure of the documentation is focused on shared documentation and therefore equal metrics like `recall` and `sensitivity` are aliased, and referenced differently - as a result there should be less noise in the documentation. The *creating factor* has been removed, and all examples are simplified.
+* **Efficient multi-metric evaluation:** The Precision-Recall and Receiver Operator Characteristics functions now accepts an `indices` arugment. The indices takes an <[integer]> matrix of corresponding to the sorted probabilites column-wise. See below:
+
+```{r}
+## Classes and
+## seed
+set.seed(1903)
+classes <- c("Kebab", "Falafel")
+
+## Generate actual classes
+## and response probabilities
+actual_classes <- factor(
+    x = sample(
+      x = classes, 
+      size = 1e2, 
+      replace = TRUE, 
+      prob = c(0.7, 0.3)
+    )
+)
+
+response_probabilities <- ifelse(
+    actual_classes == "Kebab", 
+    rbeta(sum(actual_classes == "Kebab"), 2, 5), 
+    rbeta(sum(actual_classes == "Falafel"), 5, 2)
+)
+
+## Construct response
+## matrix
+probability_matrix <- cbind(
+    response_probabilities,
+    1 - response_probabilities
+)
+
+## Calculate Precision-Recall
+stopifnot(
+    all.equal(
+        target  = SLmetric::pr.curve(actual, predicted),
+        current = SLmetric::pr.curve(actual, predicted, indices = SLmetrics::preorder(probability_matrix))
+    )
+)
+```
+
+Depending on the system and data, there is a 3x gain in speed. This approach is highly efficient for cases where multiple AUC or curves are to be computed as it avoids sorting the same probability matrix more than once.
 
 ### :rocket: New features
 
@@ -148,7 +190,8 @@ SLmetrics::roc.curve(
 ## curve
 SLmetrics::auc.roc.curve(
     actual,
-    response
+    response,
+    estimator = 0 # 0: class-wise, 1: micro average, 2: maro average 
 )
 ```
 
@@ -175,7 +218,8 @@ SLmetrics::pr.curve(
 ## curve
 SLmetrics::auc.pr.curve(
     actual,
-    response
+    response,
+    estimator = 0 # 0: class-wise, 1: micro average, 2: maro average 
 )
 ```
 

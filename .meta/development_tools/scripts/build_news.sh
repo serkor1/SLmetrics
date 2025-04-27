@@ -9,17 +9,17 @@ RESET=$1
 
 # Render the NEWS file
 if [ "$RESET" = "true" ]; then
-    quarto render .meta/CHANGELOG/NEWS.qmd --cache-refresh
+    quarto render .meta/changelog/NEWS.qmd --cache-refresh
 else
-    quarto render .meta/CHANGELOG/NEWS.qmd
+    quarto render .meta/changelog/NEWS.qmd
 fi
 
 # Move the file to the root directory
-mv .meta/CHANGELOG/NEWS.md .
+mv .meta/changelog/NEWS.md .
 
 # Update file paths in NEWS.md
 Rscript -e "file_path <- 'NEWS.md'; \
              file_contents <- readLines(file_path); \
-             modified_contents <- gsub('(v.*_files/)', '.meta/CHANGELOG/\\\\1', file_contents, perl = TRUE, ignore.case = TRUE); \
+             modified_contents <- gsub('(v.*_files/)', '.meta/changelog/\\\\1', file_contents, perl = TRUE, ignore.case = TRUE); \
              writeLines(modified_contents, file_path); \
              cat('Replacements completed in NEWS.md\n')"
