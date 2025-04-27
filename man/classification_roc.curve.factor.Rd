@@ -4,7 +4,14 @@
 \alias{roc.curve.factor}
 \title{Reciever Operator Characteristics}
 \usage{
-\method{roc.curve}{factor}(actual, response, thresholds = NULL, presorted = FALSE, ...)
+\method{roc.curve}{factor}(
+  actual,
+  response,
+  thresholds = NULL,
+  indices = NULL,
+  method = 0L,
+  ...
+)
 }
 \arguments{
 \item{actual}{A vector \link{length} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
@@ -16,7 +23,7 @@ level in \code{actual}, the second column to the second factor level, and so on.
 
 \item{thresholds}{An optional <\link{double}> vector of \link{length} \eqn{n} (default: \link{NULL}).}
 
-\item{presorted}{Currently not working.}
+\item{method}{A <\link{double}> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the \code{trapezoid}-method, if \eqn{1} it is calculated using the \code{step}-method.}
 
 \item{...}{Arguments passed into other methods.}
 }

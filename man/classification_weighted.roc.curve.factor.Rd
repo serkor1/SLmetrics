@@ -9,7 +9,8 @@
   response,
   w,
   thresholds = NULL,
-  presorted = FALSE,
+  indices = NULL,
+  method = 0L,
   ...
 )
 }
@@ -25,7 +26,7 @@ level in \code{actual}, the second column to the second factor level, and so on.
 
 \item{thresholds}{An optional <\link{double}> vector of \link{length} \eqn{n} (default: \link{NULL}).}
 
-\item{presorted}{Currently not working.}
+\item{method}{A <\link{double}> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the \code{trapezoid}-method, if \eqn{1} it is calculated using the \code{step}-method.}
 
 \item{...}{Arguments passed into other methods.}
 }

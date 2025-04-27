@@ -17,7 +17,7 @@ testthat::test_that(
       response,
       thresholds = NULL,
       w = NULL,
-      presorted = FALSE) {
+      indices = NULL) {
       
         if (is.null(w)) {
 
@@ -25,7 +25,7 @@ testthat::test_that(
             actual,
             response,
             thresholds = if (is.null(thresholds))  {NULL} else thresholds,
-            presorted  = presorted 
+            indices  = indices 
           )
   
         } else {
@@ -35,7 +35,7 @@ testthat::test_that(
             response,
             thresholds = if (is.null(thresholds))  {NULL} else thresholds,
             w = w,
-            presorted  = presorted 
+            indices  = indices 
           )
   
         }
@@ -66,10 +66,10 @@ testthat::test_that(
           # ROC
           roc_object <- wrapped_ROC(
             actual     = actual,
-            response   = if (presorted) presort(response, decreasing = TRUE) else response,
+            response   = response,
             w          = if (weighted) w else NULL,
             thresholds = if (custom_thresholds) thresholds else NULL,
-            presorted  = presorted
+            indices    = if (presorted) presort(response, decreasing = TRUE) else NULL
           )
 
           # 2.3) test that methods

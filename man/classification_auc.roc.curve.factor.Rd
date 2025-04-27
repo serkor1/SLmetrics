@@ -4,7 +4,14 @@
 \alias{auc.roc.curve.factor}
 \title{Area under the Receiver Operator Characteristics Curve}
 \usage{
-\method{auc.roc.curve}{factor}(actual, response, micro = NULL, method = 0L, ...)
+\method{auc.roc.curve}{factor}(
+  actual,
+  response,
+  estimator = 0L,
+  method = 0L,
+  indices = NULL,
+  ...
+)
 }
 \arguments{
 \item{actual}{A vector \link{length} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
@@ -14,8 +21,12 @@ The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 over the \eqn{k} classes). The first column corresponds to the first factor
 level in \code{actual}, the second column to the second factor level, and so on.}
 
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
+\item{estimator}{An <\link{integer}>-value of \link{length} \eqn{1} (default: \eqn{0}).
+\itemize{
+\item 0 - a named <\link{double}>-vector of \link{length} k (class-wise)
+\item 1 - a <\link{double}> value (Micro averaged metric)
+\item 2 - a <\link{double}> value (Macro averaged metric)
+}}
 
 \item{method}{A <\link{double}> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the \code{trapezoid}-method, if \eqn{1} it is calculated using the \code{step}-method.}
 
