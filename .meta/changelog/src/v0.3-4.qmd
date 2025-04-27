@@ -65,8 +65,8 @@ probability_matrix <- cbind(
 ## Calculate Precision-Recall
 stopifnot(
     all.equal(
-        target  = SLmetric::pr.curve(actual, predicted),
-        current = SLmetric::pr.curve(actual, predicted, indices = SLmetrics::preorder(probability_matrix))
+        target  = SLmetrics::pr.curve(actual_classes, probability_matrix),
+        current = SLmetrics::pr.curve(actual_classes, probability_matrix, indices = SLmetrics::preorder(probability_matrix, TRUE))
     )
 )
 ```

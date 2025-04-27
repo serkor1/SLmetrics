@@ -106,7 +106,7 @@ function append() {
     fi
     
     for file in "${md_files[@]}"; do
-        local clean_path="${file#.meta/CHANGELOG}"
+        local clean_path="${file#.meta/changelog}"
         echo -e "{{< include ${clean_path} >}}\n" >> "${output_file}"
     done
     
