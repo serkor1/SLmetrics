@@ -30,6 +30,8 @@ level in \code{actual}, the second column to the second factor level, and so on.
 
 \item{method}{A <\link{double}> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the \code{trapezoid}-method, if \eqn{1} it is calculated using the \code{step}-method.}
 
+\item{indices}{An optional \eqn{n \times k} matrix of <\link{integer}> values of sorted response probability indices.}
+
 \item{...}{Arguments passed into other methods.}
 }
 \value{
@@ -63,6 +65,19 @@ Apply the same pattern to any custom metric functions to ensure input sanity bef
 \subsection{Visualizing area under the receiver operator characteristics curve}{
 
 Use \code{\link[=roc.curve]{roc.curve()}} to construct the \link{data.frame} and use \link{plot} to visualize the area under the curve.
+}
+
+\subsection{Efficient multi-metric evaluation}{
+
+To avoid sorting the same probability matrix multiple times (once per class or curve),  you can precompute a single set of sort indices and pass it via the \code{indices} argument. This reduces the overall cost from O(K·N log N) to O(N log N + K·N).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## presort response
+## probabilities
+indices <- preorder(response, decreasing = TRUE)
+
+## evaluate area under the receiver operator characteristics curve
+auc.roc.curve(actual, response, indices = indices)
+}\if{html}{\out{</div>}}
 }
 }
 \examples{

@@ -4,14 +4,7 @@
 \alias{roc.curve.factor}
 \title{Reciever Operator Characteristics}
 \usage{
-\method{roc.curve}{factor}(
-  actual,
-  response,
-  thresholds = NULL,
-  indices = NULL,
-  method = 0L,
-  ...
-)
+\method{roc.curve}{factor}(actual, response, thresholds = NULL, indices = NULL, ...)
 }
 \arguments{
 \item{actual}{A vector \link{length} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
@@ -23,7 +16,7 @@ level in \code{actual}, the second column to the second factor level, and so on.
 
 \item{thresholds}{An optional <\link{double}> vector of \link{length} \eqn{n} (default: \link{NULL}).}
 
-\item{method}{A <\link{double}> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the \code{trapezoid}-method, if \eqn{1} it is calculated using the \code{step}-method.}
+\item{indices}{An optional \eqn{n \times k} matrix of <\link{integer}> values of sorted response probability indices.}
 
 \item{...}{Arguments passed into other methods.}
 }
@@ -59,6 +52,19 @@ Apply the same pattern to any custom metric functions to ensure input sanity bef
 \subsection{Area under the curve}{
 
 Use \link{auc.roc.curve} for calculating the area under the curve directly.
+}
+
+\subsection{Efficient multi-metric evaluation}{
+
+To avoid sorting the same probability matrix multiple times (once per class or curve),  you can precompute a single set of sort indices and pass it via the \code{indices} argument. This reduces the overall cost from O(K·N log N) to O(N log N + K·N).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## presort response
+## probabilities
+indices <- preorder(response, decreasing = TRUE)
+
+## evaluate reciever operator characteristics
+roc.curve(actual, response, indices = indices)
+}\if{html}{\out{</div>}}
 }
 }
 \examples{
