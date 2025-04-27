@@ -170,8 +170,8 @@ namespace metric {
                 Rcpp::Named("threshold") = thr,
                 Rcpp::Named("level")     = lvl,
                 Rcpp::Named("label")     = lbl,
-                Rcpp::Named("tpr")       = tpr,
-                Rcpp::Named("fpr")       = fpr
+                Rcpp::Named("fpr")       = fpr,
+                Rcpp::Named("tpr")       = tpr
             );
             output.attr("class") = Rcpp::CharacterVector::create("ROC","data.frame");
 

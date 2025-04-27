@@ -57,18 +57,21 @@ namespace classification {
 
             // 2a) Broadcast actual labels across cols
             arma::Mat<int> labels_i = arma::repmat(actual_, /*n_rows=*/1, /*n_cols=*/n_cols_);
-            // 2b) class indices 1..K
-            arma::Row<int> class_i = arma::linspace<arma::Row<int>>(1, n_cols_, n_cols_);
+
+            // 2b) class indices 1..K, expanded to each row
+            arma::Row<int>           class_i     = arma::linspace<arma::Row<int>>(1, n_cols_, n_cols_);
+            arma::Mat<int>           class_i_mat = arma::repmat(class_i, /*n_rows=*/n_rows_, /*n_cols=*/1);
+
             // 2c) mask positives
-            arma::Mat<arma::uword> is_pos_i = (labels_i == class_i);
-            arma::Col<double>      is_pos   = arma::conv_to<arma::Col<double>>::from(
-                                                arma::vectorise(is_pos_i)
-                                            );
+            arma::Mat<arma::uword> is_pos_i    = (labels_i == class_i_mat);
+            arma::Col<double>      is_pos      = arma::conv_to<arma::Col<double>>::from(
+                                                    arma::vectorise(is_pos_i)
+                                                );
 
             // 3) Expand weights
             arma::Col<double> base_w = weights_
-                                       ? *weights_
-                                       : arma::Col<double>(n_rows_, arma::fill::ones);
+                                    ? *weights_
+                                    : arma::Col<double>(n_rows_, arma::fill::ones);
             arma::Mat<double> wmat   = arma::repmat(base_w, /*n_rows=*/1, /*n_cols=*/n_cols_);
             arma::Col<double> weights = arma::vectorise(wmat);
 
@@ -82,6 +85,38 @@ namespace classification {
             arma::uvec idx = arma::sort_index(scores, "descend");
             return out.rows(idx);
         }
+
+        // arma::mat flatten_all_mat() {
+        //     // 1) Vector of all scores
+        //     arma::Col<double> scores = arma::vectorise(response_);
+
+        //     // 2a) Broadcast actual labels across cols
+        //     arma::Mat<int> labels_i = arma::repmat(actual_, /*n_rows=*/1, /*n_cols=*/n_cols_);
+        //     // 2b) class indices 1..K
+        //     arma::Row<int> class_i = arma::linspace<arma::Row<int>>(1, n_cols_, n_cols_);
+        //     // 2c) mask positives
+        //     arma::Mat<arma::uword> is_pos_i = (labels_i == class_i);
+        //     arma::Col<double>      is_pos   = arma::conv_to<arma::Col<double>>::from(
+        //                                         arma::vectorise(is_pos_i)
+        //                                     );
+
+        //     // 3) Expand weights
+        //     arma::Col<double> base_w = weights_
+        //                                ? *weights_
+        //                                : arma::Col<double>(n_rows_, arma::fill::ones);
+        //     arma::Mat<double> wmat   = arma::repmat(base_w, /*n_rows=*/1, /*n_cols=*/n_cols_);
+        //     arma::Col<double> weights = arma::vectorise(wmat);
+
+        //     // 4) Build output matrix
+        //     arma::mat out(scores.n_elem, /*n_cols=*/3);
+        //     out.col(0) = scores;
+        //     out.col(1) = is_pos;
+        //     out.col(2) = weights;
+
+        //     // 5) Sort by descending score
+        //     arma::uvec idx = arma::sort_index(scores, "descend");
+        //     return out.rows(idx);
+        // }
 
     public:
         curve_base(
