@@ -5,7 +5,7 @@ set -euo pipefail
 ##    values across the shell
 ##    script
 DESCRIPTION_FILE="DESCRIPTION"
-CHANGELOG_DIR=".meta/CHANGELOG"
+CHANGELOG_DIR=".meta/changelog"
 SRC_DIR="${CHANGELOG_DIR}/src"
 
 ## 2) define helper-functions

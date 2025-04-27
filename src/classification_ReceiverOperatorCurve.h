@@ -1,548 +1,185 @@
 #ifndef CLASSIFICATION_RECEIVEROPERATORCURVE_H
 #define CLASSIFICATION_RECEIVEROPERATORCURVE_H
 
-#include <Rcpp.h>
+#include "SLmetrics.h"
+#include <armadillo>
 #include <vector>
-#include <algorithm>
-#include <numeric>
-#include <memory>
+#include <optional>
 
-#ifdef _OPENMP
-  #include <omp.h>
-#endif
+namespace metric {
+    /**
+     * @class roc_curve
+     * @brief This class calculates the AUC and constructs the
+     * Receiver Operating Characteristics curve. It currently supports
+     * micro and macro averages.
+     * 
+     * The underlying algorithm is One vs Rest
+     *
+     * @todo Explicit handling of NaN similar to na.rm.
+     */
+    class roc_curve : public classification::curve_base {
+        using base = classification::curve_base;
+        public:
+        // inherit the base constructor
+        using base::base;
 
-#include "utilities_Package.h"
+        // class-wise AUC
+        Rcpp::NumericVector class_wise() override {
+            arma::uword K = this -> n_cols_;
+            Rcpp::NumericVector aucs(K);
+            aucs.attr("names") = this -> class_levels_;
 
-/**
- * @class ROC
- * @brief A class for computing ROC curves and the area under the ROC curve (AUC) 
- *        for multi-class classification problems, with performance optimizations.
- *
- * The class provides:
- *   1) Class-wise AUC (one-vs-all).
- *   2) Micro-average AUC (global flattening).
- *   3) Macro-average AUC (average of class-wise AUC).
- *   4) A method to extract the entire ROC curve for each class, returned as an Rcpp::DataFrame.
- *
- * Optimizations:
- *   (1) Single pass to count positives and negatives together (instead of two passes).
- *   (2) Parallel sorting of columns when computing class-wise metrics.
- *   (3) Reuse a pre-allocated index array for each column (avoid repeated allocations).
- */
-class ROC {
-    public:
-        // integration method
-        enum integration_method { TRAPEZOIDAL = 0, STEP };
+            for (arma::uword c = 0; c < K; ++c) {
+                arma::uvec order = this->sort_index(c);
 
-        /**
-        * Compute class-wise AUC for each class (one-vs-all).
-        *
-        * Implements:
-        *   - Parallel sorting for each column (item #2).
-        *   - Reuse of index arrays (item #3.1).
-        *   - Single pass for counting positives and negatives (item #1).
-        *
-        * @param actual    Integer vector of true class labels.
-        * @param response  Numeric matrix of predicted scores.
-        * @param method    Integration method (0 for trapezoidal, nonzero for step). 
-        * @param presorted Set to true if each column in `response` is already sorted in descending order.
-        * @param weights   Optional vector of observation weights.
-        * @return          A numeric vector of AUC values (one per class).
-        */
-        static Rcpp::NumericVector class_wise(
-            const Rcpp::IntegerVector& actual,
-            const Rcpp::NumericMatrix& response,
-            int method = TRAPEZOIDAL,
-            bool presorted = false,
-            const Rcpp::NumericVector* weights = nullptr) 
-        {
-            // 0) variable declarations
-            Rcpp::CharacterVector levels = actual.attr("levels");
-            const R_xlen_t n { actual.size() };
-            const R_xlen_t n_classes { levels.size() };
+                double tp = 0.0, fp = 0.0;
+                double prev_tp = 0.0, prev_fp = 0.0;
+                double raw_area = 0.0;
 
-            // integration method
-            double (*update_area)(double, double, double, double) =
-                (method == TRAPEZOIDAL) ? trapezoid_area : step_area;
-
-            // output container
-            Rcpp::NumericVector output(n_classes, 0.0);
-
-            // pointers to data
-            const int* ptr_actual { actual.begin() };
-            const double* ptr_weights { (weights != nullptr) ? weights->begin() : nullptr };
-
-            // 1) Create a pool of index arrays: one array per class
-            //    so we can sort them in parallel without race conditions.
-            std::vector< std::vector<std::size_t> > indices(n_classes, std::vector<std::size_t>(n));
-
-            // 2) Populate and (optionally) parallel-sort
-            #ifdef _OPENMP
-            #pragma omp parallel for if(getUseOpenMP())
-            #endif
-            for (std::size_t c = 0; c < n_classes; c++) {
-                // 2.1) Fill indices[c] with 0..n-1
-                std::iota(indices[c].begin(), indices[c].end(), 0);
-
-                // 2.2) If not presorted, sort this index array
-                if (!presorted) {
-                    const double* col_ptr = &response(0, c); // pointer to column c
-                    std::sort(
-                        indices[c].begin(),
-                        indices[c].end(),
-                        [col_ptr](std::size_t a, std::size_t b) {
-                            return col_ptr[a] > col_ptr[b];
-                        }
-                    );
-                }
-            }
-
-            // 3) Compute the AUC for each class
-            #ifdef _OPENMP
-            #pragma omp parallel for if(getUseOpenMP())
-            #endif
-            for (std::size_t c = 0; c < n_classes; ++c) {
-
-                // 3.1) Single pass to count total positives & negatives
-                //      for class_label c+1
-                double positives { 0.0 };
-                double negatives { 0.0 };
-                {
-                    int class_label = static_cast<int>(c + 1);
-                    const auto& idxRef = indices[c];
-
-                    for (std::size_t i = 0; i < n; i++) {
-                        int actual_i = ptr_actual[idxRef[i]];
-                        double w = (ptr_weights != nullptr) ? ptr_weights[idxRef[i]] : 1.0;
-
-                        if (actual_i == class_label) {
-                            positives += w;
-                        } else {
-                            negatives += w;
-                        }
-                    }
-                }
-
-                // 3.2) If no positives or no negatives, AUC is undefined
-                if (positives == 0.0 || negatives == 0.0) {
-                    output[c] = NA_REAL;
-                    continue;
-                }
-
-                // 3.3) Compute AUC using incremental integration
-                double auc = 0.0;
-                double true_positive  { 0.0 };
-                double false_positive { 0.0 };
-
-                double previous_tpr { 0.0 };
-                double previous_fpr { 0.0 };
-
-                int class_label = static_cast<int>(c + 1);
-                const auto& idxRef = indices[c];
-
-                for (std::size_t i = 0; i < n; i++) {
-                    std::size_t row_idx = idxRef[i];
-                    double w = (ptr_weights != nullptr) ? ptr_weights[row_idx] : 1.0;
-
-                    if (ptr_actual[row_idx] == class_label) {
-                        true_positive += w;
+                for (arma::uword idx : order) {
+                    double w = weights_ptr ? weights_ptr[idx] : 1.0;
+                    if (actual_ptr[idx] == static_cast<int>(c+1)) {
+                        tp += w;
                     } else {
-                        false_positive += w;
+                        fp += w;
                     }
-
-                    double tpr = true_positive / positives;
-                    double fpr = false_positive / negatives;
-
-                    auc += update_area(previous_fpr, previous_tpr, fpr, tpr);
-
-                    previous_tpr = tpr;
-                    previous_fpr = fpr;
+                    raw_area += integration_fn_(prev_fp, prev_tp, fp, tp);
+                    prev_fp = fp;
+                    prev_tp = tp;
                 }
 
-                output[c] = auc;
+                double P = tp;
+                double N = fp;
+                if (P == 0.0 || N == 0.0) {
+                    aucs[c] = NA_REAL;
+                } else {
+                    aucs[c] = raw_area / (P * N);
+                }
             }
 
-            // 4) Assign names to the output
-            output.attr("names") = levels;
-
-            // 5) Return result
-            return output;
+            return aucs;
         }
 
-        /**
-        * Compute micro-average AUC by pooling all classes.
-        *
-        * This version also merges passes to count total positives/negatives in a single loop.
-        * We do not have a separate "reuse array" across columns here, because we flatten
-        * the entire matrix into one container. Sorting can still be parallelized if
-        * a parallel sorting routine is used, but standard std::sort is typically serial.
-        *
-        * @param actual    Integer vector of true class labels.
-        * @param response  Numeric matrix of predicted scores.
-        * @param method    Integration method (0 for trapezoidal, nonzero for step).
-        * @param presorted Unused in micro-average because we flatten scores from all columns.
-        * @param weights   Optional vector of observation weights.
-        * @return          The micro-average AUC.
-        */
-        static double micro_average(
-            const Rcpp::IntegerVector& actual,
-            const Rcpp::NumericMatrix& response,
-            int method = TRAPEZOIDAL,
-            bool /* presorted */ = false,
-            const Rcpp::NumericVector* weights = nullptr) 
-        {
-            // 0) variable declarations
-            const R_xlen_t n { actual.size() };
-            const R_xlen_t n_classes { response.ncol() };
+        // micro-averaged AUC
+       double micro_average() override {
+            arma::mat all = this -> flatten_all_mat();
+            arma::colvec is_pos = all.col(1);
+            arma::colvec wts    = all.col(2);
 
-            // integration method
-            double (*update_area)(double, double, double, double) =
-                (method == TRAPEZOIDAL) ? trapezoid_area : step_area;
+            double P = arma::dot(is_pos, wts);
+            double N = arma::dot(arma::ones<arma::colvec>(is_pos.n_elem) - is_pos, wts);
+            if (P == 0.0 || N == 0.0) return Rcpp::NumericVector::get_na();
 
-            // Flatten the matrix: we have n * n_classes scores
-            std::vector<threshold_container> container(n * n_classes);
+            double tp = 0.0, fp = 0.0;
+            double prev_tpr = 0.0, prev_fpr = 0.0;
+            double auc = 0.0;
 
-            const int* ptr_actual { actual.begin() };
-            const double* ptr_response { response.begin() };
-            const double* ptr_weights { (weights != nullptr) ? weights->begin() : nullptr };
+            for (arma::uword i = 0; i < all.n_rows; ++i) {
+                double w = wts[i];
+                if (is_pos[i] > 0.5) tp += w; else fp += w;
 
-            // 1) Flatten in one pass
-            #ifdef _OPENMP
-                #pragma omp parallel for if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; i++) {
-                double w = (ptr_weights != nullptr) ? ptr_weights[i] : 1.0;
-                int actual_i = ptr_actual[i];
-
-                for (std::size_t c = 0; c < n_classes; c++) {
-                    std::size_t idx = i * n_classes + c;
-
-                    container[idx].score  = *(ptr_response + i + n * c);
-                    container[idx].label  = ((int)(c + 1) == actual_i) ? 1 : 0;
-                    container[idx].weight = w;
-                }
+                double tpr = tp / P;
+                double fpr = fp / N;
+                auc += integration_fn_(prev_fpr, prev_tpr, fpr, tpr);
+                prev_fpr = fpr;
+                prev_tpr = tpr;
             }
-
-            // 2) Sort container by descending scores
-            std::sort(
-                container.begin(),
-                container.end(),
-                [](const threshold_container &a, const threshold_container &b) {
-                    return a.score > b.score;
-                }
-            );
-
-            // 3) Single pass to count total positives & negatives
-            double positives { 0.0 };
-            double negatives { 0.0 };
-            for (auto &tc : container) {
-                if (tc.label == 1) {
-                    positives += tc.weight;
-                } else {
-                    negatives += tc.weight;
-                }
-            }
-            if (positives == 0.0 || negatives == 0.0) {
-                return NA_REAL;
-            }
-
-            // 4) Compute micro-average AUC
-            double auc { 0.0 };
-            double true_positive  { 0.0 };
-            double false_positive { 0.0 };
-            double previous_tpr { 0.0 };
-            double previous_fpr { 0.0 };
-
-            for (auto &tc : container) {
-                if (tc.label == 1) {
-                    true_positive += tc.weight;
-                } else {
-                    false_positive += tc.weight;
-                }
-                double tpr = true_positive / positives;
-                double fpr = false_positive / negatives;
-
-                auc += update_area(previous_fpr, previous_tpr, fpr, tpr);
-                previous_tpr = tpr;
-                previous_fpr = fpr;
-            }
-
             return auc;
         }
 
-        /**
-        * Compute macro-average AUC by averaging class-wise AUC.
-        *
-        * @param actual    Integer vector of true class labels.
-        * @param response  Numeric matrix of predicted scores.
-        * @param method    Integration method (0 for trapezoidal, nonzero for step).
-        * @param presorted Set to true if each column in `response` is already sorted.
-        * @param weights   Optional vector of observation weights.
-        * @return          The macro-average AUC.
-        */
-        static double macro_average(
-            const Rcpp::IntegerVector& actual,
-            const Rcpp::NumericMatrix& response,
-            int method = TRAPEZOIDAL,
-            bool presorted = false,
-            const Rcpp::NumericVector* weights = nullptr) 
-        {
-            // compute class-wise AUC
-            Rcpp::NumericVector classwise_auc = class_wise(
-                actual, response, method, presorted, weights);
+        Rcpp::DataFrame curve(const std::optional<Rcpp::NumericVector>& th_in) override {
+            
+            // 1) calculate total lengths
+            // based on thresholds
+            const R_xlen_t per_class = th_in ? (th_in -> size() + 2) : (n_rows_ + 2);
+            const R_xlen_t total     = per_class * n_cols_;
 
-            double sum { 0.0 };
-            std::size_t count { 0 };
+            // 2) preallocate R outputs
+            Rcpp::NumericVector thr(total), tpr(total), fpr(total);
+            Rcpp::IntegerVector    lvl(total);
+            Rcpp::CharacterVector  lbl(total);
 
-            const double* ptr_classwise_auc = classwise_auc.begin();
-            for (std::size_t i = 0; i < classwise_auc.size(); i++) {
-                if (!Rcpp::NumericVector::is_na(ptr_classwise_auc[i])) {
-                    sum += ptr_classwise_auc[i];
-                    count++;
-                }
-            }
-            if (count == 0) {
-                return NA_REAL;
-            }
-            return sum / count;
-        }
+            R_xlen_t pos = 0;
+            for (arma::uword c = 0; c < n_cols_; ++c) {
+                // 2.1) sort values
+                arma::uvec order = sort_index(c);
 
-        /**
-        * Generate a DataFrame representing the ROC curve for all classes.
-        *
-        * @param actual     Integer vector of true class labels.
-        * @param response   Numeric matrix of predicted scores.
-        * @param presorted  Set to true if each column in `response` is already sorted in descending order.
-        * @param weights    Optional vector of observation weights.
-        * @param thresholds Optional user-specified vector of threshold values.
-        *
-        * @return DataFrame with columns: threshold, level, label, tpr, fpr.
-        */
-        static Rcpp::DataFrame roc_curve(
-            const Rcpp::IntegerVector& actual,
-            const Rcpp::NumericMatrix& response,
-            bool presorted = false,
-            const Rcpp::NumericVector* weights = nullptr,
-            const Rcpp::NumericVector* thresholds = nullptr) 
-        {
-            // 0) variable declarations
-            Rcpp::CharacterVector levels = actual.attr("levels");
-            const R_xlen_t n { response.nrow() };
-            const R_xlen_t n_classes { response.ncol() };
+                // 2.2) Determine exact buffer length: +Inf, thresholds..., -Inf
+                // NOTE: Might be redundant.
+                const std::size_t M = th_in ? (th_in -> size() + 2) : (order.n_elem + 2);
 
-            const R_xlen_t data_points_per_class {
-                (thresholds != nullptr) ? thresholds->size() + 2 : (n + 1)
-            };
-            const R_xlen_t total_data_points = data_points_per_class * n_classes;
+                // 2.3) initialize vectors
+                arma::Col<double> raw_tp(M), raw_fp(M), cuts(M);
 
-            const int* ptr_actual { actual.begin() };
-            const double* ptr_weights { (weights != nullptr) ? weights->begin() : nullptr };
+                // 2.4) Initialize first point at +Inf
+                raw_tp[0] = 0.0;
+                raw_fp[0] = 0.0;
+                cuts[0] = R_PosInf;
 
-            // output containers
-            Rcpp::NumericVector thresholds_vector(total_data_points);
-            Rcpp::NumericVector tpr_vector(total_data_points);
-            Rcpp::NumericVector fpr_vector(total_data_points);
-            Rcpp::CharacterVector label_vector(total_data_points);
-            Rcpp::IntegerVector levels_vector(total_data_points);
-
-            // we again reuse an index pool
-            std::vector< std::vector<std::size_t> > indices(n_classes, std::vector<std::size_t>(n));
-
-            // 1) Prepare sorted indices for each column (possibly in parallel)
-            #ifdef _OPENMP
-            #pragma omp parallel for if(getUseOpenMP())
-            #endif
-            for (std::size_t c = 0; c < n_classes; c++) {
-                std::iota(indices[c].begin(), indices[c].end(), 0);
-                if (!presorted) {
-                    const double* col_ptr = &response(0, c);
-                    std::sort(
-                        indices[c].begin(),
-                        indices[c].end(),
-                        [col_ptr](std::size_t a, std::size_t b) {
-                            return col_ptr[a] > col_ptr[b];
-                        }
-                    );
-                }
-            }
-
-            // 2) Build the ROC curve
-            std::size_t idx { 0 };
-
-            for (std::size_t c = 0; c < n_classes; ++c) {
-
-                // single pass to count total positives & negatives
-                double positives { 0.0 };
-                double negatives { 0.0 };
-                {
-                    int class_label = static_cast<int>(c + 1);
-                    const auto& idxRef = indices[c];
-                    for (std::size_t i = 0; i < n; i++) {
-                        double w = (ptr_weights != nullptr) ? ptr_weights[idxRef[i]] : 1.0;
-                        if (ptr_actual[idxRef[i]] == class_label) {
-                            positives += w;
-                        } else {
-                            negatives += w;
-                        }
-                    }
-                }
-
-                double true_positive { 0.0 };
-                double false_positive { 0.0 };
-
-                if (thresholds != nullptr) {
-                    // 2.1) With user-provided thresholds
-
-                    // start with +Inf => TPR=0, FPR=0
-                    thresholds_vector[idx] = R_PosInf;
-                    tpr_vector[idx] = 0.0;
-                    fpr_vector[idx] = 0.0;
-                    label_vector[idx] = levels[c];
-                    levels_vector[idx] = (int)(c + 1);
-                    ++idx;
-
-                    const double* ptr_thresholds = thresholds->begin();
-                    std::size_t j { 0 };
-                    const auto& idxRef = indices[c];
-                    int class_label = (int)(c + 1);
-
-                    for (std::size_t k = 0; k < thresholds->size(); ++k) {
-                        double threshold_k = ptr_thresholds[k];
-
-                        // move j while score >= threshold_k
-                        while (j < (std::size_t)n &&
-                               response(idxRef[j], c) >= threshold_k) 
-                        {
-                            double w = (ptr_weights != nullptr) ? ptr_weights[idxRef[j]] : 1.0;
-                            if (ptr_actual[idxRef[j]] == class_label) {
-                                true_positive += w;
-                            } else {
-                                false_positive += w;
-                            }
+                // 2.4) accumulate conditionally
+                // on threshold values
+                if (th_in) {
+                    // 2.4.a)
+                    arma::uword j = 0;
+                    for (std::size_t i = 1; i < M-1; ++i) {
+                        double cut = (*th_in)[i-1];
+                        // accumulate all scores >= cut
+                        while (j < order.n_elem &&
+                               response_ptr[c*n_rows_ + order[j]] >= cut) {
+                            double w = weights_ptr ? weights_ptr[order[j]] : 1.0;
+                            if (actual_ptr[order[j]] == int(c+1)) raw_tp[i] += w;
+                            else                                   raw_fp[i] += w;
                             ++j;
                         }
-
-                        double tpr = (positives > 0.0) ? (true_positive / positives) : 0.0;
-                        double fpr = (negatives > 0.0) ? (false_positive / negatives) : 0.0;
-
-                        thresholds_vector[idx] = threshold_k;
-                        tpr_vector[idx] = tpr;
-                        fpr_vector[idx] = fpr;
-                        label_vector[idx] = levels[c];
-                        levels_vector[idx] = class_label;
-                        ++idx;
+                        raw_tp[i] = raw_tp[i-1];
+                        raw_fp[i] = raw_fp[i-1];
+                        cuts   [i] = cut;
                     }
-
-                    // end with -Inf => TPR=1, FPR=1 (if positives/negatives > 0)
-                    thresholds_vector[idx] = R_NegInf;
-                    double tpr = (positives > 0.0) ? (true_positive / positives) : 0.0;
-                    double fpr = (negatives > 0.0) ? (false_positive / negatives) : 0.0;
-                    tpr_vector[idx] = tpr;
-                    fpr_vector[idx] = fpr;
-                    label_vector[idx] = levels[c];
-                    levels_vector[idx] = class_label;
-                    ++idx;
-
                 } else {
-                    // 2.2) Without user-provided thresholds
-                    //      we add (n+1) points from +Inf down to last score
-
-                    const auto& idxRef = indices[c];
-                    int class_label = (int)(c + 1);
-
-                    for (std::size_t i = 0; i <= (std::size_t)n; i++) {
-                        if (i == 0) {
-                            thresholds_vector[idx] = R_PosInf;
-                        } else {
-                            std::size_t row_idx = idxRef[i - 1];
-                            thresholds_vector[idx] = response(row_idx, c);
-
-                            double w = (ptr_weights != nullptr) ? ptr_weights[row_idx] : 1.0;
-                            if (ptr_actual[row_idx] == class_label) {
-                                true_positive += w;
-                            } else {
-                                false_positive += w;
-                            }
-                        }
-
-                        double tpr = (positives > 0.0) ? (true_positive / positives) : 0.0;
-                        double fpr = (negatives > 0.0) ? (false_positive / negatives) : 0.0;
-
-                        tpr_vector[idx] = tpr;
-                        fpr_vector[idx] = fpr;
-                        label_vector[idx] = levels[c];
-                        levels_vector[idx] = class_label;
-                        ++idx;
+                    // 2.4.b)
+                    for (std::size_t i = 1; i < M-1; ++i) {
+                        arma::uword idx = order[i-1];
+                        double w = weights_ptr ? weights_ptr[idx] : 1.0;
+                        raw_tp[i] = raw_tp[i-1] + (actual_ptr[idx] == int(c+1) ? w : 0.0);
+                        raw_fp[i] = raw_fp[i-1] + (actual_ptr[idx] != int(c+1) ? w : 0.0);
+                        cuts[i] = response_ptr[c*n_rows_ + idx];
                     }
+                }
+
+                // 2.5) final point at (1,1) with threshold = -Inf
+                raw_tp[M-1] = raw_tp[M-2];
+                raw_fp[M-1] = raw_fp[M-2];
+                cuts   [M-1] = R_NegInf;
+
+                // 2.6) Normalize and fill R outputs
+                const double P = raw_tp.back();
+                const double N = raw_fp.back();
+                for (std::size_t i = 0; i < M; ++i) {
+                    thr[pos] = cuts[i];
+                    tpr[pos] = (P > 0.0 ? raw_tp[i] / P : 0.0);
+                    fpr[pos] = (N > 0.0 ? raw_fp[i] / N : 0.0);
+                    lvl[pos] = c + 1;
+                    lbl[pos] = class_levels_[c];
+                    ++pos;
                 }
             }
 
-            // 3) Construct the DataFrame
+            // 3) Return DataFrame
+            // with class attributes
             Rcpp::DataFrame output = Rcpp::DataFrame::create(
-                Rcpp::Named("threshold") = thresholds_vector,
-                Rcpp::Named("level")     = levels_vector,
-                Rcpp::Named("label")     = label_vector,
-                Rcpp::Named("tpr")       = tpr_vector,
-                Rcpp::Named("fpr")       = fpr_vector
+                Rcpp::Named("threshold") = thr,
+                Rcpp::Named("level")     = lvl,
+                Rcpp::Named("label")     = lbl,
+                Rcpp::Named("fpr")       = fpr,
+                Rcpp::Named("tpr")       = tpr
             );
-            output.attr("class") = Rcpp::CharacterVector::create("ROC", "data.frame");
+            output.attr("class") = Rcpp::CharacterVector::create("ROC","data.frame");
 
             return output;
         }
 
+    };
 
-    private:
-        /**
-        * @brief Container for storing score/label/weight, used primarily for micro-average.
-        */
-        struct threshold_container {
-            double score;
-            int label;
-            double weight;
-        };
+} // namespace metric
 
-        /**
-        * @brief Compute area increment using the trapezoidal rule.
-        *
-        * @param x1 The FPR at the previous point.
-        * @param y1 The TPR at the previous point.
-        * @param x2 The FPR at the current point.
-        * @param y2 The TPR at the current point.
-        * @return   The incremental area under the TPR-FPR curve.
-        */
-        static inline double trapezoid_area(
-            double x1,
-            double y1,
-            double x2,
-            double y2) 
-        {
-            double width  = (x2 - x1);
-            double height = 0.5 * (y1 + y2);
-            return width * height;
-        }
-
-        /**
-        * @brief Compute area increment using the step method (no interpolation).
-        *
-        * @param x1 The FPR at the previous point.
-        * @param y1 The TPR at the previous point (unused in final calc).
-        * @param x2 The FPR at the current point.
-        * @param y2 The TPR at the current point.
-        * @return   The incremental area under the curve.
-        */
-        static inline double step_area(
-            double x1,
-            double /*y1*/,
-            double x2,
-            double y2) 
-        {
-            double width = (x2 - x1);
-            return width * y2;
-        }
-
-        // prevent direct construction
-        ROC()  = delete;
-        ~ROC() = delete;
-};
-
-#endif 
+#endif // CLASSIFICATION_RECEIVEROPERATORCURVE_H

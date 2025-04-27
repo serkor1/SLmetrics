@@ -29,7 +29,7 @@ level in \code{actual}, the second column to the second factor level, and so on.
 \item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
 micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
 
-\item{presorted}{Currently not working.}
+\item{indices}{An optional \eqn{n \times k} matrix of <\link{integer}> values of sorted response probability indices.}
 
 \item{thresholds}{An optional <\link{double}> vector of \link{length} \eqn{n} (default: \link{NULL}).}
 

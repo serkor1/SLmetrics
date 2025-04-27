@@ -15,6 +15,18 @@
 #' 
 <% } %>
 #'
+#' ## Efficient multi-metric evaluation
+#' 
+#' To avoid sorting the same probability matrix multiple times (once per class or curve), you can precompute a single set of sort indices and pass it via the `indices` argument. This reduces the overall cost from O(K·N log N) to O(N log N + K·N).
+#' 
+#' ```r
+#' ## presort response
+#' ## probabilities
+#' indices <- preorder(response, decreasing = TRUE)
+#' 
+#' ## evaluate <%= tolower(.TITLE) %>
+#' <%= .FUN %>(actual, response, indices = indices)
+#' ```
 #' 
 <% if (.TYPE == "auc") { %>
 #' @returns If `estimator` is given as

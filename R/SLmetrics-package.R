@@ -53,7 +53,7 @@ NULL
 #' @param method A <[double]> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the `trapezoid`-method, if \eqn{1} it is calculated using the `step`-method.
 #' @param micro A <[logical]>-value of [length] \eqn{1} (default: [NULL]). If [TRUE] it returns the
 #' micro average across all \eqn{k} classes, if [FALSE] it returns the macro average.
-#' @param presorted Currently not working.
+#' @param indices An optional \eqn{n \times k} matrix of <[integer]> values of sorted response probability indices.
 #' @param thresholds An optional <[double]> vector of [length] \eqn{n} (default: [NULL]).
 #' @param w A <[double]> vector of sample weights.
 #' @param x A confusion matrix created [cmatrix()].

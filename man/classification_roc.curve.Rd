@@ -22,7 +22,7 @@ weighted.roc.curve(...)
 The \eqn{i}-th row should sum to 1 (i.e., a valid probability distribution
 over the \eqn{k} classes). The first column corresponds to the first factor
 level in \code{actual}, the second column to the second factor level, and so on.}
-    \item{\code{presorted}}{Currently not working.}
+    \item{\code{indices}}{An optional \eqn{n \times k} matrix of <\link{integer}> values of sorted response probability indices.}
     \item{\code{thresholds}}{An optional <\link{double}> vector of \link{length} \eqn{n} (default: \link{NULL}).}
     \item{\code{w}}{A <\link{double}> vector of sample weights.}
   }}
@@ -59,6 +59,19 @@ Apply the same pattern to any custom metric functions to ensure input sanity bef
 \subsection{Area under the curve}{
 
 Use \link{auc.roc.curve} for calculating the area under the curve directly.
+}
+
+\subsection{Efficient multi-metric evaluation}{
+
+To avoid sorting the same probability matrix multiple times (once per class or curve), you can precompute a single set of sort indices and pass it via the \code{indices} argument. This reduces the overall cost from O(K·N log N) to O(N log N + K·N).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## presort response
+## probabilities
+indices <- preorder(response, decreasing = TRUE)
+
+## evaluate reciever operator characteristics
+roc.curve(actual, response, indices = indices)
+}\if{html}{\out{</div>}}
 }
 }
 \examples{

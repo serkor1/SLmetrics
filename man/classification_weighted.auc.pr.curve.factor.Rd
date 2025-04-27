@@ -4,7 +4,15 @@
 \alias{weighted.auc.pr.curve.factor}
 \title{Area under the Precision Recall Curve}
 \usage{
-\method{weighted.auc.pr.curve}{factor}(actual, response, w, micro = NULL, method = 0L, ...)
+\method{weighted.auc.pr.curve}{factor}(
+  actual,
+  response,
+  w,
+  estimator = 0L,
+  method = 0L,
+  indices = NULL,
+  ...
+)
 }
 \arguments{
 \item{actual}{A vector \link{length} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
@@ -16,10 +24,16 @@ level in \code{actual}, the second column to the second factor level, and so on.
 
 \item{w}{A <\link{double}> vector of sample weights.}
 
-\item{micro}{A <\link{logical}>-value of \link{length} \eqn{1} (default: \link{NULL}). If \link{TRUE} it returns the
-micro average across all \eqn{k} classes, if \link{FALSE} it returns the macro average.}
+\item{estimator}{An <\link{integer}>-value of \link{length} \eqn{1} (default: \eqn{0}).
+\itemize{
+\item 0 - a named <\link{double}>-vector of \link{length} k (class-wise)
+\item 1 - a <\link{double}> value (Micro averaged metric)
+\item 2 - a <\link{double}> value (Macro averaged metric)
+}}
 
 \item{method}{A <\link{double}> value (default: \eqn{0}). Defines the underlying method of calculating the area under the curve. If \eqn{0} it is calculated using the \code{trapezoid}-method, if \eqn{1} it is calculated using the \code{step}-method.}
+
+\item{indices}{An optional \eqn{n \times k} matrix of <\link{integer}> values of sorted response probability indices.}
 
 \item{...}{Arguments passed into other methods.}
 }
@@ -54,6 +68,19 @@ Apply the same pattern to any custom metric functions to ensure input sanity bef
 \subsection{Visualizing area under the precision recall curve}{
 
 Use \code{\link[=pr.curve]{pr.curve()}} to construct the \link{data.frame} and use \link{plot} to visualize the area under the curve.
+}
+
+\subsection{Efficient multi-metric evaluation}{
+
+To avoid sorting the same probability matrix multiple times (once per class or curve), you can precompute a single set of sort indices and pass it via the \code{indices} argument. This reduces the overall cost from O(K·N log N) to O(N log N + K·N).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## presort response
+## probabilities
+indices <- preorder(response, decreasing = TRUE)
+
+## evaluate area under the precision recall curve
+auc.pr.curve(actual, response, indices = indices)
+}\if{html}{\out{</div>}}
 }
 }
 \examples{

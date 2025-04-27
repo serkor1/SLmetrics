@@ -5,7 +5,7 @@ set -euo pipefail
 ##    values across the shell
 ##    script
 DESCRIPTION_FILE="DESCRIPTION"
-CHANGELOG_DIR=".meta/CHANGELOG"
+CHANGELOG_DIR=".meta/changelog"
 SRC_DIR="${CHANGELOG_DIR}/src"
 OUTPUT_FILE="${CHANGELOG_DIR}/NEWS.qmd"
 
@@ -106,7 +106,7 @@ function append() {
     fi
     
     for file in "${md_files[@]}"; do
-        local clean_path="${file#.meta/CHANGELOG}"
+        local clean_path="${file#.meta/changelog}"
         echo -e "{{< include ${clean_path} >}}\n" >> "${output_file}"
     done
     
