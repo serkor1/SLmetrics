@@ -49,6 +49,27 @@ sanity before calling the underlying `C++` code.
 
 Use auc.pr.curve for calculating the area under the curve directly.
 
+#### Efficient multi-metric evaluation
+
+To avoid sorting the same probability matrix multiple times (once per
+class or curve), you can precompute a single set of sort indices and
+pass it via the `indices` argument. This reduces the overall cost from
+O(K·N log N) to O(N log N + K·N).
+
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
+## presort response
+## probabilities
+indices <- preorder(response, decreasing = TRUE)
+
+## evaluate precision recall curve
+pr.curve(actual, response, indices = indices)
+```
+
+{% endcode %}
+
 ### Usage
 
 ``` R
@@ -88,9 +109,10 @@ class="reqn">k</code> classes). The first column corresponds to the
 first factor level in <code>actual</code>, the second column to the
 second factor level, and so on.</p>
 </dd>
-<dt><code>presorted</code></dt>
+<dt><code>indices</code></dt>
 <dd>
-<p>Currently not working.</p>
+<p>An optional <code class="reqn">n \times k</code> matrix of
+&lt;integer&gt; values of sorted response probability indices.</p>
 </dd>
 <dt><code>thresholds</code></dt>
 <dd>

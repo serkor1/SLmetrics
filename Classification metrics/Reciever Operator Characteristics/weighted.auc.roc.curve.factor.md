@@ -50,23 +50,98 @@ sanity before calling the underlying `C++` code.
 Use `roc.curve()` to construct the data.frame and use plot to visualize
 the area under the curve.
 
+#### Efficient multi-metric evaluation
+
+To avoid sorting the same probability matrix multiple times (once per
+class or curve), you can precompute a single set of sort indices and
+pass it via the `indices` argument. This reduces the overall cost from
+O(K·N log N) to O(N log N + K·N).
+
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
+## presort response
+## probabilities
+indices <- preorder(response, decreasing = TRUE)
+
+## evaluate area under the receiver operator characteristics curve
+auc.roc.curve(actual, response, indices = indices)
+```
+
+{% endcode %}
+
 ### Usage
 
 ``` R
 ## S3 method for class 'factor'
-weighted.auc.roc.curve(actual, response, w, micro = NULL, method = 0L, ...)
+weighted.auc.roc.curve(
+  actual,
+  response,
+  w,
+  estimator = 0L,
+  method = 0L,
+  indices = NULL,
+  ...
+)
 ```
 
 ### Arguments
 
-|            |                                                                                                                                                                                                                                                                                         |
-|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `actual`   | A vector length `n`, and `k` levels. Can be of integer or factor.                                                                                                                                                                                                                       |
-| `response` | A `n \times k` \<double\>-matrix of predicted probabilities. The `i`-th row should sum to 1 (i.e., a valid probability distribution over the `k` classes). The first column corresponds to the first factor level in `actual`, the second column to the second factor level, and so on. |
-| `w`        | A \<double\> vector of sample weights.                                                                                                                                                                                                                                                  |
-| `micro`    | A \<logical\>-value of length `1` (default: NULL). If TRUE it returns the micro average across all `k` classes, if FALSE it returns the macro average.                                                                                                                                  |
-| `method`   | A \<double\> value (default: `0`). Defines the underlying method of calculating the area under the curve. If `0` it is calculated using the `trapezoid`-method, if `1` it is calculated using the `step`-method.                                                                        |
-| `...`      | Arguments passed into other methods.                                                                                                                                                                                                                                                    |
+<table role="presentation">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><code id="actual">actual</code></td>
+<td><p>A vector length <code class="reqn">n</code>, and <code
+class="reqn">k</code> levels. Can be of integer or factor.</p></td>
+</tr>
+<tr class="even">
+<td><code id="response">response</code></td>
+<td><p>A <code class="reqn">n \times k</code> &lt;double&gt;-matrix of
+predicted probabilities. The <code class="reqn">i</code>-th row should
+sum to 1 (i.e., a valid probability distribution over the <code
+class="reqn">k</code> classes). The first column corresponds to the
+first factor level in <code>actual</code>, the second column to the
+second factor level, and so on.</p></td>
+</tr>
+<tr class="odd">
+<td><code id="w">w</code></td>
+<td><p>A &lt;double&gt; vector of sample weights.</p></td>
+</tr>
+<tr class="even">
+<td><code id="estimator">estimator</code></td>
+<td><p>An &lt;integer&gt;-value of length <code class="reqn">1</code>
+(default: <code class="reqn">0</code>).</p>
+<ul>
+<li><p>0 - a named &lt;double&gt;-vector of length k
+(class-wise)</p></li>
+<li><p>1 - a &lt;double&gt; value (Micro averaged metric)</p></li>
+<li><p>2 - a &lt;double&gt; value (Macro averaged metric)</p></li>
+</ul></td>
+</tr>
+<tr class="odd">
+<td><code id="method">method</code></td>
+<td><p>A &lt;double&gt; value (default: <code class="reqn">0</code>).
+Defines the underlying method of calculating the area under the curve.
+If <code class="reqn">0</code> it is calculated using the
+<code>trapezoid</code>-method, if <code class="reqn">1</code> it is
+calculated using the <code>step</code>-method.</p></td>
+</tr>
+<tr class="even">
+<td><code id="indices">indices</code></td>
+<td><p>An optional <code class="reqn">n \times k</code> matrix of
+&lt;integer&gt; values of sorted response probability indices.</p></td>
+</tr>
+<tr class="odd">
+<td><code id="...">...</code></td>
+<td><p>Arguments passed into other methods.</p></td>
+</tr>
+</tbody>
+</table>
 
 ### Value
 

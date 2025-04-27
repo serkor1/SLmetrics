@@ -49,11 +49,32 @@ sanity before calling the underlying `C++` code.
 
 Use auc.pr.curve for calculating the area under the curve directly.
 
+#### Efficient multi-metric evaluation
+
+To avoid sorting the same probability matrix multiple times (once per
+class or curve), you can precompute a single set of sort indices and
+pass it via the `indices` argument. This reduces the overall cost from
+O(K·N log N) to O(N log N + K·N).
+
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
+## presort response
+## probabilities
+indices <- preorder(response, decreasing = TRUE)
+
+## evaluate precision recall curve
+pr.curve(actual, response, indices = indices)
+```
+
+{% endcode %}
+
 ### Usage
 
 ``` R
 ## S3 method for class 'factor'
-pr.curve(actual, response, thresholds = NULL, presorted = FALSE, ...)
+pr.curve(actual, response, thresholds = NULL, indices = NULL, ...)
 ```
 
 ### Arguments
@@ -63,7 +84,7 @@ pr.curve(actual, response, thresholds = NULL, presorted = FALSE, ...)
 | `actual`     | A vector length `n`, and `k` levels. Can be of integer or factor.                                                                                                                                                                                                                       |
 | `response`   | A `n \times k` \<double\>-matrix of predicted probabilities. The `i`-th row should sum to 1 (i.e., a valid probability distribution over the `k` classes). The first column corresponds to the first factor level in `actual`, the second column to the second factor level, and so on. |
 | `thresholds` | An optional \<double\> vector of length `n` (default: NULL).                                                                                                                                                                                                                            |
-| `presorted`  | Currently not working.                                                                                                                                                                                                                                                                  |
+| `indices`    | An optional `n \times k` matrix of \<integer\> values of sorted response probability indices.                                                                                                                                                                                           |
 | `...`        | Arguments passed into other methods.                                                                                                                                                                                                                                                    |
 
 ### Value

@@ -50,6 +50,27 @@ sanity before calling the underlying `C++` code.
 Use `roc.curve()` to construct the data.frame and use plot to visualize
 the area under the curve.
 
+#### Efficient multi-metric evaluation
+
+To avoid sorting the same probability matrix multiple times (once per
+class or curve), you can precompute a single set of sort indices and
+pass it via the `indices` argument. This reduces the overall cost from
+O(K·N log N) to O(N log N + K·N).
+
+
+{% code overflow="wrap" lineNumbers="true" %}
+
+``` R
+## presort response
+## probabilities
+indices <- preorder(response, decreasing = TRUE)
+
+## evaluate area under the receiver operator characteristics curve
+auc.roc.curve(actual, response, indices = indices)
+```
+
+{% endcode %}
+
 ### Usage
 
 ``` R
@@ -103,12 +124,21 @@ If <code class="reqn">0</code> it is calculated using the
 <code>trapezoid</code>-method, if <code class="reqn">1</code> it is
 calculated using the <code>step</code>-method.</p>
 </dd>
-<dt><code>micro</code></dt>
+<dt><code>indices</code></dt>
 <dd>
-<p>A &lt;logical&gt;-value of length <code class="reqn">1</code>
-(default: NULL). If TRUE it returns the micro average across all <code
-class="reqn">k</code> classes, if FALSE it returns the macro
-average.</p>
+<p>An optional <code class="reqn">n \times k</code> matrix of
+&lt;integer&gt; values of sorted response probability indices.</p>
+</dd>
+<dt><code>estimator</code></dt>
+<dd>
+<p>An &lt;integer&gt;-value of length <code class="reqn">1</code>
+(default: <code class="reqn">0</code>).</p>
+<ul>
+<li><p>0 - a named &lt;double&gt;-vector of length k
+(class-wise)</p></li>
+<li><p>1 - a &lt;double&gt; value (Micro averaged metric)</p></li>
+<li><p>2 - a &lt;double&gt; value (Macro averaged metric)</p></li>
+</ul>
 </dd>
 <dt><code>w</code></dt>
 <dd>
