@@ -8,12 +8,12 @@
 
 namespace metric {
     /**
-     * @class roc_cuver
+     * @class roc_curve
      * @brief This class calculates the AUC and constructs the
      * Receiver Operating Characteristics curve. It currently supports
      * micro and macro averages.
      * 
-     * The underlying algorightm is One vs Rest
+     * The underlying algorithm is One vs Rest
      *
      * @todo Explicit handling of NaN similar to na.rm.
      */
@@ -89,7 +89,7 @@ namespace metric {
 
         Rcpp::DataFrame curve(const std::optional<Rcpp::NumericVector>& th_in) override {
             
-            // 1) calculate total lenghts
+            // 1) calculate total lengths
             // based on thresholds
             const R_xlen_t per_class = th_in ? (th_in -> size() + 2) : (n_rows_ + 2);
             const R_xlen_t total     = per_class * n_cols_;

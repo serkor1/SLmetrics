@@ -58,7 +58,7 @@ Use \link{auc.pr.curve} for calculating the area under the curve directly.
 
 \subsection{Efficient multi-metric evaluation}{
 
-To avoid sorting the same probability matrix multiple times (once per class or curve),  you can precompute a single set of sort indices and pass it via the \code{indices} argument. This reduces the overall cost from O(K·N log N) to O(N log N + K·N).
+To avoid sorting the same probability matrix multiple times (once per class or curve), you can precompute a single set of sort indices and pass it via the \code{indices} argument. This reduces the overall cost from O(K·N log N) to O(N log N + K·N).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{## presort response
 ## probabilities

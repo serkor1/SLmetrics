@@ -30,7 +30,7 @@ As an example on the increased flexibility is the introduction of the `estimator
 
 * **Armadillo backend:** All functions have been ported to the C++ Armadillo library, and are heavily templated and Object Oriented. The functions are 5-20x faster than before.
 * **Streamlined documentation:** All documentation have been reworked, and are now using generic {roxygen2} templates. The new structure of the documentation is focused on shared documentation and therefore equal metrics like `recall` and `sensitivity` are aliased, and referenced differently - as a result there should be less noise in the documentation. The *creating factor* has been removed, and all examples are simplified.
-* **Efficient multi-metric evaluation:** The Precision-Recall and Receiver Operator Characteristics functions now accepts an `indices` arugment. The indices takes an <[integer]> matrix of corresponding to the sorted probabilites column-wise. See below:
+* **Efficient multi-metric evaluation:** The Precision-Recall and Receiver Operator Characteristics functions now accepts an `indices` argument. The indices takes an `integer`-matrix of corresponding to the sorted probabilities column-wise. See below:
 
 ```{r}
 ## Classes and
@@ -191,7 +191,7 @@ SLmetrics::roc.curve(
 SLmetrics::auc.roc.curve(
     actual,
     response,
-    estimator = 0 # 0: class-wise, 1: micro average, 2: maro average 
+    estimator = 0 # 0: class-wise, 1: micro average, 2: macro average 
 )
 ```
 
@@ -219,7 +219,7 @@ SLmetrics::pr.curve(
 SLmetrics::auc.pr.curve(
     actual,
     response,
-    estimator = 0 # 0: class-wise, 1: micro average, 2: maro average 
+    estimator = 0 # 0: class-wise, 1: micro average, 2: macro average 
 )
 ```
 

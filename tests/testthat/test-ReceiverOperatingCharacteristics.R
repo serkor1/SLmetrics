@@ -103,7 +103,7 @@ testthat::test_that(
           )
 
           # 3.2.2) the inverted values
-          # ie. opposite of wether indices
+          # ie. opposite of whether indices
           # have been provided
           inv_value <- wrapper(
             actual     = actual,
