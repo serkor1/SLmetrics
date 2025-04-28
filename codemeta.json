@@ -4,7 +4,7 @@
   "identifier": "SLmetrics",
   "description": " Performance evaluation metrics for supervised and unsupervised machine learning, statistical learning and artificial intelligence applications. Core computations are implemented in 'C++' for scalability and efficiency.",
   "name": "SLmetrics: Machine Learning Performance Evaluation on Steroids",
-  "relatedLink": "https://serkor1.github.io/SLmetrics/",
+  "relatedLink": "https://slmetrics-docs.gitbook.io/v1",
   "codeRepository": "https://github.com/serkor1/SLmetrics",
   "issueTracker": "https://github.com/serkor1/SLmetrics/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
