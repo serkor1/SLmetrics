@@ -103,6 +103,7 @@ Other Supervised Learning:
 \code{\link{hammingloss}()},
 \code{\link{huberloss}()},
 \code{\link{jaccard}()},
+\code{\link{maape}()},
 \code{\link{mae}()},
 \code{\link{mape}()},
 \code{\link{mcc}()},

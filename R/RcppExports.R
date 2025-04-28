@@ -960,6 +960,22 @@ weighted.mape.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_mape`, actual, predicted, w)
 }
 
+#' @templateVar .FUN maape
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @export
+maape.numeric <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_maape`, actual, predicted)
+}
+
+#' @templateVar .FUN weighted.maape
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @export
+weighted.maape.numeric <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_maape`, actual, predicted, w)
+}
+
 #' @templateVar .FUN mpe
 #' @templateVar .METHOD numeric
 #' @template regression_standard_inherit

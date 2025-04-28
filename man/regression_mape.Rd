@@ -2,11 +2,16 @@
 % Please edit documentation in R/S3_MeanAbsolutePercentageError.R
 \name{mape}
 \alias{mape}
+\alias{weighted.mape}
 \title{Mean Absolute Percentage Error}
 \usage{
 ## Generic S3 method
 ## for Mean Absolute Percentage Error
 mape(...)
+
+## Generic S3 method
+## for weighted Mean Absolute Percentage Error
+weighted.mape(...)
 }
 \arguments{
 \item{...}{
@@ -66,6 +71,7 @@ Other Regression:
 \code{\link{deviance.poisson}()},
 \code{\link{deviance.tweedie}()},
 \code{\link{huberloss}()},
+\code{\link{maape}()},
 \code{\link{mae}()},
 \code{\link{mpe}()},
 \code{\link{mse}()},
@@ -101,6 +107,7 @@ Other Supervised Learning:
 \code{\link{huberloss}()},
 \code{\link{jaccard}()},
 \code{\link{logloss}()},
+\code{\link{maape}()},
 \code{\link{mae}()},
 \code{\link{mcc}()},
 \code{\link{mpe}()},

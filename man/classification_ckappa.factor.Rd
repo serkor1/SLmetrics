@@ -141,6 +141,7 @@ Other Supervised Learning:
 \code{\link{huberloss}()},
 \code{\link{jaccard}()},
 \code{\link{logloss}()},
+\code{\link{maape}()},
 \code{\link{mae}()},
 \code{\link{mape}()},
 \code{\link{mcc}()},

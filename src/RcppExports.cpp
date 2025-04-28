@@ -1554,6 +1554,31 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// maape
+double maape(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted);
+RcppExport SEXP _SLmetrics_maape(SEXP actualSEXP, SEXP predictedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    rcpp_result_gen = Rcpp::wrap(maape(actual, predicted));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_maape
+double weighted_maape(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w);
+RcppExport SEXP _SLmetrics_weighted_maape(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_maape(actual, predicted, w));
+    return rcpp_result_gen;
+END_RCPP
+}
 // mpe
 double mpe(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted);
 RcppExport SEXP _SLmetrics_mpe(SEXP actualSEXP, SEXP predictedSEXP) {
@@ -2043,6 +2068,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_weighted_mae", (DL_FUNC) &_SLmetrics_weighted_mae, 3},
     {"_SLmetrics_mape", (DL_FUNC) &_SLmetrics_mape, 2},
     {"_SLmetrics_weighted_mape", (DL_FUNC) &_SLmetrics_weighted_mape, 3},
+    {"_SLmetrics_maape", (DL_FUNC) &_SLmetrics_maape, 2},
+    {"_SLmetrics_weighted_maape", (DL_FUNC) &_SLmetrics_weighted_maape, 3},
     {"_SLmetrics_mpe", (DL_FUNC) &_SLmetrics_mpe, 2},
     {"_SLmetrics_weighted_mpe", (DL_FUNC) &_SLmetrics_weighted_mpe, 3},
     {"_SLmetrics_mse", (DL_FUNC) &_SLmetrics_mse, 2},
