@@ -2,41 +2,41 @@
 
 <div role="main">
 
-|                       |                 |
-|-----------------------|----------------:|
-| weighted.mape.numeric | R Documentation |
+|               |                 |
+|---------------|----------------:|
+| maape.numeric | R Documentation |
 
-## Mean Absolute Percentage Error
+## Mean Arctangent Absolute Percentage Error
 
 ### Description
 
-A generic S3 function to compute the *mean absolute percentage error*
-score for a regression model. This function dispatches to S3 methods in
-`mape()` and performs no input validation. If you supply NA values or
-vectors of unequal length (e.g. `length(x) != length(y)`), the
-underlying `C++` code may trigger undefined behavior and crash your `R`
-session.
+A generic S3 function to compute the *mean arctangent absolute
+percentage error* score for a regression model. This function dispatches
+to S3 methods in `maape()` and performs no input validation. If you
+supply NA values or vectors of unequal length (e.g.
+`length(x) != length(y)`), the underlying `C++` code may trigger
+undefined behavior and crash your `R` session.
 
 #### Defensive measures
 
-Because `mape()` operates on raw pointers, pointer‑level faults (e.g.
+Because `maape()` operates on raw pointers, pointer‑level faults (e.g.
 from NA or mismatched length) occur before any `R`‑level error handling.
 Wrapping calls in `try()` or `tryCatch()` will *not* prevent `R`-session
 crashes.
 
-To guard against this, wrap `mape()` in a “safe” validator that checks
+To guard against this, wrap `maape()` in a “safe” validator that checks
 for NA values and matching length, for example:
 
 
 {% code overflow="wrap" lineNumbers="true" %}
 
 ``` R
-safe_mape <- function(x, y, ...) {
+safe_maape <- function(x, y, ...) {
   stopifnot(
     !anyNA(x), !anyNA(y),
     length(x) == length(y)
   )
-  mape(x, y, ...)
+  maape(x, y, ...)
 }
 ```
 
@@ -49,7 +49,7 @@ sanity before calling the underlying `C++` code.
 
 ``` R
 ## S3 method for class 'numeric'
-weighted.mape(actual, predicted, w, ...)
+maape(actual, predicted, ...)
 ```
 
 ### Arguments
@@ -57,7 +57,6 @@ weighted.mape(actual, predicted, w, ...)
 |                       |                                             |
 |-----------------------|---------------------------------------------|
 | `actual`, `predicted` | A pair of \<double\> vectors of length `n`. |
-| `w`                   | A \<double\> vector of sample weights.      |
 | `...`                 | Arguments passed into other methods         |
 
 ### Value
@@ -86,15 +85,10 @@ the Journal of machine Learning research 12 (2011): 2825-2830.
 actual_values    <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
 predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
 
-## Generate sample
-## weights
-sample_weights <- c(0.3, 0.5, 0.3, 0, 0.8, 0.8, 1)
-
 ## Evaluate performance
-SLmetrics::weighted.mape(
+SLmetrics::maape(
    actual    = actual_values, 
-   predicted = predicted_values,
-   w         = sample_weights
+   predicted = predicted_values
 )
 ```
 ```

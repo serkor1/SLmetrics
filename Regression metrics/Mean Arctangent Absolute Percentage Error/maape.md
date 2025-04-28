@@ -2,40 +2,41 @@
 
 <div role="main">
 
-|     |                 |
-|-----|----------------:|
-| mae | R Documentation |
+|       |                 |
+|-------|----------------:|
+| maape | R Documentation |
 
-## Mean Absolute Error
+## Mean Arctangent Absolute Percentage Error
 
 ### Description
 
-A generic S3 function to compute the *mean absolute error* score for a
-regression model. This function dispatches to S3 methods in `mae()` and
-performs no input validation. If you supply NA values or vectors of
-unequal length (e.g. `length(x) != length(y)`), the underlying `C++`
-code may trigger undefined behavior and crash your `R` session.
+A generic S3 function to compute the *mean arctangent absolute
+percentage error* score for a regression model. This function dispatches
+to S3 methods in `maape()` and performs no input validation. If you
+supply NA values or vectors of unequal length (e.g.
+`length(x) != length(y)`), the underlying `C++` code may trigger
+undefined behavior and crash your `R` session.
 
 #### Defensive measures
 
-Because `mae()` operates on raw pointers, pointer‑level faults (e.g.
+Because `maape()` operates on raw pointers, pointer‑level faults (e.g.
 from NA or mismatched length) occur before any `R`‑level error handling.
 Wrapping calls in `try()` or `tryCatch()` will *not* prevent `R`-session
 crashes.
 
-To guard against this, wrap `mae()` in a “safe” validator that checks
+To guard against this, wrap `maape()` in a “safe” validator that checks
 for NA values and matching length, for example:
 
 
 {% code overflow="wrap" lineNumbers="true" %}
 
 ``` R
-safe_mae <- function(x, y, ...) {
+safe_maape <- function(x, y, ...) {
   stopifnot(
     !anyNA(x), !anyNA(y),
     length(x) == length(y)
   )
-  mae(x, y, ...)
+  maape(x, y, ...)
 }
 ```
 
@@ -48,12 +49,12 @@ sanity before calling the underlying `C++` code.
 
 ``` R
 ## Generic S3 method
-## for Mean Absolute Error
-mae(...)
+## for Mean Arctangent Absolute Percentage Error
+maape(...)
 
 ## Generic S3 method
-## for weighted Mean Absolute Error
-weighted.mae(...)
+## for weighted Mean Arctangent Absolute Percentage Error
+weighted.maape(...)
 ```
 
 ### Arguments
@@ -66,8 +67,8 @@ weighted.mae(...)
 <tbody>
 <tr class="odd">
 <td><code id="...">...</code></td>
-<td><p>Arguments passed on to <code>mae.numeric</code>,
-<code>weighted.mae.numeric</code></p>
+<td><p>Arguments passed on to <code>maape.numeric</code>,
+<code>weighted.maape.numeric</code></p>
 <dl>
 <dt><code>actual,predicted</code></dt>
 <dd>
@@ -107,7 +108,7 @@ actual_values    <- c(1.3, 0.4, 1.2, 1.4, 1.9, 1.0, 1.2)
 predicted_values <- c(0.7, 0.5, 1.1, 1.2, 1.8, 1.1, 0.2)
 
 ## Evaluate performance
-SLmetrics::mae(
+SLmetrics::maape(
    actual    = actual_values, 
    predicted = predicted_values
 )

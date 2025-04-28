@@ -51,6 +51,10 @@ sanity before calling the underlying `C++` code.
 ## Generic S3 method
 ## for Mean Absolute Percentage Error
 mape(...)
+
+## Generic S3 method
+## for weighted Mean Absolute Percentage Error
+weighted.mape(...)
 ```
 
 ### Arguments
