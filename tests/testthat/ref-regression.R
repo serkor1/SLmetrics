@@ -185,7 +185,7 @@ ref_maape <- function(
   predicted, 
   w = NULL) {
     weighted.mean(
-      x = atan(actual - predicted),
+      x = atan( abs( (actual - predicted) / actual ) ),
       w = if (!is.null(w)) w else rep(1, times = length(actual))
     )
 }
