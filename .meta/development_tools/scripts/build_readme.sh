@@ -6,17 +6,17 @@ RESET=$1
 
 # Render the README file
 if [ "$RESET" = "true" ]; then
-    quarto render .meta/README/README.qmd --cache-refresh
+    quarto render .meta/readme/README.qmd --cache-refresh
 else
-    quarto render .meta/README/README.qmd
+    quarto render .meta/readme/README.qmd
 fi
 
 # Move the file to the root directory
-mv .meta/README/README.md .
+mv .meta/readme/README.md .
 
 # Update file paths in README.md
 Rscript -e "file_path <- 'README.md'; \
              file_contents <- readLines(file_path); \
-             modified_contents <- gsub('README_files/', '.meta/README/README_files/', file_contents); \
+             modified_contents <- gsub('README_files/', '\\.meta/readme/README_files/', file_contents); \
              writeLines(modified_contents, file_path); \
              cat('Replacements completed in README.md\n')"
