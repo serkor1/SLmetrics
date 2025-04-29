@@ -685,13 +685,13 @@ SLmetrics::setUseOpenMP(TRUE)
 #> OpenMP usage set to: enabled
 system.time(SLmetrics::entropy(pk))
 #>    user  system elapsed 
-#>   0.002   0.001   0.000
+#>   0.166   0.000   0.012
 
 SLmetrics::setUseOpenMP(FALSE)
 #> OpenMP usage set to: disabled
 system.time(SLmetrics::entropy(pk))
 #>    user  system elapsed 
-#>   0.001   0.000   0.001
+#>   0.000   0.000   0.001
 ```
 
 - **Entropy with soft labels
@@ -788,11 +788,11 @@ cat(
   sep = "\n"
 )
 #> Mean Relative Root Mean Squared Error
-#> 18.58782
+#> 8.013112
 #> Range Relative Root Mean Squared Error
-#> 0.2275443
+#> 0.2594705
 #> IQR Relative Root Mean Squared Error
-#> 0.568082
+#> 0.8870325
 ```
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
@@ -880,10 +880,10 @@ SLmetrics::cmatrix(
     actual    = actual,
     predicted = predicted
 )
-#>   a b c
-#> a 5 5 5
-#> b 4 7 9
-#> c 3 5 7
+#>    a  b  c
+#> a  4  5  7
+#> b  4  2  7
+#> c 10  5  6
 
 ## 3) weighted confusion
 ## matrix
@@ -893,9 +893,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 1.615754 3.037625 3.721081
-#> b 2.393832 2.833715 3.598837
-#> c 1.270221 2.191800 2.841290
+#> a 1.858367 2.163757 3.692561
+#> b 1.114118 1.274073 2.504418
+#> c 5.345933 2.022893 2.742402
 ```
 
 # :bookmark: Version 0.2-0
@@ -935,20 +935,20 @@ SLmetrics::cmatrix(
     actual    = actual,
     predicted = predicted
 )
-#>    a  b  c
-#> a 12  3  4
-#> b  5  3  7
-#> c  3  9  4
+#>   a b c
+#> a 4 7 6
+#> b 5 4 5
+#> c 8 5 6
 
 SLmetrics::cmatrix(
     actual    = actual,
     predicted = predicted,
     w         = weights
 )
-#>           a         b         c
-#> a 5.9838096 1.2166363 1.7515152
-#> b 2.7736205 0.8286012 4.3979237
-#> c 2.4773483 3.5242084 2.7180945
+#>          a        b        c
+#> a 1.397893 2.886112 4.647847
+#> b 2.529327 2.081302 3.228971
+#> c 3.799661 1.950323 3.445495
 ```
 
 Calculating weighted metrics using the `<factor>`- or
@@ -968,7 +968,7 @@ confusion_matrix <- SLmetrics::cmatrix(
 SLmetrics::accuracy(
     confusion_matrix
 )
-#> [1] 0.3712448
+#> [1] 0.2666734
 
 ## 2) weighted accuracy
 ## using <factor> method
@@ -977,7 +977,7 @@ SLmetrics::weighted.accuracy(
     predicted = predicted,
     w         = weights
 )
-#> [1] 0.3712448
+#> [1] 0.2666734
 ```
 
 Please note, however, that it is not possible to pass `cmatrix()`-into
@@ -1048,9 +1048,9 @@ w         <- runif(n = 50)
 ## 2) weighted and unweighted
 ## root mean squared error
 SLmetrics::rmse(actual, predicted)
-#> [1] 0.9530114
+#> [1] 1.151834
 SLmetrics::weighted.rmse(actual, predicted, w = w)
-#> [1] 0.9386771
+#> [1] 1.234968
 ```
 
 - The `rrmse()`-function have been removed in favor of the
@@ -1175,7 +1175,7 @@ predicted <- factor(
 
 ## 2) print values
 print(actual)
-#>  [1] a b a a a c b c a a
+#>  [1] b a a a b b c a b c
 #> Levels: a b c
 ```
 
@@ -1191,24 +1191,24 @@ summary(
 #> Confusion Matrix (3 x 3) 
 #> ================================================================================
 #>   a b c
-#> a 2 1 3
-#> b 1 1 0
+#> a 2 1 1
+#> b 2 0 2
 #> c 0 1 1
 #> ================================================================================
 #> Overall Statistics (micro average)
-#>  - Accuracy:          0.40
-#>  - Balanced Accuracy: 0.44
-#>  - Sensitivity:       0.40
-#>  - Specificity:       0.70
-#>  - Precision:         0.40
+#>  - Accuracy:          0.30
+#>  - Balanced Accuracy: 0.33
+#>  - Sensitivity:       0.30
+#>  - Specificity:       0.65
+#>  - Precision:         0.30
 ```
 
 ``` r
 ## 1) false positive rate
 ## using <cmatrix> method
 SLmetrics::fpr(confusion_matrix)
-#>     a     b     c 
-#> 0.250 0.250 0.375
+#>         a         b         c 
+#> 0.3333333 0.3333333 0.3750000
 
 ## 2) false positive rate
 ## using <factor> method
@@ -1216,8 +1216,8 @@ SLmetrics::fpr(
     actual    = actual, 
     predicted = predicted
 )
-#>     a     b     c 
-#> 0.250 0.250 0.375
+#>         a         b         c 
+#> 0.3333333 0.3333333 0.3750000
 ```
 
 ### Regression metrics
@@ -1236,11 +1236,11 @@ SLmetrics::huberloss(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.3865226
+#> [1] 0.4076582
 
 SLmetrics::rmse(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.9097144
+#> [1] 0.922457
 ```
