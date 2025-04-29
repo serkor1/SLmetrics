@@ -25,7 +25,7 @@ mape <- function(...) {
 #' @usage NULL
 #' 
 #' @templateVar .TITLE mean absolute percentage error
-#' @templateVar .FUN mae
+#' @templateVar .FUN mape
 #' @templateVar .TASK regression
 #' 
 #' @template generic_inherit

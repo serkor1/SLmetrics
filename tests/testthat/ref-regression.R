@@ -179,4 +179,15 @@ ref_rrmse <- function(actual, predicted, w = NULL, normalization = 0) {
 
 }
 
+# Reference Mean Arctangent Absolute Error
+ref_maape <- function(
+  actual, 
+  predicted, 
+  w = NULL) {
+    weighted.mean(
+      x = atan( abs( (actual - predicted) / actual ) ),
+      w = if (!is.null(w)) w else rep(1, times = length(actual))
+    )
+}
+
 # script end;

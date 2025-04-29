@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{weighted.mape.numeric}
 \alias{weighted.mape.numeric}
-\title{Mean Absolute Error}
+\title{Mean Absolute Percentage Error}
 \usage{
 \method{weighted.mape}{numeric}(actual, predicted, w, ...)
 }
@@ -17,19 +17,19 @@
 A <\link{double}> value
 }
 \description{
-A generic S3 function to compute the \emph{mean absolute error} score for a regression model. This function dispatches to S3 methods in \code{\link[=mae]{mae()}} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
+A generic S3 function to compute the \emph{mean absolute percentage error} score for a regression model. This function dispatches to S3 methods in \code{\link[=mape]{mape()}} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
 \subsection{Defensive measures}{
 
-Because \code{\link[=mae]{mae()}} operates on raw pointers, pointer‑level faults (e.g. from \link{NA} or mismatched \link{length}) occur before any \code{R}‑level error handling.  Wrapping calls in \code{\link[=try]{try()}} or \code{\link[=tryCatch]{tryCatch()}} will \emph{not} prevent \code{R}-session crashes.
+Because \code{\link[=mape]{mape()}} operates on raw pointers, pointer-level faults (e.g. from \link{NA} or mismatched \link{length}) occur before any \code{R}-level error handling.  Wrapping calls in \code{\link[=try]{try()}} or \code{\link[=tryCatch]{tryCatch()}} will \emph{not} prevent \code{R}-session crashes.
 
-To guard against this, wrap \code{\link[=mae]{mae()}} in a “safe” validator that checks for \link{NA} values and matching \link{length}, for example:
+To guard against this, wrap \code{\link[=mape]{mape()}} in a "safe" validator that checks for \link{NA} values and matching \link{length}, for example:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{safe_mae <- function(x, y, ...) \{
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{safe_mape <- function(x, y, ...) \{
   stopifnot(
     !anyNA(x), !anyNA(y),
     length(x) == length(y)
   )
-  mae(x, y, ...)
+  mape(x, y, ...)
 \}
 }\if{html}{\out{</div>}}
 
@@ -70,7 +70,8 @@ Other Regression:
 \code{\link{deviance.poisson}()},
 \code{\link{deviance.tweedie}()},
 \code{\link{huberloss}()},
-\code{\link{mape}()},
+\code{\link{maape}()},
+\code{\link{mae}()},
 \code{\link{mpe}()},
 \code{\link{mse}()},
 \code{\link{pinball}()},
@@ -105,7 +106,8 @@ Other Supervised Learning:
 \code{\link{huberloss}()},
 \code{\link{jaccard}()},
 \code{\link{logloss}()},
-\code{\link{mape}()},
+\code{\link{maape}()},
+\code{\link{mae}()},
 \code{\link{mcc}()},
 \code{\link{mpe}()},
 \code{\link{mse}()},
