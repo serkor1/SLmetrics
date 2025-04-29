@@ -19,12 +19,12 @@ session.
 
 #### Defensive measures
 
-Because `roc.curve()` operates on raw pointers, pointer‑level faults
-(e.g. from NA or mismatched length) occur before any `R`‑level error
+Because `roc.curve()` operates on raw pointers, pointer-level faults
+(e.g. from NA or mismatched length) occur before any `R`-level error
 handling. Wrapping calls in `try()` or `tryCatch()` will *not* prevent
 `R`-session crashes.
 
-To guard against this, wrap `roc.curve()` in a “safe” validator that
+To guard against this, wrap `roc.curve()` in a "safe" validator that
 checks for NA values and matching length, for example:
 
 

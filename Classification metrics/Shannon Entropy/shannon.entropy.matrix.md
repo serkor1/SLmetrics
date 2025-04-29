@@ -19,12 +19,12 @@ session.
 
 #### Defensive measures
 
-Because `shannon.entropy()` operates on raw pointers, pointer‑level
-faults (e.g. from NA or mismatched length) occur before any `R`‑level
+Because `shannon.entropy()` operates on raw pointers, pointer-level
+faults (e.g. from NA or mismatched length) occur before any `R`-level
 error handling. Wrapping calls in `try()` or `tryCatch()` will *not*
 prevent `R`-session crashes.
 
-To guard against this, wrap `shannon.entropy()` in a “safe” validator
+To guard against this, wrap `shannon.entropy()` in a "safe" validator
 that checks for NA values and matching length, for example:
 
 

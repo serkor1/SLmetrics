@@ -19,12 +19,12 @@ session.
 
 #### Defensive measures
 
-Because `deviance.gamma()` operates on raw pointers, pointer‑level
-faults (e.g. from NA or mismatched length) occur before any `R`‑level
+Because `deviance.gamma()` operates on raw pointers, pointer-level
+faults (e.g. from NA or mismatched length) occur before any `R`-level
 error handling. Wrapping calls in `try()` or `tryCatch()` will *not*
 prevent `R`-session crashes.
 
-To guard against this, wrap `deviance.gamma()` in a “safe” validator
+To guard against this, wrap `deviance.gamma()` in a "safe" validator
 that checks for NA values and matching length, for example:
 
 

@@ -18,12 +18,12 @@ code may trigger undefined behavior and crash your `R` session.
 
 #### Defensive measures
 
-Because `fpr()` operates on raw pointers, pointer‑level faults (e.g.
-from NA or mismatched length) occur before any `R`‑level error handling.
+Because `fpr()` operates on raw pointers, pointer-level faults (e.g.
+from NA or mismatched length) occur before any `R`-level error handling.
 Wrapping calls in `try()` or `tryCatch()` will *not* prevent `R`-session
 crashes.
 
-To guard against this, wrap `fpr()` in a “safe” validator that checks
+To guard against this, wrap `fpr()` in a "safe" validator that checks
 for NA values and matching length, for example:
 
 

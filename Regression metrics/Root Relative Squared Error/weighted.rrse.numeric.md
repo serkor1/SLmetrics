@@ -19,12 +19,12 @@ session.
 
 #### Defensive measures
 
-Because `rrse()` operates on raw pointers, pointer‑level faults (e.g.
-from NA or mismatched length) occur before any `R`‑level error handling.
+Because `rrse()` operates on raw pointers, pointer-level faults (e.g.
+from NA or mismatched length) occur before any `R`-level error handling.
 Wrapping calls in `try()` or `tryCatch()` will *not* prevent `R`-session
 crashes.
 
-To guard against this, wrap `rrse()` in a “safe” validator that checks
+To guard against this, wrap `rrse()` in a "safe" validator that checks
 for NA values and matching length, for example:
 
 

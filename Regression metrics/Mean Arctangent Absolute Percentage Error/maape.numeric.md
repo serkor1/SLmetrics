@@ -19,12 +19,12 @@ undefined behavior and crash your `R` session.
 
 #### Defensive measures
 
-Because `maape()` operates on raw pointers, pointer‑level faults (e.g.
-from NA or mismatched length) occur before any `R`‑level error handling.
+Because `maape()` operates on raw pointers, pointer-level faults (e.g.
+from NA or mismatched length) occur before any `R`-level error handling.
 Wrapping calls in `try()` or `tryCatch()` will *not* prevent `R`-session
 crashes.
 
-To guard against this, wrap `maape()` in a “safe” validator that checks
+To guard against this, wrap `maape()` in a "safe" validator that checks
 for NA values and matching length, for example:
 
 
