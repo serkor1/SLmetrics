@@ -615,7 +615,7 @@ ppv.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_ppv_score`, x, estimator, na_rm = na.rm)
 }
 
-#' @templateVar .TITLE Precision–Recall Curve
+#' @templateVar .TITLE Precision-Recall Curve
 #' @templateVar .FUN pr.curve
 #' @templateVar .TYPE pr.curve
 #' @templateVar .METHOD factor
@@ -625,7 +625,7 @@ pr.curve.factor <- function(actual, response, thresholds = NULL, indices = NULL,
     .Call(`_SLmetrics_precision_recall_curve`, actual, response, thresholds, indices)
 }
 
-#' @templateVar .TITLE Precision–Recall Curve
+#' @templateVar .TITLE Precision-Recall Curve
 #' @templateVar .FUN weighted.pr.curve
 #' @templateVar .TYPE pr.curve
 #' @templateVar .METHOD factor

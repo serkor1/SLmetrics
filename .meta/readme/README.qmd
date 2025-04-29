@@ -107,7 +107,7 @@ That’s all! Now you can explore the rest of this README for in-depth usage, pe
 
 Machine learning can be a complicated task; the steps from feature engineering to model deployment require carefully measured actions and decisions. One low-hanging fruit to simplify this process is *performance evaluation*. 
 
-At its core, performance evaluation is essentially just comparing two vectors — a programmatically and, at times, mathematically trivial step in the machine learning pipeline, but one that can become complicated due to:
+At its core, performance evaluation is essentially just comparing two vectors - a programmatically and, at times, mathematically trivial step in the machine learning pipeline, but one that can become complicated due to:
 
 1. Dependencies and potential deprecations
 2. Needlessly complex or repetitive arguments  
@@ -120,7 +120,7 @@ At its core, performance evaluation is essentially just comparing two vectors �
 3. **Lightweight:** Only depends on [{Rcpp}](https://github.com/RcppCore/Rcpp) and [{lattice}](https://github.com/deepayan/lattice)
 4. **Simple:** S3-based, minimal overhead, and flexible inputs
 
-Performance evaluation should be plug-and-play and “just work” out of the box — there’s no need to worry about *quasiquations*, *dependencies*, *deprecations*, or variations of the same functions relative to their arguments when using [{SLmetrics}](https://serkor1.github.io/SLmetrics/).
+Performance evaluation should be plug-and-play and “just work” out of the box - there’s no need to worry about *quasiquations*, *dependencies*, *deprecations*, or variations of the same functions relative to their arguments when using [{SLmetrics}](https://serkor1.github.io/SLmetrics/).
 
 ## :zap: Performance Comparison
 
