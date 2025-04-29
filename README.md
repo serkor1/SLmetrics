@@ -96,7 +96,7 @@ decisions. One low-hanging fruit to simplify this process is
 *performance evaluation*.
 
 At its core, performance evaluation is essentially just comparing two
-vectors — a programmatically and, at times, mathematically trivial step
+vectors - a programmatically and, at times, mathematically trivial step
 in the machine learning pipeline, but one that can become complicated
 due to:
 
@@ -117,7 +117,7 @@ by being:
 4.  **Simple:** S3-based, minimal overhead, and flexible inputs
 
 Performance evaluation should be plug-and-play and “just work” out of
-the box — there’s no need to worry about *quasiquations*,
+the box - there’s no need to worry about *quasiquations*,
 *dependencies*, *deprecations*, or variations of the same functions
 relative to their arguments when using
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/).
@@ -133,7 +133,7 @@ RMSE[^1].
 
 ### :fast_forward: Speed comparison
 
-<img src=".meta/readme/README_files/figure-commonmark/plot%20speed-performance-1.png"
+<img src="README_files/figure-commonmark/plot%20speed-performance-1.png"
 style="width:100.0%" />
 
 As shown in the chart,

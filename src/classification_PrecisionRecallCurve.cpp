@@ -3,7 +3,7 @@
 #include <optional>
 
 // unweighted PR curve
-//' @templateVar .TITLE Precision–Recall Curve
+//' @templateVar .TITLE Precision-Recall Curve
 //' @templateVar .FUN pr.curve
 //' @templateVar .TYPE pr.curve
 //' @templateVar .METHOD factor
@@ -35,7 +35,7 @@ Rcpp::DataFrame precision_recall_curve(
 }
 
 // weighted PR curve
-//' @templateVar .TITLE Precision–Recall Curve
+//' @templateVar .TITLE Precision-Recall Curve
 //' @templateVar .FUN weighted.pr.curve
 //' @templateVar .TYPE pr.curve
 //' @templateVar .METHOD factor

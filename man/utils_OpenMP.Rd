@@ -26,9 +26,9 @@ If OpenMP is unavailable, the function returns \link{NULL}.
 Enable or disable OpenMP parallelization for computations.
 \subsection{Disclaimer}{
 
-This toggle is a brute‑force implementation and does \strong{not} guard against data races or nested parallel regions.
+This toggle is a brute-force implementation and does \strong{not} guard against data races or nested parallel regions.
 Nested OpenMP regions can introduce subtle race conditions if multiple layers of parallelism access shared data concurrently.
-If you combine this package’s OpenMP switch with other parallel machine‑learning routines, you may encounter undefined behavior.
+If you combine this package’s OpenMP switch with other parallel machine-learning routines, you may encounter undefined behavior.
 }
 }
 \examples{

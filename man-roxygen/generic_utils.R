@@ -10,7 +10,7 @@
 #'
 #' ## Defensive measures
 #'
-#' Because [<%= .FUN %>()] operates on raw pointers, pointer‑level faults (e.g. from [NA] or mismatched [length]) occur before any \code{R}‑level error handling.  Wrapping calls in [try()] or [tryCatch()] will *not* prevent \code{R}-session crashes.
+#' Because [<%= .FUN %>()] operates on raw pointers, pointer-level faults (e.g. from [NA] or mismatched [length]) occur before any \code{R}-level error handling.  Wrapping calls in [try()] or [tryCatch()] will *not* prevent \code{R}-session crashes.
 #' 
 #' To guard against this, wrap [<%= .FUN %>()] in a “safe” validator that checks for [NA] values and matching [length], for example:
 #'

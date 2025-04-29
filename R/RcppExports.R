@@ -615,7 +615,7 @@ ppv.cmatrix <- function(x, estimator = 0L, na.rm = TRUE, ...) {
     .Call(`_SLmetrics_cmatrix_ppv_score`, x, estimator, na_rm = na.rm)
 }
 
-#' @templateVar .TITLE Precision–Recall Curve
+#' @templateVar .TITLE Precision-Recall Curve
 #' @templateVar .FUN pr.curve
 #' @templateVar .TYPE pr.curve
 #' @templateVar .METHOD factor
@@ -625,7 +625,7 @@ pr.curve.factor <- function(actual, response, thresholds = NULL, indices = NULL,
     .Call(`_SLmetrics_precision_recall_curve`, actual, response, thresholds, indices)
 }
 
-#' @templateVar .TITLE Precision–Recall Curve
+#' @templateVar .TITLE Precision-Recall Curve
 #' @templateVar .FUN weighted.pr.curve
 #' @templateVar .TYPE pr.curve
 #' @templateVar .METHOD factor
@@ -958,6 +958,22 @@ mape.numeric <- function(actual, predicted, ...) {
 #' @export
 weighted.mape.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_mape`, actual, predicted, w)
+}
+
+#' @templateVar .FUN maape
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @export
+maape.numeric <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_maape`, actual, predicted)
+}
+
+#' @templateVar .FUN weighted.maape
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @export
+weighted.maape.numeric <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_maape`, actual, predicted, w)
 }
 
 #' @templateVar .FUN mpe

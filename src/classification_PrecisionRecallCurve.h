@@ -11,7 +11,7 @@ namespace metric {
 
     /**
      * @class precision_recall_curve
-     * @brief Calculates precision–recall curves and AUC (average precision).
+     * @brief Calculates precision-recall curves and AUC (average precision).
      *        Inherits most machinery (sorting, flattening, integration) from
      *        classification::curve_base.
      */
