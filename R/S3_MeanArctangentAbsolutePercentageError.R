@@ -1,5 +1,5 @@
 # script: Mean Arctangent Absolute Percentage Error
-# date: 2024-28-04
+# date: 2024-04-28
 # author: Serkan Korkmaz, serkor1@duck.com
 # objective: Generate Methods
 # script start;

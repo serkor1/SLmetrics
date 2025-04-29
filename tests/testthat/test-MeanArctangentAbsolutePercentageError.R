@@ -7,7 +7,7 @@ testthat::test_that(
 
     testthat::skip_on_cran()
 
-    # 0) construct maape-wrapperr
+    # 0) construct maape-wrapper
     wrapped_maape <- function(
       actual,
       predicted,
@@ -56,7 +56,7 @@ testthat::test_that(
       testthat::expect_true(length(score) == 1, info = info)
 
       # 2.2) calculate reference value
-      py_score <- ref_maape(
+      ref_score <- ref_maape(
         actual     = actual,
         predicted  = predicted,
         w          = w
@@ -66,7 +66,7 @@ testthat::test_that(
       testthat::expect_true(
         object = set_equal(
           current = as.numeric(score),
-          target  = as.numeric(py_score)
+          target  = as.numeric(ref_score)
         ),
         info = info
       )

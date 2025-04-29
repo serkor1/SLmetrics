@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include "regression_MeanArctangentAbsoluteError.h"
+#include "regression_MeanArctangentAbsolutePercentageError.h"
 using namespace Rcpp;
 
 //' @templateVar .FUN maape

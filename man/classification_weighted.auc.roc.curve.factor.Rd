@@ -49,9 +49,9 @@ If \code{estimator} is given as
 A generic S3 function to compute the \emph{area under the receiver operator characteristics curve} score for a classification model. This function dispatches to S3 methods in \code{\link[=auc.roc.curve]{auc.roc.curve()}} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
 \subsection{Defensive measures}{
 
-Because \code{\link[=auc.roc.curve]{auc.roc.curve()}} operates on raw pointers, pointer‑level faults (e.g. from \link{NA} or mismatched \link{length}) occur before any \code{R}‑level error handling.  Wrapping calls in \code{\link[=try]{try()}} or \code{\link[=tryCatch]{tryCatch()}} will \emph{not} prevent \code{R}-session crashes.
+Because \code{\link[=auc.roc.curve]{auc.roc.curve()}} operates on raw pointers, pointer-level faults (e.g. from \link{NA} or mismatched \link{length}) occur before any \code{R}-level error handling.  Wrapping calls in \code{\link[=try]{try()}} or \code{\link[=tryCatch]{tryCatch()}} will \emph{not} prevent \code{R}-session crashes.
 
-To guard against this, wrap \code{\link[=auc.roc.curve]{auc.roc.curve()}} in a “safe” validator that checks for \link{NA} values and matching \link{length}, for example:
+To guard against this, wrap \code{\link[=auc.roc.curve]{auc.roc.curve()}} in a "safe" validator that checks for \link{NA} values and matching \link{length}, for example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{safe_auc.roc.curve <- function(x, y, ...) \{
   stopifnot(

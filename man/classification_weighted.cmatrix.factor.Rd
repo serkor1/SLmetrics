@@ -20,9 +20,9 @@ A named \eqn{k} x \eqn{k} <\link{matrix}>
 A generic S3 function to compute the \emph{confusion matrix}  for a classification model. This function dispatches to S3 methods in \code{\link[=cmatrix]{cmatrix()}} and performs no input validation. If you supply \link{NA} values or vectors of unequal \link{length} (e.g. \code{length(x) != length(y)}), the underlying \code{C++} code may trigger undefined behavior and crash your \code{R} session.
 \subsection{Defensive measures}{
 
-Because \code{\link[=cmatrix]{cmatrix()}} operates on raw pointers, pointer‑level faults (e.g. from \link{NA} or mismatched \link{length}) occur before any \code{R}‑level error handling.  Wrapping calls in \code{\link[=try]{try()}} or \code{\link[=tryCatch]{tryCatch()}} will \emph{not} prevent \code{R}-session crashes.
+Because \code{\link[=cmatrix]{cmatrix()}} operates on raw pointers, pointer-level faults (e.g. from \link{NA} or mismatched \link{length}) occur before any \code{R}-level error handling.  Wrapping calls in \code{\link[=try]{try()}} or \code{\link[=tryCatch]{tryCatch()}} will \emph{not} prevent \code{R}-session crashes.
 
-To guard against this, wrap \code{\link[=cmatrix]{cmatrix()}} in a “safe” validator that checks for \link{NA} values and matching \link{length}, for example:
+To guard against this, wrap \code{\link[=cmatrix]{cmatrix()}} in a "safe" validator that checks for \link{NA} values and matching \link{length}, for example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{safe_cmatrix <- function(x, y, ...) \{
   stopifnot(
