@@ -170,6 +170,7 @@ Other Supervised Learning:
 \code{\link{fdr}()},
 \code{\link{fer}()},
 \code{\link{fmi}()},
+\code{\link{gmse}()},
 \code{\link{hammingloss}()},
 \code{\link{huberloss}()},
 \code{\link{jaccard}()},
