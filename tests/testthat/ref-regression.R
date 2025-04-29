@@ -190,4 +190,17 @@ ref_maape <- function(
     )
 }
 
+# Reference Geometric Mean Squared Error
+ref_gmse <- function(
+  actual, 
+  predicted, 
+  w = NULL) {
+  exp(
+    weighted.mean(
+      x = log( (actual - predicted) * (actual - predicted) ),
+      w = if (!is.null(w)) w else rep(1, times = length(actual))
+    )
+  )
+}
+
 # script end;

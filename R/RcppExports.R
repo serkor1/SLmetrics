@@ -912,6 +912,22 @@ weighted.deviance.gamma.numeric <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_gamma_deviance`, actual, predicted, w)
 }
 
+#' @templateVar .FUN gmse
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @export
+gmse.numeric <- function(actual, predicted, ...) {
+    .Call(`_SLmetrics_gmse`, actual, predicted)
+}
+
+#' @templateVar .FUN weighted.gmse
+#' @templateVar .METHOD numeric
+#' @template regression_standard_inherit
+#' @export
+weighted.gmse.numeric <- function(actual, predicted, w, ...) {
+    .Call(`_SLmetrics_weighted_gmse`, actual, predicted, w)
+}
+
 #' @templateVar .FUN huberloss
 #' @templateVar .METHOD numeric
 #' @template regression_standard_inherit

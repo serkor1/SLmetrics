@@ -1477,6 +1477,31 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// gmse
+double gmse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted);
+RcppExport SEXP _SLmetrics_gmse(SEXP actualSEXP, SEXP predictedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    rcpp_result_gen = Rcpp::wrap(gmse(actual, predicted));
+    return rcpp_result_gen;
+END_RCPP
+}
+// weighted_gmse
+double weighted_gmse(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w);
+RcppExport SEXP _SLmetrics_weighted_gmse(SEXP actualSEXP, SEXP predictedSEXP, SEXP wSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
+    rcpp_result_gen = Rcpp::wrap(weighted_gmse(actual, predicted, w));
+    return rcpp_result_gen;
+END_RCPP
+}
 // huberloss
 double huberloss(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, double delta);
 RcppExport SEXP _SLmetrics_huberloss(SEXP actualSEXP, SEXP predictedSEXP, SEXP deltaSEXP) {
@@ -2062,6 +2087,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_SLmetrics_weighted_ccc", (DL_FUNC) &_SLmetrics_weighted_ccc, 4},
     {"_SLmetrics_gamma_deviance", (DL_FUNC) &_SLmetrics_gamma_deviance, 2},
     {"_SLmetrics_weighted_gamma_deviance", (DL_FUNC) &_SLmetrics_weighted_gamma_deviance, 3},
+    {"_SLmetrics_gmse", (DL_FUNC) &_SLmetrics_gmse, 2},
+    {"_SLmetrics_weighted_gmse", (DL_FUNC) &_SLmetrics_weighted_gmse, 3},
     {"_SLmetrics_huberloss", (DL_FUNC) &_SLmetrics_huberloss, 3},
     {"_SLmetrics_weighted_huberloss", (DL_FUNC) &_SLmetrics_weighted_huberloss, 4},
     {"_SLmetrics_mae", (DL_FUNC) &_SLmetrics_mae, 2},
