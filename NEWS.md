@@ -1140,14 +1140,14 @@ par(mfrow = c(1,2))
 plot(roc_obj, panels = FALSE)
 ```
 
-<img src=".meta/changelog/v0.1-1_files/figure-commonmark/unnamed-chunk-4-1.png"
+<img src=".meta/changelog/src/v0.1-1_files/figure-commonmark/unnamed-chunk-4-1.png"
 style="width:100.0%" />
 
 ``` r
 plot(pr_obj, panels = FALSE)
 ```
 
-<img src=".meta/changelog/v0.1-1_files/figure-commonmark/unnamed-chunk-4-2.png"
+<img src=".meta/changelog/src/v0.1-1_files/figure-commonmark/unnamed-chunk-4-2.png"
 style="width:100.0%" />
 
 # :package: [{SLmetrics}](https://serkor1.github.io/SLmetrics/) Version 0.1-0

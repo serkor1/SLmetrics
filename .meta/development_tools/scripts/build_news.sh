@@ -20,6 +20,6 @@ mv .meta/changelog/NEWS.md .
 # Update file paths in NEWS.md
 Rscript -e "file_path <- 'NEWS.md'; \
              file_contents <- readLines(file_path); \
-             modified_contents <- gsub('(v.*_files/)', '.meta/changelog/\\\\1', file_contents, perl = TRUE, ignore.case = TRUE); \
+             modified_contents <- gsub('(v.*_files/)', '.meta/changelog/src/\\\\1', file_contents, perl = TRUE, ignore.case = TRUE); \
              writeLines(modified_contents, file_path); \
              cat('Replacements completed in NEWS.md\n')"

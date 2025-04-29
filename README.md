@@ -133,7 +133,7 @@ RMSE[^1].
 
 ### :fast_forward: Speed comparison
 
-<img src="README_files/figure-commonmark/plot%20speed-performance-1.png"
+<img src=".meta/readme/README_files/figure-commonmark/plot%20speed-performance-1.png"
 style="width:100.0%" />
 
 As shown in the chart,

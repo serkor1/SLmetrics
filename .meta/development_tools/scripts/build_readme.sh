@@ -17,6 +17,6 @@ mv .meta/readme/README.md .
 # Update file paths in README.md
 Rscript -e "file_path <- 'README.md'; \
              file_contents <- readLines(file_path); \
-             modified_contents <- gsub('README_files/', '\\.meta/readme/README_files/', file_contents); \
+             modified_contents <- gsub('README_files/', '.meta/readme/README_files/', file_contents); \
              writeLines(modified_contents, file_path); \
              cat('Replacements completed in README.md\n')"
