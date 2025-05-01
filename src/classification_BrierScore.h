@@ -2,7 +2,6 @@
 #define CLASSIFICATION_BRIERSCORE_H
 
 #include "SLmetrics.h"
-#include "utilities_Package.h"
 #include <cmath>
 #include <cstddef>
 

@@ -1,14 +1,10 @@
 #ifndef COUNT_POISSONLOGLOSS_H
 #define COUNT_POISSONLOGLOSS_H
 
-#include "utilities_Package.h"
+
 #include <Rcpp.h>
 #include <cmath>
 #include <cstddef>
-
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
 
 class PoissonLogLoss {
     public:
@@ -22,9 +18,6 @@ class PoissonLogLoss {
             const double eps = 1e-15;
             double loss = 0.0;
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:loss) if(getUseOpenMP())
-            #endif
             for (std::size_t i = 0; i < n; ++i) {
                 const double pred = std::max(response_ptr[i], eps);
                 const int obs = actual_ptr[i];
@@ -50,9 +43,6 @@ class PoissonLogLoss {
             double loss = 0.0;
             double wsum = 0.0;
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:loss, wsum) if(getUseOpenMP())
-            #endif
             for (std::size_t i = 0; i < n; ++i) {
                 const double wval = w_ptr[i];
                 const double pred = std::max(response_ptr[i], eps);

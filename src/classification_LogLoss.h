@@ -1,14 +1,9 @@
 #ifndef CLASSIFICATION_CROSS_ENTROPY_LOSS_H
 #define CLASSIFICATION_CROSS_ENTROPY_LOSS_H
 
-#include "utilities_Package.h"
 #include <Rcpp.h>
 #include <cmath>
 #include <cstddef>
-
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
 
 class LogLoss {
     public:
@@ -20,9 +15,6 @@ class LogLoss {
             bool normalize) {
 
             double loss = 0.0;
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:loss) if(getUseOpenMP())
-            #endif
             for (std::size_t i = 0; i < n; ++i) {
                 const int c = actual_ptr[i] - 1;
                 const double p = response_ptr[i + static_cast<std::size_t>(c) * nrows];
@@ -47,9 +39,6 @@ class LogLoss {
                 double loss = 0.0;
                 double wsum = 0.0;
 
-                #ifdef _OPENMP
-                    #pragma omp parallel for reduction(+:loss, wsum) if(getUseOpenMP())
-                #endif
                 for (std::size_t i = 0; i < n; ++i) {
                     const int c       = actual_ptr[i] - 1;
                     const double p    = response_ptr[i + static_cast<std::size_t>(c) * nrows];

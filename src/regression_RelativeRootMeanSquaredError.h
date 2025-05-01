@@ -4,15 +4,10 @@
 #include "SLmetrics.h"
 #include "regression_RootMeanSquaredError.h"
 #include <Rcpp.h>
-#include "utilities_Package.h"
 #include <cmath>
 #include <cstddef>
 #include <algorithm>
 #include <vector>
-
-#ifdef _OPENMP
-  #include <omp.h>
-#endif
 
 namespace metric {
 

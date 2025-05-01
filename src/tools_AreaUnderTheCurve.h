@@ -1,14 +1,10 @@
 #ifndef CLASSIFICATION_AUC_H
 #define CLASSIFICATION_AUC_H
 
-#include "utilities_Package.h"
 #include <cmath>
 #include <algorithm>
 #include <vector>
 #include <numeric>
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
 
 class AUC  {
     public:
@@ -62,18 +58,12 @@ class AUC  {
                 default:
                 case 0: {
                     if (use_idx) {
-                        #ifdef _OPENMP
-                            #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
-                        #endif
                         for (std::size_t i = 1; i < n; ++i) {
                             double width  = x[idx[i]] - x[idx[i - 1]];
                             double height = 0.5 * (y[idx[i]] + y[idx[i - 1]]);
                             area += width * height;
                         }
                     } else {
-                        #ifdef _OPENMP
-                            #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
-                        #endif
                         for (std::size_t i = 1; i < n; ++i) {
                             double width  = x[i] - x[i - 1];
                             double height = 0.5 * (y[i] + y[i - 1]);
@@ -87,18 +77,12 @@ class AUC  {
                 // method (left step)
                 case 1: {
                     if (use_idx) {
-                        #ifdef _OPENMP
-                            #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
-                        #endif
                         for (std::size_t i = 1; i < n; ++i) {
                             double width  = x[idx[i]] - x[idx[i - 1]];
                             double height = y[idx[i - 1]];
                             area += width * height;
                         }
                     } else {
-                        #ifdef _OPENMP
-                            #pragma omp parallel for reduction(+:area) if(getUseOpenMP())
-                        #endif
                         for (std::size_t i = 1; i < n; ++i) {
                             double width  = x[i] - x[i - 1];
                             double height = y[i - 1];

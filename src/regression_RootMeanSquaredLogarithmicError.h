@@ -2,13 +2,9 @@
 #define REGRESSION_ROOTMEANSQUAREDLOGARITHMICERROR_H
 
 #include "SLmetrics.h"
-#include "utilities_Package.h"
 #include <cmath>
 #include <cstddef>
 
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
 
 namespace metric {
     template <typename T>

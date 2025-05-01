@@ -2,16 +2,12 @@
 #define REGRESSION_PINBALLLOSS_h
 
 #include "SLmetrics.h"
-#include "utilities_Package.h"
 #include <cstddef>             
 #include <cmath>                
 #include <algorithm>            
 #include <numeric>              
 #include <vector>
 
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
 
 namespace metric {
     template <typename T>
