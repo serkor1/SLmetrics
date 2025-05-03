@@ -16,7 +16,7 @@ namespace metric {
         RRMSE(
             const vctr_t<T>& actual,
             const vctr_t<T>& predicted,
-            int   normalization) noexcept : regression::task<T>(actual, predicted), normalization_(normalization) {}
+            int   normalization) : regression::task<T>(actual, predicted), normalization_(normalization) {}
             
             [[nodiscard]] inline T compute() const noexcept override {
 
@@ -83,7 +83,7 @@ namespace metric {
             const vctr_t<T>& actual,
             const vctr_t<T>& predicted,
             const vctr_t<T>& weights,
-            int normalization) noexcept : regression::task<T>(actual, predicted, weights), normalization_(normalization) {}
+            int normalization) : regression::task<T>(actual, predicted, weights), normalization_(normalization) {}
             
             [[nodiscard]] inline T compute() const noexcept override {
                 

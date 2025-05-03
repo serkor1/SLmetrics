@@ -12,56 +12,55 @@ namespace metric {
         public:
         using regression::task<T>::task;
 
-        pinball_loss(const vctr_t<T>& actual,
-                    const vctr_t<T>& predicted,
-                    T                alpha,
-                    bool             deviance = false) noexcept
-            : regression::task<T>(actual, predicted),
-            alpha_(alpha),
-            deviance_(deviance) {}
+        pinball_loss(
+            const vctr_t<T>& actual,
+            const vctr_t<T>& predicted,
+            T alpha,
+            bool deviance = false) : regression::task<T>(actual, predicted), alpha_(alpha), deviance_(deviance) {}
 
-        [[nodiscard]] inline T compute() const noexcept override {
 
-            // pointers and size
-            const arma::uword n_obs             = static_cast<T>( this -> actual_.n_elem );
-            const T* __restrict__ actual_ptr    = this->actual_.memptr();
-            const T* __restrict__ predicted_ptr = this->predicted_.memptr();
+            [[nodiscard]] inline T compute() const noexcept override {
 
-            if (!deviance_) {
+                // pointers and size
+                const arma::uword n_obs             = static_cast<T>( this -> actual_.n_elem );
+                const T* __restrict__ actual_ptr    = this->actual_.memptr();
+                const T* __restrict__ predicted_ptr = this->predicted_.memptr();
 
+                if (!deviance_) {
+
+                    T loss = 0;
+                    const T* __restrict__ end = actual_ptr + n_obs;
+                    for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
+                        const T error = *actual_ptr - *predicted_ptr;
+                        loss += ( error >= 0 ) ? alpha_ * error : ( 1 - alpha_ ) * ( -error );
+                    }
+                    return loss / n_obs;
+                }
+
+                // auxiliary values
+                arma::Col<T> alpha_vector( 1 );
+                alpha_vector( 0 ) = alpha_;
+                const T& quantile_value = statistic::quantile<T>::unweighted(
+                    this -> actual_, 
+                    alpha_vector
+                )(0);
+                const T& quantile_loss  = constant_loss(
+                    this -> actual_,
+                    quantile_value,
+                    alpha_
+                );
+
+                // logic
                 T loss = 0;
                 const T* __restrict__ end = actual_ptr + n_obs;
                 for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
                     const T error = *actual_ptr - *predicted_ptr;
                     loss += ( error >= 0 ) ? alpha_ * error : ( 1 - alpha_ ) * ( -error );
                 }
-                return loss / n_obs;
+                loss /= n_obs;
+
+                return 1 - ( loss / quantile_loss );
             }
-
-            // auxiliary values
-            arma::Col<T> alpha_vector( 1 );
-            alpha_vector( 0 ) = alpha_;
-            const T& quantile_value = statistic::quantile<T>::unweighted(
-                this -> actual_, 
-                alpha_vector
-            )(0);
-            const T& quantile_loss  = constant_loss(
-                this -> actual_,
-                quantile_value,
-                alpha_
-            );
-
-            // logic
-            T loss = 0;
-            const T* __restrict__ end = actual_ptr + n_obs;
-            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
-                const T error = *actual_ptr - *predicted_ptr;
-                loss += ( error >= 0 ) ? alpha_ * error : ( 1 - alpha_ ) * ( -error );
-            }
-            loss /= n_obs;
-
-            return 1 - ( loss / quantile_loss );
-        }
 
         private:
         static inline T constant_loss(
@@ -89,15 +88,13 @@ namespace metric {
         public:
         using regression::task<T>::task;
 
-        weighted_pinball_loss(const vctr_t<T>& actual,
-                            const vctr_t<T>& predicted,
-                            const vctr_t<T>& weights,
-                            T                alpha,
-                            bool             deviance = false) noexcept
-            : regression::task<T>(actual, predicted, weights),
-            alpha_(alpha),
-            deviance_(deviance) {}
-
+        weighted_pinball_loss(
+            const vctr_t<T>& actual,
+            const vctr_t<T>& predicted,
+            const vctr_t<T>& weights,
+            T                alpha,
+            bool             deviance = false) : regression::task<T>(actual, predicted, weights), alpha_(alpha), deviance_(deviance) {}
+            
             [[nodiscard]] inline T compute() const noexcept override {
 
                 // pointers and size

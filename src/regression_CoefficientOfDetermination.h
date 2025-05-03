@@ -15,9 +15,8 @@ namespace metric {
         rsq(
             const vctr_t<T>& actual, 
             const vctr_t<T>& predicted, 
-            double k = 0.0) 
-            noexcept : regression::task<T>(actual, predicted), k_(k) {}
-            
+            double k = 0.0) : regression::task<T>(actual, predicted), k_(k) {}
+
             [[ nodiscard ]] inline T compute() const noexcept override {
 
                 // pointers and size
@@ -64,7 +63,7 @@ namespace metric {
             const vctr_t<T>& actual,
             const vctr_t<T>& predicted,
             const vctr_t<T>& weights,
-            double k = 0.0) noexcept : regression::task<T>(actual, predicted, weights), k_(k) {}
+            double k = 0.0) : regression::task<T>(actual, predicted, weights), k_(k) {}
 
             [[nodiscard]] inline T compute() const noexcept override {
 

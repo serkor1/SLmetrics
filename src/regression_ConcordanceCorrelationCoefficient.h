@@ -16,7 +16,7 @@ namespace metric {
         CCC(
             const vctr_t<T>& actual,
             const vctr_t<T>& predicted,
-            bool correction = false) noexcept : regression::task<T>(actual, predicted), bias_correction_(correction) {}
+            bool correction = false) : regression::task<T>(actual, predicted), bias_correction_(correction) {}
             
             [[ nodiscard ]] inline T compute() const noexcept override {
 

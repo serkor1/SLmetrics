@@ -17,7 +17,7 @@ namespace metric {
         TweedieDeviance(
             const vctr_t<T>& actual,
             const vctr_t<T>& predicted,
-            T power = 2.0) noexcept : regression::task<T>(actual, predicted), power_(power) {}
+            T power = 2.0) : regression::task<T>(actual, predicted), power_(power) {}
             
             [[nodiscard]] inline T compute() const noexcept override {
                 
@@ -85,7 +85,7 @@ namespace metric {
             const vctr_t<T>& actual,
             const vctr_t<T>& predicted,
             const vctr_t<T>& weights,
-            T power = 2.0) noexcept : regression::task<T>(actual, predicted, weights), power_(power) {}
+            T power = 2.0) : regression::task<T>(actual, predicted, weights), power_(power) {}
             
             [[nodiscard]] inline T compute() const noexcept override {
                 
