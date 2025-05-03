@@ -6,52 +6,61 @@
 #include <cstddef>
 
 namespace metric {
-    /// Mean Arctangent Absolute Percentage Error (MAAPE)
+    // Mean Arctangent Absolute Percentage Error (MAAPE)
     template <typename T>
     class MAAPE : public regression::task<T> {
-      public:
+        public:
         using regression::task<T>::task;
         
-        inline T compute() const override {
-            arma::uword n = this->actual_.n_elem;
-            T sum_val = 0;
-            for (arma::uword i = 0; i < n; ++i) {
-        
-                sum_val += std::atan(
+        [[ nodiscard ]] inline T compute() const noexcept override {
+
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+
+            T ratio = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
+                ratio += std::atan(
                     std::abs(
-                        (this->actual_[i] - this->predicted_[i])
-                        / this->actual_[i]
-                    )
+                        ( *actual_ptr - *predicted_ptr ) / *actual_ptr
+                    )  
                 );
             }
-            return sum_val / static_cast<T>(n);
+        
+            return ratio / static_cast<T>( n_obs );
         }
     };
 
-    /// Weighted MAAPE
+    // Weighted Mean Arctangent Absolute Percentage Error
     template <typename T>
     class weighted_MAAPE : public regression::task<T> {
-      public:
+        public:
         using regression::task<T>::task;
         
-        inline T compute() const override {
-            arma::uword n = this->actual_.n_elem;
-            T sum_val = 0;
-            T sum_w = 0;
-            for (arma::uword i = 0; i < n; ++i) {
-                
-                T aape = std::atan(
+        [[ nodiscard ]] inline T compute() const noexcept override {
+            
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+            const T* __restrict__ weights_ptr   = this -> weights_.memptr();
+            
+            T ratio = 0, weight = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                ratio += *weights_ptr * std::atan(
                     std::abs(
-                        (this->actual_[i] - this->predicted_[i])
-                        / this->actual_[i]
-                    )
+                        ( *actual_ptr - *predicted_ptr ) / *actual_ptr
+                    )  
                 );
-                sum_val += this->weights_[i] * aape;
-                sum_w   += this->weights_[i];
+                weight += *weights_ptr;
             }
-            return sum_val / sum_w;
+        
+            return ratio / static_cast<T>( weight );
         }
     };
 }
 
-#endif // REGRESSION_MEANARCTANGENTABSOLUTEPERCENTAGEERROR_H
+#endif

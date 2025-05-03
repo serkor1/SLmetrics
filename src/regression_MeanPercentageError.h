@@ -1,41 +1,58 @@
-#ifndef REGRESSION_MEANPERCENTAGEERROR_H
-#define REGRESSION_MEANPERCENTAGEERROR_H
+#ifndef REGRESSION_MEANPERCENTAGEratio_H
+#define REGRESSION_MEANPERCENTAGEratio_H
 
 #include "SLmetrics.h"
 #include <cmath>
 #include <cstddef>
+#include <cstdlib>
 
 namespace metric {
 
+    // Mean Percentage ratio (MPE)
     template <typename T>
     class MPE : public regression::task<T> {
-    public:
+        public:
         using regression::task<T>::task;
-        
-        inline T compute() const override {            
-            return arma::accu( 
-                ( this -> actual_ - this -> predicted_) / this -> actual_ ) / this -> actual_.n_elem;
+
+        [[ nodiscard ]] inline T compute() const noexcept override {
+
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+
+            T ratio = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
+                ratio += ( *actual_ptr - *predicted_ptr ) / *actual_ptr;
+            }
+
+            return ratio / n_obs;
         }
     };
 
+    // Weighted Mean Percentage ratio
     template <typename T>
     class weighted_MPE : public regression::task<T> {
-    public:
+        public:
         using regression::task<T>::task;
-        
-        inline T compute() const override {
-            const arma::uword n    = this -> actual_.n_elem;
-            const T* actual_ptr    = this -> actual_.memptr();
-            const T* predicted_ptr = this -> predicted_.memptr();
-            const T* weights_ptr   = this -> weights_.memptr();
-            
-            T weighted_mpe = 0;
-            T sum_weights  = 0;
-            for (arma::uword i = 0; i < n; ++i) {
-                weighted_mpe += weights_ptr[i] * ((actual_ptr[i] - predicted_ptr[i]) / actual_ptr[i]);
-                sum_weights  += weights_ptr[i];
+
+        [[ nodiscard ]] inline T compute() const noexcept override {
+
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+            const T* __restrict__ weights_ptr   = this -> weights_.memptr();
+
+            T ratio  = 0,weight = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                ratio  += *weights_ptr * ( ( *actual_ptr - *predicted_ptr ) / *actual_ptr );
+                weight += *weights_ptr;
             }
-            return weighted_mpe / sum_weights;
+
+            return ratio / weight;
         }
     };
 

@@ -6,66 +6,77 @@
 #include <cstddef>
 
 namespace metric {
-
+    // Huber Loss
     template <typename T>
     class huberloss : public regression::task<T> {
-    public:
+        public:
         T delta_;
-        
-        huberloss(const vctr_t<T>& actual, const vctr_t<T>& predicted, T delta)
-            : regression::task<T>(actual, predicted), delta_(delta) {}
 
-        inline T compute() const override {
-            const arma::uword n    = this -> actual_.n_elem;
-            const T* ptr_actual    = this -> actual_.memptr();
-            const T* ptr_predicted = this -> predicted_.memptr();
+        huberloss(
+            const vctr_t<T>& actual,
+            const vctr_t<T>& predicted,
+            T delta) : regression::task<T>(actual, predicted), delta_(delta) {}
+            
+            [[ nodiscard ]] inline T compute() const noexcept override {
 
-            T sum_loss = 0;
-            for (arma::uword i = 0; i < n; ++i) {
-                T error = ptr_actual[i] - ptr_predicted[i];
-                T abs_error = std::abs(error);
+                // pointers and size
+                const arma::uword n_obs             = static_cast<T>( this -> actual_.n_elem );
+                const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+                const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
 
-                if (abs_error <= delta_)
-                    sum_loss += 0.5 * error * error;
-                else
-                    sum_loss += delta_ * (abs_error - 0.5 * delta_);
+                T loss = 0;
+                const T* __restrict__ end = actual_ptr + n_obs;
+                for (; actual_ptr < end; ++actual_ptr, ++predicted_ptr) {
+                    T error     = *actual_ptr - *predicted_ptr;
+                    T abs_error = std::abs( error );
+
+                    if (abs_error <= delta_) {
+                        loss += 0.5 * error * error;
+                    } else {
+                        loss += delta_ * ( abs_error - 0.5 * delta_ );
+                    }
+                }
+
+                return loss / n_obs;
             }
-
-            return sum_loss / n;
-        }
     };
 
+    // Weighted Huber Loss
     template <typename T>
     class weighted_huberloss : public regression::task<T> {
-    public:
+        public:
         T delta_;
-        
-        weighted_huberloss(const vctr_t<T>& actual,
-                           const vctr_t<T>& predicted,
-                           const vctr_t<T>& weights,
-                           T delta)
-            : regression::task<T>(actual, predicted, weights), delta_(delta) {}
 
-        inline T compute() const override {
-            const arma::uword n = this->actual_.n_elem;
-            const T* actual_ptr    = this->actual_.memptr();
-            const T* predicted_ptr = this->predicted_.memptr();
-            const T* weights_ptr   = this->weights_.memptr();
+        weighted_huberloss(
+            const vctr_t<T>& actual,
+            const vctr_t<T>& predicted,
+            const vctr_t<T>& weights,
+            T delta) : regression::task<T>(actual, predicted, weights), delta_(delta) {}
 
-            T weighted_loss = 0;
-            T sum_weights = 0;
-            for (arma::uword i = 0; i < n; ++i) {
-                T error = actual_ptr[i] - predicted_ptr[i];
-                T abs_error = std::abs(error);
-                T loss = (abs_error <= delta_) ? (0.5 * error * error)
-                                               : (delta_ * (abs_error - 0.5 * delta_));
-                weighted_loss += weights_ptr[i] * loss;
-                sum_weights += weights_ptr[i];
+            [[ nodiscard ]] inline T compute() const noexcept override {
+
+                // pointers and size
+                const arma::uword n_obs             = static_cast<T>( this -> actual_.n_elem );
+                const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+                const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+                const T* __restrict__ weights_ptr   = this -> weights_.memptr();
+
+                T loss = 0, weight = 0;
+                const T* __restrict__ end = actual_ptr + n_obs;
+                for (; actual_ptr < end; ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                    T error      = *actual_ptr - *predicted_ptr;
+                    T abs_error  = std::abs( error );
+                    T point_loss = (abs_error <= delta_)
+                            ? ( 0.5 * error * error )
+                            : ( delta_ * ( abs_error - 0.5 * delta_ ) );
+
+                    loss   += *weights_ptr * point_loss;
+                    weight += *weights_ptr;
+                }
+
+                return loss / weight;
             }
-            return weighted_loss / sum_weights;
-        }
     };
-
 }
 
 #endif

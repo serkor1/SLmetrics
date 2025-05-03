@@ -2,112 +2,119 @@
 #define REGRESSION_CONCORDANCE_CORRELATION_COEFFICIENT_H
 
 #include "SLmetrics.h"
-#include <cstddef>
 #include <cmath>
+#include <cstddef>
 
 namespace metric {
+    // Concordance Correlation Coefficient
+    template <typename T>
+    class CCC : public regression::task<T> {
+        bool bias_correction_;
+        public:
+        using regression::task<T>::task;
+        
+        CCC(
+            const vctr_t<T>& actual,
+            const vctr_t<T>& predicted,
+            bool correction = false) : regression::task<T>(actual, predicted), bias_correction_(correction) {}
+            
+            [[ nodiscard ]] inline T compute() const noexcept override {
 
-  template <typename T>
-  class CCC : public regression::task<T> {
-  private:
-      bool correction_;
-      
-  public:
-      CCC(const vctr_t<T>& actual, const vctr_t<T>& predicted, bool correction)
-          : regression::task<T>(actual, predicted), correction_(correction) {}
+                // pointers and size
+                const arma::uword n_obs             = this -> actual_.n_elem;
+                const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+                const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
 
-      inline T compute() const override {
-          arma::uword n = this -> actual_.n_elem;
+                // auxiliary values
+                T sum_x = 0, sum_y = 0, sum_xx = 0, sum_yy = 0, sum_xy = 0;
+                const T* __restrict__ end   = actual_ptr + n_obs;
+                for (; actual_ptr < end; ++actual_ptr, ++predicted_ptr) {
+                    sum_x  += *actual_ptr;
+                    sum_y  += *predicted_ptr;
+                    sum_xx += *actual_ptr * *actual_ptr;
+                    sum_yy += *predicted_ptr * *predicted_ptr;
+                    sum_xy += *actual_ptr * *predicted_ptr;
+                }
+                
+                // logic
+                const T inv_n_obs = 1.0 / static_cast<T>(n_obs);
+                const T mean_x = sum_x * inv_n_obs;
+                const T mean_y = sum_y * inv_n_obs;
+                const T denom  = static_cast<T>(n_obs - 1);
 
-          const T* ptr_actual = this -> actual_.memptr();
-          const T* ptr_predicted = this -> predicted_.memptr();
+                T var_x = (sum_xx - static_cast<T>(n_obs) * mean_x * mean_x) / denom;
+                T var_y = (sum_yy - static_cast<T>(n_obs) * mean_y * mean_y) / denom;
+                T cov   = (sum_xy - static_cast<T>(n_obs) * mean_x * mean_y) / denom;
 
-          T sum_x  = 0, sum_y  = 0;
-          T sum_xx = 0, sum_yy = 0, sum_xy = 0;
-          for(arma::uword i = 0; i < n; ++i) {
-              T x = ptr_actual[i], y = ptr_predicted[i];
-              sum_x  += x;
-              sum_y  += y;
-              sum_xx += x * x;
-              sum_yy += y * y;
-              sum_xy += x * y;
-          }
+                if (bias_correction_) {
+                    const T factor = denom / static_cast<T>(n_obs);
+                    var_x *= factor;
+                    var_y *= factor;
+                    cov   *= factor;
+                }
 
-          T mean_x = sum_x / n;
-          T mean_y = sum_y / n;
+                const T mean_diff = mean_x - mean_y;
+                return (2.0 * cov) / (var_x + var_y + mean_diff * mean_diff);
+        }
+    };
 
-          T sxx = (sum_xx - n * mean_x * mean_x) / (n - 1);
-          T syy = (sum_yy - n * mean_y * mean_y) / (n - 1);
-          T sxy = (sum_xy - n * mean_x * mean_y) / (n - 1);
+    // Weighted Concordance Correlation Coefficient
+    template <typename T>
+    class weighted_CCC : public regression::task<T> {
+        bool bias_correction_;
+        
+        public:
+        using regression::task<T>::task;
 
-          if(correction_) {
-              T factor = static_cast<T>(n - 1) / static_cast<T>(n);
-              sxx *= factor;
-              syy *= factor;
-              sxy *= factor;
-          }
+        weighted_CCC(
+            const vctr_t<T>& actual,
+            const vctr_t<T>& predicted,
+            const vctr_t<T>& weights,
+            bool correction = false) noexcept : regression::task<T>(actual, predicted, weights), bias_correction_(correction) {}
+                    
+            [[ nodiscard ]] inline T compute() const noexcept override {
+                
+                // pointers and size
+                const arma::uword n_obs             = this -> actual_.n_elem;
+                const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+                const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+                const T* __restrict__ weights_ptr   = this -> weights_.memptr();
 
-          T diff = mean_x - mean_y;
-          return (2 * sxy) / (sxx + syy + diff * diff);
-      }
-  };
+                // auxillary values
+                T weight_sum = 0, weight_sq_sum = 0;
+                T sum_x = 0, sum_y = 0, sum_xx = 0, sum_yy = 0, sum_xy = 0;
+                const T* __restrict__ end   = actual_ptr + n_obs;
+                for (; actual_ptr < end; ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                    const T w = *weights_ptr;
+                    weight_sum      += w;
+                    weight_sq_sum   += w * w;
+                    sum_x           += w * *actual_ptr;
+                    sum_y           += w * *predicted_ptr;
+                    sum_xx          += w * *actual_ptr * *actual_ptr;
+                    sum_yy          += w * *predicted_ptr * *predicted_ptr;
+                    sum_xy          += w * *actual_ptr * *predicted_ptr;
+                }
 
-  template <typename T>
-  class weighted_CCC : public regression::task<T> {
-  private:
-      bool correction_;
-      
-  public:
-      weighted_CCC(const vctr_t<T>& actual,
-                   const vctr_t<T>& predicted,
-                   const vctr_t<T>& weights,
-                   bool correction)
-          : regression::task<T>(actual, predicted, weights), correction_(correction) {}
+                // logic
+                const T mean_x = sum_x / weight_sum;
+                const T mean_y = sum_y / weight_sum;
+                const T design_denom = weight_sum - (weight_sq_sum / weight_sum);
 
-      inline T compute() const override {
-          arma::uword n = this -> actual_.n_elem;
+                T var_x = (sum_xx - weight_sum * mean_x * mean_x) / design_denom;
+                T var_y = (sum_yy - weight_sum * mean_y * mean_y) / design_denom;
+                T cov   = (sum_xy - weight_sum * mean_x * mean_y) / design_denom;
 
-          const T* ptr_actual = this -> actual_.memptr();
-          const T* ptr_predicted = this -> predicted_.memptr();
-          const T* ptrW = this -> weights_.memptr();
+                if (bias_correction_) {
+                    const T factor = (weight_sum - 1.0) / weight_sum;
+                    var_x *= factor;
+                    var_y *= factor;
+                    cov   *= factor;
+                }
 
-          // Accumulate weighted sums in one pass.
-          T sum_w   = 0, sum_wx  = 0, sum_wy  = 0;
-          T sum_wxx = 0, sum_wyy = 0, sum_wxy = 0, sum_w2 = 0;
-          for(arma::uword i = 0; i < n; ++i) {
-              T w = ptrW[i];
-              T x = ptr_actual[i];
-              T y = ptr_predicted[i];
-              sum_w   += w;
-              sum_wx  += w * x;
-              sum_wy  += w * y;
-              sum_wxx += w * x * x;
-              sum_wyy += w * y * y;
-              sum_wxy += w * x * y;
-              sum_w2  += w * w;
-          }
-
-          T mean_x = sum_wx / sum_w;
-          T mean_y = sum_wy / sum_w;
-
-          T D = sum_w - (sum_w2 / sum_w);
-          T sxx = (sum_wxx - sum_w * mean_x * mean_x) / D;
-          T syy = (sum_wyy - sum_w * mean_y * mean_y) / D;
-          T sxy = (sum_wxy - sum_w * mean_x * mean_y) / D;
-
-
-          if(correction_) {
-              T factor = (sum_w - 1) / sum_w;
-              sxx *= factor;
-              syy *= factor;
-              sxy *= factor;
-          }
-
-          T diff = mean_x - mean_y;
-          return (2 * sxy) / (sxx + syy + diff * diff);
-      }
-  };
-
-} // namespace metric
+                const T mean_diff = mean_x - mean_y;
+                return (2.0 * cov) / (var_x + var_y + mean_diff * mean_diff);
+            }
+    };
+}
 
 #endif

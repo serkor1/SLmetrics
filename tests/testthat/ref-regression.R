@@ -158,7 +158,7 @@ ref_rrmse <- function(actual, predicted, w = NULL, normalization = 0) {
   } 
 
   if (normalization == 1) {
-    denominator <- if (is.null(w)) diff(range(actual)) else diff(range(w*actual))
+    denominator <- if (is.null(w)) diff(range(actual)) else diff(range(actual))
   }
 
   

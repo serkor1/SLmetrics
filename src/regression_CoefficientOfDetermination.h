@@ -6,78 +6,101 @@
 #include <cstddef>
 
 namespace metric {
-
+    // Coefficient of Determination (R squared)
     template <typename T>
     class rsq : public regression::task<T> {
-        private:
-        double k_;
         public:
+        using regression::task<T>::task;
+        
         rsq(
-            const vctr_t<T>& actual,
-            const vctr_t<T>& predicted,
-            double k = 0.0)
-            : regression::task<T>(actual, predicted), k_(k) {}
+            const vctr_t<T>& actual, 
+            const vctr_t<T>& predicted, 
+            double k = 0.0) : regression::task<T>(actual, predicted), k_(k) {}
 
-        inline T compute() const override {
-            const arma::uword n = this -> actual_.n_elem;
+            [[ nodiscard ]] inline T compute() const noexcept override {
 
-            T mean_actual = arma::accu( this -> actual_ ) / static_cast<T>(n);
+                // pointers and size
+                const arma::uword n_obs             = this -> actual_.n_elem;
+                const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+                const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
 
-            T SSE = 0;
-            T SST = 0;
-            
-            for (arma::uword i = 0; i < n; ++i) {
-                T diffActual   = this -> actual_[i] - mean_actual;
-                T diffResidual = this -> actual_[i] - this -> predicted_[i];
-                SST += diffActual * diffActual;
-                SSE += diffResidual * diffResidual;
-            }
+                // auxiliary values
+                T mean = 0;
+                for (arma::uword i = 0; i < n_obs; ++i) {
+                    mean += actual_ptr[i];
+                }
+                mean /= n_obs;
 
-            T factor = (static_cast<T>(n) - 1) / (static_cast<T>(n) - (k_ + 1));
-            return static_cast<T>(1) - (SSE / SST) * factor;
-        }
+                const T factor = static_cast<T>(
+                    ( n_obs - 1 ) / ( n_obs - ( k_ + 1 ) ) 
+                );
+
+                // logic
+                T SSE = 0, SST = 0;
+                const T* __restrict__ end = actual_ptr + n_obs;
+                for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr ) {
+                    const T error  = *actual_ptr - *predicted_ptr;
+                    const T center = *actual_ptr - mean;
+
+                    SSE += error  * error;
+                    SST += center * center;
+                }
+
+                return 1 - ( SSE / SST ) * factor;
+    }
+
+    private:
+        double k_;
     };
 
+    // Weighted Coefficient of Determination
     template <typename T>
     class weighted_rsq : public regression::task<T> {
-        private:
-        double k_;
         public:
+        using regression::task<T>::task;
+
         weighted_rsq(
             const vctr_t<T>& actual,
             const vctr_t<T>& predicted,
             const vctr_t<T>& weights,
-            double k = 0.0)
-            : regression::task<T>(actual, predicted, weights), k_(k) {}
+            double k = 0.0) : regression::task<T>(actual, predicted, weights), k_(k) {}
 
-        inline T compute() const override {
-            const arma::uword n = this -> actual_.n_elem;
-            T sum_weights   = 0;
-            T weighted_sum_actual  = 0;
-            T SSE    = 0;
+            [[nodiscard]] inline T compute() const noexcept override {
 
-            for (arma::uword i = 0; i < n; ++i) {
-                T w = this -> weights_[i];
-                T a = this -> actual_[i];
-                T p = this -> predicted_[i];
-                sum_weights  += w;
-                weighted_sum_actual += w * a;
-                T resid = a - p;
-                SSE   += w * resid * resid;
+                // pointers and size
+                const arma::uword n_obs             = this -> actual_.n_elem;
+                const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+                const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+                const T* __restrict__ weights_ptr   = this -> weights_.memptr();
+
+                // auxillary values
+                T mean = 0, w_sum = 0;
+                for (arma::uword i = 0; i < n_obs; ++i) {
+                    mean  += this -> weights_[i] * this -> actual_[i];
+                    w_sum += this -> weights_[i];
+                }
+                mean /= w_sum;
+
+                const T factor = static_cast<T>(
+                    ( n_obs - 1 ) / ( n_obs - ( k_ + 1 ) ) 
+                );
+
+                // logic
+                T SSE = 0, SST = 0;
+                const T* __restrict__ end = actual_ptr + n_obs;
+                for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                    const T error  = *actual_ptr - *predicted_ptr;
+                    const T center = *actual_ptr - mean;
+
+                    SSE += *weights_ptr * error * error;
+                    SST += *weights_ptr * center * center;
+                }
+
+                return 1 - ( SSE / SST ) * factor;
             }
 
-            T wMean = weighted_sum_actual / sum_weights;
-            T SST = 0;
-
-            for (arma::uword i = 0; i < n; ++i) {
-                T w    = this -> weights_[i];
-                T diff = this -> actual_[i] - wMean;
-                SST   += w * diff * diff;
-            }
-
-            T factor = (static_cast<T>(n) - 1) / (static_cast<T>(n) - (k_ + 1));
-            return static_cast<T>(1) - (SSE / SST) * factor;
-        }
+        private:
+            double k_;
     };
 }
 
