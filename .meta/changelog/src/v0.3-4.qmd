@@ -73,6 +73,10 @@ stopifnot(
 
 Depending on the system and data, there is a 3x gain in speed. This approach is highly efficient for cases where multiple AUC or curves are to be computed as it avoids sorting the same probability matrix more than once.
 
+## :bug:-fixes
+
+* **Relative Root Mean Squared Error:** Normalizing the `RMSE` using the `range`, the `range` is always calculated by the distance between `max(actual) - min(actual)` instead of the weighted distance.
+
 ### :rocket: New features
 
 * **Hamming Loss:** The fraction of the wrong labels to the total number of labels, i.e. , where is the target, is the prediction, and is the "Exclusive, or" operator that returns zero when the target and prediction are identical and one otherwise. The interface to `hammingloss()` is given below:
