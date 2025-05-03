@@ -15,7 +15,7 @@ namespace metric {
         [[ nodiscard ]] inline T compute() const noexcept override {
 
             // pointers and size
-            const arma::uword n_obs             = static_cast<T>( this -> actual_.n_elem );
+            const arma::uword n_obs             = this -> actual_.n_elem;
             const T* __restrict__ actual_ptr    = this -> actual_.memptr();
             const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
 
@@ -42,7 +42,7 @@ namespace metric {
         [[ nodiscard ]] inline T compute() const noexcept override {
 
             // pointers and size
-            const arma::uword n_obs             = static_cast<T>( this -> actual_.n_elem );
+            const arma::uword n_obs             = this -> actual_.n_elem;
             const T* __restrict__ actual_ptr    = this -> actual_.memptr();
             const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
             const T* __restrict__ weights_ptr   = this -> weights_.memptr();

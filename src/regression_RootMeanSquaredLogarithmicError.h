@@ -27,7 +27,7 @@ namespace metric {
             }
 
             return std::sqrt(
-                squared_error / static_cast<T>( n_obs )
+                squared_error / n_obs
             );
         }
     };

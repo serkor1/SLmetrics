@@ -22,9 +22,9 @@ namespace metric {
             [[nodiscard]] inline T compute() const noexcept override {
 
                 // pointers and size
-                const arma::uword n_obs             = static_cast<T>( this -> actual_.n_elem );
-                const T* __restrict__ actual_ptr    = this->actual_.memptr();
-                const T* __restrict__ predicted_ptr = this->predicted_.memptr();
+                const arma::uword n_obs             = this -> actual_.n_elem;
+                const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+                const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
 
                 if (!deviance_) {
 
@@ -71,11 +71,11 @@ namespace metric {
                 const arma::uword n = x.n_elem;
                 const T* __restrict__ x_ptr = x.memptr();
                 T sum = 0;
-                for (const T* end = x_ptr + n; x_ptr < end; ++x_ptr) {
+                for (const T* end = ( x_ptr + n ); x_ptr < end; ++x_ptr) {
                     const T error = *x_ptr - c;
-                    sum += (error >= 0) ? alpha * error : (static_cast<T>(1) - alpha) * (-error);
+                    sum += ( error >= 0 ) ? alpha * error : ( 1.0 - alpha ) * ( -error );
                 }
-                return sum / static_cast<T>(n);
+                return sum / n;
         }
 
         T   alpha_;
@@ -98,7 +98,7 @@ namespace metric {
             [[nodiscard]] inline T compute() const noexcept override {
 
                 // pointers and size
-                const arma::uword n_obs              = static_cast<T>( this -> actual_.n_elem );
+                const arma::uword n_obs              = this -> actual_.n_elem;
                 const T* __restrict__ actual_ptr     = this -> actual_.memptr();
                 const T* __restrict__ predicted_ptr  = this -> predicted_.memptr();
                 const T* __restrict__ weights_ptr    = this -> weights_.memptr();
@@ -153,19 +153,20 @@ namespace metric {
             T c, 
             T alpha) noexcept {
     
-                const arma::uword n = x.n_elem;
-                const T* __restrict__ x_ptr = x.memptr();
+                const arma::uword n               = x.n_elem;
+                const T* __restrict__ x_ptr       = x.memptr();
                 const T* __restrict__ weights_ptr = w.memptr();
+
                 T loss = 0, weight = 0;
-                for (const T* end = x_ptr + n; x_ptr < end; ++x_ptr, ++weights_ptr) {
+                for (const T* end = ( x_ptr + n ); x_ptr < end; ++x_ptr, ++weights_ptr) {
                     const T error = *x_ptr - c;
-                    loss += (error >= 0) ? *weights_ptr * alpha * error : *weights_ptr * (static_cast<T>(1) - alpha) * (-error);
+                    loss += ( error >= 0 ) ? *weights_ptr * alpha * error : *weights_ptr * ( 1.0 - alpha ) * ( -error );
                     weight += *weights_ptr;
                 }
                 return loss / weight;
             }
 
-            T   alpha_;
+            T alpha_;
             bool deviance_;
     };
 }
