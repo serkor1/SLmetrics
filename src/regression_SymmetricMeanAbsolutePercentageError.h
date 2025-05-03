@@ -7,7 +7,7 @@
 #include <cstdlib>
 
 namespace metric {
-    // Symmetric Mean Absolute Error (SMAPE)
+    // Symmetric Mean Absolute Percentage Error (sMAPE)
     template <typename T>
     class SMAPE : public regression::task<T> {
         public:
@@ -32,7 +32,7 @@ namespace metric {
         }
     };
 
-    // Weighted Symmetric Mean Absolute Error
+    // Weighted Symmetric Mean Absolute Percentage Error
     template <typename T>
     class weighted_SMAPE : public regression::task<T> {
         public:

@@ -30,7 +30,7 @@ namespace metric {
                 const bool need_range = (normalization_ == 1);
                 const bool need_iqr   = (normalization_ == 2);
 
-                // auxillary values
+                // auxiliary values
                 const T* __restrict__ end = actual_ptr + n_obs;
 
                 // no normalization

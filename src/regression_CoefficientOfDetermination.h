@@ -25,7 +25,7 @@ namespace metric {
                 const T* __restrict__ actual_ptr    = this -> actual_.memptr();
                 const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
 
-                // auxillary values
+                // auxiliary values
                 T mean = 0;
                 for (arma::uword i = 0; i < n_obs; ++i) {
                     mean += actual_ptr[i];

@@ -7,7 +7,7 @@
 #include <cstdlib>
 
 namespace metric {
-    // Mean Absolute Error (MAPE)
+    // Mean Absolute Percentage Error (MAPE)
     template <typename T>
     class MAPE : public regression::task<T> {
         public:
@@ -32,7 +32,7 @@ namespace metric {
         }
     };
 
-    // Weighted Mean Absolute Error
+    // Weighted Mean Absolute Percentage Error
     template <typename T>
     class weighted_MAPE : public regression::task<T> {
         public:

@@ -38,7 +38,7 @@ namespace metric {
                 return loss / n_obs;
             }
 
-            // auxillary values
+            // auxiliary values
             arma::Col<T> alpha_vector( 1 );
             alpha_vector( 0 ) = alpha_;
             const T& quantile_value = statistic::quantile<T>::unweighted(

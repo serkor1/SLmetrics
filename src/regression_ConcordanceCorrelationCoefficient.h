@@ -25,7 +25,7 @@ namespace metric {
                 const T* __restrict__ actual_ptr    = this -> actual_.memptr();
                 const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
 
-                // auxillary values
+                // auxiliary values
                 T sum_x = 0, sum_y = 0, sum_xx = 0, sum_yy = 0, sum_xy = 0;
                 const T* __restrict__ end   = actual_ptr + n_obs;
                 for (; actual_ptr < end; ++actual_ptr, ++predicted_ptr) {

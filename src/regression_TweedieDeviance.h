@@ -31,7 +31,7 @@ namespace metric {
                 const bool is_gamma   = std::fabs(p - 2.0) < 1e-10;
                 const bool is_poisson = std::fabs(p - 1.0) < 1e-10;
 
-                // auxillary values
+                // auxiliary values
                 const T one_minus_p   = 1.0 - p;
                 const T two_minus_p   = 2.0 - p;
                 const T inv_one_minus = (is_gamma || is_poisson) ? 0 : 1.0 / one_minus_p;
