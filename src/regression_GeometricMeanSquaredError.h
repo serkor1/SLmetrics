@@ -9,13 +9,13 @@ namespace metric {
     // Geometric Mean Squared Error (GMSE)
     template <typename T>
     class gmse : public regression::task<T> {
-      public:
+        public:
         using regression::task<T>::task;
 
-        inline T compute() const noexcept override {
+        [[ nodiscard ]] inline T compute() const noexcept override {
 
             // pointers and size
-            const arma::uword n_obs             = this -> actual_.n_elem;
+            const arma::uword n_obs             = static_cast<T>( this -> actual_.n_elem );
             const T* __restrict__ actual_ptr    = this -> actual_.memptr();
             const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
 
@@ -27,20 +27,22 @@ namespace metric {
                 );
             }
             
-            return std::exp( sum_log / static_cast<T>( n_obs ) );
+            return std::exp( 
+                sum_log / n_obs 
+            );
         }
     };
 
     // Weighted Geometric Mean Squared Error
     template <typename T>
     class weighted_gmse : public regression::task<T> {
-      public:
+        public:
         using regression::task<T>::task;
 
-        inline T compute() const noexcept override {
+        [[ nodiscard ]] inline T compute() const noexcept override {
 
             // pointers and size
-            const arma::uword n_obs             = this -> actual_.n_elem;
+            const arma::uword n_obs             = static_cast<T>( this -> actual_.n_elem );
             const T* __restrict__ actual_ptr    = this -> actual_.memptr();
             const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
             const T* __restrict__ weights_ptr   = this -> weights_.memptr();
@@ -54,9 +56,11 @@ namespace metric {
                 sum_weights  += *weights_ptr;
             }
 
-            return std::exp( wsum_log / sum_weights );
+            return std::exp( 
+                wsum_log / sum_weights 
+            );
         }
     };
 }
 
-#endif // REGRESSION_GEOMETRICMEANSQUAREDERROR_H
+#endif

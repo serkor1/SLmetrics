@@ -6,48 +6,55 @@
 #include <cstddef>
 
 namespace metric {
+    // Gamma Deviance
     template <typename T>
     class GammaDeviance : public regression::task<T> {
         public:
         using regression::task<T>::task;
-        
-        inline T compute() const override {
-            const arma::uword n = this->actual_.n_elem;
-            const T* actual_ptr = this->actual_.memptr();
-            const T* predicted_ptr = this->predicted_.memptr();
-            
-            T sum_deviance = 0;
-            
-            for (arma::uword i = 0; i < n; ++i) {
-                sum_deviance += -std::log(actual_ptr[i] / predicted_ptr[i]) + 
-                                (actual_ptr[i] - predicted_ptr[i]) / predicted_ptr[i];
+
+        [[ nodiscard ]] inline T compute() const noexcept override {
+
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+
+            // logic
+            T deviance = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
+                const T ratio = *actual_ptr / *predicted_ptr;
+                deviance += -std::log( ratio ) + ( ratio - 1);
             }
-            
-            return 2 * sum_deviance / n;
+
+            return 2 * ( deviance / n_obs );
         }
     };
-
+    
+    // Weighted Gamma Deviance
     template <typename T>
     class weighted_GammaDeviance : public regression::task<T> {
         public:
         using regression::task<T>::task;
         
-        inline T compute() const override {
-            const arma::uword n = this->actual_.n_elem;
-            const T* actual_ptr = this->actual_.memptr();
-            const T* predicted_ptr = this->predicted_.memptr();
-            const T* weights_ptr = this->weights_.memptr();
-            
-            T weighted_sum = 0;
-            T sum_weights = 0;
-            
-            for (arma::uword i = 0; i < n; ++i) {
-                weighted_sum += weights_ptr[i] * (-std::log(actual_ptr[i] / predicted_ptr[i]) + 
-                                (actual_ptr[i] - predicted_ptr[i]) / predicted_ptr[i]);
-                sum_weights += weights_ptr[i];
+        [[ nodiscard ]] inline T compute() const noexcept override {
+
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+            const T* __restrict__ weights_ptr   = this -> weights_.memptr();
+
+            // logic
+            T deviance = 0, weights = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                const T ratio = *actual_ptr / *predicted_ptr;
+                deviance     += *weights_ptr * ( -std::log(ratio) + ( ratio - 1) );
+                weights      += *weights_ptr;
             }
-            
-            return 2 * weighted_sum / sum_weights;
+
+            return 2 * ( deviance / weights );
         }
     };
 }

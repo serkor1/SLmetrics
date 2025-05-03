@@ -6,56 +6,68 @@
 #include <cstddef>
 
 namespace metric {
+    // Relative Absolute Error (RAE)
     template <typename T>
     class RAE : public regression::task<T> {
-    public:
+        public:
         using regression::task<T>::task;
-        
-        inline T compute() const override {
-            const arma::uword n = this  -> actual_.n_elem;
-            T mean_actual = arma::accu( this -> actual_ ) / n;
-            
-            T numerator   = 0;
-            T denominator = 0;
-            
-            const T* actual_ptr    = this -> actual_.memptr();
-            const T* predicted_ptr = this -> predicted_.memptr();
-            
-            for (arma::uword i = 0; i < n; ++i) {
-                numerator   += std::abs(actual_ptr[i] - predicted_ptr[i]);
-                denominator += std::abs(actual_ptr[i] - mean_actual);
+
+        [[ nodiscard ]] inline T compute() const noexcept override {
+
+            // pointers and size
+            const arma::uword n_obs             = static_cast<T>( this -> actual_.n_elem );
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+
+            // auxillary values
+            T mean = 0;
+            for (arma::uword i = 0; i < n_obs; ++i) {
+                mean += actual_ptr[i];
             }
+            mean /= n_obs;
+
+            // logic
+            T numerator = 0, denominator = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
+                numerator   += std::abs( *actual_ptr - *predicted_ptr );
+                denominator += std::abs( *actual_ptr - mean );
+            }
+
             return numerator / denominator;
         }
     };
 
+    // Weighted Relative Absolute Error
     template <typename T>
     class weighted_RAE : public regression::task<T> {
-    public:
+        public:
         using regression::task<T>::task;
         
-        inline T compute() const override {
-            const arma::uword n    = this -> actual_.n_elem;
-            const T* actual_ptr    = this -> actual_.memptr();
-            const T* predicted_ptr = this -> predicted_.memptr();
-            const T* weights_ptr   = this -> weights_.memptr();
+        [[ nodiscard ]] inline T compute() const noexcept override {
+
+            // pointers and size
+            const arma::uword n_obs             = static_cast<T>( this -> actual_.n_elem );
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+            const T* __restrict__ weights_ptr   = this -> weights_.memptr();
             
-            // First pass: compute the weighted mean of actual values.
-            T sum_weighted_actual = 0;
-            T sum_weights = 0;
-            for (arma::uword i = 0; i < n; ++i) {
-                sum_weighted_actual += weights_ptr[i] * actual_ptr[i];
-                sum_weights += weights_ptr[i];
+            // auxillary values
+            T mean = 0, weight = 0;
+            for (arma::uword i = 0; i < n_obs; ++i) {
+                mean   += weights_ptr[i] * actual_ptr[i];
+                weight += weights_ptr[i];
             }
-            T weighted_mean = sum_weighted_actual / sum_weights;
-            
-            // Second pass: compute weighted numerator and denominator.
-            T numerator = 0;
-            T denominator = 0;
-            for (arma::uword i = 0; i < n; ++i) {
-                numerator += weights_ptr[i] * std::abs(actual_ptr[i] - predicted_ptr[i]);
-                denominator += weights_ptr[i] * std::abs(actual_ptr[i] - weighted_mean);
+            mean /= weight;
+
+            // logic
+            T numerator = 0, denominator = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                numerator   += *weights_ptr * std::abs( *actual_ptr - *predicted_ptr );
+                denominator += *weights_ptr * std::abs( *actual_ptr - mean );
             }
+
             return numerator / denominator;
         }
     };
