@@ -128,6 +128,14 @@ weighted.cmatrix.factor <- function(actual, predicted, w, ...) {
     .Call(`_SLmetrics_weighted_confusion_matrix`, actual, predicted, w)
 }
 
+#' @templateVar .FUN cross.entropy
+#' @templateVar .METHOD matrix
+#' @template classification_entropy_inherit
+#' @export
+cross.entropy.matrix <- function(pk, qk, dim = 0L, normalize = FALSE, ...) {
+    .Call(`_SLmetrics_cross_entropy`, pk, qk, dim, normalize)
+}
+
 #' @templateVar .FUN dor
 #' @templateVar .METHOD factor
 #' @template classification_standard_inherit
@@ -153,30 +161,6 @@ weighted.dor.factor <- function(actual, predicted, w, ...) {
 #' @export
 dor.cmatrix <- function(x, ...) {
     .Call(`_SLmetrics_cmatrix_diagnostic_odds_ratio`, x)
-}
-
-#' @templateVar .FUN shannon.entropy
-#' @templateVar .METHOD matrix
-#' @template classification_entropy_inherit
-#' @export
-shannon.entropy.matrix <- function(pk, dim = 0L, base = -1.0, ...) {
-    .Call(`_SLmetrics_ShannonsEntropy`, pk, dim, base)
-}
-
-#' @templateVar .FUN relative.entropy
-#' @templateVar .METHOD matrix
-#' @template classification_entropy_inherit
-#' @export
-relative.entropy.matrix <- function(pk, qk, dim = 0L, base = -1.0, ...) {
-    .Call(`_SLmetrics_RelativeEntropy`, pk, qk, dim, base)
-}
-
-#' @templateVar .FUN cross.entropy
-#' @templateVar .METHOD matrix
-#' @template classification_entropy_inherit
-#' @export
-cross.entropy.matrix <- function(pk, qk, dim = 0L, base = -1.0, ...) {
-    .Call(`_SLmetrics_CrossEntropy`, pk, qk, dim, base)
 }
 
 #' @templateVar .FUN fbeta
@@ -756,6 +740,22 @@ auc.roc.curve.factor <- function(actual, response, estimator = 0L, method = 0L, 
 #' @export
 weighted.auc.roc.curve.factor <- function(actual, response, w, estimator = 0L, method = 0L, indices = NULL, ...) {
     .Call(`_SLmetrics_roc_auc_weighted`, actual, response, w, estimator, method, indices)
+}
+
+#' @templateVar .FUN relative.entropy
+#' @templateVar .METHOD matrix
+#' @template classification_entropy_inherit
+#' @export
+relative.entropy.matrix <- function(pk, qk, dim = 0L, normalize = FALSE, ...) {
+    .Call(`_SLmetrics_relative_entropy`, pk, qk, dim, normalize)
+}
+
+#' @templateVar .FUN shannon.entropy
+#' @templateVar .METHOD matrix
+#' @template classification_entropy_inherit
+#' @export
+shannon.entropy.matrix <- function(pk, dim = 0L, normalize = FALSE, ...) {
+    .Call(`_SLmetrics_shannon_entropy`, pk, dim, normalize)
 }
 
 #' @templateVar .FUN specificity

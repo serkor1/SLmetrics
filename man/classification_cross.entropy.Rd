@@ -14,7 +14,9 @@ cross.entropy(...)
   \describe{
     \item{\code{pk,qk}}{A pair of <\link{double}> matrices of \link{length} \eqn{n} of emprical probabilities \eqn{p} and estimated probabilities \eqn{q}.}
     \item{\code{dim}}{An <\link{integer}> value of \link{length} 1 (Default: 0). Defines the dimension along which to calculate the entropy (0: total, 1: row-wise, 2: column-wise).}
-    \item{\code{base}}{A <\link{double}> value of \link{length} 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.}
+    \item{\code{normalize}}{A <\link{logical}>-value (default: \link{TRUE}). If \link{TRUE},
+the mean cross-entropy across all observations is returned; otherwise, the
+sum of cross-entropies is returned.}
   }}
 }
 \value{

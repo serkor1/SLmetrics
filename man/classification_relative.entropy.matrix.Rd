@@ -4,14 +4,16 @@
 \alias{relative.entropy.matrix}
 \title{Relative Entropy}
 \usage{
-\method{relative.entropy}{matrix}(pk, qk, dim = 0L, base = -1, ...)
+\method{relative.entropy}{matrix}(pk, qk, dim = 0L, normalize = FALSE, ...)
 }
 \arguments{
 \item{pk, qk}{A pair of <\link{double}> matrices of \link{length} \eqn{n} of emprical probabilities \eqn{p} and estimated probabilities \eqn{q}.}
 
 \item{dim}{An <\link{integer}> value of \link{length} 1 (Default: 0). Defines the dimension along which to calculate the entropy (0: total, 1: row-wise, 2: column-wise).}
 
-\item{base}{A <\link{double}> value of \link{length} 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.}
+\item{normalize}{A <\link{logical}>-value (default: \link{TRUE}). If \link{TRUE},
+the mean cross-entropy across all observations is returned; otherwise, the
+sum of cross-entropies is returned.}
 
 \item{...}{Arguments passed into other methods.}
 }

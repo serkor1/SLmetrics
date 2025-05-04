@@ -4,7 +4,7 @@
 \alias{shannon.entropy.matrix}
 \title{Shannon Entropy}
 \usage{
-\method{shannon.entropy}{matrix}(pk, dim = 0L, base = -1, ...)
+\method{shannon.entropy}{matrix}(pk, dim = 0L, normalize = FALSE, ...)
 }
 \arguments{
 \item{pk}{A \eqn{n \times k} <\link{double}>-matrix of observed probabilities.
@@ -14,7 +14,9 @@ level in \code{actual}, the second column to the second factor level, and so on.
 
 \item{dim}{An <\link{integer}> value of \link{length} 1 (Default: 0). Defines the dimension along which to calculate the entropy (0: total, 1: row-wise, 2: column-wise).}
 
-\item{base}{A <\link{double}> value of \link{length} 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.}
+\item{normalize}{A <\link{logical}>-value (default: \link{TRUE}). If \link{TRUE},
+the mean cross-entropy across all observations is returned; otherwise, the
+sum of cross-entropies is returned.}
 
 \item{...}{Arguments passed into other methods.}
 }

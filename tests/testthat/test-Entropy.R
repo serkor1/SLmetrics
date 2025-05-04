@@ -36,6 +36,10 @@ testthat::test_that(desc = "Test `shannon.entropy()`-function", code ={
       
         # 2.1.2) calculate scores
         score <- shannon.entropy(pk, dim = axis, base = if (is.na(base)) {-1} else {base})
+
+        if (!is.na(base)) {
+          score <- score / log(base)
+        }
         
         # Map SLmetrics axis to scipy axis:
         # SLmetrics: axis = 0 -> scipy: NULL

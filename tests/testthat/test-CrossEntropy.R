@@ -25,7 +25,7 @@ testthat::test_that(desc = "Test `cross.entropy()`-function", code ={
     # In scipy - 0: column, 1: row, NULL: total
     # In SLmetrics - 0: total, 1: row, 2: column
     for (axis in c(0, 1, 2)) {
-      for (base in c(NA,2, 10)) {
+      for (base in c(NA, 2, 10)) {
 
         # 2.1.1) set OpenMP flags
         if (lgl) {
@@ -35,7 +35,11 @@ testthat::test_that(desc = "Test `cross.entropy()`-function", code ={
         }
       
         # 2.1.2) calculate scores
-        score <- cross.entropy(pk, qk, dim = axis, base = if (is.na(base)) {-1} else {base})
+        score <- cross.entropy(pk, qk, dim = axis)
+
+        if (!is.na(base)) {
+          score <- score / log(base)
+        }
         
         # Map SLmetrics axis to scipy axis:
         # SLmetrics: axis = 0 -> scipy: NULL
@@ -62,6 +66,4 @@ testthat::test_that(desc = "Test `cross.entropy()`-function", code ={
       
     }
   }
-  
-
 })
