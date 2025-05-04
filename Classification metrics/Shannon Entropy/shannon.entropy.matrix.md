@@ -49,17 +49,17 @@ sanity before calling the underlying `C++` code.
 
 ``` R
 ## S3 method for class 'matrix'
-shannon.entropy(pk, dim = 0L, base = -1, ...)
+shannon.entropy(pk, dim = 0L, normalize = FALSE, ...)
 ```
 
 ### Arguments
 
-|        |                                                                                                                                                                                                                                                                                        |
-|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `pk`   | A `n \times k` \<double\>-matrix of observed probabilities. The `i`-th row should sum to 1 (i.e., a valid probability distribution over the `k` classes). The first column corresponds to the first factor level in `actual`, the second column to the second factor level, and so on. |
-| `dim`  | An \<integer\> value of length 1 (Default: 0). Defines the dimension along which to calculate the entropy (0: total, 1: row-wise, 2: column-wise).                                                                                                                                     |
-| `base` | A \<double\> value of length 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.                                                                                                                                                                 |
-| `...`  | Arguments passed into other methods.                                                                                                                                                                                                                                                   |
+|             |                                                                                                                                                                                                                                                                                        |
+|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `pk`        | A `n \times k` \<double\>-matrix of observed probabilities. The `i`-th row should sum to 1 (i.e., a valid probability distribution over the `k` classes). The first column corresponds to the first factor level in `actual`, the second column to the second factor level, and so on. |
+| `dim`       | An \<integer\> value of length 1 (Default: 0). Defines the dimension along which to calculate the entropy (0: total, 1: row-wise, 2: column-wise).                                                                                                                                     |
+| `normalize` | A \<logical\>-value (default: TRUE). If TRUE, the mean cross-entropy across all observations is returned; otherwise, the sum of cross-entropies is returned.                                                                                                                           |
+| `...`       | Arguments passed into other methods.                                                                                                                                                                                                                                                   |
 
 ### Value
 

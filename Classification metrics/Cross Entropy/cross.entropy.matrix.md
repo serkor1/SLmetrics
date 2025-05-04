@@ -49,17 +49,17 @@ sanity before calling the underlying `C++` code.
 
 ``` R
 ## S3 method for class 'matrix'
-cross.entropy(pk, qk, dim = 0L, base = -1, ...)
+cross.entropy(pk, qk, dim = 0L, normalize = FALSE, ...)
 ```
 
 ### Arguments
 
-|            |                                                                                                                                                    |
-|------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| `pk`, `qk` | A pair of \<double\> matrices of length `n` of emprical probabilities `p` and estimated probabilities `q`.                                         |
-| `dim`      | An \<integer\> value of length 1 (Default: 0). Defines the dimension along which to calculate the entropy (0: total, 1: row-wise, 2: column-wise). |
-| `base`     | A \<double\> value of length 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.                             |
-| `...`      | Arguments passed into other methods.                                                                                                               |
+|             |                                                                                                                                                              |
+|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `pk`, `qk`  | A pair of \<double\> matrices of length `n` of emprical probabilities `p` and estimated probabilities `q`.                                                   |
+| `dim`       | An \<integer\> value of length 1 (Default: 0). Defines the dimension along which to calculate the entropy (0: total, 1: row-wise, 2: column-wise).           |
+| `normalize` | A \<logical\>-value (default: TRUE). If TRUE, the mean cross-entropy across all observations is returned; otherwise, the sum of cross-entropies is returned. |
+| `...`       | Arguments passed into other methods.                                                                                                                         |
 
 ### Value
 

@@ -78,10 +78,11 @@ class="reqn">q</code>.</p>
 dimension along which to calculate the entropy (0: total, 1: row-wise,
 2: column-wise).</p>
 </dd>
-<dt><code>base</code></dt>
+<dt><code>normalize</code></dt>
 <dd>
-<p>A &lt;double&gt; value of length 1 (Default: -1). The logarithmic
-base to use. Default value specifies natural logarithms.</p>
+<p>A &lt;logical&gt;-value (default: TRUE). If TRUE, the mean
+cross-entropy across all observations is returned; otherwise, the sum of
+cross-entropies is returned.</p>
 </dd>
 </dl></td>
 </tr>
