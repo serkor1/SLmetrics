@@ -42,6 +42,34 @@ To guard against this, wrap \code{\link[=logloss]{logloss()}} in a "safe" valida
 
 Apply the same pattern to any custom metric functions to ensure input sanity before calling the underlying \code{C++} code.
 }
+
+\subsection{Examples}{
+
+Refer to each of the dispatched methods for an example on how to use \code{\link[=logloss]{logloss()}}.
+}
+}
+\examples{
+## generate valid probability
+## distributions
+rand.sum <- function(n) {
+   x <- sort(runif( n-1 ))
+   c(x,1) - c(0, x)
+}
+## observed values
+## and seed
+set.seed(1903)
+actual <- sample(1L:20L, size = 100, replace = TRUE)
+
+## generate response
+## probabilities
+response <- t(replicate(100, rand.sum(1)))
+
+## entropy
+logloss(actual, response)
+
+
+
+
 }
 \references{
 MacKay, David JC. Information theory, inference and learning algorithms. Cambridge university press, 2003.

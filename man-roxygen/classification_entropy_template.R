@@ -1,3 +1,11 @@
+#' @description
+#' 
+#' ## Examples
+#' 
+#' Refer to each of the dispatched methods for an example on how to use [<%= .FUN %>()].
+#' 
+#' 
+#' 
 <% if (grepl(pattern = "logloss", x = .FUN)) { %>
 #'
 #' @inheritDotParams <%= .FUN %>.integer
@@ -8,7 +16,7 @@
 #' @inheritDotParams <%= .FUN %>.matrix
 #' 
 <% } %>
-#'
+#' 
 #' 
 <% if (grepl(pattern = "logloss", x = .FUN)) { %>
 #' @returns 

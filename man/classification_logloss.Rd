@@ -49,6 +49,11 @@ To guard against this, wrap \code{\link[=logloss]{logloss()}} in a "safe" valida
 
 Apply the same pattern to any custom metric functions to ensure input sanity before calling the underlying \code{C++} code.
 }
+
+\subsection{Examples}{
+
+Refer to each of the dispatched methods for an example on how to use \code{\link[=logloss]{logloss()}}.
+}
 }
 \references{
 MacKay, David JC. Information theory, inference and learning algorithms. Cambridge university press, 2003.
