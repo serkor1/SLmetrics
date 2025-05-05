@@ -86,7 +86,7 @@ namespace metric {
         // dim = 2
         // {[0.3, 0.5, 0.2]} Entropy
         // {[0.2, 0.2, 0.6]} Entropy
-        [[ nodiscard ]] inline Rcpp::NumericVector column(bool normalize = true) const noexcept {
+        [[ nodiscard ]] inline Rcpp::NumericVector column(bool normalize = true) const noexcept override {
             
             // pointers and size
             const arma::uword obs           = this -> n_obs;
