@@ -1372,26 +1372,26 @@ BEGIN_RCPP
 END_RCPP
 }
 // PoissonLogLoss
-double PoissonLogLoss(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, const bool normalize);
+double PoissonLogLoss(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, const bool normalize);
 RcppExport SEXP _SLmetrics_PoissonLogLoss(SEXP actualSEXP, SEXP responseSEXP, SEXP normalizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
     Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
     rcpp_result_gen = Rcpp::wrap(PoissonLogLoss(actual, response, normalize));
     return rcpp_result_gen;
 END_RCPP
 }
 // weighted_PoissonLogLoss
-double weighted_PoissonLogLoss(const Rcpp::IntegerVector& actual, const Rcpp::NumericMatrix& response, const Rcpp::NumericVector& w, const bool normalize);
+double weighted_PoissonLogLoss(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, const Rcpp::NumericVector& w, const bool normalize);
 RcppExport SEXP _SLmetrics_weighted_PoissonLogLoss(SEXP actualSEXP, SEXP responseSEXP, SEXP wSEXP, SEXP normalizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type actual(actualSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type response(responseSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type response(responseSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type w(wSEXP);
     Rcpp::traits::input_parameter< const bool >::type normalize(normalizeSEXP);
     rcpp_result_gen = Rcpp::wrap(weighted_PoissonLogLoss(actual, response, w, normalize));

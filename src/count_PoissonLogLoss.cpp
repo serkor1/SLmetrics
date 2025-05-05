@@ -8,7 +8,7 @@
 // [[Rcpp::export(logloss.integer)]]
 double PoissonLogLoss(
     const Rcpp::IntegerVector& actual,
-    const Rcpp::NumericMatrix& response, 
+    const Rcpp::NumericVector& response, 
     const bool normalize = true) {
 
         // initialize
@@ -25,7 +25,7 @@ double PoissonLogLoss(
 // [[Rcpp::export(weighted.logloss.integer)]]
 double weighted_PoissonLogLoss(
     const Rcpp::IntegerVector& actual,
-    const Rcpp::NumericMatrix& response,
+    const Rcpp::NumericVector& response,
     const Rcpp::NumericVector& w, 
     const bool normalize = true) {
         
