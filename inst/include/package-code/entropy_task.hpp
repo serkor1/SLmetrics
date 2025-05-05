@@ -94,6 +94,41 @@ namespace entropy {
                 
             }
 
+        // constructor for vector vs vector
+        task(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response) :
+            p_vector(const_cast<pk*>(actual.begin()), actual.size(), false, false),
+            q_vector(const_cast<qk*>(response.begin()), response.size(), false, false) {
+
+                // convert vectors
+                // to arma vectors
+                p_vector = arma::Col<pk>(p_vector.memptr(), p_vector.size(), false, false);
+                q_vector = arma::Col<qk>(q_vector.memptr(), q_vector.size(), false, false);
+
+                // calculate number
+                // of obs
+                n_obs = p_vector.n_elem;
+
+            }
+
+        // constructor for vector vs vector (Weighted)
+        task(const Rcpp::IntegerVector& actual, const Rcpp::NumericVector& response, const Rcpp::NumericVector& w) :
+            p_vector(const_cast<pk*>(actual.begin()), actual.size(), false, false),
+            q_vector(const_cast<qk*>(response.begin()), response.size(), false, false),
+            sample_weights(const_cast<double*>(w.begin()), w.size(), false, false) {
+
+                // convert vectors
+                // to arma vectors
+                p_vector = arma::Col<pk>(p_vector.memptr(), p_vector.size(), false, false);
+                q_vector = arma::Col<qk>(q_vector.memptr(), q_vector.size(), false, false);
+                sample_weights = arma::Col<double>(sample_weights.memptr(), sample_weights.size(), false, false);
+
+                // calculate number
+                // of obs
+                n_obs = p_vector.n_elem;
+
+            }
+
+
             // virtual Rcpp::NumericVector row(bool normalize = false) const noexcept = 0;
             // virtual Rcpp::NumericVector column(bool normalize = false) const noexcept = 0;
             // virtual Rcpp::NumericVector total(bool normalize = false) const noexcept = 0;
