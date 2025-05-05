@@ -14,9 +14,9 @@ namespace metric {
         [[ nodiscard ]] inline Rcpp::NumericVector total(bool normalize = false) const noexcept override {
 
             // pointers and size
-            const arma::uword vector_size   = this->p_vector.n_elem;
-            const pk* __restrict__ p_vector = this->p_vector.memptr();
-            const qk* __restrict__ q_vector = this->q_vector.memptr();
+            const arma::uword vector_size   = this -> p_vector.n_elem;
+            const pk* __restrict__ p_vector = this -> p_vector.memptr();
+            const qk* __restrict__ q_vector = this -> q_vector.memptr();
 
             // auxiliary values
             Rcpp::NumericVector output(1);
@@ -36,7 +36,7 @@ namespace metric {
             // if normalized it's averaged
             // across dimensions
             output = diff_sum * (1.0 / sum_pk) + std::log(sum_pk) - std::log(sum_qk);
-            return (normalize) ? (output / this->n_obs) : output;
+            return (normalize) ? (output / this -> n_obs) : output;
         }
 
         // Row wise entropy:
@@ -47,11 +47,11 @@ namespace metric {
         [[ nodiscard ]] inline Rcpp::NumericVector row(bool normalize = false) const noexcept override {
 
             // pointers and size
-            const arma::uword obs           = this->n_obs;
-            const arma::uword vector_size   = this->p_vector.n_elem;
+            const arma::uword obs           = this -> n_obs;
+            const arma::uword vector_size   = this -> p_vector.n_elem;
             const arma::uword n_cols        = vector_size / obs;
-            const pk* __restrict__ p_vector = this->p_vector.memptr();
-            const qk* __restrict__ q_vector = this->q_vector.memptr();
+            const pk* __restrict__ p_vector = this -> p_vector.memptr();
+            const qk* __restrict__ q_vector = this -> q_vector.memptr();
 
             // auxiliary values
             Rcpp::NumericVector output(n_cols);
@@ -80,7 +80,7 @@ namespace metric {
                 }
             }
 
-            return output;
+            return (normalize) ? output / ( obs ) : output;
         }
 
         // Column wise entropy:
@@ -90,10 +90,10 @@ namespace metric {
         [[ nodiscard ]] inline Rcpp::NumericVector column(bool normalize = true) const noexcept override {
 
             // pointers and size
-            const arma::uword obs           = this->n_obs;
-            const arma::uword vector_size   = this->p_vector.n_elem;
-            const pk* __restrict__ p_vector = this->p_vector.memptr();
-            const qk* __restrict__ q_vector = this->q_vector.memptr();
+            const arma::uword obs           = this -> n_obs;
+            const arma::uword vector_size   = this -> p_vector.n_elem;
+            const pk* __restrict__ p_vector = this -> p_vector.memptr();
+            const qk* __restrict__ q_vector = this -> q_vector.memptr();
 
             // auxiliary values
             Rcpp::NumericVector output(obs);
@@ -109,7 +109,7 @@ namespace metric {
             // output
             // if normalized it's averaged
             // across dimensions
-            return output;
+            return (normalize) ? ( output / ( vector_size / obs ) ) : output;
         }
     };
 }

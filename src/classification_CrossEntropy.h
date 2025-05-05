@@ -48,11 +48,11 @@ namespace metric {
         [[ nodiscard ]] inline Rcpp::NumericVector row(bool normalize = false) const noexcept override {
 
             // pointers and size
-            const arma::uword obs           = this->n_obs;
-            const arma::uword vector_size   = this->p_vector.n_elem;
+            const arma::uword obs           = this -> n_obs;
+            const arma::uword vector_size   = this -> p_vector.n_elem;
             const arma::uword n_cols        = vector_size / obs;
-            const pk* __restrict__ p_vector = this->p_vector.memptr();
-            const qk* __restrict__ q_vector = this->q_vector.memptr();
+            const pk* __restrict__ p_vector = this -> p_vector.memptr();
+            const qk* __restrict__ q_vector = this -> q_vector.memptr();
 
             // logic
             Rcpp::NumericVector cross_sum(n_cols, 0.0), sum_qk(n_cols, 0.0), sum_pk(n_cols, 0.0);
@@ -79,7 +79,7 @@ namespace metric {
                 }
             }
 
-            return output;
+            return (normalize) ? output / ( obs ) : output;;
         }
 
         // Column wise entropy:

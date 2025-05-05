@@ -18,8 +18,8 @@ namespace metric {
         [[ nodiscard ]] inline Rcpp::NumericVector total(bool normalize = false) const noexcept override {
 
             // pointers and size
-            const arma::uword vector_size   = this->p_vector.n_elem;
-            const pk* __restrict__ p_vector = this->p_vector.memptr();
+            const arma::uword vector_size   = this -> p_vector.n_elem;
+            const pk* __restrict__ p_vector = this -> p_vector.memptr();
             
             // auxiliary values
             Rcpp::NumericVector output(1);
@@ -31,14 +31,14 @@ namespace metric {
                 const double p_i = *p_vector;
 
                 sum_pk    += p_i;
-                sum_plog  += p_i * std::log(p_i + (p_i == 0.0));
+                sum_plog  += p_i * std::log( p_i + ( p_i == 0.0 ) );
             }
 
             // output
             // if normalized it's averaged
             // across dimensions
-            output = std::log(sum_pk) - sum_plog * (1.0 / sum_pk);
-            return (normalize) ? (output / this -> n_obs) : output;
+            output = std::log( sum_pk ) - sum_plog * (1.0 / sum_pk);
+            return (normalize) ? ( output / this -> n_obs ) : output;
         }
 
         // Row wise entropy:
@@ -49,10 +49,10 @@ namespace metric {
         [[ nodiscard ]] inline Rcpp::NumericVector row(bool normalize = false) const noexcept override {
 
             // pointers and size
-            const arma::uword obs           = this->n_obs;
-            const arma::uword vector_size   = this->p_vector.n_elem;
+            const arma::uword obs           = this -> n_obs;
+            const arma::uword vector_size   = this -> p_vector.n_elem;
             const arma::uword n_cols        = vector_size / obs;
-            const pk* __restrict__ p_vector = this->p_vector.memptr();
+            const pk* __restrict__ p_vector = this -> p_vector.memptr();
 
             // auxillary values
             Rcpp::NumericVector output(n_cols, 0.0);
@@ -64,7 +64,7 @@ namespace metric {
                 const double p_i      = p_vector[idx];
 
                 sum_pk[col]   += p_i;
-                sum_plog[col] += p_i * std::log(p_i + (p_i == 0.0));
+                sum_plog[col] += p_i * std::log( p_i + ( p_i == 0.0 ) );
             }
 
             // output
@@ -72,16 +72,16 @@ namespace metric {
             // across dimensions
             if (normalize) {
                 for (arma::uword j = 0; j < n_cols; ++j) {
-                    double H = std::log(sum_pk[j]) - sum_plog[j] * (1.0 / sum_pk[j]);
+                    double H = std::log( sum_pk[j] ) - sum_plog[j] * ( 1.0 / sum_pk[j] );
                     output[j] = H / obs;
                 }
             } else {
                 for (arma::uword j = 0; j < n_cols; ++j) {
-                    output[j] = std::log(sum_pk[j]) - sum_plog[j] * (1.0 / sum_pk[j]);
+                    output[j] = std::log( sum_pk[j] ) - sum_plog[j] * ( 1.0 / sum_pk[j] );
                 }
             }
 
-            return output;
+            return (normalize) ? output / ( obs ) : output;
         }
         
         // Column wise entropy:
@@ -91,9 +91,9 @@ namespace metric {
         [[ nodiscard ]] inline Rcpp::NumericVector column(bool normalize = true) const noexcept override {
 
             // pointers and size
-            const arma::uword obs           = this->n_obs;
-            const arma::uword vector_size   = this->p_vector.n_elem;
-            const pk* __restrict__ p_vector = this->p_vector.memptr();
+            const arma::uword obs           = this -> n_obs;
+            const arma::uword vector_size   = this -> p_vector.n_elem;
+            const pk* __restrict__ p_vector = this -> p_vector.memptr();
 
             // auxiliary values
             Rcpp::NumericVector output(obs);
@@ -102,13 +102,13 @@ namespace metric {
             for (arma::uword idx = 0; idx < vector_size; ++idx) {
                 const arma::uword row = idx % obs;
                 const double p_i      = p_vector[idx];
-                output[row]          -= p_i * std::log(p_i + (p_i == 0.0));
+                output[row]          -= p_i * std::log( p_i + ( p_i == 0.0 ) );
             }
 
             // output
             // if normalized it's averaged
             // across dimensions
-            return output;
+            return (normalize) ? ( output / ( vector_size / obs ) ) : output;
         }
     };
 }
