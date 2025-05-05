@@ -45,6 +45,11 @@ safe_logloss <- function(x, y, ...) {
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
 
+#### Examples
+
+Refer to each of the dispatched methods for an example on how to use
+`logloss()`.
+
 ### Usage
 
 ``` R
@@ -77,3 +82,33 @@ evolution strategies (2016): 45-53.
 Virtanen, Pauli, et al. "SciPy 1.0: fundamental algorithms for
 scientific computing in Python." Nature methods 17.3 (2020): 261-272.
 
+### Examples
+
+``` R
+## generate valid probability
+## distributions
+rand.sum <- function(n) {
+   x <- sort(runif( n-1 ))
+   c(x,1) - c(0, x)
+}
+## observed values
+## and seed
+set.seed(1903)
+actual <- sample(1L:20L, size = 100, replace = TRUE)
+
+## generate response
+## probabilities
+response <- t(replicate(100, rand.sum(1)))
+
+## entropy
+weighted.logloss(actual, response)
+
+
+
+```
+```
+
+{% endcode %}
+```
+
+{% endcode %}

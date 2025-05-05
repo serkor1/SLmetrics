@@ -45,6 +45,11 @@ safe_relative.entropy <- function(x, y, ...) {
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
 
+#### Examples
+
+Refer to each of the dispatched methods for an example on how to use
+`relative.entropy()`.
+
 ### Usage
 
 ``` R
@@ -95,10 +100,10 @@ A \<double\> value or vector:
 
 - A single \<double\> value (length 1) if `dim == 0`.
 
-- A \<double\> vector with length equal to the length of rows if
+- A \<double\> vector with length equal to the length of columns if
   `dim == 1`.
 
-- A \<double\> vector with length equal to the length of columns if
+- A \<double\> vector with length equal to the length of rows if
   `dim == 2`.
 
 ### References

@@ -45,6 +45,11 @@ safe_logloss <- function(x, y, ...) {
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
 
+#### Examples
+
+Refer to each of the dispatched methods for an example on how to use
+`logloss()`.
+
 ### Usage
 
 ``` R
