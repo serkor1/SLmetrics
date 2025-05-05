@@ -11,7 +11,7 @@ namespace metric {
 
         // Total or normalized entropy:
         // dim = 0 (or default)
-        [[ nodiscard ]] inline Rcpp::NumericVector total(bool normalize = false) const noexcept override {
+        [[ nodiscard ]] inline Rcpp::NumericVector total(bool normalize = false) const noexcept {
 
             // pointers and size
             const arma::uword vector_size   = this -> p_vector.n_elem;
@@ -44,7 +44,7 @@ namespace metric {
         // {[0.3, 0.5, 0.2]}
         // {[0.2, 0.2, 0.6]}
         // Entropy, Entropy, Entropy
-        [[ nodiscard ]] inline Rcpp::NumericVector row(bool normalize = false) const noexcept override {
+        [[ nodiscard ]] inline Rcpp::NumericVector row(bool normalize = false) const noexcept {
 
             // pointers and size
             const arma::uword obs           = this -> n_obs;
@@ -87,7 +87,7 @@ namespace metric {
         // dim = 2
         // {[0.3, 0.5, 0.2]} Entropy
         // {[0.2, 0.2, 0.6]} Entropy
-        [[ nodiscard ]] inline Rcpp::NumericVector column(bool normalize = true) const noexcept override {
+        [[ nodiscard ]] inline Rcpp::NumericVector column(bool normalize = true) const noexcept {
 
             // pointers and size
             const arma::uword obs           = this -> n_obs;
