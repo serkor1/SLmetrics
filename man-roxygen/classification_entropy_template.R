@@ -16,8 +16,8 @@
 <% } else { %>
 #' @returns A <[double]> value or vector:
 #' - A single <[double]> value (length 1) if `dim == 0`.
-#' - A <[double]> vector with length equal to the [length] of rows if `dim == 1`.
-#' - A <[double]> vector with length equal to the [length] of columns if `dim == 2`.
+#' - A <[double]> vector with length equal to the [length] of columns if `dim == 1`.
+#' - A <[double]> vector with length equal to the [length] of rows if `dim == 2`.
 <% } %>
 #' 
 #' @references
