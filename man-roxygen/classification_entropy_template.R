@@ -11,6 +11,9 @@
 #' @inheritDotParams <%= .FUN %>.integer
 #' @inheritDotParams <%= .FUN %>.factor
 #' 
+#' @inheritDotParams weighted.<%= .FUN %>.integer
+#' @inheritDotParams weighted.<%= .FUN %>.factor
+#' 
 <% } else { %>
 #'
 #' @inheritDotParams <%= .FUN %>.matrix
