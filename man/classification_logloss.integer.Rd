@@ -42,31 +42,40 @@ To guard against this, wrap \code{\link[=logloss]{logloss()}} in a "safe" valida
 
 Apply the same pattern to any custom metric functions to ensure input sanity before calling the underlying \code{C++} code.
 }
-
-\subsection{Examples}{
-
-Refer to each of the dispatched methods for an example on how to use \code{\link[=logloss]{logloss()}}.
-}
 }
 \examples{
-## generate valid probability
-## distributions
-rand.sum <- function(n) {
-   x <- sort(runif( n-1 ))
-   c(x,1) - c(0, x)
-}
-## observed values
-## and seed
+## Classes and
+## seed
 set.seed(1903)
-actual <- sample(1L:20L, size = 100, replace = TRUE)
+classes <- c("Kebab", "Falafel")
 
-## generate response
-## probabilities
-response <- t(replicate(100, rand.sum(1)))
+## Generate actual
+## and predicted response
+## probabilites
+actual_classes <- factor(
+    x = sample(x = classes, size = 1e3, replace = TRUE),
+    levels = c("Kebab", "Falafel")
+)
 
-## entropy
-logloss(actual, response)
+response <- runif(n = 1e3)
 
+## Evaluate performance
+SLmetrics::logloss(
+   actual    = actual_classes, 
+   response  = cbind(
+     response,
+     1 - response
+   )
+)
+
+## Generate observed
+## frequencies 
+actual_frequency <- sample(10L:100L, size = 1e3, replace = TRUE)
+
+SLmetrics::logloss(
+   actual    = actual_frequency, 
+   response  = response
+)
 
 
 

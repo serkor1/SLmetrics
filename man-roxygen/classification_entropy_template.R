@@ -1,10 +1,3 @@
-#' @description
-#' 
-#' ## Examples
-#' 
-#' Refer to each of the dispatched methods for an example on how to use [<%= .FUN %>()].
-#' 
-#' 
 #' 
 <% if (grepl(pattern = "logloss", x = .FUN)) { %>
 #'
@@ -14,10 +7,84 @@
 #' @inheritDotParams weighted.<%= .FUN %>.integer
 #' @inheritDotParams weighted.<%= .FUN %>.factor
 #' 
+#' 
+#' @examples
+#' ## Classes and
+#' ## seed
+#' set.seed(1903)
+#' classes <- c("Kebab", "Falafel")
+#' 
+#' ## Generate actual
+#' ## and predicted response
+#' ## probabilites
+#' actual_classes <- factor(
+#'     x = sample(x = classes, size = 1e3, replace = TRUE),
+#'     levels = c("Kebab", "Falafel")
+#' )
+#' 
+#' response <- runif(n = 1e3)
+#' 
+#' ## Logloss
+#' SLmetrics::<%= .FUN %>(
+#'    actual    = actual_classes, 
+#'    response  = cbind(
+#'      response,
+#'      1 - response
+#'    )
+#' )
+#' 
+#' ## Generate observed
+#' ## frequencies 
+#' actual_frequency <- sample(10L:100L, size = 1e3, replace = TRUE)
+#' 
+#' ## Poisson Logloss
+#' SLmetrics::<%= .FUN %>(
+#'    actual    = actual_frequency, 
+#'    response  = response
+#' )
+#' 
+#' 
+#' 
 <% } else { %>
 #'
 #' @inheritDotParams <%= .FUN %>.matrix
 #' 
+#' @examples 
+#' ## generate valid probability
+#' ## distributions
+#' rand.sum <- function(n) {
+#'    x <- sort(runif( n-1 ))
+#'    c(x,1) - c(0, x)
+#' }
+#' 
+<% if (!grepl(pattern = "shannon", x = .FUN)) { %>
+#' ## empirical and
+#' ## predicted probabilites
+#' set.seed(1903)
+#' pk <- t(replicate(200,rand.sum(5)))
+#' qk <- t(replicate(200,rand.sum(5)))
+#' 
+#' ## entropy
+#' <%= .FUN %>(
+#'  pk = pk,
+#'  qk = qk
+#' )
+#' 
+<% } else { %>
+#' 
+#' 
+#' ## empirical and
+#' ## predicted probabilites
+#' set.seed(1903)
+#' pk <- t(replicate(200,rand.sum(5)))
+#' 
+#' ## entropy
+#' SLmetrics::<%= .FUN %>(
+#'  pk = pk
+#' )
+#' 
+#' 
+<% } %>
 <% } %>
 #' 
 #' 

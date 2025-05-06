@@ -47,11 +47,6 @@ To guard against this, wrap \code{\link[=shannon.entropy]{shannon.entropy()}} in
 
 Apply the same pattern to any custom metric functions to ensure input sanity before calling the underlying \code{C++} code.
 }
-
-\subsection{Examples}{
-
-Refer to each of the dispatched methods for an example on how to use \code{\link[=shannon.entropy]{shannon.entropy()}}.
-}
 }
 \examples{
 ## generate valid probability
@@ -67,13 +62,13 @@ rand.sum <- function(n) {
 ## predicted probabilites
 set.seed(1903)
 pk <- t(replicate(200,rand.sum(5)))
-qk <- t(replicate(200,rand.sum(5)))
 
 ## entropy
-shannon.entropy(
- pk = pk,
- qk = qk
+SLmetrics::shannon.entropy(
+ pk = pk
 )
+
+
 
 
 }

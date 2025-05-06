@@ -4,6 +4,9 @@
 #' @name <%= .FUN %>.<%= .METHOD %>
 #' @method <%= .FUN %> <%= .METHOD %>
 #'
+#'
+<% if ( grepl(pattern = "entropy", x = .METHOD ) ) { %>
+#'
 #' @examples 
 #' ## generate valid probability
 #' ## distributions
@@ -11,46 +14,6 @@
 #'    x <- sort(runif( n-1 ))
 #'    c(x,1) - c(0, x)
 #' }
-<% if ( grepl(pattern = "integer", x = .METHOD) ) { %>
-#' ## observed values
-#' ## and seed
-#' set.seed(1903)
-#' actual <- sample(1L:20L, size = 100, replace = TRUE)
-#' 
-#' ## generate response
-#' ## probabilities
-#' response <- t(replicate(100, rand.sum(1)))
-#' 
-#' ## entropy
-#' <%= .FUN %>(actual, response)
-#' 
-<% } %>
-#' 
-<% if ( grepl(pattern = "factor", x = .METHOD) ) { %>
-#' ## Classes and
-#' ## seed
-#' set.seed(1903)
-#' classes <- c("Kebab", "Falafel")
-#' 
-#' ## Generate actual classes
-#' ## and response probabilities
-#' actual_classes <- factor(
-#'     x = sample(
-#'       x = classes, 
-#'       size = 1e2, 
-#'       replace = TRUE, 
-#'       prob = c(0.7, 0.3)
-#'     )
-#' )
-#' 
-#' response <- t(replicate(1e2, rand.sum(length(classes))))
-#' 
-#' ## entropy
-#' <%= .FUN %>(actual, response)
-#' 
-<% } %>
-#'
-<% if ( grepl(pattern = "matrix", x = .METHOD ) ) { %>
 #'
 #' ## empirical and
 #' ## predicted probabilites
@@ -59,11 +22,99 @@
 #' qk <- t(replicate(200,rand.sum(5)))
 #' 
 #' ## entropy
-#' <%= .FUN %>(
+#' SLmetrics::<%= .FUN %>(
 #'  pk = pk,
 #'  qk = qk
 #' )
 #' 
+<% } %>
+#'
+#' 
+<% if ( grepl(pattern = "logloss", x = .FUN ) ) { %>
+#'
+<% if ( grepl(pattern = "weighted", x = .FUN ) ) { %>
+#'
+#' @examples
+#' ## Classes and
+#' ## seed
+#' set.seed(1903)
+#' classes <- c("Kebab", "Falafel")
+#' 
+#' ## Generate actual
+#' ## and predicted response
+#' ## probabilites
+#' actual_classes <- factor(
+#'     x = sample(x = classes, size = 1e3, replace = TRUE),
+#'     levels = c("Kebab", "Falafel")
+#' )
+#' 
+#' response <- runif(n = 1e3)
+#' 
+#' ## Generate sample
+#' ## weights
+#' sample_weights <- runif(
+#'   n = 1e3
+#' )
+#' 
+#' 
+#' ## Evaluate performance
+#' SLmetrics::<%= .FUN %>(
+#'    actual    = actual_classes, 
+#'    response  = cbind(
+#'      response,
+#'      1 - response
+#'    ),
+#'    w = sample_weights
+#' )
+#' 
+#' ## Generate observed
+#' ## frequencies 
+#' actual_frequency <- sample(10L:100L, size = 1e3, replace = TRUE)
+#' 
+#' SLmetrics::<%= .FUN %>(
+#'    actual    = actual_frequency, 
+#'    response  = response,
+#'    w         = sample_weights
+#' )
+#'
+<% } else { %>
+#'
+#' @examples
+#' ## Classes and
+#' ## seed
+#' set.seed(1903)
+#' classes <- c("Kebab", "Falafel")
+#' 
+#' ## Generate actual
+#' ## and predicted response
+#' ## probabilites
+#' actual_classes <- factor(
+#'     x = sample(x = classes, size = 1e3, replace = TRUE),
+#'     levels = c("Kebab", "Falafel")
+#' )
+#' 
+#' response <- runif(n = 1e3)
+#' 
+#' ## Evaluate performance
+#' SLmetrics::<%= .FUN %>(
+#'    actual    = actual_classes, 
+#'    response  = cbind(
+#'      response,
+#'      1 - response
+#'    )
+#' )
+#' 
+#' ## Generate observed
+#' ## frequencies 
+#' actual_frequency <- sample(10L:100L, size = 1e3, replace = TRUE)
+#' 
+#' SLmetrics::<%= .FUN %>(
+#'    actual    = actual_frequency, 
+#'    response  = response
+#' )
+#' 
+#' 
+<% } %>
 <% } %>
 #' 
 #' @inheritParams classification_documentation
