@@ -81,7 +81,7 @@ namespace metric {
                 }
             }
 
-            return (normalize) ? output / ( obs ) : output;
+            return output;
         }
         
         // Column wise entropy:
