@@ -45,11 +45,6 @@ safe_cross.entropy <- function(x, y, ...) {
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
 
-#### Examples
-
-Refer to each of the dispatched methods for an example on how to use
-`cross.entropy()`.
-
 ### Usage
 
 ``` R
@@ -117,3 +112,33 @@ evolution strategies (2016): 45-53.
 Virtanen, Pauli, et al. "SciPy 1.0: f'undamental algorithms for
 scientific computing in Python." Nature methods 17.3 (2020): 261-272.
 
+### Examples
+
+``` R
+## generate valid probability
+## distributions
+rand.sum <- function(n) {
+   x <- sort(runif( n-1 ))
+   c(x,1) - c(0, x)
+}
+
+## empirical and
+## predicted probabilites
+set.seed(1903)
+pk <- t(replicate(200,rand.sum(5)))
+qk <- t(replicate(200,rand.sum(5)))
+
+## entropy
+cross.entropy(
+ pk = pk,
+ qk = qk
+)
+
+
+```
+```
+
+{% endcode %}
+```
+
+{% endcode %}

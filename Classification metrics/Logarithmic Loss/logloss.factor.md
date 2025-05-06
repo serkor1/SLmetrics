@@ -45,11 +45,6 @@ safe_logloss <- function(x, y, ...) {
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
 
-#### Examples
-
-Refer to each of the dispatched methods for an example on how to use
-`logloss()`.
-
 ### Usage
 
 ``` R
@@ -84,33 +79,38 @@ scientific computing in Python." Nature methods 17.3 (2020): 261-272.
 ### Examples
 
 ``` R
-## generate valid probability
-## distributions
-rand.sum <- function(n) {
-   x <- sort(runif( n-1 ))
-   c(x,1) - c(0, x)
-}
-
 ## Classes and
 ## seed
 set.seed(1903)
 classes <- c("Kebab", "Falafel")
 
-## Generate actual classes
-## and response probabilities
+## Generate actual
+## and predicted response
+## probabilites
 actual_classes <- factor(
-x = sample(
-  x = classes, 
-  size = 1e2, 
-  replace = TRUE, 
-  prob = c(0.7, 0.3)
-)
+x = sample(x = classes, size = 1e3, replace = TRUE),
+levels = c("Kebab", "Falafel")
 )
 
-response <- t(replicate(1e2, rand.sum(length(classes))))
+response <- runif(n = 1e3)
 
-## entropy
-logloss(actual, response)
+## Evaluate performance
+SLmetrics::logloss(
+   actual    = actual_classes, 
+   response  = cbind(
+ response,
+ 1 - response
+   )
+)
+
+## Generate observed
+## frequencies 
+actual_frequency <- sample(10L:100L, size = 1e3, replace = TRUE)
+
+SLmetrics::logloss(
+   actual    = actual_frequency, 
+   response  = response
+)
 
 
 ```

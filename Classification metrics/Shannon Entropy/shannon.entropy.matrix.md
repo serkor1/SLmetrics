@@ -45,11 +45,6 @@ safe_shannon.entropy <- function(x, y, ...) {
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
 
-#### Examples
-
-Refer to each of the dispatched methods for an example on how to use
-`shannon.entropy()`.
-
 ### Usage
 
 ``` R
@@ -105,13 +100,13 @@ rand.sum <- function(n) {
 ## predicted probabilites
 set.seed(1903)
 pk <- t(replicate(200,rand.sum(5)))
-qk <- t(replicate(200,rand.sum(5)))
 
 ## entropy
-shannon.entropy(
- pk = pk,
- qk = qk
+SLmetrics::shannon.entropy(
+ pk = pk
 )
+
+
 
 ```
 ```

@@ -45,11 +45,6 @@ safe_logloss <- function(x, y, ...) {
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
 
-#### Examples
-
-Refer to each of the dispatched methods for an example on how to use
-`logloss()`.
-
 ### Usage
 
 ``` R
@@ -73,7 +68,8 @@ weighted.logloss(...)
 <tr class="odd">
 <td><code id="...">...</code></td>
 <td><p>Arguments passed on to <code>logloss.integer</code>,
-<code>logloss.factor</code></p>
+<code>logloss.factor</code>, <code>weighted.logloss.integer</code>,
+<code>weighted.logloss.factor</code></p>
 <dl>
 <dt><code>actual</code></dt>
 <dd>
@@ -95,6 +91,10 @@ second factor level, and so on.</p>
 cross-entropy across all observations is returned; otherwise, the sum of
 cross-entropies is returned.</p>
 </dd>
+<dt><code>w</code></dt>
+<dd>
+<p>A &lt;double&gt; vector of sample weights.</p>
+</dd>
 </dl></td>
 </tr>
 </tbody>
@@ -115,3 +115,50 @@ evolution strategies (2016): 45-53.
 Virtanen, Pauli, et al. "SciPy 1.0: f'undamental algorithms for
 scientific computing in Python." Nature methods 17.3 (2020): 261-272.
 
+### Examples
+
+``` R
+## Classes and
+## seed
+set.seed(1903)
+classes <- c("Kebab", "Falafel")
+
+## Generate actual
+## and predicted response
+## probabilites
+actual_classes <- factor(
+x = sample(x = classes, size = 1e3, replace = TRUE),
+levels = c("Kebab", "Falafel")
+)
+
+response <- runif(n = 1e3)
+
+## Logloss
+SLmetrics::logloss(
+   actual    = actual_classes, 
+   response  = cbind(
+ response,
+ 1 - response
+   )
+)
+
+## Generate observed
+## frequencies 
+actual_frequency <- sample(10L:100L, size = 1e3, replace = TRUE)
+
+## Poisson Logloss
+SLmetrics::logloss(
+   actual    = actual_frequency, 
+   response  = response
+)
+
+
+
+
+```
+```
+
+{% endcode %}
+```
+
+{% endcode %}

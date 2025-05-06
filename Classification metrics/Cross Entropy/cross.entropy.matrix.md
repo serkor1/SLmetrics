@@ -45,11 +45,6 @@ safe_cross.entropy <- function(x, y, ...) {
 Apply the same pattern to any custom metric functions to ensure input
 sanity before calling the underlying `C++` code.
 
-#### Examples
-
-Refer to each of the dispatched methods for an example on how to use
-`cross.entropy()`.
-
 ### Usage
 
 ``` R
@@ -99,8 +94,6 @@ rand.sum <- function(n) {
    c(x,1) - c(0, x)
 }
 
-
-
 ## empirical and
 ## predicted probabilites
 set.seed(1903)
@@ -112,6 +105,7 @@ cross.entropy(
  pk = pk,
  qk = qk
 )
+
 
 ```
 ```
