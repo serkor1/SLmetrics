@@ -1,37 +1,64 @@
 import numpy as np
 from scipy import stats
 
-def ref_entropy(pk, qk = None, type = 0, relative = True, axis = None, base = None):
+def py_shannon_entropy(pk, dim, base = None):
 
-    # shannons entropy
-    if type == 0:
-        output = stats.entropy(
-            pk   = pk,
-            base = base,
-            axis = axis
-        )
+    ## recode dim
+    ## to scipy compatible
+    ## output
+    match dim:
+        case 0: dim = None
+        case 1: dim = 0
+        case 2: dim = 1
+        
+    ## calculate entropy
+    entropy = stats.entropy(
+        pk   = pk,
+        base = base,
+        axis = dim
+    )
     
-    # relative entropy
-    if type == 1:
-        output = stats.entropy(
-            pk = pk,
-            qk = qk,
-            base = base,
-            axis = axis
-        )
-    
-    # cross-entropy
-    if type == 2:
-        entropy_ = stats.entropy(
-            pk   = pk,
-            base = base,
-            axis = axis
-        )
-        output = entropy_ + stats.entropy(
-            pk = pk,
-            qk = qk,
-            base = base,
-            axis = axis
-        )
+    return entropy
 
-    return output
+def py_relative_entropy(pk, qk, dim, base = None):
+
+    ## recode dim
+    ## to scipy compatible
+    ## output
+    match dim:
+        case 0: dim = None
+        case 1: dim = 0
+        case 2: dim = 1
+        
+
+    ## calculate entropy
+    entropy = stats.entropy(
+        pk   = pk,
+        qk   = qk,
+        axis = dim,
+        base = base
+    )
+
+    return entropy
+
+def py_cross_entropy(pk, qk, dim, base = None):
+
+    ## calculate shannon
+    ## entropy
+    shannon_entropy = py_shannon_entropy(
+        pk   = pk,
+        dim  = dim, 
+        base = base
+    )
+
+    ## calculate relative
+    ## entropy
+    relative_entropy = py_relative_entropy(
+        pk = pk,
+        qk = qk,
+        dim = dim,
+        base = base
+    )
+
+    ## entropy
+    return shannon_entropy + relative_entropy
