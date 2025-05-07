@@ -272,7 +272,7 @@ pk <- matrix(
 SLmetrics::shannon.entropy(pk)
 ```
 
-The entropy functions have had the `base`-argument removed, and a new argument have been introduced: `normalize`. The `normalize`-parameter averages the calculated entropy across the desired dimensions.
+The entropy functions have had the `base`-argument removed, and a new argument has been introduced: `normalize`. The `normalize`-parameter averages the calculated entropy across the desired dimensions.
 
 * **Aggregation in classification metrics:** The aggregation flag in the classification functions `micro` have been replaced with the `integer`-argument `estimator` which falls back to class-wise evaluation if misspecified. The new interface is given below and is applicable to all functions that has this argument:
 
@@ -309,4 +309,4 @@ SLmetrics::recall(
 )
 ```
 
-* **Poisson Logloss:** The `logloss()` for count data `logloss.integer()` were taking a `matrix` of probabilities. This has been change to a `vector` of probabilities.
+* **Poisson Logloss:** The `logloss()` for count data `logloss.integer()` were taking a `matrix` of probabilities. This has been changed to a `vector` of probabilities.

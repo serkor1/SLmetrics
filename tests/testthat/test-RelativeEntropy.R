@@ -44,7 +44,6 @@ testthat::test_that(desc = "Test `relative.entropy()`-function", code ={
       ## reference value
       if (normalize) {
         if (dim == 0 | dim == 1) reference <- reference / dim(pk)[1]
-        if (dim == 1) reference / dim(pk)[1] 
         if (dim == 2) reference <- reference / dim(pk)[2]
       }
 

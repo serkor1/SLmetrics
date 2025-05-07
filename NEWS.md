@@ -330,7 +330,7 @@ SLmetrics::shannon.entropy(pk)
 ```
 
 The entropy functions have had the `base`-argument removed, and a new
-argument have been introduced: `normalize`. The `normalize`-parameter
+argument has been introduced: `normalize`. The `normalize`-parameter
 averages the calculated entropy across the desired dimensions.
 
 - **Aggregation in classification metrics:** The aggregation flag in the
@@ -378,7 +378,7 @@ SLmetrics::recall(
 
 - **Poisson Logloss:** The `logloss()` for count data
   `logloss.integer()` were taking a `matrix` of probabilities. This has
-  been change to a `vector` of probabilities.
+  been changed to a `vector` of probabilities.
 
 # :bookmark: Version 0.3-3
 
