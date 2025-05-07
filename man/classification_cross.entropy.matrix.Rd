@@ -4,14 +4,16 @@
 \alias{cross.entropy.matrix}
 \title{Cross Entropy}
 \usage{
-\method{cross.entropy}{matrix}(pk, qk, dim = 0L, base = -1, ...)
+\method{cross.entropy}{matrix}(pk, qk, dim = 0L, normalize = FALSE, ...)
 }
 \arguments{
 \item{pk, qk}{A pair of <\link{double}> matrices of \link{length} \eqn{n} of emprical probabilities \eqn{p} and estimated probabilities \eqn{q}.}
 
 \item{dim}{An <\link{integer}> value of \link{length} 1 (Default: 0). Defines the dimension along which to calculate the entropy (0: total, 1: row-wise, 2: column-wise).}
 
-\item{base}{A <\link{double}> value of \link{length} 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.}
+\item{normalize}{A <\link{logical}>-value (default: \link{TRUE}). If \link{TRUE},
+the mean cross-entropy across all observations is returned; otherwise, the
+sum of cross-entropies is returned.}
 
 \item{...}{Arguments passed into other methods.}
 }
@@ -19,8 +21,8 @@
 A <\link{double}> value or vector:
 \itemize{
 \item A single <\link{double}> value (length 1) if \code{dim == 0}.
-\item A <\link{double}> vector with length equal to the \link{length} of rows if \code{dim == 1}.
-\item A <\link{double}> vector with length equal to the \link{length} of columns if \code{dim == 2}.
+\item A <\link{double}> vector with length equal to the \link{length} of columns if \code{dim == 1}.
+\item A <\link{double}> vector with length equal to the \link{length} of rows if \code{dim == 2}.
 }
 }
 \description{
@@ -42,6 +44,29 @@ To guard against this, wrap \code{\link[=cross.entropy]{cross.entropy()}} in a "
 
 Apply the same pattern to any custom metric functions to ensure input sanity before calling the underlying \code{C++} code.
 }
+}
+\examples{
+## generate valid probability
+## distributions
+rand.sum <- function(n) {
+   x <- sort(runif( n-1 ))
+   c(x,1) - c(0, x)
+}
+
+## empirical and
+## predicted probabilites
+set.seed(1903)
+pk <- t(replicate(200,rand.sum(5)))
+qk <- t(replicate(200,rand.sum(5)))
+
+## entropy
+cross.entropy(
+ pk = pk,
+ qk = qk
+)
+
+
+
 }
 \references{
 MacKay, David JC. Information theory, inference and learning algorithms. Cambridge university press, 2003.

@@ -15,7 +15,7 @@ weighted.logloss(...)
 }
 \arguments{
 \item{...}{
-  Arguments passed on to \code{\link[=logloss.integer]{logloss.integer}}, \code{\link[=logloss.factor]{logloss.factor}}
+  Arguments passed on to \code{\link[=logloss.integer]{logloss.integer}}, \code{\link[=logloss.factor]{logloss.factor}}, \code{\link[=weighted.logloss.integer]{weighted.logloss.integer}}, \code{\link[=weighted.logloss.factor]{weighted.logloss.factor}}
   \describe{
     \item{\code{actual}}{A vector \link{length} \eqn{n}, and \eqn{k} levels. Can be of \link{integer} or \link{factor}.}
     \item{\code{response}}{A \eqn{n \times k} <\link{double}>-matrix of predicted probabilities.
@@ -25,6 +25,7 @@ level in \code{actual}, the second column to the second factor level, and so on.
     \item{\code{normalize}}{A <\link{logical}>-value (default: \link{TRUE}). If \link{TRUE},
 the mean cross-entropy across all observations is returned; otherwise, the
 sum of cross-entropies is returned.}
+    \item{\code{w}}{A <\link{double}> vector of sample weights.}
   }}
 }
 \value{
@@ -49,6 +50,46 @@ To guard against this, wrap \code{\link[=logloss]{logloss()}} in a "safe" valida
 
 Apply the same pattern to any custom metric functions to ensure input sanity before calling the underlying \code{C++} code.
 }
+}
+\examples{
+## Classes and
+## seed
+set.seed(1903)
+classes <- c("Kebab", "Falafel")
+
+## Generate actual
+## and predicted response
+## probabilities
+actual_classes <- factor(
+    x = sample(x = classes, size = 1e3, replace = TRUE),
+    levels = c("Kebab", "Falafel")
+)
+
+response <- runif(n = 1e3)
+
+## Logloss
+SLmetrics::logloss(
+   actual    = actual_classes, 
+   response  = cbind(
+     response,
+     1 - response
+   )
+)
+
+## Generate observed
+## frequencies 
+actual_frequency <- sample(10L:100L, size = 1e3, replace = TRUE)
+
+## Poisson Logloss
+SLmetrics::logloss(
+   actual    = actual_frequency, 
+   response  = response
+)
+
+
+
+
+
 }
 \references{
 MacKay, David JC. Information theory, inference and learning algorithms. Cambridge university press, 2003.

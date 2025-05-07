@@ -4,7 +4,7 @@
 \alias{shannon.entropy.matrix}
 \title{Shannon Entropy}
 \usage{
-\method{shannon.entropy}{matrix}(pk, dim = 0L, base = -1, ...)
+\method{shannon.entropy}{matrix}(pk, dim = 0L, normalize = FALSE, ...)
 }
 \arguments{
 \item{pk}{A \eqn{n \times k} <\link{double}>-matrix of observed probabilities.
@@ -14,7 +14,9 @@ level in \code{actual}, the second column to the second factor level, and so on.
 
 \item{dim}{An <\link{integer}> value of \link{length} 1 (Default: 0). Defines the dimension along which to calculate the entropy (0: total, 1: row-wise, 2: column-wise).}
 
-\item{base}{A <\link{double}> value of \link{length} 1 (Default: -1). The logarithmic base to use. Default value specifies natural logarithms.}
+\item{normalize}{A <\link{logical}>-value (default: \link{TRUE}). If \link{TRUE},
+the mean cross-entropy across all observations is returned; otherwise, the
+sum of cross-entropies is returned.}
 
 \item{...}{Arguments passed into other methods.}
 }
@@ -22,8 +24,8 @@ level in \code{actual}, the second column to the second factor level, and so on.
 A <\link{double}> value or vector:
 \itemize{
 \item A single <\link{double}> value (length 1) if \code{dim == 0}.
-\item A <\link{double}> vector with length equal to the \link{length} of rows if \code{dim == 1}.
-\item A <\link{double}> vector with length equal to the \link{length} of columns if \code{dim == 2}.
+\item A <\link{double}> vector with length equal to the \link{length} of columns if \code{dim == 1}.
+\item A <\link{double}> vector with length equal to the \link{length} of rows if \code{dim == 2}.
 }
 }
 \description{
@@ -45,6 +47,30 @@ To guard against this, wrap \code{\link[=shannon.entropy]{shannon.entropy()}} in
 
 Apply the same pattern to any custom metric functions to ensure input sanity before calling the underlying \code{C++} code.
 }
+}
+\examples{
+## generate valid probability
+## distributions
+rand.sum <- function(n) {
+   x <- sort(runif( n-1 ))
+   c(x,1) - c(0, x)
+}
+
+
+
+## empirical and
+## predicted probabilites
+set.seed(1903)
+pk <- t(replicate(200,rand.sum(5)))
+
+## entropy
+SLmetrics::shannon.entropy(
+ pk = pk
+)
+
+
+
+
 }
 \references{
 MacKay, David JC. Information theory, inference and learning algorithms. Cambridge university press, 2003.

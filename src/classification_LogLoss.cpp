@@ -6,20 +6,16 @@
 //' @template classification_entropy_inherit
 //' @export
 // [[Rcpp::export(logloss.factor)]]
-double LogLoss(const Rcpp::IntegerVector& actual, 
-               const Rcpp::NumericMatrix& response, 
-               const bool normalize = true)
-{
-    // 1) Extract pointers
-    const int*    ptr_actual   = actual.begin();
-    const double* ptr_response = response.begin();
-    
-    // 2) Get sizes
-    const std::size_t n     = actual.size();
-    const std::size_t nrows = response.nrow();
+double LogLoss(
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::NumericMatrix& response,
+    const bool normalize = true) {
 
-    // 3) Compute
-    return LogLoss::compute(ptr_actual, ptr_response, n, nrows, normalize);
+        // initialize
+        metric::logloss<int, double> entropy(actual, response);
+
+        // return
+        return entropy.unweighted(normalize);
 }
 
 //' @templateVar .FUN weighted.logloss
@@ -27,20 +23,15 @@ double LogLoss(const Rcpp::IntegerVector& actual,
 //' @template classification_entropy_inherit
 //' @export
 // [[Rcpp::export(weighted.logloss.factor)]]
-double weighted_LogLoss(const Rcpp::IntegerVector& actual, 
-                        const Rcpp::NumericMatrix& response, 
-                        const Rcpp::NumericVector& w, 
-                        const bool normalize = true)
-{
-    // 1) Extract pointers
-    const int*    ptr_actual   = actual.begin();
-    const double* ptr_response = response.begin();
-    const double* ptr_w        = w.begin();
+double weighted_LogLoss(
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::NumericMatrix& response,
+    const Rcpp::NumericVector& w, 
+    const bool normalize = true) {
 
-    // 2) Get sizes
-    const std::size_t n     = actual.size();
-    const std::size_t nrows = response.nrow();
+        // initialize
+        metric::logloss<int, double> entropy(actual, response, w);
 
-    // 3) Compute
-    return LogLoss::compute(ptr_actual, ptr_response, ptr_w, n, nrows, normalize);
+        // return
+        return entropy.weighted(normalize);
 }
