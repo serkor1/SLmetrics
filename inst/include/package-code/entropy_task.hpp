@@ -25,7 +25,7 @@ namespace entropy {
                 // flatten both matrices
                 // NOTE: It might be possible to do 
                 // in one step if we just pass pointers
-                // to constructores instead
+                // to constructors instead
                 p_vector = arma::Col<pk>(
                     p_matrix.memptr(),
                     p_matrix.n_elem,

@@ -54,7 +54,7 @@ namespace metric {
             const arma::uword n_cols        = vector_size / obs;
             const pk* __restrict__ p_vector = this -> p_vector.memptr();
 
-            // auxillary values
+            // auxiliary values
             Rcpp::NumericVector output(n_cols, 0.0);
 
             // logic
