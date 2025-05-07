@@ -86,7 +86,7 @@ classes <- c("Kebab", "Falafel")
 
 ## Generate actual
 ## and predicted response
-## probabilites
+## probabilities
 actual_classes <- factor(
 x = sample(x = classes, size = 1e3, replace = TRUE),
 levels = c("Kebab", "Falafel")
