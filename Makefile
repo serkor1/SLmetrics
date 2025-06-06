@@ -1,48 +1,25 @@
-# Load common variables
+## Makefile
+##
+## Collects all available Makefiles
+## found in .meta/development_tools/makefiles
+
+## Make variables
 include .meta/development_tools/makefiles/variables.mk
 
-# Default target
-.PHONY: all
-all: build
-
-# Install target - sets permissions correctly
-.PHONY: install-build-system
-install-build-system:
-	@echo $(echo_prefix) "Setting up build system"
-	@chmod +x $(scripts_directory)/*.sh
-	@echo $(echo_success) "Build system installed"
-
-# Load modular makefiles
-include $(makefile_directory)/documentation.mk
-include $(makefile_directory)/package.mk
-include $(makefile_directory)/maintenance.mk
-
-# Default help target
+## default target
 .PHONY: help
 help:
-	@echo "{SLmetrics} Package Build System"
-	@echo "================================"
-	@echo ""
-	@echo "Documentation:"
-	@echo "  make build-meta      - Build README and NEWS files"
-	@echo "  make build-news      - Build only NEWS file"
-	@echo "  make build-readme    - Build only README file"
-	@echo "  make build-gitbook   - Build only Gitbook files"
-	@echo "  make document        - Update package documentation"
-	@echo ""
-	@echo "Package Building:"
-	@echo "  make build           - Build and install the package"
-	@echo "  make check           - Build, check and install the package"
-	@echo "  make test-pkg        - Run unit tests"
-	@echo "  make r-hub-check     - Run R-hub checks"
-	@echo "  make build-config    - Compile and run Autoconf"
-	@echo ""
-	@echo "Maintenance:"
-	@echo "  make performance     - Run performance tests"
-	@echo "  make clean           - Clean repository"
-	@echo "  make purge           - Aggressively clean repository. Deletes all branches except main and development."
-	@echo "  make new-version     - Create a new NEWS entry"
-	@echo ""
-	@echo "Options:"
-	@echo "  RESET=true           - Reset cache when building documentation"
-	@echo "  CHECK=true           - Run R CMD check before installing"
+	@grep -h -E '^[[:space:]]*[A-Za-z0-9_.-]+:.*?## .*$$' $(MAKEFILE_LIST) \
+		| sed -E 's/^[[:space:]]*//' \
+		| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[1;34m%-15s\033[m \xE2\x80\x94 %s\n", $$1, $$2}'
+
+	@echo "\n\033[1;32mNote: \033[mAll source files are located in \033[3m.meta/development_tools/scripts/\033[0m"
+
+## Make files
+include $(makefile_directory)/maintenance.mk
+include $(makefile_directory)/package.mk
+include $(makefile_directory)/documentation.mk
+
+
+
+

@@ -1,42 +1,30 @@
-# Run performance tests
-.PHONY: performance
-performance:
+pkg-benchmark: ## Run package benchmarks
 	@echo $(echo_prefix) "Running performance tests for $(PKGNAME)"
 	@echo "==========================================="
 	@$(scripts_directory)/run_performance_tests.sh
 	@echo $(echo_success) "Performance tests completed successfully"
 	@echo $(echo_warning) "Remember to rebuild $(PKGNAME) to use the new data!"
 
-# Build and install the package
-.PHONY: build
-build: document
+pkg-build: document ## Build and install the package
 	@echo $(echo_prefix) "Starting build process of $(PKGNAME)"
 	@$(scripts_directory)/build_package.sh $(CHECK)
 	@echo $(echo_success) "Build process completed"
 
-# Check the package
-.PHONY: check
-check:
+pkg-check: ## Run R CMD CHECK
 	@$(MAKE) build CHECK=true
 
-# Run unit tests
-.PHONY: test-pkg
-test-pkg: document
+pkg-test: document ## Unit-tests with {testthat}
 	@echo $(echo_prefix) "Running unit tests"
 	@$(scripts_directory)/run_tests.sh
 	@echo $(echo_success) "Unit tests completed"
 
-# Run R-hub checks
-.PHONY: r-hub-check
-r-hub-check:
+pkg-r-hub: ## Run R-hub tests
 	@echo $(echo_prefix) "Requesting R-hub tests"
 	@echo "========================="
 	@$(scripts_directory)/run_rhub_checks.sh
 	@echo $(echo_success) "R-hub checks requested"
 
-# Compile and run Autoconf
-.PHONY: build-config
-build-config:
+pkg-config: ## Compile configure
 	@echo $(echo_prefix) "Compiling configure.ac"
 	@echo "========================="
 	@autoconf && ./configure

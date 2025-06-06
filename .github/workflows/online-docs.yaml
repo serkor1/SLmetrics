@@ -38,7 +38,7 @@ jobs:
 
       - name: Build Gitbook
         working-directory: main
-        run: make build-gitbook
+        run: make docs-gitbook
 
       - name: Synchronize
         run: |
