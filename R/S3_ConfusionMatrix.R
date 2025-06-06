@@ -5,32 +5,42 @@
 # objective:
 # script start;
 
-#' @inheritSection specificity Creating <[factor]>
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
 #' 
-#' @title Confusion Matrix
-#'
+#' @templateVar .TITLE Confusion Matrix
+#' @templateVar .FUN cmatrix
+#' @templateVar .TASK classification
+#' 
+#' @template generic_description
+#' 
 #' @description
-#' The [cmatrix()]-function uses cross-classifying factors to build
-#' a confusion matrix of the counts at each combination of the [factor] levels.
-#' Each row of the [matrix] represents the actual [factor] levels, while each
-#' column represents the predicted [factor] levels.
-#'
-#' @usage
-#' ## Generic S3 method
-#' cmatrix(
-#'  actual,
-#'  predicted,
-#'  ...
-#' )
 #' 
-#' @param actual A <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
-#' @param predicted A <[factor]>-vector of [length] \eqn{n}, and \eqn{k} levels.
-#' @param w A <[numeric]>-vector of [length] \eqn{n} (default: [NULL]) If passed it will return a weighted confusion matrix.
-#' @param ... Arguments passed into other methods.
+#' ## The workhorse
+#' 
+#' [cmatrix()] is the main function for classification metrics with cmatrix S3 dispatch. These functions internally calls [cmatrix()], so there is a signficant gain in computing the confusion matrix first, and then pass it onto the metrics.
+#' For example:
+#' 
+#' ```r
+#' ## Compute confusion matrix
+#' confusion_matrix <- cmatrix(actual, predicted)
+#' 
+#' ## Evaluate accuracy
+#' ## via S3 dispatching
+#' accuracy(confusion_matrix)
+#' 
+#' ## Evaluate recall
+#' ## via S3 dispatching
+#' recall(confusion_matrix)
+#' ```
+#' 
+#' 
+#' @inheritDotParams cmatrix.factor
+#' @inheritDotParams weighted.cmatrix.factor
 #' 
 #' @section Dimensions:
-#' There is no robust defensive measure against mis-specifying
-#' the confusion matrix. If the arguments are correctly specified, the resulting
+#' There is no robust defensive measure against misspecifying the confusion matrix. If the arguments are passed correctly, the resulting
 #' confusion matrix is on the form:
 #'
 #' |            | A (Predicted) | B (Predicted) |
@@ -41,37 +51,61 @@
 #'
 #' @returns
 #' A named \eqn{k} x \eqn{k} <[matrix]>
-#'
-#' @example man/examples/scr_ConfusionMatrix.R
+#' 
+#' 
+#' @examples
+#' ## Classes and
+#' ## seed
+#' set.seed(1903)
+#' classes <- c("Kebab", "Falafel")
+#' 
+#' ## Generate actual
+#' ## and predicted classes
+#' actual_classes <- factor(
+#'     x = sample(x = classes, size = 1e3, replace = TRUE),
+#'     levels = c("Kebab", "Falafel")
+#' )
+#' 
+#' predicted_classes <- factor(
+#'     x = sample(x = classes, size = 1e3, replace = TRUE),
+#'     levels = c("Kebab", "Falafel")
+#' )
+#' 
+#' ## Compute the confusion
+#' ## matrix
+#' SLmetrics::cmatrix(
+#'  actual    = actual_classes, 
+#'  predicted = predicted_classes
+#' )
+#' 
+#' @references
+#' 
+#' James, Gareth, et al. An introduction to statistical learning. Vol. 112. No. 1. New York: springer, 2013.
+#' 
+#' Hastie, Trevor. "The elements of statistical learning: data mining, inference, and prediction." (2009).
+#' 
+#' Pedregosa, Fabian, et al. "Scikit-learn: Machine learning in Python." the Journal of machine Learning research 12 (2011): 2825-2830.
 #' 
 #' @family Classification
 #' @family Supervised Learning
 #' 
 #' @export
-cmatrix <- function(
-  actual,
-  predicted,
-  ...) {
+cmatrix <- function(...) {
   UseMethod(
     generic = "cmatrix"
   )
 }
 
-#' @rdname cmatrix
-#' @usage
-#' ## Generic S3 method
-#' weighted.cmatrix(
-#'  actual,
-#'  predicted,
-#'  w,
-#'  ...
-#' )
+#' @usage NULL
+#' 
+#' @templateVar .TITLE confusion matrix
+#' @templateVar .FUN cmatrix
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
-weighted.cmatrix <- function(
-  actual,
-  predicted,
-  w,
-  ...) {
+weighted.cmatrix <- function(...) {
   UseMethod(
     generic = "weighted.cmatrix"
   )
@@ -131,12 +165,29 @@ plot.cmatrix <- function(
 #' @export
 summary.cmatrix <- function(
     object,
-    average = "micro",
+    estimator = "micro",
     digits = 2,
     ...) {
+  
+  # 0) determine aggregation
+  # level based on estimator
+  # 
+  # Can be passed as <character>
+  # <numeric> or <integer>
+  estimator <- switch (estimator,
+    "micro" = {1},
+    "macro" = {2},
+    # default value:
+    1
+  )
 
-  micro <- average == "micro"
-
+  # pass the chosen
+  # value to average
+  average <- switch (estimator,
+    "micro",
+    "macro"
+  ) 
+  
   # 1) print the header
   # of the summary
   cat(
@@ -147,22 +198,22 @@ summary.cmatrix <- function(
 
   full_line()
 
-  print(object)
-
+    print(object)
+  
   full_line()
 
   # summary statistics
-  #
+  # for the classification
+  # problem
   cat(
     paste("Overall Statistics", paste0("(", paste(average, "average"), ")")),
     paste(" - Accuracy:         ", formatC(accuracy(object), digits = digits,format = "f")),
     paste(" - Balanced Accuracy:", formatC(baccuracy(object), digits = digits,format = "f")),
-    paste(" - Sensitivity:      ", formatC(sensitivity(object,micro = micro), digits = digits, format = "f")),
-    paste(" - Specificity:      ", formatC(specificity(object,micro = micro), digits = digits, format = "f")),
-    paste(" - Precision:        ", formatC(precision(object,micro = micro), digits = digits, format = "f")),
+    paste(" - Sensitivity:      ", formatC(sensitivity(object,estimator = estimator), digits = digits, format = "f")),
+    paste(" - Specificity:      ", formatC(specificity(object,estimator = estimator), digits = digits, format = "f")),
+    paste(" - Precision:        ", formatC(precision(object,estimator = estimator), digits = digits, format = "f")),
     sep = "\n"
     )
-
 }
 
 # script end;

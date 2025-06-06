@@ -3,37 +3,31 @@
 
 using namespace Rcpp;
 
-//' @rdname rrmse
-//' @method rrmse numeric
+//' @templateVar .FUN rrmse
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(rrmse.numeric)]]
-double RelativeRootMeanSquaredError(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const int normalization = 1)
-{
-    // 1) Extract pointers
-    const double* ptr_actual    = actual.begin();
-    const double* ptr_predicted = predicted.begin();
+double RelativeRootMeanSquaredError(
+    const Rcpp::NumericVector& actual, 
+    const Rcpp::NumericVector& predicted, 
+    const int normalization = 1) {
 
-    // 2) Determine size
-    std::size_t n = actual.size();
-
-    // 3) Compute RRMSE (unweighted)
-    return RRMSE::compute(ptr_actual, ptr_predicted, n, normalization);
+        metric::RRMSE<double> performance(actual, predicted, normalization);
+        return performance.compute();
 }
 
-//' @rdname rrmse
-//' @method weighted.rrmse numeric
+//' @templateVar .FUN weighted.rrmse
+//' @templateVar .METHOD numeric
+//' @template regression_standard_inherit
 //' @export
 // [[Rcpp::export(weighted.rrmse.numeric)]]
-double weighted_RelativeRootMeanSquaredError(const Rcpp::NumericVector& actual, const Rcpp::NumericVector& predicted, const Rcpp::NumericVector& w, const int normalization = 1)
-{
-    // 1) Extract pointers
-    const double* ptr_actual    = actual.begin();
-    const double* ptr_predicted = predicted.begin();
-    const double* ptr_w         = w.begin();
+double weighted_RelativeRootMeanSquaredError(
+    const Rcpp::NumericVector& actual, 
+    const Rcpp::NumericVector& predicted, 
+    const Rcpp::NumericVector& w, 
+    const int normalization = 1) {
 
-    // 2) Determine size
-    std::size_t n = actual.size();
-
-    // 3) Compute RRMSE (weighted)
-    return RRMSE::compute(ptr_actual, ptr_predicted, ptr_w, n, normalization);
+        metric::weighted_RRMSE<double> performance(actual, predicted, w, normalization);
+        return performance.compute();
 }

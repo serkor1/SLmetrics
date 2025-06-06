@@ -4,68 +4,36 @@
 # objective: Generate Methods
 # script start;
 
-#' @inherit huberloss
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
 #' 
-#' @title Concordance Correlation Coefficient
-#'
-#' @description
-#' A generic function for the [concordance correlation coefficient](https://en.wikipedia.org/wiki/Concordance_correlation_coefficient). Use [weighted.ccc()] for the weighted [concordance correlation coefficient](https://en.wikipedia.org/wiki/Concordance_correlation_coefficient).
+#' @templateVar .TITLE concordance correlation coefficient
+#' @templateVar .FUN ccc
+#' @templateVar .TASK regression
 #' 
-#' @usage
-#' ccc(
-#'  ...,
-#'  correction = FALSE
-#' )
-#' 
-#' @param correction A <[logical]> vector of [length] \eqn{1} (default: [FALSE]). If [TRUE] the variance and covariance
-#' will be adjusted with \eqn{\frac{1-n}{n}}
-#' 
-#' @section Definition:
-#' Let \eqn{\rho_c \in [0,1]} measure the agreement between \eqn{y} and \eqn{\upsilon}. The classifier agreement is calculated as, 
-#' 
-#' \deqn{
-#'   \rho_c = \frac{2 \rho \sigma_{\upsilon} \sigma_y}{\sigma_{\upsilon}^2 + \sigma_y^2 + (\mu_{\upsilon} - \mu_y)^2}
-#' }
-#'
-#' Where:
-#' - \eqn{\rho} is the pearson correlation coefficient
-#' - \eqn{\sigma_y} is the unbiased standard deviation of \eqn{y}
-#' - \eqn{\sigma_{\upsilon}} is the unbiased standard deviation of \eqn{\upsilon}
-#' - \eqn{\mu_y} is the mean of \eqn{y}
-#' - \eqn{\mu_{\upsilon}} is the mean of \eqn{\upsilon}
-#' 
-#' If `correction == TRUE` each \eqn{\sigma_{i \in [y, \upsilon]}} is adjusted by \eqn{\frac{1-n}{n}}
-#' 
-#' @example man/examples/scr_ConcordanceCorrelationCoefficient.R
-#'
-#' @family Regression
-#' @family Supervised Learning
+#' @template generic_description
+#' @template regression_standard_template
 #' 
 #' @export
-ccc <- function(
-  ...,
-  correction = FALSE) {
+ccc <- function(...) {
   UseMethod(
-    generic = "ccc",
-    object  = ..1
+    generic = "ccc"
   )
 }
 
-#' @rdname ccc
-#' @usage
-#' weighted.ccc(
-#'  ...,
-#'  w,
-#'  correction = FALSE
-#' )
+#' @usage NULL
+#' 
+#' @templateVar .TITLE concordance correlation coefficient
+#' @templateVar .FUN ccc
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
-weighted.ccc <- function(
-  ...,
-  w,
-  correction = FALSE) {
+weighted.ccc <- function(...) {
   UseMethod(
-    generic = "weighted.ccc",
-    object  = ..1
+    generic = "weighted.ccc"
   )
 }
 

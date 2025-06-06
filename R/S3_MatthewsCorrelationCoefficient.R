@@ -4,84 +4,58 @@
 # objective: Generate MCC methods
 # script start;
 
-#' @aliases mcc phi
-#' @inherit accuracy
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
 #' 
-#' @title Matthews Correlation Coefficient
-#'
-#' @description
-#' The [mcc()]-function computes the [Matthews Correlation Coefficient](https://en.wikipedia.org/wiki/Matthews_correlation_coefficient) (MCC), also known as the \eqn{\phi}-coefficient, between
-#' two vectors of predicted and observed [factor()] values. The [weighted.mcc()] function computes the weighted Matthews Correlation Coefficient.
-#'
-#' @usage
-#' ## Generic S3 method
-#' mcc(...)
+#' @aliases phi weighted.phi
 #' 
-#' @section Definition:
-#'
-#' The metric is calculated as follows,
-#'
-#' \deqn{
-#'   \frac{\#TP \times \#TN - \#FP \times \#FN}{\sqrt{(\#TP + \#FP)(\#TP + \#FN)(\#TN + \#FP)(\#TN + \#FN)}}
-#' }
+#' @templateVar .TITLE Matthews Correlation Coefficient
+#' @templateVar .FUN mcc
+#' @templateVar .TASK Classification
+#' @templateVar .MULTI_OUTPUT false
 #' 
-#' @example man/examples/scr_MatthewsCorrelationCoefficient.R
+#' @template generic_description
+#' @template classification_standard_template
 #'
-#' @family Classification
-#' @family Supervised Learning
+#' @section Other names:
+#' 
+#' The Matthews Correlation Coefficient has other names depending on research field:
+#' - \eqn{\phi}-coefficient, [phi()]
 #'
 #' @export
 mcc <- function(...) {
   UseMethod(
-    generic = "mcc",
-    object = ..1
+    generic = "mcc"
   )
 }
 
-#' @rdname mcc
-#' @usage
-#' ## Generic S3 method
-#' weighted.mcc(
-#'  ...,
-#'  w
-#' )
-#' @export
-weighted.mcc <- function(
-  ..., 
-  w) {
-  UseMethod(
-    generic = "weighted.mcc",
-    object = ..1
-  )
-}
-
-#' @rdname mcc
-#' @usage
-#' ## Generic S3 method
-#' phi(...)
+#' @usage NULL
 #' 
+#' @templateVar .TITLE Matthews Correlation Coefficient
+#' @templateVar .FUN mcc
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
+#' @export
+weighted.mcc <- function(...) {
+  UseMethod(
+    generic = "weighted.mcc"
+  )
+}
+
 #' @export
 phi <- function(...) {
   UseMethod(
-    generic = "phi",
-    object = ..1
+    generic = "phi"
   )
 }
 
-#' @rdname mcc
-#' @usage
-#' ## Generic S3 method
-#' weighted.phi(
-#'  ...,
-#'  w
-#' )
 #' @export
-weighted.phi <- function(
-  ...,
-  w) {
+weighted.phi <- function(...) {
   UseMethod(
-    generic = "weighted.phi",
-    object = ..1
+    generic = "weighted.phi"
   )
 }
 

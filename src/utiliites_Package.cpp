@@ -15,7 +15,12 @@
  * are independent, and sorts each column independently of
  * of eachother
  */
-//' @method presort matrix
+//' @returns NULL
+//'
+//' @templateVar .FUN presort
+//' @templateVar .METHOD matrix
+//' @template utils_ordering_inherit
+//'
 //' @export
 // [[Rcpp::export(presort.matrix)]]
 Rcpp::NumericMatrix sort_matrix(
@@ -68,7 +73,11 @@ Rcpp::NumericMatrix sort_matrix(
     return x;
 }
 
-//' @method preorder matrix
+//' @returns NULL
+//' @templateVar .FUN preorder
+//' @templateVar .METHOD matrix
+//' @template utils_ordering_inherit
+//'
 //' @export
 // [[Rcpp::export(preorder.matrix)]]
 Rcpp::IntegerMatrix order_matrix(

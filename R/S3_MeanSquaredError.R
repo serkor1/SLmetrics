@@ -4,62 +4,34 @@
 # objective: Generate Errors
 # script start;
 
-#' @inherit huberloss
-#'
-#' @title Mean Squared Error
-#'
-#' @description
-#' The [mse()]-function computes the [mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error) between
-#' the observed and predicted <[numeric]> vectors. The [weighted.mse()] function computes the weighted mean squared error.
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
 #' 
-#' @usage
-#' ## Generic S3 method
-#' mse(
-#'  actual,
-#'  predicted,
-#'  ...
-#' )
+#' @templateVar .TITLE mean squared error
+#' @templateVar .FUN mse
+#' @templateVar .TASK regression
 #' 
-#' @section Definition:
-#'
-#' The metric is calculated as,
-#'
-#' \deqn{
-#'   \frac{1}{n} \sum_i^n (y_i - \upsilon_i)^2
-#' }
-#'
-#' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively. 
-#' 
-#' @example man/examples/scr_MeanSquaredError.R
-#'
-#' @family Regression
-#' @family Supervised Learning
+#' @template generic_description
+#' @template regression_standard_template
 #' 
 #' @export
-mse <- function( 
-  actual, 
-  predicted,
-  ...) {
+mse <- function(...) {
   UseMethod(
     generic = "mse"
   )
 }
 
-#' @rdname mse
-#' @usage
-#' ## Generic S3 method
-#' weighted.mse(
-#'  actual,
-#'  predicted,
-#'  w,
-#'  ...
-#' )
+#' @usage NULL
+#' 
+#' @templateVar .TITLE mean squared error
+#' @templateVar .FUN mse
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
-weighted.mse <- function(
-  actual, 
-  predicted,
-  w,
-  ...) {
+weighted.mse <- function(...) {
   UseMethod(
     generic = "weighted.mse"
   )

@@ -1,155 +1,117 @@
 #ifndef RELATIVE_ENTROPY_CLASS_H
 #define RELATIVE_ENTROPY_CLASS_H
 
-#include "utilities_Package.h"
-#include <Rcpp.h>
-#include <cmath>
-#include <vector>
-#include <memory>
+#include "SLmetrics.h"
 
+namespace metric {
+    template <typename pk, typename qk>
+    class relative_entropy : public ::entropy::task<pk, qk> {
+    public:
+        using ::entropy::task<pk, qk>::task;
 
-class RelativeEntropyClass {
-public:
+        // Total or normalized entropy:
+        // dim = 0 (or default)
+        [[ nodiscard ]] inline Rcpp::NumericVector total(bool normalize = false) const noexcept {
 
-    static Rcpp::NumericVector Entropy(const double* __restrict pk,
-                                         const double* __restrict qk,
-                                         const int n,
-                                         const int k,
-                                         const int axis,
-                                         const double base = -1.0) {
-        const bool adjust_base = (base != -1.0);
-        const double log_base = adjust_base ? std::log(base) : 1.0;
-        if (adjust_base && (base <= 0 || log_base == 0.0)) {
-            Rcpp::stop("Invalid logarithm base");
-        }
-        
-        switch (axis) {
-            case 1:  return column_entropy(pk, qk, n, k, adjust_base, log_base);
-            case 2:  return row_entropy(pk, qk, n, k, adjust_base, log_base);
-            default: return total_entropy(pk, qk, n, k, adjust_base, log_base);
-        }
-    }
+            // pointers and size
+            const arma::uword vector_size   = this -> p_vector.n_elem;
+            const pk* __restrict__ p_vector = this -> p_vector.memptr();
+            const qk* __restrict__ q_vector = this -> q_vector.memptr();
 
-private:
-    
-    static Rcpp::NumericVector column_entropy(const double* __restrict pk,
-                                                         const double* __restrict qk,
-                                                         const int n,
-                                                         const int k,
-                                                         const bool adjust_base,
-                                                         const double log_base) {
-        Rcpp::NumericVector result(k);
+            // auxiliary values
+            Rcpp::NumericVector output(1);
 
-        #pragma omp parallel for if(getUseOpenMP()) schedule(static)
-        for (int j = 0; j < k; ++j) {
-
-            const double* pk_col = pk + j * n;
-            const double* qk_col = qk + j * n;
-
-            double sum_pk = 0.0, sum_qk = 0.0;
-            #pragma omp simd reduction(+:sum_pk, sum_qk)
-            for (int i = 0; i < n; ++i) {
-                sum_pk += pk_col[i];
-                sum_qk += qk_col[i];
+            // logic
+            qk sum_pk = 0.0, sum_qk = 0.0, diff_sum = 0.0;
+            const pk* __restrict__ end = p_vector + vector_size;
+            for (; p_vector < end; ++p_vector, ++q_vector) {
+                const double p_i = *p_vector;
+                const double q_i = *q_vector;
+                sum_pk    += p_i;
+                sum_qk    += q_i;
+                diff_sum  += p_i * (std::log(p_i + (p_i == 0.0)) - std::log(q_i + (q_i == 0.0)));
             }
 
+            // output
+            // if normalized it's averaged
+            // across dimensions
+            output = diff_sum * (1.0 / sum_pk) + std::log(sum_pk) - std::log(sum_qk);
+            return (normalize) ? (output / this -> n_obs) : output;
+        }
 
-            if (sum_pk <= 0.0 || sum_qk <= 0.0) {
-                result[j] = R_NaN;
-                continue;
+        // Row wise entropy:
+        // dim = 1
+        // {[0.3, 0.5, 0.2]}
+        // {[0.2, 0.2, 0.6]}
+        // Entropy, Entropy, Entropy
+        [[ nodiscard ]] inline Rcpp::NumericVector row(bool normalize = false) const noexcept {
+
+            // pointers and size
+            const arma::uword obs           = this -> n_obs;
+            const arma::uword vector_size   = this -> p_vector.n_elem;
+            const arma::uword n_cols        = vector_size / obs;
+            const pk* __restrict__ p_vector = this -> p_vector.memptr();
+            const qk* __restrict__ q_vector = this -> q_vector.memptr();
+
+            // auxiliary values
+            Rcpp::NumericVector output(n_cols);
+
+            // logic
+            Rcpp::NumericVector sum_pk(n_cols, 0.0), sum_qk(n_cols, 0.0), diff_sum(n_cols, 0.0);
+            for (arma::uword idx = 0; idx < vector_size; ++idx) {
+                const arma::uword col = idx / obs;
+                const double p_i      = p_vector[idx];
+                const double q_i      = q_vector[idx];
+                sum_pk[col]   += p_i;
+                sum_qk[col]   += q_i;
+                diff_sum[col] += p_i * (std::log(p_i + (p_i == 0.0)) - std::log(q_i + (q_i == 0.0)));
             }
 
-            const double inv_sum_pk = 1.0 / sum_pk;
-            const double inv_sum_qk = 1.0 / sum_qk;
-            double entropy = 0.0;
-            #pragma omp simd reduction(+:entropy)
-            for (int i = 0; i < n; ++i) {
-                double p = pk_col[i] * inv_sum_pk;
-                double q = qk_col[i] * inv_sum_qk;
-                if (p > 0.0 && q > 0.0) {
-                    entropy += p * (std::log(p) - std::log(q));
+            // output
+            // if normalized it's averaged
+            // across dimensions
+            if (normalize) {
+                for (arma::uword j = 0; j < n_cols; ++j) {
+                    output[j] = ( diff_sum[j] * ( 1.0 / sum_pk[j] ) - std::log( sum_pk[j] ) + std::log( sum_qk[j] ) ) / obs;
                 }
-            }
-            if (adjust_base) entropy /= log_base;
-            result[j] = entropy;
-        }
-
-        return result;
-    }
-
-
-    static Rcpp::NumericVector row_entropy(const double* __restrict pk,
-                                                      const double* __restrict qk,
-                                                      const int n,
-                                                      const int k,
-                                                      const bool adjust_base,
-                                                      const double log_base) {
-        Rcpp::NumericVector result(n);
-
-        #pragma omp parallel for if(getUseOpenMP()) schedule(static)
-        for (int i = 0; i < n; ++i) {
-            double sum_pk = 0.0, sum_qk = 0.0;
-            for (int j = 0; j < k; ++j) {
-                sum_pk += pk[i + j * n];
-                sum_qk += qk[i + j * n];
-            }
-
-            if (sum_pk <= 0.0 || sum_qk <= 0.0) {
-                result[i] = R_NaN;
-                continue;
-            }
-
-            const double inv_sum_pk = 1.0 / sum_pk;
-            const double inv_sum_qk = 1.0 / sum_qk;
-            double entropy = 0.0;
-            for (int j = 0; j < k; ++j) {
-                double p = pk[i + j * n] * inv_sum_pk;
-                double q = qk[i + j * n] * inv_sum_qk;
-                if (p > 0.0 && q > 0.0) {
-                    entropy += p * (std::log(p) - std::log(q));
+            } else {
+                for (arma::uword j = 0; j < n_cols; ++j) {
+                    output[j] = diff_sum[j] * ( 1.0 / sum_pk[j] ) - std::log( sum_pk[j] ) + std::log( sum_qk[j] );
                 }
             }
 
-            if (adjust_base) entropy /= log_base;
-            result[i] = entropy;
-        }
-        return result;
-    }
-
-    
-    static Rcpp::NumericVector total_entropy(const double* __restrict pk,
-                                                        const double* __restrict qk,
-                                                        const int n,
-                                                        const int k,
-                                                        const bool adjust_base,
-                                                        const double log_base) {
-        const int total = n * k;
-        double sum_pk = 0.0, sum_qk = 0.0;
-        #pragma omp simd reduction(+:sum_pk, sum_qk)
-            for (int i = 0; i < total; ++i) {
-                sum_pk += pk[i];
-                sum_qk += qk[i];
-            }
-
-        if (sum_pk <= 0.0 || sum_qk <= 0.0) {
-            return Rcpp::NumericVector::create(R_NaN);
+            return output;
         }
 
-        const double inv_sum_pk = 1.0 / sum_pk;
-        const double inv_sum_qk = 1.0 / sum_qk;
-        double entropy = 0.0;
-        #pragma omp parallel for reduction(+:entropy) if(getUseOpenMP()) schedule(static)
-            for (int i = 0; i < total; ++i) {
-                double p = pk[i] * inv_sum_pk;
-                double q = qk[i] * inv_sum_qk;
-                if (p > 0.0 && q > 0.0) {
-                    entropy += p * (std::log(p) - std::log(q));
-                }
+        // Column wise entropy:
+        // dim = 2
+        // {[0.3, 0.5, 0.2]} Entropy
+        // {[0.2, 0.2, 0.6]} Entropy
+        [[ nodiscard ]] inline Rcpp::NumericVector column(bool normalize = true) const noexcept {
+
+            // pointers and size
+            const arma::uword obs           = this -> n_obs;
+            const arma::uword vector_size   = this -> p_vector.n_elem;
+            const pk* __restrict__ p_vector = this -> p_vector.memptr();
+            const qk* __restrict__ q_vector = this -> q_vector.memptr();
+
+            // auxiliary values
+            Rcpp::NumericVector output(obs);
+
+            // logic
+            for (arma::uword idx = 0; idx < vector_size; ++idx) {
+                const arma::uword row = idx % obs;
+                const double p_i      = p_vector[idx];
+                const double q_i      = q_vector[idx];
+                output[row]          += p_i * ( std::log(p_i + ( p_i == 0.0 ) ) - std::log(q_i + ( q_i == 0.0 ) ) );
             }
 
-        if (adjust_base) entropy /= log_base;
-        return Rcpp::NumericVector::create(entropy);
-    }
-};
+            // output
+            // if normalized it's averaged
+            // across dimensions
+            return (normalize) ? ( output / ( vector_size / obs ) ) : output;
+        }
+    };
+}
 
 #endif

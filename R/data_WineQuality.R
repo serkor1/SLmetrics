@@ -1,5 +1,8 @@
-#' Wine Quality Dataset
+#' @rdname data_wine.quality
+#' 
+#' @title Wine quality dataset
 #'
+#' @description
 #' This dataset contains measurements of various chemical properties of white wines
 #' along with their quality ratings and a quality classification. The dataset was
 #' obtained from the UCI Machine Learning Repository.
@@ -39,7 +42,7 @@
 #' }
 #'
 #' @docType data
-#' @usage data(wine_quality)
+#' @usage data(wine.quality)
 #' @format A list with two components:
 #' \describe{
 #'   \item{features}{A data frame with 11 chemical property variables.}
@@ -47,4 +50,4 @@
 #' }
 #' @source \url{https://archive.ics.uci.edu/dataset/186/wine+quality}
 #' @keywords datasets
-"wine_quality"
+"wine.quality"

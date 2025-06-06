@@ -14,6 +14,7 @@ downloads](https://cranlogs.r-pkg.org/badges/last-month/SLmetrics?color=blue)](h
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/serkor1/SLmetrics/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/serkor1/SLmetrics/actions/workflows/R-CMD-check.yaml)
 [![R-hub](https://github.com/serkor1/SLmetrics/actions/workflows/rhub.yaml/badge.svg)](https://github.com/serkor1/SLmetrics/actions/workflows/rhub.yaml)
+[![Gitbook](https://github.com/serkor1/SLmetrics/actions/workflows/online-docs.yaml/badge.svg)](https://github.com/serkor1/SLmetrics/actions/workflows/online-docs.yaml)
 [![codecov](https://codecov.io/gh/serkor1/SLmetrics/branch/development/graph/badge.svg?token=X2osJDSRlN)](https://app.codecov.io/gh/serkor1/SLmetrics)
 [![CodeFactor](https://www.codefactor.io/repository/github/serkor1/slmetrics/badge)](https://www.codefactor.io/repository/github/serkor1/slmetrics)
 <!-- badges: end -->
@@ -30,7 +31,7 @@ array of metrics as
 [{scikit-learn}](https://github.com/scikit-learn/scikit-learn) and
 [{PyTorch}](https://github.com/pytorch/pytorch) all without
 [{reticulate}](https://github.com/rstudio/reticulate) and the Python
-compile-run-(crash)-debug cylce.
+compile-run-(crash)-debug cycle.
 
 Depending on the mood and alignment of planets
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) stands for
@@ -40,43 +41,17 @@ latter will be the core philosophy and include unsupervised learning
 metrics. If not, then it will remain a {pkg} for Supervised Learning
 metrics, and a sandbox for me to develop my `C++` skills.
 
-## :books: Table of Contents
-
-- [:rocket: Gettting Started](#rocket-gettting-started)
-  - [:shield: Installation](#shield-installation)
-  - [:books: Basic Usage](#books-basic-usage)
-- [:information_source: Why?](#information_source-why)
-- [:zap: Performance Comparison](#zap-performance-comparison)
-  - [:fast_forward: Speed comparison](#fast_forward-speed-comparison)
-  - [:floppy_disk: Memory-efficiency](#floppy_disk-memory-efficiency)
-- [:information_source: Basic usage](#information_source-basic-usage)
-  - [:books: Regression](#books-regression)
-  - [:books: Classification](#books-classification)
-- [:information_source: Enable
-  OpenMP](#information_source-enable-openmp)
-  - [:books: Entropy without OpenMP](#books-entropy-without-openmp)
-  - [:books: Entropy with OpenMP](#books-entropy-with-openmp)
-- [:information_source: Installation](#information_source-installation)
-  - [:shield: Stable version](#shield-stable-version)
-  - [:hammer_and_wrench: Development
-    version](#hammer_and_wrench-development-version)
-- [:information_source: Code of
-  Conduct](#information_source-code-of-conduct)
-
 ## :rocket: Gettting Started
 
 Below you’ll find instructions to install
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/) and get started with
 your first metric, the Root Mean Squared Error (RMSE).
 
-### :shield: Installation
+### :package: CRAN version
 
 ``` r
-## install stable release
-devtools::install_github(
-  repo = 'https://github.com/serkor1/SLmetrics@*release',
-  ref  = 'main'
-)
+## install latest CRAN build
+install.packages("SLmetrics")
 ```
 
 ### :books: Basic Usage
@@ -121,7 +96,7 @@ decisions. One low-hanging fruit to simplify this process is
 *performance evaluation*.
 
 At its core, performance evaluation is essentially just comparing two
-vectors — a programmatically and, at times, mathematically trivial step
+vectors - a programmatically and, at times, mathematically trivial step
 in the machine learning pipeline, but one that can become complicated
 due to:
 
@@ -133,17 +108,16 @@ due to:
 by being:
 
 1.  **Fast:** Powered by `C++` and
-    [Rcpp](https://github.com/RcppCore/Rcpp)  
+    [{Rcpp}](https://github.com/RcppCore/Rcpp)  
 2.  **Memory-efficient:** Everything is structured around pointers and
     references
 3.  **Lightweight:** Only depends on
-    [Rcpp](https://github.com/RcppCore/Rcpp),
-    [RcppEigen](https://github.com/RcppCore/RcppEigen), and
-    [lattice](https://github.com/deepayan/lattice)
+    [{Rcpp}](https://github.com/RcppCore/Rcpp) and
+    [{lattice}](https://github.com/deepayan/lattice)
 4.  **Simple:** S3-based, minimal overhead, and flexible inputs
 
 Performance evaluation should be plug-and-play and “just work” out of
-the box — there’s no need to worry about *quasiquations*,
+the box - there’s no need to worry about *quasiquations*,
 *dependencies*, *deprecations*, or variations of the same functions
 relative to their arguments when using
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/).
@@ -159,7 +133,7 @@ RMSE[^1].
 
 ### :fast_forward: Speed comparison
 
-<img src="meta/README_files/figure-commonmark/unnamed-chunk-4-1.png"
+<img src=".meta/readme/README_files/figure-commonmark/plot%20speed-performance-1.png"
 style="width:100.0%" />
 
 As shown in the chart,
@@ -207,8 +181,8 @@ remains extremely memory-efficient, even at large sample sizes.
 
 In its simplest form,
 [{SLmetrics}](https://serkor1.github.io/SLmetrics/)-functions work
-directly with pairs of \<numeric\> vectors (for regression) or
-\<factor\> vectors (for classification). Below we demonstrate this on
+directly with pairs of `<numeric>` vectors (for regression) or
+`<factor>` vectors (for classification). Below we demonstrate this on
 two well-known datasets, `mtcars` (regression) and `iris`
 (classification).
 
@@ -218,7 +192,7 @@ We first fit a linear model to predict `mpg` in the `mtcars` dataset,
 then compute the in-sample RMSE:
 
 ``` r
-# Evaluate a linear model on mpg (mtcars)
+## Evaluate a linear model on mpg (mtcars)
 model <- lm(mpg ~ ., data = mtcars)
 rmse(mtcars$mpg, fitted(model))
 #> [1] 2.146905
@@ -231,14 +205,14 @@ vs. “others”) and fit a logistic regression. Then we generate predicted
 classes, compute the confusion matrix and summarize it.
 
 ``` r
-# 1) recode iris
-# to binary problem
+## 1) recode iris
+## to binary problem
 iris$species_num <- as.numeric(
   iris$Species == "virginica"
 )
 
-# 2) fit the logistic
-# regression
+## 2) fit the logistic
+## regression
 model <- glm(
   formula = species_num ~ Sepal.Length + Sepal.Width,
   data    = iris,
@@ -247,8 +221,8 @@ model <- glm(
   )
 )
 
-# 3) generate predicted
-# classes
+## 3) generate predicted
+## classes
 predicted <- factor(
   as.numeric(
     predict(model, type = "response") > 0.5
@@ -257,8 +231,8 @@ predicted <- factor(
   labels = c("Virginica", "Others")
 )
 
-# 4) generate actual
-# values as factor
+## 4) generate actual
+## values as factor
 actual <- factor(
   x = iris$species_num,
   levels = c(1,0),
@@ -267,10 +241,10 @@ actual <- factor(
 ```
 
 ``` r
-# 4) generate
-# confusion matrix
+## 4) generate
+## confusion matrix
 summary(
-  confusion_matrix <-  cmatrix(
+  confusion_matrix <- cmatrix(
     actual    = actual,
     predicted = predicted
   )
@@ -298,16 +272,16 @@ summary(
 > stability may vary based on your system configuration and workload.
 
 You can control OpenMP usage within
-[{SLmetrics}](https://serkor1.github.io/SLmetrics/) using the
-setUseOpenMP function. Below are examples demonstrating how to enable
-and disable OpenMP:
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) using `openmp.on()`
+and `openmp.off()` . Below are examples demonstrating how to enable and
+disable OpenMP:
 
 ``` r
-# enable OpenMP
+## enable OpenMP
 SLmetrics::openmp.on()
 #> OpenMP enabled!
 
-# disable OpenMP
+## disable OpenMP
 SLmetrics::openmp.off()
 #> OpenMP disabled!
 ```
@@ -332,23 +306,39 @@ over 100 iterations[^3].
 
 1e6 x 200 matrix with OpenMP
 
-### :shield: Stable version
+## :package: Install from source
+
+### Github release
 
 ``` r
-## install stable release
-devtools::install_github(
-  repo = 'https://github.com/serkor1/SLmetrics@*release',
-  ref  = 'main'
+## install github release
+pak::pak(
+    pkg = "serkor1/SLmetrics@*release",
+    ask = FALSE
 )
 ```
 
-### :hammer_and_wrench: Development version
+### Nightly build
+
+#### Clone repository with submodules
+
+``` console
+git clone --recurse-submodules https://github.com/serkor1/SLmetrics.git
+```
+
+#### Installing with build tools
+
+``` console
+make build
+```
+
+#### Installing with {pak}
 
 ``` r
-## install development version
-devtools::install_github(
-  repo = 'https://github.com/serkor1/SLmetrics',
-  ref  = 'development'
+## install nightly build
+pak::pak(
+    pkg = ".",
+    ask = FALSE
 )
 ```
 

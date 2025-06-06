@@ -1,57 +1,63 @@
 #ifndef REGRESSION_MEANABSOLUTEPERCENTAGEERROR_H
 #define REGRESSION_MEANABSOLUTEPERCENTAGEERROR_H
 
-#include "utilities_Package.h"
+#include "SLmetrics.h"
 #include <cmath>
 #include <cstddef>
+#include <cstdlib>
 
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
+namespace metric {
+    // Mean Absolute Percentage Error (MAPE)
+    template <typename T>
+    class MAPE : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
+        
+        [[ nodiscard ]] inline T compute() const noexcept override {
 
-class MAPE {
-    public:
-        // Unweighted MAPE
-        static double compute(const double* actual, const double* predicted, std::size_t n)
-        {
-            double sum_ap = 0.0;
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_ap) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double diff_ratio = std::fabs(actual[i] - predicted[i]) / actual[i];
-                sum_ap += diff_ratio;
+            T ratio = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
+                T numerator   = std::abs( *actual_ptr - *predicted_ptr );
+                T denominator = std::abs( *actual_ptr );
+                ratio        += numerator / denominator;
             }
 
-            return sum_ap / static_cast<double>(n);
+            return ratio / n_obs;
         }
+    };
 
-        // Weighted MAPE
-        static double compute(const double* actual, const double* predicted, 
-                            const double* weights, std::size_t n)
-        {
-            double sum_ap_w = 0.0;
-            double sum_w    = 0.0;
+    // Weighted Mean Absolute Percentage Error
+    template <typename T>
+    class weighted_MAPE : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
+        
+        [[ nodiscard ]] inline T compute() const noexcept override {
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_ap_w, sum_w) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double w          = weights[i];
-                double diff_ratio = std::fabs(actual[i] - predicted[i]) / actual[i];
-                sum_ap_w += w * diff_ratio;
-                sum_w    += w;
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+            const T* __restrict__ weights_ptr   = this -> weights_.memptr();
+
+            T ratio = 0, weight = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                T numerator   = std::abs( *actual_ptr - *predicted_ptr );
+                T denominator = std::abs( *actual_ptr );
+                ratio        += *weights_ptr * numerator / denominator;
+                weight       += *weights_ptr;
             }
 
-            return sum_ap_w / sum_w;
+            return ratio / weight;
         }
-
-    private:
-            // Prevents the compiler from doing
-            // bad stuff.
-            MAPE()  = delete;
-            ~MAPE() = delete;
-};
+    };
+}
 
 #endif

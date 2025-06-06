@@ -1,75 +1,67 @@
-#ifndef CLASSIFICATION_CROSS_ENTROPY_LOSS_H
-#define CLASSIFICATION_CROSS_ENTROPY_LOSS_H
+#ifndef CLASSIFICATION_LOGLOSS_H
+#define CLASSIFICATION_LOGLOSS_H
 
-#include "utilities_Package.h"
-#include <Rcpp.h>
+#include "SLmetrics.h"
+#include <algorithm>
 #include <cmath>
 #include <cstddef>
 
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
+namespace metric {
+    template <typename pk, typename qk>
+    class logloss : public ::entropy::task<pk, qk> {
+        public:
+        using ::entropy::task<pk, qk>::task;
+        
+        [[nodiscard]] inline double unweighted(bool normalize = false) const noexcept {
 
-class LogLoss {
-    public:
-        static double compute(
-            const int* actual_ptr,
-            const double* response_ptr,
-            std::size_t n,
-            std::size_t nrows,
-            bool normalize) {
+            // pointers and size
+            const arma::uword n             = this -> n_obs;
+            const pk* __restrict__ p_vector = this -> p_vector.memptr();
+            const qk* __restrict__ q_matrix = this -> q_matrix.memptr();
+            constexpr double eps = 1e-15;
 
+            // logic
             double loss = 0.0;
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:loss) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                const int c = actual_ptr[i] - 1;
-                const double p = response_ptr[i + static_cast<std::size_t>(c) * nrows];
-                loss -= std::log(p);
+            for (arma::uword i = 0; i < n; ++i) {
+                const int idx = p_vector[i] - 1; // NOTE: it has to be renamed, its no longer a probability vector
+                const double probability = q_matrix[i + idx * n];
+                loss -= std::log(
+                    std::max(
+                        probability, eps
+                    )
+                );
             }
 
-            if (normalize) {
-                loss /= static_cast<double>(n);
-            }
-
-            return loss;
+            return (normalize) ? loss /= static_cast<double>(n) : loss;
         }
 
-        static double compute(
-            const int* actual_ptr,
-            const double* response_ptr,
-            const double* w_ptr,
-            std::size_t   n,
-            std::size_t   nrows,
-            bool          normalize) {
+        [[nodiscard]] inline double weighted(bool normalize = false) const noexcept {
 
-                double loss = 0.0;
-                double wsum = 0.0;
+            // pointers and size
+            const arma::uword n                     = this -> n_obs;
+            const pk* __restrict__ p_vector         = this -> p_vector.memptr();
+            const qk* __restrict__ q_matrix         = this -> q_matrix.memptr();
+            const double*  __restrict__ weights_ptr = this -> sample_weights.memptr();
+            constexpr double eps = 1e-15;
 
-                #ifdef _OPENMP
-                    #pragma omp parallel for reduction(+:loss, wsum) if(getUseOpenMP())
-                #endif
-                for (std::size_t i = 0; i < n; ++i) {
-                    const int c       = actual_ptr[i] - 1;
-                    const double p    = response_ptr[i + static_cast<std::size_t>(c) * nrows];
-                    const double wval = w_ptr[i];
+            // logic
+            double loss = 0.0, weight = 0.0;
+            for (arma::uword i = 0; i < n; ++i) {
+                const int idx = p_vector[i] - 1; // NOTE: it has to be renamed, its no longer a probability vector
+                const double probability = q_matrix[i + idx * n];
+                loss -= std::log(
+                    std::max(
+                        probability, eps
+                    )
+                ) * weights_ptr[i];
 
-                    loss -= wval * std::log(p);
-                    wsum += wval;
-                }
-
-                // Normalize if requested
-                if (normalize) {
-                    loss /= wsum;
-                }
-
-                return loss;
+                weight += weights_ptr[i];
             }
 
-    private:
-        LogLoss()  = delete;
-        ~LogLoss() = delete;
-};
+            return (normalize) ? loss /= weight : loss;
+        }
+
+    };
+}
 
 #endif

@@ -4,60 +4,34 @@
 # objective: Generate Methods
 # script start;
 
-#' @inherit huberloss
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
 #' 
-#' @title Mean Absolute Percentage Error
-#'
-#' @description
-#' The [mape()]-function computes the [mean absolute percentage error](https://en.wikipedia.org/wiki/Mean_absolute_percentage_error) between
-#' the observed and predicted <[numeric]> vectors. The [weighted.mape()] function computes the weighted mean absolute percentage error.
+#' @templateVar .TITLE mean absolute percentage error
+#' @templateVar .FUN mape
+#' @templateVar .TASK regression
 #' 
-#' @usage
-#' ## Generic S3 method
-#' mape(
-#'  actual,
-#'  predicted,
-#'  ...
-#' )
-#' 
-#' @section Definition:
-#'
-#' The metric is calculated as,
-#'
-#' \deqn{
-#'   \frac{1}{n} \sum_i^n \frac{|y_i - \upsilon_i|}{|y_i|}
-#' }
-#' 
-#' @example man/examples/scr_MeanAbsolutePercentageError.R
-#' 
-#' @family Regression
-#' @family Supervised Learning
+#' @template generic_description
+#' @template regression_standard_template
 #' 
 #' @export
-mape <- function(
-  actual, 
-  predicted,
-  ...) {
+mape <- function(...) {
   UseMethod(
     generic = "mape"
   )
 }
 
-#' @rdname mape
-#' @usage
-#' ## Generic S3 method
-#' weighted.mape(
-#'  actual,
-#'  predicted,
-#'  w,
-#'  ...
-#' )
+#' @usage NULL
+#' 
+#' @templateVar .TITLE mean absolute percentage error
+#' @templateVar .FUN mape
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
-weighted.mape <- function(
-  actual, 
-  predicted,
-  w,
-  ...) {
+weighted.mape <- function(...) {
   UseMethod(
     generic = "weighted.mape"
   )

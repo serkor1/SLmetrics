@@ -1,56 +1,58 @@
 #ifndef REGRESSION_MEANSQUAREDERROR_H
 #define REGRESSION_MEANSQUAREDERROR_H
 
-#include "utilities_Package.h"
+#include "SLmetrics.h"
 #include <cmath>
 #include <cstddef>
 
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
+namespace metric {
+    // Mean Squared Error (MSE)
+    template <typename T>
+    class MSE : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
+        
+        [[ nodiscard ]] inline T compute() const noexcept override {
 
-class MSE {
-    public:
-        // Unweighted MSE
-        static double compute(const double* actual, const double* predicted, std::size_t n)
-        {
-            double sum_sq_diff = 0.0;
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_sq_diff) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double diff = actual[i] - predicted[i];
-                sum_sq_diff += diff * diff;
+            T squared_error = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
+                squared_error += (*actual_ptr - *predicted_ptr) * ( *actual_ptr - *predicted_ptr );
             }
 
-            return sum_sq_diff / static_cast<double>(n);
+            return squared_error / static_cast<T>( n_obs );
         }
+    };
 
-        // Weighted MSE
-        static double compute(const double* actual, const double* predicted, const double* weights, std::size_t n)
-        {
-            double sum_sq_diff = 0.0;
-            double sum_w       = 0.0;
+    // Weighted Mean Squared Error (MSE)
+    template <typename T>
+    class weighted_MSE : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
+        
+        [[ nodiscard ]] inline T compute() const noexcept override {
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_sq_diff, sum_w) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double diff = actual[i] - predicted[i];
-                double w    = weights[i];
-                sum_sq_diff += w * diff * diff;
-                sum_w       += w;
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+            const T* __restrict__ weights_ptr   = this -> weights_.memptr();
+
+            T squared_error = 0, weight = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                squared_error += *weights_ptr * (*actual_ptr - *predicted_ptr) * ( *actual_ptr - *predicted_ptr );
+                weight        += *weights_ptr;
             }
 
-            return sum_sq_diff / sum_w;
+            return squared_error / static_cast<T>( weight );
         }
-
-    private:
-            // Prevents the compiler from doing
-            // bad stuff.
-            MSE()  = delete;
-            ~MSE() = delete;
-};
+    };
+}
 
 #endif

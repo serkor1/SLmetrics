@@ -4,60 +4,34 @@
 # objective: Generate Methods
 # script start;
 
-#' @inherit huberloss
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
 #' 
-#' @title Mean Absolute Error
-#'
-#' @description 
-#' The [mae()]-function computes the [mean absolute error](https://en.wikipedia.org/wiki/Mean_absolute_error) between
-#' the observed and predicted <[numeric]> vectors. The [weighted.mae()] function computes the weighted mean absolute error.
-#'
-#' @usage
-#' ## Generic S3 method
-#' mae(
-#'  actual,
-#'  predicted,
-#'  ...
-#' )
+#' @templateVar .TITLE mean absolute error
+#' @templateVar .FUN mae
+#' @templateVar .TASK regression
 #' 
-#' @section Definition:
-#' 
-#' The metric is calulated as follows,
-#'
-#' \deqn{
-#'   \frac{\sum_i^n |y_i - \upsilon_i|}{n}
-#' }
-#' 
-#' @example man/examples/scr_MeanAbsoluteError.R
-#' 
-#' @family Regression
-#' @family Supervised Learning
+#' @template generic_description
+#' @template regression_standard_template
 #' 
 #' @export
-mae <- function(
-  actual, 
-  predicted,
-  ...) {
+mae <- function(...) {
   UseMethod(
     generic = "mae"
   )
 }
 
-#' @rdname mae
-#' @usage
-#' ## Generic S3 method
-#' weighted.mae(
-#'  actual,
-#'  predicted,
-#'  w,
-#'  ...
-#' )
+#' @usage NULL
+#' 
+#' @templateVar .TITLE mean absolute error
+#' @templateVar .FUN mae
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
-weighted.mae <- function(
-  actual, 
-  predicted,
-  w,
-  ...) {
+weighted.mae <- function(...) {
   UseMethod(
     generic = "weighted.mae"
   )

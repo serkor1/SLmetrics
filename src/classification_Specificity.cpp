@@ -1,95 +1,131 @@
-// [[Rcpp::depends(RcppEigen)]]
-#include <RcppEigen.h>
-#include "classification_Specificity.h" // SpecificityClass definition
+#include <Rcpp.h>
+#include "classification_Specificity.h"
 
-using namespace Rcpp;
+// declare metric
+using specificity_score_impl = metric::specificity<int>;
 
-//' @rdname specificity
-//' @method specificity factor
+//' @templateVar .FUN specificity
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(specificity.factor)]]
-Rcpp::NumericVector Specificity(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    SpecificityClass cook(na_rm);
-    return recipe(cook, actual, predicted, std::nullopt, micro);
+Rcpp::NumericVector specificity(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+        
+        specificity_score_impl performance(actual, predicted, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
-//' @rdname specificity
-//' @method weighted.specificity factor
+//' @templateVar .FUN weighted.specificity
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.specificity.factor)]]
-Rcpp::NumericVector weighted_Specificity(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    SpecificityClass cook(na_rm);
-    return recipe(cook, actual, predicted, w, micro);
+Rcpp::NumericVector weighted_specificity(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const Rcpp::NumericVector& w, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+
+        specificity_score_impl performance(actual, predicted, w, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
-//' @rdname specificity
-//' @method specificity cmatrix
+//' @templateVar .FUN specificity
+//' @templateVar .METHOD cmatrix
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(specificity.cmatrix)]]
-Rcpp::NumericVector cmatrix_Specificity(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    SpecificityClass cook(na_rm);
-    return recipe(cook, x, micro);
+Rcpp::NumericVector cmatrix_specificity(
+    const Rcpp::NumericMatrix& x,
+    const int& estimator = 0,
+    bool na_rm = true) {
+        
+        specificity_score_impl performance(x, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
-//' @rdname specificity
 //' @method tnr factor
 //' @export
 // [[Rcpp::export(tnr.factor)]]
-Rcpp::NumericVector TrueNegativeRate(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    SpecificityClass cook(na_rm);
-    return recipe(cook, actual, predicted, std::nullopt, micro);
+Rcpp::NumericVector true_negative_rate(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+        
+        specificity_score_impl performance(actual, predicted, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
-//' @rdname specificity
 //' @method weighted.tnr factor
 //' @export
 // [[Rcpp::export(weighted.tnr.factor)]]
-Rcpp::NumericVector weighted_TrueNegativeRate(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    SpecificityClass cook(na_rm);
-    return recipe(cook, actual, predicted, w, micro);
+Rcpp::NumericVector weighted_true_negative_rate(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const Rcpp::NumericVector& w, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+
+        specificity_score_impl performance(actual, predicted, w, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
-//' @rdname specificity
 //' @method tnr cmatrix
 //' @export
 // [[Rcpp::export(tnr.cmatrix)]]
-Rcpp::NumericVector cmatrix_TrueNegativeRate(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    SpecificityClass cook(na_rm);
-    return recipe(cook, x, micro);
+Rcpp::NumericVector cmatrix_true_negative_rate(
+    const Rcpp::NumericMatrix& x,
+    const int& estimator = 0,
+    bool na_rm = true) {
+        
+        specificity_score_impl performance(x, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
-//' @rdname specificity
 //' @method selectivity factor
 //' @export
 // [[Rcpp::export(selectivity.factor)]]
-Rcpp::NumericVector Selectivity(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    SpecificityClass cook(na_rm);
-    return recipe(cook, actual, predicted, std::nullopt, micro);
+Rcpp::NumericVector selectivity(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+        
+        specificity_score_impl performance(actual, predicted, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
-//' @rdname specificity
 //' @method weighted.selectivity factor
 //' @export
 // [[Rcpp::export(weighted.selectivity.factor)]]
-Rcpp::NumericVector weighted_Selectivity(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    SpecificityClass cook(na_rm);
-    return recipe(cook, actual, predicted, w, micro);
+Rcpp::NumericVector weighted_selectivity(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const Rcpp::NumericVector& w, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+
+        specificity_score_impl performance(actual, predicted, w, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
-//' @rdname specificity
 //' @method selectivity cmatrix
 //' @export
 // [[Rcpp::export(selectivity.cmatrix)]]
-Rcpp::NumericVector cmatrix_Selectivity(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    SpecificityClass cook(na_rm);
-    return recipe(cook, x, micro);
+Rcpp::NumericVector cmatrix_selectivity(
+    const Rcpp::NumericMatrix& x,
+    const int& estimator = 0,
+    bool na_rm = true) {
+        
+        specificity_score_impl performance(x, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }

@@ -1,60 +1,62 @@
 #ifndef REGRESSION_ROOTMEANSQUAREDEROR_H
 #define REGRESSION_ROOTMEANSQUAREDEROR_H
 
-#include "utilities_Package.h"
+#include "SLmetrics.h"
 #include <cmath>
 #include <cstddef>
 
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
+namespace metric {
+    // Root Mean Squared Error (RMSE)
+    template <typename T>
+    class RMSE : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
+        
+        [[ nodiscard ]] inline T compute() const noexcept override {
 
-class RMSE {
-    public:
-        // Unweighted RMSE
-        static double compute(const double* actual, const double* predicted, std::size_t n)
-        {
-            double squared_sum = 0.0;
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:squared_sum) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double difference = actual[i] - predicted[i];
-                squared_sum += difference * difference;
+            T squared_error = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
+                squared_error += (*actual_ptr - *predicted_ptr) * ( *actual_ptr - *predicted_ptr );
             }
 
-            double mse = squared_sum / static_cast<double>(n);
-
-            return std::sqrt(mse);
+            return std::sqrt( 
+                squared_error / n_obs
+             );
         }
+    };
 
-        // Weighted RMSE
-        static double compute(const double* actual, const double* predicted, const double* weights, std::size_t n)
-        {
-            double squared_sum = 0.0;
-            double weighted_sum  = 0.0;
+    // Weighted Root Mean Squared Error
+    template <typename T>
+    class weighted_RMSE : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
+        
+        [[ nodiscard ]] inline T compute() const noexcept override {
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:squared_sum, weighted_sum) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double difference = actual[i] - predicted[i];
-                double w    = weights[i];
-                squared_sum += w * difference * difference;
-                weighted_sum  += w;
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+            const T* __restrict__ weights_ptr   = this -> weights_.memptr();
+
+            T squared_error = 0, weight = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                squared_error += *weights_ptr * (*actual_ptr - *predicted_ptr) * ( *actual_ptr - *predicted_ptr );
+                weight        += *weights_ptr;
             }
 
-            double mse = squared_sum / weighted_sum;
-            
-            return std::sqrt(mse);
+            return std::sqrt( 
+                squared_error / weight
+             );
         }
-
-    private:
-        // Prevents the compiler from doing
-        // bad stuff.
-        RMSE()  = delete;
-        ~RMSE() = delete;
-};
+    };
+}
 
 #endif

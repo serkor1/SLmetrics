@@ -1,57 +1,61 @@
-#ifndef REGRESSION_MEANPERCENTAGEERROR_H
-#define REGRESSION_MEANPERCENTAGEERROR_H
+#ifndef REGRESSION_MEANPERCENTAGEratio_H
+#define REGRESSION_MEANPERCENTAGEratio_H
 
-#include "utilities_Package.h"
+#include "SLmetrics.h"
 #include <cmath>
 #include <cstddef>
+#include <cstdlib>
 
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
+namespace metric {
 
-class MPE {
-    public:
-        // Unweighted MPE
-        static double compute(const double* actual, const double* predicted, std::size_t n)
-        {
-            double sum_perc = 0.0;
+    // Mean Percentage ratio (MPE)
+    template <typename T>
+    class MPE : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_perc) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double diff  = actual[i] - predicted[i];
-                double ratio = diff / actual[i];
-                sum_perc += ratio;
+        [[ nodiscard ]] inline T compute() const noexcept override {
+
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+
+            T ratio = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
+                ratio += ( *actual_ptr - *predicted_ptr ) / *actual_ptr;
             }
 
-            return sum_perc / static_cast<double>(n);
+            return ratio / n_obs;
         }
+    };
 
-        // Weighted MPE
-        static double compute(const double* actual, const double* predicted, const double* weights, std::size_t n)
-        {
-            double sum_perc = 0.0;
-            double sum_w    = 0.0;
+    // Weighted Mean Percentage ratio
+    template <typename T>
+    class weighted_MPE : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_perc, sum_w) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double w     = weights[i];
-                double diff  = actual[i] - predicted[i];
-                double ratio = diff / actual[i];
-                sum_perc += w * ratio;
-                sum_w    += w;
+        [[ nodiscard ]] inline T compute() const noexcept override {
+
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+            const T* __restrict__ weights_ptr   = this -> weights_.memptr();
+
+            T ratio  = 0,weight = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                ratio  += *weights_ptr * ( ( *actual_ptr - *predicted_ptr ) / *actual_ptr );
+                weight += *weights_ptr;
             }
 
-            return sum_perc / sum_w;
+            return ratio / weight;
         }
-    private:
-            // Prevents the compiler from doing
-            // bad stuff.
-            MPE()  = delete;
-            ~MPE() = delete;
-};
+    };
+
+}
 
 #endif

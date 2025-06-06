@@ -1,57 +1,59 @@
 #ifndef REGRESSION_MEANABSOLUTEERROR_H
 #define REGRESSION_MEANABSOLUTEERROR_H
 
-#include "utilities_Package.h"
+#include "SLmetrics.h"
 #include <cmath>
 #include <cstddef>
+#include <cstdlib>
 
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
-
-class MAE {
+namespace metric {
+    // Mean Absolute Error (MAE)
+    template <typename T>
+    class MAE : public regression::task<T> {
     public:
-        // Unweighted MAE
-        static double compute(const double* actual, const double* predicted, std::size_t n)
-        {
-            double sum_abs_diff = 0.0;
+        using regression::task<T>::task;
+        
+        [[ nodiscard ]] inline T compute() const noexcept override {
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_abs_diff) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double diff = actual[i] - predicted[i];
-                sum_abs_diff += std::fabs(diff);
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+
+            T error = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
+                error += std::abs( *actual_ptr - *predicted_ptr );
             }
 
-            return sum_abs_diff / static_cast<double>(n);
+            return error / static_cast<T>(n_obs);
         }
+    };
 
-        // Weighted MAE
-        static double compute(const double* actual, const double* predicted, 
-                            const double* weights, std::size_t n)
-        {
-            double sum_abs_diff = 0.0;
-            double sum_w        = 0.0;
+    // Weighted Mean Absolute Error
+    template <typename T>
+    class weighted_MAE : public regression::task<T> {
+    public:
+        using regression::task<T>::task;
+        
+        [[ nodiscard ]] inline T compute() const noexcept override {
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_abs_diff, sum_w) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double w    = weights[i];
-                double diff = actual[i] - predicted[i];
-                sum_abs_diff += w * std::fabs(diff);
-                sum_w        += w;
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+            const T* __restrict__ weights_ptr   = this -> weights_.memptr();
+
+            T error = 0, weight = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                error  += *weights_ptr * std::abs( *actual_ptr - *predicted_ptr );
+                weight += *weights_ptr;
             }
 
-            return sum_abs_diff / sum_w;
+            return error / static_cast<T>( weight );
         }
-
-    private:
-        // Prevents the compiler from doing
-        // bad stuff.
-        MAE()  = delete;
-        ~MAE() = delete;
-};
+    };
+}
 
 #endif

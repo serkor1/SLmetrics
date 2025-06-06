@@ -4,29 +4,17 @@
 # objective: Generate Methods
 # script start;
 
-#' @inherit specificity
-#'
-#' @title Receiver Operator Characteristics
-#'
-#' @description
-#' The [ROC()]-function computes the [tpr()] and [fpr()] at thresholds provided by the \eqn{response}- or \eqn{thresholds}-vector. The function
-#' constructs a [data.frame()] grouped by \eqn{k}-classes where each class is treated as a binary classification problem.
+#' @title NULL
+#' @usage NULL
 #' 
-#' @usage
-#' ## Generic S3 method
-#' ROC(
-#'  actual,
-#'  response,
-#'  thresholds = NULL,
-#'  presorted  = FALSE,
-#'  ...
-#' )
+#' @templateVar .TITLE Reciever Operator Characteristics
+#' @templateVar .FUN roc.curve
+#' @templateVar .TYPE not_auc
+#' @templateVar .TASK Classification
 #' 
-#' @param response A \eqn{n \times k} <[numeric]>-[matrix]. The estimated response probabilities for each class \eqn{k}.
-#' @param thresholds An optional <[numeric]> vector of [length] \eqn{n} (default: [NULL]).
-#' @param presorted A <[logical]>-value [length] 1 (default: [FALSE]). If [TRUE] the input will not be sorted by threshold.
-#' @param ... Arguments passed into other methods.
-#'
+#' @template generic_description
+#' @template classification_auc_template
+#' 
 #' @returns A [data.frame] on the following form,
 #'
 #' \item{threshold}{<[numeric]> Thresholds used to determine [tpr()] and [fpr()]}
@@ -34,45 +22,67 @@
 #' \item{label}{<[character]> The levels of the actual <[factor]>}
 #' \item{fpr}{<[numeric]> The false positive rate}
 #' \item{tpr}{<[numeric]> The true positve rate}
-#'
-#' @example man/examples/scr_ReceiverOperatorCurve.R
-#'
-#' @family Classification
-#' @family Supervised Learning
-#'
+#' 
 #' @export
-ROC <- function(
-  actual,
-  response, 
-  thresholds = NULL,
-  presorted  = FALSE,
-  ...) {
+roc.curve <- function(...) {
   UseMethod(
-    generic = "ROC"
+    generic = "roc.curve"
   )
 }
 
-#' @rdname ROC
-#' @usage
-#' ## Generic S3 method
-#' weighted.ROC(
-#'  actual,
-#'  response,
-#'  w,
-#'  thresholds = NULL,
-#'  presorted  = FALSE,
-#'  ...
-#' )
+#' @usage NULL
+#' 
+#' @templateVar .TITLE Reciever Operator Characteristics
+#' @templateVar .FUN roc.curve
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
-weighted.ROC <- function(
-  actual,
-  response,
-  w,
-  thresholds = NULL,
-  presorted  = FALSE,
-  ...) {
+weighted.roc.curve <- function(...) {
   UseMethod(
-    generic = "weighted.ROC"
+    generic = "weighted.roc.curve"
+  )
+}
+
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
+#' 
+#' @templateVar .TITLE Area under the Receiver Operator Characteristics Curve
+#' @templateVar .FUN auc.roc.curve
+#' @templateVar .TYPE auc
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_description
+#' @template classification_auc_template
+#' 
+#' @usage
+#' ## Generic S3 method for
+#' ## unweighted area under the
+#' ## Receiver Operator Characteristics
+#' ## Curve
+#' auc.roc.curve(...)
+#' 
+#' @export
+auc.roc.curve <- function(...) {
+  UseMethod(
+    generic = "auc.roc.curve"
+  )
+}
+
+#' @usage NULL
+#' 
+#' @templateVar .TITLE Area under the Receiver Operator Characteristics Curve
+#' @templateVar .FUN auc.roc.curve
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
+#' @export
+weighted.auc.roc.curve <- function(...) {
+  UseMethod(
+    generic = "weighted.auc.roc.curve"
   )
 }
 
@@ -113,7 +123,7 @@ summary.ROC <- function(
   metric <- vapply(
     x_list, 
     function(x) {
-      auc(
+      auc.xy(
         y = x$tpr,
         x = x$fpr
       )

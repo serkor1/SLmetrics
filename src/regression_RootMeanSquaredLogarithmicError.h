@@ -1,62 +1,64 @@
 #ifndef REGRESSION_ROOTMEANSQUAREDLOGARITHMICERROR_H
 #define REGRESSION_ROOTMEANSQUAREDLOGARITHMICERROR_H
 
-#include "utilities_Package.h"
+#include "SLmetrics.h"
 #include <cmath>
 #include <cstddef>
 
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
+namespace metric {
+    // Root Mean Squared Logarithmic Error (RMSLE)
+    template <typename T>
+    class RMSLE : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
 
-class RMSLE {
-    public:
-        // Unweighted RMSLE
-        static double compute(const double* actual, const double* predicted, std::size_t n)
-        {
-            double sum_log_diff_sq = 0.0;
+        [[ nodiscard ]] inline T compute() const noexcept override {
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_log_diff_sq) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double log_a = std::log(actual[i] + 1.0);
-                double log_p = std::log(predicted[i] + 1.0);
-                double diff  = log_a - log_p;
-                sum_log_diff_sq += diff * diff;
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+
+            T squared_error = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
+                T error        = std::log( *actual_ptr + 1 ) - std::log( *predicted_ptr + 1 );
+                squared_error += error * error;
             }
 
-            double mean_log_diff_sq = sum_log_diff_sq / static_cast<double>(n);
-            return std::sqrt(mean_log_diff_sq);
+            return std::sqrt(
+                squared_error / n_obs
+            );
         }
+    };
 
-        // Weighted RMSLE
-        static double compute(const double* actual, const double* predicted, const double* weights, std::size_t n)
-        {
-            double sum_log_diff_sq = 0.0;
-            double sum_w           = 0.0;
+    // Weighted Root Mean Squared Logarithmic Error
+    template <typename T>
+    class weighted_RMSLE : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_log_diff_sq, sum_w) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double w     = weights[i];
-                double log_a = std::log(actual[i] + 1.0);
-                double log_p = std::log(predicted[i] + 1.0);
-                double diff  = log_a - log_p;
-                sum_log_diff_sq += w * diff * diff;
-                sum_w           += w;
+        [[ nodiscard ]] inline T compute() const noexcept override {
+
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+            const T* __restrict__ weights_ptr   = this -> weights_.memptr();
+
+            T squared_error = 0, weight = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                T error        = std::log( *actual_ptr + 1 ) - std::log( *predicted_ptr + 1 );
+                squared_error += *weights_ptr * (error * error);
+                weight        += *weights_ptr;
             }
 
-            double mean_log_diff_sq = sum_log_diff_sq / sum_w;
-            return std::sqrt(mean_log_diff_sq);
+            return std::sqrt(
+                squared_error / weight
+            );
         }
-
-    private:
-            // Prevents the compiler from doing
-            // bad stuff.
-            RMSLE()  = delete;
-            ~RMSLE() = delete;
-};
+    };
+}
 
 #endif

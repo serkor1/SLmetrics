@@ -1,0 +1,105 @@
+#!/usr/bin/env sh
+
+## Description: 
+##
+## Script used to generate Makevars.win from Makevars.win.in on Windows
+## It checks for available C++ standards in descending order:
+##    C++23, then C++20, then C++17.
+## If none is available, installation is aborted.
+
+## 0) Create a small program
+##    to test for CXXSTD and 
+##    store as environment
+##    variable
+cat > test_cpp_version.cpp << 'EOF'
+#include <iostream>
+int main() {
+    std::cout << __cplusplus;
+    return 0;
+}
+EOF
+
+test_cpp_standard() {
+    std_flag="$1"
+    ${CXX} $std_flag -o test_cpp_version test_cpp_version.cpp 2>/dev/null
+    if test $? -eq 0; then
+        result=`./test_cpp_version`
+        echo $result
+        return 0
+    else
+        return 1
+    fi
+}
+
+## 1) Locate R Home
+##    this is where R is stored
+##    often a standard location. And compile
+##    program with standard compiler built
+##    shipped with R
+##
+##    NOTE: It may, or may not, be a a good idea
+##    to search for it in alternative locations 
+##    for users using containers, dockers and other
+##    stuff that changes essential stuff 
+R_EXE="${R_HOME}/bin${R_ARCH_BIN}/R"
+CXX=`"${R_EXE}" CMD config CXX`
+CPP_SUPPORTED="no"
+
+## 2) List all possible
+##    CXXSTD
+STD_C23=`"${R_EXE}" CMD config CXX23STD`
+STD_C20=`"${R_EXE}" CMD config CXX20STD`
+STD_C17=`"${R_EXE}" CMD config CXX17STD`
+
+## 3) Check for C++23 
+##    if not available try C++20, and 
+##    fall back on C++17 (if not available it will abort)
+## 3.1) C++23
+if test -n "$STD_C23"; then
+    value=`test_cpp_standard "$STD_C23"`
+    if test $? -eq 0 && test "$value" -ge 202302; then
+         CXXFLAGS=`"${R_EXE}" CMD config CXX23FLAGS`
+         CXX_STD="CXX23"
+         CPP_SUPPORTED="yes"
+    fi
+fi
+
+## 3.2) C++20
+if test "$CPP_SUPPORTED" = "no" && test -n "$STD_C20"; then
+    value=`test_cpp_standard "$STD_C20"`
+    if test $? -eq 0 && test "$value" -ge 202002; then
+         CXXFLAGS=`"${R_EXE}" CMD config CXX20FLAGS`
+         CXX_STD="CXX20"
+         CPP_SUPPORTED="yes"
+    fi
+fi
+
+## 3.3) C++17
+if test "$CPP_SUPPORTED" = "no" && test -n "$STD_C17"; then
+    value=`test_cpp_standard "$STD_C17"`
+    if test $? -eq 0 && test "$value" -ge 201703; then
+         CXXFLAGS=`"${R_EXE}" CMD config CXX17FLAGS`
+         CXX_STD="CXX17"
+         CPP_SUPPORTED="yes"
+    fi
+fi
+
+## 3.4) Abort installation if no
+##      CXXSTD17 compiler is available. 
+##      or echo the CXXSTD
+if test "$CPP_SUPPORTED" = "no"; then
+    echo "ERROR: Your C++ compiler does not support C++17 or later."
+    rm -f test_cpp_version.cpp test_cpp_version
+    exit 1
+fi
+
+echo "Using C++ standard: $CXX_STD"
+
+## 4) Extract additional
+##    flags
+CPPFLAGS=`"${R_EXE}" CMD config CPPFLAGS`
+
+## 5) Create Makevars.win
+sed -e "s/@CXX_STD@/$CXX_STD/" < src/Makevars.win.in > src/Makevars.win
+
+exit 0

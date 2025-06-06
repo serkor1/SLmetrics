@@ -80,6 +80,13 @@ def py_accuracy(actual, predicted, average = None, w = None):
       y_pred = predicted,
       sample_weight = w
     )
+
+def py_hammingloss(actual, predicted, w = None):
+    return metrics.hamming_loss(
+      y_true = actual,
+      y_pred = predicted,
+      sample_weight = w
+    )
     
 def py_baccuracy(actual, predicted, adjust = False, average = None, w = None):
     return metrics.balanced_accuracy_score(
@@ -116,6 +123,13 @@ def py_prROC(actual, response, pos_label = 1, w = None):
     sample_weight = w
   )
 
+def py_brier(actual, predicted, w = None):
+    return metrics.brier_score_loss(
+      y_true  = actual,
+      y_prob  = predicted,
+      sample_weight = w,
+      pos_label = 1
+    )
 
 # regression metrics
 
@@ -168,6 +182,28 @@ def py_pinball(actual, predicted, w = None, alpha = 0.5):
       sample_weight = w,
       alpha = alpha,
       multioutput = "raw_values"
+    )
+
+def py_tweedie(actual, predicted, w = None, power = 2):
+    return metrics.mean_tweedie_deviance(
+      y_true = actual,
+      y_pred = predicted,
+      sample_weight = w,
+      power = power
+    )
+
+def py_gamma(actual, predicted, w = None):
+    return metrics.mean_gamma_deviance(
+      y_true = actual,
+      y_pred = predicted,
+      sample_weight = w
+    )
+
+def py_poisson(actual, predicted, w = None):
+    return metrics.mean_poisson_deviance(
+      y_true = actual,
+      y_pred = predicted,
+      sample_weight = w
     )
 
 

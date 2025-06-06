@@ -1,149 +1,117 @@
 #ifndef CROSS_ENTROPY_CLASS_H
 #define CROSS_ENTROPY_CLASS_H
 
-#include "utilities_Package.h"
-#include <Rcpp.h>
-#include <cmath>
-#include <vector>
-#include <memory>
+#include "SLmetrics.h"
 
-class CrossEntropyClass {
+namespace metric {
+    template <typename pk, typename qk>
+    class cross_entropy : public ::entropy::task<pk, qk> {
+        public:
+        using ::entropy::task<pk, qk>::task;
 
-    public:
-        static Rcpp::NumericVector Entropy(const double* __restrict pk,
-                                           const double* __restrict qk,
-                                            const int n,
-                                            const int k,
-                                            const int axis,
-                                            const double base = -1.0) {
+        /// Total or normalized entropy:
+        // dim = 0 (or default)
+        [[ nodiscard ]] inline Rcpp::NumericVector total(bool normalize = false) const noexcept {
 
-            const bool adjust_base = (base != -1.0);
-            const double log_base = adjust_base ? std::log(base) : 1.0;
+            // pointers and size
+            const arma::uword vector_size   = this -> p_vector.n_elem;
+            const pk* __restrict__ p_vector = this -> p_vector.memptr(); 
+            const qk* __restrict__ q_vector = this -> q_vector.memptr();
+            Rcpp::NumericVector output(1);
+            
 
-            if (adjust_base && (base <= 0 || log_base == 0.0)) {
-                Rcpp::stop("Invalid logarithm base");
+            // logic
+            qk sum_pk = 0.0, sum_qk = 0.0, cross_sum = 0.0;
+            const qk* __restrict__ end = p_vector + vector_size;
+            for (; p_vector < ( end ); ++p_vector, ++q_vector) {
+                const double p_i = *p_vector;
+                const double q_i = *q_vector;
+
+                sum_pk    += p_i;
+                sum_qk    += q_i;
+
+                cross_sum += p_i * std::log(q_i + (q_i == 0.0));
             }
 
-            switch (axis) {
-                case 1:  return column_entropy(pk, qk, n, k, adjust_base, log_base);
-                case 2:  return row_entropy(pk, qk, n, k, adjust_base, log_base);
-                default: return total_entropy(pk, qk, n, k, adjust_base, log_base);
+            // output
+            // if normalized it's averaged
+            // across dimensions
+            output = std::log( sum_qk ) - cross_sum * ( 1.0 / sum_pk );
+            return (normalize) ? ( output / this -> n_obs ) : output;
+        }
+
+        // Row wise entropy:
+        // dim = 1
+        // {[0.3, 0.5, 0.2]}
+        // {[0.2, 0.2, 0.6]}
+        // Entropy, Entropy, Entropy
+        [[ nodiscard ]] inline Rcpp::NumericVector row(bool normalize = false) const noexcept {
+
+            // pointers and size
+            const arma::uword obs           = this -> n_obs;
+            const arma::uword vector_size   = this -> p_vector.n_elem;
+            const arma::uword n_cols        = vector_size / obs;
+            const pk* __restrict__ p_vector = this -> p_vector.memptr();
+            const qk* __restrict__ q_vector = this -> q_vector.memptr();
+
+            // logic
+            Rcpp::NumericVector cross_sum(n_cols, 0.0), sum_qk(n_cols, 0.0), sum_pk(n_cols, 0.0);
+            for (arma::uword idx = 0; idx < vector_size; ++idx) {
+                const arma::uword col = idx / obs;
+                const double p_i      = p_vector[idx];
+                const double q_i      = q_vector[idx];
+                sum_pk[col]    += p_i;
+                sum_qk[col]    += q_i;
+                cross_sum[col] += (q_i > 0.0) ? p_i * std::log(q_i) : 0.0;
             }
+
+            Rcpp::NumericVector output(n_cols, 0.0);
+            if (normalize) {
+                for (arma::uword j = 0; j < n_cols; ++j) {
+                    double cross_entropy = std::log(sum_qk[j])
+                            - cross_sum[j] * (1.0 / sum_pk[j]);
+                    output[j] = cross_entropy / obs;
+                }
+            } else {
+                for (arma::uword j = 0; j < n_cols; ++j) {
+                    output[j] = std::log(sum_qk[j])
+                            - cross_sum[j] * (1.0 / sum_pk[j]);
+                }
+            }
+
+            return output;
         }
 
-    private:
-        static Rcpp::NumericVector column_entropy(const double* __restrict pk,
-                                                    const double* __restrict qk,
-                                                    const int n,
-                                                    const int k,
-                                                    const bool adjust_base,
-                                                    const double log_base) {
-            Rcpp::NumericVector result(k);
+        // Column wise entropy:
+        // dim = 2
+        // {[0.3, 0.5, 0.2]} Entropy
+        // {[0.2, 0.2, 0.6]} Entropy
+        [[ nodiscard ]] inline Rcpp::NumericVector column(bool normalize = true) const noexcept {
+            
+            // pointers and size
+            const arma::uword obs           = this -> n_obs;
+            const arma::uword vector_size   = this -> p_vector.n_elem;
+            const pk* __restrict__ p_vector = this -> p_vector.memptr(); 
+            const qk* __restrict__ q_vector = this -> q_vector.memptr();
 
-            #pragma omp parallel for if(getUseOpenMP()) schedule(static)
-                for (int j = 0; j < k; ++j) {
-                    const double* pk_col = pk + j * n;
-                    const double* qk_col = qk + j * n;
+            // auxiliary values
+            Rcpp::NumericVector output( obs );
+            for (arma::uword idx = 0; idx < vector_size; ++idx) {
+                const arma::uword row = idx % obs;
 
-                    double sum_pk = 0.0, sum_qk = 0.0;
-                    #pragma omp simd reduction(+:sum_pk, sum_qk)
-                        for (int i = 0; i < n; ++i) {
-                            sum_pk += pk_col[i];
-                            sum_qk += qk_col[i];
-                        }
+                const double p_i      = p_vector[idx];
+                const double q_i      = q_vector[idx];
 
-                        if (sum_pk <= 0.0 || sum_qk <= 0.0) {
-                            result[j] = R_NaN;
-                            continue;
-                        }
-
-                    const double inv_sum_pk = 1.0 / sum_pk;
-                    double sum_pqlog = 0.0;
-                    #pragma omp simd reduction(+:sum_pqlog)
-                        for (int i = 0; i < n; ++i) {
-                            const double q = qk_col[i];
-                            sum_pqlog += (q > 0.0) ? (pk_col[i] * std::log(q)) : 0.0;
-                        }
-
-                    double cross_entropy = std::log(sum_qk) - sum_pqlog * inv_sum_pk;
-                    if (adjust_base) cross_entropy /= log_base;
-                    result[j] = cross_entropy;
-                }
-            return result;
+                output[row] -= p_i * std::log(q_i + (q_i == 0.0));
+            }
+            
+            // output
+            // if normalized it's averaged
+            // across dimensions
+            return (normalize) ? ( output / ( vector_size / obs ) ) : output;
         }
+        
+    };
+}
 
-        static Rcpp::NumericVector row_entropy(const double* __restrict pk,
-                                                const double* __restrict qk,
-                                                const int n,
-                                                const int k,
-                                                const bool adjust_base,
-                                                const double log_base) {
-            Rcpp::NumericVector result(n);
-
-            #pragma omp parallel for if(getUseOpenMP()) schedule(static)
-                for (int i = 0; i < n; ++i) {
-                    const double* pk_row = pk + i;
-                    const double* qk_row = qk + i;
-
-                    double sum_pk = 0.0, sum_qk = 0.0;
-                    for (int j = 0; j < k; ++j) {
-                        sum_pk += pk_row[j * n];
-                        sum_qk += qk_row[j * n];
-                    }
-
-                    if (sum_pk <= 0.0 || sum_qk <= 0.0) {
-                        result[i] = R_NaN;
-                        continue;
-                    }
-
-                    const double inv_sum_pk = 1.0 / sum_pk;
-                    double sum_pqlog = 0.0;
-                    for (int j = 0; j < k; ++j) {
-                        const double q = qk_row[j * n];
-                        sum_pqlog += (q > 0.0) ? (pk_row[j * n] * std::log(q)) : 0.0;
-                    }
-
-                    double cross_entropy = std::log(sum_qk) - sum_pqlog * inv_sum_pk;
-                    if (adjust_base) cross_entropy /= log_base;
-                    result[i] = cross_entropy;
-                }
-
-            return result;
-        }
-
-        static Rcpp::NumericVector total_entropy(const double* __restrict pk,
-                                                const double* __restrict qk,
-                                                const int n,
-                                                const int k,
-                                                const bool adjust_base,
-                                                const double log_base) {
-            const int total = n * k;
-            double sum_pk = 0.0, sum_qk = 0.0;
-            #pragma omp simd reduction(+:sum_pk, sum_qk)
-                for (int i = 0; i < total; ++i) {
-                    sum_pk += pk[i];
-                    sum_qk += qk[i];
-                }
-
-                if (sum_pk <= 0.0 || sum_qk <= 0.0) {
-                    return Rcpp::NumericVector::create(R_NaN);
-                }
-
-                const double inv_sum_pk = 1.0 / sum_pk;
-                double sum_pqlog = 0.0;
-
-            #pragma omp parallel for reduction(+:sum_pqlog) if(getUseOpenMP()) schedule(static)
-                for (int i = 0; i < total; ++i) {
-                    const double q = qk[i];
-                    sum_pqlog += (q > 0.0) ? (pk[i] * std::log(q)) : 0.0;
-                }
-
-                double cross_entropy = std::log(sum_qk) - sum_pqlog * inv_sum_pk;
-
-            if (adjust_base) cross_entropy /= log_base;
-
-            return Rcpp::NumericVector::create(cross_entropy);
-        }
-};
-
-#endif // CROSS_ENTROPY_CLASS_H
+#endif

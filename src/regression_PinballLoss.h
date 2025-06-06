@@ -1,237 +1,174 @@
 #ifndef REGRESSION_PINBALLLOSS_H
 #define REGRESSION_PINBALLLOSS_H
 
-#include "utilities_Package.h"
-#include <cstddef>             
-#include <cmath>                
-#include <algorithm>            
-#include <numeric>              
-#include <vector>
+#include "SLmetrics.h"
+#include <cstddef>
+#include <cmath>
 
-#ifdef _OPENMP
-    #include <omp.h>
+namespace metric {
+    template <typename T>
+    // Pinball Loss
+    class pinball_loss : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
+
+        pinball_loss(
+            const vctr_t<T>& actual,
+            const vctr_t<T>& predicted,
+            T alpha,
+            bool deviance = false) : regression::task<T>(actual, predicted), alpha_(alpha), deviance_(deviance) {}
+
+
+            [[nodiscard]] inline T compute() const noexcept override {
+
+                // pointers and size
+                const arma::uword n_obs             = this -> actual_.n_elem;
+                const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+                const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+
+                if (!deviance_) {
+
+                    T loss = 0;
+                    const T* __restrict__ end = actual_ptr + n_obs;
+                    for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
+                        const T error = *actual_ptr - *predicted_ptr;
+                        loss += ( error >= 0 ) ? alpha_ * error : ( 1 - alpha_ ) * ( -error );
+                    }
+                    return loss / n_obs;
+                }
+
+                // auxiliary values
+                arma::Col<T> alpha_vector( 1 );
+                alpha_vector( 0 ) = alpha_;
+                const T& quantile_value = statistic::quantile<T>::unweighted(
+                    this -> actual_, 
+                    alpha_vector
+                )(0);
+                const T& quantile_loss  = constant_loss(
+                    this -> actual_,
+                    quantile_value,
+                    alpha_
+                );
+
+                // logic
+                T loss = 0;
+                const T* __restrict__ end = actual_ptr + n_obs;
+                for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
+                    const T error = *actual_ptr - *predicted_ptr;
+                    loss += ( error >= 0 ) ? alpha_ * error : ( 1 - alpha_ ) * ( -error );
+                }
+                loss /= n_obs;
+
+                return 1 - ( loss / quantile_loss );
+            }
+
+        private:
+        static inline T constant_loss(
+            const arma::Col<T>& x,
+            T c, 
+            T alpha) noexcept {
+
+                const arma::uword n = x.n_elem;
+                const T* __restrict__ x_ptr = x.memptr();
+                T sum = 0;
+                for (const T* end = ( x_ptr + n ); x_ptr < end; ++x_ptr) {
+                    const T error = *x_ptr - c;
+                    sum += ( error >= 0 ) ? alpha * error : ( 1.0 - alpha ) * ( -error );
+                }
+                return sum / n;
+        }
+
+        T   alpha_;
+        bool deviance_;
+    };
+
+    // Weighted Pinball Loss
+    template <typename T>
+    class weighted_pinball_loss : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
+
+        weighted_pinball_loss(
+            const vctr_t<T>& actual,
+            const vctr_t<T>& predicted,
+            const vctr_t<T>& weights,
+            T                alpha,
+            bool             deviance = false) : regression::task<T>(actual, predicted, weights), alpha_(alpha), deviance_(deviance) {}
+            
+            [[nodiscard]] inline T compute() const noexcept override {
+
+                // pointers and size
+                const arma::uword n_obs              = this -> actual_.n_elem;
+                const T* __restrict__ actual_ptr     = this -> actual_.memptr();
+                const T* __restrict__ predicted_ptr  = this -> predicted_.memptr();
+                const T* __restrict__ weights_ptr    = this -> weights_.memptr();
+            
+                if (!deviance_) {
+            
+                    T loss = 0, weight = 0;
+                    const T* __restrict__ end = actual_ptr + n_obs;
+                    for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                        const T error = *actual_ptr - *predicted_ptr;
+
+                        loss   += ( error >= 0 ) ? *weights_ptr * alpha_ * error : *weights_ptr * ( 1 - alpha_ ) * ( -error );
+                        weight += *weights_ptr;
+                    }
+                    return loss / weight;
+                }
+            
+                // auxillary values
+                arma::Col<T> alpha_vector( 1 );
+                alpha_vector( 0 ) = alpha_;
+            
+                const T& quantile_value = statistic::quantile<T>::weighted(
+                    this -> actual_,
+                    this -> weights_,
+                    alpha_vector
+                )(0);
+            
+                const T& quantile_loss = constant_loss(
+                    this -> actual_,
+                    this -> weights_,
+                    quantile_value,
+                    alpha_
+                );
+            
+                // logic
+                T loss = 0, weight = 0;
+                const T* __restrict__ end = actual_ptr + n_obs;
+                for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                    const T error = *actual_ptr - *predicted_ptr;
+                    loss  += ( error >= 0 ) ? *weights_ptr * alpha_ * error : *weights_ptr * ( 1 - alpha_ ) * ( -error );
+                    weight += *weights_ptr;
+                }
+                loss /= weight;
+            
+                return 1 - ( loss / quantile_loss );
+            }
+
+        private:
+        static inline T constant_loss(
+            const arma::Col<T>& x, 
+            const arma::Col<T>& w, 
+            T c, 
+            T alpha) noexcept {
+    
+                const arma::uword n               = x.n_elem;
+                const T* __restrict__ x_ptr       = x.memptr();
+                const T* __restrict__ weights_ptr = w.memptr();
+
+                T loss = 0, weight = 0;
+                for (const T* end = ( x_ptr + n ); x_ptr < end; ++x_ptr, ++weights_ptr) {
+                    const T error = *x_ptr - c;
+                    loss += ( error >= 0 ) ? *weights_ptr * alpha * error : *weights_ptr * ( 1.0 - alpha ) * ( -error );
+                    weight += *weights_ptr;
+                }
+                return loss / weight;
+            }
+
+            T alpha_;
+            bool deviance_;
+    };
+}
+
 #endif
-
-class PinballLoss {
-public:
-    /**
-     * Unweighted pinball loss:
-     * 
-     * Loss = (1/n) * sum_{i=1..n}  [ (alpha * (a_i - p_i))         if a_i >= p_i
-     *                                ((1 - alpha) * (p_i - a_i))   if a_i <  p_i ]
-     *
-     * @param actual    Pointer to actual data
-     * @param predicted Pointer to predicted data
-     * @param n         Number of elements
-     * @param alpha     Quantile level in [0, 1]
-     */
-    static double compute(const double* actual,
-                          const double* predicted,
-                          std::size_t n,
-                          double alpha)
-    {
-        double sumLoss = 0.0;
-
-        #ifdef _OPENMP
-            #pragma omp parallel for reduction(+:sumLoss) if(getUseOpenMP())
-        #endif
-        for (std::size_t i = 0; i < n; ++i) {
-            double diff = actual[i] - predicted[i];
-            if (diff >= 0.0) {
-                sumLoss += alpha * diff;
-            } else {
-                sumLoss += (1.0 - alpha) * (-diff);
-            }
-        }
-
-        return sumLoss / static_cast<double>(n);
-    }
-
-    /**
-     * Weighted pinball loss:
-     *
-     * Loss = sum_{i=1..n} [ w_i * L(a_i, p_i) ] / sum_{i=1..n} w_i,
-     * where L(a, p) is the same piecewise function as above.
-     *
-     * @param actual    Pointer to actual data
-     * @param predicted Pointer to predicted data
-     * @param weights   Pointer to weights
-     * @param n         Number of elements
-     * @param alpha     Quantile level in [0, 1]
-     */
-    static double compute(const double* actual,
-                          const double* predicted,
-                          const double* weights,
-                          std::size_t n,
-                          double alpha)
-    {
-        double sumLoss = 0.0;
-        double sumW    = 0.0;
-
-        #ifdef _OPENMP
-            #pragma omp parallel for reduction(+:sumLoss, sumW) if(getUseOpenMP())
-        #endif
-        for (std::size_t i = 0; i < n; ++i) {
-            double w    = weights[i];
-            double diff = actual[i] - predicted[i];
-            double val  = (diff >= 0.0)
-                            ? (alpha * diff)
-                            : ((1.0 - alpha) * -diff);
-
-            sumLoss += w * val;
-            sumW    += w;
-        }
-
-        return sumLoss / sumW;
-    }
-
-    /**
-     * Compute pinball loss for a single constant prediction `c`.
-     * (Unweighted)
-     *
-     * @param actual Pointer to actual data
-     * @param n      Number of elements
-     * @param alpha  Quantile level
-     * @param c      The constant predicted value
-     */
-    static double computeConstantPred(const double* actual,
-                                      std::size_t n,
-                                      double alpha,
-                                      double c)
-    {
-        double sumLoss = 0.0;
-
-        #ifdef _OPENMP
-            #pragma omp parallel for reduction(+:sumLoss) if(getUseOpenMP())
-        #endif
-        for (std::size_t i = 0; i < n; ++i) {
-            double diff = actual[i] - c;
-            if (diff >= 0.0) {
-                sumLoss += alpha * diff;
-            } else {
-                sumLoss += (1.0 - alpha) * (-diff);
-            }
-        }
-
-        return sumLoss / static_cast<double>(n);
-    }
-
-    /**
-     * Compute pinball loss for a single constant prediction `c`.
-     * (Weighted)
-     *
-     * @param actual  Pointer to actual data
-     * @param weights Pointer to weights
-     * @param n       Number of elements
-     * @param alpha   Quantile level
-     * @param c       The constant predicted value
-     */
-    static double computeConstantPred(const double* actual,
-                                      const double* weights,
-                                      std::size_t n,
-                                      double alpha,
-                                      double c)
-    {
-        double sumLoss = 0.0;
-        double sumW    = 0.0;
-
-        #ifdef _OPENMP
-            #pragma omp parallel for reduction(+:sumLoss, sumW) if(getUseOpenMP())
-        #endif
-        for (std::size_t i = 0; i < n; ++i) {
-            double w    = weights[i];
-            double diff = actual[i] - c;
-            double val  = (diff >= 0.0)
-                            ? (alpha * diff)
-                            : ((1.0 - alpha) * -diff);
-
-            sumLoss += w * val;
-            sumW    += w;
-        }
-
-        return sumLoss / sumW;
-    }
-
-    static double quantile(const double* x,
-                           std::size_t n,
-                           double alpha)
-    {
-        // Create an index array [0..n-1]
-        std::vector<std::size_t> idx(n);
-        for (std::size_t i = 0; i < n; ++i) {
-            idx[i] = i;
-        }
-
-        // Sort indices by x[idx[i]]
-        std::sort(idx.begin(), idx.end(),
-                  [&](std::size_t a, std::size_t b) {
-                      return x[a] < x[b];
-                  });
-
-        // Position in the sorted array
-        double pos = alpha * (n - 1);
-        std::size_t lower_i = static_cast<std::size_t>(pos);
-        std::size_t upper_i = (lower_i + 1 < n) ? (lower_i + 1) : (n - 1);
-        double frac = pos - static_cast<double>(lower_i);
-
-        double lower_val = x[idx[lower_i]];
-        double upper_val = x[idx[upper_i]];
-
-        return lower_val + frac * (upper_val - lower_val);
-    }
-
-    static double quantile(const double* x,
-                           const double* w,
-                           std::size_t n,
-                           double alpha)
-    {
-        // Create an index array [0..n-1]
-        std::vector<std::size_t> idx(n);
-        for (std::size_t i = 0; i < n; ++i) {
-            idx[i] = i;
-        }
-
-        // Sort indices by the underlying value x[idx]
-        std::sort(idx.begin(), idx.end(),
-                  [&](std::size_t a, std::size_t b) {
-                      return x[a] < x[b];
-                  });
-
-        // Total weight
-        double totalW = 0.0;
-        for (std::size_t i = 0; i < n; ++i) {
-            totalW += w[i];
-        }
-
-        double target = alpha * totalW;
-        double cumW   = 0.0;
-        double lower_val = 0.0, upper_val = 0.0;
-        bool found_lower = false;
-
-        for (std::size_t i = 0; i < n; ++i) {
-            std::size_t ndx  = idx[i];
-            cumW += w[ndx];
-
-            // The moment we cross target, store 'lower_val'
-            if (!found_lower && cumW >= target) {
-                lower_val   = x[ndx];
-                found_lower = true;
-            }
-            // We store 'upper_val' as well
-            if (cumW >= target) {
-                upper_val = x[ndx];
-                break;
-            }
-        }
-
-        return lower_val; 
-    }
-
-    private:
-        // Prevents the compiler from doing
-        // bad stuff.
-        PinballLoss()  = delete;
-        ~PinballLoss() = delete;
-};
-
-#endif // REGRESSION_PINBALLLOSS_H

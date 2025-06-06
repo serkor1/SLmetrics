@@ -1,35 +1,62 @@
-// [[Rcpp::depends(RcppEigen)]]
-#include <RcppEigen.h>
+#include <Rcpp.h>
 #include "classification_FBetaScore.h"
 
-using namespace Rcpp;
+// declare metric;
+using f_beta = metric::f_beta<int>;
 
-//' @rdname fbeta
-//' @method fbeta factor
+//' @templateVar .FUN fbeta
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
+//' @param beta A <[double]> vector of [length] \eqn{1} (default: \eqn{1}).
+//'
 //' @export
 // [[Rcpp::export(fbeta.factor)]]
-Rcpp::NumericVector FBetaScore(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const double& beta = 1.0, Rcpp::Nullable<bool> micro = R_NilValue, bool na_rm = true) 
-{
-    FBetaScoreClass cook(beta, na_rm); // Instantiate F-Beta metric with the provided beta value
-    return recipe(cook, actual, predicted, std::nullopt, micro);
+Rcpp::NumericVector fbeta_score(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const double& beta = 1.0, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+        
+        f_beta performance(actual, predicted, beta, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
-//' @rdname fbeta
-//' @method weighted.fbeta factor
+//' @templateVar .FUN weighted.fbeta
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
+//' @param beta A <[double]> vector of [length] \eqn{1} (default: \eqn{1}).
+//'
 //' @export
 // [[Rcpp::export(weighted.fbeta.factor)]]
-Rcpp::NumericVector weighted_FBetaScore(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, const double& beta = 1.0, Rcpp::Nullable<bool> micro = R_NilValue, bool na_rm = true) 
-{
-    FBetaScoreClass cook(beta, na_rm); // Instantiate F-Beta metric with the provided beta value
-    return recipe(cook, actual, predicted, w, micro);
+Rcpp::NumericVector weighted_fbeta_score(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const Rcpp::NumericVector& w, 
+    const double& beta = 1.0, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+
+        f_beta performance(actual, predicted, w, beta, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
-//' @rdname fbeta
-//' @method fbeta cmatrix
+//' @templateVar .FUN fbeta
+//' @templateVar .METHOD cmatrix
+//' @template classification_standard_inherit
+//'
+//' @param beta A <[double]> vector of [length] \eqn{1} (default: \eqn{1}).
+//'
 //' @export
 // [[Rcpp::export(fbeta.cmatrix)]]
-Rcpp::NumericVector cmatrix_FBetaScore(const Rcpp::NumericMatrix& x, const double& beta = 1.0, Rcpp::Nullable<bool> micro = R_NilValue, bool na_rm = true) 
-{
-    FBetaScoreClass cook(beta, na_rm); // Instantiate F-Beta metric with the provided beta value
-    return recipe(cook, x, micro);
+Rcpp::NumericVector cmatrix_fbeta_score(
+    const Rcpp::NumericMatrix& x,
+    const double& beta = 1.0,
+    const int& estimator = 0,
+    bool na_rm = true) {
+        
+        f_beta performance(x, beta, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }

@@ -1,49 +1,55 @@
-#ifndef CLASSIFICATION_JACCARD_H
-#define CLASSIFICATION_JACCARD_H
+#ifndef CLASSIFICATION_JACCARDINDEX_H
+#define CLASSIFICATION_JACCARDINDEX_H
 
-#include "classification_Helpers.h"
-#include <RcppEigen.h>
-#include <cmath>
-#define EIGEN_USE_MKL_ALL
-EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+#include "SLmetrics.h"
+#include <armadillo>
 
-class JaccardIndexClass : public classification {
+namespace metric {
 
-    private:
-        bool na_rm;
+    template <typename T>
+    using base_metric = classification::metric_tools::base_metric<T>;
 
+    using aggregate = classification::metric_tools::aggregation_level;
+    
+    template <typename T>
+    class jaccard : public base_metric<T> {
+    protected:
+        // Class-wise calculation
+        arma::Col<double> calculate_class_values() const override {
+            // Jaccard Index = TP / (TP + FP + FN)
+            return this->tp_ / (this->tp_ + this->fp_ + this->fn_);
+        }
+        
+        // Micro average calculation
+        double calculate_micro_value() const override {
+            return this->calculate_micro([](double tp, double fp, double fn, double tn) {
+                // Jaccard Index = TP / (TP + FP + FN)
+                return tp / (tp + fp + fn);
+            });
+        }
+        
     public:
-        JaccardIndexClass(bool na_rm)
-            : na_rm(na_rm) {}
+        // Unweighted constructor
+        jaccard(const vctr_t<T>& actual, 
+                const vctr_t<T>& predicted, 
+                aggregate mode = aggregate::CLASS_WISE, 
+                bool na_rm = true) 
+                : base_metric<T>(actual, predicted, mode, na_rm) {}
 
-        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro) const override {
-            Eigen::ArrayXd output(1);
-            Eigen::ArrayXd tp(matrix.rows()), fp(matrix.rows()), fn(matrix.rows());
+        // Weighted constructor
+        jaccard(const vctr_t<T>& actual, 
+                const vctr_t<T>& predicted,
+                const vctr_t<double>& weights, 
+                aggregate mode = aggregate::CLASS_WISE, 
+                bool na_rm = true) 
+                : base_metric<T>(actual, predicted, weights, mode, na_rm) {}
 
-            TP(matrix, tp);
-            FP(matrix, fp);
-            FN(matrix, fn);
+        // Matrix constructor
+        jaccard(const Rcpp::NumericMatrix& x, 
+                aggregate mode = aggregate::CLASS_WISE, 
+                bool na_rm = true)
+                : base_metric<T>(x, mode, na_rm) {}
+    };
+}
 
-
-            // 2) retun with 
-            // ternary expression
-            return do_micro
-                ? micro(tp, (tp + fp + fn), na_rm)
-                : macro(tp, (tp + fp + fn), na_rm);
-
-        }
-
-        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
-            Eigen::ArrayXd output(matrix.rows());
-            Eigen::ArrayXd tp(matrix.rows()), fp(matrix.rows()), fn(matrix.rows());
-
-            TP(matrix, tp);
-            FP(matrix, fp);
-            FN(matrix, fn);
-
-            output = tp / (tp + fp + fn);
-            return Rcpp::wrap(output);
-        }
-};
-
-#endif // CLASSIFICATION_JACCARD_H
+#endif

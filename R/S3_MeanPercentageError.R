@@ -4,62 +4,34 @@
 # objective: Generate Methods
 # script start;
 
-#' @inherit huberloss
-#'
-#' @title Mean Percentage Error
-#'
-#' @description
-#' The [mpe()]-function computes the [mean percentage error](https://en.wikipedia.org/wiki/Mean_percentage_error) between
-#' the observed and predicted <[numeric]> vectors. The [weighted.mpe()] function computes the weighted mean percentage error.
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
 #' 
-#' @usage
-#' ## Generic S3 method
-#' mpe(
-#'  actual,
-#'  predicted,
-#'  ...
-#' )
+#' @templateVar .TITLE mean percentage error
+#' @templateVar .FUN mpe
+#' @templateVar .TASK regression
 #' 
-#' @section Definition:
-#'
-#' The metric is calculated as,
-#'
-#' \deqn{
-#'   \frac{1}{n} \sum_i^n \frac{y_i - \upsilon_i}{y_i}
-#' }
-#'
-#' Where \eqn{y_i} and \eqn{\upsilon_i} are the `actual` and `predicted` values respectively.
-#' 
-#' @example man/examples/scr_MeanPercentageError.R
-#'
-#' @family Regression
-#' @family Supervised Learning
+#' @template generic_description
+#' @template regression_standard_template
 #' 
 #' @export
-mpe <- function(
-  actual, 
-  predicted,
-  ...) {
+mpe <- function(...) {
   UseMethod(
     generic = "mpe"
   )
 }
 
-#' @rdname mpe
-#' @usage
-#' ## Generic S3 method
-#' weighted.mpe(
-#'  actual,
-#'  predicted,
-#'  w,
-#'  ...
-#' )
+#' @usage NULL
+#' 
+#' @templateVar .TITLE mean percentage error
+#' @templateVar .FUN mpe
+#' @templateVar .TASK regression
+#' 
+#' @template generic_inherit
+#' 
 #' @export
-weighted.mpe <- function(
-  actual, 
-  predicted,
-  w,
-  ...) {
+weighted.mpe <- function(...) {
   UseMethod(
     generic = "weighted.mpe"
   )

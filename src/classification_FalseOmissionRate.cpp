@@ -1,35 +1,53 @@
-// [[Rcpp::depends(RcppEigen)]]
-#include <RcppEigen.h>
+#include <Rcpp.h>
 #include "classification_FalseOmissionRate.h"
 
-using namespace Rcpp;
+// declare metric
+using fer_impl = metric::false_omission_rate<int>;
 
-//' @rdname fer
-//' @method fer factor
+//' @templateVar .FUN fer
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(fer.factor)]]
-Rcpp::NumericVector FalseOmissionRate(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    FalseOmissionRateClass cook(na_rm);
-    return recipe(cook, actual, predicted, std::nullopt, micro);
+Rcpp::NumericVector false_omission_rate(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+        
+        fer_impl performance(actual, predicted, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
-//' @rdname fer
-//' @method weighted.fer factor
+//' @templateVar .FUN weighted.fer
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.fer.factor)]]
-Rcpp::NumericVector weighted_FalseOmissionRate(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    FalseOmissionRateClass cook(na_rm);
-    return recipe(cook, actual, predicted, w, micro);
+Rcpp::NumericVector weighted_false_omission_rate(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const Rcpp::NumericVector& w, 
+    const int& estimator = 0, 
+    bool na_rm = true) {
+
+        fer_impl performance(actual, predicted, w, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }
 
-//' @rdname fer
-//' @method fer cmatrix
+//' @templateVar .FUN fer
+//' @templateVar .METHOD cmatrix
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(fer.cmatrix)]]
-Rcpp::NumericVector cmatrix_FalseOmissionRate(const Rcpp::NumericMatrix& x, Rcpp::Nullable<bool> micro = R_NilValue, const bool& na_rm = true) 
-{
-    FalseOmissionRateClass cook(na_rm);
-    return recipe(cook, x, micro);
+Rcpp::NumericVector cmatrix_false_omission_rate(
+    const Rcpp::NumericMatrix& x,
+    const int& estimator = 0,
+    bool na_rm = true) {
+        
+        fer_impl performance(x, static_cast<metric::aggregate>(estimator), na_rm);
+        return performance.compute();
 }

@@ -1,25 +1,31 @@
-// [[Rcpp::depends(RcppEigen)]]
-#include <RcppEigen.h>
-#include "classification_ConfusionMatrix.h"
 #include <Rcpp.h>
-using namespace Rcpp;
+#include "classification_ConfusionMatrix.h"
 
-//' @rdname cmatrix
-//' @method cmatrix factor
+//' @templateVar .FUN cmatrix
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(cmatrix.factor)]]
-Rcpp::NumericMatrix UnweightedConfusionMatrix(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) 
-{
-    ConfusionMatrixClass args(actual, predicted);
-    return args.constructMatrix();
+Rcpp::NumericMatrix confusion_matrix(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted) {
+
+        metric::confusion_matrix<int> cmatrix(actual, predicted);
+        return cmatrix.as_Rcpp();
 }
 
-//' @rdname cmatrix
-//' @method weighted.cmatrix factor
+//' @templateVar .FUN weighted.cmatrix
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.cmatrix.factor)]]
-Rcpp::NumericMatrix WeightedConfusionMatrix(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w) 
-{
-    ConfusionMatrixClass args(actual, predicted);
-    return args.constructMatrix(w);
+Rcpp::NumericMatrix weighted_confusion_matrix(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const Rcpp::NumericVector& w) {
+
+        metric::confusion_matrix<int> cmatrix(actual, predicted, w);
+        return cmatrix.as_Rcpp();
 }

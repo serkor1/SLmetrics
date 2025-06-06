@@ -4,67 +4,37 @@
 # objective: Generate Method
 # script start;
 
-#' @inherit specificity
+#' @title NULL
+#' @usage NULL
+#' @returns NULL
 #' 
-#' @title False Omission Rate
+#' @templateVar .TITLE false omission rate
+#' @templateVar .FUN fer
+#' @templateVar .TASK Classification
+#' @templateVar .MULTI_OUTPUT true
 #' 
-#' @description
-#' A generic function for the [false omission rate](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate). Use [weighted.fdr()] for the weighted [false omission rate](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values#False_omission_rate).
+#' @template generic_description
+#' @template classification_standard_template
 #'
-#' @usage 
-#' ## Generic S3 method
-#' fer(
-#'  ...,
-#'  micro = NULL,
-#'  na.rm = TRUE
-#' )
-#' 
-#' @section Definition:
-#' Let \eqn{\hat{\beta} \in [0, 1]} be the proportion of false negatives among the predicted negatives. The false omission rate of the classifier is calculated as,
-#'
-#' \deqn{
-#'   \hat{\beta} = \frac{\#FN_k}{\#TN_k + \#FN_k}
-#' }
-#'
-#' Where:
-#' 
-#' - \eqn{\#TN_k} is the number of true negatives, and
-#' - \eqn{\#FN_k} is the number of false negatives.
-#'
-#' @example man/examples/scr_FalseOmissionRate.R
-#' 
-#' @family Classification
-#' @family Supervised Learning
-#' 
 #' @export
-fer <- function(
-  ...,
-  micro = NULL,
-  na.rm = TRUE) {
+fer <- function(...) {
   UseMethod(
-    generic = "fer",
-    object  = ..1
+    generic = "fer"
   )
 }
 
-#' @rdname fer
-#' @usage 
-#' ## Generic S3 method
-#' weighted.fer(
-#'  ...,
-#'  w,
-#'  micro = NULL,
-#'  na.rm = TRUE
-#' )
+#' @usage NULL
+#' 
+#' @templateVar .TITLE false omission rate
+#' @templateVar .FUN fer
+#' @templateVar .TASK Classification
+#' 
+#' @template generic_inherit
+#' 
 #' @export
-weighted.fer <- function(
-  ...,
-  w,
-  micro = NULL,
-  na.rm = TRUE) {
+weighted.fer <- function(...) {
   UseMethod(
-    generic = "weighted.fer",
-    object  = ..1
+    generic = "weighted.fer"
   )
 }
 

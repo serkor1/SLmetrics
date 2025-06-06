@@ -1,0 +1,97 @@
+---
+format:
+    gfm:
+        default-image-extension: ".png"
+always_allow_html: true
+execute:
+  cache: true
+  freeze: auto
+  dir: meta/CHANGELOG
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    dpi: 1280
+    fig.height: 6
+    out.width: 100%
+---
+
+```{r install version (v0.1-0)}
+#| include: false
+#| echo: false
+pak::pak(
+    pkg = "serkor1/SLmetrics@v0.1-0", 
+    ask = FALSE
+    )
+```
+
+# :package: [{SLmetrics}](https://serkor1.github.io/SLmetrics/) Version 0.1-0
+
+[{SLmetrics}](https://serkor1.github.io/SLmetrics/) is a collection of Machine Learning performance evaluation functions for supervised learning written in `C++` with [{Rcpp}](https://github.com/RcppCore/Rcpp). Visit the online documentation on [Github pages](https://serkor1.github.io/SLmetrics/).
+
+## :information_source: Basic usage
+
+### Classification metrics
+
+```{r classification metrics (v0.1-0)}
+## 1) define actual and
+## predicted classes
+actual <- factor(
+    sample(letters[1:3], size = 10, replace = TRUE)
+)
+
+predicted <- factor(
+    sample(letters[1:3], size = 10, replace = TRUE)
+)
+
+## 2) print values
+print(actual)
+```
+
+```{r confusion matrix (v0.1-0)}
+## 1) compute and summarise the
+## the confusion matrix
+summary(
+    confusion_matrix <- SLmetrics::cmatrix(
+        actual    = actual,
+        predicted = predicted
+    )
+)
+```
+
+```{r false positive rate (v0.1-0)}
+## 1) false positive rate
+## using <cmatrix> method
+SLmetrics::fpr(confusion_matrix)
+
+## 2) false positive rate
+## using <factor> method
+SLmetrics::fpr(
+    actual    = actual, 
+    predicted = predicted
+)
+
+```
+
+### Regression metrics
+
+```{r regression metrics (v0.1-0)}
+## 1) define actual and
+## predicted values
+actual <- rnorm(n = 10)
+predicted <- actual + rnorm(n = 10)
+```
+
+```{r huberloss and RMSE (v0.1-1)}
+## 1) calculate Huber Loss and
+## Root Mean Squared Error
+SLmetrics::huberloss(
+    actual    = actual,
+    predicted = predicted
+)
+
+SLmetrics::rmse(
+    actual    = actual,
+    predicted = predicted
+)
+```

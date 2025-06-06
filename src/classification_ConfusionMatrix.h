@@ -1,203 +1,48 @@
-#ifndef CLASSIFICATION_CONFUSION_MATRIX_H
-#define CLASSIFICATION_CONFUSION_MATRIX_H
+#ifndef CLASSIFICATION_CONFUSIONMATRIX_H
+#define CLASSIFICATION_CONFUSIONMATRIX_H
 
-#include "utilities_Package.h"
-#include <RcppEigen.h>
-#include <cmath>
+#include "SLmetrics.h"
 
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
 
-#define EIGEN_USE_MKL_ALL
-EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-
-class ConfusionMatrixClass {
+namespace metric {
+    template <typename T>
+    class confusion_matrix {
     private:
-        Rcpp::IntegerVector actual_;
-        Rcpp::IntegerVector predicted_;
-        Rcpp::CharacterVector levels_;
-        int k_;
-
-    protected:
-        void prepareLevels() {
-            levels_ = actual_.attr("levels");
-            k_ = levels_.length() + 1;
-        }
-
-        Rcpp::NumericMatrix finalizeMatrix(const Eigen::MatrixXd& matrix) const {
-            Rcpp::NumericMatrix output = Rcpp::wrap(matrix);
-            Rcpp::rownames(output) = levels_;
-            Rcpp::colnames(output) = levels_;
-            output.attr("class")   = "cmatrix";
-            return output;
-        }
-
-        template <typename MatrixType>
-        MatrixType computeMatrixSingleThreaded() const {
-            MatrixType placeholder = MatrixType::Zero(k_, k_).eval();
-            const int n = actual_.size();
-
-            const int* actual_ptr = actual_.begin();
-            const int* predicted_ptr = predicted_.begin();
-            auto matrix_ptr = placeholder.data();
-
-            // Unrolled loop for efficiency
-            int i = 0;
-            for (; i <= n - 6; i += 6) {
-                ++matrix_ptr[predicted_ptr[i]     * k_ + actual_ptr[i]    ];
-                ++matrix_ptr[predicted_ptr[i + 1] * k_ + actual_ptr[i + 1]];
-                ++matrix_ptr[predicted_ptr[i + 2] * k_ + actual_ptr[i + 2]];
-                ++matrix_ptr[predicted_ptr[i + 3] * k_ + actual_ptr[i + 3]];
-                ++matrix_ptr[predicted_ptr[i + 4] * k_ + actual_ptr[i + 4]];
-                ++matrix_ptr[predicted_ptr[i + 5] * k_ + actual_ptr[i + 5]];
-            }
-
-            for (; i < n; ++i) {
-                ++matrix_ptr[predicted_ptr[i] * k_ + actual_ptr[i]];
-            }
-
-            return placeholder.block(1, 1, k_ - 1, k_ - 1);
-        }
-
-        template <typename MatrixType>
-        MatrixType computeMatrixSingleThreaded(const Rcpp::NumericVector& weights) const {
-            MatrixType placeholder = MatrixType::Zero(k_, k_).eval();
-            const int n = actual_.size();
-
-            const int* actual_ptr = actual_.begin();
-            const int* predicted_ptr = predicted_.begin();
-            const double* weights_ptr = weights.begin();
-            auto matrix_ptr = placeholder.data();
-
-            int i = 0;
-            for (; i <= n - 6; i += 6) {
-                matrix_ptr[predicted_ptr[i]     * k_ + actual_ptr[i]    ] += weights_ptr[i];
-                matrix_ptr[predicted_ptr[i + 1] * k_ + actual_ptr[i + 1]] += weights_ptr[i + 1];
-                matrix_ptr[predicted_ptr[i + 2] * k_ + actual_ptr[i + 2]] += weights_ptr[i + 2];
-                matrix_ptr[predicted_ptr[i + 3] * k_ + actual_ptr[i + 3]] += weights_ptr[i + 3];
-                matrix_ptr[predicted_ptr[i + 4] * k_ + actual_ptr[i + 4]] += weights_ptr[i + 4];
-                matrix_ptr[predicted_ptr[i + 5] * k_ + actual_ptr[i + 5]] += weights_ptr[i + 5];
-            }
-
-            for (; i < n; ++i) {
-                matrix_ptr[predicted_ptr[i] * k_ + actual_ptr[i]] += weights_ptr[i];
-            }
-
-            return placeholder.block(1, 1, k_ - 1, k_ - 1);
-
-        }
-
-        template <typename MatrixType>
-        MatrixType computeMatrixParallel() const {
-            const int n = actual_.size();
-            const int* actual_ptr = actual_.begin();
-            const int* predicted_ptr = predicted_.begin();
-
-            MatrixType globalMatrix = MatrixType::Zero(k_, k_);
-
-            #ifdef _OPENMP
-            #pragma omp parallel if(getUseOpenMP()) 
-            {
-                MatrixType localMatrix = MatrixType::Zero(k_, k_);
-                auto local_ptr = localMatrix.data();
-
-                #pragma omp for schedule(static)
-                for (int i = 0; i < n; i++) {
-                    ++local_ptr[predicted_ptr[i] * k_ + actual_ptr[i]];
-                }
-
-                // Reduction
-                #pragma omp critical
-                {
-                    globalMatrix += localMatrix;
-                }
-            }
-            #else
-            
-            globalMatrix = computeMatrixSingleThreaded<MatrixType>();
-            #endif
-
-            return globalMatrix.block(1, 1, k_ - 1, k_ - 1);
-        }
-
-        template <typename MatrixType>
-        MatrixType computeMatrixParallel(const Rcpp::NumericVector& weights) const {
-            const int n = actual_.size();
-            const int* actual_ptr = actual_.begin();
-            const int* predicted_ptr = predicted_.begin();
-            const double* weights_ptr = weights.begin();
-
-            MatrixType globalMatrix = MatrixType::Zero(k_, k_);
-
-            #ifdef _OPENMP
-            #pragma omp parallel if(getUseOpenMP())
-            {
-                MatrixType localMatrix = MatrixType::Zero(k_, k_);
-                auto local_ptr = localMatrix.data();
-
-                #pragma omp for schedule(static)
-                for (int i = 0; i < n; i++) {
-                    local_ptr[predicted_ptr[i] * k_ + actual_ptr[i]] += weights_ptr[i];
-                }
-
-                #pragma omp critical
-                {
-                    globalMatrix += localMatrix;
-                }
-            }
-            #else
-            globalMatrix = computeMatrixSingleThreaded<MatrixType>(weights);
-            #endif
-
-            return globalMatrix.block(1, 1, k_ - 1, k_ - 1);
-        }
+        classification::confusion_matrix<T> internal_cm_;
 
     public:
+        // Unweighted constructor
+        confusion_matrix(const vctr_t<T>& actual, const vctr_t<T>& predicted)
+            : internal_cm_(actual, predicted) {}
 
-        ConfusionMatrixClass(const Rcpp::IntegerVector& actual,
-                            const Rcpp::IntegerVector& predicted)
-            : actual_(actual), predicted_(predicted)
-        {
-            prepareLevels();
-        }
+        // Weighted constructor
+        confusion_matrix(const vctr_t<T>& actual, const vctr_t<T>& predicted, const vctr_t<double>& weights)
+            : internal_cm_(actual, predicted, weights) {}
 
-        Eigen::MatrixXd InputMatrix() const {
-            if (getUseOpenMP()) {
-            #ifdef _OPENMP
-                return computeMatrixParallel<Eigen::MatrixXd>();
-            #else
-                return computeMatrixSingleThreaded<Eigen::MatrixXd>();
-            #endif
-            } else {
-                return computeMatrixSingleThreaded<Eigen::MatrixXd>();
+        // Convert Arma::Mat to
+        // Rcpp::NumericMatrix
+        Rcpp::NumericMatrix as_Rcpp() {
+
+            arma::Mat<double> mat = internal_cm_.get_matrix();
+            Rcpp::NumericMatrix Rcpp_matrix(mat.n_rows, mat.n_cols);
+
+            const double* __restrict__ mat_ptr = mat.memptr();
+            double* __restrict__ Rcpp_matrix_ptr = Rcpp_matrix.begin();
+            
+            const arma::uword total = mat.n_rows * mat.n_cols;
+            
+
+            for (arma::uword i = 0; i < total; ++i) {
+                Rcpp_matrix_ptr[i] = mat_ptr[i];
             }
-        }
+            
+            const Rcpp::RObject& levels = internal_cm_.get_levels();
+            Rcpp_matrix.attr("dimnames") = Rcpp::List::create(levels, levels);
+            Rcpp_matrix.attr("class") = "cmatrix";
 
-        Rcpp::NumericMatrix constructMatrix() const {
-            Eigen::MatrixXd matrix = InputMatrix();
-            return finalizeMatrix(matrix);
+            return Rcpp_matrix;
         }
+    };
+} // Namespace end
 
-        //------------------------------------------------------------------------------
-        // Weighted
-        //------------------------------------------------------------------------------
-        Eigen::MatrixXd InputMatrix(const Rcpp::NumericVector& weights) const {
-            if (getUseOpenMP()) {
-            #ifdef _OPENMP
-                return computeMatrixParallel<Eigen::MatrixXd>(weights);
-            #else
-                return computeMatrixSingleThreaded<Eigen::MatrixXd>(weights);
-            #endif
-            } else {
-                return computeMatrixSingleThreaded<Eigen::MatrixXd>(weights);
-            }
-        }
-
-        Rcpp::NumericMatrix constructMatrix(const Rcpp::NumericVector& weights) const {
-            Eigen::MatrixXd matrix = InputMatrix(weights);
-            return finalizeMatrix(matrix);
-        }
-};
-
-#endif
+#endif // CLASSIFICATION_CONFUSIONMATRIX_H

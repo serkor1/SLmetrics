@@ -1,60 +1,63 @@
 #ifndef REGRESSION_SYMMETRICMEANABSOLUTEPERCENTAGEERROR_H
 #define REGRESSION_SYMMETRICMEANABSOLUTEPERCENTAGEERROR_H
 
-#include "utilities_Package.h"
+#include "SLmetrics.h"
 #include <cmath>
 #include <cstddef>
+#include <cstdlib>
 
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
+namespace metric {
+    // Symmetric Mean Absolute Percentage Error (SMAPE)
+    template <typename T>
+    class SMAPE : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
+        
+        [[ nodiscard ]] inline T compute() const noexcept override {
 
-class SMAPE {
-    public:
-        // Unweighted SMAPE
-        static double compute(const double* actual, const double* predicted, std::size_t n)
-        {
-            double sum_smape = 0.0;
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_smape) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double numerator   = std::fabs(actual[i] - predicted[i]);
-                double denominator = (std::fabs(actual[i]) + std::fabs(predicted[i])) / 2.0;
-                double value       = numerator / denominator;
-                sum_smape += value;
+            T ratio = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
+                T numerator   = std::abs( *actual_ptr - *predicted_ptr );
+                T denominator = ( std::abs( *actual_ptr ) + std::abs( *predicted_ptr ) ) / static_cast<T>( 2 );
+                ratio        += numerator / denominator;
             }
 
-            return sum_smape / static_cast<double>(n);
+            return ratio / n_obs;
         }
+    };
 
-        // Weighted SMAPE
-        static double compute(const double* actual, const double* predicted, const double* weights, std::size_t n)
-        {
-            double sum_smape = 0.0;
-            double sum_w     = 0.0;
+    // Weighted Symmetric Mean Absolute Percentage Error
+    template <typename T>
+    class weighted_SMAPE : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
+        
+        [[ nodiscard ]] inline T compute() const noexcept override {
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sum_smape, sum_w) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double numerator   = std::fabs(actual[i] - predicted[i]);
-                double denominator = (std::fabs(actual[i]) + std::fabs(predicted[i])) / 2.0;
-                double w           = weights[i];
-                double value       = numerator / denominator;
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+            const T* __restrict__ weights_ptr   = this -> weights_.memptr();
 
-                sum_smape += w * value;
-                sum_w     += w;
+            T ratio = 0, weight = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                T numerator   = std::abs( *actual_ptr - *predicted_ptr );
+                T denominator = ( std::abs( *actual_ptr ) + std::abs( *predicted_ptr ) ) / static_cast<T>( 2 );
+                ratio        += *weights_ptr * numerator / denominator;
+                weight       += *weights_ptr;
             }
 
-            return sum_smape / sum_w;
+            return ratio / weight;
         }
-    private:
-            // Prevents the compiler from doing
-            // bad stuff.
-            SMAPE()  = delete;
-            ~SMAPE() = delete;
-};
+    };
+}
 
 #endif

@@ -1,48 +1,53 @@
-#ifndef CLASSIFICATION_FPR_H
-#define CLASSIFICATION_FPR_H
+#ifndef CLASSIFICATION_FALSEPOSITIVERATE_H
+#define CLASSIFICATION_FALSEPOSITIVERATE_H
 
-#include "classification_Helpers.h"
-#include <RcppEigen.h>
-#include <cmath>
-#define EIGEN_USE_MKL_ALL
-EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+#include "SLmetrics.h"
+#include <armadillo>
 
-class FalsePositiveRateClass : public classification {
+namespace metric {
+
+    template <typename T>
+    using base_metric = classification::metric_tools::base_metric<T>;
+
+    using aggregate = classification::metric_tools::aggregation_level;
     
-    private:
-        bool na_rm;
-
-    public:
-        FalsePositiveRateClass(bool na_rm) 
-            : na_rm(na_rm) {}
-
-        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix, bool do_micro) const override {
+    template <typename T>
+    class false_positive_rate : public base_metric<T> {
+    protected:
+        // Class-wise calculation: FPR = FP / (FP + TN)
+        arma::Col<double> calculate_class_values() const override {
+            return this->fp_ / (this->fp_ + this->tn_);
+        }
+        
+        // Micro average calculation
+        double calculate_micro_value() const override {
+            return this->calculate_micro([](double tp, double fp, double fn, double tn) {
+                return fp / (fp + tn);
+            });
+        }
             
-            // 0) Declare variables and size
-            // for efficiency.
-            // NOTE: Micro and macro already wraps and exports as Rcpp
-            Rcpp::NumericVector output(1);
-            Eigen::ArrayXd fp(matrix.rows()), tn(matrix.rows()), auxillary(matrix.rows());
+    public:
+        // Unweighted constructor
+        false_positive_rate(const vctr_t<T>& actual, 
+                     const vctr_t<T>& predicted,
+                     aggregate mode = aggregate::CLASS_WISE, 
+                     bool na_rm = true) 
+                     : base_metric<T>(actual, predicted, mode, na_rm) {}
 
-            FP(matrix, fp);
-            TN(matrix, tn);
+        // Weighted constructor
+        false_positive_rate(const vctr_t<T>& actual, 
+                     const vctr_t<T>& predicted,
+                     const vctr_t<double>& weights,
+                     aggregate mode = aggregate::CLASS_WISE, 
+                     bool na_rm = true) 
+                     : base_metric<T>(actual, predicted, weights, mode, na_rm) {}
 
-            return do_micro
-                ? micro(fp, fp + tn, na_rm)
-                : macro(fp, fp + tn, na_rm);
-
-        }
-
-        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
-            Eigen::ArrayXd output(matrix.rows());
-            Eigen::ArrayXd fp(matrix.rows()), tn(matrix.rows());
-
-            FP(matrix, fp);
-            TN(matrix, tn);
-
-            output = fp / (fp + tn);
-            return Rcpp::wrap(output);
-        }
-};
+        // Matrix constructor
+        false_positive_rate(const Rcpp::NumericMatrix& x,
+                     aggregate mode = aggregate::CLASS_WISE, 
+                     bool na_rm = true)
+                     : base_metric<T>(x, mode, na_rm) {}
+    };
+}
 
 #endif

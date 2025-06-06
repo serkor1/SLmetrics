@@ -1,99 +1,81 @@
 #ifndef REGRESSION_ROOTRELATIVESQUAREERROR_H
 #define REGRESSION_ROOTRELATIVESQUAREERROR_H
 
-#include "utilities_Package.h"
+#include "SLmetrics.h"
 #include <cmath>
 #include <cstddef>
 
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
+namespace metric {
+    // Root Relative Squared Error (RRSE)
+    template <typename T>
+    class RRSE : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
 
-class RRSE {
-    public:
-        /**
-        * Unweighted RRSE
-        *
-        * @param actual Pointer to actual values
-        * @param predicted Pointer to predicted values
-        * @param n Number of elements
-        *
-        * @return Root Relative Squared Error (unweighted)
-        */
-        static double compute(const double* actual, const double* predicted, std::size_t n)
-        {
-            // 1) Calculate mean of 'actual'
-            double sum_actual = 0.0;
-            for (std::size_t i = 0; i < n; ++i) {
-                sum_actual += actual[i];
+        [[ nodiscard ]] inline T compute() const noexcept override {
+
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+
+            // auxiliary values
+            T mean = 0;
+            for (arma::uword i = 0; i < n_obs; ++i) {
+                mean += actual_ptr[i];
             }
-            double mean_actual = sum_actual / static_cast<double>(n);
+            mean /= n_obs;
 
-            // 2) Calculate numerator and denominator
-            double numerator   = 0.0;
-            double denominator = 0.0;
-
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:numerator, denominator) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double diff_pred = actual[i] - predicted[i];
-                double diff_mean = actual[i] - mean_actual;
-
-                numerator   += diff_pred * diff_pred;
-                denominator += diff_mean * diff_mean;
+            // logic
+            T numerator = 0, denominator = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr) {
+                numerator   += ( *actual_ptr - *predicted_ptr ) * ( *actual_ptr - *predicted_ptr );
+                denominator += ( *actual_ptr - mean ) * ( *actual_ptr - mean );
             }
 
-            // No check for zero denominator, as requested
-            return std::sqrt(numerator / denominator);
+            return std::sqrt(
+                numerator / denominator
+            );
         }
+    };
 
-        /**
-        * Weighted RRSE
-        *
-        * @param actual Pointer to actual values
-        * @param predicted Pointer to predicted values
-        * @param weights Pointer to observation weights
-        * @param n Number of elements
-        *
-        * @return Weighted Root Relative Squared Error
-        */
-        static double compute(const double* actual, const double* predicted, const double* weights, std::size_t n)
-        {
-            // 1) Calculate weighted mean of 'actual'
-            double weighted_sum = 0.0;
-            double weight_sum   = 0.0;
-            for (std::size_t i = 0; i < n; ++i) {
-                weighted_sum += weights[i] * actual[i];
-                weight_sum   += weights[i];
+    // Weighted Root Relative Squared Error
+    template <typename T>
+    class weighted_RRSE : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
+
+        [[ nodiscard ]] inline T compute() const noexcept override {
+
+            // pointers and size
+            const arma::uword n_obs             = this -> actual_.n_elem;
+            const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+            const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+            const T* __restrict__ weights_ptr   = this -> weights_.memptr();
+
+            // auxillary values
+            T mean = 0, weight = 0;
+            for (arma::uword i = 0; i < n_obs; ++i) {
+                mean    += weights_ptr[i] * actual_ptr[i];
+                weight  += weights_ptr[i];
             }
-            double mean_w_actual = weighted_sum / weight_sum;
+            mean /= weight;
 
-            // 2) Calculate numerator and denominator
-            double numerator   = 0.0;
-            double denominator = 0.0;
-
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:numerator, denominator) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double w         = weights[i];
-                double diff_pred = actual[i] - predicted[i];
-                double diff_mean = actual[i] - mean_w_actual;
-
-                numerator   += w * (diff_pred * diff_pred);
-                denominator += w * (diff_mean * diff_mean);
+            // logic
+            T numerator = 0, denominator = 0;
+            const T* __restrict__ end = actual_ptr + n_obs;
+            for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                numerator   += *weights_ptr * ( *actual_ptr - *predicted_ptr ) * ( *actual_ptr - *predicted_ptr );
+                denominator += *weights_ptr * ( *actual_ptr - mean ) * ( *actual_ptr - mean );
             }
 
-            // 3) Return RRSE
-            return std::sqrt(numerator / denominator);
+            return std::sqrt(
+                numerator / denominator
+            );
         }
+    };
 
-    private:
-        // Prevents the compiler from doing
-        // bad stuff.
-        RRSE()  = delete;
-        ~RRSE() = delete;
-};
+}
 
 #endif

@@ -6,62 +6,62 @@ testthat::test_that(desc = "Test `cross.entropy()`-function", code ={
 
   testthat::skip_on_cran()
 
-  # 0) matrix generator
-  # for the tests
+  ## 0) matrix generator
+  ## for the tests
   rand.sum <- function(n){
     x <- sort(runif(n-1))
     c(x,1) - c(0,x)
   }
 
-  # 1) generate values
-  # for the tests
-  pk <- t(replicate(10,rand.sum(1e3)))
-  qk <- t(replicate(10,rand.sum(1e3)))
+  ## 1) generate values
+  ## for the tests
+  pk <- t(replicate(10,rand.sum(3)))
+  qk <- t(replicate(10,rand.sum(3)))
 
-  # 2) test with and without
-  # parallel processing
-  for (lgl in c(TRUE, FALSE)) {
-    # 2.1) test by MARGIN
-    # In scipy - 0: column, 1: row, NULL: total
-    # In SLmetrics - 0: total, 1: row, 2: column
-    for (axis in c(0, 1, 2)) {
-      for (base in c(NA,2, 10)) {
+  ## 2) conduct tests
+  ## against {scipy}
+  for (dim in c(0L, 1L, 2L)) {
+    for (normalize in c(FALSE, TRUE)) {
 
-        # 2.1.1) set OpenMP flags
-        if (lgl) {
-          openmp.on()
-        } else {
-          openmp.off()
-        }
-      
-        # 2.1.2) calculate scores
-        score <- cross.entropy(pk, qk, dim = axis, base = if (is.na(base)) {-1} else {base})
-        
-        # Map SLmetrics axis to scipy axis:
-        # SLmetrics: axis = 0 -> scipy: NULL
-        # SLmetrics: axis = 1 -> scipy: 0
-        # SLmetrics: axis = 2 -> scipy: 1
-        py_axis <- if (axis == 0) NULL else as.integer(axis - 1)
-        py_score <- ref_entropy(pk, qk, type = 2, axis = py_axis, base = if (is.na(base)) {NULL} else {base})
-        
-        # 2.1.3) verify equivalence
-        testthat::expect_true(
-          set_equal(
-            as.numeric(score),
-            as.numeric(py_score)
-          ),
-          info = paste(
-            "OpenMP = ", lgl,
-            "axis =", axis,
-            "base =", base
-          )
-        )
+      ## 2.1) calculate shannon
+      ## entropy
+      score <- cross.entropy(
+        pk        = pk,
+        qk        = qk,
+        dim       = dim,
+        normalize = normalize
+      )
 
+      ## 2.2) calculate shannon
+      ## entropy reference
+      reference <- py_cross_entropy(
+        pk  = pk,
+        qk  = qk,
+        dim = dim 
+      )
+
+      ## 2.2.1) normalize
+      ## reference value
+      if (normalize) {
+        if (dim == 0 | dim == 1) reference <- reference / dim(pk)[1]
+        if (dim == 2) reference <- reference / dim(pk)[2]
       }
-      
-      
+
+      ## 2.3) test for equality
+      ## in values
+      testthat::expect_true(
+        object = set_equal(
+          as.numeric(score),
+          as.numeric(reference)
+        ),
+        info = paste(
+          "dim =", dim,
+          "normalize = ", normalize
+        )
+      )
+
     }
   }
-  
 
-})
+}
+)

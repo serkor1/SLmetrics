@@ -1,45 +1,37 @@
 #include <Rcpp.h>
 #include "count_PoissonLogLoss.h"
 
-
-//' @rdname logloss
-//' @method logloss integer
+//' @templateVar .FUN logloss
+//' @templateVar .METHOD integer
+//' @template classification_entropy_inherit
 //' @export
 // [[Rcpp::export(logloss.integer)]]
-double PoissonLogLoss(const Rcpp::IntegerVector& actual, 
-               const Rcpp::NumericMatrix& response, 
-               const bool normalize = true)
-{
-    // 1) Extract pointers
-    const int*    ptr_actual   = actual.begin();
-    const double* ptr_response = response.begin();
-    
-    // 2) Get sizes
-    const std::size_t n     = actual.size();
-    const std::size_t nrows = response.nrow();
+double PoissonLogLoss(
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::NumericVector& response, 
+    const bool normalize = true) {
 
-    // 3) Compute
-    return PoissonLogLoss::compute(ptr_actual, ptr_response, n, normalize);
+        // initialize
+        metric::poisson_logloss<int, double> entropy(actual, response);
+
+        // return
+        return entropy.unweighted(normalize);
 }
 
-//' @rdname logloss
-//' @method weighted.logloss integer
+//' @templateVar .FUN weighted.logloss
+//' @templateVar .METHOD integer
+//' @template classification_entropy_inherit
 //' @export
 // [[Rcpp::export(weighted.logloss.integer)]]
-double weighted_PoissonLogLoss(const Rcpp::IntegerVector& actual, 
-                        const Rcpp::NumericMatrix& response, 
-                        const Rcpp::NumericVector& w, 
-                        const bool normalize = true)
-{
-    // 1) Extract pointers
-    const int*    ptr_actual   = actual.begin();
-    const double* ptr_response = response.begin();
-    const double* ptr_w        = w.begin();
+double weighted_PoissonLogLoss(
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::NumericVector& response,
+    const Rcpp::NumericVector& w, 
+    const bool normalize = true) {
+        
+         // initialize
+         metric::poisson_logloss<int, double> entropy(actual, response, w);
 
-    // 2) Get sizes
-    const std::size_t n     = actual.size();
-    const std::size_t nrows = response.nrow();
-
-    // 3) Compute
-    return PoissonLogLoss::compute(ptr_actual, ptr_response, ptr_w, n, normalize);
+         // return
+         return entropy.weighted(normalize);
 }

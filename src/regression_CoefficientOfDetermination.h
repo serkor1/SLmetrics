@@ -1,133 +1,107 @@
 #ifndef REGRESSION_COEFFICIENTOFDETERMINATION_H
 #define REGRESSION_COEFFICIENTOFDETERMINATION_H
 
-#include "utilities_Package.h"
+#include "SLmetrics.h"
 #include <cmath>
 #include <cstddef>
 
-#ifdef _OPENMP
-    #include <omp.h>
-#endif
+namespace metric {
+    // Coefficient of Determination (R squared)
+    template <typename T>
+    class rsq : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
+        
+        rsq(
+            const vctr_t<T>& actual, 
+            const vctr_t<T>& predicted, 
+            double k = 0.0) : regression::task<T>(actual, predicted), k_(k) {}
 
-class CoefficientOfDetermination {
-    public:
-        /**
-        * Compute unweighted R-squared.
-        *
-        * @param actual    Pointer to actual values
-        * @param predicted Pointer to predicted values
-        * @param n         Number of observations
-        * @param k         Number of predictors (default=0 => plain R^2)
-        * 
-        * @return The R^2 or adjusted R^2.
-        */
-        static double compute(const double* actual,
-                            const double* predicted,
-                            std::size_t n,
-                            double k)
-        {
-            // 1) Compute mean of actual
-            double sumA = 0.0;
-            for (std::size_t i = 0; i < n; ++i) {
-                sumA += actual[i];
-            }
-            double meanA = sumA / static_cast<double>(n);
+            [[ nodiscard ]] inline T compute() const noexcept override {
 
-            // 2) Compute SSE and SST
-            double SSE = 0.0;
-            double SST = 0.0;
+                // pointers and size
+                const arma::uword n_obs             = this -> actual_.n_elem;
+                const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+                const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
 
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:SSE, SST) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double diffAm = (actual[i] - meanA);
-                double diffAp = (actual[i] - predicted[i]);
+                // auxiliary values
+                T mean = 0;
+                for (arma::uword i = 0; i < n_obs; ++i) {
+                    mean += actual_ptr[i];
+                }
+                mean /= n_obs;
 
-                SST += diffAm * diffAm;
-                SSE += diffAp * diffAp;
-            }
+                const T factor = static_cast<T>(
+                    ( n_obs - 1 ) / ( n_obs - ( k_ + 1 ) ) 
+                );
 
-            // 3) Unadjusted R^2 = 1 - SSE/SST
-            //    Adjusted => multiply (SSE/SST) by factor = ((n - 1) / (n - (k + 1))).
-            //    So final = 1 - (SSE/SST) * factor
-            double factor   = (static_cast<double>(n) - 1.0) / (static_cast<double>(n) - (k + 1.0));
-            double r2_value = 1.0 - ((SSE / SST) * factor);
+                // logic
+                T SSE = 0, SST = 0;
+                const T* __restrict__ end = actual_ptr + n_obs;
+                for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr ) {
+                    const T error  = *actual_ptr - *predicted_ptr;
+                    const T center = *actual_ptr - mean;
 
-            return r2_value;
-        }
+                    SSE += error  * error;
+                    SST += center * center;
+                }
 
-        /**
-        * Compute weighted R-squared.
-        *
-        * Weighted definitions:
-        *   Weighted SSE = sum( w_i * (a_i - p_i)^2 )
-        *   Weighted mean of actual = sum( w_i*a_i ) / sum( w_i )
-        *   Weighted SST = sum( w_i * (a_i - wMean)^2 )
-        *
-        * Then apply the same adjustment factor for k.
-        *
-        * @param actual    Pointer to actual values
-        * @param predicted Pointer to predicted values
-        * @param weights   Pointer to weights
-        * @param n         Number of observations
-        * @param k         Number of predictors (default=0 => plain weighted R^2)
-        *
-        * @return The weighted R^2 or adjusted weighted R^2.
-        */
-        static double compute(const double* actual,
-                            const double* predicted,
-                            const double* weights,
-                            std::size_t n,
-                            double k)
-        {
-            // 1) Compute weighted sums, SSE
-            double sumW   = 0.0;
-            double sumWA  = 0.0;
-            double SSE    = 0.0;
-
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:sumW, sumWA, SSE) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double w   = weights[i];
-                double a   = actual[i];
-                double p   = predicted[i];
-
-                sumW   += w;
-                sumWA  += (w * a);
-
-                double resid = a - p;
-                SSE    += w * resid * resid;
-            }
-
-            // Weighted mean of actual
-            double wMean = sumWA / sumW;
-
-            // 2) Weighted SST
-            double SST = 0.0;
-
-            #ifdef _OPENMP
-                #pragma omp parallel for reduction(+:SST) if(getUseOpenMP())
-            #endif
-            for (std::size_t i = 0; i < n; ++i) {
-                double w   = weights[i];
-                double diff = actual[i] - wMean;
-                SST += w * diff * diff;
-            }
-
-            // 3) Weighted R^2 or adjusted R^2
-            double factor   = (static_cast<double>(n) - 1.0) / (static_cast<double>(n) - (k + 1.0));
-            double r2_value = 1.0 - ((SSE / SST) * factor);
-
-            return r2_value;
-        }
+                return 1 - ( SSE / SST ) * factor;
+    }
 
     private:
-        // Prevents the compiler from doing
-        // bad stuff.
-        CoefficientOfDetermination()  = delete;
-        ~CoefficientOfDetermination() = delete;
-};
+        double k_;
+    };
 
-#endif // REGRESSION_COEFFICIENTOFDETERMINATION_H
+    // Weighted Coefficient of Determination
+    template <typename T>
+    class weighted_rsq : public regression::task<T> {
+        public:
+        using regression::task<T>::task;
+
+        weighted_rsq(
+            const vctr_t<T>& actual,
+            const vctr_t<T>& predicted,
+            const vctr_t<T>& weights,
+            double k = 0.0) : regression::task<T>(actual, predicted, weights), k_(k) {}
+
+            [[nodiscard]] inline T compute() const noexcept override {
+
+                // pointers and size
+                const arma::uword n_obs             = this -> actual_.n_elem;
+                const T* __restrict__ actual_ptr    = this -> actual_.memptr();
+                const T* __restrict__ predicted_ptr = this -> predicted_.memptr();
+                const T* __restrict__ weights_ptr   = this -> weights_.memptr();
+
+                // auxillary values
+                T mean = 0, w_sum = 0;
+                for (arma::uword i = 0; i < n_obs; ++i) {
+                    mean  += this -> weights_[i] * this -> actual_[i];
+                    w_sum += this -> weights_[i];
+                }
+                mean /= w_sum;
+
+                const T factor = static_cast<T>(
+                    ( n_obs - 1 ) / ( n_obs - ( k_ + 1 ) ) 
+                );
+
+                // logic
+                T SSE = 0, SST = 0;
+                const T* __restrict__ end = actual_ptr + n_obs;
+                for (; actual_ptr < ( end ); ++actual_ptr, ++predicted_ptr, ++weights_ptr) {
+                    const T error  = *actual_ptr - *predicted_ptr;
+                    const T center = *actual_ptr - mean;
+
+                    SSE += *weights_ptr * error * error;
+                    SST += *weights_ptr * center * center;
+                }
+
+                return 1 - ( SSE / SST ) * factor;
+            }
+
+        private:
+            double k_;
+    };
+}
+
+#endif

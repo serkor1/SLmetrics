@@ -15,189 +15,94 @@ concurrency:
 permissions: read-all
 
 jobs:
-  R-CMD-check:
-    runs-on: ${{ matrix.config.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-          # Ubuntu
-          - {os: ubuntu-latest,   r: 'devel',     compiler: 'default', http-user-agent: 'release'}
-          - {os: ubuntu-latest,   r: 'release',   compiler: 'default'}
-          - {os: ubuntu-latest,   r: 'oldrel-1',  compiler: 'default'}
+    R-CMD-check:
+        runs-on: ${{ matrix.config.os }}
+        strategy:
+            fail-fast: false
+            matrix:
+                config:
+                    # Ubuntu
+                    - {os: ubuntu-latest,   r: 'devel',     compiler: 'default', http-user-agent: 'release'}
+                    - {os: ubuntu-latest,   r: 'release',   compiler: 'default'}
+                    - {os: ubuntu-latest,   r: 'oldrel-1',  compiler: 'default'}
+                    - {os: ubuntu-latest,   r: 'oldrel-2',  compiler: 'default'}
+                    - {os: ubuntu-latest,   r: 'oldrel-3',  compiler: 'default'}
 
-          # Windows
-          - {os: windows-latest,  r: 'devel',     compiler: 'default'}
-          - {os: windows-latest,  r: 'release',   compiler: 'default'}
-          - {os: windows-latest,  r: 'oldrel-1',  compiler: 'default'}
-
-          # macOS Clang
-          - {os: macos-latest,    r: 'devel',     compiler: 'clang'}
-          - {os: macos-latest,    r: 'release',   compiler: 'clang'}
-          - {os: macos-latest,    r: 'oldrel-1',  compiler: 'clang'}
-
-          # macOS GCC via Homebrew
-          - {os: macos-latest,    r: 'devel',     compiler: 'gcc'}
-          - {os: macos-latest,    r: 'release',   compiler: 'gcc'}
-          - {os: macos-latest,    r: 'oldrel-1',  compiler: 'gcc'}
-
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      R_KEEP_PKG_SOURCE: yes
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pandoc
-        uses: r-lib/actions/setup-pandoc@v2
-
-      - name: Install and update build tools (macOS)
-        if: runner.os == 'macOS'
-        run: |
-          # update and upgrade
-          # everything brew-related
-          brew update
-          brew upgrade
-
-          # reinstall important
-          # libraries
-          brew reinstall gcc
-          brew reinstall pkg-config
-          brew reinstall gettext
-          brew install libomp
-
-          # clean up eveything
-          brew cleanup
-
-          # creatre folders
-          # and symbolic links
-          sudo mkdir -p /opt/R/arm64/lib
-          sudo ln -sf $(brew --prefix gettext)/lib/libintl.a /opt/R/arm64/lib/libintl.a
+                    # Windows
+                    - {os: windows-latest,  r: 'devel',     compiler: 'default'}
+                    - {os: windows-latest,  r: 'release',   compiler: 'default'}
+                    - {os: windows-latest,  r: 'oldrel-1',  compiler: 'default'}
 
 
-      - name: Configure Makevars (macOS-gcc)
-        if: runner.os == 'macOS' && matrix.config.compiler == 'gcc'
-        run: |
-          mkdir -p ~/.R
-          GCC_PATH=$(brew --prefix gcc)
-          OMP_PATH=$(brew --prefix libomp)
-          SDK_PATH=$(xcrun --show-sdk-path)
+                    # macOS Clang
+                    - {os: macos-latest,    r: 'devel',     compiler: 'clang'}
+                    - {os: macos-latest,    r: 'release',   compiler: 'clang'}
+                    - {os: macos-latest,    r: 'oldrel-1',  compiler: 'clang'}
 
-          GCC_BIN=gcc-14
-          GXX_BIN=g++-14
+                    # macOS GCC via Homebrew
+                    - {os: macos-latest,    r: 'devel',     compiler: 'gcc'}
+                    - {os: macos-latest,    r: 'release',   compiler: 'gcc'}
+                    - {os: macos-latest,    r: 'oldrel-1',  compiler: 'gcc'}
+                    
+        env:
+            GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+            R_KEEP_PKG_SOURCE: yes
+            
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                submodules: 'true'
 
-          cat << EOF > ~/.R/Makevars
-          # Compiler settings
-          CC=${GCC_PATH}/bin/${GCC_BIN}
-          CXX=${GCC_PATH}/bin/${GXX_BIN}
-          CXX11=${GCC_PATH}/bin/${GXX_BIN}
-          CXX14=${GCC_PATH}/bin/${GXX_BIN}
-          CXX17=${GCC_PATH}/bin/${GXX_BIN}
-          CXX20=${GCC_PATH}/bin/${GXX_BIN}
+            - name: Setup pandoc
+              uses: r-lib/actions/setup-pandoc@v2
 
-          OMP_LIB=${OMP_PATH}/lib
-          OMP_INC=${OMP_PATH}/include
+            - name: Install and update build tools (macOS)
+              if: runner.os == 'macOS'
+              run: |
+                # update and upgrade
+                # everything brew-related
+                brew update
+                brew upgrade
 
-          # Compiler flags
-          CPPFLAGS=-I\${OMP_INC} -isysroot ${SDK_PATH} -fopenmp
-          CFLAGS=-O3 -pedantic
-          CXXFLAGS=-O3 -pedantic
+                # reinstall important
+                # libraries
+                brew reinstall gcc
+                brew reinstall pkg-config
+                brew reinstall gettext
+                brew install libomp
 
-          # Linker flags
-          LDFLAGS=-L\${OMP_LIB} -L${GCC_PATH}/lib -lomp -lgfortran -lm -isysroot ${SDK_PATH}
-          CPPFLAGS += -I$(brew --prefix gettext)/include
-          LDFLAGS  += -L$(brew --prefix gettext)/lib -lintl
+                # clean up eveything
+                brew cleanup
 
+                # creatre folders
+                # and symbolic links
+                sudo mkdir -p /opt/R/arm64/lib
+                sudo ln -sf $(brew --prefix gettext)/lib/libintl.a /opt/R/arm64/lib/libintl.a
 
-          # Fortran configuration
-          FC=$(brew --prefix gfortran)/bin/gfortran
-          F77=$(brew --prefix gfortran)/bin/gfortran
-          FLIBS=-L$(brew --prefix gfortran)/lib -lgfortran -lquadmath
-          EOF
+            - name: Setup R
+              uses: r-lib/actions/setup-r@v2
+              with:
+                r-version: ${{ matrix.config.r }}
+                http-user-agent: ${{ matrix.config.http-user-agent || '' }}
+                use-public-rspm: true
 
-      - name: Configure Makevars (macOS-clang)
-        if: runner.os == 'macOS' && matrix.config.compiler == 'clang'
-        run: |
-          mkdir -p ~/.R
-          GCC_PATH=$(brew --prefix gcc)
-          SDK_PATH=$(xcrun --show-sdk-path)
+            - name: Installing {pkgs}
+              uses: r-lib/actions/setup-r-dependencies@v2
+              with:
+                extra-packages: any::rcmdcheck reticulate
+                needs: check
+                
+            - name: Check R build-tools
+              shell: Rscript {0}
+              run: |
+                pkgbuild::check_build_tools(debug = TRUE)
 
-          GCC_BIN=gcc-14
-          GXX_BIN=g++-14
+            - name: Setup Python and {reticulate}
+              uses: ./.github/actions/setup-reticulate
 
-          cat << EOF > ~/.R/Makevars
-          # Compiler settings
-          CC=${GCC_PATH}/bin/${GCC_BIN}
-          CXX=${GCC_PATH}/bin/${GXX_BIN}
-          CXX11=${GCC_PATH}/bin/${GXX_BIN}
-          CXX14=${GCC_PATH}/bin/${GXX_BIN}
-          CXX17=${GCC_PATH}/bin/${GXX_BIN}
-          CXX20=${GCC_PATH}/bin/${GXX_BIN}
-
-          # Compiler flags
-          CPPFLAGS=-isysroot ${SDK_PATH}
-          CFLAGS=-O3 -pedantic
-          CXXFLAGS=-O3 -pedantic
-
-          # Linker flags
-          LDFLAGS=-L${GCC_PATH}/lib -lgfortran -lm -isysroot ${SDK_PATH}
-          CPPFLAGS += -I$(brew --prefix gettext)/include
-          LDFLAGS  += -L$(brew --prefix gettext)/lib -lintl
-
-          # Fortran configuration
-          FC=$(brew --prefix gfortran)/bin/gfortran
-          F77=$(brew --prefix gfortran)/bin/gfortran
-          FLIBS=-L$(brew --prefix gfortran)/lib -lgfortran -lquadmath
-          EOF
-
-      - name: Setup R
-        uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: ${{ matrix.config.r }}
-          http-user-agent: ${{ matrix.config.http-user-agent || '' }}
-          use-public-rspm: true
-
-      - name: Installing {pkgs}
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::rcmdcheck reticulate
-          needs: check
-          
-      - name: Check R build-tools
-        shell: Rscript {0}
-        run: |
-          pkgbuild::check_build_tools(debug = TRUE)
-
-      - name: Check OpenMP availability
-        if: matrix.config.compiler != 'clang'
-        shell: Rscript {0}
-        run: |
-          # 1) check if OpenMP
-          # is available
-          Rcpp::cppFunction(plugins = "openmp",
-            code = "
-            bool is_available() {
-              #ifdef _OPENMP
-                return true;
-              #else
-                return false;
-              #endif
-            }
-            "
-          )
-
-          # 2) stop if not
-          # available
-          stopifnot(
-            "OpenMP not available!" = is_available()
-          )
-
-      - name: Setup Python and {reticulate}
-        uses: ./.github/actions/setup-reticulate
-
-      - name: R CMD check
-        uses: r-lib/actions/check-r-package@v2
-        with:
-          build_args: 'c("--no-manual", "--compact-vignettes=gs+qpdf")'
-          upload-snapshots: true
+            - name: R CMD check
+              uses: r-lib/actions/check-r-package@v2
+              with:
+                build_args: 'c("--no-manual", "--compact-vignettes=gs+qpdf")'
+                upload-snapshots: true

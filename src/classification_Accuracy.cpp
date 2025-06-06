@@ -1,35 +1,47 @@
-// [[Rcpp::depends(RcppEigen)]]
-#include <RcppEigen.h>
+#include <Rcpp.h>
 #include "classification_Accuracy.h"
 
-using namespace Rcpp;
+// implementation of metric
+using accuracy_score_impl = metric::accuracy_score<int>;
 
-//' @rdname accuracy
-//' @method accuracy factor
+//' @templateVar .FUN accuracy
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(accuracy.factor)]]
-Rcpp::NumericVector Accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) 
-{
-    AccuracyClass cook;
-    return recipe(cook, actual, predicted);
+double accuracy(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted) {
+
+        accuracy_score_impl performance(actual, predicted);
+        return performance.compute();
 }
 
-//' @rdname accuracy
-//' @method weighted.accuracy factor
+//' @templateVar .FUN weighted.accuracy
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.accuracy.factor)]]
-Rcpp::NumericVector weighted_Accuracy(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w) 
-{
-    AccuracyClass cook;
-    return recipe(cook, actual, predicted, w);
+double weighted_accuracy(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const Rcpp::NumericVector& w) {
+
+        accuracy_score_impl performance(actual, predicted, w);
+        return performance.compute();
 }
 
-//' @rdname accuracy
-//' @method accuracy cmatrix
+//' @templateVar .FUN accuracy
+//' @templateVar .METHOD cmatrix
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(accuracy.cmatrix)]]
-Rcpp::NumericVector cmatrix_Accuracy(const Rcpp::NumericMatrix& x) 
-{
-    AccuracyClass cook;
-    return recipe(cook, x);
+double cmatrix_accuracy(
+    const Rcpp::NumericMatrix& x) {
+
+        accuracy_score_impl performance(x);
+        return performance.compute();
 }

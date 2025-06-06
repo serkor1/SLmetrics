@@ -1,16 +1,44 @@
-#' @title Use OpenMP
+# script: Accuracy
+# date: 2024-10-05
+# author: Serkan Korkmaz, serkor1@duck.com
+# objective: Generate methods for accuracy
+# script start;
+
+#' @title Control OpenMP
+#' @rdname utils_OpenMP
+#' @name OpenMP
 #' 
 #' @usage
 #' ## enable OpenMP
 #' openmp.on()
 #' 
 #' @description
-#' This function allows you to enable or disable the use of OpenMP for parallelizing computations.
+#' Enable or disable OpenMP parallelization for computations.
 #' 
-#' @param threads A positive <[integer]>-value (Default: None). If `threads` is missing, the `openmp.threads()` returns the number of available threads. If [NULL] all available threads will be used.
+#' ## Disclaimer
+#' This toggle is a brute-force implementation and does **not** guard against data races or nested parallel regions.
+#' Nested OpenMP regions can introduce subtle race conditions if multiple layers of parallelism access shared data concurrently.
+#' If you combine this package’s OpenMP switch with other parallel machine-learning routines, you may encounter undefined behavior.
 #' 
-#' @example man/examples/scr_OpenMP.R
+#' @examples
+#' \dontrun{
+#' ## enable OpenMP
+#' SLmetrics::openmp.on()
 #'
+#' ## disable OpenMP
+#' SLmetrics::openmp.off()
+#'
+#' ## available threads
+#' SLmetrics::openmp.threads()
+#' 
+#' ## set number of threads
+#' SLmetrics::openmp.threads(2)
+#'}
+#' 
+#' 
+#' @returns
+#' If OpenMP is unavailable, the function returns [NULL].
+#' 
 #' @export
 openmp.on <- function() {
 
@@ -31,7 +59,9 @@ openmp.on <- function() {
 
 }
 
-#' @rdname openmp.on
+#' @rdname utils_OpenMP
+#' @inherit OpenMP description
+#' @inherit OPenMP return
 #' 
 #' @usage
 #' ## disable OpenMP
@@ -57,10 +87,15 @@ openmp.off <- function() {
 
 }
 
-#' @rdname openmp.on
+#' @rdname utils_OpenMP
+#' @inherit OpenMP description
+#' @inherit OPenMP return
+#' 
 #' @usage
 #' ## set number of threads
 #' openmp.threads(threads)
+#' 
+#' @param threads A positive <[integer]>-value (Default: None). If `threads` is missing, the `openmp.threads()` returns the number of available threads. If [NULL] all available threads will be used.
 #' 
 #' @export
 openmp.threads <- function(threads) {
@@ -113,3 +148,5 @@ openmp.threads <- function(threads) {
   
   message(sprintf("Using %d threads.", threads))
 }
+
+# script end;

@@ -1,29 +1,35 @@
-#ifndef CLASSIFICATION_DOR_H
-#define CLASSIFICATION_DOR_H
+#ifndef CLASSIFICATION_DIAGNOSTICODDSRATIO_H
+#define CLASSIFICATION_DIAGNOSTICODDSRATIO_H
 
-#include "classification_Helpers.h"
-#include <RcppEigen.h>
-#include <cmath>
-#define EIGEN_USE_MKL_ALL
-EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+#include "SLmetrics.h"
+#include <armadillo>
 
-class DiagnosticOddsRatioClass : public classification {
+namespace metric {
+    template <typename T>
+    class diagnostic_odds_ratio : public classification::confusion_matrix<T> {
+        public:
+        // Unweighted constructor
+        diagnostic_odds_ratio(const vctr_t<T>& actual, const vctr_t<T>& predicted)
+            : classification::confusion_matrix<T>(actual, predicted) {}
 
-    public:
+        // Weighted constructor
+        diagnostic_odds_ratio(const vctr_t<T>& actual, const vctr_t<T>& predicted, const vctr_t<double>& weights)
+            : classification::confusion_matrix<T>(actual, predicted, weights) {}
 
-        Rcpp::NumericVector compute(const Eigen::MatrixXd& matrix) const override {
-            Rcpp::NumericVector output {};
-            Eigen::ArrayXd tp { matrix.rows() }, fn { matrix.rows() }, tn { matrix.rows() }, fp { matrix.rows() };
+        // Rcpp::NumericMatrix constructor
+        diagnostic_odds_ratio(const Rcpp::NumericMatrix& x)
+            : classification::confusion_matrix<T>(x) {}
 
-            TP(matrix, tp);
-            FN(matrix, fn);
-            TN(matrix, tn);
-            FP(matrix, fp);
+        // Calculate metric
+        [[nodiscard]] inline double compute() const noexcept {
+            double tp = arma::accu(this->TP());
+            double fn = arma::accu(this->FN());
+            double fp = arma::accu(this->FP());
+            double tn = arma::accu(this->TN());
 
-            output = (tp.sum() * tn.sum()) / (fp.sum() * fn.sum());
-            
-            return output;
+            return (tp * tn) / (fp * fn);
         }
-};
+    };
+}
 
-#endif // CLASSIFICATION_DOR_H
+#endif

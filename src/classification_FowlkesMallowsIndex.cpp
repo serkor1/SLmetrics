@@ -1,28 +1,46 @@
-// [[Rcpp::depends(RcppEigen)]]
-#include <RcppEigen.h>
+#include <Rcpp.h>
 #include "classification_FowlkesMallowsIndex.h"
-using namespace Rcpp;
 
+using fowlkes_mallows_index_impl = metric::fowlkes_mallows_index<int>;
 
-//' @rdname fmi
-//' @method fmi factor
+//' @templateVar .FUN fmi
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(fmi.factor)]]
-Rcpp::NumericVector FowlkesMallowsIndex(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted)
-{
-  FowlkesMallowsIndexClass cook;
-  return recipe(cook, actual, predicted);
+double fowlkes_mallows_index(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted) {
+
+        fowlkes_mallows_index_impl performance(actual, predicted);
+        return performance.compute();
 }
 
-//' @rdname fmi
-//' @method fmi cmatrix
+//' @templateVar .FUN weighted.fmi
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
+//' @export
+// [[Rcpp::export(weighted.fmi.factor)]]
+double weighted_fowlkes_mallows_index(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const Rcpp::NumericVector& w) {
+
+        fowlkes_mallows_index_impl performance(actual, predicted, w);
+        return performance.compute();
+}
+
+//' @templateVar .FUN fmi
+//' @templateVar .METHOD cmatrix
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(fmi.cmatrix)]]
-Rcpp::NumericVector cmatrix_FowlkesMallowsIndexClass(const Rcpp::NumericMatrix& x)
-{
-  FowlkesMallowsIndexClass cook;
-  return recipe(cook, x);
+double cmatrix_fowlkes_mallows_index(
+    const Rcpp::NumericMatrix& x) {
+
+        fowlkes_mallows_index_impl performance(x);
+        return performance.compute();
 }
-
-
-

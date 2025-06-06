@@ -1,34 +1,46 @@
-// [[Rcpp::depends(RcppEigen)]]
-#include <RcppEigen.h>
+#include <Rcpp.h>
 #include "classification_ZeroOneLoss.h"
-using namespace Rcpp;
 
-//' @rdname zerooneloss
-//' @method zerooneloss factor
+using zero_one_loss_impl = metric::zerooneloss_score<int>;
+
+//' @templateVar .FUN zerooneloss
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(zerooneloss.factor)]]
-Rcpp::NumericVector ZeroOneLoss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) 
-{
-    ZeroOneLossClass cook;
-    return recipe(cook, actual, predicted);
+double zero_one_loss(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted) {
+
+        zero_one_loss_impl performance(actual, predicted);
+        return performance.compute();
 }
 
-//' @rdname zerooneloss
-//' @method weighted.zerooneloss factor
+//' @templateVar .FUN weighted.zerooneloss
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.zerooneloss.factor)]]
-Rcpp::NumericVector weighted_ZeroOneLoss(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w) 
-{
-    ZeroOneLossClass cook;
-    return recipe(cook, actual, predicted, w);
+double weighted_zero_one_loss(
+    const Rcpp::IntegerVector& actual, 
+    const Rcpp::IntegerVector& predicted, 
+    const Rcpp::NumericVector& w) {
+
+        zero_one_loss_impl performance(actual, predicted, w);
+        return performance.compute();
 }
 
-//' @rdname zerooneloss
-//' @method zerooneloss cmatrix
+//' @templateVar .FUN zerooneloss
+//' @templateVar .METHOD cmatrix
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(zerooneloss.cmatrix)]]
-Rcpp::NumericVector cmatrix_ZeroOneLoss(const Rcpp::NumericMatrix& x) 
-{
-  ZeroOneLossClass cook;
-  return recipe(cook, x);
+double cmatrix_zero_one_loss(
+    const Rcpp::NumericMatrix& x) {
+
+        zero_one_loss_impl performance(x);
+        return performance.compute();
 }

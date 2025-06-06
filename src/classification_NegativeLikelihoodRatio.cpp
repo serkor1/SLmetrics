@@ -1,35 +1,47 @@
-// [[Rcpp::depends(RcppEigen)]]
-#include <RcppEigen.h>
-#include "classification_NegativeLikelihoodRatio.h" // NegativeLikelihoodRatio definition
+#include <Rcpp.h>
+#include "classification_NegativeLikelihoodRatio.h"
 
-using namespace Rcpp;
+// declare metric
+using negative_likelihood_ratio_impl = metric::negative_likelihood_ratio<int>;
 
-//' @rdname nlr
-//' @method nlr factor
+//' @templateVar .FUN nlr
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(nlr.factor)]]
-Rcpp::NumericVector NegativeLikelihoodRatio(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted) 
-{
-    NegativeLikelihoodRatioClass cook;
-    return recipe(cook, actual, predicted);
+double negative_likelihood_ratio(
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::IntegerVector& predicted) {
+
+        negative_likelihood_ratio_impl performance(actual, predicted);
+        return performance.compute();
 }
 
-//' @rdname nlr
-//' @method weighted.nlr factor
+//' @templateVar .FUN weighted.nlr
+//' @templateVar .METHOD factor
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(weighted.nlr.factor)]]
-Rcpp::NumericVector weighted_NegativeLikelihoodRatio(const Rcpp::IntegerVector& actual, const Rcpp::IntegerVector& predicted, const Rcpp::NumericVector& w) 
-{
-    NegativeLikelihoodRatioClass cook;
-    return recipe(cook, actual, predicted, w);
+double weighted_negative_likelihood_ratio(
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::IntegerVector& predicted,
+    const Rcpp::NumericVector& w) {
+
+        negative_likelihood_ratio_impl performance(actual, predicted, w);
+        return performance.compute();
 }
 
-//' @rdname nlr
-//' @method nlr cmatrix
+//' @templateVar .FUN nlr
+//' @templateVar .METHOD cmatrix
+//' @template classification_standard_inherit
+//'
 //' @export
 // [[Rcpp::export(nlr.cmatrix)]]
-Rcpp::NumericVector cmatrix_NegativeLikelihoodRatio(const Rcpp::NumericMatrix& x) 
-{
-    NegativeLikelihoodRatioClass cook;
-    return recipe(cook, x);
+double cmatrix_negative_likelihood_ratio(
+    const Rcpp::NumericMatrix& x) {
+
+        negative_likelihood_ratio_impl performance(x);
+        return performance.compute();
 }

@@ -23,7 +23,7 @@ generalized_metric <- function(
   actual, 
   predicted,
   w = NULL, 
-  micro = NULL,
+  estimator = 0,
   metric_expr, 
   na.rm = TRUE,
   ...) {
@@ -45,31 +45,34 @@ generalized_metric <- function(
   # 3.2) calculate output
   output <- eval(substitute(metric_expr), envir = env)
 
-  if (is.null(micro)) {
-    return(output)
-  }
+  switch (estimator + 1,
+     {
+      return(output)
+    },
+    {
 
-  # 4) Aggregate if micro is specified
-  if (micro) {
-    # Aggregate all values for micro average
-    total_TP <- sum(TP, na.rm = TRUE)
-    total_FP <- sum(FP, na.rm = TRUE)
-    total_TN <- sum(TN, na.rm = TRUE)
-    total_FN <- sum(FN, na.rm = TRUE)
+      # Aggregate all values for micro average
+      total_TP <- sum(TP, na.rm = TRUE)
+      total_FP <- sum(FP, na.rm = TRUE)
+      total_TN <- sum(TN, na.rm = TRUE)
+      total_FN <- sum(FN, na.rm = TRUE)
 
-    env <- c(list(TP = total_TP, FP = total_FP, TN = total_TN, FN = total_FN), list(...))
-    output <- eval(substitute(metric_expr), envir = env)
+      env <- c(list(TP = total_TP, FP = total_FP, TN = total_TN, FN = total_FN), list(...))
+      output <- eval(substitute(metric_expr), envir = env)
+      return(output)
 
-  } else {
-    # Handle NA values if na.rm is FALSE
-    if (!na.rm) {
-      output[!is.finite(output)] <- 0
+    },
+    {
+      # Handle NA values if na.rm is FALSE
+      if (!na.rm) {
+        output[!is.finite(output)] <- 0
+      }
+      # Mean across classes
+      output <- mean(output, na.rm = na.rm)
+      return(output)
     }
-    # Mean across classes
-    output <- mean(output, na.rm = na.rm)
-  }
-
-  return(output)
+  )
+  
 }
 
 # script end;

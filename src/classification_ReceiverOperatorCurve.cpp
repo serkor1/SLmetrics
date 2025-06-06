@@ -1,90 +1,160 @@
 #include "classification_ReceiverOperatorCurve.h"
-
 #include <Rcpp.h>
+#include <optional>
 
-using namespace Rcpp;
-
-//' @rdname ROC
-//' @method ROC factor
+//' @templateVar .TITLE Receiver Operator Characteristics Curve
+//' @templateVar .FUN roc.curve
+//' @templateVar .TYPE roc.curve
+//' @templateVar .METHOD factor
+//' @template classification_auc_inherit
 //' @export
-// [[Rcpp::export(ROC.factor)]]
+// [[Rcpp::export(roc.curve.factor)]]
 Rcpp::DataFrame roc_curve_unweighted(
-    const Rcpp::IntegerVector actual,
-    const Rcpp::NumericMatrix response,
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::NumericMatrix& response,
     Rcpp::Nullable<Rcpp::NumericVector> thresholds = R_NilValue,
-    bool presorted = false) {
+    Rcpp::Nullable<Rcpp::IntegerMatrix> indices = R_NilValue) {
+        // optional thresholds
+        std::optional<Rcpp::NumericVector> thr_opt;
+        if ( thresholds.isNotNull() ) {
+            thr_opt = Rcpp::NumericVector(thresholds.get());
+        }
 
-    if (thresholds.isNotNull()) {
-        Rcpp::NumericVector thr = Rcpp::as<Rcpp::NumericVector>(thresholds);
-        return ROC::roc_curve(actual, response, presorted, nullptr, &thr);
-    }
-    return ROC::roc_curve(actual, response, presorted, nullptr, nullptr);
+        // optional precomputed indices
+        std::optional<Rcpp::IntegerMatrix> idx_opt;
+        if ( indices.isNotNull() ) {
+            idx_opt = Rcpp::as<Rcpp::IntegerMatrix>(indices.get());
+        }
+
+        // build unweighted ROC
+        metric::roc_curve calc(
+            actual,
+            response,
+            static_cast<classification::integration_method>(0),
+            std::nullopt,  // no weights
+            idx_opt
+        );
+
+        return calc.curve(thr_opt);
 }
 
-//' @rdname ROC
-//' @method weighted.ROC factor
+//' @templateVar .TITLE Receiver Operator Characteristics Curve
+//' @templateVar .FUN weighted.roc.curve
+//' @templateVar .TYPE roc.curve
+//' @templateVar .METHOD factor
+//' @template classification_auc_inherit
 //' @export
-// [[Rcpp::export(weighted.ROC.factor)]]
+// [[Rcpp::export(weighted.roc.curve.factor)]]
 Rcpp::DataFrame roc_curve_weighted(
-    const Rcpp::IntegerVector actual,
-    const Rcpp::NumericMatrix response,
-    const Rcpp::NumericVector w,
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::NumericMatrix& response,
+    const Rcpp::NumericVector& w,
     Rcpp::Nullable<Rcpp::NumericVector> thresholds = R_NilValue,
-    bool presorted = false) {
+    Rcpp::Nullable<Rcpp::IntegerMatrix> indices = R_NilValue) {
 
-    if (thresholds.isNotNull()) {
-        Rcpp::NumericVector thr = Rcpp::as<Rcpp::NumericVector>(thresholds);
-        return ROC::roc_curve(actual, response, presorted, &w, &thr);
-    }
-    return ROC::roc_curve(actual, response, presorted, &w, nullptr);
+        // optional thresholds
+        std::optional<Rcpp::NumericVector> thr_opt;
+        if ( thresholds.isNotNull() ) {
+            thr_opt = Rcpp::NumericVector(thresholds.get());
+        }
+
+        // optional indices
+        std::optional<Rcpp::IntegerMatrix> idx_opt;
+        if ( indices.isNotNull() ) {
+            idx_opt = Rcpp::as<Rcpp::IntegerMatrix>(indices.get());
+        }
+
+        // wrap weights
+        std::optional<Rcpp::NumericVector> wopt = w;
+
+        metric::roc_curve calc(
+            actual,
+            response,
+            static_cast<classification::integration_method>(0),
+            wopt,
+            idx_opt
+        );
+
+        return calc.curve(thr_opt);
 }
 
-
-//' @rdname roc.auc
-//' @method roc.auc matrix
+//' @templateVar .TITLE Area under the ROC curve
+//' @templateVar .FUN auc.roc.curve
+//' @templateVar .TYPE auc
+//' @templateVar .METHOD factor
+//' @template classification_auc_inherit
 //' @export
-// [[Rcpp::export(roc.auc.matrix)]]
+// [[Rcpp::export(auc.roc.curve.factor)]]
 Rcpp::NumericVector roc_auc(
-    const Rcpp::IntegerVector actual,
-    const Rcpp::NumericMatrix response,
-    Rcpp::Nullable<bool> micro = R_NilValue,
-    int method = 0) {
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::NumericMatrix& response,
+    int estimator = 0,
+    int method = 0,
+    Rcpp::Nullable<Rcpp::IntegerMatrix> indices = R_NilValue) {
 
-        if (micro.isNull()) {
-            return ROC::class_wise(actual, response, method, false);
+        // optional indices
+        std::optional<Rcpp::IntegerMatrix> idx_opt;
+        if ( indices.isNotNull() ) {
+            idx_opt = Rcpp::as<Rcpp::IntegerMatrix>(indices.get());
         }
-        
-        bool use_micro = Rcpp::as<bool>(micro);
-        if (use_micro) {
-            double auc = ROC::micro_average(actual, response, method, false);
-            return Rcpp::NumericVector::create(auc);
-        } else {
-            double auc = ROC::macro_average(actual, response, method, false);
-            return Rcpp::NumericVector::create(auc);
+
+        // build unweighted ROC
+        metric::roc_curve calc(
+            actual,
+            response,
+            static_cast<classification::integration_method>(method),
+            std::nullopt,
+            idx_opt
+        );
+
+        switch ( static_cast<classification::aggregation_level>(estimator) ) {
+        case classification::aggregation_level::MICRO:
+            return Rcpp::NumericVector::create(calc.micro_average());
+        case classification::aggregation_level::MACRO:
+            return Rcpp::NumericVector::create(calc.macro_average());
+        default:
+            return calc.class_wise();
         }
 }
 
-//' @rdname roc.auc
-//' @method weighted.roc.auc matrix
+//' @templateVar .TITLE Area under the ROC curve
+//' @templateVar .FUN weighted.auc.roc.curve
+//' @templateVar .TYPE auc
+//' @templateVar .METHOD factor
+//' @template classification_auc_inherit
 //' @export
-// [[Rcpp::export(weighted.roc.auc.matrix)]]
+// [[Rcpp::export(weighted.auc.roc.curve.factor)]]
 Rcpp::NumericVector roc_auc_weighted(
-    const Rcpp::IntegerVector actual,
-    const Rcpp::NumericMatrix response,
-    const Rcpp::NumericVector w,
-    Rcpp::Nullable<bool> micro = R_NilValue,
-    int method = 0) {
+    const Rcpp::IntegerVector& actual,
+    const Rcpp::NumericMatrix& response,
+    const Rcpp::NumericVector& w,
+    int estimator = 0,
+    int method = 0,
+    Rcpp::Nullable<Rcpp::IntegerMatrix> indices = R_NilValue) {
 
-        if (micro.isNull()) {
-            return ROC::class_wise(actual, response, method, false, &w);
+        // optional indices
+        std::optional<Rcpp::IntegerMatrix> idx_opt;
+        if ( indices.isNotNull() ) {
+            idx_opt = Rcpp::as<Rcpp::IntegerMatrix>(indices.get());
         }
 
-        bool use_micro = Rcpp::as<bool>(micro);
-        if (use_micro) {
-            double auc = ROC::micro_average(actual, response, method, false, &w);
-            return Rcpp::NumericVector::create(auc);
-        } else {
-            double auc = ROC::macro_average(actual, response, method, false, &w);
-            return Rcpp::NumericVector::create(auc);
+        // wrap weights
+        std::optional<Rcpp::NumericVector> wopt = w;
+
+        metric::roc_curve calc(
+            actual,
+            response,
+            static_cast<classification::integration_method>(method),
+            wopt,
+            idx_opt
+        );
+
+        switch ( static_cast<classification::aggregation_level>(estimator) ) {
+        case classification::aggregation_level::MICRO:
+            return Rcpp::NumericVector::create(calc.micro_average());
+        case classification::aggregation_level::MACRO:
+            return Rcpp::NumericVector::create(calc.macro_average());
+        default:
+            return calc.class_wise();
         }
 }
