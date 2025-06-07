@@ -6,7 +6,7 @@
 ##    see: https://unconj.ca/blog/an-autoconf-primer-for-r-package-authors.html
 ##    this is a good place to get started, alongside the official documentation
 ##    found here: https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.pdf
-AC_INIT([{SLmetrics}], [v0.3-3])
+AC_INIT([{SLmetrics}], [v0.3-4])
 AC_MSG_NOTICE([Configuring {SLmetrics} ${PACKAGE_VERSION}])
 
 ## 1) Locate R Home
@@ -43,7 +43,8 @@ FLIBS=`"${R_HOME}/bin/R" CMD config FLIBS`
 ##      installation
 AC_LANG([C++])
 AC_PROG_CXX
-m4_include([m4/ax_cxx_compile_stdcxx.m4])
+AC_CONFIG_MACRO_DIR([tools/m4])
+m4_include([tools/m4/ax_cxx_compile_stdcxx.m4])
 AX_CXX_COMPILE_STDCXX([23], [ext], [optional])
 if test "$HAVE_CXX23" = "1"; then
   STD_VER=23
