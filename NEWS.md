@@ -177,10 +177,8 @@ SLmetrics::deviance.poisson(
 #> [1] 0.3980706
 ```
 
-- **Mean Arctangent Absolute Error:** See
-  [here](https://support.numxl.com/hc/en-us/articles/115001223463-MAAPE-Mean-Arctangent-Absolute-Percentage-Error)
-  for a general description of the implementation. The metric can be
-  calculated as follows:
+- **Mean Arctangent Absolute Error:** The metric can be calculated as
+  follows:
 
 ``` r
 ## Generate actual
@@ -392,11 +390,7 @@ SLmetrics::recall(
   it easier to navigate the functions argument-wise.
 
 - **Exported Data:** Three new datasets have been introduced to the
-  package; the [Wine
-  Quality](https://archive.ics.uci.edu/dataset/186/wine+quality)-,
-  [Obesity](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)-
-  and [Banknote
-  Authentication](https://archive.ics.uci.edu/dataset/267/banknote+authentication)
+  package; the Wine Quality-, Obesity- and Banknote Authentication
   datasets. Each dataset is comes in named `list` where features and
   targets are stored separately. Below is an example from the Obesity
   dataset:
@@ -718,7 +712,7 @@ SLmetrics::setUseOpenMP(TRUE)
 #> OpenMP usage set to: enabled
 system.time(SLmetrics::entropy(pk))
 #>    user  system elapsed 
-#>   0.013   0.000   0.002
+#>   0.010   0.003   0.001
 
 SLmetrics::setUseOpenMP(FALSE)
 #> OpenMP usage set to: disabled
@@ -821,11 +815,11 @@ cat(
   sep = "\n"
 )
 #> Mean Relative Root Mean Squared Error
-#> -5.413742
+#> -4.686365
 #> Range Relative Root Mean Squared Error
-#> 0.2481626
+#> 0.1943122
 #> IQR Relative Root Mean Squared Error
-#> 0.856433
+#> 0.8692987
 ```
 
 - **Log Loss:** Weighted and unweighted Log Loss, with and without
@@ -914,9 +908,9 @@ SLmetrics::cmatrix(
     predicted = predicted
 )
 #>   a b c
-#> a 6 6 5
-#> b 7 5 9
-#> c 4 3 5
+#> a 4 5 3
+#> b 6 6 7
+#> c 5 8 6
 
 ## 3) weighted confusion
 ## matrix
@@ -926,9 +920,9 @@ SLmetrics::weighted.cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 3.373804 2.716187 3.493723
-#> b 3.290703 2.152031 5.147649
-#> c 1.562841 2.046342 2.691885
+#> a 2.551064 2.859906 2.205269
+#> b 2.577943 1.947142 3.013536
+#> c 1.935559 3.522135 4.064463
 ```
 
 # :bookmark: Version 0.2-0
@@ -968,10 +962,10 @@ SLmetrics::cmatrix(
     actual    = actual,
     predicted = predicted
 )
-#>   a b c
-#> a 6 7 8
-#> b 7 4 2
-#> c 8 3 5
+#>    a  b  c
+#> a  8  4  6
+#> b  4  3  5
+#> c  4 10  6
 
 SLmetrics::cmatrix(
     actual    = actual,
@@ -979,9 +973,9 @@ SLmetrics::cmatrix(
     w         = weights
 )
 #>          a        b        c
-#> a 3.935494 3.631405 3.044675
-#> b 4.775933 2.032147 1.054056
-#> c 3.047617 2.052384 2.311538
+#> a 2.858602 2.064648 4.187036
+#> b 1.598406 1.395218 3.285804
+#> c 1.457663 4.459990 3.001868
 ```
 
 Calculating weighted metrics using the `<factor>`- or
@@ -1001,7 +995,7 @@ confusion_matrix <- SLmetrics::cmatrix(
 SLmetrics::accuracy(
     confusion_matrix
 )
-#> [1] 0.3198416
+#> [1] 0.2984745
 
 ## 2) weighted accuracy
 ## using <factor> method
@@ -1010,7 +1004,7 @@ SLmetrics::weighted.accuracy(
     predicted = predicted,
     w         = weights
 )
-#> [1] 0.3198416
+#> [1] 0.2984745
 ```
 
 Please note, however, that it is not possible to pass `cmatrix()`-into
@@ -1081,9 +1075,9 @@ w         <- runif(n = 50)
 ## 2) weighted and unweighted
 ## root mean squared error
 SLmetrics::rmse(actual, predicted)
-#> [1] 1.124893
+#> [1] 0.9109375
 SLmetrics::weighted.rmse(actual, predicted, w = w)
-#> [1] 1.041752
+#> [1] 0.7965708
 ```
 
 - The `rrmse()`-function have been removed in favor of the
@@ -1183,13 +1177,13 @@ plot(pr_obj, panels = FALSE)
 <img src=".meta/changelog/src/v0.1-1_files/figure-commonmark/unnamed-chunk-4-2.png"
 style="width:100.0%" />
 
-# :package: [{SLmetrics}](https://serkor1.github.io/SLmetrics/) Version 0.1-0
+# :package: [{SLmetrics}](https://slmetrics-docs.gitbook.io/v1) Version 0.1-0
 
-[{SLmetrics}](https://serkor1.github.io/SLmetrics/) is a collection of
+[{SLmetrics}](https://slmetrics-docs.gitbook.io/v1) is a collection of
 Machine Learning performance evaluation functions for supervised
 learning written in `C++` with
 [{Rcpp}](https://github.com/RcppCore/Rcpp). Visit the online
-documentation on [Github pages](https://serkor1.github.io/SLmetrics/).
+documentation on [Github pages](https://slmetrics-docs.gitbook.io/v1).
 
 ## :information_source: Basic usage
 
@@ -1208,7 +1202,7 @@ predicted <- factor(
 
 ## 2) print values
 print(actual)
-#>  [1] b c a c b c a c b c
+#>  [1] a c a c a b c a a a
 #> Levels: a b c
 ```
 
@@ -1224,16 +1218,16 @@ summary(
 #> Confusion Matrix (3 x 3) 
 #> ================================================================================
 #>   a b c
-#> a 1 1 0
-#> b 0 1 2
-#> c 2 0 3
+#> a 2 2 2
+#> b 0 0 1
+#> c 1 1 1
 #> ================================================================================
 #> Overall Statistics (micro average)
-#>  - Accuracy:          0.50
-#>  - Balanced Accuracy: 0.48
-#>  - Sensitivity:       0.50
-#>  - Specificity:       0.75
-#>  - Precision:         0.50
+#>  - Accuracy:          0.30
+#>  - Balanced Accuracy: 0.22
+#>  - Sensitivity:       0.30
+#>  - Specificity:       0.65
+#>  - Precision:         0.30
 ```
 
 ``` r
@@ -1241,7 +1235,7 @@ summary(
 ## using <cmatrix> method
 SLmetrics::fpr(confusion_matrix)
 #>         a         b         c 
-#> 0.2500000 0.1428571 0.4000000
+#> 0.2500000 0.3333333 0.4285714
 
 ## 2) false positive rate
 ## using <factor> method
@@ -1250,7 +1244,7 @@ SLmetrics::fpr(
     predicted = predicted
 )
 #>         a         b         c 
-#> 0.2500000 0.1428571 0.4000000
+#> 0.2500000 0.3333333 0.4285714
 ```
 
 ### Regression metrics
@@ -1269,11 +1263,11 @@ SLmetrics::huberloss(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 0.4237599
+#> [1] 0.4444274
 
 SLmetrics::rmse(
     actual    = actual,
     predicted = predicted
 )
-#> [1] 1.007314
+#> [1] 1.026454
 ```
