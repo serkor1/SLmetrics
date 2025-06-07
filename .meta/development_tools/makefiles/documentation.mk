@@ -9,7 +9,7 @@ docs-news: ## Build NEWS
 	@$(scripts_directory)/build_news.sh $(reset)
 	@echo $(echo_success) "NEWS built successfully"
 
-docs-readme: build ## Build README
+docs-readme: pkg-build ## Build README
 	@echo $(echo_prefix) "Rendering README"
 	@$(scripts_directory)/build_readme.sh $(reset)
 	@echo $(echo_success) "README built successfully"
