@@ -11,9 +11,6 @@ A list with two components:
 \item{target}{A list with two elements: \code{regression} (weight in kilograms) and \code{class} (obesity level classification).}
 }
 }
-\source{
-\url{https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition}
-}
 \usage{
 data(obesity)
 }
@@ -53,5 +50,8 @@ Typical levels include \code{"no"}, \code{"sometimes"}, \code{"frequently"}, and
 }
 }
 }
+}
+\references{
+Palechor, Fabio Mendoza, and Alexis De la Hoz Manotas. "Dataset for estimation of obesity levels based on eating habits and physical condition in individuals from Colombia, Peru and Mexico." Data in brief 25 (2019): 104344.
 }
 \keyword{datasets}

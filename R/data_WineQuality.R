@@ -48,6 +48,9 @@
 #'   \item{features}{A data frame with 11 chemical property variables.}
 #'   \item{target}{A list with two elements: \code{regression} (wine quality scores) and \code{class} (quality classification).}
 #' }
-#' @source \url{https://archive.ics.uci.edu/dataset/186/wine+quality}
+#' 
+#' @references
+#' Cortez, Paulo, et al. "Modeling wine preferences by data mining from physicochemical properties." Decision support systems 47.4 (2009): 547-553.
+#' 
 #' @keywords datasets
 "wine.quality"

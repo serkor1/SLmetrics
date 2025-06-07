@@ -36,6 +36,10 @@
 #'   \item{target}{A factor with levels \code{"inauthentic"} and \code{"authentic"}
 #'   representing the banknote's authenticity.}
 #' }
-#' @source \url{https://archive.ics.uci.edu/dataset/267/banknote+authentication}
+#' 
+#' @references 
+#' 
+#' Gillich, Eugen & Lohweg, Volker. (2010). Banknote Authentication. 
+#' 
 #' @keywords datasets
 "banknote"

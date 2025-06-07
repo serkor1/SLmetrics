@@ -11,9 +11,6 @@ A list with two components:
 \item{target}{A list with two elements: \code{regression} (wine quality scores) and \code{class} (quality classification).}
 }
 }
-\source{
-\url{https://archive.ics.uci.edu/dataset/186/wine+quality}
-}
 \usage{
 data(wine.quality)
 }
@@ -55,5 +52,8 @@ where classification is determined as follows:
 }
 }
 }
+}
+\references{
+Cortez, Paulo, et al. "Modeling wine preferences by data mining from physicochemical properties." Decision support systems 47.4 (2009): 547-553.
 }
 \keyword{datasets}

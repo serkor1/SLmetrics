@@ -13,9 +13,6 @@ A list with two components:
 representing the banknote's authenticity.}
 }
 }
-\source{
-\url{https://archive.ics.uci.edu/dataset/267/banknote+authentication}
-}
 \usage{
 data(banknote)
 }
@@ -43,5 +40,8 @@ two levels:
 }
 }
 }
+}
+\references{
+Gillich, Eugen & Lohweg, Volker. (2010). Banknote Authentication.
 }
 \keyword{datasets}
