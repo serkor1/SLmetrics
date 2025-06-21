@@ -40,3 +40,8 @@ Rscript -e "suppressMessages(
     roclets = c('collate', 'namespace', 'rd')
   )
 )"
+
+# 4) delete the _documentation
+#    templates - they serve no purpose
+#    other than documentation and failing on R-devel
+find man/ -type f -name "*_documentation*" -delete
