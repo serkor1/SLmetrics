@@ -2,8 +2,6 @@
 #define CLASSIFICATION_ENTROPY_H
 
 #include "SLmetrics.h"
-
-#include <Rcpp.h>
 #include <cmath>
 #include <algorithm>
 

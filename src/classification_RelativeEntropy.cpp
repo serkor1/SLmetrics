@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "classification_RelativeEntropy.h"
 
 //' @templateVar .FUN relative.entropy

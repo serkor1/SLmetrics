@@ -1,6 +1,4 @@
-#include "SLmetrics.h"
 #include "regression_PoissonDeviance.h"
-using namespace Rcpp;
 
 //' @templateVar .FUN deviance.poisson
 //' @templateVar .METHOD numeric

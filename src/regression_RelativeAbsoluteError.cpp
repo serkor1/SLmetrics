@@ -1,6 +1,4 @@
-#include <Rcpp.h>
 #include "regression_RelativeAbsoluteError.h"
-using namespace Rcpp;
 
 //' @templateVar .FUN rae
 //' @templateVar .METHOD numeric

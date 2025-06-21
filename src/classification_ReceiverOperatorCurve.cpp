@@ -1,5 +1,4 @@
 #include "classification_ReceiverOperatorCurve.h"
-#include <Rcpp.h>
 #include <optional>
 
 //' @templateVar .TITLE Receiver Operator Characteristics Curve

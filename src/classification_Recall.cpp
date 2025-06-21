@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "classification_Recall.h"
 
 using recall_metric_impl = metric::recall<int>;

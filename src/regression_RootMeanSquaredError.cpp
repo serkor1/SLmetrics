@@ -1,6 +1,4 @@
-#include "SLmetrics.h"
 #include "regression_RootMeanSquaredError.h"
-using namespace Rcpp;
 
 //' @templateVar .FUN rmse
 //' @templateVar .METHOD numeric

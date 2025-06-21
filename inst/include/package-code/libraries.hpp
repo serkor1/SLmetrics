@@ -14,8 +14,7 @@
 // 1) include armadillo
 // and Rcpp
 // NOTE: It seems that the order matters
-#include <armadillo>
-#include <Rcpp.h>
+#include <RcppArmadillo.h>
 
 
 #endif

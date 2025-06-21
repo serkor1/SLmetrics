@@ -1,5 +1,4 @@
-#include <armadillo>
-#include <Rcpp.h>
+#include <RcppArmadillo.h>
 #include <optional>
 #include <functional>
 

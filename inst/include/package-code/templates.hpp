@@ -8,7 +8,7 @@
 #ifndef templates_hpp
 #define templates_hpp
 
-#include <Rcpp.h>
+#include <RcppArmadillo.h>
 
 template <typename T>
 struct vctr;

@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "classification_CohensKappa.h"
 
 // implementation of metric

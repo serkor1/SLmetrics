@@ -1,6 +1,7 @@
 #ifndef CLASSIFICATION_AUC_H
 #define CLASSIFICATION_AUC_H
 
+#include "SLmetrics.h"
 #include <cmath>
 #include <algorithm>
 #include <vector>

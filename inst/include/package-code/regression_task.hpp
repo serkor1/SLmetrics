@@ -10,8 +10,7 @@
 #ifndef regression_tasks_hpp
 #define regression_tasks_hpp
 
-#include <armadillo>
-#include <Rcpp.h>
+#include <RcppArmadillo.h>
 #include "templates.hpp"
 
 namespace regression {

@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "classification_ZeroOneLoss.h"
 
 using zero_one_loss_impl = metric::zerooneloss_score<int>;

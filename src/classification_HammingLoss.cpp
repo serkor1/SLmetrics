@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "classification_HammingLoss.h"
 
 using hamming_loss_t = metric::hamming_loss<int>;

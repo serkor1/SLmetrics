@@ -8,8 +8,7 @@
 #define __classification__
 
 /// @include
-#include <armadillo>
-#include <Rcpp.h>
+#include <RcppArmadillo.h>
 #include "templates.hpp"
 
 /**

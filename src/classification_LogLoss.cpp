@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "classification_LogLoss.h"
 
 //' @templateVar .FUN logloss

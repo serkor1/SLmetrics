@@ -2,7 +2,6 @@
 #define CLASSIFICATION_RECEIVEROPERATORCURVE_H
 
 #include "SLmetrics.h"
-#include <armadillo>
 #include <vector>
 #include <optional>
 

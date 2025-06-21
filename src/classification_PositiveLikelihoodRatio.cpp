@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "classification_PositiveLikelihoodRatio.h"
 
 // declare metric

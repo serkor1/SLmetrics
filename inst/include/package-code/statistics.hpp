@@ -1,4 +1,4 @@
-#include <armadillo>
+#include <RcppArmadillo.h>
 
 namespace statistic {
 

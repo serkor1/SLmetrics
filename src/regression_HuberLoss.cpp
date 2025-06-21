@@ -1,6 +1,4 @@
-#include <Rcpp.h>
 #include "regression_HuberLoss.h"
-using namespace Rcpp;
 
 //' @templateVar .FUN huberloss
 //' @templateVar .METHOD numeric

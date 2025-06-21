@@ -2,7 +2,6 @@
 #define CLASSIFICATION_NEGATIVEPREDICTIVEVALUE_H
 
 #include "SLmetrics.h"
-#include <armadillo>
 
 namespace metric {
 

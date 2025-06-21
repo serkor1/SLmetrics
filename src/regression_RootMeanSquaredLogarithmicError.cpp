@@ -1,6 +1,4 @@
-#include <Rcpp.h>
 #include "regression_RootMeanSquaredLogarithmicError.h"
-using namespace Rcpp;
 
 //' @templateVar .FUN rmsle
 //' @templateVar .METHOD numeric

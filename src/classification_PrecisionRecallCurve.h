@@ -2,10 +2,8 @@
 #define CLASSIFICATION_PRECISIONRECALLCURVE_H
 
 #include "SLmetrics.h"
-#include <armadillo>
 #include <vector>
 #include <optional>
-#include <Rcpp.h>
 
 namespace metric {
 

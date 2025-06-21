@@ -1,6 +1,4 @@
-#include <Rcpp.h>
 #include "regression_SymmetricMeanAbsolutePercentageError.h"
-using namespace Rcpp;
 
 //' @templateVar .FUN smape
 //' @templateVar .METHOD numeric

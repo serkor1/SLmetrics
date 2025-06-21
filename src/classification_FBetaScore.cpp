@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "classification_FBetaScore.h"
 
 // declare metric;

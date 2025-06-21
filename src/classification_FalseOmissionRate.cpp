@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "classification_FalseOmissionRate.h"
 
 // declare metric

@@ -3,7 +3,6 @@
 
 #include "SLmetrics.h"
 
-
 namespace metric {
     template <typename T>
     class confusion_matrix {

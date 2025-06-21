@@ -1,5 +1,5 @@
 // [[Rcpp::plugins(cpp23)]]
-#include <Rcpp.h>
+#include <RcppArmadillo.h>
 #include <algorithm>
 #include <functional>
 

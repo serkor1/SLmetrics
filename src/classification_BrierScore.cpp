@@ -1,4 +1,3 @@
-#include "SLmetrics.h"
 #include "classification_BrierScore.h"
 using namespace Rcpp;
 

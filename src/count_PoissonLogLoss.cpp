@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "count_PoissonLogLoss.h"
 
 //' @templateVar .FUN logloss

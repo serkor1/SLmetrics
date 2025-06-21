@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "classification_NegativePredictiveValue.h"
 
 // declare metric

@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "classification_ShannonEntropy.h"
 
 //' @templateVar .FUN shannon.entropy

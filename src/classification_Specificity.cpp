@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "classification_Specificity.h"
 
 // declare metric

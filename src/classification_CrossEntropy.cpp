@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "classification_CrossEntropy.h"
 
 //' @templateVar .FUN cross.entropy

@@ -1,6 +1,4 @@
-#include <Rcpp.h>
 #include "regression_GeometricMeanSquaredError.h"
-using namespace Rcpp;
 
 //' @templateVar .FUN gmse
 //' @templateVar .METHOD numeric

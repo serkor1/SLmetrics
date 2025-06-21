@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "classification_DiagnosticOddsRatio.h"
 
 // declare metric

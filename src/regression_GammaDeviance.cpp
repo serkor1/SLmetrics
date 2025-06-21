@@ -1,6 +1,4 @@
-#include "SLmetrics.h"
 #include "regression_GammaDeviance.h"
-using namespace Rcpp;
 
 //' @templateVar .FUN deviance.gamma
 //' @templateVar .METHOD numeric

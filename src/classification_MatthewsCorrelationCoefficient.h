@@ -2,7 +2,6 @@
 #define CLASSIFICATION_MATTHEWSCORRELATIONCOEFFICIENT_H
 
 #include "SLmetrics.h"
-#include <armadillo>
 #include <cmath>
 
 namespace metric {

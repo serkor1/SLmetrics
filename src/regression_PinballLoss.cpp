@@ -1,6 +1,4 @@
-#include <Rcpp.h>
 #include "regression_PinballLoss.h"
-using namespace Rcpp;
 
 //' @templateVar .FUN pinball
 //' @templateVar .METHOD numeric

@@ -1,6 +1,4 @@
-#include <Rcpp.h>
 #include "regression_MeanSquaredError.h"
-using namespace Rcpp;
 
 //' @templateVar .FUN mse
 //' @templateVar .METHOD numeric

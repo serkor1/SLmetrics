@@ -1,6 +1,4 @@
-#include <Rcpp.h>
 #include "regression_MeanPercentageError.h"
-using namespace Rcpp;
 
 //' @templateVar .FUN mpe
 //' @templateVar .METHOD numeric

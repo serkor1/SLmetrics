@@ -2,7 +2,6 @@
 #define CLASSIFICATION_COHENS_KAPPA_H
 
 #include "SLmetrics.h"
-#include <armadillo>
 
 namespace metric {
     template <typename T>

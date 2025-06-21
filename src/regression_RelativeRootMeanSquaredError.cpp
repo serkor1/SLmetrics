@@ -1,7 +1,4 @@
-#include <Rcpp.h>
 #include "regression_RelativeRootMeanSquaredError.h"
-
-using namespace Rcpp;
 
 //' @templateVar .FUN rrmse
 //' @templateVar .METHOD numeric

@@ -1,6 +1,4 @@
-#include "SLmetrics.h"
 #include "regression_TweedieDeviance.h"
-using namespace Rcpp;
 
 //' @templateVar .FUN deviance.tweedie
 //' @templateVar .METHOD numeric

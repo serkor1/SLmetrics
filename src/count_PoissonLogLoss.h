@@ -2,7 +2,6 @@
 #define COUNT_POISSONLOGLOSS_H
 
 #include "SLmetrics.h"
-#include <Rcpp.h>
 #include <cmath>
 #include <cstddef>
 

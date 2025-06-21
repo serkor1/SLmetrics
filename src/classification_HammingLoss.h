@@ -2,7 +2,6 @@
 #define CLASSIFICATION_HAMMING_LOSS_H
 
 #include "SLmetrics.h"
-#include <armadillo>
 
 namespace metric {
 

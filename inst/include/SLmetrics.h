@@ -8,7 +8,6 @@
 #include "package-code/classification_task.hpp"
 #include "package-code/regression_task.hpp"
 #include "package-code/templates.hpp"
-#include <armadillo>
-#include <Rcpp.h>
+#include <RcppArmadillo.h>
 
 #endif

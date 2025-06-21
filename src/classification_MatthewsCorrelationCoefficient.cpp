@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "classification_MatthewsCorrelationCoefficient.h"
 
 // implementation of metric

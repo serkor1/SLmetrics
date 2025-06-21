@@ -1,6 +1,4 @@
-#include <Rcpp.h>
 #include "regression_ConcordanceCorrelationCoefficient.h"
-using namespace Rcpp;
 
 //' @templateVar .FUN ccc
 //' @templateVar .METHOD numeric

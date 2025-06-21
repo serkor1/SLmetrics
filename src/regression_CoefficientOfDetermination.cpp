@@ -1,6 +1,4 @@
-#include <Rcpp.h>
 #include "regression_CoefficientOfDetermination.h"
-using namespace Rcpp;
 
 //' @templateVar .FUN rsq
 //' @templateVar .METHOD numeric

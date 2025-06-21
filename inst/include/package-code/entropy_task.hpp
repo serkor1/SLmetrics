@@ -1,8 +1,7 @@
 #ifndef entropy_hpp
 #define entropy_hpp
 
-#include <armadillo>
-#include <Rcpp.h>
+#include <RcppArmadillo.h>
 
 namespace entropy {
     template <typename pk, typename qk>

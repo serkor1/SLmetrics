@@ -1,4 +1,3 @@
-#include <Rcpp.h>
 #include "classification_FowlkesMallowsIndex.h"
 
 using fowlkes_mallows_index_impl = metric::fowlkes_mallows_index<int>;

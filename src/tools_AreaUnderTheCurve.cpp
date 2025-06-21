@@ -1,7 +1,4 @@
 #include "tools_AreaUnderTheCurve.h"
-#include <Rcpp.h>
-
-using namespace Rcpp;
 
 //' @title Area under the curve
 //'

@@ -2,7 +2,6 @@
 #define CLASSIFICATION_PRECISION_H
 
 #include "SLmetrics.h"
-#include <armadillo>
 
 namespace metric {
 
