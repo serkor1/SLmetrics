@@ -29,3 +29,9 @@ pkg-config: ## Compile configure
 	@echo "========================="
 	@autoconf && ./configure
 	@echo $(echo_success) "Configure done!"
+
+pkg-format: ## Formate code (change -style=$1 for other styleguides)
+	@clang-format -style=LLVM -dump-config > .clang-format
+	@clang-format -i src/*.cpp src/*.h inst/include/*.h
+	@clang-format -i inst/include/package-code/*.hpp
+	@rm .clang-format 
